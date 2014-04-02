@@ -52,11 +52,14 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/Bootstrap/Css/bootstrap.css",
                 "~/Content/Bootstrap/Css/bootstrap-theme.css",
                 "~/Content/Themes/reset.less",
-                "~/Content/Themes/style.less");
+                "~/Content/Themes/style.less",
+                "~/Content/Themes/custom.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libraries/AngularJs/angular.js",
-                "~/Scripts/Libraries/Bootstrap/ui-bootstrap-tpls-0.10.0.js"));
+                "~/Scripts/Libraries/Bootstrap/ui-bootstrap-tpls-0.10.0.js",
+                "~/Scripts/tgrs-common.js",
+                "~/Areas/User/Resources/Login/reCheckIn.js"));
         }
     }
 

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool enableReChckIn = ViewBag.ViewFlags != null && ViewBag.ViewFlags.IsReCheckin;
+}
+<!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
 <!--[if (IE 8)]><html lang="en" class="ie8 oldie"><![endif]-->
 <!--[if (IE 9)]><html lang="en" class="ie9"><![endif]-->
@@ -23,22 +26,29 @@
             <div class="greeting">
                 <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
                 <ul>
-                    <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "User", new { Area = "User" }, new { })</li>
-                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "User", new { Area = "User" }, new { })</li>
+                    <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo", new { Area = "User" }, new { })</li>
+                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo", new { Area = "User" }, new { })</li>
                     <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { Area = "User" }, new { })</li>
                 </ul>
             </div>
         </div>
     </header>
     <section id="headline">
-        <span class="server-time">@string.Format("{0} {1}", ViewBag.ServerDate, ViewLang.GMTMinus4)</span>
-        @RenderSection("Headline", false)
-    </section>
-    <section id="body">
-        <div class="content">
-            @RenderBody()
+        <div class="row">
+            <span class="server-time">@string.Format("{0} {1}", ViewBag.ServerDate, ViewLang.GMTMinus4)</span>
+            @RenderSection("Headline", false)
         </div>
     </section>
+    <section id="body">
+        <div class="row content">
+            @RenderBody()
+            <div id="divCommon"></div>
+        </div>
+    </section>
+    <div id="divReCheckIn"
+         data-ng-controller="reCheckInController"
+         data-ng-init="rootUrl = initialize('@enableReChckIn' === 'True', '@Url.Content("~")')">
+    </div>
     @Scripts.Render("~/scripts/common")
     @RenderSection("Foot", false)
 </body>

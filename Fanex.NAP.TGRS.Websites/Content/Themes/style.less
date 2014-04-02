@@ -108,7 +108,7 @@ iframe {
 /*                        Headers                       */
 /********************************************************/
 
-header, #headline, #body, .filter-bar, footer {
+header, footer {
     float: left;
     width: 100%;
 }
@@ -243,7 +243,7 @@ header {
                 background: @menu_bg url(Images/user.png) no-repeat 6px center;
                 display: block;
                 clear: none;
-                margin-left: -2px;
+                margin: 0 0 0 -2px;
                 float: left;
                 padding: 4px 10px 4px 28px;
                 color: @white;
@@ -256,6 +256,7 @@ header {
                     color: #fecc35;
                     font-weight: bold;
                     display: inline-block;
+                    height: 16px;
                 }
 
                 .info-more {
@@ -274,7 +275,7 @@ header {
                 background-color: @white;
                 list-style-type: none;
                 margin: 0;
-                border:solid 1px @menu_border;
+                border: solid 1px @menu_border;
                 width:100%;
                 padding: 2px 0px;
                 z-index: 11;
@@ -305,7 +306,7 @@ header {
 
             &:hover {
                 ul {
-                    top:24px;
+                    top: 24px;
                     visibility: visible;
                     opacity: 1;
                     .box_shadow(0 1px 2px 1px rgba(0,0,0,0.25));
@@ -418,4 +419,97 @@ header {
     margin: 12px 12px 0 0;
     float: right;
     color: @msg_text;
+}
+
+/********************************************************/
+/*                      Forms                           */
+/********************************************************/
+.form {
+    background-color: @form_bg;
+    border: solid 1px @form_border;
+    padding: 15px;
+    float: left;
+    .box_shadow(1px 1px 2px 1px rgba(0, 0, 0, 0.1));
+
+    .form-row {
+        float: left;
+        clear: both;
+        margin-bottom: 3px;
+        min-height: 33px;
+
+        .lbl-field, .edit-field {
+            display: block;
+            float: left;
+        }
+
+        .lbl-field {
+            width: 100px;
+            vertical-align: top;
+            text-align: left;
+            padding: 5px 20px 0 0;
+            .text_shadow(0 0 0.023em black);
+        }
+
+        .edit-field {
+            .read-only {
+                padding-top: 5px;
+            }
+
+            input[type=text], input[type=password], select {
+                width: 280px;
+                height: 20px;
+                padding: 2px;
+                border: 1px solid @form_border;
+                font-size: 0.9em;
+                color: @text;
+
+                &:disabled {
+                    background-color: @disabled_field !important;
+                }
+            }
+
+            textarea {
+                padding: 2px;
+                border: 1px solid @form_border;
+                font-size: 0.9em;
+                color: @text;
+            }
+
+            input[type=submit], input[type=reset] {
+                .button();
+            }
+            .cancel {
+                .button();
+            }
+
+            * {
+                vertical-align: middle;
+            }
+            
+        }
+
+        .read-only {
+            cursor: text;
+        }
+
+        .rdo-field, .chk-field {
+            padding: 3px 0 0;
+        }
+
+        .rdolist {
+            label {
+                padding: 0 10px 0 2px;
+            }
+        }
+    }
+
+    .form-row.required {
+        .lbl-field {
+            font-weight: bold;
+        }
+    }
+
+    &.user-control {
+        margin: 6px 0 0 10px;
+    }
 }

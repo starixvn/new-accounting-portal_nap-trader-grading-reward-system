@@ -117,6 +117,57 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access denied!</value>
+  </data>
+  <data name="AccessDeniedMessage" xml:space="preserve">
+    <value>You are not authorized to access this link.</value>
+  </data>
+  <data name="ChangedPassword" xml:space="preserve">
+    <value>The password has been changed successfully!</value>
+  </data>
+  <data name="ChangedProfile" xml:space="preserve">
+    <value>The profile has been changed successfully!</value>
+  </data>
+  <data name="ConfirmPasswordCannotEmpty" xml:space="preserve">
+    <value>Confirm password cannot be empty.</value>
+  </data>
+  <data name="InternalError" xml:space="preserve">
+    <value>Internal error!</value>
+  </data>
+  <data name="InternalErrorMessage" xml:space="preserve">
+    <value>Sorry, an error occurred while processing your request, please notify the administrators.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid email.</value>
+  </data>
+  <data name="NewPasswordCannotEmpty" xml:space="preserve">
+    <value>New password cannot be empty.</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Not found!</value>
+  </data>
+  <data name="NotFound1" xml:space="preserve">
+    <value>Not found!</value>
+  </data>
+  <data name="NotFoundMessage" xml:space="preserve">
+    <value>The resource cannot be found.</value>
+  </data>
+  <data name="NotFoundMessage1" xml:space="preserve">
+    <value>The resource cannot be found.</value>
+  </data>
+  <data name="OldPasswordCannotEmpty" xml:space="preserve">
+    <value>Old password cannot be empty.</value>
+  </data>
+  <data name="PasswordDoesNotMatch" xml:space="preserve">
+    <value>The confirm password does not match with the new password.</value>
+  </data>
+  <data name="PasswordMinLengthError" xml:space="preserve">
+    <value>The password must have at least 6 characters.</value>
+  </data>
+  <data name="RequiredFieldError" xml:space="preserve">
+    <value>Required field!</value>
+  </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Trader Grading &amp; Reward System</value>
   </data>

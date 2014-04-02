@@ -168,6 +168,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\NAPCommonSpNames.xml" />
+    <Content Include="Areas\User\Resources\Login\reCheckIn.js" />
     <Content Include="Areas\User\Resources\Login\img\auth-bg.png" />
     <Content Include="Areas\User\Resources\Login\img\bg.png" />
     <Content Include="Areas\User\Resources\Login\img\bg_header.png" />
@@ -187,6 +188,7 @@
     <Content Include="Content\Themes\Images\small-arrow-down.png" />
     <Content Include="Content\Themes\Images\user.png" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\tgrs-common.js" />
     <Content Include="Scripts\Libraries\AngularJs\angular.js" />
     <Content Include="Scripts\Libraries\Bootstrap\ui-bootstrap-tpls-0.10.0.js" />
     <Content Include="Scripts\Libraries\Html5\html5shiv.min.js" />
@@ -199,9 +201,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Error\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -210,6 +210,8 @@
     <Content Include="Areas\User\Views\Common\Offline.cshtml" />
     <Content Include="Areas\User\Views\Login\Index.cshtml" />
     <None Include="Areas\User\Resources\Login\login.less" />
+    <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
+    <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -229,6 +231,10 @@
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Themes\custom.less" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

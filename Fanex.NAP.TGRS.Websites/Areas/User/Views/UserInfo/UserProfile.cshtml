@@ -1,0 +1,58 @@
+﻿@using Fanex.NAP.Core.Criteria.User
+@model UpdateCustCriteria
+@{
+    bool success = ViewBag.Success != null && ViewBag.Success;
+
+    ViewBag.Title = ViewResources.User_Profile;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span>@HttpContext.Current.User.Identity.Name / </span><span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+@using (Html.BeginForm())
+{
+    <div class="form w80 user-control" id="divProfile">
+        <div id="divValidationSummary" class="display-none">
+            @Html.ValidationSummary()
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.FirstName)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.FirstName, new { @class = "userprofile" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.LastName)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.LastName, new { @class = "userprofile" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.Email)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.Email, new { @class = "userprofile" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+            </div>
+            <div class="edit-field">
+                <input type="submit" id="btnSubmit" value="@ViewResources.Save" class="blue-button" />
+                <input type="button" value="Cancel" onclick="CMS.navigateToRoot('', 0); return false;" class="red-button"/>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.GroupId)
+}
+@section Foot {
+}

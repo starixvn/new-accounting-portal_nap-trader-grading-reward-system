@@ -61,6 +61,159 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access denied!.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized to access this link..
+        /// </summary>
+        public static string AccessDeniedMessage {
+            get {
+                return ResourceManager.GetString("AccessDeniedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password has been changed successfully!.
+        /// </summary>
+        public static string ChangedPassword {
+            get {
+                return ResourceManager.GetString("ChangedPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The profile has been changed successfully!.
+        /// </summary>
+        public static string ChangedProfile {
+            get {
+                return ResourceManager.GetString("ChangedProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password cannot be empty..
+        /// </summary>
+        public static string ConfirmPasswordCannotEmpty {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordCannotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal error!.
+        /// </summary>
+        public static string InternalError {
+            get {
+                return ResourceManager.GetString("InternalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, an error occurred while processing your request, please notify the administrators..
+        /// </summary>
+        public static string InternalErrorMessage {
+            get {
+                return ResourceManager.GetString("InternalErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email..
+        /// </summary>
+        public static string InvalidEmail {
+            get {
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password cannot be empty..
+        /// </summary>
+        public static string NewPasswordCannotEmpty {
+            get {
+                return ResourceManager.GetString("NewPasswordCannotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found!.
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found!.
+        /// </summary>
+        public static string NotFound1 {
+            get {
+                return ResourceManager.GetString("NotFound1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The resource cannot be found..
+        /// </summary>
+        public static string NotFoundMessage {
+            get {
+                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The resource cannot be found..
+        /// </summary>
+        public static string NotFoundMessage1 {
+            get {
+                return ResourceManager.GetString("NotFoundMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old password cannot be empty..
+        /// </summary>
+        public static string OldPasswordCannotEmpty {
+            get {
+                return ResourceManager.GetString("OldPasswordCannotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The confirm password does not match with the new password..
+        /// </summary>
+        public static string PasswordDoesNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordDoesNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password must have at least 6 characters..
+        /// </summary>
+        public static string PasswordMinLengthError {
+            get {
+                return ResourceManager.GetString("PasswordMinLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required field!.
+        /// </summary>
+        public static string RequiredFieldError {
+            get {
+                return ResourceManager.GetString("RequiredFieldError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to Trader Grading &amp; Reward System.
         /// </summary>
         public static string WelcomeMessage {
