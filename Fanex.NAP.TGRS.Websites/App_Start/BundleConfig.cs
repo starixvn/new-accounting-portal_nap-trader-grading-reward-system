@@ -39,6 +39,12 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.AddAndInclude(
                 "~/styles/login",
                 "~/Areas/User/Resources/Login/login.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/userProfile").Include(
+                "~/Areas/User/Resources/UserInfo/user-profile.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/changePassword").Include(
+                "~/Areas/User/Resources/UserInfo/change-password.js"));
         }
 
         /// <summary>
@@ -57,9 +63,10 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libraries/AngularJs/angular.js",
+                "~/Scripts/Libraries/AngularJs/angular-animate.js",
                 "~/Scripts/Libraries/Bootstrap/ui-bootstrap-tpls-0.10.0.js",
-                "~/Scripts/tgrs-common.js",
-                "~/Areas/User/Resources/Login/reCheckIn.js"));
+                "~/Areas/User/Resources/Login/reCheckIn.js",
+                "~/Scripts/tgrs-common.js"));
         }
     }
 

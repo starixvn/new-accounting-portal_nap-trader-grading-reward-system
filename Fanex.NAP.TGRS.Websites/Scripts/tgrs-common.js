@@ -1,7 +1,7 @@
 ﻿/* File Created: April 1, 2014 */
 'use strict';
 
-var tgrs = angular.module('tgrs.common', ['ui.bootstrap']);
+var tgrs = angular.module('tgrs.common', ['ui.bootstrap', 'reCheckIn']);
 
 tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $timeout, $log) {
     var commonSericeObj = {};
@@ -85,6 +85,15 @@ tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $
     };
 
     return commonSericeObj;
+} ]);
+
+tgrs.controller('commonController', ['$scope', '$interval', 'reCheckinService', function ($scope, $interval, reCheckinService) {
+    $scope.initialize = function (enableReCheckIn, rootUrl) {
+        if (enableReCheckIn) {
+            reCheckinService.rootUrl = rootUrl;
+            $interval(reCheckinService.callReCheckIn, reCheckinService.time);
+        }
+    };
 } ]);
 
 // Register reCheckIn module on 

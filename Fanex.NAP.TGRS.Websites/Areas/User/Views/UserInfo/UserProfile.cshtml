@@ -13,46 +13,73 @@
         </div>
     </div>
 }
-@using (Html.BeginForm())
-{
-    <div class="form w80 user-control" id="divProfile">
-        <div id="divValidationSummary" class="display-none">
-            @Html.ValidationSummary()
+
+<div class="form-bar" 
+     id="divProfile"
+     data-ng-app="tgrs.userProfile"
+     data-ng-controller="userProfileController"
+     data-ng-init="initialize('@Model.FirstName', '@Model.LastName', '@Model.Email')">
+    @using (Html.BeginForm("UserProfile", "UserInfo", FormMethod.Post, new { name = "userProfile", data_ng_submit = "submitForm(userProfile.$valid)", novalidate = true }))
+    {
+        <div data-collapse="show" >
+            <p>@ViewResources.Your_changes_were_saved!</p>
         </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(c => c.FirstName)
+        <div class="form">
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtFirstName">@ViewResources.First_Name</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" 
+                           id="txtFirstName"
+                           name="firstName"
+                           class="width-200"
+                           data-ng-model="user.firstName"
+                           data-ng-maxlength="50"
+                           data-tooltip="@ViewResources.InputLengthValidationMsg"
+                           data-tooltip-trigger="focus"
+                           data-tooltip-placement="right" />
+                </div>
             </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(c => c.FirstName, new { @class = "userprofile" })
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtLastName">@ViewResources.Last_Name</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" 
+                           id="txtLastName"
+                           name="lastName"
+                           class="width-200"
+                           data-ng-model="user.lastName"
+                           data-ng-maxlength="50" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtEmail">@ViewResources.Email</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" 
+                           id="txtEmail"
+                           name="email"
+                           required
+                           class="width-200"
+                           data-ng-pattern="/\w+([-+.]\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/"
+                           data-ng-model="user.email" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                </div>
+                <div class="edit-field">
+                    <input type="submit" value="@ViewResources.Save" class="blue-button" />
+                    <input type="button" value="Cancel" class="red-button" ng-click="show = !show"/>
+                </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(c => c.LastName)
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(c => c.LastName, new { @class = "userprofile" })
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                @Html.LabelFor(c => c.Email)
-            </div>
-            <div class="edit-field">
-                @Html.TextBoxFor(c => c.Email, new { @class = "userprofile" })
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-            </div>
-            <div class="edit-field">
-                <input type="submit" id="btnSubmit" value="@ViewResources.Save" class="blue-button" />
-                <input type="button" value="Cancel" onclick="CMS.navigateToRoot('', 0); return false;" class="red-button"/>
-            </div>
-        </div>
-    </div>
-    @Html.HiddenFor(m => m.GroupId)
-}
+        @Html.HiddenFor(m => m.GroupId)
+    }
+</div>
 @section Foot {
+    @Scripts.Render("~/scripts/userProfile")
 }

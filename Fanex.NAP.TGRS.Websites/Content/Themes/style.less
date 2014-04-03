@@ -29,6 +29,40 @@
 /********************************************************/
 /*                     Utility classes                  */
 /********************************************************/
+/* Align */
+.align-left             { text-align: left !important ; }
+.align-center           { text-align: center !important ; }
+.align-right            { text-align: right !important ; }
+
+/* Floating elements */
+.float-left             { float: left !important; }
+.float-right            { float: right !important; }
+.clear-left             { clear: left !important; }
+.clear-right            { clear: right !important; }
+.clear-both             { clear: both !important; }
+.clear-fix              { .clearfix ; }
+
+/* Width */
+.width-auto             { width: auto !important; }
+.width-20               { width: 20px !important; }
+.width-100              { width: 100px !important; }
+.width-120              { width: 120px !important; }
+.width-140              { width: 140px !important; }
+.width-160              { width: 160px !important; }
+.width-180              { width: 180px !important; }
+.width-200              { width: 200px !important; }
+
+/* Absolute positioning */
+.relative               { position: relative !important; }
+.absolute-left,
+.absolute-right {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+}
+.absolute-left          { left: 0; }
+.absolute-right         { right: 0; }
+
 .clearfix() {
     *zoom:1;
 
@@ -152,7 +186,7 @@ header {
         .menu {
             z-index: 200;// !important;
             margin: 0;
-            margin-top:2px;
+            margin-top: 2px;
 
             li {
                 display: block;
@@ -161,36 +195,48 @@ header {
                 position: relative;
 
                 a {
-                    display: block;
-                    padding:8px 16px;
-                    border:solid 1px transparent;
                     color: @menu_text;
                     .text_shadow(0em 0em 0.025em #d6dee9);
+                }
+            }
+
+            > li {
+                > a {
+                    display: block;
+                    font-size: 1em;
+                    padding:8px 16px;
+                    border:solid 1px transparent;
                 }
 
                 ul {
                     position: absolute;
                     top: 26px;
                     background-color: @sub_menu_bg;
+                    margin: 0;
                     text-align: left;
                     z-index: 10001;
                     visibility: hidden;
+                    opacity: 0;
                     border: solid 1px @menu_border;
                     border-top: none;
-                    padding: 4px 0px;
                     .box_shadow(0 3px 2px 1px rgba(0,0,0,0.2));
                     .transition;
+                    padding: 4px 0px;
 
                     li {
-                        border: none;
+                        display: block;
                         clear: both;
                         width: 100%;
 
                         a {
                             color: @sub_menu_text;
+                            background-image: none;
+                            border-left: none;
+                            display: block;
                             padding: 6px 12px;
                             white-space: nowrap;
                             min-width: 160px;
+                            font-size: 1em;
                         }
 
                         &:hover a {
@@ -203,12 +249,10 @@ header {
                             border: none;
                         }
                     }
-
-
                 }
 
                 &:hover {
-                    >a {
+                    > a {
                         border: solid 1px @menu_border;
                         border-bottom: solid 1px transparent;
                         background: @menu_bg_o;
@@ -222,6 +266,30 @@ header {
                         top: 26px;
                         visibility: visible;
                         opacity: 1;
+                    }
+                }
+            }
+
+            >li {
+                &.normal {
+                    ul {
+                        left: 0px;
+                    }
+                }
+
+                &.last {
+                    border-right: 0 none;
+
+                    ul {
+                        right: 0px;
+                    }
+                }
+
+                &.has-kids:hover{
+                    background: url(Images/bgmenu-more.png);
+
+                    > a {
+                        cursor: default;
                     }
                 }
             }
@@ -375,14 +443,6 @@ header {
     }
 }
 
-@media screen and (max-width: 700px) {
-    #body {
-        .content {
-            min-width: 90%;
-        }
-    }
-}
-
 /********************************************************/
 /*                        Headline                      */
 /********************************************************/
@@ -416,80 +476,135 @@ header {
 
 .server-time {
     display: inline-block;
-    margin: 12px 12px 0 0;
+    margin: 12px 15px 0 0;
     float: right;
     color: @msg_text;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.display-none {
+    display: none!important;
+}
+
+.display-inline {
+    display: inline;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.inline-message {
+    margin: 15px 0 15px 20px;
+    font-style: oblique;
+    clear: both;
+
+    &.error {
+        padding: 3px 0 3px 30px;
+        background: url(Images/icon-error-message.png) no-repeat;
+        color: #db2c2c;
+    }
+
+    &.info {
+        padding: 3px 0 3px 30px;
+        background: url(Images/icon-success-message.png) no-repeat;
+        color: @msg_text;
+    }
 }
 
 /********************************************************/
 /*                      Forms                           */
 /********************************************************/
-.form {
-    background-color: @form_bg;
-    border: solid 1px @form_border;
-    padding: 15px;
+
+.filter-bar, .form-bar {
     float: left;
-    .box_shadow(1px 1px 2px 1px rgba(0, 0, 0, 0.1));
+    width: 98%;
+    background-color: @filter_bar_bg;
+    border: solid 1px @filter_border;
+    margin: 6px 0 15px 10px;
+    .box_shadow(0px 0px 4px 1px rgba(0,0,0,0.1));
 
-    .form-row {
+    .filter-form, .form {
+        padding: 10px;
         float: left;
-        clear: both;
-        margin-bottom: 3px;
-        min-height: 33px;
+        color: @text;
 
-        .lbl-field, .edit-field {
-            display: block;
+        .filter-row, .form-row {
+            margin-bottom: 7px;
+            display: inline;
+            float: left;
+            clear: left;
+        }
+
+        .filter-cell, form-cell {
+            display: inline;
             float: left;
         }
 
         .lbl-field {
-            width: 100px;
-            vertical-align: top;
-            text-align: left;
-            padding: 5px 20px 0 0;
-            .text_shadow(0 0 0.023em black);
+            text-align: right;
+            padding: 4px 0 0;
+            margin: 0 10px 0 0;
+            width: 120px;
+            display: inline;
+            float: left;
+            .text_shadow(0 0 0.023em @black);
+
+            label {
+                font-weight: normal;
+            }
         }
 
         .edit-field {
-            .read-only {
-                padding-top: 5px;
-            }
+            margin: 0px;
+            display: inline;
+            float: left;
+            vertical-align: baseline;
+            text-align: left;
 
             input[type=text], input[type=password], select {
-                width: 280px;
-                height: 20px;
+                border: 1px solid @filter_border;
                 padding: 2px;
-                border: 1px solid @form_border;
                 font-size: 0.9em;
                 color: @text;
+                height: 24px;
 
                 &:disabled {
                     background-color: @disabled_field !important;
                 }
             }
 
-            textarea {
-                padding: 2px;
-                border: 1px solid @form_border;
-                font-size: 0.9em;
-                color: @text;
+            input[type=password] {
+                width: 165px;
             }
 
-            input[type=submit], input[type=reset] {
-                .button();
-            }
-            .cancel {
-                .button();
+            input[type=text] {
+                width: 120px;
             }
 
-            * {
-                vertical-align: middle;
+            input[type='checkbox'] {
+                margin-right:2px;
+                margin-top:3px;
             }
-            
-        }
 
-        .read-only {
-            cursor: text;
+            select {
+                padding: 3px;
+                border-radius: 2px;
+
+                option {
+                    padding: 2px 4px;
+                }
+            }
+
+            input[type=text], input[type=checkbox], input[type=radio], select {
+                &:active, &:focus, &:hover {
+                    border: @filter_border 1px solid;
+                    .box_shadow(0 1px 3px  rgba(0, 0, 0, 0.5));
+                }
+            }
         }
 
         .rdo-field, .chk-field {
@@ -502,14 +617,46 @@ header {
             }
         }
     }
+}
 
-    .form-row.required {
-        .lbl-field {
-            font-weight: bold;
+@media screen and (max-width: 640px) {
+    .filter-bar, .form-bar {
+        .filter-form, .form {
+            .lbl-field {
+                text-align: left;
+            }
+
+            .edit-field {
+                width: auto;
+            }
         }
     }
+}
 
-    &.user-control {
-        margin: 6px 0 0 10px;
+@media screen and (max-width: 420px) {
+    .filter-bar, .form-bar {
+        border-top: 1px dotted @brand_color;
+        margin: 30px 0;
+
+        .filter-form, .form {
+            .filter-cell, .form-cell {
+                width: 100%;
+            }
+        }
     }
+}
+
+/********************************************************/
+/*                    Custom buttons                    */
+/********************************************************/
+.blue-button {
+    .button();
+}
+
+.red-button {
+    .custom_button(@red_button_bg, @red_button_bg_light, @red_button_bg_hover, @red_button_border);
+}
+
+.green-button {
+    .custom_button(@green_button_bg, @green_button_bg_light, @green_button_bg_hover, @green_button_border);
 }

@@ -19,20 +19,10 @@ reCheckIn.factory('reCheckinService', ['$http', '$window', '$timeout', '$log', '
             } else if (data === '"-1"') {
                 $window.location.href = reCheckInObj.rootUrl + 'User/Common/Offline';
             }
+
+            $log.debug('recheckin');
         });
     };
 
     return reCheckInObj;
 } ]);
-
-reCheckIn.controller('reCheckInController', ['$scope', '$interval', 'reCheckinService', function ($scope, $interval, reCheckinService) {
-    $scope.initialize = function (enableReCheckIn, rootUrl) {
-        if (enableReCheckIn) {
-            reCheckinService.rootUrl = rootUrl;
-            $interval(reCheckinService.callReCheckIn, reCheckinService.time);
-        }
-    };
-} ]);
-
-// Register reCheckIn module on 
-angular.bootstrap(document.getElementById('divReCheckIn'), ['reCheckIn']);
