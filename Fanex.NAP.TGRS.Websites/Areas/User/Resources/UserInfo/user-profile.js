@@ -3,24 +3,42 @@
 
 var userProfile = angular.module('tgrs.userProfile', ['tgrs.common', 'ui.bootstrap.collapse']);
 
-userProfile.controller('userProfileController', ['$scope', function ($scope) {
-    $scope.user = {
-        firstName: '',
-        lastName: '',
-        email: ''
-    };
-    $scope.show = false;
+userProfile.controller(
+    'userProfileController', ['$scope', '$timeout', '$http', '$window', '$log', 'commonService', 'commonConstants',
+    function ($scope, $timeout, $http, $window, $log, commonService, commonConstants) {
+        $scope.user = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            groupId: 0
+        };
+        $scope.success = false;
+        $scope.showMessage = $scope.success;
 
-    $scope.initialize = function (firstName, lastName, email) {
-        $scope.user.firstName = firstName;
-        $scope.user.lastName = lastName;
-        $scope.user.email = email;
-        $scope.show = true;
-    };
+        $scope.$watch('success', function () {
+            $scope.showMessage = $scope.success;
+            $timeout(function () {
+                $scope.success = false;
+                $scope.showMessage = false;
+            }, 5000);
+        }, true);
 
-    $scope.submitForm = function (isValid) {
-        if (!isValid) {
-            return;
-        }
-    };
-} ]);
+        $scope.cancel = function () {
+            $window.location.href = commonConstants.rootUrl;
+        };
+
+        $scope.submitForm = function () {
+            if ($scope.userProfile.$valid) {
+                commonService.disableInput();
+                $http.post(commonConstants.rootUrl + 'User/UserInfo/UserProfile', $scope.user).success(function (result) {
+                    if (result.length === 0) {
+                        $scope.success = true;
+                    }
+                }).error(function (xhr) {
+                    commonService.showErrorMsg(commonConstants.internalError);
+                }).then(function (result) {
+                    commonService.enableInput();
+                });
+            }
+        };
+    } ]);

@@ -45,6 +45,7 @@
 /* Width */
 .width-auto             { width: auto !important; }
 .width-20               { width: 20px !important; }
+.width-80               { width: 80px !important; }
 .width-100              { width: 100px !important; }
 .width-120              { width: 120px !important; }
 .width-140              { width: 140px !important; }
@@ -486,7 +487,7 @@ header {
 }
 
 .display-none {
-    display: none!important;
+    display: none;
 }
 
 .display-inline {
@@ -498,7 +499,7 @@ header {
 }
 
 .inline-message {
-    margin: 15px 0 15px 20px;
+    margin: 5px 0 0 20px;
     font-style: oblique;
     clear: both;
 
@@ -513,6 +514,26 @@ header {
         background: url(Images/icon-success-message.png) no-repeat;
         color: @msg_text;
     }
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width:32px;
+    height:32px;
+    background:url(Images/loading.gif) no-repeat scroll 0 0 transparent;
+    z-index: 10003;
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10002;
+    opacity: 1;
 }
 
 /********************************************************/
@@ -574,6 +595,10 @@ header {
 
                 &:disabled {
                     background-color: @disabled_field !important;
+                }
+                
+                &.ng-invalid {
+                    .box_shadow(0 0 5px @red);
                 }
             }
 

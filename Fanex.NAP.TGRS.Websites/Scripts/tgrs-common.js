@@ -3,8 +3,10 @@
 
 var tgrs = angular.module('tgrs.common', ['ui.bootstrap', 'reCheckIn']);
 
-tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $timeout, $log) {
-    var commonSericeObj = {};
+tgrs.factory('commonService', ['$modal', '$timeout', '$document', '$log', function ($modal, $timeout, $document, $log) {
+    var commonSericeObj = {},
+        loading = null,
+        loadingOverlay = null;
 
     // Use to show success/error/warning message.
     var showMessage = function (type, content, autoHide) {
@@ -51,13 +53,27 @@ tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $
         return modalInstance;
     };
 
-    commonSericeObj.scope = {};
-    commonSericeObj.modalInstance = null;
+    var showHideLoading = function (show) {
+        var body = angular.element($document.find('body')[0]).children(),
+            mainApp = angular.element(body[3]).children();
 
-    commonSericeObj.initialize = function (scope) {
-        commonSericeObj.scope = scope;
-        $log.debug('init', commonSericeObj.scope);
+        if (angular.isDefined(mainApp)) {
+            loading = angular.element(mainApp[0]);
+            loadingOverlay = angular.element(mainApp[1]);
+        }
+
+        if (angular.isDefined(loading) && angular.isDefined(loadingOverlay)) {
+            if (show) {
+                loading.removeClass('display-none');
+                loadingOverlay.removeClass('display-none');
+            } else {
+                loading.addClass('display-none');
+                loadingOverlay.addClass('display-none');
+            }
+        }
     };
+
+    commonSericeObj.modalInstance = null;
 
     commonSericeObj.showErrorMsg = function (content) {
         commonSericeObj.modalInstance = showMessage('danger', content, false);
@@ -68,7 +84,6 @@ tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $
     };
 
     commonSericeObj.showWarningMsg = function (content) {
-        $log.debug(commonSericeObj);
         commonSericeObj.modalInstance = showMessage('warning', content, false);
     };
 
@@ -84,17 +99,41 @@ tgrs.factory('commonService', ['$modal', '$timeout', '$log', function ($modal, $
         commonSericeObj.modalInstance.close();
     };
 
+    commonSericeObj.disableInput = function () {
+        showHideLoading(true);
+    };
+
+    commonSericeObj.enableInput = function () {
+        showHideLoading(false);
+    };
+
     return commonSericeObj;
 } ]);
 
-tgrs.controller('commonController', ['$scope', '$interval', 'reCheckinService', function ($scope, $interval, reCheckinService) {
-    $scope.initialize = function (enableReCheckIn, rootUrl) {
-        if (enableReCheckIn) {
-            reCheckinService.rootUrl = rootUrl;
-            $interval(reCheckinService.callReCheckIn, reCheckinService.time);
-        }
-    };
-} ]);
+tgrs.value('commonConstants', (function () {
+    var commonConstants = {};
+
+    commonConstants.internalError = 'Sorry, an error occurred while processing your request, please notify the administrators.';
+
+    commonConstants.rootUrl = '';
+    commonConstants.loading = false;
+
+    return commonConstants;
+})());
+
+tgrs.controller(
+    'commonController',
+    ['$scope', '$interval', '$log', 'commonConstants', 'reCheckinService', function ($scope, $interval, $log, commonConstants, reCheckinService) {
+        $scope.initialize = function (enableReCheckIn, rootUrl) {
+            $scope.commonConstants = commonConstants;
+            $scope.commonConstants.rootUrl = rootUrl;
+
+            if (enableReCheckIn) {
+                reCheckinService.rootUrl = rootUrl;
+                $interval(reCheckinService.callReCheckIn, reCheckinService.time);
+            }
+        };
+    } ]);
 
 // Register reCheckIn module on 
 angular.bootstrap(document.getElementById('divCommon'), ['tgrs.common']);

@@ -47,6 +47,8 @@
     <div id="divCommon"
          data-ng-controller="commonController"
          data-ng-init="rootUrl = initialize('@enableReChckIn' === 'True', '@Url.Content("~")')">
+         <div class="loading display-none"></div>
+         <div class="loading-overlay display-none"></div>
     </div>
     @Scripts.Render("~/scripts/common")
     @RenderSection("Foot", false)

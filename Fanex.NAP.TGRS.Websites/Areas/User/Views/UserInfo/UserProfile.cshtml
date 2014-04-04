@@ -14,19 +14,16 @@
     </div>
 }
 
-<div class="form-bar" 
-     id="divProfile"
+<div class="form-bar"
      data-ng-app="tgrs.userProfile"
-     data-ng-controller="userProfileController"
-     data-ng-init="initialize('@Model.FirstName', '@Model.LastName', '@Model.Email')">
-    @using (Html.BeginForm("UserProfile", "UserInfo", FormMethod.Post, new { name = "userProfile", data_ng_submit = "submitForm(userProfile.$valid)", novalidate = true }))
-    {
-        <div data-collapse="show" >
-            <p>@ViewResources.Your_changes_were_saved!</p>
-        </div>
+     data-ng-controller="userProfileController">
+    <form name="userProfile" data-ng-submit="submitForm()" novalidate>
         <div class="form">
+            <div data-collapse="!showMessage" class="inline-message info">
+                <p>@ViewResources.Your_changes_were_saved!</p>
+            </div>
             <div class="form-row">
-                <div class="lbl-field">
+                <div class="lbl-field width-80">
                     <label for="txtFirstName">@ViewResources.First_Name</label>
                 </div>
                 <div class="edit-field">
@@ -34,15 +31,17 @@
                            id="txtFirstName"
                            name="firstName"
                            class="width-200"
+                           data-ng-init="user.firstName = '@Model.FirstName'"
                            data-ng-model="user.firstName"
+                           data-ng-minlength="0"
                            data-ng-maxlength="50"
-                           data-tooltip="@ViewResources.InputLengthValidationMsg"
+                           data-tooltip="@string.Format(ViewResources.InputLengthValidationMsg, ViewResources.First_Name, 5, 0)"
                            data-tooltip-trigger="focus"
                            data-tooltip-placement="right" />
                 </div>
             </div>
             <div class="form-row">
-                <div class="lbl-field">
+                <div class="lbl-field width-80">
                     <label for="txtLastName">@ViewResources.Last_Name</label>
                 </div>
                 <div class="edit-field">
@@ -50,12 +49,17 @@
                            id="txtLastName"
                            name="lastName"
                            class="width-200"
+                           data-ng-init="user.lastName = '@Model.LastName'"
                            data-ng-model="user.lastName"
-                           data-ng-maxlength="50" />
+                           data-ng-minlength="0"
+                           data-ng-maxlength="50"
+                           data-tooltip="@string.Format(ViewResources.InputLengthValidationMsg, ViewResources.First_Name, 5, 0)"
+                           data-tooltip-trigger="focus"
+                           data-tooltip-placement="right" />
                 </div>
             </div>
             <div class="form-row">
-                <div class="lbl-field">
+                <div class="lbl-field width-80">
                     <label for="txtEmail">@ViewResources.Email</label>
                 </div>
                 <div class="edit-field">
@@ -64,21 +68,26 @@
                            name="email"
                            required
                            class="width-200"
+                           data-ng-init="user.email = '@Model.Email'"
+                           data-ng-model="user.email"
                            data-ng-pattern="/\w+([-+.]\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*/"
-                           data-ng-model="user.email" />
+                           data-tooltip="example@@example.com"
+                           data-tooltip-trigger="focus"
+                           data-tooltip-placement="right" />
                 </div>
             </div>
             <div class="form-row">
-                <div class="lbl-field">
+                <div class="lbl-field width-80">
                 </div>
                 <div class="edit-field">
                     <input type="submit" value="@ViewResources.Save" class="blue-button" />
-                    <input type="button" value="Cancel" class="red-button" ng-click="show = !show"/>
+                    <input type="button" value="@ViewResources.Cancel" class="red-button" ng-click="cancel()"/>
                 </div>
             </div>
         </div>
-        @Html.HiddenFor(m => m.GroupId)
-    }
+        <input type="hidden" data-ng-init="user.groupId = @Model.GroupId" />
+        <input type="hidden" data-ng-init="success = '@success' === 'True'" />
+    </form>
 </div>
 @section Foot {
     @Scripts.Render("~/scripts/userProfile")

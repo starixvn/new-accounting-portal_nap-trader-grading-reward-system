@@ -10,6 +10,7 @@
 
 namespace Fanex.NAP.TGRS.User.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Common;
     using Fanex.NAP.Core.Criteria.User;
@@ -56,7 +57,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="criteria">Criteria using to update password.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria)
+        public JsonResult ChangePassword(UpdatePasswordCustCriteria criteria)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +86,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 }
             }
 
-            return View(criteria);
+            return Json(ModelState.Values.SelectMany(value => value.Errors).Select(error => error.ErrorMessage));
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="criteria">Criteria using to update user profile.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public ActionResult UserProfile(UpdateCustCriteria criteria)
+        public JsonResult UserProfile(UpdateCustCriteria criteria)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +132,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 }
             }
 
-            return View(criteria);
+            return Json(ModelState.Values.SelectMany(value => value.Errors).Select(error => error.ErrorMessage));
         }
     }
 }
