@@ -36,16 +36,16 @@ changePassword.controller(
 
             if ($scope.changePassword.$valid) {
                 commonService.disableInput();
-                $scope.errors = []
+                $scope.errors = [];
                 $http.post(commonConstants.rootUrl + 'User/UserInfo/ChangePassword', updatedPwd).success(function (result) {
                     if (result.length === 0) {
                         $scope.success = true;
                     } else {
                         $scope.errors = result;
                     }
-                }).error(function (xhr) {
+                }).error(function () {
                     commonService.showErrorMsg(commonConstants.internalError);
-                }).then(function (result) {
+                }).then(function () {
                     commonService.enableInput();
                 });
             }

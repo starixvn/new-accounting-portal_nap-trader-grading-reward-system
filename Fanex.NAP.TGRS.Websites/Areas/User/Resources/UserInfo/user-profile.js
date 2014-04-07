@@ -34,9 +34,9 @@ userProfile.controller(
                     if (result.length === 0) {
                         $scope.success = true;
                     }
-                }).error(function (xhr) {
+                }).error(function () {
                     commonService.showErrorMsg(commonConstants.internalError);
-                }).then(function (result) {
+                }).then(function () {
                     commonService.enableInput();
                 });
             }

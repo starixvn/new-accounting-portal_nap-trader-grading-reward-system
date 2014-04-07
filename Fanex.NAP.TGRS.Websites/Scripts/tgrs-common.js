@@ -3,7 +3,7 @@
 
 var tgrs = angular.module('tgrs.common', ['ui.bootstrap', 'reCheckIn']);
 
-tgrs.factory('commonService', ['$modal', '$timeout', '$document', '$log', function ($modal, $timeout, $document, $log) {
+tgrs.factory('commonService', ['$modal', '$timeout', '$document', function ($modal, $timeout, $document) {
     var commonSericeObj = {},
         loading = null,
         loadingOverlay = null;
