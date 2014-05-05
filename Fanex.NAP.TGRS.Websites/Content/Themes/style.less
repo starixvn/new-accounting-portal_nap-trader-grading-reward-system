@@ -499,7 +499,7 @@ header {
 }
 
 .inline-message {
-    margin: 5px 0 0 20px;
+    margin: 5px 0 15px 20px;
     font-style: oblique;
     clear: both;
 
@@ -517,23 +517,9 @@ header {
 }
 
 .loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width:32px;
-    height:32px;
-    background:url(Images/loading.gif) no-repeat scroll 0 0 transparent;
-    z-index: 10003;
-}
-
-.loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10002;
-    opacity: 1;
+    width: 32px;
+    height: 32px;
+    background: url(img/loading.gif) no-repeat scroll 0 0 transparent;
 }
 
 /********************************************************/
@@ -572,7 +558,7 @@ header {
             width: 120px;
             display: inline;
             float: left;
-            .text_shadow(0 0 0.023em @black);
+            .text_shadow(0 0.023em 0 @black);
 
             label {
                 font-weight: normal;
@@ -595,10 +581,6 @@ header {
 
                 &:disabled {
                     background-color: @disabled_field !important;
-                }
-                
-                &.ng-invalid {
-                    .box_shadow(0 0 5px @red);
                 }
             }
 
@@ -624,7 +606,7 @@ header {
                 }
             }
 
-            input[type=text], input[type=checkbox], input[type=radio], select {
+            input[type=text], input[type=password], input[type=checkbox], input[type=radio], select {
                 &:active, &:focus, &:hover {
                     border: @filter_border 1px solid;
                     .box_shadow(0 1px 3px  rgba(0, 0, 0, 0.5));

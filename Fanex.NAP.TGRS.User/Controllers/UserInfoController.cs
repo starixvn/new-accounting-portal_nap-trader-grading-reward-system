@@ -10,9 +10,12 @@
 
 namespace Fanex.NAP.TGRS.User.Controllers
 {
-    using System.Linq;
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Web;
     using System.Web.Mvc;
-    using Fanex.Common;
+    using System.Web.Security;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Service.Impl;
@@ -26,7 +29,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
     /// </summary>
     public class UserInfoController : TGRSBaseController
     {
+        private const string FormTokenKey = "_SecureChangePasswordFormToken";
         private readonly IUserService _userService;
+        private HashAlgorithm _hashAlgorithm;
 
         public UserInfoController()
             : this(null)
@@ -35,11 +40,29 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         public UserInfoController(IUserService userService)
         {
-            _userService = userService ?? new UserService
-                {
-                    ServiceContext = ServiceContext
-                };
+            _userService = userService ?? new UserService { ServiceContext = ServiceContext };
+            _hashAlgorithm = new SHA256Managed();
         }
+
+        public string FormToken
+        {
+            get
+            {
+                if (Session[FormTokenKey] == null)
+                {
+                    return string.Empty;
+                }
+
+                return Session[FormTokenKey].ToString();
+            }
+
+            set
+            {
+                Session[FormTokenKey] = value;
+            }
+        }
+
+        #region Change Password
 
         /// <summary>
         /// Redirect to changing password form.
@@ -48,6 +71,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
         [HttpGet]
         public ActionResult ChangePassword()
         {
+            GenerateToken();
+
             return View(new UpdatePasswordCustCriteria { Username = CurrentSession.Username });
         }
 
@@ -55,19 +80,20 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// Change password action.
         /// </summary>
         /// <param name="criteria">Criteria using to update password.</param>
+        /// <param name="token">Changing password token.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public JsonResult ChangePassword(UpdatePasswordCustCriteria criteria)
+        public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria, string token)
         {
-            if (ModelState.IsValid)
+            ////if (ModelState.IsValid)
+            if (CheckValidToken(token))
             {
                 IUser user = _userService.GetById(CurrentSession.UserId);
-                string oldPwd = Cryptography.CfsEnCode(criteria.OldUserPwd);
+                string hashPassword = GetHash(user.Password + token);
 
-                if (oldPwd.Equals(user.Password))
+                if (hashPassword == criteria.OldUserPwd)
                 {
                     criteria.CustId = user.Id;
-                    criteria.UserPwd = Cryptography.CfsEnCode(criteria.UserPwd);
 
                     ICommandResult result = this._userService.InsertOrUpdate(criteria);
 
@@ -82,12 +108,18 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("OldUserPwd", ViewResources.Wrong_password);
+                    ViewBag.Message = ViewResources.Wrong_password;
                 }
             }
 
-            return Json(ModelState.Values.SelectMany(value => value.Errors).Select(error => error.ErrorMessage));
+            GenerateToken();
+
+            return View(criteria);
         }
+
+        #endregion Change Password
+
+        #region Profile
 
         /// <summary>
         /// Redirect to profile page.
@@ -114,7 +146,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="criteria">Criteria using to update user profile.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public JsonResult UserProfile(UpdateCustCriteria criteria)
+        public ActionResult UserProfile(UpdateCustCriteria criteria)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +164,96 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 }
             }
 
-            return Json(ModelState.Values.SelectMany(value => value.Errors).Select(error => error.ErrorMessage));
+            return View(criteria);
         }
+
+        #endregion Profile
+
+        #region Helpers
+
+        /// <summary>
+        /// Generates the token for login form.
+        /// </summary>
+        private void GenerateToken()
+        {
+            string token = Guid.NewGuid().ToString("N");
+
+            FormToken = token;
+            ViewBag.ChangePasswordToken = token;
+            AddTokenToCookie(token);
+        }
+
+        /// <summary>
+        /// Adds the login token to cookie.
+        /// </summary>
+        /// <param name="token">The changing password token.</param>
+        private void AddTokenToCookie(string token)
+        {
+            var responseCookie = new HttpCookie(FormTokenKey)
+            {
+                HttpOnly = true,
+                Value = token
+            };
+
+            // If we are using SSL, the cookie should be set to secure to
+            // prevent it from being sent over HTTP connections
+            if (FormsAuthentication.RequireSSL && Request.IsSecureConnection)
+            {
+                responseCookie.Secure = true;
+            }
+
+            // Add the cookie to the response
+            Response.Cookies.Set(responseCookie);
+        }
+
+        /// <summary>
+        /// Checks if the token is valid or not.
+        /// </summary>
+        /// <param name="token">The changing password token.</param>
+        /// <returns>Boolean value indicates if the login token is valid or not.</returns>
+        private bool CheckValidToken(string token)
+        {
+            return !string.IsNullOrWhiteSpace(token)
+                && FormToken == token
+                && Request.Cookies[FormTokenKey] != null
+                && token == Request.Cookies[FormTokenKey].Value;
+        }
+
+        /// <summary>
+        /// Gets the hash value of input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>Hash value of input.</returns>
+        private string GetHash(string input)
+        {
+            var encrypted = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                var hashData = _hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
+            }
+
+            return encrypted;
+        }
+
+        /// <summary>
+        /// Clears the token.
+        /// </summary>
+        private void ClearToken()
+        {
+            Session.Remove(FormTokenKey);
+
+            if (Request.Cookies[FormTokenKey] != null)
+            {
+                HttpCookie cookie = new HttpCookie(FormTokenKey);
+
+                cookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(cookie);
+            }
+        }
+
+        #endregion Helpers
     }
 }

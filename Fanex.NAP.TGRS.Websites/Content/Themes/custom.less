@@ -1,3 +1,7 @@
+@import "colors.less";
+@import "common.less";
+@import "style.less";
+
 /********************************************************/
 /*               Customized for Bootstrap               */
 /********************************************************/
@@ -5,14 +9,243 @@
 .row {
     margin: 0;
 }
+/********************************************************/
+/*                  Msgbox custom style                 */
+/********************************************************/
+.msgbox {
+    &.custom-confirm {
+        font-weight: normal;
+        background-color: @body_bg;
+        border-color: @border;
+        padding: 0;
 
-.alert {
-    &.message-popup {
-        margin: 0;
-        padding: 10px;
+        .msgbox-header {
+            .bg_linear_gradient(@menu_bg_light, @menu_bg);
+            color: @white;
+            text-align: center;
+            padding: 5px;
+
+            .msgbox-close {
+                top: 7px;
+                right: 7px;
+                background-position: -1px -50px;
+                border: none;
+                
+                &:hover {
+                    background-color: transparent;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .msgbox-content {
+            background: url(Images/icon-question.png) no-repeat;
+            margin: 15px 20px;
+            padding: 15px 0 15px 55px;
+        }
+
+        .msgbox-btn-wrap {
+            padding: 15px 0;
+            margin: auto;
+            text-align: center;
+            width: 93%;
+            border-color: @border;
+
+            .msgbox-btn {
+                display: inline-block;
+                height: 23px !important;
+                min-width: 60px !important;
+                line-height: 22px;
+
+                &.ok {
+                    .blue-button;
+                }
+
+                &.cancel {
+                    .red-button;
+                }
+            }
+        }
+    }
+}
+
+/********************************************************/
+/*                  Custom CSS for Tipsy                */
+/********************************************************/
+.tipsy {
+    font-size: .85em;
+}
+
+.error-tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000; }
+.error-tipsy-inner {
+    background-color: @tipsy_error-bg;
+    color: @black;
+    max-width: 200px;
+    padding: 5px 8px 4px 8px;
+    text-align: center;
+    font-size: 13px;
+    .border_radius();
+    .box_shadow(0 0 5px #000000);
+}
+
+/* Rules to colour arrows */
+.error-tipsy-arrow { position: absolute; width: 0; height: 0; border: 5px solid transparent; }
+.error-tipsy-arrow-n { border-bottom-color: @tipsy_error_border; }
+.error-tipsy-arrow-s { border-top-color: @tipsy_error_border; }
+.error-tipsy-arrow-e { border-left-color: @tipsy_error_border; }
+.error-tipsy-arrow-w { border-right-color: @tipsy_error_border; }
+
+.error-tipsy-n .error-tipsy-arrow, .error-tipsy-nw .error-tipsy-arrow, .error-tipsy-ne .error-tipsy-arrow { top: 0; border-top: none; }
+.error-tipsy-s .error-tipsy-arrow, .error-tipsy-sw .error-tipsy-arrow, .error-tipsy-se .error-tipsy-arrow { bottom: 0; border-bottom: none; }
+.error-tipsy-n .error-tipsy-arrow, .error-tipsy-s .error-tipsy-arrow { left: 50%; margin-left: -5px; }
+.error-tipsy-nw .error-tipsy-arrow, .error-tipsy-sw .error-tipsy-arrow { left: 10px; }
+.error-tipsy-ne .error-tipsy-arrow, .error-tipsy-se .error-tipsy-arrow { right: 10px; }
+.error-tipsy-e .error-tipsy-arrow, .error-tipsy-w .error-tipsy-arrow { top: 50%; margin-top: -5px; }
+.error-tipsy-e .error-tipsy-arrow { right: 0; border-right: none; }
+.error-tipsy-w .error-tipsy-arrow { left: 0; border-left: none; }
+
+/********************************************************/
+/*             Multiselect and MonthPicker              */
+/********************************************************/
+input.ui-multiselect-state-default{
+    &:active, &:focus {
+        border: none;
+        .box_shadow(0 0 0px @filter_border);
+    }
+}
+.ui-multiselect, .monpickr-selected-month{
+    &:hover, &:focus, &:active {
+        .box_shadow(0 1px 3px  rgba(0, 0, 0, 0.5));
     }
 
-    .close {
-        line-height: 0.75;
+    input[type='text'], select {
+        border:none;
+        box-shadow:none;
     }
+}
+.ui-multiselect-state-active {
+    .box_shadow(0 1px 3px  rgba(0, 0, 0, 0.5));
+}
+
+/********************************************************/
+/*                      Fanex Grid                      */
+/********************************************************/
+.content-grid {
+    float:left;
+    margin-left: 10px;
+    min-width: 99%;
+
+    .freegrid {
+        thead th, .grid-fixed-table thead th {
+            font-weight: normal;
+        }
+
+        .grid-fixed-table tr{
+            &.highlight-row:hover td {
+                background-color: #faffa8;
+            }
+
+            &.highlight td, td.highlight {
+                background-color: #FEECD1;
+            }
+        }
+
+        .freegrid-even td {
+            background-color: #ebf5fc;
+        }
+    }
+}
+
+/********************************************************/
+/*         Custom jQuery Dialog and Datepicker          */
+/********************************************************/
+.ui-widget {
+    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif !important;
+}
+
+.ui-widget-header, .ui-state-active {
+    .bg_linear_gradient(@menu_bg_light, @menu_bg);
+}
+
+.ui-datepicker {
+    z-index: 1003 !important;
+    .ui-datepicker-title {
+        select { 
+            font-size: 0.9em; 
+            margin:1px 6px; 
+            border: 1px solid #CECCCD;
+            height: 18px;
+        }
+    }
+
+    .ui-datepicker-prev {
+        margin:1.5px 0 0px 1.5px;
+    }
+
+    .ui-datepicker-next {
+        margin:1.5px 1.5px 0 0;
+    }
+
+    .ui-datepicker-week-end {
+        color: #C84519;
+    }
+}
+
+.ui-dialog {
+    .box_shadow(0 3px 9px rgba(0, 0, 0, 0.5));
+    .border_radius(0);
+    padding: 0;
+    z-index: 9999 !important;
+
+    .ui-widget-header {
+        .border_radius(0);
+        font-weight: normal;
+        text-align: center;
+
+        .ui-dialog-title {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ui-dialog-titlebar-close {
+            padding: 0;
+
+            .ui-icon-closethick {
+                background: url(img/btn-close.png) no-repeat -1px -48px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            &.ui-state-hover {
+                background: none;
+                border: none;
+            }
+        }
+    }
+
+    .ui-dialog-content {
+        margin-top: -13px;
+        padding-top: 17px;
+        float: left;
+
+        .form {
+            background-color: transparent;
+            border: none;
+            padding: 15px 0 10px 0;
+            .box_shadow(none);
+
+            input[type=button], input[type=submit] {
+                font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
+            }
+        }
+    }
+}
+
+.ui-widget-overlay {
+    background: #000;
+    overflow: hidden;
+    z-index: 9998 !important;
 }

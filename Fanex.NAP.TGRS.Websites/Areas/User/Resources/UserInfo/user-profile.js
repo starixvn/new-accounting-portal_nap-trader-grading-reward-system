@@ -1,44 +1,54 @@
 ﻿/* File Created: April 3, 2014 */
+/* global Namespace, common, validator, passedData */
 'use strict';
 
-var userProfile = angular.module('tgrs.userProfile', ['tgrs.common', 'ui.bootstrap.collapse']);
+$(document).ready(function () {
+    var userProfile = new Fanex.TGRS.UserProfile();
 
-userProfile.controller(
-    'userProfileController', ['$scope', '$timeout', '$http', '$window', '$log', 'commonService', 'commonConstants',
-    function ($scope, $timeout, $http, $window, $log, commonService, commonConstants) {
-        $scope.user = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            groupId: 0
-        };
-        $scope.success = false;
-        $scope.showMessage = $scope.success;
+    userProfile.Initialize();
+});
 
-        $scope.$watch('success', function () {
-            $scope.showMessage = $scope.success;
-            $timeout(function () {
-                $scope.success = false;
-                $scope.showMessage = false;
-            }, 5000);
-        }, true);
+Namespace.Register("Fanex.TGRS.UserProfile");
+Fanex.TGRS.UserProfile = function () {
+    var $this = this;
+    var domElements = {
+        divMessage: null,
+        divValidationSummary: null,
+        divForm: null,
+        btnSubmit: null,
+        btnCancel: null
+    };
 
-        $scope.cancel = function () {
-            $window.location.href = commonConstants.rootUrl;
-        };
+    var cacheDOM = function () {
+        domElements.divForm = $('#divUserProfile');
+        domElements.divMessage = $('#divErrorSuccessMsg');
+        domElements.divValidationSummary = $('#divValidationSummary');
+        domElements.btnSubmit = $('#btnSubmit');
+        domElements.btnCancel = $('#btnCancel');
+    };
 
-        $scope.submitForm = function () {
-            if ($scope.userProfile.$valid) {
-                commonService.disableInput();
-                $http.post(commonConstants.rootUrl + 'User/UserInfo/UserProfile', $scope.user).success(function (result) {
-                    if (result.length === 0) {
-                        $scope.success = true;
-                    }
-                }).error(function () {
-                    commonService.showErrorMsg(commonConstants.internalError);
-                }).then(function () {
-                    commonService.enableInput();
-                });
+    var handleEvents = function () {
+        if (passedData.IsSuccess) {
+            common.ShowInlineInfoMsg(domElements.divMessage, passedData.ChangedSuccessfully);
+        } else if (domElements.divValidationSummary.find('li:first').text() !== '') {
+            common.ShowInlineErrorMsg(domElements.divMessage, domElements.divValidationSummary.html());
+        }
+
+        domElements.btnSubmit.click(function () {
+            if (!validator.ValidateForm(domElements.divForm, 'w')) {
+                return false;
             }
-        };
-    } ]);
+        });
+
+        domElements.btnCancel.click(function () {
+            common.NavigateToRoot('', 0);
+
+            return false;
+        });
+    };
+
+    $this.Initialize = function () {
+        cacheDOM();
+        handleEvents();
+    };
+};

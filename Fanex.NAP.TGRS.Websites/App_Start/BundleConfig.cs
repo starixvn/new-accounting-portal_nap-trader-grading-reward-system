@@ -40,10 +40,15 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/styles/login",
                 "~/Areas/User/Resources/Login/login.less");
 
+            bundles.Add(new ScriptBundle("~/scripts/loginJS").Include(
+                "~/Scripts/Libraries/Crypto/CryptoJS.js",
+                "~/Areas/User/Resources/Login/login.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/userProfile").Include(
                 "~/Areas/User/Resources/UserInfo/user-profile.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/changePassword").Include(
+                "~/Scripts/Libraries/Crypto/CryptoJS.js",
                 "~/Areas/User/Resources/UserInfo/change-password.js"));
         }
 
@@ -55,18 +60,31 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
         {
             bundles.AddAndInclude(
                 "~/styles/common",
+                "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
                 "~/Content/Bootstrap/Css/bootstrap.css",
                 "~/Content/Bootstrap/Css/bootstrap-theme.css",
+                "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
+                "~/Content/Tipsy/tipsy.css",
+                "~/Content/MsgBox/msgbox-0.0.1.css",
+                "~/Content/Fanex.Grid/Fanex.Grid.css",
                 "~/Content/Themes/reset.less",
                 "~/Content/Themes/style.less",
                 "~/Content/Themes/custom.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
-                "~/Scripts/Libraries/AngularJs/angular.js",
-                "~/Scripts/Libraries/AngularJs/angular-animate.js",
-                "~/Scripts/Libraries/Bootstrap/ui-bootstrap-tpls-0.10.0.js",
+                "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
+                "~/Scripts/Libraries/Modernizr/modernizr.30715.min.js",
+                "~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
+                "~/Scripts/Libraries/Tipsy/jquery.tipsy.js",
+                "~/Scripts/Libraries/MsgBox/msgbox-0.0.1.js",
+                "~/Scripts/Libraries/Others/moment.js",
+                "~/Scripts/Libraries/Others/numeral.js",
+                "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
+                "~/Scripts/Libraries/Others/namespace.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",
-                "~/Scripts/tgrs-common.js"));
+                "~/Scripts/tgrs.js",
+                "~/Scripts/layout.js",
+                "~/Scripts/validator.js"));
         }
     }
 

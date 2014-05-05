@@ -11,8 +11,9 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewLang.TGRS &mdash; @ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Content/Themes/Images/tgrs.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--[if lt IE 9]><script src="~/Scripts/Libraries/Html5/html5shiv.min.js" type="text/javascript"></script><![endif]-->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     @Styles.Render("~/styles/common")
     @RenderSection("Head", false)
 </head>
@@ -44,12 +45,12 @@
             @RenderBody()
         </div>
     </section>
-    <div id="divCommon"
-         data-ng-controller="commonController"
-         data-ng-init="rootUrl = initialize('@enableReChckIn' === 'True', '@Url.Content("~")')">
-         <div class="loading display-none"></div>
-         <div class="loading-overlay display-none"></div>
-    </div>
+    <div id="divPopup"></div>
+    @Html.Hidden("RootURL", Url.Content("~/"))
+    @Html.Hidden("AccessDeniedError", Messages.AccessDenied)
+    @Html.Hidden("NotFoundError", Messages.NotFoundMessage)
+    @Html.Hidden("InternalError", Messages.InternalError)
+    @Html.Hidden("AllowReCheckIn", enableReChckIn)
     @Scripts.Render("~/scripts/common")
     @RenderSection("Foot", false)
 </body>

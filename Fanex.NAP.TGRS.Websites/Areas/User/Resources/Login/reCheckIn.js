@@ -1,28 +1,63 @@
 ﻿/* File Created: April 1, 2014 */
+/* global Namespace */
 'use strict';
 
-var reCheckIn = angular.module('reCheckIn', ['tgrs.common']);
+$(document).ready(function () {
+    var reCheckIn = new Fanex.TGRS.ReCheckIn();
 
-reCheckIn.factory('reCheckinService', ['$http', '$window', '$timeout', '$log', 'commonService', function ($http, $window, $timeout, $log, commonService) {
-    var reCheckInObj = {};
+    reCheckIn.Initialize();
+});
 
-    reCheckInObj.time = 5000,
-    reCheckInObj.kickedOutMsg = 'You have logged in from another session or your login session has expired!',
-    reCheckInObj.rootUrl = '';
-    reCheckInObj.callReCheckIn = function () {
-        $http({ method: 'POST', url: reCheckInObj.rootUrl + 'User/Login/ReCheckLogin' }).success(function (data) {
-            if (data === '"1"') {
-                commonService.showErrorMsg(reCheckInObj.kickedOutMsg);
-                $timeout(function () {
-                    $window.location.href = reCheckInObj.rootUrl + 'User/Login/LogOut';
-                }, 3000);
-            } else if (data === '"-1"') {
-                $window.location.href = reCheckInObj.rootUrl + 'User/Common/Offline';
+Namespace.Register("Fanex.TGRS.ReCheckIn");
+Fanex.TGRS.ReCheckIn = function () {
+    var $this = this;
+    var cachedElements = {
+        AllowReCheckIn: false,
+        HeadlineMsgBox: null,
+        RootURL: '',
+        KickedOutMessage: 'You have logged in from another session or your login session has expired!',
+        ReCheckInterval: 5000
+    };
+
+    var initializeData = function () {
+        cachedElements.AllowReCheckIn = $('#AllowReCheckIn').val() === 'True';
+        cachedElements.RootURL = location.protocol + '//' + location.host + $('#RootURL').val();
+        cachedElements.HeadlineMsgBox = $.msgbox({
+            message: '',
+            type: 'err',
+            modal: false,
+            position: ['top:130', 'center'],
+            theme: '',
+            zIndex: 9999,
+            duration: 2000,
+            useAnimation: false,
+            beforeClose: function () {
+                window.location.href = cachedElements.RootURL + 'User/Login/LogOut';
             }
-
-            $log.debug('recheckin');
         });
     };
 
-    return reCheckInObj;
-} ]);
+    var reCheckIn = function () {
+        $.ajax({
+            url: cachedElements.RootURL + 'User/Login/ReCheckLogin',
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result === '1') {
+                    cachedElements.HeadlineMsgBox.showInfo(cachedElements.KickedOutMessage, { closeBtn: false });
+                }
+                if (result === '-1') {
+                    window.location.href = cachedElements.RootURL + 'User/Login/Offline';
+                }
+            }
+        });
+    };
+
+    $this.Initialize = function () {
+        initializeData();
+
+        if (cachedElements.AllowReCheckIn) {
+            setInterval(reCheckIn, cachedElements.ReCheckInterval);
+        }
+    };
+};
