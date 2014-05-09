@@ -45,6 +45,9 @@
     <Reference Include="BundleTransformer.Less">
       <HintPath>..\packages\BundleTransformer.Less.1.8.25\lib\net40\BundleTransformer.Less.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.4.0.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -273,7 +276,9 @@
     <Content Include="Scripts\Libraries\Tipsy\jquery.tipsy.js" />
     <Content Include="Scripts\Libraries\AngularJs\angular.js" />
     <Content Include="Scripts\Libraries\Bootstrap\ui-bootstrap-tpls-0.10.0.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -290,6 +295,8 @@
     <Content Include="Areas\User\Views\Web.config" />
     <Content Include="Areas\User\Views\Common\Offline.cshtml" />
     <Content Include="Areas\User\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\Web.config" />
+    <Content Include="Areas\Configuration\Views\TeamManagement\index.cshtml" />
     <None Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />
@@ -318,6 +325,10 @@
     <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Config\Fanex.NAP.TGRS.Configuration.csproj">
+      <Project>{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}</Project>
+      <Name>Fanex.NAP.TGRS.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
       <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
       <Name>Fanex.NAP.TGRS.Core</Name>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.User", "Fane
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.Websites", "Fanex.NAP.TGRS.Websites\Fanex.NAP.TGRS.Websites.csproj", "{93B9638A-EF6B-4483-B07A-CC735C28F9B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.Configuration", "Fanex.NAP.TGRS.Config\Fanex.NAP.TGRS.Configuration.csproj", "{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{93B9638A-EF6B-4483-B07A-CC735C28F9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B9638A-EF6B-4483-B07A-CC735C28F9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B9638A-EF6B-4483-B07A-CC735C28F9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
