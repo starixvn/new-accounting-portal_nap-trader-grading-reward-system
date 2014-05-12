@@ -1,13 +1,66 @@
-﻿@{
+﻿@using Fanex.NAP.Core.Web
+@using Fanex.NAP.TGRS.Core.Resources
+@using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
+
+@model TeamInfoList
+@{
+    ViewBag.Title = ViewResources.Test;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Headline {
     <div class="title">
         <div>
-            <span class="curr">Team Management</span>
+            <span class="curr">@ViewLang.TeamManagement</span>
+            <a href="#" id="lnkAddNewTeam" class="blue-button change-list"><span class="icon-list"></span>@ViewLang.NewTeam</a>
         </div>
     </div>
 }
-<div>
-    Team Management
+<div id="resultContainer" class="content-grid">
+    <div  id="divTeamsGrid" class="freegrid">
+    </div>
 </div>
+<div class="display-none">
+    <div id="divNewTeamForm" class="form-bar">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.TeamName</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtTeamName" class="width-200" data-val-required="@Messages.RequiredFieldError" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label for="txtNewSMAName">@ViewLang.Description</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtTeamDes" class="width-200" data-val-required="@Messages.RequiredFieldError" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field  normal-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveNewTeam" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancelNewTeam" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/teamManagement")
+    <script type="text/javascript">
+        var labels = {
+            TeamName: '@ViewLang.TeamName',
+            Description: '@ViewLang.Description',
+            TraderCount: '@ViewLang.TraderCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewTeam: '@ViewLang.NewTeam',
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

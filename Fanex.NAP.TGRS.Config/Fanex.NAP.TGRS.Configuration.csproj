@@ -8,7 +8,7 @@
     <ProjectGuid>{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fanex.NAP.TGRS.Config</RootNamespace>
+    <RootNamespace>Fanex.NAP.TGRS.Configuration</RootNamespace>
     <AssemblyName>Fanex.NAP.TGRS.Config</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -64,8 +64,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\TeamManagementController.cs" />
+    <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
+    <Compile Include="Models\TeamManagement\TeamInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigAreaRegistration.cs" />
+    <Compile Include="Services\Implement\TeamManagement\TeamManagementService.cs" />
+    <Compile Include="Services\Interface\TeamManagement\ITeamManagementService.cs" />
+    <Compile Include="ViewModel\TeamManagement\TeamInfoItem.cs" />
+    <Compile Include="ViewModel\TeamManagement\TeamInfoList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
@@ -76,6 +83,10 @@
       <Project>{818AB9EF-2DB1-49EA-B2E8-A3A4D9BFE45E}</Project>
       <Name>Fanex.NAP.TGRS.User</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\Implement\TeamManagement\" />
+    <Folder Include="Repositories\Interface\TeamManagement\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

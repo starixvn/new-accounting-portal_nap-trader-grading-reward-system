@@ -38,7 +38,7 @@ Fanex.TGRS.Common = function () {
             message = messages.NotFoundError;
         }
 
-        $this.showErrorMessage(message);
+        $this.ShowErrorMessage(message);
     };
 
     $this.ShowErrorMessage = function (message) {

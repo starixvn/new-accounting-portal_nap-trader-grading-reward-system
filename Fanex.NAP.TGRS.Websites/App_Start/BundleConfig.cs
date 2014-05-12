@@ -50,6 +50,9 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.Add(new ScriptBundle("~/scripts/changePassword").Include(
                 "~/Scripts/Libraries/Crypto/CryptoJS.js",
                 "~/Areas/User/Resources/UserInfo/change-password.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/teamManagement").Include(
+                "~/Areas/Configuration/Resources/TeamManagement/team-management.js"));
         }
 
         /// <summary>
@@ -61,8 +64,6 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.AddAndInclude(
                 "~/styles/common",
                 "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
-                "~/Content/Bootstrap/Css/bootstrap.css",
-                "~/Content/Bootstrap/Css/bootstrap-theme.css",
                 "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
                 "~/Content/Tipsy/tipsy.css",
                 "~/Content/MsgBox/msgbox-0.0.1.css",
@@ -81,6 +82,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/Others/numeral.js",
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
                 "~/Scripts/Libraries/Others/namespace.js",
+                "~/Scripts/Extensions/nativeObjectExtensions.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",
                 "~/Scripts/tgrs.js",
                 "~/Scripts/layout.js",

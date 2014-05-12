@@ -1,3 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="TeamManagement">
+    <Setting Key="TGRS_Team_SelectAll" SpName="TGRS_Team_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet">
+    </Setting>
+  </Function>
 </Functions>

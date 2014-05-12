@@ -39,4 +39,6 @@ public static class TGRSFunctionKeys
 
         public const string SystemConfiguration = "SystemConfiguration";
 
+        public const string TeamManagement = "TeamManagement";
+
     }

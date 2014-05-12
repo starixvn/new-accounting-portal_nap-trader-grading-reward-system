@@ -9,8 +9,12 @@
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
     /// <summary>
@@ -20,7 +24,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     {
         #region Members
 
-        private IUserService _userService;
+        private ITeamManagementService _teamService;
 
         #endregion Members
 
@@ -31,9 +35,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
         }
 
-        public TeamManagementController(IUserService userService)
+        public TeamManagementController(ITeamManagementService teamManagementService)
         {
-            this._userService = userService ?? new UserService();
+            this._teamService = _teamService ?? new TeamManagementService();
         }
 
         #endregion Constructors
@@ -42,9 +46,39 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// Gets Index page.
         /// </summary>
         /// <returns>Return Index View.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.TeamManagement, Constant.Policy.Host);
             return View();
+        }
+
+        /// <summary>
+        /// Get all teams.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetAllTeam(GetAllTeamsCriteria criteria)
+        {
+            TeamInfoList result = this._teamService.GetAllTeam(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Add new team.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>JSON object indicates the result of insert.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        public JsonResult InsertTeam(GetAllTeamsCriteria criteria)
+        {
+            TeamInfoList result = this._teamService.GetAllTeam(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

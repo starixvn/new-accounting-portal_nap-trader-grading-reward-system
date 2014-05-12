@@ -123,4 +123,31 @@
   <data name="TGRS" xml:space="preserve">
     <value>Trader Grading &amp; Reward System</value>
   </data>
+  <data name="TeamName" xml:space="preserve">
+    <value>Team Name</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="TraderCount" xml:space="preserve">
+    <value>No. Of Trader</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TeamManagement" xml:space="preserve">
+    <value>Team Management</value>
+  </data>
+  <data name="NewTeam" xml:space="preserve">
+    <value>New Team</value>
+  </data>
 </root>

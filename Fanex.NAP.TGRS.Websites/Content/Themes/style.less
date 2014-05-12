@@ -166,7 +166,7 @@ header {
 
         a {
             display: block;
-            //background: url(img/logo.png) center left no-repeat;
+            background: url(Images/logo-tgrs.png) center left no-repeat;
             margin-left: 10px;
             margin-top:5px;
             height:28px;
@@ -519,7 +519,14 @@ header {
 .loading {
     width: 32px;
     height: 32px;
-    background: url(img/loading.gif) no-repeat scroll 0 0 transparent;
+    background: url(Images/loading.gif) no-repeat scroll 0 0 transparent;
+}
+
+.link {
+    display: inline-block;
+    width: 100%;
+    color: @link;
+    cursor: pointer;
 }
 
 /********************************************************/
@@ -531,7 +538,7 @@ header {
     width: 98%;
     background-color: @filter_bar_bg;
     border: solid 1px @filter_border;
-    margin: 6px 0 15px 10px;
+    margin: 5px;
     .box_shadow(0px 0px 4px 1px rgba(0,0,0,0.1));
 
     .filter-form, .form {
