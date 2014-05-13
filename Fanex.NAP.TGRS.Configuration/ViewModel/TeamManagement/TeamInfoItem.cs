@@ -13,7 +13,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
     using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
 
     /// <summary>
-    /// Information for 1 team.
+    /// Team info view model.
     /// </summary>
     public class TeamInfoItem
     {

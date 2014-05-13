@@ -57,15 +57,14 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <summary>
         /// Get all teams.
         /// </summary>
-        /// <param name="criteria">Criteria that are used to query data.</param>
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetAllTeam(GetAllTeamsCriteria criteria)
+        public JsonResult GetAllTeam()
         {
-            TeamInfoList result = this._teamService.GetAllTeam(criteria);
+            TeamInfoList result = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         /// <summary>
@@ -77,9 +76,25 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
         public JsonResult InsertTeam(InsertTeamCriteria criteria)
         {
-            ICommandResult result = this._teamService.InsertTeam(criteria);
+            ICommandResult result = null;
+            TeamInfoList updatedItems = null;
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            criteria.TeamName = criteria.TeamName ?? string.Empty;
+            criteria.Description = criteria.Description ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
+            result = this._teamService.InsertTeam(criteria);
+            
+            if (result.IsSuccessful)
+            {
+                updatedItems = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
+            }
+
+            return Json(new 
+            {
+                ErrorCode = result.Code,
+                ErrorMessage = result.Message,
+                UpdatedItems = updatedItems
+            });
         }
 
         /// <summary>
@@ -91,9 +106,25 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
         public JsonResult UpdateTeam(UpdateTeamCriteria criteria)
         {
-            ICommandResult result = this._teamService.UpdateTeam(criteria);
+            ICommandResult result = null;
+            TeamInfoList updatedItems = null;
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            criteria.TeamName = criteria.TeamName ?? string.Empty;
+            criteria.Description = criteria.Description ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
+            result = this._teamService.UpdateTeam(criteria);
+
+            if (result.IsSuccessful)
+            {
+                updatedItems = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
+            }
+
+            return Json(new
+            {
+                ErrorCode = result.Code,
+                ErrorMessage = result.Message,
+                UpdatedItems = updatedItems
+            });
         }
     }
 }

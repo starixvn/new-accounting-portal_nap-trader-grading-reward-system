@@ -97,6 +97,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Team.
+        /// </summary>
+        public static string EditTeam {
+            get {
+                return ResourceManager.GetString("EditTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GMT-4.
         /// </summary>
         public static string GMTMinus4 {

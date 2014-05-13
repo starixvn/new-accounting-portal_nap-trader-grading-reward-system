@@ -3,5 +3,9 @@
   <Function Name="TeamManagement">
     <Setting Key="TGRS_Team_SelectAll" SpName="TGRS_Team_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet">
     </Setting>
+    <Setting Key="TGRS_Team_Insert" SpName="TGRS_Team_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet">
+    </Setting>
+    <Setting Key="TGRS_Team_Update" SpName="TGRS_Team_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet">
+    </Setting>
   </Function>
 </Functions>

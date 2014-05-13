@@ -23,9 +23,9 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
 
         public int UserId { get; set; }
 
-        public int ErrorCode { get; set; }
+        public int ErrCode { get; set; }
 
-        public string ErrorMsg { get; set; }
+        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets Setting Key.

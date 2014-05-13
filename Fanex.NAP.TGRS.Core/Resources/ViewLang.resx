@@ -150,4 +150,7 @@
   <data name="NewTeam" xml:space="preserve">
     <value>New Team</value>
   </data>
+  <data name="EditTeam" xml:space="preserve">
+    <value>Edit Team</value>
+  </data>
 </root>

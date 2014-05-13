@@ -304,6 +304,8 @@
     <Content Include="Areas\User\Views\Login\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\Web.config" />
     <Content Include="Areas\Configuration\Views\TeamManagement\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\TeamManagement\InsertTeamForm.cshtml" />
+    <Content Include="Areas\Configuration\Views\TeamManagement\UpdateTeamForm.cshtml" />
     <None Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />

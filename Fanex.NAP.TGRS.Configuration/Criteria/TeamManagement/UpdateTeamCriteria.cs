@@ -25,9 +25,9 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
 
         public int UserId { get; set; }
 
-        public int ErrorCode { get; set; }
+        public int ErrCode { get; set; }
 
-        public string ErrorMsg { get; set; }
+        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets Setting Key.
@@ -35,7 +35,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Grade_Update";
+            return "TGRS_Team_Update";
         }
 
         /// <summary>

@@ -1,0 +1,29 @@
+﻿<div id="divUpdateTeamForm" class="form-bar" style="width: 438px">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.TeamName</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtTeamName" class="width-200" data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
+                <input type="hidden" id="txtTeamId" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.Description</label>
+            </div>
+            <div class="edit-field">
+                <textarea rows="3" id="txtTeamDes" class="width-200" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200"></textarea>
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field  normal-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

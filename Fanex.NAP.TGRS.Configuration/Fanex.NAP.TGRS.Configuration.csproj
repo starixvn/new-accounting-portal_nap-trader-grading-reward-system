@@ -72,8 +72,10 @@
     <Compile Include="ConfigAreaRegistration.cs" />
     <Compile Include="Services\Implement\TeamManagement\TeamManagementService.cs" />
     <Compile Include="Services\Interface\TeamManagement\ITeamManagementService.cs" />
+    <Compile Include="ViewModel\TeamManagement\InsertTeamModel.cs" />
     <Compile Include="ViewModel\TeamManagement\TeamInfoItem.cs" />
     <Compile Include="ViewModel\TeamManagement\TeamInfoList.cs" />
+    <Compile Include="ViewModel\TeamManagement\UpdateTeamModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
