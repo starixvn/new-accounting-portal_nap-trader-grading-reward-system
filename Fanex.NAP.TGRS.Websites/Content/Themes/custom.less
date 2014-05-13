@@ -3,13 +3,6 @@
 @import "style.less";
 
 /********************************************************/
-/*               Customized for Bootstrap               */
-/********************************************************/
-
-.row {
-    margin: 0;
-}
-/********************************************************/
 /*                  Msgbox custom style                 */
 /********************************************************/
 .msgbox {
@@ -161,6 +154,7 @@ input.ui-multiselect-state-default{
 /********************************************************/
 .ui-widget {
     font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif !important;
+    font-size: 1em;
 }
 
 .ui-widget-header, .ui-state-active {
@@ -199,6 +193,7 @@ input.ui-multiselect-state-default{
 
     .ui-widget-header {
         .border_radius(0);
+        border: none;
         font-weight: normal;
         text-align: center;
 
@@ -209,6 +204,8 @@ input.ui-multiselect-state-default{
         }
 
         .ui-dialog-titlebar-close {
+            background: none;
+            border: none;
             padding: 0;
 
             .ui-icon-closethick {
@@ -227,18 +224,23 @@ input.ui-multiselect-state-default{
     }
 
     .ui-dialog-content {
-        margin-top: -13px;
-        padding-top: 17px;
+        background: #fff;
         float: left;
 
-        .form {
-            background-color: transparent;
-            border: none;
-            padding: 15px 0 10px 0;
+        .form-bar {
             .box_shadow(none);
+            background: none;
+            border: none;
+            margin: 0 5px;
 
-            input[type=button], input[type=submit] {
-                font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
+            .form {
+                background-color: transparent;
+                border: none;
+                padding: 0;
+
+                input[type=button], input[type=submit] {
+                    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
+                }
             }
         }
     }

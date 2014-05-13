@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/Others/numeral.js",
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
                 "~/Scripts/Libraries/Others/namespace.js",
-                "~/Scripts/Extensions/nativeObjectExtensions.js",
+                "~/Scripts/Extensions/native-object-extensions.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",
                 "~/Scripts/tgrs.js",
                 "~/Scripts/layout.js",

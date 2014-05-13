@@ -1,4 +1,5 @@
 @import "fonts.less";
+@import "grid.less";
 @import "colors.less";
 @import "common.less";
 
@@ -467,7 +468,19 @@ header {
                 color:@headline_text_curr;
             }
         }
-        
+    }
+
+    .header-button {
+        margin-left: 15px;
+        margin-top: 8px;
+        display: inline-block;
+
+        a {
+            font-size: 13px;
+            line-height: 22px;
+            height: 23px;
+            display: inline-block;
+        }
     }
 }
 
@@ -584,7 +597,7 @@ header {
                 padding: 2px;
                 font-size: 0.9em;
                 color: @text;
-                height: 24px;
+                height: 20px;
 
                 &:disabled {
                     background-color: @disabled_field !important;
@@ -630,6 +643,120 @@ header {
                 padding: 0 10px 0 2px;
             }
         }
+
+        .col_1{.column(1)}
+        .col_2{.column(2)}
+        .col_3{.column(3)}
+        .col_4{.column(4)}
+        .col_5{.column(5)}
+        .col_6{.column(6)}
+        .col_7{.column(7)}
+        .col_8{.column(8)}
+        .col_9{.column(9)}
+        .col_10{.column(10)}
+        .col_11{.column(11)}
+        .col_12{.column(12)}
+        .col_13{.column(13)}
+        .col_14{.column(14)}
+        .col_15{.column(15)}
+        .col_16{.column(16)}
+        .col_17{.column(17)}
+        .col_18{.column(18)}
+        .col_19{.column(19)}
+        .col_20{.column(20)}
+        .col_21{.column(21)}
+        .col_22{.column(22)}
+        .col_23{.column(23)}
+        .col_24{.column(24)}
+        .col_25{.column(25)}
+        .col_26{.column(26)}
+        .col_27{.column(27)}
+        .col_28{.column(28)}
+        .col_29{.column(29)}
+        .col_30{.column(30)}
+        .col_31{.column(31)}
+        .col_32{.column(32)}
+        .col_33{.column(33)}
+        .col_34{.column(34)}
+        .col_35{.column(35)}
+        .col_36{.column(36)}
+
+        .prefix_1{.prefix(1)}
+        .prefix_2{.prefix(2)}
+        .prefix_3{.prefix(3)}
+        .prefix_4{.prefix(4)}
+        .prefix_5{.prefix(5)}
+        .prefix_6{.prefix(6)}
+        .prefix_7{.prefix(7)}
+        .prefix_8{.prefix(8)}
+        .prefix_9{.prefix(9)}
+        .prefix_10{.prefix(10)}
+        .prefix_11{.prefix(11)}
+        .prefix_12{.prefix(12)}
+        .prefix_13{.prefix(13)}
+        .prefix_14{.prefix(14)}
+        .prefix_15{.prefix(15)}
+        .prefix_16{.prefix(16)}
+        .prefix_17{.prefix(17)}
+        .prefix_18{.prefix(18)}
+        .prefix_19{.prefix(19)}
+        .prefix_20{.prefix(20)}
+        .prefix_21{.prefix(21)}
+        .prefix_22{.prefix(22)}
+        .prefix_23{.prefix(23)}
+        .prefix_24{.prefix(24)}
+        .prefix_25{.prefix(25)}
+        .prefix_26{.prefix(26)}
+        .prefix_27{.prefix(27)}
+        .prefix_28{.prefix(28)}
+        .prefix_29{.prefix(29)}
+        .prefix_30{.prefix(30)}
+        .prefix_31{.prefix(31)}
+        .prefix_32{.prefix(32)}
+        .prefix_33{.prefix(33)}
+        .prefix_34{.prefix(34)}
+        .prefix_35{.prefix(35)}
+        .prefix_36{.prefix(36)}
+
+        .suffix_1{.suffix(1)}
+        .suffix_2{.suffix(2)}
+        .suffix_3{.suffix(3)}
+        .suffix_4{.suffix(4)}
+        .suffix_5{.suffix(5)}
+        .suffix_6{.suffix(6)}
+        .suffix_7{.suffix(7)}
+        .suffix_8{.suffix(8)}
+        .suffix_9{.suffix(9)}
+        .suffix_10{.suffix(10)}
+        .suffix_11{.suffix(11)}
+        .suffix_12{.suffix(12)}
+        .suffix_13{.suffix(13)}
+        .suffix_14{.suffix(14)}
+        .suffix_15{.suffix(15)}
+        .suffix_16{.suffix(16)}
+        .suffix_17{.suffix(17)}
+        .suffix_18{.suffix(18)}
+        .suffix_19{.suffix(19)}
+        .suffix_20{.suffix(20)}
+        .suffix_21{.suffix(21)}
+        .suffix_22{.suffix(22)}
+        .suffix_23{.suffix(23)}
+        .suffix_24{.suffix(24)}
+        .suffix_25{.suffix(25)}
+        .suffix_26{.suffix(26)}
+        .suffix_27{.suffix(27)}
+        .suffix_28{.suffix(28)}
+        .suffix_29{.suffix(29)}
+        .suffix_30{.suffix(30)}
+        .suffix_31{.suffix(31)}
+        .suffix_32{.suffix(32)}
+        .suffix_33{.suffix(33)}
+        .suffix_34{.suffix(34)}
+        .suffix_35{.suffix(35)}
+        .suffix_36{.suffix(36)}
+        
+        .alpha {margin-left: 0;}
+        .omega {margin-right: 0;}
     }
 }
 
@@ -673,4 +800,32 @@ header {
 
 .green-button {
     .custom_button(@green_button_bg, @green_button_bg_light, @green_button_bg_hover, @green_button_border);
+
+    &.change-list {
+        padding: 0 18px 0 0;
+        margin-right: 7px;
+        min-width: 60px;
+
+        &:disabled, &.disabled {
+            background: #C3E094;
+            border-color: #809361 #A8C280 #A8C280;
+            box-shadow: 1px 1px 1px 0 #A8C280 inset;
+            color: #5D7731;
+            text-shadow: none;
+            cursor: default;
+
+            .icon-list {
+                background-position: -105px -26px;
+            }
+        }
+
+        .icon-list {
+            background: url("Images/sprites.png") no-repeat -86px -26px;
+            height: 13px;
+            width: 12px;
+            cursor: pointer;
+            float: left;
+            margin: 5px 5px 0 20px;
+        }
+    }
 }
