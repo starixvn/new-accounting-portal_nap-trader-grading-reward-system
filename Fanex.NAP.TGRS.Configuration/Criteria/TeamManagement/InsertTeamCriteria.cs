@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UpdateTeamCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="InsertTeamCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 // <history>
-//   <change who="Ken.Nguyen" date="2014.5.12">Created</change>
+//   <change who="Ken.Nguyen" date="2014.5.13">Created</change>
 // </history>
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
@@ -13,17 +13,19 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all team.
+    /// Update team criteria.
     /// </summary>
-    public class UpdateTeamCriteria : CriteriaBase
+    public class InsertTeamCriteria : CriteriaBase
     {
-        public int TeamId { get; set; }
-
         public string TeamName { get; set; }
 
         public string Description { get; set; }
 
         public int UserId { get; set; }
+
+        public int ErrorCode { get; set; }
+
+        public string ErrorMsg { get; set; }
 
         /// <summary>
         /// Gets Setting Key.
@@ -31,7 +33,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Grade_Update";
+            return "TGRS_Team_Insert";
         }
 
         /// <summary>

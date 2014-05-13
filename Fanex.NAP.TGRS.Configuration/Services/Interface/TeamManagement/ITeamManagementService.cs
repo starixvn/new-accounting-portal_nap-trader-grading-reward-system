@@ -9,11 +9,16 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement
 {
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
 
     public interface ITeamManagementService
     {
         TeamInfoList GetAllTeam(GetAllTeamsCriteria criteria);
+
+        ICommandResult InsertTeam(InsertTeamCriteria criteria);
+
+        ICommandResult UpdateTeam(UpdateTeamCriteria criteria);
     }
 }

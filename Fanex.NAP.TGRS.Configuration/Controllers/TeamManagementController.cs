@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
@@ -70,13 +71,27 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <summary>
         /// Add new team.
         /// </summary>
-        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <param name="criteria">Criteria that are used to insert data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
-        public JsonResult InsertTeam(GetAllTeamsCriteria criteria)
+        public JsonResult InsertTeam(InsertTeamCriteria criteria)
         {
-            TeamInfoList result = this._teamService.GetAllTeam(criteria);
+            ICommandResult result = this._teamService.InsertTeam(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Update team.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to update data.</param>
+        /// <returns>JSON object indicates the result of insert.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        public JsonResult UpdateTeam(UpdateTeamCriteria criteria)
+        {
+            ICommandResult result = this._teamService.UpdateTeam(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

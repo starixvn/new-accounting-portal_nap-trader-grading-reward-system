@@ -12,5 +12,6 @@
 /Fanex.NAP.TGRS.Websites/StyleCop.Cache
 /Fanex.NAP.TGRS.suo
 /Fanex.NAP.TGRS.sln.docstates.suo
-/Fanex.NAP.TGRS.Config/obj
-/Fanex.NAP.TGRS.Config/bin
+/Fanex.NAP.TGRS.Configuration/obj
+/Fanex.NAP.TGRS.Configuration/bin
+/Fanex.NAP.TGRS.Configuration/StyleCop.Cache

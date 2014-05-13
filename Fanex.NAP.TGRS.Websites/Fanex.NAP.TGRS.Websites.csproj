@@ -332,7 +332,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.TGRS.Config\Fanex.NAP.TGRS.Configuration.csproj">
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
       <Project>{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}</Project>
       <Name>Fanex.NAP.TGRS.Configuration</Name>
     </ProjectReference>

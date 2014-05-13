@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\TeamManagementController.cs" />
+    <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />

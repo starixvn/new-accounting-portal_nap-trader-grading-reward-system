@@ -8,16 +8,17 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement
 {
-    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
 
     /// <summary>
     /// Team Management Service.
     /// </summary>
-    public class TeamManagementService : BaseService, ITeamManagementService
+    public class TeamManagementService : TGRSBaseService, ITeamManagementService
     {
         /// <summary>
         /// Get all team.
@@ -46,6 +47,26 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Insert new team.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to insert data.</param>
+        /// <returns>Result of insert.</returns>
+        public ICommandResult InsertTeam(InsertTeamCriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        /// <summary>
+        /// Update new team.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to update data.</param>
+        /// <returns>Result of update.</returns>
+        public ICommandResult UpdateTeam(UpdateTeamCriteria criteria)
+        {
+            return this.UpdateData(criteria);
         }
     }
 }
