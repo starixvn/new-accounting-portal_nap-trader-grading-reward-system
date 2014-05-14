@@ -83,10 +83,23 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
                 "~/Scripts/Libraries/Others/namespace.js",
                 "~/Scripts/Extensions/native-object-extensions.js",
+                "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",
                 "~/Scripts/tgrs.js",
                 "~/Scripts/layout.js",
                 "~/Scripts/validator.js"));
+        }
+
+        /// <summary>
+        /// Registers the common bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterConfigurationBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/scripts/benchmarkManagement").Include(
+                "~/Areas/Configuration/Resources/BenchmarkManagement/team-benchmark-management.js",
+                "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",
+                "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js"));
         }
     }
 

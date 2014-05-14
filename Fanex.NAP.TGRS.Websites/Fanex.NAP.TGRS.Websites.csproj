@@ -171,6 +171,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\NAPCommonSpNames.xml" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
     <Content Include="Areas\User\Resources\Login\img\logo-login.png" />
     <Content Include="Areas\User\Resources\Login\login.js" />
@@ -264,6 +267,7 @@
     <Content Include="Content\Tipsy\tipsy.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />
@@ -306,6 +310,7 @@
     <Content Include="Areas\Configuration\Views\TeamManagement\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\TeamManagement\InsertTeamForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TeamManagement\UpdateTeamForm.cshtml" />
+    <Content Include="Areas\Configuration\Views\BenchmarkManagement\Index.cshtml" />
     <None Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />

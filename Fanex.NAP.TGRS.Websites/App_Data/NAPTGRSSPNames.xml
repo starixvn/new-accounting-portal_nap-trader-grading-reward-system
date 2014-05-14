@@ -8,4 +8,9 @@
     <Setting Key="TGRS_Team_Update" SpName="TGRS_Team_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet">
     </Setting>
   </Function>
+  <Function Name="BenchmarkManagement">
+    <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_ProfitMargin" SpName="TGRS_BenchmarkTeam_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+  </Function>
 </Functions>
