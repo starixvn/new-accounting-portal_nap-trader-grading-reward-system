@@ -28,6 +28,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
         {
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
+            RegisterConfigurationBundles(bundles);
         }
 
         /// <summary>
@@ -50,9 +51,6 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.Add(new ScriptBundle("~/scripts/changePassword").Include(
                 "~/Scripts/Libraries/Crypto/CryptoJS.js",
                 "~/Areas/User/Resources/UserInfo/change-password.js"));
-
-            bundles.Add(new ScriptBundle("~/scripts/teamManagement").Include(
-                "~/Areas/Configuration/Resources/TeamManagement/team-management.js"));
         }
 
         /// <summary>
@@ -96,6 +94,12 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterConfigurationBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/scripts/teamManagement").Include(
+                "~/Areas/Configuration/Resources/TeamManagement/team-management.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/gradeManagement").Include(
+                "~/Areas/Configuration/Resources/GradeManagement/grade-management.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/benchmarkManagement").Include(
                 "~/Areas/Configuration/Resources/BenchmarkManagement/team-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",

@@ -174,9 +174,6 @@
   <data name="RequiredFieldError" xml:space="preserve">
     <value>Required field!</value>
   </data>
-  <data name="RequiredFieldError" xml:space="preserve">
-    <value>Required field!</value>
-  </data>
   <data name="UpdateTeamSuccessfully" xml:space="preserve">
     <value>The team has been updated successfully!</value>
   </data>
@@ -188,5 +185,11 @@
   </data>
   <data name="FieldMaxLengthError200" xml:space="preserve">
     <value>This field can have maximum 200 characters.</value>
+  </data>
+  <data name="AddGradeSuccessfully" xml:space="preserve">
+    <value>The new grade has been added successfully!</value>
+  </data>
+  <data name="UpdateGradeSuccessfully" xml:space="preserve">
+    <value>The grade has been updated successfully!</value>
   </data>
 </root>

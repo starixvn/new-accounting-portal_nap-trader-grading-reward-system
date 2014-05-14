@@ -153,4 +153,16 @@
   <data name="EditTeam" xml:space="preserve">
     <value>Edit Team</value>
   </data>
+  <data name="GradeManagement" xml:space="preserve">
+    <value>Grade Management</value>
+  </data>
+  <data name="GradeName" xml:space="preserve">
+    <value>Grade Name</value>
+  </data>
+  <data name="EditGrade" xml:space="preserve">
+    <value>Edit Grade</value>
+  </data>
+  <data name="NewGrade" xml:space="preserve">
+    <value>New Grade</value>
+  </data>
 </root>

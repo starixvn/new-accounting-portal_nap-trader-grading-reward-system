@@ -1,0 +1,53 @@
+﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement
+@using Fanex.NAP.TGRS.Core.Resources
+@model GradeInfoList
+@{
+    ViewBag.Title = ViewResources.Test;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.GradeManagement</span>
+        </div>
+    </div>
+    @if (ViewBag.HasEditRight)
+    {
+        <div class="header-button">
+            <a href="#" id="lnkAddNewGrade" class="green-button change-list"><span class="icon-list"></span>@ViewLang.NewGrade</a>
+        </div>
+    }
+}
+<div id="resultContainer" class="content-grid">
+    <div  id="divGradesGrid" class="freegrid" style="margin-top: 10px">
+    </div>
+</div>
+@if (ViewBag.HasEditRight)
+{ 
+    <div id="divHiddenForm" class="display-none">
+        @Html.Partial("InsertGradeForm")
+        @Html.Partial("UpdateGradeForm")
+    </div>
+}
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/gradeManagement")
+    <script type="text/javascript">
+        var labels = {
+            GradeName: '@ViewLang.GradeName',
+            Description: '@ViewLang.Description',
+            TraderCount: '@ViewLang.TraderCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewGrade: '@ViewLang.NewGrade',
+            EditGrade: '@ViewLang.EditGrade',
+        };
+        var messages = {
+            UpdateGradeSuccessfully: '@Messages.UpdateGradeSuccessfully',
+            AddGradeSuccessfully: '@Messages.AddGradeSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

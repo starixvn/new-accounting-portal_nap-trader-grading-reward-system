@@ -1,0 +1,28 @@
+﻿<div id="divInsertGradeForm" class="form-bar" style="width: 438px">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.GradeName</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtGradeName" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.Description</label>
+            </div>
+            <div class="edit-field">
+                <textarea rows="3" id="txtGradeDes" class="width-200" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200"></textarea>
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field  normal-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

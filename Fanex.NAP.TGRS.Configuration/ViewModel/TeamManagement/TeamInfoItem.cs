@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
 {
     using System;
     using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
+    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Team info view model.

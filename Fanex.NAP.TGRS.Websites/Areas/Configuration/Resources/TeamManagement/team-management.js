@@ -37,7 +37,6 @@ Fanex.TGRS.TeamManagement = function () {
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
-        // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divTeamsGrid = $('#divTeamsGrid');
         domElements.lnkAddNewTeam = $('#lnkAddNewTeam');
         domElements.divInsertTeamForm = $('#divInsertTeamForm').clone();
@@ -184,7 +183,7 @@ Fanex.TGRS.TeamManagement = function () {
     // Render grid.
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-team-link link" data-team-id="{0}" data-team-name="{1}">{1}</span>';
-        var descColFormat = '<span id="teamDesc_{0}">{1}</span>';
+        var descColFormat = '<span class="wordwrap-span" id="teamDesc_{0}">{1}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TeamName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -193,7 +192,7 @@ Fanex.TGRS.TeamManagement = function () {
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
-            gridExpandHeight: 200,
+            gridExpandHeight: 100,
         };
         var editableTeamNameCol = "";
         var teamDescCol = "";

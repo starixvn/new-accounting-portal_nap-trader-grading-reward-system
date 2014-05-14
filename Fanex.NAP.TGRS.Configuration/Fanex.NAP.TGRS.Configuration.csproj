@@ -64,12 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BenchmarkManagementController.cs" />
+    <Compile Include="Controllers\GradeManagementController.cs" />
     <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamProfitMarginCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\GradeManagement\GetAllGradesCriteria.cs" />
+    <Compile Include="Criteria\GradeManagement\InsertGradeCriteria.cs" />
+    <Compile Include="Criteria\GradeManagement\UpdateGradeCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
@@ -77,20 +81,23 @@
     <Compile Include="Models\BenchmarkManagement\LeagueBenchmark.cs" />
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\GradeManagement\GradeInfo.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagement\BenchmarkManagementService.cs" />
+    <Compile Include="Services\Implement\GradeManagement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagement\TeamManagementService.cs" />
     <Compile Include="Services\Interface\BenchmarkManagement\IBenchmarkManagementService.cs" />
+    <Compile Include="Services\Interface\GradeManagement\IGradeManagementService.cs" />
     <Compile Include="Services\Interface\TeamManagement\ITeamManagementService.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\BetTypeBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\LeagueBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
-    <Compile Include="ViewModel\TeamManagement\InsertTeamModel.cs" />
+    <Compile Include="ViewModel\GradeManagement\GradeInfoItem.cs" />
+    <Compile Include="ViewModel\GradeManagement\GradeInfoList.cs" />
     <Compile Include="ViewModel\TeamManagement\TeamInfoItem.cs" />
     <Compile Include="ViewModel\TeamManagement\TeamInfoList.cs" />
-    <Compile Include="ViewModel\TeamManagement\UpdateTeamModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

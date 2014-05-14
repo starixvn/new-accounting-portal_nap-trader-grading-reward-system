@@ -1,5 +1,4 @@
 ﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
-@using Fanex.NAP.TGRS.Core.Resources
 @model TeamInfoList
 @{
     ViewBag.Title = ViewResources.Test;
@@ -19,7 +18,7 @@
     }
 }
 <div id="resultContainer" class="content-grid">
-    <div  id="divTeamsGrid" class="freegrid">
+    <div  id="divTeamsGrid" class="freegrid" style="margin-top: 10px">
     </div>
 </div>
 @if (ViewBag.HasEditRight)

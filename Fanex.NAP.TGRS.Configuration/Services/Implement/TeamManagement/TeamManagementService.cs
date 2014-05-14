@@ -29,20 +29,17 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement
         {
             TeamInfoList result = null;
 
-            if (result == null)
+            var rawData = this.GetData<TeamInfo>(criteria);
+
+            if (rawData != null)
             {
-                var rawData = this.GetData<TeamInfo>(criteria);
+                result = new TeamInfoList();
 
-                if (rawData != null)
+                foreach (TeamInfo team in rawData)
                 {
-                    result = new TeamInfoList();
+                    var teamInfoItem = new TeamInfoItem(team);
 
-                    foreach (TeamInfo team in rawData)
-                    {
-                        var teamInfoItem = new TeamInfoItem(team);
-
-                        result.Add(teamInfoItem);
-                    }
+                    result.Add(teamInfoItem);
                 }
             }
 

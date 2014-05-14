@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     {
         #region Members
 
-        private ITeamManagementService _teamService;
+        private readonly ITeamManagementService _teamService;
 
         #endregion Members
 
@@ -36,9 +36,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
         }
 
-        public TeamManagementController(ITeamManagementService teamManagementService)
+        public TeamManagementController(ITeamManagementService teamService)
         {
-            this._teamService = _teamService ?? new TeamManagementService();
+            this._teamService = teamService ?? new TeamManagementService();
         }
 
         #endregion Constructors
@@ -83,13 +83,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             criteria.Description = criteria.Description ?? string.Empty;
             criteria.UserId = this.CurrentSession.UserId;
             result = this._teamService.InsertTeam(criteria);
-            
+
             if (result.IsSuccessful)
             {
                 updatedItems = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
             }
 
-            return Json(new 
+            return Json(new
             {
                 ErrorCode = result.Code,
                 ErrorMessage = result.Message,
