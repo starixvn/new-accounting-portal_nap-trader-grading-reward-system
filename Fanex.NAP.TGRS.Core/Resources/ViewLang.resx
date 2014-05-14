@@ -198,4 +198,49 @@
   <data name="AllTeams" xml:space="preserve">
     <value>All Teams</value>
   </data>
+  <data name="AllMarkets" xml:space="preserve">
+    <value>All Markets</value>
+  </data>
+  <data name="BenchmarkManagement" xml:space="preserve">
+    <value>Benchmark Management</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="League" xml:space="preserve">
+    <value>League</value>
+  </data>
+  <data name="LeagueName" xml:space="preserve">
+    <value>League Name</value>
+  </data>
+  <data name="MainMarkets" xml:space="preserve">
+    <value>Main Markets</value>
+  </data>
+  <data name="Market" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="SpecialLeague" xml:space="preserve">
+    <value>Special League</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="Benchmark" xml:space="preserve">
+    <value>Benchmark</value>
+  </data>
+  <data name="BetTypeBM" xml:space="preserve">
+    <value>Bet Type BM</value>
+  </data>
+  <data name="Configure" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="ProfitMargin" xml:space="preserve">
+    <value>Profit Margin</value>
+  </data>
+  <data name="BetType" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
 </root>
