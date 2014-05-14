@@ -339,7 +339,6 @@
     <Content Include="Content\Themes\fonts.less" />
     <Content Include="Content\Themes\colors.less" />
     <Content Include="Content\Themes\common.less" />
-    <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />

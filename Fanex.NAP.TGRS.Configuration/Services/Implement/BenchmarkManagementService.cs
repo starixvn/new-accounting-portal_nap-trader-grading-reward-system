@@ -7,9 +7,8 @@
 //   <change who="Jason.Ly" date="2014.5.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Implement.BenchmarkManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
 {
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.BenchmarkManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
     /// <summary>

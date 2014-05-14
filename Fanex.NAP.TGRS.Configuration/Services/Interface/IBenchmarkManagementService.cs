@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.5.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Interface.BenchmarkManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
 {
     public interface IBenchmarkManagementService
     {

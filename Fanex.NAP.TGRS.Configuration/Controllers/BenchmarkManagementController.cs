@@ -12,8 +12,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.TGRS.Configuration.Services.Implement.BenchmarkManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.BenchmarkManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
     /// <summary>

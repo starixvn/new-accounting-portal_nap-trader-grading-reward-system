@@ -1,5 +1,103 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = ViewLang.BenchmarkManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
+@section Head
+{
+    @Styles.Render("~/styles/benchmarkManagement")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="header-button">
+        <a href="#" id="lnkLeague" class="green-button change-list disabled"><span class="icon-list"></span>@ViewLang.League</a>
+        <a href="#" id="lnkTeam" class="green-button change-list"><span class="icon-list"></span>@ViewLang.Team</a>
+    </div>
+}
+<div id="divLeagueBMContent">
+    <div class="filter-bar">
+        <div id="divLeagueBMFilter" class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_2">
+                    <label for="ddlSport">@ViewLang.Sport</label>
+                </div>
+                <div class="edit-field col_7">
+                    <select id="ddlSport" class="width-160"></select>
+                </div>
+                <div class="lbl-field col_4">
+                    <label for="ddlSpecialLeague">@ViewLang.SpecialLeague</label>
+                </div>
+                <div class="edit-field col_7">
+                    <select id="ddlSpecialLeague" class="width-160"></select>
+                </div>
+                <div class="lbl-field col_2 align-right">
+                    <label for="txtLeague">@ViewLang.League</label>
+                </div>
+                <div class="edit-field col_12 align-left">
+                    <input type="text" id="txtLeague" class="width-250" />
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="lbl-field col_2 align-right">
+                    <label for="ddlCountry">@ViewLang.Country</label>
+                </div>
+                <div class="edit-field col_7 align-left">
+                    <select id="ddlCountry" class="width-160"></select>
+                </div>
+                <div class="lbl-field col_4 align-right">
+                    <label for="ddlMarket">@ViewLang.Market</label>
+                </div>
+                <div class="edit-field col_7 align-left">
+                    <select id="ddlMarket" class="width-160">
+                        <option value="true">@ViewLang.AllMarkets</option>
+                        <option value="false">@ViewLang.MainMarkets</option>
+                    </select>
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnSearch" type="button" class="blue-button" value="@ViewLang.Search" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divLeagueBMGridContainer" class="content-grid display-none">
+        <div id="divLeagueBMGrid" class="freegrid"></div>
+    </div>
+</div>
+<div id="divTeamBMContent" class="display-none">
+    <div id="divTeamBMGridContainer" class="display-none">
+        <div id="divTeamBMGrid" class="freegrid"></div>
+    </div>
+</div>
+<div id="divBetTypeBMContent" class="display-none">
+    <div class="league-title">
+        <span>@ViewLang.League</span>
+        <span id="spanLeagueName"></span>
+    </div>
+    <div id="divBetTypeBMGridContainer" class="display-none">
+        <div id="divBetTypeBMGrid" class="freegrid"></div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/benchmarkManagement")
+    <script type="text/javascript">
+        var labels = {
+            Sport: '@ViewLang.Sport',
+            League: '@ViewLang.League',
+            ProfitMargin: '@ViewLang.ProfitMargin',
+            Benchmark: '@ViewLang.Benchmark',
+            BetTypeBM: '@ViewLang.BetTypeBM',
+            Configure: '@ViewLang.Configure',
+            TeamName: '@ViewLang.TeamName',
+            Percentage: '@ViewLang.BetType',
+            LeagueName: '@ViewLang.LeagueName',
+            Year: '@ViewLang.Year'
+        };
+        var messages = {
+        };
+    </script>
+}
