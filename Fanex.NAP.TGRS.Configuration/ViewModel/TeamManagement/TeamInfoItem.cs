@@ -9,9 +9,8 @@
 
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
 {
-    using System;
-    using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
     using Fanex.NAP.Core.Web;
+    using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
 
     /// <summary>
     /// Team info view model.
@@ -24,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
             this.TeamName = teamInfo.TeamName;
             this.Description = teamInfo.Description;
             this.TraderCount = teamInfo.TraderCount;
-            this.CreatedDate = teamInfo.CreatedDate.ToString("MM/d/yyyy hh:mm:ss t\\M");
+            this.CreatedDate = teamInfo.CreatedDate.ToFullFormatedDate();
             this.CreatedBy = teamInfo.CreatedBy;
             this.CreatedUsername = teamInfo.CreatedUsername;
         }

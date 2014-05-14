@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement
 {
-    using System;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Configuration.Models.GradeManagement;
 
     /// <summary>
@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement
             this.GradeName = gradeInfo.GradeName;
             this.Description = gradeInfo.Description;
             this.TraderCount = gradeInfo.TraderCount;
-            this.CreatedDate = gradeInfo.CreatedDate.ToString("MM/d/yyyy hh:mm:ss t\\M");
+            this.CreatedDate = gradeInfo.CreatedDate.ToFullFormatedDate();
             this.CreatedBy = gradeInfo.CreatedBy;
             this.CreatedUsername = gradeInfo.CreatedUsername;
         }
