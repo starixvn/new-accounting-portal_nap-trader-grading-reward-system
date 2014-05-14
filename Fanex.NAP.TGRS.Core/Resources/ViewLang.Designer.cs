@@ -277,11 +277,11 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User Name.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string UserName {
+        public static string Username {
             get {
-                return ResourceManager.GetString("UserName", resourceCulture);
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

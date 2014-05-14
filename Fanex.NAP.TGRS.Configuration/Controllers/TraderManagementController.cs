@@ -12,9 +12,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.Configuration.Criteria.GradeManagement;
+    using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Implement.GradeManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Interface.GradeManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement;
+    using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
@@ -26,19 +34,23 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         #region Members
 
         private readonly ITraderManagementService _traderService;
+        private readonly ITeamManagementService _teamService;
+        private readonly IGradeManagementService _gradeService;
 
         #endregion Members
 
         #region Constructors
 
         public TraderManagementController()
-            : this(null)
+            : this(null, null, null)
         {
         }
 
-        public TraderManagementController(ITraderManagementService traderService)
+        public TraderManagementController(ITraderManagementService traderService, IGradeManagementService gradeService, ITeamManagementService teamService)
         {
             this._traderService = traderService ?? new TraderManagementService();
+            this._teamService = teamService ?? new TeamManagementService();
+            this._gradeService = gradeService ?? new GradeManagementService();
         }
 
         #endregion Constructors
@@ -65,6 +77,24 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             TraderInfoList result = this._traderService.GetAllTrader(new GetAllTradersCriteria());
 
             return Json(result);
+        }
+
+        /// <summary>
+        /// Gets initialized data for index page.
+        /// </summary>
+        /// <returns>List of JSON objects represents the team list and grade list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetInitializedData()
+        {
+            TeamInfoList teams = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
+            GradeInfoList grades = this._gradeService.GetAllGrade(new GetAllGradesCriteria());
+
+            return Json(new
+            {
+                Teams = teams,
+                Grades = grades
+            });
         }
 
         /// <summary>

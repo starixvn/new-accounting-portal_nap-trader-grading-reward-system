@@ -1,13 +1,13 @@
 ﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement
 @using Fanex.NAP.TGRS.Core.Resources
 @{
-    ViewBag.Title = ViewResources.Test;
+    ViewBag.Title = ViewLang.GradeManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Headline {
     <div class="title">
         <div>
-            <span class="curr">@ViewLang.GradeManagement</span>
+            <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
     @if (ViewBag.HasEditRight)

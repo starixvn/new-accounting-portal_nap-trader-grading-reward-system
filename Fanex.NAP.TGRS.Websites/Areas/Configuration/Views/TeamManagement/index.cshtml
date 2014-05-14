@@ -1,12 +1,12 @@
 ﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
 @{
-    ViewBag.Title = ViewResources.Test;
+    ViewBag.Title = ViewLang.TeamManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Headline {
     <div class="title">
         <div>
-            <span class="curr">@ViewLang.TeamManagement</span>
+            <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
     @if (ViewBag.HasEditRight)

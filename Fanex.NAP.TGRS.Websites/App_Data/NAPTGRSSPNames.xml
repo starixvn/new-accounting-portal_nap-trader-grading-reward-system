@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="TeamManagement">
-    <Setting Key="TGRS_Team_SelectAll" SpName="TGRS_Team_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Team_Insert" SpName="TGRS_Team_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Team_Update" SpName="TGRS_Team_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_Team_SelectAll" SpName="TGRS_Team_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Team_Insert" SpName="TGRS_Team_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Team_Update" SpName="TGRS_Team_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="GradeManagement">
-    <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Grade_Update" SpName="TGRS_Grade_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Grade_Update" SpName="TGRS_Grade_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="TraderManagement">
-    <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="BenchmarkManagement">
-    <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
-    <Setting Key="TGRS_BenchmarkTeam_ProfitMargin" SpName="TGRS_BenchmarkTeam_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_ProfitMargin" SpName="TGRS_BenchmarkTeam_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
 </Functions>

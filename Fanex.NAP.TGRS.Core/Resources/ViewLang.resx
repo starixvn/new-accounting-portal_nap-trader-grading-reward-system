@@ -189,7 +189,7 @@
   <data name="Team" xml:space="preserve">
     <value>Team</value>
   </data>
-  <data name="UserName" xml:space="preserve">
-    <value>User Name</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

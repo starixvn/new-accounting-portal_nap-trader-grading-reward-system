@@ -1,13 +1,13 @@
 ﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
 @using Fanex.NAP.TGRS.Core.Resources
 @{
-    ViewBag.Title = ViewResources.Test;
+    ViewBag.Title = ViewLang.TraderManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Headline {
     <div class="title">
         <div>
-            <span class="curr">@ViewLang.TraderManagement</span>
+            <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
     @if (ViewBag.HasEditRight)
@@ -35,7 +35,7 @@
     @Scripts.Render("~/scripts/TraderManagement")
     <script type="text/javascript">
         var labels = {
-            UserName: '@ViewLang.UserName',
+            UserName: '@ViewLang.Username',
             EmployeeId: '@ViewLang.EmployeeId',
             Team: '@ViewLang.Team',
             Grade: '@ViewLang.Grade',

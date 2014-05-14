@@ -14,14 +14,22 @@ Fanex.TGRS.TraderManagement = function () {
     var urls = {
         GetAllTrader: common.ResolveRootUrl('TraderManagement/GetAllTrader'),
         InsertTrader: common.ResolveRootUrl('TraderManagement/InsertTrader'),
-        UpdateTrader: common.ResolveRootUrl('TraderManagement/UpdateTrader')
+        UpdateTrader: common.ResolveRootUrl('TraderManagement/UpdateTrader'),
+        GetInitializedData: common.ResolveRootUrl('TraderManagement/GetInitializedData'),
+    };
+    var filterParameters = {
+        teamId: null,
+        gradeId: null
     };
     var domElements = {
         divTradersGrid: null,
         lnkAddNewTrader: null,
         divInsertTraderForm: null,
         divUpdateTraderForm: null,
-        divPopup: null
+        ddlGrade: null,
+        ddlTeam: null,
+        divPopup: null,
+        btnSearch: null
     };
     var popupElements = {
         divInsertTraderForm: null,
@@ -42,7 +50,10 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.lnkAddNewTrader = $('#lnkAddNewTrader');
         domElements.divInsertTraderForm = $('#divInsertTraderForm').clone();
         domElements.divUpdateTraderForm = $('#divUpdateTraderForm').clone();
+        domElements.ddlGrade = $('#ddlGrade');
+        domElements.ddlTeam = $('#ddlTeam');
         domElements.divPopup = $('#divPopup');
+        domElements.btnSearch = $('#btnSearch');
 
         $('#divHiddenForm').empty();
     };
@@ -187,8 +198,8 @@ Fanex.TGRS.TraderManagement = function () {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 150, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.EmployeeId, Width: 150, Name: 'ColEmployee', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.EmployeeId, Width: 100, Name: 'ColEmployee', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
@@ -223,6 +234,63 @@ Fanex.TGRS.TraderManagement = function () {
         renderGrid(data);
     };
 
+    // Initialize filter form data.
+    var intializeFilterData = function () {
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetInitializedData,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                if (result.Teams) {
+                    updateTeamDropdown(result.Teams.TeamInfoItems);
+                }
+
+                if (result.Grades) {
+                    updateGradeDropdown(result.Grades.GradeInfoItems);
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+    // Update Team drop-down list.
+    var updateTeamDropdown = function (data) {
+        // Clear old values.
+        domElements.ddlTeam.html('');
+
+        //Default value
+        domElements.ddlTeam.append($('<option></option>').attr('value', "-1").text("All Teams"));
+
+        // Add new values.
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                domElements.ddlTeam.append($('<option></option>').attr('value', item.TeamId).text(item.TeamName));
+            });
+        }
+    };
+
+    // Update Grade drop-down list.
+    var updateGradeDropdown = function (data) {
+        // Clear old values.
+        domElements.ddlGrade.html('');
+
+        //Default value
+        domElements.ddlGrade.append($('<option></option>').attr('value', "-1").text("All Grades"));
+
+        // Add new values.
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                domElements.ddlGrade.append($('<option></option>').attr('value', item.GradeId).text(item.GradeName));
+            });
+        }
+    };
+
     // Disable pop up form.
     var disablePopup = function () {
         popupElements.txtTraderName.prop('disabled', true);
@@ -237,6 +305,19 @@ Fanex.TGRS.TraderManagement = function () {
         //event: click on new Trader button.
         domElements.lnkAddNewTrader.on('click', function () {
             makeInsertTraderForm();
+        });
+
+        //btnSearch
+        domElements.btnSearch.on('click', function () {
+            // Delay 70ms for jQuery-UI combo-box to verify its state.
+            setTimeout(function () {
+                if (validator.countErrors(domElements.divTraderFilterForm) === 0) {
+                    filterParameters.teamId = domElements.ddlTeam.val();
+                    filterParameters.gradeId = domElements.ddlGrade.val();
+
+                    getAllTraders();
+                }
+            }, 70);
         });
 
         //Grid's event
@@ -286,6 +367,7 @@ Fanex.TGRS.TraderManagement = function () {
     $this.Initialize = function () {
         cacheDOMElements();
         handlePageEvents();
+        intializeFilterData();
         getAllTraders();
     };
 };
