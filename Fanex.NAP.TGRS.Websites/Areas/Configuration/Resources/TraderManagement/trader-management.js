@@ -38,13 +38,14 @@ Fanex.TGRS.TraderManagement = function () {
     var popupElements = {
         divInsertTraderForm: null,
         divUpdateTraderForm: null,
-        txtTraderName: null,
-        txtTraderDes: null,
-        txtTraderId: null,
+        txtUserName: null,
+        txtEmployeeId: null,
         btnSave: null,
         btnCancel: null,
         popupType: 0,
-        divErrorSuccessMsg: null
+        divErrorSuccessMsg: null,
+        ddlGrade: null,
+        ddlTeam: null,
     };
 
     // Cache DOM Elements.
@@ -69,21 +70,24 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.divInsertTraderForm = $("#divInsertTraderForm", domElements.divPopup);
         popupElements.divUpdateTraderForm = $("#divUpdateTraderForm", domElements.divPopup);
         popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
-        popupElements.txtTraderName = $('#txtTraderName', domElements.divPopup);
-        popupElements.txtTraderDes = $('#txtTraderDes', domElements.divPopup);
-        popupElements.txtTraderId = $('#txtTraderId', domElements.divPopup);
+        popupElements.txtUserName = $('#txtUserName', domElements.divPopup);
+        popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
+        popupElements.ddlGrade = $('#ddlGrade', domElements.divPopup);
+        popupElements.ddlTeam = $('#ddlTeam', domElements.divPopup);
     };
 
     // Bind event handlers to elements on the insert Trader popup.
     var bindNewTraderPopupEvent = function () {
-        popupElements.btnSave.click(function () {
+        popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
-                var TraderName = $.trim(popupElements.txtTraderName.val());
-                var TraderDes = $.trim(popupElements.txtTraderDes.val());
+                var username = $.trim(popupElements.txtUserName.val());
+                var employeeId = $.trim(popupElements.txtEmployeeId.val());
+                var teamId = $.trim(popupElements.ddlTeam.val());
+                var gradeId = $.trim(popupElements.ddlGrade.val());
 
-                insertTrader(TraderName, TraderDes);
+                insertTrader(username, employeeId, teamId, gradeId);
             }
         });
 
@@ -92,13 +96,14 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
     var bindUpdateTraderPopupEvent = function () {
-        popupElements.btnSave.click(function () {
+        popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
-                var txtTraderId = $.trim(popupElements.txtTraderId.val());
-                var TraderName = $.trim(popupElements.txtTraderName.val());
-                var TraderDes = $.trim(popupElements.txtTraderDes.val());
+                var username = $.trim(popupElements.txtUserName.val());
+                var employeeId = $.trim(popupElements.txtEmployeeId.val());
+                var teamId = $.trim(popupElements.ddlTeam.val());
+                var gradeId = $.trim(popupElements.ddlGrade.val());
 
-                updateTrader(txtTraderId, TraderName, TraderDes);
+                updateTrader(username, employeeId, teamId, gradeId);
             }
         });
 
@@ -130,10 +135,12 @@ Fanex.TGRS.TraderManagement = function () {
     };
 
     //Insert new Trader
-    var insertTrader = function (TraderName, description) {
+    var insertTrader = function (username, employeeId, teamId, gradeId) {
         var isertingParameters = {
-            TraderName: TraderName,
-            Description: description
+            Username: username,
+            EmployeeId: employeeId,
+            TeamId: teamId,
+            GradeId: gradeId
         };
 
         common.DisableInput();
@@ -164,11 +171,12 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
     //insert Trader
-    var updateTrader = function (TraderId, TraderName, TraderDes) {
+    var updateTrader = function (username, employeeId, teamId, gradeId) {
         var updateParameters = {
-            TraderId: TraderId,
-            TraderName: TraderName,
-            Description: TraderDes
+            Username: username,
+            EmployeeId: employeeId,
+            TeamId: teamId,
+            GradeId: gradeId
         };
 
         common.DisableInput();
@@ -201,7 +209,8 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var nameColFormat = '<span class="edit-Trader-link link" data-Trader-id="{0}" data-Trader-name="{1}">{1}</span>';
+        var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"';
+        nameColFormat += 'data-trader-name="{1}" data-trader-team="{2}" data-trader-grade="{3}">{1}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 150, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -220,7 +229,7 @@ Fanex.TGRS.TraderManagement = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName);
+                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName);
                 TraderNameCol = item.TraderName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
@@ -300,10 +309,16 @@ Fanex.TGRS.TraderManagement = function () {
         }
     };
 
+    // Update Popup drop-down list.
+    var updatePopupDropdown = function () {
+        popupElements.ddlTeam.html(domElements.ddlTeam.html());
+        popupElements.ddlGrade.html(domElements.ddlGrade.html());
+    };
+
     // Disable pop up form.
     var disablePopup = function () {
-        popupElements.txtTraderName.prop('disabled', true);
-        popupElements.txtTraderDes.prop('disabled', true);
+        popupElements.txtUserName.prop('disabled', true);
+        popupElements.txtEmployeeId.prop('disabled', true);
         popupElements.btnSave.prop('disabled', true);
         popupElements.btnCancel.prop('disabled', true);
     };
@@ -333,13 +348,14 @@ Fanex.TGRS.TraderManagement = function () {
 
         //Grid's event
         //event: click on Trader name
-        domElements.divTradersGrid.on('click','span.edit-Trader-link', function () {
+        domElements.divTradersGrid.on('click','span.edit-trader-link', function () {
             var $obj = $(this);
-            var TraderId = $obj.attr('data-Trader-id');
-            var TraderName = $obj.attr('data-Trader-name');
-            var TraderDes = $("#TraderDesc_"+TraderId).text();
+            var employeeId = $obj.attr('data-trader-id');
+            var username = $obj.attr('data-trader-name');
+            var teamId = $obj.attr('data-trader-team');
+            var gradeId = $obj.attr('data-trader-grade');
 
-            makeUpdateTraderForm(TraderId, TraderName, TraderDes);
+            makeUpdateTraderForm(username, employeeId, teamId, gradeId);
         });
     };
 
@@ -353,9 +369,10 @@ Fanex.TGRS.TraderManagement = function () {
         //prepare event, data
         cachePopupElements();
         bindNewTraderPopupEvent();
+        updatePopupDropdown();
     };
     // Display update Trader form.
-    var makeUpdateTraderForm = function (TraderId, TraderName, TraderDes) {
+    var makeUpdateTraderForm = function (username, employeeId, teamId, gradeId) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
@@ -364,9 +381,11 @@ Fanex.TGRS.TraderManagement = function () {
         //prepare event, data
         cachePopupElements();
         bindUpdateTraderPopupEvent();
-        popupElements.txtTraderName.val(TraderName);
-        popupElements.txtTraderDes.val(TraderDes);
-        popupElements.txtTraderId.val(TraderId);
+
+        popupElements.txtUserName.val(username);
+        popupElements.txtEmployeeId.val(employeeId);
+        popupElements.ddlTeam.val(teamId);
+        popupElements.ddlGrade.val(gradeId);
     };
 
     var refreshPopup = function()

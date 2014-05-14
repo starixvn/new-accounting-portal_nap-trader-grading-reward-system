@@ -17,15 +17,15 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
     /// </summary>
     public class InsertTraderCriteria : CriteriaBase
     {
-        public string TraderName { get; set; }
+        public string Username { get; set; }
 
-        public string Description { get; set; }
+        public string EmployeeId { get; set; }
+
+        public int TeamId { get; set; }
+
+        public int GradeId { get; set; }
 
         public int UserId { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets Setting Key.
