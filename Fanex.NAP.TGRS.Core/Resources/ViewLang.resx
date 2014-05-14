@@ -165,4 +165,31 @@
   <data name="NewGrade" xml:space="preserve">
     <value>New Grade</value>
   </data>
+  <data name="EditTrader" xml:space="preserve">
+    <value>Edit Trader</value>
+  </data>
+  <data name="NewTrader" xml:space="preserve">
+    <value>New Trader</value>
+  </data>
+  <data name="TraderManagement" xml:space="preserve">
+    <value>Trader Management</value>
+  </data>
+  <data name="TraderName" xml:space="preserve">
+    <value>Trader Name</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>Employee ID</value>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
 </root>

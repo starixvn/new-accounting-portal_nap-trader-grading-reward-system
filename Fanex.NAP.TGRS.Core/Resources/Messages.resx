@@ -192,4 +192,10 @@
   <data name="UpdateGradeSuccessfully" xml:space="preserve">
     <value>The grade has been updated successfully!</value>
   </data>
+  <data name="AddTraderSuccessfully" xml:space="preserve">
+    <value>The new trader has been added successfully!</value>
+  </data>
+  <data name="UpdateTraderSuccessfully" xml:space="preserve">
+    <value>The trader has been updated successfully!</value>
+  </data>
 </root>

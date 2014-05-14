@@ -100,6 +100,9 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.Add(new ScriptBundle("~/scripts/gradeManagement").Include(
                 "~/Areas/Configuration/Resources/GradeManagement/grade-management.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/traderManagement").Include(
+                "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/benchmarkManagement").Include(
                 "~/Areas/Configuration/Resources/BenchmarkManagement/team-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",

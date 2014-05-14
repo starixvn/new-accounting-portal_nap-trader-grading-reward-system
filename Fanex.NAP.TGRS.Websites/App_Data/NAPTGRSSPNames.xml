@@ -10,6 +10,11 @@
     <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
     <Setting Key="TGRS_Grade_Update" SpName="TGRS_Grade_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="TraderManagement">
+    <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+    <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
+  </Function>
   <Function Name="BenchmarkManagement">
     <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbAdminNet"></Setting>

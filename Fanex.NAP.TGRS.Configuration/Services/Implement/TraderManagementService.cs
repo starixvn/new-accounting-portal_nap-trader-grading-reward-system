@@ -1,0 +1,69 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="TraderManagementService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// <history>
+//   <change who="Ken.Nguyen" date="2014.5.12">Created</change>
+// </history>
+
+namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement
+{
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+
+    /// <summary>
+    /// Trader Management Service.
+    /// </summary>
+    public class TraderManagementService : TGRSBaseService, ITraderManagementService
+    {
+        /// <summary>
+        /// Get all Trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of Trader information.</returns>
+        public TraderInfoList GetAllTrader(GetAllTradersCriteria criteria)
+        {
+            TraderInfoList result = null;
+
+            var rawData = this.GetData<TraderInfo>(criteria);
+
+            if (rawData != null)
+            {
+                result = new TraderInfoList();
+
+                foreach (TraderInfo trader in rawData)
+                {
+                    var traderInfoItem = new TraderInfoItem(trader);
+
+                    result.Add(traderInfoItem);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Insert new Trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to insert data.</param>
+        /// <returns>Result of insert.</returns>
+        public ICommandResult InsertTrader(InsertTraderCriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        /// <summary>
+        /// Update new Trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to update data.</param>
+        /// <returns>Result of update.</returns>
+        public ICommandResult UpdateTrader(UpdateTraderCriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+    }
+}
