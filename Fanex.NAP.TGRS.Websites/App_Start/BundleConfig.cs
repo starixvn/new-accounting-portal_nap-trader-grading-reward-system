@@ -106,7 +106,8 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.Add(new ScriptBundle("~/scripts/benchmarkManagement").Include(
                 "~/Areas/Configuration/Resources/BenchmarkManagement/team-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",
-                "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js"));
+                "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js",
+                "~/Areas/Configuration/Resources/BenchmarkManagement/page-manager.js"));
         }
     }
 

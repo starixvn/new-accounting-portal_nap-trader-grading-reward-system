@@ -171,6 +171,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\NAPCommonSpNames.xml" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
