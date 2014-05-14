@@ -19,7 +19,9 @@ Fanex.TGRS.TraderManagement = function () {
     };
     var filterParameters = {
         teamId: null,
-        gradeId: null
+        gradeId: null,
+        username: null,
+        employeeId: null,
     };
     var domElements = {
         divTradersGrid: null,
@@ -29,7 +31,9 @@ Fanex.TGRS.TraderManagement = function () {
         ddlGrade: null,
         ddlTeam: null,
         divPopup: null,
-        btnSearch: null
+        btnSearch: null,
+        txtUserName: null,
+        txtEmployeeId: null
     };
     var popupElements = {
         divInsertTraderForm: null,
@@ -54,6 +58,8 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.ddlTeam = $('#ddlTeam');
         domElements.divPopup = $('#divPopup');
         domElements.btnSearch = $('#btnSearch');
+        domElements.txtUserName = $('#txtUserName');
+        domElements.txtEmployeeId = $('#txtEmployeeId');
 
         $('#divHiddenForm').empty();
     };
@@ -108,6 +114,7 @@ Fanex.TGRS.TraderManagement = function () {
             url: urls.GetAllTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
+            data: JSON.stringify(filterParameters),
             success: function (result) {
                 if (result) {
                     renderGrid(result.TraderInfoItems);
@@ -265,7 +272,8 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.ddlTeam.html('');
 
         //Default value
-        domElements.ddlTeam.append($('<option></option>').attr('value', "-1").text("All Teams"));
+        domElements.ddlTeam.append($('<option></option>').attr('value', "0").text(labels.AllTeams));
+        domElements.ddlTeam.val(null).next().children('input').val(labels.AllTeams);
 
         // Add new values.
         if (data && data.length > 0) {
@@ -281,7 +289,8 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.ddlGrade.html('');
 
         //Default value
-        domElements.ddlGrade.append($('<option></option>').attr('value', "-1").text("All Grades"));
+        domElements.ddlGrade.append($('<option></option>').attr('value', "0").text(labels.AllGrades));
+        domElements.ddlGrade.val(null).next().children('input').val(labels.AllGrades);
 
         // Add new values.
         if (data && data.length > 0) {
@@ -311,9 +320,11 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.btnSearch.on('click', function () {
             // Delay 70ms for jQuery-UI combo-box to verify its state.
             setTimeout(function () {
-                if (validator.countErrors(domElements.divTraderFilterForm) === 0) {
+                if (validator.CountErrors(domElements.divTraderFilterForm) === 0) {
                     filterParameters.teamId = domElements.ddlTeam.val();
                     filterParameters.gradeId = domElements.ddlGrade.val();
+                    filterParameters.username = domElements.txtUserName.val();
+                    filterParameters.employeeId = domElements.txtEmployeeId.val();
 
                     getAllTraders();
                 }

@@ -69,12 +69,16 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <summary>
         /// Get all Traders.
         /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetAllTrader()
+        public JsonResult GetAllTrader(GetAllTradersCriteria criteria)
         {
-            TraderInfoList result = this._traderService.GetAllTrader(new GetAllTradersCriteria());
+            criteria.UserName = criteria.UserName ?? string.Empty;
+            criteria.EmployeeId = criteria.EmployeeId ?? string.Empty;
+
+            TraderInfoList result = this._traderService.GetAllTrader(criteria);
 
             return Json(result);
         }
