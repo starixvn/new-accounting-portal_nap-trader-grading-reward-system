@@ -18,6 +18,10 @@ Fanex.TGRS.TraderManagement = function () {
         UpdateTrader: common.ResolveRootUrl('TraderManagement/UpdateTrader'),
         GetInitializedData: common.ResolveRootUrl('TraderManagement/GetInitializedData'),
     };
+    var popupType = {
+        update: 1,
+        insert: 2
+    };
     var filterParameters = {
         teamId: null,
         gradeId: null,
@@ -34,16 +38,17 @@ Fanex.TGRS.TraderManagement = function () {
         divPopup: null,
         btnSearch: null,
         txtUserName: null,
-        txtEmployeeId: null
+        txtEmployeeId: null,
+        divTraderFilterForm: null
     };
     var popupElements = {
         divInsertTraderForm: null,
         divUpdateTraderForm: null,
         txtUserName: null,
+        txtCustId: null,
         txtEmployeeId: null,
         btnSave: null,
         btnCancel: null,
-        popupType: 0,
         divErrorSuccessMsg: null,
         ddlGrade: null,
         ddlTeam: null,
@@ -68,7 +73,7 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.btnSearch = $('#btnSearch');
         domElements.txtUserName = $('#txtUserName');
         domElements.txtEmployeeId = $('#txtEmployeeId');
-
+        domElements.divTraderFilterForm= $('#divTraderFilterForm');
         $('#divHiddenForm').empty();
     };
 
@@ -78,6 +83,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.divUpdateTraderForm = $("#divUpdateTraderForm", domElements.divPopup);
         popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
         popupElements.txtUserName = $('#txtUserName', domElements.divPopup);
+        popupElements.txtCustId = $('#txtCustId', domElements.divPopup);
         popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
@@ -91,12 +97,14 @@ Fanex.TGRS.TraderManagement = function () {
     var bindNewTraderPopupEvent = function () {
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
-                var username = $.trim(popupElements.txtUserName.val());
-                var employeeId = $.trim(popupElements.txtEmployeeId.val());
-                var teamId = $.trim(popupElements.ddlTeam.val());
-                var gradeId = $.trim(popupElements.ddlGrade.val());
+                var parameters = {
+                    Username:$.trim(popupElements.txtUserName.val()),
+                    EmployeeId: $.trim(popupElements.txtEmployeeId.val()),
+                    TeamId: popupElements.ddlTeam.val(),
+                    GradeId: popupElements.ddlGrade.val()
+                };
 
-                insertTrader(username, employeeId, teamId, gradeId);
+                insertTrader(parameters);
             }
         });
 
@@ -110,16 +118,18 @@ Fanex.TGRS.TraderManagement = function () {
         maxDate.setMonth(maxDate.getMonth() + 1);
 
         layout.CreateDatepicker(popupElements.dpkEffectiveDate, 'txtEffectiveDate',
-            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'width-200');
+            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'trader-width-200');
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
-                var username = $.trim(popupElements.txtUserName.val());
-                var employeeId = $.trim(popupElements.txtEmployeeId.val());
-                var teamId = $.trim(popupElements.ddlTeam.val());
-                var gradeId = $.trim(popupElements.ddlGrade.val());
 
-                updateTrader(username, employeeId, teamId, gradeId);
+                var parameters = {
+                    CustId: popupElements.txtCustId.val(),
+                    TeamId: popupElements.ddlTeam.val(),
+                    GradeId: popupElements.ddlGrade.val(),
+                    EffectiveDate: popupElements.dpkEffectiveDate.nexDatePicker('getSingleDate')
+                };
+                updateTrader(parameters);
             }
         });
 
@@ -130,6 +140,7 @@ Fanex.TGRS.TraderManagement = function () {
 
     //Get all Traders
     var getAllTraders = function () {
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetAllTrader,
@@ -151,21 +162,14 @@ Fanex.TGRS.TraderManagement = function () {
     };
 
     //Insert new Trader
-    var insertTrader = function (username, employeeId, teamId, gradeId) {
-        var isertingParameters = {
-            Username: username,
-            EmployeeId: employeeId,
-            TeamId: teamId,
-            GradeId: gradeId
-        };
-
+    var insertTrader = function (parameter) {
         common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.InsertTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(isertingParameters),
+            data: JSON.stringify(parameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.AddTraderSuccessfully, false, function () {
@@ -187,21 +191,14 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
     //insert Trader
-    var updateTrader = function (username, employeeId, teamId, gradeId) {
-        var updateParameters = {
-            Username: username,
-            EmployeeId: employeeId,
-            TeamId: teamId,
-            GradeId: gradeId
-        };
-
+    var updateTrader = function (parameter) {
         common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.UpdateTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(updateParameters),
+            data: JSON.stringify(parameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateTraderSuccessfully, false, function () {
@@ -225,8 +222,8 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"';
-        nameColFormat += 'data-trader-name="{1}" data-trader-team="{2}" data-trader-grade="{3}">{1}</span>';
+        var nameColFormat = '<span class="edit-trader-link link" data-cust-id="{0}"';
+        nameColFormat += 'data-username="{1}" data-trader-team="{2}" data-trader-grade="{3}" data-trader-employeeId="{4}">{1}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 150, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -237,6 +234,12 @@ Fanex.TGRS.TraderManagement = function () {
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
             gridExpandHeight: 100,
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges
+            }
         };
         var editableTraderNameCol = "";
         var TraderNameCol = "";
@@ -245,7 +248,7 @@ Fanex.TGRS.TraderManagement = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName);
+                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId);
                 TraderNameCol = item.TraderName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
@@ -340,9 +343,21 @@ Fanex.TGRS.TraderManagement = function () {
     };
 
     // Update Popup drop-down list.
-    var updatePopupDropdown = function (defaultLabelTeam, selectTeam, defaultLabelGrade, selectGrade) {
-        updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, defaultLabelTeam, selectTeam);
-        updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, defaultLabelGrade, selectGrade);
+    var updatePopupDropdown = function (type, selectTeam, selectGrade) {
+        if (type === popupType.update)
+        {
+            updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, null, selectTeam);
+            updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, null, selectGrade);
+        }
+        else
+        {
+            updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, labels.SelectATeam, selectTeam);
+            updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, labels.SelectAGrade, selectGrade);
+
+            //edit to null val for validator to check data-val-required
+            popupElements.ddlTeam.find(":selected").val('');
+            popupElements.ddlGrade.find(":selected").val('');
+        }
     };
 
     // Disable pop up form.
@@ -351,7 +366,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.txtEmployeeId.prop('disabled', true);
         popupElements.ddlTeam.prop('disabled', true);
         popupElements.ddlGrade.prop('disabled', true);
-        popupElements.divEffectiveDate.prop('disabled', true);
+        popupElements.dpkEffectiveDate.prop('disabled', true);
         popupElements.btnSave.prop('disabled', true);
         popupElements.btnCancel.prop('disabled', true);
     };
@@ -362,6 +377,18 @@ Fanex.TGRS.TraderManagement = function () {
         //event: click on new Trader button.
         domElements.lnkAddNewTrader.on('click', function () {
             makeInsertTraderForm();
+        });
+
+        //Enter on fields
+        domElements.txtUserName.off('keyup').on('keyup', function (event) {
+            if (event.keyCode === 13) {
+                domElements.btnSearch.click();
+            }
+        });
+        domElements.txtEmployeeId.off('keyup').on('keyup', function (event) {
+            if (event.keyCode === 13) {
+                domElements.btnSearch.click();
+            }
         });
 
         //btnSearch
@@ -383,16 +410,19 @@ Fanex.TGRS.TraderManagement = function () {
         //event: click on Trader name
         domElements.divTradersGrid.on('click','span.edit-trader-link', function () {
             var $obj = $(this);
-            var employeeId = $obj.attr('data-trader-id');
-            var username = $obj.attr('data-trader-name');
+            var custId = $obj.attr('data-cust-id');
+            var username = $obj.attr('data-username');
+            var employeeId = $obj.attr('data-trader-employeeId');
             var teamName = $obj.attr('data-trader-team');
             var gradeName = $obj.attr('data-trader-grade');
+            
 
             //get teamId and gradeId by name
             var teamId = cacheTeamDataId[teamName];
             var gradeId = cacheGradeDataId[gradeName];
 
-            makeUpdateTraderForm(username, employeeId, teamId, gradeId);
+            makeUpdateTraderForm(custId, username, employeeId, teamId, gradeId);
+
         });
     };
 
@@ -405,11 +435,11 @@ Fanex.TGRS.TraderManagement = function () {
 
         //prepare event, data
         cachePopupElements();
+        updatePopupDropdown(popupType.insert, defaultSelectVal, defaultSelectVal);
         bindNewTraderPopupEvent();
-        updatePopupDropdown(labels.SelectATeam, defaultSelectVal, labels.SelectAGrade, defaultSelectVal);
     };
     // Display update Trader form.
-    var makeUpdateTraderForm = function (username, employeeId, teamId, gradeId) {
+    var makeUpdateTraderForm = function (custId, username, employeeId, teamId, gradeId) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
@@ -417,14 +447,16 @@ Fanex.TGRS.TraderManagement = function () {
 
         //prepare event, data
         cachePopupElements();
-        bindUpdateTraderPopupEvent();
-        
+
         //Prepare data for update form ;
         popupElements.txtUserName.val(username);
+        popupElements.txtCustId.val(custId);
         popupElements.txtEmployeeId.val(employeeId);
         popupElements.txtUserName.prop('disabled', true);
         popupElements.txtEmployeeId.prop('disabled', true);
-        updatePopupDropdown(null, teamId, null, gradeId);
+        updatePopupDropdown(popupType.update, teamId, gradeId);
+
+        bindUpdateTraderPopupEvent();
     };
 
     var refreshPopup = function()
@@ -437,6 +469,5 @@ Fanex.TGRS.TraderManagement = function () {
         cacheDOMElements();
         initPageFields();
         intializeFilterData();
-        getAllTraders();
     };
 };

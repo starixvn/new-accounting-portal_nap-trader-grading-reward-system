@@ -91,6 +91,7 @@ Fanex.TGRS.TeamManagement = function () {
 
     //Get all teams
     var getAllTeams = function () {
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetAllTeam,

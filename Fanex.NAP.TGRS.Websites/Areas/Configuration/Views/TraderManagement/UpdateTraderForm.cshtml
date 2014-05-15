@@ -7,6 +7,7 @@
             </div>
             <div class="edit-field">
                 <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
+                <input type="hidden" id="txtCustId" />
             </div>
         </div>
         <div class="form-row">
@@ -22,7 +23,7 @@
                 <label>@ViewLang.Team</label>
             </div>
             <div class="edit-field">
-                <select id="ddlTeam" class="width-200"></select>
+                <select id="ddlTeam" class="trader-width-200"></select>
             </div>
         </div>
         <div class="form-row">
@@ -30,7 +31,7 @@
                 <label>@ViewLang.Grade</label>
             </div>
             <div class="edit-field">
-                <select id="ddlGrade" class="width-200"></select>
+                <select id="ddlGrade" class="trader-width-200"></select>
             </div>
         </div>
         <div class="form-row">

@@ -17,6 +17,14 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
     /// </summary>
     public class GetAllTradersCriteria : CriteriaBase
     {
+        public GetAllTradersCriteria()
+        {
+            UserName = string.Empty;
+            EmployeeId = string.Empty;
+            TeamId = 0;
+            GradeId = 0;
+        }
+
         public string UserName { get; set; }
 
         public string EmployeeId { get; set; }

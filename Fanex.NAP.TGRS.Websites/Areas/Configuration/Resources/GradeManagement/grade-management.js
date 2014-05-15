@@ -92,6 +92,7 @@ Fanex.TGRS.GradeManagement = function () {
 
     //Get all grades
     var getAllGrades = function () {
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetAllGrade,
