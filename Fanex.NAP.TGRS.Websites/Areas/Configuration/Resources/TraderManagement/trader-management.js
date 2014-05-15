@@ -46,6 +46,7 @@ Fanex.TGRS.TraderManagement = function () {
         divErrorSuccessMsg: null,
         ddlGrade: null,
         ddlTeam: null,
+        divEffectiveDate: null
     };
 
     // Cache DOM Elements.
@@ -76,6 +77,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.ddlGrade = $('#ddlGrade', domElements.divPopup);
         popupElements.ddlTeam = $('#ddlTeam', domElements.divPopup);
+        popupElements.divEffectiveDate = $('#divDatepickerPlugin', domElements.divPopup);
     };
 
     // Bind event handlers to elements on the insert Trader popup.
@@ -319,12 +321,28 @@ Fanex.TGRS.TraderManagement = function () {
     var disablePopup = function () {
         popupElements.txtUserName.prop('disabled', true);
         popupElements.txtEmployeeId.prop('disabled', true);
+        popupElements.ddlTeam.prop('disabled', true);
+        popupElements.ddlGrade.prop('disabled', true);
+        popupElements.divEffectiveDate.prop('disabled', true);
         popupElements.btnSave.prop('disabled', true);
         popupElements.btnCancel.prop('disabled', true);
     };
 
-    // Handle page's events.
-    var handlePageEvents = function () {
+    // Init page fields and events
+    var initPageFields = function () {
+        //Date picker
+        /*
+        layout.CreateDateRange(
+            popupElements.divEffectiveDate,
+            null,
+            'col_9',
+            null,
+            'col_5',
+            datepickerSetting.Today,
+            null,
+            null,
+            null);
+            */
         //Title button
         //event: click on new Trader button.
         domElements.lnkAddNewTrader.on('click', function () {
@@ -381,11 +399,14 @@ Fanex.TGRS.TraderManagement = function () {
         //prepare event, data
         cachePopupElements();
         bindUpdateTraderPopupEvent();
-
+        
+        //Prepare update form data;
         popupElements.txtUserName.val(username);
         popupElements.txtEmployeeId.val(employeeId);
         popupElements.ddlTeam.val(teamId);
         popupElements.ddlGrade.val(gradeId);
+        popupElements.txtUserName.prop('disabled', true);
+        popupElements.txtEmployeeId.prop('disabled', true);
     };
 
     var refreshPopup = function()
@@ -396,7 +417,7 @@ Fanex.TGRS.TraderManagement = function () {
 
     $this.Initialize = function () {
         cacheDOMElements();
-        handlePageEvents();
+        initPageFields();
         intializeFilterData();
         getAllTraders();
     };

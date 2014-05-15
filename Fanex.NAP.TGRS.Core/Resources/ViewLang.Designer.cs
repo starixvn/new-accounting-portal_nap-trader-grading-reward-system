@@ -205,6 +205,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Effective Date.
+        /// </summary>
+        public static string EffectiveDate {
+            get {
+                return ResourceManager.GetString("EffectiveDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee ID.
         /// </summary>
         public static string EmployeeId {
@@ -327,6 +336,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selec a grade.
+        /// </summary>
+        public static string SelectAGrade {
+            get {
+                return ResourceManager.GetString("SelectAGrade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a team.
+        /// </summary>
+        public static string SelectATeam {
+            get {
+                return ResourceManager.GetString("SelectATeam", resourceCulture);
             }
         }
         

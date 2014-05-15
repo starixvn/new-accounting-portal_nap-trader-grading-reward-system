@@ -243,4 +243,13 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="SelectAGrade" xml:space="preserve">
+    <value>Selec a grade</value>
+  </data>
+  <data name="SelectATeam" xml:space="preserve">
+    <value>Select a team</value>
+  </data>
 </root>

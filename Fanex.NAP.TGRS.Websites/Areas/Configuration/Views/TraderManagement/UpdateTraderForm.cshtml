@@ -1,22 +1,43 @@
 ﻿<div id="divUpdateTraderForm" class="form-bar" style="width: 438px">
-    <div class="form expand-form">
+        <div class="form expand-form">
         <div id="divErrorSuccessMsg" class="inline-message"></div>
         <div class="form-row">
             <div class="lbl-field">
-                <label>@ViewLang.TraderName</label>
+                <label>@ViewLang.Username</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtTraderName" class="width-200" data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
-                <input type="hidden" id="txtTraderId" />
+                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
             </div>
         </div>
         <div class="form-row">
             <div class="lbl-field">
-                <label>@ViewLang.Description</label>
+                <label>@ViewLang.EmployeeId</label>
             </div>
             <div class="edit-field">
-                <textarea rows="3" id="txtTraderDes" class="width-200" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200"></textarea>
+                <input type="text" id="txtEmployeeId" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
             </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.Team</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlTeam" class="width-200"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.Grade</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlGrade" class="width-200"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label>@ViewLang.EffectiveDate</label>
+            </div>
+            <div id="divDatepickerPlugin"></div>
         </div>
         <div class="form-row button-row">
             <div class="lbl-field  normal-label"></div>
