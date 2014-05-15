@@ -118,7 +118,7 @@ Fanex.TGRS.TraderManagement = function () {
         maxDate.setMonth(maxDate.getMonth() + 1);
 
         layout.CreateDatepicker(popupElements.dpkEffectiveDate, 'txtEffectiveDate',
-            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'trader-width-200');
+            labels.EffectiveDate, 'width-80', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'trader-width-200');
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
