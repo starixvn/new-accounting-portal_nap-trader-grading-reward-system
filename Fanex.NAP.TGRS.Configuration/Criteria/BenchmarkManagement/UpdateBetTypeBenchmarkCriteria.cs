@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
     {
         public int LeagueId { get; set; }
 
-        public int BetTypeId { get; set; }
+        public int BetType { get; set; }
 
         public decimal Benchmark { get; set; }
 
@@ -34,7 +34,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_BenchmarkBettype_Update";
+            return "TGRS_BenchmarkBetType_Update";
         }
 
         /// <summary>

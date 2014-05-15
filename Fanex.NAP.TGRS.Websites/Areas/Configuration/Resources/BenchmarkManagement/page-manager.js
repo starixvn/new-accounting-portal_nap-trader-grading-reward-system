@@ -1,9 +1,10 @@
 ﻿/* File Created: May 14, 2014 */
-/* global Namespace, Fanex */
+/* global Namespace, Fanex, common */
+
+'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.PageManager');
 Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
-    'use strict';
 
     var $this = this;
     var domElements = {
@@ -41,7 +42,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
 
                 pages.LeagueBenchmark = pages.LeagueBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark();
                 currentTag = pages.LeagueBenchmark;
-                currentTag.InitPage(domElements.divLeagueBMContent);
+                currentTag.InitPage(domElements.divLeagueBMContent, $this.ShowBetTypeBenchmark);
+
+                if (common.IsOpenPopup()) {
+                    common.ClosePopup();
+                }
             }
         }).click();
 
@@ -56,11 +61,15 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
                 pages.TeamBenchmark = pages.TeamBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark();
                 currentTag = pages.TeamBenchmark;
                 currentTag.InitPage(domElements.divTeamBMContent);
+
+                if (common.IsOpenPopup()) {
+                    common.ClosePopup();
+                }
             }
         });
     };
 
-    $this.ShowBetTypeBenchmark = function (leagueID) {
+    $this.ShowBetTypeBenchmark = function (leagueID, leagueName) {
         domElements.lnkTeam.removeClass('disabled');
         domElements.lnkLeague.removeClass('disabled');
         domElements.divBetTypeBMContent.removeClass('display-none');
@@ -69,7 +78,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
 
         pages.BetTypeBenchmark = pages.BetTypeBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark();
         currentTag = new Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark();
-        currentTag.InitPage(domElements.divBetTypeBMContent, leagueID);
+        currentTag.InitPage(domElements.divBetTypeBMContent, leagueID, leagueName);
+
+        if (common.IsOpenPopup()) {
+            common.ClosePopup();
+        }
     };
 
     $this.InitPage = function () {
@@ -78,10 +91,8 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
     };
 };
 
+var benchmarkManagement = new Fanex.NAP.TGRS.BenchmarkManagement.PageManager();
+
 $(document).ready(function () {
-    'use strict';
-
-    var benchmarkManagement = new Fanex.NAP.TGRS.BenchmarkManagement.PageManager();
-
     benchmarkManagement.InitPage();
 });

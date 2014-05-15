@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
 
     /// <summary>
     /// Team benchmark view model.
@@ -17,7 +19,18 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
     [Serializable]
     public class TeamBenchmarkItem
     {
-        public short TeamID { get; set; }
+        public TeamBenchmarkItem(TeamBenchmark benchmark)
+        {
+            if (benchmark != null)
+            {
+                this.TeamId = benchmark.TeamId;
+                this.TeamName = benchmark.TeamName;
+                this.Benchmark = Converter.ToDecimal(benchmark.Benchmark);
+                this.Margin = Converter.ToDecimal(benchmark.Margin);
+            }
+        }
+
+        public short TeamId { get; set; }
 
         public string TeamName { get; set; }
 

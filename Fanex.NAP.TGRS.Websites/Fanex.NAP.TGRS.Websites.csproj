@@ -172,9 +172,9 @@
     <Content Include="App_Data\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\NAPCommonSpNames.xml" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
-    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
-    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
@@ -381,7 +381,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51874</DevelopmentServerPort>
+          <DevelopmentServerPort>59059</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -16,7 +16,9 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
     /// </summary>
     public class GetBetTypeProfitMarginCriteria : CriteriaBase
     {
-        public int BetTypeId { get; set; }
+        public int LeagueId { get; set; }
+
+        public int BetType { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -24,7 +26,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_BenchmarkBettype_ProfitMargin";
+            return "TGRS_BenchmarkBetType_ProfitMargin";
         }
 
         /// <summary>

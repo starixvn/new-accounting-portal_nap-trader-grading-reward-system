@@ -1,10 +1,10 @@
 ﻿/* File Created: May 14, 2014 */
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
+'use strict';
+
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.LeaguePage');
 Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
-    'use strict';
-
     var $this = this;
     var domElements = {
         divLeagueBMContent: null,
@@ -16,10 +16,15 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         ddlMarket: null,
         btnSearch: null,
         divLeagueBMGridContainer: null,
-        divLeagueBMGrid: null
+        divLeagueBMGrid: null,
+        divPopupContent: null,
+        divProfitMargin: null,
+        divPopup: null
     };
     var urls = {
-        GetLeagueBenchmark: common.ResolveRootUrl('BenchmarkManagement/GetLeagueBenchmark')
+        GetLeagueBenchmark: common.ResolveRootUrl('BenchmarkManagement/GetLeagueBenchmark'),
+        UpdateLeagueBenchmark: common.ResolveRootUrl('BenchmarkManagement/UpdateLeagueBenchmark'),
+        GetLeagueProfitMargin: common.ResolveRootUrl('BenchmarkManagement/GetLeagueProfitMargin')
     };
     var parameters = {
         SportType: null,
@@ -29,6 +34,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         AllMarket: null,
         LeagueName: null
     };
+    var showBetTypeBMFunction = null;
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -42,6 +48,8 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         domElements.btnSearch = domElements.divLeagueBMContent.find('#btnSearch');
         domElements.divLeagueBMGridContainer = domElements.divLeagueBMContent.find('#divLeagueBMGridContainer');
         domElements.divLeagueBMGrid = domElements.divLeagueBMContent.find('#divLeagueBMGrid');
+        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopup = $('#divPopup');
     };
 
     // Bind event handlers.
@@ -75,6 +83,20 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                 getReportData();
             }
         });
+
+        // Hide instruction tipsy when clicking on document.
+        $('html').off('mousedown').on('mousedown', function () {
+            domElements.divLeagueBMGrid.find('input.benchmark').each(function () {
+                var $input = $(this);
+                var $link = $input.prev();
+
+                if (!$input.hasClass('hide')) {
+                    $input.addClass('hide');
+                    $link.removeClass('hide');
+                    $input.tipsy('hide');
+                }
+            });
+        });
     };
 
     // Get report data.
@@ -101,7 +123,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
     // Render grid.
     var renderGrid = function (data) {
         var profitMarginFormat = '<span class="profit-margin link" data-league-id="{0}">{1}</span>';
-        var benchmarkFormat = '<span class="benchmark-link link" data-league-id="{0}" data-value="{1}">{2}</span>' +
+        var benchmarkFormat = '<span class="benchmark-link link" data-league-id="{0}">{1}</span>' +
                                '<input type="text" maxlength="4" class="benchmark hide" />';
         var configurationFormat = '<a href="#" class="configuration green-button" data-league-id="{0}">{1}</a>';
         var profitMarginCol = '';
@@ -111,9 +133,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.LeagueName, Width: 450, Name: 'ColLeagueName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.LeagueName, Width: 550, Name: 'ColLeagueName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.ProfitMargin, Width: 100, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
-                      { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right'}],
+                      { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 220,
             showNumberColumn: true,
             showPager: true,
@@ -126,29 +149,22 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         var bodyData = [];
         var row;
 
-        if (hasEditRight) {
-            gridOptions.columns.push({ HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'center' });
-        }
-
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 profitMarginCol = profitMarginFormat.format(item.LeagueId, numeral(item.Margin).format(common.Formats.DecimalFormat));
                 benchmark = numeral(item.Benchmark).format(common.Formats.DecimalFormat);
                 benchmarkCol = hasEditRight ?
-                               benchmarkFormat.format(item.LeagueId, item.Benchmark, benchmark) :
+                               benchmarkFormat.format(item.LeagueId, benchmark) :
                                benchmark;
+                configurationCol = configurationFormat.format(item.LeagueId, labels.Configure);
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
-                              { Name: 'ColLeagueName', Value: item.LeagueName },
+                              { Name: 'ColLeagueName', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColProfitMargin', Value: profitMarginCol },
-                              { Name: 'ColBenchmark', Value: benchmarkCol}]
+                              { Name: 'ColBenchmark', Value: benchmarkCol },
+                              { Name: 'ColBetTypeBM', Value: configurationCol}]
                 };
-
-                if (hasEditRight) {
-                    configurationCol = configurationFormat.format(item.LeagueId, labels.Configure);
-                    row.Columns.push({ Name: 'ColBetTypeBM', Value: configurationCol });
-                }
 
                 bodyData.push(row);
             });
@@ -171,7 +187,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         benchmarkLinks.on('click', function () {
             var $link = $(this);
             var $input = $link.next();
-            var benchmark = $link.attr('data-value');
+            var benchmark = $link.text();
 
             // Disable other active fields.
             $.each(benchmarkLinks, function (index, link) {
@@ -188,11 +204,14 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
             var $input = $(this);
             var $link = $input.prev();
             var benchmark = $input.val();
+            var leagueName = '';
 
             if (event.keyCode === 13 && validateBenchmark($input)) {
-                common.ShowConfirmMessage(messages.UpdateBenchmarkConfirmMessage, function () {
+                leagueName = $link.closest('tr').find('div.league-name').text();
+                leagueName = leagueName.length > 53 ? leagueName.substring(0, 50) + '...' : leagueName;
+
+                common.ShowConfirmMessage(messages.UpdateBenchmarkConfirmMessage.format('<b>' + leagueName + '</b>'), function () {
                     if (updateBenchmark($link.attr('data-league-id'), benchmark.replace(/,/g, ''))) {
-                        $link.attr('data-value', benchmark);
                         $link.text(benchmark);
                         $input.addClass('hide');
                         $link.removeClass('hide');
@@ -206,8 +225,21 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
             }
         });
 
-        domElements.divLeagueBMGrid.find('span.configuration').on('click', function () {
-            // @@TODO: Redirect to BetTypeConfiguration
+        domElements.divLeagueBMGrid.find('span.profit-margin').on('click', function () {
+            var $link = $(this);
+            var leagueId = $link.attr('data-league-id');
+            var leagueName = $link.closest('tr').find('div.league-name').text();
+
+            leagueName = leagueName.length > 53 ? leagueName.substring(0, 50) + '...' : leagueName;
+            getProfitMarginData(leagueId, leagueName);
+        });
+
+        domElements.divLeagueBMGrid.find('a.configuration').on('click', function () {
+            var $link = $(this);
+            var leagueId = $link.attr('data-league-id');
+            var leagueName = $link.closest('tr').find('div.league-name').text();
+
+            showBetTypeBMFunction(leagueId, leagueName);
         });
 
         // Hide tooltip.
@@ -226,7 +258,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         var isValid = $.isNumeric(value);
 
         if (isValid) {
-            value = parseInt(value);
+            value = parseFloat(value);
             isValid = 0 <= value && value <= 1;
         }
 
@@ -238,17 +270,112 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
     };
 
     // Update benchmark.
-    var updateBenchmark = function () {
+    var updateBenchmark = function (leagueId, benchmark) {
+        var updatingParameters = {
+            SportType: parameters.SportType,
+            LeagueId: leagueId,
+            Benchmark: benchmark,
+            ProgramId: parameters.ProgramId,
+            DisplayMode: parameters.DisplayMode,
+            CountryCode: parameters.CountryCode,
+            AllMarket: parameters.AllMarket,
+            LeagueName: parameters.LeagueName
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.UpdateLeagueBenchmark,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(updatingParameters),
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    common.ShowInfoMessage(messages.UpdateBenchmarkSuccessfully);
+                    renderGrid(result.Benchmarks);
+
+                    return true;
+                } else {
+                    common.ShowErrorMessage(result.ErrorMessage);
+
+                    return false;
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+
+    // Get profit margin data.
+    var getProfitMarginData = function (leagueId, leagueName) {
+        var profitMarginParameters = {
+            LeagueId: leagueId
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetLeagueProfitMargin,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(profitMarginParameters),
+            success: function (result) {
+                common.Popup(leagueName, domElements.divPopupContent);
+                renderProfitMarginGrid(result);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+
+    // Render profit margin grid.
+    var renderProfitMarginGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: labels.Year, Width: 150, Name: 'ColYear', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.ProfitMargin, Width: 250, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat
+                      }]
+        };
+        var bodyData = [];
+        var row;
+
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColYear', Value: item.Year },
+                              { Name: 'ColProfitMargin', Value: item.Margin}]
+                };
+
+                bodyData.push(row);
+            });
+        }
+
+        gridOptions.bodyRows = bodyData;
+        domElements.divProfitMargin = domElements.divPopup.find('#divProfitMargin');
+        domElements.divProfitMargin.fanexGrid(gridOptions);
     };
 
     // Reset filter data
     var resetFilterData = function () {
         validator.ClearErrors(domElements.divLeagueBMFilter);
+        domElements.ddlSpecialLeague.val('0;');
+        domElements.ddlCountry.val('null');
+        domElements.ddlMarket.val('true');
+        domElements.txtLeague.val('');
         domElements.divLeagueBMGridContainer.addClass('display-none');
     };
 
-    $this.InitPage = function (divContent) {
+    $this.InitPage = function (divContent, showBetTypeBMPage) {
         domElements.divLeagueBMContent = divContent;
+        showBetTypeBMFunction = showBetTypeBMPage || function () { };
         cacheDOMElements();
         resetFilterData();
         bindEventHandlers();

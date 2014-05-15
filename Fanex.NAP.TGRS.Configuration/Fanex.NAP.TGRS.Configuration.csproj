@@ -109,8 +109,10 @@
     <Compile Include="ViewModel\BenchmarkManagement\BetTypeBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\CountryItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\LeagueBenchmarkItem.cs" />
+    <Compile Include="ViewModel\BenchmarkManagement\ProfitMarginItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
+    <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoList.cs" />
     <Compile Include="ViewModel\GradeManagement\GradeInfoItem.cs" />

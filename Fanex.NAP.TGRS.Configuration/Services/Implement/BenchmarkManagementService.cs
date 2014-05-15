@@ -11,6 +11,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
     using Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement;
@@ -74,6 +76,92 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Updates league benchmark.
+        /// </summary>
+        /// <param name="criteria">The criteria that contain updated benchmark value.</param>
+        /// <returns>ICommandResult object indicates if the updating process is successful or not.</returns>
+        public ICommandResult UpdateLeagueBenchmark(UpdateLeagueBenchmarkCriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        /// <summary>
+        /// Gets the profit margin of a league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of ProfitMarginItem objects.</returns>
+        public IEnumerable<ProfitMarginItem> GetProfitMargin(CriteriaBase criteria)
+        {
+            IEnumerable<ProfitMargin> rawData = this.GetData<ProfitMargin>(criteria);
+            IEnumerable<ProfitMarginItem> result = null;
+
+            if (rawData.Any())
+            {
+                result = rawData.Select(obj => new ProfitMarginItem(obj));
+                result = result.OrderBy(obj => obj.Year);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the team benchmark data that are satisfied the passed conditions.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of TeamBenchmarkItem objects.</returns>
+        public IEnumerable<TeamBenchmarkItem> GetTeamBenchmark(GetTeamBenchmarkCriteria criteria)
+        {
+            IEnumerable<TeamBenchmark> rawData = this.GetData<TeamBenchmark>(criteria);
+            IEnumerable<TeamBenchmarkItem> result = null;
+
+            if (rawData.Any())
+            {
+                result = rawData.Select(obj => new TeamBenchmarkItem(obj));
+                result = result.OrderBy(obj => obj.TeamName);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates team benchmark.
+        /// </summary>
+        /// <param name="criteria">The criteria that contain updated benchmark value.</param>
+        /// <returns>ICommandResult object indicates if the updating process is successful or not.</returns>
+        public ICommandResult UpdateTeamBenchmark(UpdateTeamBenchmarkCriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        /// <summary>
+        /// Gets the bet type benchmark data that are satisfied the passed conditions.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of BetTypeBenchmarkItem objects.</returns>
+        public IEnumerable<BetTypeBenchmarkItem> GetBetTypeBenchmark(GetBetTypeBenchmarkCriteria criteria)
+        {
+            IEnumerable<BetTypeBenchmark> rawData = this.GetData<BetTypeBenchmark>(criteria);
+            IEnumerable<BetTypeBenchmarkItem> result = null;
+
+            if (rawData.Any())
+            {
+                result = rawData.Select(obj => new BetTypeBenchmarkItem(obj));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates bet type benchmark.
+        /// </summary>
+        /// <param name="criteria">The criteria that contain updated benchmark value.</param>
+        /// <returns>ICommandResult object indicates if the updating process is successful or not.</returns>
+        public ICommandResult UpdateBetTypeBenchmark(UpdateBetTypeBenchmarkCriteria criteria)
+        {
+            return this.UpdateData(criteria);
         }
     }
 }

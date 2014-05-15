@@ -117,7 +117,8 @@
 }
 
 .msgbox .msgbox-close:hover {
-    background-position: -1px -51px;
+    background-position: 0 -50px;
+    cursor: pointer;
     background-color: #333;
 }
 /*

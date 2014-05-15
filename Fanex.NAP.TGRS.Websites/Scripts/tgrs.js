@@ -119,6 +119,10 @@ Fanex.TGRS.Common = function () {
         }
     };
 
+    $this.IsOpenPopup = function () {
+        return domElements.divPopup.html().length > 0 && domElements.divPopup.dialog('isOpen');
+    };
+
     $this.ClosePopup = function () {
         domElements.divPopup.dialog('close');
     };

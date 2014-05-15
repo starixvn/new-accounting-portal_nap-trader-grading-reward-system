@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
 
     /// <summary>
     /// Bet type benchmark view model.
@@ -17,7 +19,18 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
     [Serializable]
     public class BetTypeBenchmarkItem
     {
-        public int BetTypeID { get; set; }
+        public BetTypeBenchmarkItem(BetTypeBenchmark rawData)
+        {
+            if (rawData != null)
+            {
+                this.BetTypeId = rawData.BetType;
+                this.BetTypeName = rawData.TypeName;
+                this.Benchmark = Converter.ToDecimal(rawData.Benchmark);
+                this.Margin = Converter.ToDecimal(rawData.Margin);
+            }
+        }
+
+        public int BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
 
