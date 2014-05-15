@@ -17,11 +17,13 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
     /// </summary>
     public class UpdateTraderCriteria : CriteriaBase
     {
-        public int TraderId { get; set; }
+        public int CustId { get; set; }
 
-        public string TraderName { get; set; }
+        public int TeamId { get; set; }
 
-        public string Description { get; set; }
+        public int GradeId { get; set; }
+
+        public DateTime EffectiveDate { get; set; }
 
         public int UserId { get; set; }
 

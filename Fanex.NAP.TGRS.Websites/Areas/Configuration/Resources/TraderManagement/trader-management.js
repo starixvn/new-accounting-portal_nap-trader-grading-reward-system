@@ -12,10 +12,6 @@ Fanex.TGRS.TraderManagement = function () {
     var $this = this;
     var timeout = null;
     var defaultSelectVal = 0;
-    var cacheTeamTable = {};
-    var cacheGradeTable = {};
-    var cacheTeamData = null;
-    var cacheGradeData = null;
     var urls = {
         GetAllTrader: common.ResolveRootUrl('TraderManagement/GetAllTrader'),
         InsertTrader: common.ResolveRootUrl('TraderManagement/InsertTrader'),
@@ -54,6 +50,10 @@ Fanex.TGRS.TraderManagement = function () {
         dpkEffectiveDate: null,
         txtEffectiveDate: null
     };
+    var cacheTeamData = null;
+    var cacheGradeData = null;
+    var cacheTeamDataId = {};
+    var cacheGradeDataId = {};
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -106,8 +106,11 @@ Fanex.TGRS.TraderManagement = function () {
     };
     var bindUpdateTraderPopupEvent = function () {
         //Date picker
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setMonth(maxDate.getMonth() + 1);
+
         layout.CreateDatepicker(popupElements.dpkEffectiveDate, 'txtEffectiveDate',
-            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, null, 'width-200');
+            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'width-200');
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
@@ -305,7 +308,7 @@ Fanex.TGRS.TraderManagement = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 ddlDiv.append($('<option></option>').attr('value', item.TeamId).text(item.TeamName));
-                cacheTeamTable[item.TeamName]=item.TeamId;
+                cacheTeamDataId[item.TeamName]=item.TeamId;
             });
         }
 
@@ -328,7 +331,7 @@ Fanex.TGRS.TraderManagement = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 ddlDiv.append($('<option></option>').attr('value', item.GradeId).text(item.GradeName));
-                cacheGradeTable[item.GradeName]=item.GradeId;
+                cacheGradeDataId[item.GradeName]=item.GradeId;
             });
         }
 
@@ -386,8 +389,8 @@ Fanex.TGRS.TraderManagement = function () {
             var gradeName = $obj.attr('data-trader-grade');
 
             //get teamId and gradeId by name
-            var teamId = cacheTeamTable[teamName];
-            var gradeId = cacheGradeTable[gradeName];
+            var teamId = cacheTeamDataId[teamName];
+            var gradeId = cacheGradeDataId[gradeName];
 
             makeUpdateTraderForm(username, employeeId, teamId, gradeId);
         });
@@ -416,11 +419,9 @@ Fanex.TGRS.TraderManagement = function () {
         cachePopupElements();
         bindUpdateTraderPopupEvent();
         
-        //Prepare update form data;
+        //Prepare data for update form ;
         popupElements.txtUserName.val(username);
         popupElements.txtEmployeeId.val(employeeId);
-        popupElements.ddlTeam.val(teamId);
-        popupElements.ddlGrade.val(gradeId);
         popupElements.txtUserName.prop('disabled', true);
         popupElements.txtEmployeeId.prop('disabled', true);
         updatePopupDropdown(null, teamId, null, gradeId);
