@@ -340,7 +340,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selec a grade.
+        ///   Looks up a localized string similar to Select a grade.
         /// </summary>
         public static string SelectAGrade {
             get {

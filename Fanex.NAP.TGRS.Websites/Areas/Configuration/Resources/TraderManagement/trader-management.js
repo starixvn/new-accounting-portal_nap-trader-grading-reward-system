@@ -1,5 +1,5 @@
 ﻿/* File Created: May 12, 2014 */
-/* global Namespace, common, labels, hasEditRight, validator, messages */
+/* global Namespace, common, labels, hasEditRight, validator, messages, datepickerSetting, layout */
 'use strict';
 
 $(document).ready(function () {
@@ -11,6 +11,11 @@ Namespace.Register("Fanex.TGRS.TraderManagement");
 Fanex.TGRS.TraderManagement = function () {
     var $this = this;
     var timeout = null;
+    var defaultSelectVal = 0;
+    var cacheTeamTable = {};
+    var cacheGradeTable = {};
+    var cacheTeamData = null;
+    var cacheGradeData = null;
     var urls = {
         GetAllTrader: common.ResolveRootUrl('TraderManagement/GetAllTrader'),
         InsertTrader: common.ResolveRootUrl('TraderManagement/InsertTrader'),
@@ -46,7 +51,8 @@ Fanex.TGRS.TraderManagement = function () {
         divErrorSuccessMsg: null,
         ddlGrade: null,
         ddlTeam: null,
-        divEffectiveDate: null
+        dpkEffectiveDate: null,
+        txtEffectiveDate: null
     };
 
     // Cache DOM Elements.
@@ -77,7 +83,8 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.ddlGrade = $('#ddlGrade', domElements.divPopup);
         popupElements.ddlTeam = $('#ddlTeam', domElements.divPopup);
-        popupElements.divEffectiveDate = $('#divDatepickerPlugin', domElements.divPopup);
+        popupElements.dpkEffectiveDate = $('#dpkEffectiveDate', domElements.divPopup);
+        popupElements.txtEffectiveDate = $('#txtEffectiveDate', domElements.divPopup);
     };
 
     // Bind event handlers to elements on the insert Trader popup.
@@ -98,6 +105,10 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
     var bindUpdateTraderPopupEvent = function () {
+        //Date picker
+        layout.CreateDatepicker(popupElements.dpkEffectiveDate, 'txtEffectiveDate',
+            labels.EffectiveDate, ' ', datepickerSetting.Today, datepickerSetting.Today, null, 'width-200');
+
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
                 var username = $.trim(popupElements.txtUserName.val());
@@ -261,12 +272,14 @@ Fanex.TGRS.TraderManagement = function () {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                if (result.Teams) {
-                    updateTeamDropdown(result.Teams.TeamInfoItems);
+                if (result.Teams.TeamInfoItems) {
+                    cacheTeamData = result.Teams.TeamInfoItems;
+                    updateTeamDropdown(cacheTeamData, domElements.ddlTeam, labels.AllTeams, defaultSelectVal);
                 }
 
-                if (result.Grades) {
-                    updateGradeDropdown(result.Grades.GradeInfoItems);
+                if (result.Grades.GradeInfoItems) {
+                    cacheGradeData = result.Grades.GradeInfoItems;
+                    updateGradeDropdown(cacheGradeData, domElements.ddlGrade, labels.AllGrades, defaultSelectVal);
                 }
             },
             error: function (xhr) {
@@ -278,43 +291,55 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
     // Update Team drop-down list.
-    var updateTeamDropdown = function (data) {
+    var updateTeamDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
-        domElements.ddlTeam.html('');
+        ddlDiv.html('');
 
         //Default value
-        domElements.ddlTeam.append($('<option></option>').attr('value', "0").text(labels.AllTeams));
-        domElements.ddlTeam.val(null).next().children('input').val(labels.AllTeams);
+        if(defaultLabel != null)
+        {
+            ddlDiv.append($('<option></option>').attr('value', defaultSelectVal).text(defaultLabel));
+        }
 
         // Add new values.
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                domElements.ddlTeam.append($('<option></option>').attr('value', item.TeamId).text(item.TeamName));
+                ddlDiv.append($('<option></option>').attr('value', item.TeamId).text(item.TeamName));
+                cacheTeamTable[item.TeamName]=item.TeamId;
             });
         }
+
+        //auto select val
+        ddlDiv.val(selectVal);
     };
 
     // Update Grade drop-down list.
-    var updateGradeDropdown = function (data) {
+    var updateGradeDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
-        domElements.ddlGrade.html('');
+        ddlDiv.html('');
 
         //Default value
-        domElements.ddlGrade.append($('<option></option>').attr('value', "0").text(labels.AllGrades));
-        domElements.ddlGrade.val(null).next().children('input').val(labels.AllGrades);
+        if(defaultLabel != null)
+        {
+            ddlDiv.append($('<option></option>').attr('value', defaultSelectVal).text(defaultLabel));
+        }
 
         // Add new values.
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                domElements.ddlGrade.append($('<option></option>').attr('value', item.GradeId).text(item.GradeName));
+                ddlDiv.append($('<option></option>').attr('value', item.GradeId).text(item.GradeName));
+                cacheGradeTable[item.GradeName]=item.GradeId;
             });
         }
+
+        //auto select val
+        ddlDiv.val(selectVal);
     };
 
     // Update Popup drop-down list.
-    var updatePopupDropdown = function () {
-        popupElements.ddlTeam.html(domElements.ddlTeam.html());
-        popupElements.ddlGrade.html(domElements.ddlGrade.html());
+    var updatePopupDropdown = function (defaultLabelTeam, selectTeam, defaultLabelGrade, selectGrade) {
+        updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, defaultLabelTeam, selectTeam);
+        updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, defaultLabelGrade, selectGrade);
     };
 
     // Disable pop up form.
@@ -330,19 +355,6 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Init page fields and events
     var initPageFields = function () {
-        //Date picker
-        /*
-        layout.CreateDateRange(
-            popupElements.divEffectiveDate,
-            null,
-            'col_9',
-            null,
-            'col_5',
-            datepickerSetting.Today,
-            null,
-            null,
-            null);
-            */
         //Title button
         //event: click on new Trader button.
         domElements.lnkAddNewTrader.on('click', function () {
@@ -370,8 +382,12 @@ Fanex.TGRS.TraderManagement = function () {
             var $obj = $(this);
             var employeeId = $obj.attr('data-trader-id');
             var username = $obj.attr('data-trader-name');
-            var teamId = $obj.attr('data-trader-team');
-            var gradeId = $obj.attr('data-trader-grade');
+            var teamName = $obj.attr('data-trader-team');
+            var gradeName = $obj.attr('data-trader-grade');
+
+            //get teamId and gradeId by name
+            var teamId = cacheTeamTable[teamName];
+            var gradeId = cacheGradeTable[gradeName];
 
             makeUpdateTraderForm(username, employeeId, teamId, gradeId);
         });
@@ -387,7 +403,7 @@ Fanex.TGRS.TraderManagement = function () {
         //prepare event, data
         cachePopupElements();
         bindNewTraderPopupEvent();
-        updatePopupDropdown();
+        updatePopupDropdown(labels.SelectATeam, defaultSelectVal, labels.SelectAGrade, defaultSelectVal);
     };
     // Display update Trader form.
     var makeUpdateTraderForm = function (username, employeeId, teamId, gradeId) {
@@ -407,6 +423,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.ddlGrade.val(gradeId);
         popupElements.txtUserName.prop('disabled', true);
         popupElements.txtEmployeeId.prop('disabled', true);
+        updatePopupDropdown(null, teamId, null, gradeId);
     };
 
     var refreshPopup = function()

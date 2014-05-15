@@ -66,6 +66,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/Tipsy/tipsy.css",
                 "~/Content/MsgBox/msgbox-0.0.1.css",
                 "~/Content/Fanex.Grid/Fanex.Grid.css",
+                "~/Content/DatePicker/jquery.nexDatePicker.css",
                 "~/Content/Themes/reset.less",
                 "~/Content/Themes/style.less",
                 "~/Content/Themes/custom.less");
@@ -80,6 +81,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/Others/numeral.js",
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
                 "~/Scripts/Libraries/Others/namespace.js",
+                "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
                 "~/Scripts/Extensions/native-object-extensions.js",
                 "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",
