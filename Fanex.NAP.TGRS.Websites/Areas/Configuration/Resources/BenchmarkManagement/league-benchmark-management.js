@@ -238,7 +238,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
     };
 
     // Update benchmark.
-    var updateBenchmark = function (leagueId, benchmark) {
+    var updateBenchmark = function () {
     };
 
     // Reset filter data
