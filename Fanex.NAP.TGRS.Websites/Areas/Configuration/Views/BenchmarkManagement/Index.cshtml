@@ -87,16 +87,16 @@
     </div>
 </div>
 <div id="divTeamBMContent" class="display-none">
-    <div id="divTeamBMGridContainer" class="display-none">
+    <div id="divTeamBMGridContainer" class="content-grid display-none">
         <div id="divTeamBMGrid" class="freegrid"></div>
     </div>
 </div>
 <div id="divBetTypeBMContent" class="display-none">
     <div class="league-title">
-        <span>@ViewLang.League</span>
+        <span class="league">@ViewLang.League:</span>
         <span id="spanLeagueName"></span>
     </div>
-    <div id="divBetTypeBMGridContainer" class="display-none">
+    <div id="divBetTypeBMGridContainer" class="content-grid display-none">
         <div id="divBetTypeBMGrid" class="freegrid"></div>
     </div>
 </div>
@@ -118,6 +118,7 @@
             TeamName: '@ViewLang.TeamName',
             Percentage: '@ViewLang.BetType',
             LeagueName: '@ViewLang.LeagueName',
+            BetType: '@ViewLang.BetType',
             Year: '@ViewLang.Year'
         };
         var messages = {
