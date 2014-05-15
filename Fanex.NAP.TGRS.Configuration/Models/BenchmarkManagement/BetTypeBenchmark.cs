@@ -14,11 +14,11 @@ namespace Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement
     /// </summary>
     public class BetTypeBenchmark
     {
-        public int BetTypeID { get; set; }
+        public int BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
 
-        public decimal? BenchMark { get; set; }
+        public decimal? Benchmark { get; set; }
 
         public decimal? Margin { get; set; }
     }

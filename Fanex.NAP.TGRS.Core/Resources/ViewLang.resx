@@ -252,4 +252,7 @@
   <data name="SelectATeam" xml:space="preserve">
     <value>Select a team</value>
   </data>
+  <data name="Soccer" xml:space="preserve">
+    <value>Soccer</value>
+  </data>
 </root>

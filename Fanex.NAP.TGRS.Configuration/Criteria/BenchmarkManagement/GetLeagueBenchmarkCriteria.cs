@@ -16,17 +16,17 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
     /// </summary>
     public class GetLeagueBenchmarkCriteria : CriteriaBase
     {
-        public int SportType { get; set; }
+        public short SportType { get; set; }
 
-        public int DisplayMode { get; set; }
+        public byte DisplayMode { get; set; }
 
-        public int ProgramID { get; set; }
+        public string ProgramId { get; set; }
 
         public string CountryCode { get; set; }
 
         public string LeagueName { get; set; }
 
-        public bool IsMainMarket { get; set; }
+        public bool AllMarket { get; set; }
 
         /// <summary>
         /// Gets the setting key.

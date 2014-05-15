@@ -30,13 +30,14 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public BenchmarkManagementController(IBenchmarkManagementService benchmarkService)
         {
             this._benchmarkService = benchmarkService ?? new BenchmarkManagementService();
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.BenchmarkManagement, Constant.Policy.Host);
         }
 
         /// <summary>
         /// Gets Index page.
         /// </summary>
         /// <returns>Return Index View.</returns>
-        [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.BenchmarkManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();

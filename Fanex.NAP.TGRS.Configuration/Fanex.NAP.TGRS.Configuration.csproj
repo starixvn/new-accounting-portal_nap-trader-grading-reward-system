@@ -68,9 +68,13 @@
     <Compile Include="Controllers\GradeManagementController.cs" />
     <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetBetTypeBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\GetBetTypeProfitMarginCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetLeagueBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\GetLeagueProfitMarginCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamProfitMarginCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />

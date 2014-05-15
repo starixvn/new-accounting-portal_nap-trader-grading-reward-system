@@ -16,6 +16,11 @@
     <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="BenchmarkManagement">
+    <Setting Key="TGRS_SpecialLeague_SelList" SpName="TGRS_SpecialLeague_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Country_SelList" SpName="TGRS_Country_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkLeague_SelectAll" SpName="TGRS_BenchmarkLeague_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkLeague_ProfitMargin" SpName="TGRS_BenchmarkLeague_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkLeague_Update" SpName="TGRS_BenchmarkLeague_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_ProfitMargin" SpName="TGRS_BenchmarkTeam_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>

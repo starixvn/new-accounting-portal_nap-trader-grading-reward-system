@@ -358,6 +358,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Soccer.
+        /// </summary>
+        public static string Soccer {
+            get {
+                return ResourceManager.GetString("Soccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Special League.
         /// </summary>
         public static string SpecialLeague {
