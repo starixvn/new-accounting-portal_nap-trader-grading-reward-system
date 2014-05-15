@@ -62,10 +62,10 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.AddAndInclude(
                 "~/styles/common",
                 "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
-                "~/Content/jQuery-UI/jquery-ui-1.10.4.min.css",
                 "~/Content/Tipsy/tipsy.css",
                 "~/Content/MsgBox/msgbox-0.0.1.css",
                 "~/Content/Fanex.Grid/Fanex.Grid.css",
+                "~/Content/Fanex.Grid/Fanex.Pagination.css",
                 "~/Content/DatePicker/jquery.nexDatePicker.css",
                 "~/Content/Themes/reset.less",
                 "~/Content/Themes/style.less",
