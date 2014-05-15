@@ -255,4 +255,16 @@
   <data name="Soccer" xml:space="preserve">
     <value>Soccer</value>
   </data>
+  <data name="Olympic" xml:space="preserve">
+    <value>Olympic</value>
+  </data>
+  <data name="WorldCup" xml:space="preserve">
+    <value>World Cup</value>
+  </data>
+  <data name="AllLeagues" xml:space="preserve">
+    <value>All Leagues</value>
+  </data>
+  <data name="AllCountries" xml:space="preserve">
+    <value>All Countries</value>
+  </data>
 </root>

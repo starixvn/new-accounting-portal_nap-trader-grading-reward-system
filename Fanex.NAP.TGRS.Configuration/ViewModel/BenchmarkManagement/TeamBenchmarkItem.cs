@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 
         public string TeamName { get; set; }
 
-        public decimal BenchMark { get; set; }
+        public decimal Benchmark { get; set; }
 
         public decimal Margin { get; set; }
     }

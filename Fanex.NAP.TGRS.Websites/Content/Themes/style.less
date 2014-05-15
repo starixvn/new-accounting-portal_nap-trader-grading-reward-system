@@ -512,6 +512,10 @@ header {
     display: none;
 }
 
+.hide {
+    display: none !important;
+}
+
 .display-inline {
     display: inline;
 }
@@ -538,10 +542,18 @@ header {
     }
 }
 
-.loading {
+.blockMsg {
+    display: block !important;
     width: 32px;
     height: 32px;
     background: url(Images/loading.gif) no-repeat scroll 0 0 transparent;
+    //border: none !important;
+    top: 50%;
+    left: 50%;
+}
+
+.blockOverlay {
+    background-color: transparent !important;
 }
 
 .link {

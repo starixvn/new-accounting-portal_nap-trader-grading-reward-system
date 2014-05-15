@@ -75,11 +75,13 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
                 "~/Scripts/Libraries/Modernizr/modernizr.30715.min.js",
                 "~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
+                "~/Scripts/Libraries/jQuery/jquery.blockUI.2.66.min.js",
                 "~/Scripts/Libraries/Tipsy/jquery.tipsy.js",
                 "~/Scripts/Libraries/MsgBox/msgbox-0.0.1.js",
                 "~/Scripts/Libraries/Others/moment.js",
                 "~/Scripts/Libraries/Others/numeral.js",
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Grid.js",
+                "~/Scripts/Libraries/Fanex.Grid/Fanex.Pagination.js",
                 "~/Scripts/Libraries/Others/namespace.js",
                 "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
                 "~/Scripts/Extensions/native-object-extensions.js",
@@ -104,6 +106,10 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
 
             bundles.Add(new ScriptBundle("~/scripts/traderManagement").Include(
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/benchmarkManagement",
+                "~/Areas/Configuration/Resources/BenchmarkManagement/benchmark-management.less");
 
             bundles.Add(new ScriptBundle("~/scripts/benchmarkManagement").Include(
                 "~/Areas/Configuration/Resources/BenchmarkManagement/team-benchmark-management.js",

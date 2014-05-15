@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
 
     /// <summary>
     /// League benchmark view model.
@@ -17,12 +19,23 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
     [Serializable]
     public class LeagueBenchmarkItem
     {
-        public int LeagueID { get; set; }
+        public LeagueBenchmarkItem(LeagueBenchmark rawData)
+        {
+            if (rawData != null)
+            {
+                this.LeagueId = rawData.LeagueId;
+                this.LeagueName = rawData.LeagueName;
+                this.Margin = Converter.ToDecimal(Margin);
+                this.Benchmark = Converter.ToDecimal(rawData.Benchmark);
+            }
+        }
+
+        public int LeagueId { get; set; }
 
         public string LeagueName { get; set; }
 
-        public decimal? BenchMark { get; set; }
+        public decimal Benchmark { get; set; }
 
-        public decimal? Margin { get; set; }
+        public decimal Margin { get; set; }
     }
 }

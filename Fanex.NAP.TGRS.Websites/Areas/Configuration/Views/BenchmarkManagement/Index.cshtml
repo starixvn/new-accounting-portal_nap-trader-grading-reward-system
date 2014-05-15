@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
+@{
     ViewBag.Title = ViewLang.BenchmarkManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,7 +15,7 @@
         </div>
     </div>
     <div class="header-button">
-        <a href="#" id="lnkLeague" class="green-button change-list disabled"><span class="icon-list"></span>@ViewLang.League</a>
+        <a href="#" id="lnkLeague" class="green-button change-list"><span class="icon-list"></span>@ViewLang.League</a>
         <a href="#" id="lnkTeam" class="green-button change-list"><span class="icon-list"></span>@ViewLang.Team</a>
     </div>
 }
@@ -34,7 +35,15 @@
                     <label for="ddlSpecialLeague">@ViewLang.SpecialLeague</label>
                 </div>
                 <div class="edit-field col_7">
-                    <select id="ddlSpecialLeague" class="width-160"></select>
+                    <select id="ddlSpecialLeague" class="width-160">
+                        @if (ViewBag.SpecialLeagues != null)
+                        {
+                            foreach (SpecialLeagueItem league in (IEnumerable<SpecialLeagueItem>)ViewBag.SpecialLeagues)
+                            {
+                                <option value="@league.Code">@league.DisplayName</option>
+                            }
+                        }
+                    </select>
                 </div>
                 <div class="lbl-field col_2 align-right">
                     <label for="txtLeague">@ViewLang.League</label>
@@ -48,7 +57,15 @@
                     <label for="ddlCountry">@ViewLang.Country</label>
                 </div>
                 <div class="edit-field col_7 align-left">
-                    <select id="ddlCountry" class="width-160"></select>
+                    <select id="ddlCountry" class="width-160">
+                        @if (ViewBag.Countries != null)
+                        {
+                            foreach (CountryItem country in (IEnumerable<CountryItem>)ViewBag.Countries)
+                            {
+                                <option value="@country.CountryCode">@country.CountryName</option>
+                            }
+                        }
+                    </select>
                 </div>
                 <div class="lbl-field col_4 align-right">
                     <label for="ddlMarket">@ViewLang.Market</label>
@@ -88,6 +105,7 @@
     @Scripts.Render("~/scripts/benchmarkManagement")
     <script type="text/javascript">
         var labels = {
+            No: '#',
             Sport: '@ViewLang.Sport',
             League: '@ViewLang.League',
             ProfitMargin: '@ViewLang.ProfitMargin',
@@ -100,6 +118,10 @@
             Year: '@ViewLang.Year'
         };
         var messages = {
+            UpdateBenchmarkConfirmMessage: '@Messages.UpdateBenchmarkConfirmMessage',
+            UpdateBenchmarkSuccessfully: '@Messages.UpdateBenchmarkSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
         };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
     </script>
 }

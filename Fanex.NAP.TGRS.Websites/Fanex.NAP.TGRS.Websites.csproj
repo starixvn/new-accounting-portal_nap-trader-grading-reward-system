@@ -272,6 +272,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
+    <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\Libraries\Modernizr\modernizr.30715.min.js" />
@@ -321,6 +322,7 @@
     <Content Include="Areas\Configuration\Views\TraderManagement\InsertTraderForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TraderManagement\UpdateTraderForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TraderManagement\IndexFilter.cshtml" />
+    <Content Include="Areas\Configuration\Resources\BenchmarkManagement\benchmark-management.less" />
     <None Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />

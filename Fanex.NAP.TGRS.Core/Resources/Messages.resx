@@ -153,13 +153,7 @@
   <data name="NotFound" xml:space="preserve">
     <value>Not found!</value>
   </data>
-  <data name="NotFound1" xml:space="preserve">
-    <value>Not found!</value>
-  </data>
   <data name="NotFoundMessage" xml:space="preserve">
-    <value>The resource cannot be found.</value>
-  </data>
-  <data name="NotFoundMessage1" xml:space="preserve">
     <value>The resource cannot be found.</value>
   </data>
   <data name="OldPasswordCannotEmpty" xml:space="preserve">
@@ -197,5 +191,11 @@
   </data>
   <data name="UpdateTraderSuccessfully" xml:space="preserve">
     <value>The trader has been updated successfully!</value>
+  </data>
+  <data name="UpdateBenchmarkConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to update benchmark of {0}?</value>
+  </data>
+  <data name="UpdateBenchmarkSuccessfully" xml:space="preserve">
+    <value>The benchmark value has been updated successfully!</value>
   </data>
 </root>

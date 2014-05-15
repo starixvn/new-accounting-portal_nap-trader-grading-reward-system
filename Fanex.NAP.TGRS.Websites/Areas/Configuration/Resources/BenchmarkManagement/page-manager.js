@@ -13,6 +13,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
         divTeamBMContent: null,
         divBetTypeBMContent: null
     };
+    var pages = {
+        LeagueBenchmark: null,
+        TeamBenchmark: null,
+        BetTypeBenchmark: null
+    };
     var currentTag = null;
 
     // Cache DOM elements
@@ -34,10 +39,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
                 domElements.divBetTypeBMContent.addClass('display-none');
                 domElements.divLeagueBMContent.removeClass('display-none');
 
-                currentTag = new Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark();
-                $this.CurrentPage.InitPage(domElements.divLeagueBMContent);
+                pages.LeagueBenchmark = pages.LeagueBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark();
+                currentTag = pages.LeagueBenchmark;
+                currentTag.InitPage(domElements.divLeagueBMContent);
             }
-        });
+        }).click();
 
         domElements.lnkTeam.on('click', function () {
             if (!domElements.lnkTeam.hasClass('disabled')) {
@@ -47,8 +53,9 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
                 domElements.divLeagueBMContent.addClass('display-none');
                 domElements.divTeamBMContent.removeClass('display-none');
 
-                currentTag = new Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark();
-                $this.CurrentPage.InitPage(domElements.divTeamBMContent);
+                pages.TeamBenchmark = pages.TeamBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark();
+                currentTag = pages.TeamBenchmark;
+                currentTag.InitPage(domElements.divTeamBMContent);
             }
         });
     };
@@ -60,8 +67,9 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
         domElements.divLeagueBMContent.addClass('display-none');
         domElements.divTeamBMContent.addClass('display-none');
 
+        pages.BetTypeBenchmark = pages.BetTypeBenchmark || new Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark();
         currentTag = new Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark();
-        $this.CurrentPage.InitPage(domElements.divBetTypeBMContent, leagueID);
+        currentTag.InitPage(domElements.divBetTypeBMContent, leagueID);
     };
 
     $this.InitPage = function () {

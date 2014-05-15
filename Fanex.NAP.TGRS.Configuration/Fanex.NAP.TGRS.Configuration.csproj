@@ -69,8 +69,10 @@
     <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetBetTypeProfitMarginCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\GetCountryCodesCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetLeagueProfitMarginCriteria.cs" />
+    <Compile Include="Criteria\BenchmarkManagement\GetSpecialLeaguesCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\GetTeamProfitMarginCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
@@ -86,8 +88,10 @@
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
     <Compile Include="Models\BenchmarkManagement\BetTypeBenchmark.cs" />
+    <Compile Include="Models\BenchmarkManagement\Country.cs" />
     <Compile Include="Models\BenchmarkManagement\LeagueBenchmark.cs" />
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
+    <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
@@ -103,7 +107,9 @@
     <Compile Include="Services\Interface\IGradeManagementService.cs" />
     <Compile Include="Services\Interface\ITeamManagementService.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\BetTypeBenchmarkItem.cs" />
+    <Compile Include="ViewModel\BenchmarkManagement\CountryItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\LeagueBenchmarkItem.cs" />
+    <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoList.cs" />

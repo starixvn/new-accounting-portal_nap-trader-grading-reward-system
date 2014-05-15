@@ -124,7 +124,7 @@ Fanex.TGRS.Common = function () {
     };
 
     $this.DisableInput = function () {
-        try { $.blockUI(); } catch (e) { }
+        try { $.blockUI({ message: '' }); } catch (e) { }
     };
 
     $this.EnableInput = function () {
