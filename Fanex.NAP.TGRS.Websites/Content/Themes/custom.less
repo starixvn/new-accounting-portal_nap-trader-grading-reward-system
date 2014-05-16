@@ -128,25 +128,25 @@ input.ui-multiselect-state-default{
     margin-left: 10px;
     margin-top: 10px;
     min-width: 99%;
+}
 
-    .freegrid {
-        thead th, .grid-fixed-table thead th {
-            font-weight: normal;
+.freegrid {
+    thead th, .grid-fixed-table thead th {
+        font-weight: normal;
+    }
+
+    .grid-fixed-table tr{
+        &.highlight-row:hover td {
+            background-color: #faffa8;
         }
 
-        .grid-fixed-table tr{
-            &.highlight-row:hover td {
-                background-color: #faffa8;
-            }
-
-            &.highlight td, td.highlight {
-                background-color: #FEECD1;
-            }
+        &.highlight td, td.highlight {
+            background-color: #FEECD1;
         }
+    }
 
-        .freegrid-even td {
-            background-color: #ebf5fc;
-        }
+    .freegrid-even td {
+        background-color: #ebf5fc;
     }
 }
 
@@ -154,8 +154,13 @@ input.ui-multiselect-state-default{
 /*         Custom jQuery Dialog and Datepicker          */
 /********************************************************/
 .ui-widget {
-    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif !important;
+    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
     font-size: 1em;
+
+    input, textarea, select, button {
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+        font-size: 1em;
+    }
 }
 
 .ui-widget-header, .ui-state-active {
@@ -164,7 +169,7 @@ input.ui-multiselect-state-default{
 
 .ui-datepicker {
     .ui-datepicker-title {
-        select { 
+        select {
             font-size: 0.9em; 
             margin:1px 6px; 
             border: 1px solid #CECCCD;

@@ -37,17 +37,19 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
     // Bind event handlers.
     var bindEventHandlers = function () {
         // Hide instruction tipsy when clicking on document.
-        $('html').off('mousedown').on('mousedown', function () {
-            domElements.divBetTypeBMGrid.find('input.benchmark').each(function () {
-                var $input = $(this);
-                var $link = $input.prev();
+        $('html').off('mousedown').on('mousedown', function (event) {
+            if (!$(event.target).hasClass('benchmark')) {
+                domElements.divBetTypeBMGrid.find('input.benchmark').each(function () {
+                    var $input = $(this);
+                    var $link = $input.prev();
 
-                if (!$input.hasClass('hide')) {
-                    $input.addClass('hide');
-                    $link.removeClass('hide');
-                    $input.tipsy('hide');
-                }
-            });
+                    if (!$input.hasClass('hide')) {
+                        $input.addClass('hide');
+                        $link.removeClass('hide');
+                        $input.tipsy('hide');
+                    }
+                });
+            }
         });
     };
 
@@ -86,7 +88,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
                       { HeaderText: labels.BetType, Width: 300, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.ProfitMargin, Width: 100, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right'}],
-            gridExpandHeight: 100,
+            gridExpandHeight: 120,
             showNumberColumn: true,
             showPager: true,
             pagerOption: {

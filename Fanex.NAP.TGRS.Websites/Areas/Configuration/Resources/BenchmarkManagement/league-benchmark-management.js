@@ -85,17 +85,19 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         });
 
         // Hide instruction tipsy when clicking on document.
-        $('html').off('mousedown').on('mousedown', function () {
-            domElements.divLeagueBMGrid.find('input.benchmark').each(function () {
-                var $input = $(this);
-                var $link = $input.prev();
+        $('html').off('mousedown').on('mousedown', function (event) {
+            if (!$(event.target).hasClass('benchmark')) {
+                domElements.divLeagueBMGrid.find('input.benchmark').each(function () {
+                    var $input = $(this);
+                    var $link = $input.prev();
 
-                if (!$input.hasClass('hide')) {
-                    $input.addClass('hide');
-                    $link.removeClass('hide');
-                    $input.tipsy('hide');
-                }
-            });
+                    if (!$input.hasClass('hide')) {
+                        $input.addClass('hide');
+                        $link.removeClass('hide');
+                        $input.tipsy('hide');
+                    }
+                });
+            }
         });
     };
 
@@ -137,7 +139,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                       { HeaderText: labels.ProfitMargin, Width: 100, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'center'}],
-            gridExpandHeight: 220,
+            gridExpandHeight: 180,
             showNumberColumn: true,
             showPager: true,
             pagerOption: {

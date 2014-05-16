@@ -33,17 +33,19 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
     // Bind event handlers.
     var bindEventHandlers = function () {
         // Hide instruction tipsy when clicking on document.
-        $('html').off('mousedown').on('mousedown', function () {
-            domElements.divTeamBMGrid.find('input.benchmark').each(function () {
-                var $input = $(this);
-                var $link = $input.prev();
+        $('html').off('mousedown').on('mousedown', function (event) {
+            if (!$(event.target).hasClass('benchmark')) {
+                domElements.divTeamBMGrid.find('input.benchmark').each(function () {
+                    var $input = $(this);
+                    var $link = $input.prev();
 
-                if (!$input.hasClass('hide')) {
-                    $input.addClass('hide');
-                    $link.removeClass('hide');
-                    $input.tipsy('hide');
-                }
-            });
+                    if (!$input.hasClass('hide')) {
+                        $input.addClass('hide');
+                        $link.removeClass('hide');
+                        $input.tipsy('hide');
+                    }
+                });
+            }
         });
     };
 
