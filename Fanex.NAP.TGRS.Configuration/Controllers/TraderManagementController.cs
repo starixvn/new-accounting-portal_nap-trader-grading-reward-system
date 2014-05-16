@@ -117,13 +117,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             insertCriteria.Username = insertCriteria.Username ?? string.Empty;
             insertCriteria.EmployeeId = insertCriteria.EmployeeId ?? string.Empty;
             insertCriteria.UserId = this.CurrentSession.UserId;
-            getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
-            getCriteria.UserName = getCriteria.UserName ?? string.Empty;
 
             result = this._traderService.InsertTrader(insertCriteria);
 
             if (result.IsSuccessful)
             {
+                getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
+                getCriteria.UserName = getCriteria.UserName ?? string.Empty;
                 updatedItems = this._traderService.GetAllTrader(getCriteria);
             }
 
@@ -149,13 +149,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             TraderInfoList updatedItems = null;
 
             updateCriteria.UserId = this.CurrentSession.UserId;
-            getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
-            getCriteria.UserName = getCriteria.UserName ?? string.Empty;
 
             result = this._traderService.UpdateTrader(updateCriteria);
 
             if (result.IsSuccessful)
             {
+                getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
+                getCriteria.UserName = getCriteria.UserName ?? string.Empty;
                 updatedItems = this._traderService.GetAllTrader(getCriteria);
             }
 
