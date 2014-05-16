@@ -68,12 +68,10 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/Fanex.Grid/Fanex.Pagination.css",
                 "~/Content/DatePicker/jquery.nexDatePicker.css",
                 "~/Content/Themes/reset.less",
-                "~/Content/Themes/style.less",
-                "~/Content/Themes/custom.less");
+                "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
-                "~/Scripts/Libraries/Modernizr/modernizr.30715.min.js",
                 "~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
                 "~/Scripts/Libraries/jQuery/jquery.blockUI.2.66.min.js",
                 "~/Scripts/Libraries/Tipsy/jquery.tipsy.js",

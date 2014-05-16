@@ -45,8 +45,8 @@
     <Reference Include="BundleTransformer.Less">
       <HintPath>..\packages\BundleTransformer.Less.1.8.25\lib\net40\BundleTransformer.Less.dll</HintPath>
     </Reference>
-    <Reference Include="dotless.Core">
-      <HintPath>..\packages\dotless.1.4.0.0\lib\dotless.Core.dll</HintPath>
+    <Reference Include="Fanex.Caching, Version=1.0.404.94, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\Fanex\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
@@ -269,7 +269,6 @@
     <Content Include="Content\Themes\Images\small-arrow-down.png" />
     <Content Include="Content\Themes\Images\user.png" />
     <Content Include="Content\Tipsy\tipsy.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
@@ -321,7 +320,7 @@
     <Content Include="Areas\Configuration\Views\TraderManagement\UpdateTraderForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TraderManagement\IndexFilter.cshtml" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\benchmark-management.less" />
-    <None Include="Areas\User\Resources\Login\login.less" />
+    <Content Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
