@@ -234,7 +234,7 @@ Fanex.TGRS.TraderManagement = function () {
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
-            gridExpandHeight: 100,
+            gridExpandHeight: 150,
             showPager: true,
             pagerOption: {
                 currentPage: 0,
