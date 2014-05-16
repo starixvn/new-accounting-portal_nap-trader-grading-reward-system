@@ -279,7 +279,6 @@
     <Content Include="Scripts\Libraries\Modernizr\modernizr.30715.min.js" />
     <Content Include="Scripts\Libraries\Others\namespace.js" />
     <Content Include="Scripts\tgrs.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular-animate.js" />
     <Content Include="Scripts\Libraries\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libraries\DatePicker\jquery.nexDatePicker.js" />
     <Content Include="Scripts\Libraries\Fanex.Grid\Fanex.Grid.js" />
@@ -290,8 +289,6 @@
     <Content Include="Scripts\Libraries\Others\moment.js" />
     <Content Include="Scripts\Libraries\Others\numeral.js" />
     <Content Include="Scripts\Libraries\Tipsy\jquery.tipsy.js" />
-    <Content Include="Scripts\Libraries\AngularJs\angular.js" />
-    <Content Include="Scripts\Libraries\Bootstrap\ui-bootstrap-tpls-0.10.0.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
