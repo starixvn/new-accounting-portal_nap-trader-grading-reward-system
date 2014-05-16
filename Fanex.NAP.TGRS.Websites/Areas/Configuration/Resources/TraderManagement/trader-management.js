@@ -112,13 +112,13 @@ Fanex.TGRS.TraderManagement = function () {
             common.ClosePopup();
         });
     };
-    var bindUpdateTraderPopupEvent = function () {
+    var bindUpdateTraderPopupEvent = function (effectiveDate) {
         //Date picker
         var maxDate = new Date(datepickerSetting.Today);
         maxDate.setMonth(maxDate.getMonth() + 1);
 
         layout.CreateDatepicker(popupElements.dpkEffectiveDate, 'txtEffectiveDate',
-            labels.EffectiveDate, 'width-80', datepickerSetting.Today, datepickerSetting.Today, maxDate, 'trader-width-200');
+            labels.EffectiveDate, 'width-80', effectiveDate, datepickerSetting.Today, maxDate, 'trader-width-200');
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
@@ -223,7 +223,8 @@ Fanex.TGRS.TraderManagement = function () {
     // Render grid.
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-trader-link link" data-cust-id="{0}"';
-        nameColFormat += 'data-username="{1}" data-trader-team="{2}" data-trader-grade="{3}" data-trader-employeeId="{4}">{1}</span>';
+        nameColFormat += 'data-username="{1}" data-trader-team="{2}" data-trader-grade="{3}"';
+        nameColFormat += 'data-trader-employeeId="{4}" data-trader-effectiveDate="{5}">{1}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 150, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -248,7 +249,7 @@ Fanex.TGRS.TraderManagement = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId);
+                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId, item.EffectiveDate);
                 TraderNameCol = item.TraderName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
@@ -413,6 +414,7 @@ Fanex.TGRS.TraderManagement = function () {
             var custId = $obj.attr('data-cust-id');
             var username = $obj.attr('data-username');
             var employeeId = $obj.attr('data-trader-employeeId');
+            var effectiveDate = $obj.attr('data-trader-effectiveDate');
             var teamName = $obj.attr('data-trader-team');
             var gradeName = $obj.attr('data-trader-grade');
             
@@ -421,7 +423,7 @@ Fanex.TGRS.TraderManagement = function () {
             var teamId = cacheTeamDataId[teamName];
             var gradeId = cacheGradeDataId[gradeName];
 
-            makeUpdateTraderForm(custId, username, employeeId, teamId, gradeId);
+            makeUpdateTraderForm(custId, username, employeeId, teamId, gradeId, effectiveDate);
 
         });
     };
@@ -439,7 +441,7 @@ Fanex.TGRS.TraderManagement = function () {
         bindNewTraderPopupEvent();
     };
     // Display update Trader form.
-    var makeUpdateTraderForm = function (custId, username, employeeId, teamId, gradeId) {
+    var makeUpdateTraderForm = function (custId, username, employeeId, teamId, gradeId, effectiveDate) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
@@ -447,6 +449,7 @@ Fanex.TGRS.TraderManagement = function () {
 
         //prepare event, data
         cachePopupElements();
+        
 
         //Prepare data for update form ;
         popupElements.txtUserName.val(username);
@@ -456,7 +459,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.txtEmployeeId.prop('disabled', true);
         updatePopupDropdown(popupType.update, teamId, gradeId);
 
-        bindUpdateTraderPopupEvent();
+        bindUpdateTraderPopupEvent(effectiveDate);
     };
 
     var refreshPopup = function()
@@ -469,6 +472,5 @@ Fanex.TGRS.TraderManagement = function () {
         cacheDOMElements();
         initPageFields();
         intializeFilterData();
-        getAllTraders();
     };
 };
