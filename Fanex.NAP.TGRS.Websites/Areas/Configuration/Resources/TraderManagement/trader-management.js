@@ -469,5 +469,6 @@ Fanex.TGRS.TraderManagement = function () {
         cacheDOMElements();
         initPageFields();
         intializeFilterData();
+        getAllTraders();
     };
 };

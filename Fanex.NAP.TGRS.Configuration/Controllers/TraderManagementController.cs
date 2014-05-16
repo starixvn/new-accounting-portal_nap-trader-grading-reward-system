@@ -113,6 +113,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             ICommandResult result = null;
             TraderInfoList updatedItems = null;
 
+            criteria.Username = criteria.Username ?? string.Empty;
+            criteria.EmployeeId = criteria.EmployeeId ?? string.Empty;
             criteria.UserId = this.CurrentSession.UserId;
             result = this._traderService.InsertTrader(criteria);
 
