@@ -164,12 +164,16 @@ Fanex.TGRS.TraderManagement = function () {
     //Insert new Trader
     var insertTrader = function (parameter) {
         common.DisableInput();
+        var combineParameter = {
+            insertCriteria: parameter,
+            getCriteria: filterParameters
+        };
         $.ajax({
             type: 'POST',
             url: urls.InsertTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(parameter),
+            data: JSON.stringify(combineParameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.AddTraderSuccessfully, false, function () {
@@ -193,12 +197,16 @@ Fanex.TGRS.TraderManagement = function () {
     //insert Trader
     var updateTrader = function (parameter) {
         common.DisableInput();
+        var combineParameter = {
+            updateCriteria: parameter,
+            getCriteria: filterParameters
+        };
         $.ajax({
             type: 'POST',
             url: urls.UpdateTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(parameter),
+            data: JSON.stringify(combineParameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateTraderSuccessfully, false, function () {
@@ -242,18 +250,17 @@ Fanex.TGRS.TraderManagement = function () {
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
-        var editableTraderNameCol = "";
         var TraderNameCol = "";
         var bodyData = [];
         var row;
-
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId, item.EffectiveDate);
-                TraderNameCol = item.TraderName;
+                TraderNameCol = hasEditRight ? 
+                                nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId, item.EffectiveDate) 
+                                : item.UserName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
-                              { Name: 'ColName', Value: hasEditRight ? editableTraderNameCol : TraderNameCol },
+                              { Name: 'ColName', Value: TraderNameCol },
                               { Name: 'ColEmployee', Value: item.EmployeeId },
                               { Name: 'ColTeam', Value: item.TeamName },
                               { Name: 'ColGrade', Value: item.GradeName },

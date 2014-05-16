@@ -104,23 +104,27 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <summary>
         /// Add new Trader.
         /// </summary>
-        /// <param name="criteria">Criteria that are used to insert data.</param>
+        /// <param name="insertCriteria">Criteria that are used to insert data.</param>
+        /// <param name="getCriteria">Criteria that are used to get data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult InsertTrader(InsertTraderCriteria criteria)
+        public JsonResult InsertTrader(InsertTraderCriteria insertCriteria, GetAllTradersCriteria getCriteria)
         {
             ICommandResult result = null;
             TraderInfoList updatedItems = null;
 
-            criteria.Username = criteria.Username ?? string.Empty;
-            criteria.EmployeeId = criteria.EmployeeId ?? string.Empty;
-            criteria.UserId = this.CurrentSession.UserId;
-            result = this._traderService.InsertTrader(criteria);
+            insertCriteria.Username = insertCriteria.Username ?? string.Empty;
+            insertCriteria.EmployeeId = insertCriteria.EmployeeId ?? string.Empty;
+            insertCriteria.UserId = this.CurrentSession.UserId;
+            getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
+            getCriteria.UserName = getCriteria.UserName ?? string.Empty;
+
+            result = this._traderService.InsertTrader(insertCriteria);
 
             if (result.IsSuccessful)
             {
-                updatedItems = this._traderService.GetAllTrader(new GetAllTradersCriteria());
+                updatedItems = this._traderService.GetAllTrader(getCriteria);
             }
 
             return Json(new
@@ -134,21 +138,25 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <summary>
         /// Update Trader.
         /// </summary>
-        /// <param name="criteria">Criteria that are used to update data.</param>
+        /// <param name="updateCriteria">Criteria that are used to update data.</param>
+        /// <param name="getCriteria">Criteria that are used to get data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult UpdateTrader(UpdateTraderCriteria criteria)
+        public JsonResult UpdateTrader(UpdateTraderCriteria updateCriteria, GetAllTradersCriteria getCriteria)
         {
             ICommandResult result = null;
             TraderInfoList updatedItems = null;
 
-            criteria.UserId = this.CurrentSession.UserId;
-            result = this._traderService.UpdateTrader(criteria);
+            updateCriteria.UserId = this.CurrentSession.UserId;
+            getCriteria.EmployeeId = getCriteria.EmployeeId ?? string.Empty;
+            getCriteria.UserName = getCriteria.UserName ?? string.Empty;
+
+            result = this._traderService.UpdateTrader(updateCriteria);
 
             if (result.IsSuccessful)
             {
-                updatedItems = this._traderService.GetAllTrader(new GetAllTradersCriteria());
+                updatedItems = this._traderService.GetAllTrader(getCriteria);
             }
 
             return Json(new
