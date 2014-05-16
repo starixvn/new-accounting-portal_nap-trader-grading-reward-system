@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ConfigAreaRegistration.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ConfigurationAreaRegistration.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -14,7 +14,7 @@ namespace Fanex.NAP.TGRS.Configuration
     /// <summary>
     /// Registers Config area.
     /// </summary>
-    public class ConfigAreaRegistration : AreaRegistration
+    public class ConfigurationAreaRegistration : AreaRegistration
     {
         public override string AreaName
         {
