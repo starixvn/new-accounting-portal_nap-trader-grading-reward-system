@@ -61,6 +61,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Bet Types.
+        /// </summary>
+        public static string AllBetTypes {
+            get {
+                return ResourceManager.GetString("AllBetTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Countries.
         /// </summary>
         public static string AllCountries {
@@ -124,6 +133,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Count.
+        /// </summary>
+        public static string BetCount {
+            get {
+                return ResourceManager.GetString("BetCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type.
         /// </summary>
         public static string BetType {
@@ -138,6 +156,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string BetTypeBM {
             get {
                 return ResourceManager.GetString("BetTypeBM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Performance.
+        /// </summary>
+        public static string BetTypePerformance {
+            get {
+                return ResourceManager.GetString("BetTypePerformance", resourceCulture);
             }
         }
         
@@ -183,6 +210,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string CreatedDate {
             get {
                 return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -241,6 +277,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forecast.
+        /// </summary>
+        public static string Forecast {
+            get {
+                return ResourceManager.GetString("Forecast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string Generate {
+            get {
+                return ResourceManager.GetString("Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GMT-4.
         /// </summary>
         public static string GMTMinus4 {
@@ -277,11 +331,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grand Total.
+        /// </summary>
+        public static string GrandTotal {
+            get {
+                return ResourceManager.GetString("GrandTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League.
         /// </summary>
         public static string League {
             get {
                 return ResourceManager.GetString("League", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League BM.
+        /// </summary>
+        public static string LeagueBM {
+            get {
+                return ResourceManager.GetString("LeagueBM", resourceCulture);
             }
         }
         
@@ -295,6 +367,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live Turnover.
+        /// </summary>
+        public static string LiveTurnover {
+            get {
+                return ResourceManager.GetString("LiveTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live Win Loss.
+        /// </summary>
+        public static string LiveWinLoss {
+            get {
+                return ResourceManager.GetString("LiveWinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Markets.
         /// </summary>
         public static string MainMarkets {
@@ -304,11 +394,47 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Margin.
+        /// </summary>
+        public static string Margin {
+            get {
+                return ResourceManager.GetString("Margin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Market.
         /// </summary>
         public static string Market {
             get {
                 return ResourceManager.GetString("Market", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match.
+        /// </summary>
+        public static string Match {
+            get {
+                return ResourceManager.GetString("Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Turnover.
+        /// </summary>
+        public static string MinimumTurnover {
+            get {
+                return ResourceManager.GetString("MinimumTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Win Loss.
+        /// </summary>
+        public static string MinimumWinLoss {
+            get {
+                return ResourceManager.GetString("MinimumWinLoss", resourceCulture);
             }
         }
         
@@ -340,11 +466,56 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Of Leagues.
+        /// </summary>
+        public static string NoOfLeagues {
+            get {
+                return ResourceManager.GetString("NoOfLeagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No. Of Matches.
+        /// </summary>
+        public static string NoOfMatches {
+            get {
+                return ResourceManager.GetString("NoOfMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No. Of Traders.
+        /// </summary>
+        public static string NoOfTraders {
+            get {
+                return ResourceManager.GetString("NoOfTraders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olympic.
         /// </summary>
         public static string Olympic {
             get {
                 return ResourceManager.GetString("Olympic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performance Detail Report.
+        /// </summary>
+        public static string PerformanceDetailReport {
+            get {
+                return ResourceManager.GetString("PerformanceDetailReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performance Summary Report.
+        /// </summary>
+        public static string PerformanceSummaryReport {
+            get {
+                return ResourceManager.GetString("PerformanceSummaryReport", resourceCulture);
             }
         }
         
@@ -448,11 +619,47 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Team Performance.
+        /// </summary>
+        public static string TeamPerformance {
+            get {
+                return ResourceManager.GetString("TeamPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trader Grading &amp; Reward System.
         /// </summary>
         public static string TGRS {
             get {
                 return ResourceManager.GetString("TGRS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top 5 losing leagues.
+        /// </summary>
+        public static string Top5LosingLeagues {
+            get {
+                return ResourceManager.GetString("Top5LosingLeagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top 5 winning leagues.
+        /// </summary>
+        public static string Top5WinningLeagues {
+            get {
+                return ResourceManager.GetString("Top5WinningLeagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trader.
+        /// </summary>
+        public static string Trader {
+            get {
+                return ResourceManager.GetString("Trader", resourceCulture);
             }
         }
         
@@ -484,11 +691,38 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trader Performance.
+        /// </summary>
+        public static string TraderPerformance {
+            get {
+                return ResourceManager.GetString("TraderPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turnover.
+        /// </summary>
+        public static string Turnover {
+            get {
+                return ResourceManager.GetString("Turnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Loss.
+        /// </summary>
+        public static string WinLoss {
+            get {
+                return ResourceManager.GetString("WinLoss", resourceCulture);
             }
         }
         

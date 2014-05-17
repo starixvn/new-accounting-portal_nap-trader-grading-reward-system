@@ -267,4 +267,82 @@
   <data name="AllCountries" xml:space="preserve">
     <value>All Countries</value>
   </data>
+  <data name="AllBetTypes" xml:space="preserve">
+    <value>All Bet Types</value>
+  </data>
+  <data name="BetCount" xml:space="preserve">
+    <value>Bet Count</value>
+  </data>
+  <data name="BetTypePerformance" xml:space="preserve">
+    <value>Bet Type Performance</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Forecast" xml:space="preserve">
+    <value>Forecast</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="GrandTotal" xml:space="preserve">
+    <value>Grand Total</value>
+  </data>
+  <data name="LeagueBM" xml:space="preserve">
+    <value>League BM</value>
+  </data>
+  <data name="LiveTurnover" xml:space="preserve">
+    <value>Live Turnover</value>
+  </data>
+  <data name="LiveWinLoss" xml:space="preserve">
+    <value>Live Win Loss</value>
+  </data>
+  <data name="Margin" xml:space="preserve">
+    <value>Margin</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="MinimumTurnover" xml:space="preserve">
+    <value>Minimum Turnover</value>
+  </data>
+  <data name="MinimumWinLoss" xml:space="preserve">
+    <value>Minimum Win Loss</value>
+  </data>
+  <data name="NoOfLeagues" xml:space="preserve">
+    <value>No. Of Leagues</value>
+  </data>
+  <data name="NoOfMatches" xml:space="preserve">
+    <value>No. Of Matches</value>
+  </data>
+  <data name="NoOfTraders" xml:space="preserve">
+    <value>No. Of Traders</value>
+  </data>
+  <data name="PerformanceDetailReport" xml:space="preserve">
+    <value>Performance Detail Report</value>
+  </data>
+  <data name="PerformanceSummaryReport" xml:space="preserve">
+    <value>Performance Summary Report</value>
+  </data>
+  <data name="TeamPerformance" xml:space="preserve">
+    <value>Team Performance</value>
+  </data>
+  <data name="Top5LosingLeagues" xml:space="preserve">
+    <value>Top 5 losing leagues</value>
+  </data>
+  <data name="Top5WinningLeagues" xml:space="preserve">
+    <value>Top 5 winning leagues</value>
+  </data>
+  <data name="TraderPerformance" xml:space="preserve">
+    <value>Trader Performance</value>
+  </data>
+  <data name="Turnover" xml:space="preserve">
+    <value>Turnover</value>
+  </data>
+  <data name="WinLoss" xml:space="preserve">
+    <value>Win Loss</value>
+  </data>
+  <data name="Trader" xml:space="preserve">
+    <value>Trader</value>
+  </data>
 </root>

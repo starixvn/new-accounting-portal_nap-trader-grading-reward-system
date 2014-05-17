@@ -1,0 +1,84 @@
+﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
+@{
+    ViewBag.Title = ViewLang.PerformanceDetailReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="header-button">
+        <a href="#" class="green-button change-list disabled">
+            <span class="icon-list"></span>@ViewLang.League
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/TraderPerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.Trader
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/GradePerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.Grade
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/TeamPerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.Team
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.BetType
+        </a>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divLeaguePerformanceFilter" class="filter-form">
+        <div class="filter-row">
+            <div id="divDateRange"></div>
+            <div class="lbl-field col_2 align-right">
+                <label for="txtLeague">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_12 align-left">
+                <input type="text" id="txtLeague" class="width-200" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5 align-right">
+                <label for="ddlBetType">@ViewLang.BetType</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <select id="ddlBetType" class="width-140">
+                </select>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMarginFrom">@ViewLang.Margin</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtMarginFrom" class="width-60"/> - <input type="text" id="txtMarginTo"  class="width-60"/>
+            </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtLeagueBMFrom">@ViewLang.LeagueBM</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtLeagueBMFrom" class="width-60" /> - <input type="text" id="txtLeagueBMTo" class="width-60" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMinTurnover" class="width-140"/>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtMinWinLoss" class="width-140"/>
+            </div>
+            <div class="submit width-auto col_4">
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divLeagueBMGridContainer" class="content-grid display-none">
+    <div id="divLeagueBMGrid" class="freegrid"></div>
+</div>

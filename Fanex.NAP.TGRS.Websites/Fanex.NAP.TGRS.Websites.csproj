@@ -45,7 +45,7 @@
     <Reference Include="BundleTransformer.Less">
       <HintPath>..\packages\BundleTransformer.Less.1.8.25\lib\net40\BundleTransformer.Less.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Caching, Version=1.0.404.94, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Fanex\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
@@ -300,7 +300,9 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Reports\Resources\" />
+    <Folder Include="Areas\Reports\Resources\PerformanceDetail\" />
+    <Folder Include="Areas\Reports\Resources\PerformanceSummary\" />
+    <Folder Include="Areas\Reports\Views\PerformanceSummary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -326,6 +328,11 @@
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />
     <Content Include="Areas\Reports\Views\Web.config" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\BetTypePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\TeamPerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\GradePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\TraderPerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\LeaguePerformance.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

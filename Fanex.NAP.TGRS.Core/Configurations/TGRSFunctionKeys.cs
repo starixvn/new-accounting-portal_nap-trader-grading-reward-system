@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 5/13/2014 7:29:54 AM
+// Lasted generated date: 5/17/2014 4:35:06 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -47,7 +47,7 @@ public static class TGRSFunctionKeys
 
         public const string PerformanceSummary = "PerformanceSummary";
 
-        public const string Report = "Report";
+        public const string Reports = "Reports";
 
         public const string SystemConfiguration = "SystemConfiguration";
 

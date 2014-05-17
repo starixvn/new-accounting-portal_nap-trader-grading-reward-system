@@ -58,8 +58,22 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PerformanceDetailController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsAreaRegistration.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\GradePerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\GradePerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceGroup.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
@@ -68,11 +82,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Criteria\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="Criteria\PerformanceDetail\" />
+    <Folder Include="Criteria\PerformanceSummary\" />
+    <Folder Include="Models\PerformanceDetail\" />
+    <Folder Include="Models\PerformanceSummary\" />
+    <Folder Include="Services\Implements\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="ViewModels\PerformanceSummary\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Fanex.NAP.TGRS.Core.Resources;
 
     /// <summary>
-    /// Team controller.
+    /// Benchmark controller.
     /// </summary>
     public class BenchmarkManagementController : TGRSBaseController
     {
