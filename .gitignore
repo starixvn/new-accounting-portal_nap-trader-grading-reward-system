@@ -1,7 +1,13 @@
+/Fanex.NAP.TGRS.Configuration/obj
+/Fanex.NAP.TGRS.Configuration/bin
+/Fanex.NAP.TGRS.Configuration/StyleCop.Cache
 /Fanex.NAP.TGRS.Core/bin
 /Fanex.NAP.TGRS.Core/obj
 /Fanex.NAP.TGRS.Core/Fanex.NAP.TGRS.Core.csproj.user
 /Fanex.NAP.TGRS.Core/StyleCop.Cache
+/Fanex.NAP.TGRS.Reports/obj
+/Fanex.NAP.TGRS.Reports/bin
+/Fanex.NAP.TGRS.Reports/StyleCop.Cache
 /Fanex.NAP.TGRS.User/bin
 /Fanex.NAP.TGRS.User/obj
 /Fanex.NAP.TGRS.User/StyleCop.Cache
@@ -12,7 +18,4 @@
 /Fanex.NAP.TGRS.Websites/StyleCop.Cache
 /Fanex.NAP.TGRS.suo
 /Fanex.NAP.TGRS.sln.docstates.suo
-/Fanex.NAP.TGRS.Configuration/obj
-/Fanex.NAP.TGRS.Configuration/bin
-/Fanex.NAP.TGRS.Configuration/StyleCop.Cache
 Fanex.NAP.TGRS.Websites/Fanex.NAP.TGRS.Websites.Publish.xml

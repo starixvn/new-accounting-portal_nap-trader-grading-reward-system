@@ -299,7 +299,9 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Reports\Resources\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -323,6 +325,7 @@
     <Content Include="Areas\User\Resources\Login\login.less" />
     <Content Include="Areas\User\Views\UserInfo\ChangePassword.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\UserProfile.cshtml" />
+    <Content Include="Areas\Reports\Views\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -356,6 +359,10 @@
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
       <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
       <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Reports\Fanex.NAP.TGRS.Reports.csproj">
+      <Project>{F1E9E8DE-FFE3-4040-8532-21ABE82DC2E5}</Project>
+      <Name>Fanex.NAP.TGRS.Reports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.TGRS.User\Fanex.NAP.TGRS.User.csproj">
       <Project>{818AB9EF-2DB1-49EA-B2E8-A3A4D9BFE45E}</Project>
