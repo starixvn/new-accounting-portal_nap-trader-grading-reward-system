@@ -20,6 +20,7 @@ Fanex.TGRS.Common = function () {
 
     $this.Formats = {
         DateFormat: 'mm/dd/yy',
+        MomentDateFormat: 'MM/DD/YYYY',
         IntegerFormat: '0,0',
         DecimalFormat: '0,0.00'
     };

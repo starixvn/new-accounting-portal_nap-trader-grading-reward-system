@@ -348,4 +348,13 @@
   <data name="AvgGrade" xml:space="preserve">
     <value>Average Grade</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="LeaguePerformance" xml:space="preserve">
+    <value>League Performance</value>
+  </data>
 </root>

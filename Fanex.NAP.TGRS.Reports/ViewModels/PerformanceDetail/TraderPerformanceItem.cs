@@ -21,6 +21,10 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public string TraderName { get; set; }
 
+        public int Grade { get; set; }
+
+        public string TeamName { get; set; }
+
         public int NoOfLeagues { get; set; }
 
         public int NoOfMatches { get; set; }

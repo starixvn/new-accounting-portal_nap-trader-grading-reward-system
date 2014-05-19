@@ -9,16 +9,26 @@
 
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
 
     /// <summary>
     /// Performance detail report controller.
     /// </summary>
     public class PerformanceDetailController : TGRSBaseController
     {
+        public PerformanceDetailController()
+        {
+            ViewBag.MinDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+        }
+
         /// <summary>
         /// Gets Index page.
         /// </summary>

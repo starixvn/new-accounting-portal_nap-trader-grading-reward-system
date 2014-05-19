@@ -94,22 +94,23 @@
         this.$firstDatePicker = null;
         this.$secondDatePicker = null;
         this.$datePickers = null;
-        this.CurrentDate = new Date();
+        this.FirstDate = new Date();
+        this.SecondDate = new Date();
 
         //// Get Current Date
         if (typeof options.firstDatePicker.InitDate != "undefined"
         && options.firstDatePicker.InitDate != "") {
-            this.CurrentDate = new Date(options.firstDatePicker.InitDate);
+            this.FirstDate = new Date(options.firstDatePicker.InitDate);
             if (options.nexDatePickerType != "single"
                 && typeof options.secondDatePicker.InitDate != "undefined"
                 && options.secondDatePicker.InitDate != "") {
-                this.CurrentDate = new Date(options.secondDatePicker.InitDate);
+                this.SecondDate = new Date(options.secondDatePicker.InitDate);
             }
         }
 
         //// Get Yesterday
-        this.Yesterday = new Date(this.CurrentDate);
-        this.Yesterday.setDate(this.CurrentDate.getDate() - 1);
+        this.Yesterday = new Date(this.FirstDate);
+        this.Yesterday.setDate(this.FirstDate.getDate() - 1);
         //// Start Render
         this.Initialize();
 
@@ -207,8 +208,8 @@
             this.$datePickers = $(ids);
             this.DatePickerOnSelect();
             this.$datePickers.datepicker(options.datePickerFormat);
-            var fd = new Date(me.CurrentDate);
-            var td = new Date(me.CurrentDate);
+            var fd = new Date(me.FirstDate);
+            var td = new Date(me.SecondDate);
             me.$firstDatePicker.datepicker("setDate", fd);
             if (options.nexDatePickerType != "single") {
                 me.$secondDatePicker.datepicker("setDate", td);
@@ -236,9 +237,9 @@
             if (options.nexDatePickerType != "single") {
                 me.$select.parent().on("change", "#" + options.dropDownList.Id, function () {
                     var selectValue = $(this).val();
-                    var dt = new Date(me.CurrentDate);
-                    var fDate = new Date(me.CurrentDate);
-                    var tDate = new Date(me.CurrentDate);
+                    var dt = new Date(me.FirstDate);
+                    var fDate = new Date(me.FirstDate);
+                    var tDate = new Date(me.SecodDate);
                     var dateRange = [fDate, tDate];
                     switch (parseInt(selectValue)) {
                         case 0:
@@ -290,6 +291,8 @@
             var optionSelect =
             {
                 onSelect: function (selectedDate) {
+                    var currentDatepicker = this.id == options.firstDatePicker.Id ? me.$firstDatePicker : me.$secondDatePicker;
+
                     if (options.nexDatePickerType != "single") {
                         var option = this.id == options.firstDatePicker.Id ? "minDate" : "maxDate";
                         var instance = $(this).data("datepicker");
@@ -306,8 +309,8 @@
                         //.datepicker("close");
                         //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
                     }
-                    options.onSelectDatePicker(selectedDate);
-                    me.$dropDownList.val(7);                   
+                    options.onSelectDatePicker(selectedDate, currentDatepicker);
+                    me.$dropDownList.val(7);
                 }
             }
             this.Options.datePickerFormat = $.extend({}, this.Options.datePickerFormat, optionSelect);

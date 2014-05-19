@@ -29,10 +29,11 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
             RegisterConfigurationBundles(bundles);
+            RegisterReportsBundles(bundles);
         }
 
         /// <summary>
-        /// Registers the common bundles.
+        /// Registers the login bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterLoginBundles(BundleCollection bundles)
@@ -91,7 +92,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
         }
 
         /// <summary>
-        /// Registers the common bundles.
+        /// Registers the configuration module's bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterConfigurationBundles(BundleCollection bundles)
@@ -114,6 +115,32 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/page-manager.js"));
+        }
+
+        /// <summary>
+        /// Registers the reports module's bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterReportsBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/performanceDetail",
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/leaguePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/league-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/traderPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/trader-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/gradePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/grade-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/teamPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/team-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/betTypePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/bettype-performance.js"));
         }
     }
 

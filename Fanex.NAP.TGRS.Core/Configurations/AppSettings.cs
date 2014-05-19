@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Core.Configurations
 {
     using System.Configuration;
+    using Fanex.Common;
 
     /// <summary>
     /// Application settings.
@@ -17,6 +18,9 @@ namespace Fanex.NAP.TGRS.Core.Configurations
     public static class AppSettings
     {
         private static string serverTimezone;
+        private static int performanceYearRange;
+        private static int performanceAllowYearRange;
+        private static int performanceDefaultDayRange;
 
         public static string ServerTimezone
         {
@@ -28,6 +32,45 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return serverTimezone;
+            }
+        }
+
+        public static int PerformanceYearRange
+        {
+            get
+            {
+                if (performanceYearRange == 0)
+                {
+                    performanceYearRange = Converter.ToInt(GetValue("PerformanceYearRange"));
+                }
+
+                return performanceYearRange;
+            }
+        }
+
+        public static int PerformanceAllowYearRange
+        {
+            get
+            {
+                if (performanceAllowYearRange == 0)
+                {
+                    performanceAllowYearRange = Converter.ToInt(GetValue("PerformanceAllowYearRange"));
+                }
+
+                return performanceAllowYearRange;
+            }
+        }
+
+        public static int PerformanceDefaultDayRange
+        {
+            get
+            {
+                if (performanceDefaultDayRange == 0)
+                {
+                    performanceDefaultDayRange = Converter.ToInt(GetValue("PerformanceDefaultDayRange"));
+                }
+
+                return performanceDefaultDayRange;
             }
         }
 

@@ -295,6 +295,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Date.
+        /// </summary>
+        public static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generate.
         /// </summary>
         public static string Generate {
@@ -372,6 +381,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string LeagueName {
             get {
                 return ResourceManager.GetString("LeagueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League Performance.
+        /// </summary>
+        public static string LeaguePerformance {
+            get {
+                return ResourceManager.GetString("LeaguePerformance", resourceCulture);
             }
         }
         
@@ -642,6 +660,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string TGRS {
             get {
                 return ResourceManager.GetString("TGRS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Date.
+        /// </summary>
+        public static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
             }
         }
         

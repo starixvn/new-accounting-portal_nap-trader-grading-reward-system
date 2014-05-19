@@ -76,7 +76,7 @@ Fanex.TGRS.Validator = function () {
 
             value = $.trim($ele.val().replace(/,/g, ''));
 
-            if (errMsg && !$ele.prop('disabled') && (!$.isNumeric(value))) {
+            if (errMsg && !$ele.prop('disabled') && (value !== '') && (!$.isNumeric(value))) {
                 $this.ShowError($obj, errMsg, gravity);
 
                 return false;

@@ -1,5 +1,106 @@
-﻿@{
-    ViewBag.Title = "TeamPerformance";
+﻿@using Fanex.NAP.Core.Web
+@{
+    ViewBag.Title = ViewLang.PerformanceDetailReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>TeamPerformance</h2>
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="header-button">
+        <a href="@Url.Content("/Reports/PerformanceDetail/LeaguePerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.League
+        </a>
+        <a href="#" class="green-button change-list disabled">
+            <span class="icon-list"></span>@ViewLang.Trader
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/GradePerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.Grade
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/TeamPerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.Team
+        </a>
+        <a href="@Url.Content("/Reports/PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+            <span class="icon-list"></span>@ViewLang.BetType
+        </a>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divLeaguePerformanceFilter" class="filter-form">
+        <div class="filter-row">
+            <div id="divDateRange"></div>
+            <div class="lbl-field col_5 align-right">
+                <label for="ddlBetType">@ViewLang.BetType</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <select id="ddlBetType" class="width-140">
+                </select>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtLeague">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtLeague" class="width-140" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtMarginFrom">@ViewLang.Margin</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMarginFrom" class="width-60"/> - <input type="text" id="txtMarginTo"  class="width-60"/>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMinTurnover" class="width-140"/>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMinWinLoss" class="width-140"/>
+            </div>
+            <div class="submit col_5">
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divLeagueBMGridContainer" class="content-grid display-none">
+    <div id="divLeagueBMGrid" class="freegrid"></div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/teamPerformance")
+    <script type="text/javascript">
+        var datepickerSetting = {
+            MinDate: '@DateTime.Today.AddYears(AppSettings.PerformanceDetailYearRange * -1).ToShortFormatedDate()',
+            DefaultFromDate: '@DateTime.Today.AddDays(AppSettings.PerformanceDetailDefaultDayRange * -1).ToShortFormatedDate()',
+            DefaultToDate: '@DateTime.Today.AddDays(-1).ToShortFormatedDate()',
+            AllowYearRange: parseInt('@AppSettings.PerformanceDetailAllowYearRange')
+        };
+        var labels = {
+            FromDate: '@ViewLang.FromDate',
+            ToDate: '@ViewLang.ToDate',
+            No: '#',
+            League: '@ViewLang.League',
+            League: '@ViewLang.League',
+            NoOfTraders: '@ViewLang.NoOfTraders',
+            NoOfMatches: '@ViewLang.NoOfMatches',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            BetCount: '@ViewLang.BetCount',
+            Margin: '@ViewLang.Margin',
+            LeagueBM: '@ViewLang.LeagueBM',
+            Trader: '@ViewLang.Trader',
+            Grade: '@ViewLang.Grade',
+            Team: '@ViewLang.Team',
+            Match: '@ViewLang.Match'
+        };
+    </script>
+}
