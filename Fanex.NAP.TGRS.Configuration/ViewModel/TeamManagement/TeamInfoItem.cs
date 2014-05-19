@@ -26,6 +26,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
             this.CreatedDate = teamInfo.CreatedDate.ToFullFormatedDate();
             this.CreatedBy = teamInfo.CreatedBy;
             this.CreatedUsername = teamInfo.CreatedUsername;
+            this.AvgGrade = teamInfo.AvgGrade;
         }
 
         public int TeamId { get; set; }
@@ -41,5 +42,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
         public int CreatedBy { get; set; }
 
         public string CreatedUsername { get; set; }
+
+        public decimal AvgGrade { get; set; }
     }
 }

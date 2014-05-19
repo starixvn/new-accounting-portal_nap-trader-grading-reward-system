@@ -1,0 +1,35 @@
+﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
+@{
+    ViewBag.Title = ViewLang.PerformanceSummaryReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divReportFilterForm" class="filter-form">
+        <div class="filter-row">
+            <div id="divDateRange"></div>
+            <div class="lbl-field col_2">
+                <label for="txtMarginFrom">@ViewLang.Date</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <div id="dpkDateFrom"></div>
+                <div id="txtDateFrom"></div> - 
+                <div id="dpkDateTo"></div>
+                <div id="txtDateTo"></div>
+            </div>
+            <div class="submit col_4">
+                <input id="btnSearch" type="submit" class="blue-button float-right" value="Search">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divReportGridContainer" class="content-grid display-none">
+    <div id="divReportGrid" class="freegrid"></div>
+</div>

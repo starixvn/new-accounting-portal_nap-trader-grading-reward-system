@@ -29,5 +29,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.TeamManagement
         public int CreatedBy { get; set; }
 
         public string CreatedUsername { get; set; }
+
+        public decimal AvgGrade { get; set; }
     }
 }

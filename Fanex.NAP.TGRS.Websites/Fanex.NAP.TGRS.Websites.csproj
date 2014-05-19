@@ -178,6 +178,7 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.js" />
     <Content Include="Areas\User\Resources\Login\img\logo-login.png" />
     <Content Include="Areas\User\Resources\Login\login.js" />
     <Content Include="Areas\User\Resources\Login\reCheckIn.js" />
@@ -301,8 +302,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Reports\Resources\PerformanceDetail\" />
-    <Folder Include="Areas\Reports\Resources\PerformanceSummary\" />
-    <Folder Include="Areas\Reports\Views\PerformanceSummary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -333,6 +332,7 @@
     <Content Include="Areas\Reports\Views\PerformanceDetail\GradePerformance.cshtml" />
     <Content Include="Areas\Reports\Views\PerformanceDetail\TraderPerformance.cshtml" />
     <Content Include="Areas\Reports\Views\PerformanceDetail\LeaguePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceSummary\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
