@@ -22,7 +22,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
             UserName = string.Empty;
             EmployeeId = string.Empty;
             TeamId = 0;
-            GradeId = 0;
+            Grade = 0;
         }
 
         public string UserName { get; set; }
@@ -31,7 +31,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
 
         public int TeamId { get; set; }
 
-        public int GradeId { get; set; }
+        public int Grade { get; set; }
 
         /// <summary>
         /// Gets Setting Key.

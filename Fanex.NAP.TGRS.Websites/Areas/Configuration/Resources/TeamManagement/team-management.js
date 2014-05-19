@@ -188,9 +188,11 @@ Fanex.TGRS.TeamManagement = function () {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TeamName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Description, Width: 280, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.AvgGrade, Width: 80, Name: 'ColAvgGrade', HeaderAlign: 'right', CellAlign: 'right' },
+                      { HeaderText: labels.AvgGrade, Width: 120, Name: 'ColAvgGrade', HeaderAlign: 'right', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
@@ -212,6 +214,7 @@ Fanex.TGRS.TeamManagement = function () {
                               { Name: 'ColName', Value: hasEditRight ? editableTeamNameCol : teamNameCol },
                               { Name: 'ColDes', Value: teamDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },
+                              { Name: 'ColAvgGrade', Value: item.AvgGrade },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedUsername}]
                 };

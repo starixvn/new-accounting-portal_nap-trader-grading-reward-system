@@ -345,4 +345,7 @@
   <data name="Trader" xml:space="preserve">
     <value>Trader</value>
   </data>
+  <data name="AvgGrade" xml:space="preserve">
+    <value>Average Grade</value>
+  </data>
 </root>

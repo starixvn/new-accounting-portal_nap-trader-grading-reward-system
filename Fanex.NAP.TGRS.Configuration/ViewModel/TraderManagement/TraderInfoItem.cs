@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
             this.UserName = traderInfo.UserName;
             this.EmployeeId = traderInfo.EmployeeId;
             this.TeamName = traderInfo.TeamName;
-            this.GradeName = traderInfo.GradeName;
+            this.Grade = traderInfo.Grade;
             this.CreatedDate = traderInfo.CreatedDate.ToFullFormatedDate();
             this.CreatedUsername = traderInfo.CreatedUsername;
             this.EffectiveDate = traderInfo.EffectiveDate.ToFullFormatedDate();
@@ -37,7 +37,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
 
         public string TeamName { get; set; }
 
-        public string GradeName { get; set; }
+        public string Grade { get; set; }
 
         public string CreatedDate { get; set; }
 

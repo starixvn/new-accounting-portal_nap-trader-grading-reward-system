@@ -24,7 +24,7 @@ Fanex.TGRS.TraderManagement = function () {
     };
     var filterParameters = {
         teamId: null,
-        gradeId: null,
+        grade: null,
         username: null,
         employeeId: null,
     };
@@ -56,9 +56,7 @@ Fanex.TGRS.TraderManagement = function () {
         txtEffectiveDate: null
     };
     var cacheTeamData = null;
-    var cacheGradeData = null;
     var cacheTeamDataId = {};
-    var cacheGradeDataId = {};
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -101,7 +99,7 @@ Fanex.TGRS.TraderManagement = function () {
                     Username:$.trim(popupElements.txtUserName.val()),
                     EmployeeId: $.trim(popupElements.txtEmployeeId.val()),
                     TeamId: popupElements.ddlTeam.val(),
-                    GradeId: popupElements.ddlGrade.val()
+                    grade: popupElements.ddlGrade.val()
                 };
 
                 insertTrader(parameters);
@@ -126,7 +124,7 @@ Fanex.TGRS.TraderManagement = function () {
                 var parameters = {
                     CustId: popupElements.txtCustId.val(),
                     TeamId: popupElements.ddlTeam.val(),
-                    GradeId: popupElements.ddlGrade.val(),
+                    grade: popupElements.ddlGrade.val(),
                     EffectiveDate: popupElements.dpkEffectiveDate.nexDatePicker('getSingleDate')
                 };
                 updateTrader(parameters);
@@ -238,7 +236,7 @@ Fanex.TGRS.TraderManagement = function () {
                       { HeaderText: labels.UserName, Width: 150, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.EmployeeId, Width: 100, Name: 'ColEmployee', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
@@ -256,14 +254,14 @@ Fanex.TGRS.TraderManagement = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 TraderNameCol = hasEditRight ? 
-                                nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.GradeName, item.EmployeeId, item.EffectiveDate) 
+                                nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.Grade, item.EmployeeId, item.EffectiveDate) 
                                 : item.UserName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
                               { Name: 'ColName', Value: TraderNameCol },
                               { Name: 'ColEmployee', Value: item.EmployeeId },
                               { Name: 'ColTeam', Value: item.TeamName },
-                              { Name: 'ColGrade', Value: item.GradeName },
+                              { Name: 'ColGrade', Value: item.Grade },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedUsername}]
                 };
@@ -290,11 +288,7 @@ Fanex.TGRS.TraderManagement = function () {
                     cacheTeamData = result.Teams.TeamInfoItems;
                     updateTeamDropdown(cacheTeamData, domElements.ddlTeam, labels.AllTeams, defaultSelectVal);
                 }
-
-                if (result.Grades.GradeInfoItems) {
-                    cacheGradeData = result.Grades.GradeInfoItems;
-                    updateGradeDropdown(cacheGradeData, domElements.ddlGrade, labels.AllGrades, defaultSelectVal);
-                }
+                updateGradeDropdown(domElements.ddlGrade, labels.AllGrades, defaultSelectVal);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -328,7 +322,7 @@ Fanex.TGRS.TraderManagement = function () {
     };
 
     // Update Grade drop-down list.
-    var updateGradeDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
+    var updateGradeDropdown = function (ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
         ddlDiv.html('');
 
@@ -339,11 +333,8 @@ Fanex.TGRS.TraderManagement = function () {
         }
 
         // Add new values.
-        if (data && data.length > 0) {
-            $.each(data, function (index, item) {
-                ddlDiv.append($('<option></option>').attr('value', item.GradeId).text(item.GradeName));
-                cacheGradeDataId[item.GradeName]=item.GradeId;
-            });
+        for (var i = 1; i <= 10; i++) {
+            ddlDiv.append($('<option></option>').attr('value', i).text(i));
         }
 
         //auto select val
@@ -355,12 +346,12 @@ Fanex.TGRS.TraderManagement = function () {
         if (type === popupType.update)
         {
             updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, null, selectTeam);
-            updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, null, selectGrade);
+            updateGradeDropdown(popupElements.ddlGrade, null, selectGrade);
         }
         else
         {
             updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, labels.SelectATeam, selectTeam);
-            updateGradeDropdown(cacheGradeData, popupElements.ddlGrade, labels.SelectAGrade, selectGrade);
+            updateGradeDropdown(popupElements.ddlGrade, labels.SelectAGrade, selectGrade);
 
             //edit to null val for validator to check data-val-required
             popupElements.ddlTeam.find(":selected").val('');
@@ -405,7 +396,7 @@ Fanex.TGRS.TraderManagement = function () {
             setTimeout(function () {
                 if (validator.CountErrors(domElements.divTraderFilterForm) === 0) {
                     filterParameters.teamId = domElements.ddlTeam.val();
-                    filterParameters.gradeId = domElements.ddlGrade.val();
+                    filterParameters.grade = domElements.ddlGrade.val();
                     filterParameters.username = domElements.txtUserName.val();
                     filterParameters.employeeId = domElements.txtEmployeeId.val();
 
@@ -423,14 +414,12 @@ Fanex.TGRS.TraderManagement = function () {
             var employeeId = $obj.attr('data-trader-employeeId');
             var effectiveDate = $obj.attr('data-trader-effectiveDate');
             var teamName = $obj.attr('data-trader-team');
-            var gradeName = $obj.attr('data-trader-grade');
+            var grade = $obj.attr('data-trader-grade');
             
 
-            //get teamId and gradeId by name
+            //get teamId and grade by name
             var teamId = cacheTeamDataId[teamName];
-            var gradeId = cacheGradeDataId[gradeName];
-
-            makeUpdateTraderForm(custId, username, employeeId, teamId, gradeId, effectiveDate);
+            makeUpdateTraderForm(custId, username, employeeId, teamId, grade, effectiveDate);
 
         });
     };
@@ -448,7 +437,7 @@ Fanex.TGRS.TraderManagement = function () {
         bindNewTraderPopupEvent();
     };
     // Display update Trader form.
-    var makeUpdateTraderForm = function (custId, username, employeeId, teamId, gradeId, effectiveDate) {
+    var makeUpdateTraderForm = function (custId, username, employeeId, teamId, grade, effectiveDate) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
@@ -464,7 +453,7 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.txtEmployeeId.val(employeeId);
         popupElements.txtUserName.prop('disabled', true);
         popupElements.txtEmployeeId.prop('disabled', true);
-        updatePopupDropdown(popupType.update, teamId, gradeId);
+        updatePopupDropdown(popupType.update, teamId, grade);
 
         bindUpdateTraderPopupEvent(effectiveDate);
     };

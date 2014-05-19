@@ -24,7 +24,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
 
         public string TeamName { get; set; }
 
-        public string GradeName { get; set; }
+        public string Grade { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

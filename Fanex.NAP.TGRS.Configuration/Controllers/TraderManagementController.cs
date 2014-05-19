@@ -92,12 +92,10 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult GetInitializedData()
         {
             TeamInfoList teams = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
-            GradeInfoList grades = this._gradeService.GetAllGrade(new GetAllGradesCriteria());
 
             return Json(new
             {
-                Teams = teams,
-                Grades = grades
+                Teams = teams
             });
         }
 
