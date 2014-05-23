@@ -3,6 +3,10 @@
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Head
+{
+    @Styles.Render("~/styles/performanceDetail")
+}
 @section Headline
 {
     <div class="title">
@@ -14,13 +18,13 @@
         <a href="@Url.Content("/Reports/PerformanceDetail/LeaguePerformance")" class="green-button change-list">
             <span class="icon-list"></span>@ViewLang.League
         </a>
-        <a href="#" class="green-button change-list disabled">
+        <a href="@Url.Content("/Reports/PerformanceDetail/TraderPerformance")" class="green-button change-list">
             <span class="icon-list"></span>@ViewLang.Trader
         </a>
         <a href="@Url.Content("/Reports/PerformanceDetail/GradePerformance")" class="green-button change-list">
             <span class="icon-list"></span>@ViewLang.Grade
         </a>
-        <a href="@Url.Content("/Reports/PerformanceDetail/TeamPerformance")" class="green-button change-list">
+        <a href="#" class="green-button change-list disabled">
             <span class="icon-list"></span>@ViewLang.Team
         </a>
         <a href="@Url.Content("/Reports/PerformanceDetail/BetTypePerformance")" class="green-button change-list">
@@ -29,60 +33,79 @@
     </div>
 }
 <div class="filter-bar">
-    <div id="divLeaguePerformanceFilter" class="filter-form">
+    <div id="divTeamPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
-            <div class="lbl-field col_5 align-right">
-                <label for="ddlBetType">@ViewLang.BetType</label>
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlTeam">@ViewLang.Team</label>
             </div>
-            <div class="edit-field col_5 align-left">
-                <select id="ddlBetType" class="width-140">
+            <div class="edit-field col_12 align-left">
+                <select id="ddlTeam" class="team">
                 </select>
-            </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="txtLeague">@ViewLang.Trader</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtLeague" class="width-140" />
             </div>
         </div>
         <div class="filter-row">
-            <div class="lbl-field col_3 align-right">
+            <div class="lbl-field col_5 align-right">
+                <label for="ddlBetType">@ViewLang.BetType</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <select id="ddlBetType" class="bet-type">
+                </select>
+            </div>
+            <div class="lbl-field col_5 align-right">
                 <label for="txtMarginFrom">@ViewLang.Margin</label>
             </div>
             <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMarginFrom" class="width-60"/> - <input type="text" id="txtMarginTo"  class="width-60"/>
+                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtTeamBMFrom">@ViewLang.TeamBM</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtTeamBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtTeamBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            </div>
+        </div>
+        <div class="filter-row">
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
             <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinTurnover" class="width-140"/>
+                <input type="text" id="txtMinTurnover" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
             </div>
             <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinWinLoss" class="width-140"/>
+                <input type="text" id="txtMinWinLoss" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="submit col_5">
-                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            <div class="submit col_4">
+                <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
             </div>
         </div>
     </div>
 </div>
-<div id="divLeagueBMGridContainer" class="content-grid display-none">
-    <div id="divLeagueBMGrid" class="freegrid"></div>
+<div id="divTeamPerformanceContainer" class="content-grid display-none">
+    <div id="divTeamPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divTraderPerformanceContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
 </div>
 @section Foot
 {
     @Scripts.Render("~/scripts/teamPerformance")
     <script type="text/javascript">
         var datepickerSetting = {
-            MinDate: '@DateTime.Today.AddYears(AppSettings.PerformanceDetailYearRange * -1).ToShortFormatedDate()',
-            DefaultFromDate: '@DateTime.Today.AddDays(AppSettings.PerformanceDetailDefaultDayRange * -1).ToShortFormatedDate()',
-            DefaultToDate: '@DateTime.Today.AddDays(-1).ToShortFormatedDate()',
-            AllowYearRange: parseInt('@AppSettings.PerformanceDetailAllowYearRange')
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
             FromDate: '@ViewLang.FromDate',
@@ -100,7 +123,8 @@
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
-            Match: '@ViewLang.Match'
+            Match: '@ViewLang.Match',
+            LeaguePerformance: '@ViewLang.LeaguePerformance'
         };
     </script>
 }

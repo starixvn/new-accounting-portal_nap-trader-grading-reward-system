@@ -3,6 +3,10 @@
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Head
+{
+    @Styles.Render("~/styles/performanceDetail")
+}
 @section Headline
 {
     <div class="title">
@@ -14,10 +18,10 @@
         <a href="@Url.Content("/Reports/PerformanceDetail/LeaguePerformance")" class="green-button change-list">
             <span class="icon-list"></span>@ViewLang.League
         </a>
-        <a href="#" class="green-button change-list disabled">
+        <a href="@Url.Content("/Reports/PerformanceDetail/TraderPerformance")" class="green-button change-list">
             <span class="icon-list"></span>@ViewLang.Trader
         </a>
-        <a href="@Url.Content("/Reports/PerformanceDetail/GradePerformance")" class="green-button change-list">
+        <a href="#" class="green-button change-list disabled">
             <span class="icon-list"></span>@ViewLang.Grade
         </a>
         <a href="@Url.Content("/Reports/PerformanceDetail/TeamPerformance")" class="green-button change-list">
@@ -29,21 +33,21 @@
     </div>
 }
 <div class="filter-bar">
-    <div id="divLeaguePerformanceFilter" class="filter-form">
+    <div id="divGradePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
             <div class="lbl-field col_5 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_5 align-left">
-                <select id="ddlBetType" class="width-140">
+            <div class="edit-field col_6 align-left">
+                <select id="ddlBetType" class="bet-type">
                 </select>
             </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="txtLeague">@ViewLang.Trader</label>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtTrader">@ViewLang.Trader</label>
             </div>
             <div class="edit-field col_6 align-left">
-                <input type="text" id="txtLeague" class="width-140" />
+                <input type="text" id="txtTrader" class="width-140" />
             </div>
         </div>
         <div class="filter-row">
@@ -71,18 +75,24 @@
         </div>
     </div>
 </div>
-<div id="divLeagueBMGridContainer" class="content-grid display-none">
-    <div id="divLeagueBMGrid" class="freegrid"></div>
+<div id="divGradePerformanceContainer" class="content-grid display-none">
+    <div id="divGradePerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divTraderPerformanceContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
 </div>
 @section Foot
 {
     @Scripts.Render("~/scripts/gradePerformance")
     <script type="text/javascript">
         var datepickerSetting = {
-            MinDate: '@DateTime.Today.AddYears(AppSettings.PerformanceDetailYearRange * -1).ToShortFormatedDate()',
-            DefaultFromDate: '@DateTime.Today.AddDays(AppSettings.PerformanceDetailDefaultDayRange * -1).ToShortFormatedDate()',
-            DefaultToDate: '@DateTime.Today.AddDays(-1).ToShortFormatedDate()',
-            AllowYearRange: parseInt('@AppSettings.PerformanceDetailAllowYearRange')
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
             FromDate: '@ViewLang.FromDate',
@@ -100,7 +110,8 @@
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
-            Match: '@ViewLang.Match'
+            Match: '@ViewLang.Match',
+            GradePerformance: '@ViewLang.GradePerformance'
         };
     </script>
 }

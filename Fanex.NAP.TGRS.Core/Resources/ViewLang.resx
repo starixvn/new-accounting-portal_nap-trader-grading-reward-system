@@ -357,4 +357,10 @@
   <data name="LeaguePerformance" xml:space="preserve">
     <value>League Performance</value>
   </data>
+  <data name="GradePerformance" xml:space="preserve">
+    <value>Grade Performance</value>
+  </data>
+  <data name="TeamBM" xml:space="preserve">
+    <value>Team BM</value>
+  </data>
 </root>

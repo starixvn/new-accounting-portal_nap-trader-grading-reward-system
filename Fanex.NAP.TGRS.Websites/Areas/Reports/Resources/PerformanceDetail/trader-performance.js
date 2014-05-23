@@ -29,8 +29,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         divMatchPerformanceGrid: null
     };
     var urls = {
-        GetLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
-        GetTraderPerformanceOfLeague: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
+        GetTraderPerformance: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformance'),
         GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTrader')
     };
     var parameters = {
@@ -92,13 +91,13 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 domElements.dpkToDate.datepicker('option', 'minDate', minDate);
             });
 
-        domElements.dpkFromDate = domElements.divLeaguePerformanceFilter.find('#dpkFromDate');
-        domElements.dpkToDate = domElements.divLeaguePerformanceFilter.find('#dpkToDate');
+            domElements.dpkFromDate = domElements.divTraderPerformanceFilter.find('#dpkFromDate');
+            domElements.dpkToDate = domElements.divTraderPerformanceFilter.find('#dpkToDate');
 
         domElements.txtTrader.focusout(function () {
-            var value = $.trim(domElements.txtLeague.val());
+            var value = $.trim(domElements.txtTrader.val());
 
-            domElements.txtLeague.val(value);
+            domElements.txtTrader.val(value);
         });
 
         domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
@@ -130,7 +129,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         });
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w')) {
+            if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w')) {
                 parameters.DateFrom = domElements.dpkFromDate.val();
                 parameters.DateTo = domElements.dpkToDate.val();
                 parameters.TraderName = domElements.txtTrader.val();
@@ -150,7 +149,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetTraderPerformanceOfLeague,
+            url: urls.GetTraderPerformance,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
@@ -236,9 +235,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             footerData.push(row);
         }
 
-        // Hide previous report.
-        domElements.divLeaguePerformanceContainer.addClass('display-none');
-
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
@@ -258,7 +254,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
 
     // Show trader performance report and hide other reports.
     var showTraderPerformanceReport = function () {
-        domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divTraderPerformanceContainer.removeClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
     };
@@ -289,7 +284,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     };
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceGrid = function (data, leagueId, leagueName, traderId, traderName) {
+    var renderMatchPerformanceGrid = function (data, traderId, traderName) {
         var titleFormat = '<span id="spanTraderLink">{0}</span><span>{1}</span>';
         var forecastFormat = '<span class="forecast link" data-trader-id="{0}" data-match-id="{1}">{2}</span>';
         var forecastCol = '';
@@ -362,7 +357,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         }
 
         // Hide previous report.
-        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
