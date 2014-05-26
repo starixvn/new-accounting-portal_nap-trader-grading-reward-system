@@ -89,7 +89,8 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: handleGridEvents
             }
         };
         var bodyData = [];
