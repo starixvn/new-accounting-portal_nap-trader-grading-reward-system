@@ -69,7 +69,8 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/Fanex.Grid/Fanex.Pagination.css",
                 "~/Content/DatePicker/jquery.nexDatePicker.css",
                 "~/Content/Themes/reset.less",
-                "~/Content/Themes/style.less");
+                "~/Content/Themes/style.less",
+                "~/Content/Themes/custom.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
@@ -123,6 +124,9 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterReportsBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/scripts/performanceSummary").Include(
+                "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.js"));
+
             bundles.AddAndInclude(
                 "~/styles/performanceDetail",
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail.less");

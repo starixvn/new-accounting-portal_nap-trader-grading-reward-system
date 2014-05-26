@@ -13,23 +13,53 @@
 }
 <div class="filter-bar">
     <div id="divReportFilterForm" class="filter-form">
-        <div class="filter-row">
-            <div id="divDateRange"></div>
-            <div class="lbl-field col_2">
-                <label for="txtMarginFrom">@ViewLang.Date</label>
+        <div class="filter-row width-800">
+            <div class="lbl-field col_3">
+                <label>@ViewLang.PeriodType</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <div id="dpkDateFrom"></div>
-                <div id="txtDateFrom"></div> - 
-                <div id="dpkDateTo"></div>
-                <div id="txtDateTo"></div>
+            <div class="edit-field">
+                <select id="ddlPeriodType">
+                    <option value="1">Date</option>
+                    <option value="2">Month</option>
+                    <option value="3">Year</option>
+                </select>
             </div>
+            <div id="dpkFromDate"></div> <div id="txtFromDate"></div>
+            <div id="dpkToDate"></div> <div id="txtToDate"></div>
             <div class="submit col_4">
                 <input id="btnSearch" type="submit" class="blue-button float-right" value="Search">
             </div>
         </div>
     </div>
 </div>
-<div id="divReportGridContainer" class="content-grid display-none">
-    <div id="divReportGrid" class="freegrid"></div>
+<div id="divGeneralInfo" class="content-grid display-none">
+        <label class="width-140">Live Win Loss</label>
+        <label class="col_3" id="lblWinLoss"></label>
+        <label class="col_3">Margin</label>
+        <label class="col_3" id="lblMargin"></label>
+        <br />
+        <label class="col_3">Live Turnover</label>
+        <label class="col_3" id="lblTurnOver"></label>
+        <label class="col_3">No. Of Matches</label>
+        <label class="col_3" id="lblMatches"></label>
 </div>
+<div id="divReportGridContainer" class="content-grid display-none">
+    <div id="divTeamGrid" class="freegrid display-none"></div>
+    <div id="divTraderGrid" class="freegrid display-none"></div>
+    <div id="divTopWinLeagueGrid" class="freegrid display-none"></div>
+    <div id="divTopLoseLeagueGrid" class="freegrid display-none"></div>
+    <div id="divBetTypeGrid" class="freegrid display-none"></div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/performanceSummary")
+    <script type="text/javascript">
+        var labels = {
+            Date: '@ViewLang.Date',
+            Team: '@ViewLang.Team',
+            Turnover: '@ViewLang.Turnover',
+            Winloss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+        };
+    </script>
+}

@@ -363,4 +363,7 @@
   <data name="TeamBM" xml:space="preserve">
     <value>Team BM</value>
   </data>
+  <data name="PeriodType" xml:space="preserve">
+    <value>Period Type</value>
+  </data>
 </root>

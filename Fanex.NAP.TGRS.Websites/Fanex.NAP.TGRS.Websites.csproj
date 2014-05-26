@@ -45,6 +45,9 @@
     <Reference Include="BundleTransformer.Less">
       <HintPath>..\packages\BundleTransformer.Less.1.8.25\lib\net40\BundleTransformer.Less.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.4.0.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Fanex\Fanex.Caching.dll</HintPath>
     </Reference>
