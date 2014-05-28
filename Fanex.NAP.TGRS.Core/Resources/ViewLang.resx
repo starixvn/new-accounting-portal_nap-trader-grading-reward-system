@@ -366,4 +366,7 @@
   <data name="PeriodType" xml:space="preserve">
     <value>Period Type</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
 </root>

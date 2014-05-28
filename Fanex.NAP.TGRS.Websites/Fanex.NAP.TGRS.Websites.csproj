@@ -282,6 +282,16 @@
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\bg-demo-docs-param.gif" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\demo-spindown-closed.gif" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\demo-spindown-open.gif" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\dropdown-icon.png" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\icon-left.png" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\icon-right.png" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\spindown-closed.png" />
+    <Content Include="Scripts\Libraries\MonthPicker\Images\spindown-open.png" />
+    <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.css" />
+    <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\Libraries\Modernizr\modernizr.30715.min.js" />
@@ -365,6 +375,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Content\Themes\grid.less" />
+    <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3-custom.less" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">

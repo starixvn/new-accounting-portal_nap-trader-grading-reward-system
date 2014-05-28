@@ -10,6 +10,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
     var domElements = {
         lnkLeague: null,
         lnkTeam: null,
+        lnkBack: null,
         divLeagueBMContent: null,
         divTeamBMContent: null,
         divBetTypeBMContent: null
@@ -25,6 +26,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
     var cacheDOMElements = function () {
         domElements.lnkLeague = $('#lnkLeague');
         domElements.lnkTeam = $('#lnkTeam');
+        domElements.lnkBack = $('#lnkBack');
         domElements.divLeagueBMContent = $('#divLeagueBMContent');
         domElements.divTeamBMContent = $('#divTeamBMContent');
         domElements.divBetTypeBMContent = $('#divBetTypeBMContent');
@@ -36,6 +38,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
             if (!domElements.lnkLeague.hasClass('disabled')) {
                 domElements.lnkTeam.removeClass('disabled');
                 domElements.lnkLeague.addClass('disabled');
+                domElements.lnkBack.addClass('hide');
                 domElements.divTeamBMContent.addClass('display-none');
                 domElements.divBetTypeBMContent.addClass('display-none');
                 domElements.divLeagueBMContent.removeClass('display-none');
@@ -54,6 +57,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
             if (!domElements.lnkTeam.hasClass('disabled')) {
                 domElements.lnkTeam.addClass('disabled');
                 domElements.lnkLeague.removeClass('disabled');
+                domElements.lnkBack.addClass('hide');
                 domElements.divBetTypeBMContent.addClass('display-none');
                 domElements.divLeagueBMContent.addClass('display-none');
                 domElements.divTeamBMContent.removeClass('display-none');
@@ -67,11 +71,25 @@ Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {
                 }
             }
         });
+
+        domElements.lnkBack.on('click', function () {
+            domElements.lnkTeam.removeClass('disabled');
+            domElements.lnkLeague.addClass('disabled');
+            domElements.lnkBack.addClass('hide');
+            domElements.divTeamBMContent.addClass('display-none');
+            domElements.divBetTypeBMContent.addClass('display-none');
+            domElements.divLeagueBMContent.removeClass('display-none');
+
+            if (common.IsOpenPopup()) {
+                common.ClosePopup();
+            }
+        });
     };
 
     $this.ShowBetTypeBenchmark = function (leagueID, leagueName) {
         domElements.lnkTeam.removeClass('disabled');
         domElements.lnkLeague.removeClass('disabled');
+        domElements.lnkBack.removeClass('hide');
         domElements.divBetTypeBMContent.removeClass('display-none');
         domElements.divLeagueBMContent.addClass('display-none');
         domElements.divTeamBMContent.addClass('display-none');
