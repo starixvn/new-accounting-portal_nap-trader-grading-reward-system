@@ -54,7 +54,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetGeneralInfo(GeneralInfoCriteria criteria)
+        public JsonResult GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
             GeneralInfo result = this._summaryReportService.GetGeneralInfo(criteria).First();
 
@@ -68,7 +68,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetTeamPerformance(TeamPerformanceCriteria criteria)
+        public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
             IEnumerable<TeamPerformance> result = this._summaryReportService.GetTeamPerformance(criteria);
 

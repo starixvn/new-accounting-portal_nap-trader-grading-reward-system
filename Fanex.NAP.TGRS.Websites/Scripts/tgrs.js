@@ -22,7 +22,8 @@ Fanex.TGRS.Common = function () {
         DateFormat: 'mm/dd/yy',
         MomentDateFormat: 'MM/DD/YYYY',
         IntegerFormat: '0,0',
-        DecimalFormat: '0,0.00'
+        DecimalFormat: '0,0.00',
+        MonthYearDateFormat: 'MM-yy',
     };
 
     $this.Constants = {

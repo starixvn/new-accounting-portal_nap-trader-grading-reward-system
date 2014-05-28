@@ -15,8 +15,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport
 
     public interface ISummaryReportService
     {
-        IEnumerable<GeneralInfo> GetGeneralInfo(GeneralInfoCriteria criteria);
+        IEnumerable<GeneralInfo> GetGeneralInfo(GetGeneralInfoCriteria criteria);
 
-        IEnumerable<TeamPerformance> GetTeamPerformance(TeamPerformanceCriteria criteria);
+        IEnumerable<TeamPerformance> GetTeamPerformance(GetTeamPerformanceCriteria criteria);
     }
 }

@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
     /// </summary>
     public class SummaryReportService : TGRSBaseService, ISummaryReportService
     {
-        public IEnumerable<GeneralInfo> GetGeneralInfo(GeneralInfoCriteria criteria)
+        public IEnumerable<GeneralInfo> GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
             IEnumerable<GeneralInfo> result = null;
 
@@ -28,7 +28,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             return result;
         }
 
-        public IEnumerable<TeamPerformance> GetTeamPerformance(TeamPerformanceCriteria criteria)
+        public IEnumerable<TeamPerformance> GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
             IEnumerable<TeamPerformance> result = null;
 

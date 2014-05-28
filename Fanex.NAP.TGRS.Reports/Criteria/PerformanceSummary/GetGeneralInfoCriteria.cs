@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="TeamPerformanceCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetGeneralInfoCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -15,9 +15,10 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get all Trader.
     /// </summary>
-    public class TeamPerformanceCriteria : CriteriaBase
+    public class GetGeneralInfoCriteria : CriteriaBase
     {
-        public int RptType { get; set; }
+        [SpParam(Ignored = false, SqlParamName = "RptType")]
+        public int ReportType { get; set; }
 
         public DateTime FromDate { get; set; }
 
@@ -29,7 +30,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_SummaryTeamPerformance";
+            return "TGRS_Rpt_SummaryGeneralInfo";
         }
 
         /// <summary>

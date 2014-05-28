@@ -45,6 +45,51 @@ Fanex.TGRS.Layout = function () {
         return $obj.nexDatePicker(configObj);
     };
 
+    //Create only month-year datepicker
+    $this.CreateDatepickerMY = function ($obj, id, label, labelCss, defaultDate, minDate, maxDate, pickerCss, onChangeHandler) {
+        var configObj = {};
+
+        labelCss = labelCss || 'col_2';
+        pickerCss = pickerCss || 'col_6 width-auto';
+        onChangeHandler = onChangeHandler || function () { };
+
+        configObj = {
+            nexDatePickerType: 'single',
+            firstDatePicker: {
+                Id: id,
+                Label: label,
+                InitDate: defaultDate,
+                LabelCss: 'lbl-field ' + labelCss,
+                TextboxCss: 'edit-field ' + pickerCss
+            },
+            datePickerFormat: {
+                dateFormat: common.Formats.MonthYearDateFormat,
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                beforeShow: function () {
+                    $('#ui-datepicker-div').addClass('hide-calendar');
+                },
+                onClose: function() { 
+                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    $(this).datepicker('setDate', new Date(year, month, 1));
+                }
+            },
+            onSelectDatePicker: onChangeHandler
+        };
+
+        if (minDate) {
+            configObj.datePickerFormat.minDate = new Date(minDate);
+        }
+
+        if (maxDate) {
+            configObj.datePickerFormat.maxDate = new Date(maxDate);
+        }
+
+        return $obj.nexDatePicker(configObj);
+    };
     // Create date range picker.
     $this.CreateDateRange = function (
                                 $obj,

@@ -60,8 +60,9 @@
   <ItemGroup>
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
-    <Compile Include="Criteria\PerformanceSummary\TeamPerformanceCriteria.cs" />
-    <Compile Include="Criteria\PerformanceSummary\GeneralInfoCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTopLoseLeagueCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTeamPerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetGeneralInfoCriteria.cs" />
     <Compile Include="Models\PerformanceSummary\GeneralInfo.cs" />
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

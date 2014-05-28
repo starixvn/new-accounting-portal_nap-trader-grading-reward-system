@@ -10,6 +10,7 @@ $(document).ready(function () {
 Namespace.Register("Fanex.TGRS.PerformanceSummary");
 Fanex.TGRS.PerformanceSummary = function () {
     var $this = this;
+    var maxYearRange = 3;
     var urls = {
         GetGeneralInfo: common.ResolveRootUrl('PerformanceSummary/GetGeneralInfo'),
         GetTeamReport: common.ResolveRootUrl('PerformanceSummary/GetTeamPerformance')
@@ -21,10 +22,11 @@ Fanex.TGRS.PerformanceSummary = function () {
     };
     var domElements = {
         dpkFromDate: null,
-        txtFromDate: null,
         dpkToDate: null,
-        txtToDate: null,
+        ddlYear: null,
         btnSearch: null,
+        dpkFromDateCalendar: null,
+        dpkToDateCalendar: null,
 
         divGeneralInfo: null,
         lblWinLoss: null,
@@ -36,19 +38,19 @@ Fanex.TGRS.PerformanceSummary = function () {
         divTopWinLeagueGrid: null,
         divTopLoseLeagueGrid: null,
         divBetTypeGrid: null,
+        ddlPeriodType: null,
     };
     var filterParameters = {
-        RptType: null,
-        fromDate: null,
-        toDate: null
+        ReportType: null,
+        FromDate: null,
+        ToDate: null
     };
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.dpkFromDate = $('#dpkFromDate');
-        domElements.txtFromDate = $('#txtFromDate');
         domElements.dpkToDate = $('#dpkToDate');
-        domElements.txtToDate = $('#txtToDate');
+        domElements.ddlYear = $('#ddlYear');
         domElements.btnSearch = $('#btnSearch');
         domElements.divGeneralInfo = $('#divGeneralInfo');
 
@@ -57,6 +59,7 @@ Fanex.TGRS.PerformanceSummary = function () {
         domElements.divTopWinLeagueGrid = $('#divTopWinLeagueGrid');
         domElements.divTopLoseLeagueGrid = $('#divTopLoseLeagueGrid');
         domElements.divBetTypeGrid = $('#divBetTypeGrid');
+        domElements.ddlPeriodType = $('#ddlPeriodType');
 
         domElements.lblWinLoss = $("#lblWinLoss", domElements.divGeneralInfo);
         domElements.lblMargin = $("#lblMargin", domElements.divGeneralInfo);
@@ -114,32 +117,65 @@ Fanex.TGRS.PerformanceSummary = function () {
     // Init page fields and events
     var initPageFields = function () {
         //Date picker
-        var toDate = new Date();
-        var maxDate = new Date(toDate);
-        maxDate.setDate(maxDate.getDate() - 1);
-        var minDate = new Date(toDate);
-        minDate.setDate(minDate.getDate() - 15);
-        initDatePicker(datePeriodType.Date, minDate, maxDate);
+        initDatePicker(datePeriodType.Year);
 
         //btnSearch
         domElements.btnSearch.on('click', function () {
             setTimeout(function () {
-                filterParameters.fromDate = domElements.dpkFromDate.nexDatePicker('getSingleDate');
-                filterParameters.toDate = domElements.dpkToDate.nexDatePicker('getSingleDate');
-                filterParameters.RptType = 1;
+                filterParameters.FromDate = domElements.dpkFromDate.nexDatePicker('getSingleDate');
+                filterParameters.ToDate = domElements.dpkToDate.nexDatePicker('getSingleDate');
+                filterParameters.ReportType = domElements.ddlPeriodType.val();
                 getAllReports();
             }, 70);// Delay 70ms for jQuery-UI combo-box to verify its state.
         });
     };
-    var initDatePicker = function(type, minDate, maxDate) {
+    var initDatePicker = function(type) {
+        var toDate = new Date();
+        var maxDate = null;
+        var defaultFromDate = null;
+        var minDate = new Date(toDate.getFullYear() - maxYearRange, 0, 1);
+
         if (type === datePeriodType.Date) {
+            //max date is yesterdate
+            maxDate = new Date(toDate);
+            maxDate.setDate(maxDate.getDate() - 1);
+            //default date: 2 weeks after yesterday
+            defaultFromDate = new Date(toDate);
+            defaultFromDate.setDate(toDate.getDate() - 14);
+
             layout.CreateDatepicker(domElements.dpkFromDate, 'txtFromDate',
-            "", 'col_1', minDate, minDate, maxDate, 'col_5');
+            "", 'col_1', defaultFromDate, minDate, maxDate, 'col_5');
             layout.CreateDatepicker(domElements.dpkToDate, 'txtToDate',
                 "", 'col_1', maxDate, minDate, maxDate, 'col_5');
         }
+        else if(type === datePeriodType.Month) {
+            //max date: end of last month
+            maxDate = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
+            //default date: begin of last month
+            defaultFromDate = new Date(toDate.getFullYear(), toDate.getMonth() - 1, 1);
+
+            layout.CreateDatepickerMY(domElements.dpkFromDate, 'txtFromDate',
+            "", 'col_1', defaultFromDate, minDate, maxDate, '');
+            layout.CreateDatepickerMY(domElements.dpkToDate, 'txtToDate',
+                "", 'col_1', maxDate, minDate, maxDate, '');
+        }
+        else if(type === datePeriodType.Year) {
+            //max date: end of last month
+            var maxYear = toDate.getFullYear();
+            //default date: begin of last month
+            var minYear = maxYear - maxYearRange;
+
+            for (var i = minYear; i <= maxYear; i++) {
+                domElements.ddlYear.append(
+                    $('<option></option>').val(i).html(i)
+                );
+            }
+            domElements.ddlYear.show();
+            domElements.dpkFromDate.hide();
+            domElements.dpkToDate.hide();
+        }
     };
-    
+
     var renderGeneralInfo = function(data) {
         domElements.divGeneralInfo.css({display: "block"});
         domElements.lblWinLoss.text(data.Winlost);
