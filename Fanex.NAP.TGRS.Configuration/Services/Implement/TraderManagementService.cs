@@ -8,6 +8,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement
 {
+    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
@@ -40,6 +41,58 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement
                     var traderInfoItem = new TraderInfoItem(trader);
 
                     result.Add(traderInfoItem);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get team history of trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of Trader information.</returns>
+        public IEnumerable<TeamHistoryItem> GetTeamHistory(GetTeamHistoryCriteria criteria)
+        {
+            List<TeamHistoryItem> result = null;
+
+            var rawData = this.GetData<TeamHistory>(criteria);
+
+            if (rawData != null)
+            {
+                result = new List<TeamHistoryItem>();
+
+                foreach (TeamHistory teamHistory in rawData)
+                {
+                    var teamHistoryItem = new TeamHistoryItem(teamHistory);
+
+                    result.Add(teamHistoryItem);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get grade history of trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of Trader information.</returns>
+        public IEnumerable<GradeHistoryItem> GetGradeHistory(GetGradeHistoryCriteria criteria)
+        {
+            List<GradeHistoryItem> result = null;
+
+            var rawData = this.GetData<GradeHistory>(criteria);
+
+            if (rawData != null)
+            {
+                result = new List<GradeHistoryItem>();
+
+                foreach (GradeHistory gradeHistory in rawData)
+                {
+                    var gradeHistoryItem = new GradeHistoryItem(gradeHistory);
+
+                    result.Add(gradeHistoryItem);
                 }
             }
 

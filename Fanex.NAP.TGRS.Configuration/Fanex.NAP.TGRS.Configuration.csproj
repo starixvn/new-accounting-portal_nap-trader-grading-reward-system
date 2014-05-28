@@ -75,6 +75,8 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
@@ -90,6 +92,8 @@
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\TraderManagement\GradeHistory.cs" />
+    <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />
@@ -110,6 +114,8 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
+    <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
+    <Compile Include="ViewModel\TraderManagement\TeamHistoryItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TraderInfoList.cs" />
     <Compile Include="ViewModel\GradeManagement\GradeInfoItem.cs" />

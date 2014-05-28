@@ -19,11 +19,13 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
     {
         public int CustId { get; set; }
 
-        public int TeamId { get; set; }
+        public int? NewTeamId { get; set; }
 
-        public int Grade { get; set; }
+        public int? NewGrade { get; set; }
 
-        public DateTime EffectiveDate { get; set; }
+        public DateTime? NewTeamEffectiveDate { get; set; }
+
+        public DateTime? NewGradeEffectiveDate { get; set; }
 
         public int UserId { get; set; }
 

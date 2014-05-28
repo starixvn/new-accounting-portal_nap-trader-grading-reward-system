@@ -32,6 +32,8 @@ namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
 
         public string CreatedUsername { get; set; }
 
-        public DateTime EffectiveDate { get; set; }
+        public DateTime TeamEffectiveDate { get; set; }
+
+        public DateTime GradeEffectiveDate { get; set; }
     }
 }

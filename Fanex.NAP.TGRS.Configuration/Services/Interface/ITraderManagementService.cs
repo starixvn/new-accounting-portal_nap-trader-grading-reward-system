@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement
 {
+    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
@@ -20,5 +21,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement
         ICommandResult InsertTrader(InsertTraderCriteria criteria);
 
         ICommandResult UpdateTrader(UpdateTraderCriteria criteria);
+
+        IEnumerable<GradeHistoryItem> GetGradeHistory(GetGradeHistoryCriteria criteria);
+
+        IEnumerable<TeamHistoryItem> GetTeamHistory(GetTeamHistoryCriteria criteria);
     }
 }

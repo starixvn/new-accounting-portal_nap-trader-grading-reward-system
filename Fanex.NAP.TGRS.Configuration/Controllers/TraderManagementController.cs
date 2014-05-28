@@ -8,11 +8,11 @@
 // </history>
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.TGRS.Configuration.Criteria.GradeManagement;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Implement.GradeManagement;
@@ -21,7 +21,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Fanex.NAP.TGRS.Configuration.Services.Interface.GradeManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement;
-    using Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -79,6 +78,34 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             criteria.EmployeeId = criteria.EmployeeId ?? string.Empty;
 
             TraderInfoList result = this._traderService.GetAllTrader(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get team history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetTeamHistory(GetTeamHistoryCriteria criteria)
+        {
+            IEnumerable<TeamHistoryItem> result = this._traderService.GetTeamHistory(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get grade history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetGradeHistory(GetGradeHistoryCriteria criteria)
+        {
+            IEnumerable<GradeHistoryItem> result = this._traderService.GetGradeHistory(criteria);
 
             return Json(result);
         }

@@ -27,6 +27,8 @@
     <div id="divHiddenForm" class="display-none">
         @Html.Partial("InsertTraderForm")
         @Html.Partial("UpdateTraderForm")
+        @Html.Partial("GradeHistoryForm")
+        @Html.Partial("TeamHistoryForm")
     </div>
 }
 
@@ -48,9 +50,12 @@
             SelectATeam: '@ViewLang.SelectATeam',
             SelectAGrade: '@ViewLang.SelectAGrade',
             EffectiveDate: '@ViewLang.EffectiveDate',
+            TeamEffectiveDate: '@ViewLang.TeamEffectiveDate',
+            GradeEffectiveDate: '@ViewLang.GradeEffectiveDate',
         };
         var messages = {
             UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',
+            UpdateNoChange: '@Messages.UpdateNoChange',
             AddTraderSuccessfully: '@Messages.AddTraderSuccessfully',
             InvalidValueError: '@Messages.InvalidValueError'
         };

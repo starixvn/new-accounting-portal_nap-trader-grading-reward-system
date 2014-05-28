@@ -369,4 +369,10 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="GradeEffectiveDate" xml:space="preserve">
+    <value>Grade Effective Date</value>
+  </data>
+  <data name="TeamEffectiveDate" xml:space="preserve">
+    <value>Team Effective Date</value>
+  </data>
 </root>

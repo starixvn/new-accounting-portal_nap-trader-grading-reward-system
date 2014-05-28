@@ -14,6 +14,8 @@
     <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Trader_TeamHistory" SpName="TGRS_Trader_TeamHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Trader_GradeHistory" SpName="TGRS_Trader_GradeHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="BenchmarkManagement">
     <Setting Key="TGRS_SpecialLeague_SelList" SpName="TGRS_SpecialLeague_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>

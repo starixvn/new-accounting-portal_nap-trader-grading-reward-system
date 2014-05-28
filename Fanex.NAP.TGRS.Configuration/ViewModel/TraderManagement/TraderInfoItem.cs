@@ -26,7 +26,8 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
             this.Grade = traderInfo.Grade;
             this.CreatedDate = traderInfo.CreatedDate.ToFullFormatedDate();
             this.CreatedUsername = traderInfo.CreatedUsername;
-            this.EffectiveDate = traderInfo.EffectiveDate.ToFullFormatedDate();
+            this.TeamEffectiveDate = traderInfo.TeamEffectiveDate.ToShortFormatedDate();
+            this.GradeEffectiveDate = traderInfo.GradeEffectiveDate.ToShortFormatedDate();
         }
 
         public int CustId { get; set; }
@@ -43,6 +44,8 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
 
         public string CreatedUsername { get; set; }
 
-        public string EffectiveDate { get; set; }
+        public string TeamEffectiveDate { get; set; }
+
+        public string GradeEffectiveDate { get; set; }
     }
 }
