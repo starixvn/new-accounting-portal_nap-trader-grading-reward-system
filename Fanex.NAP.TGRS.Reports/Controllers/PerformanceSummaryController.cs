@@ -74,5 +74,75 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             return Json(result);
         }
+
+        /// <summary>
+        /// Get Trader Performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformance(GetTeamPerformanceCriteria criteria)
+        {
+            IEnumerable<TeamPerformance> result = this._summaryReportService.GetTeamPerformance(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get Bet Type Performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        {
+            IEnumerable<BetTypePerformance> result = this._summaryReportService.GetBetTypePerformance(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get Top Win League.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTopWinLeague(GetTopWinLeagueCriteria criteria)
+        {
+            IEnumerable<League> result = this._summaryReportService.GetTopWinLeague(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get Top Lose League.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTopLoseLeague(GetTopLoseLeagueCriteria criteria)
+        {
+            IEnumerable<League> result = this._summaryReportService.GetTopLoseLeague(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get Top Trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTopTrader(GetTopTraderCriteria criteria)
+        {
+            IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
+
+            return Json(result);
+        }
     }
 }

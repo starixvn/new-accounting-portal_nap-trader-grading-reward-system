@@ -17,7 +17,6 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// </summary>
     public class GetTeamPerformanceCriteria : CriteriaBase
     {
-        [SpParam(Ignored = false, SqlParamName = "RptType")]
         public int ReportType { get; set; }
 
         public DateTime FromDate { get; set; }

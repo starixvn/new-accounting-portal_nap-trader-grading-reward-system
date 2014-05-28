@@ -12,7 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
     using System;
 
     /// <summary>
-    /// Trader information model.
+    /// Summary Report Team Performance model.
     /// </summary>
     public class TeamPerformance
     {

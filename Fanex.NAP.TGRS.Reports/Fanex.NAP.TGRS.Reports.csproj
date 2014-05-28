@@ -60,9 +60,17 @@
   <ItemGroup>
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetBetTypePerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTraderPerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTopWinLeagueCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTopTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTopLoseLeagueCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetGeneralInfoCriteria.cs" />
+    <Compile Include="Models\PerformanceSummary\BetTypePerformance.cs" />
+    <Compile Include="Models\PerformanceSummary\TopTrader.cs" />
+    <Compile Include="Models\PerformanceSummary\TraderPerformance.cs" />
+    <Compile Include="Models\PerformanceSummary\League.cs" />
     <Compile Include="Models\PerformanceSummary\GeneralInfo.cs" />
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

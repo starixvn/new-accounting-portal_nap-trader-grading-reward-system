@@ -17,7 +17,6 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// </summary>
     public class GetTopLoseLeagueCriteria : CriteriaBase
     {
-        [SpParam(Ignored = false, SqlParamName = "RptType")]
         public int ReportType { get; set; }
 
         public DateTime FromDate { get; set; }
@@ -30,7 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_SummaryGeneralInfo";
+            return "TGRS_Rpt_SummaryTopLoseLeague";
         }
 
         /// <summary>

@@ -36,5 +36,50 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
 
             return result;
         }
+
+        public IEnumerable<League> GetTopLoseLeague(GetTopLoseLeagueCriteria criteria)
+        {
+            IEnumerable<League> result = null;
+
+            result = this.GetData<League>(criteria);
+
+            return result;
+        }
+
+        public IEnumerable<TopTrader> GetTopTrader(GetTopTraderCriteria criteria)
+        {
+            IEnumerable<TopTrader> result = null;
+
+            result = this.GetData<TopTrader>(criteria);
+
+            return result;
+        }
+
+        public IEnumerable<League> GetTopWinLeague(GetTopWinLeagueCriteria criteria)
+        {
+            IEnumerable<League> result = null;
+
+            result = this.GetData<League>(criteria);
+
+            return result;
+        }
+
+        public IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        {
+            IEnumerable<TraderPerformance> result = null;
+
+            result = this.GetData<TraderPerformance>(criteria);
+
+            return result;
+        }
+
+        public IEnumerable<BetTypePerformance> GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        {
+            IEnumerable<BetTypePerformance> result = null;
+
+            result = this.GetData<BetTypePerformance>(criteria);
+
+            return result;
+        }
     }
 }

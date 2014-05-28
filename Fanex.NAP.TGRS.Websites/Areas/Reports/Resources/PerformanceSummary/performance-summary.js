@@ -13,7 +13,12 @@ Fanex.TGRS.PerformanceSummary = function () {
     var maxYearRange = 3;
     var urls = {
         GetGeneralInfo: common.ResolveRootUrl('PerformanceSummary/GetGeneralInfo'),
-        GetTeamReport: common.ResolveRootUrl('PerformanceSummary/GetTeamPerformance')
+        GetTeamPerformance: common.ResolveRootUrl('PerformanceSummary/GetTeamPerformance'),
+        GetTraderPerformance: common.ResolveRootUrl('PerformanceSummary/GetTraderPerformance'),
+        GetBetTypePerformance: common.ResolveRootUrl('PerformanceSummary/GetBetTypePerformance'),
+        GetTopWinLeague: common.ResolveRootUrl('PerformanceSummary/GetTopWinLeague'),
+        GetTopLoseLeague: common.ResolveRootUrl('PerformanceSummary/GetTopLoseLeague'),
+        GetTopTrader: common.ResolveRootUrl('PerformanceSummary/GetTopTrader')
     };
     var datePeriodType = {
         Date: 1,
@@ -67,57 +72,32 @@ Fanex.TGRS.PerformanceSummary = function () {
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
     };
 
-    var getAllReports = function() {
-        getSummaryInfo();
-        getTeamReport();
-    };
+    function getReportByType(reportUrl, renderFunction) {
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: reportUrl,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(filterParameters),
+            success: function (result) {
+                if (result) {
+                    renderFunction(result);
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    }
 
-    var getSummaryInfo = function () {
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.GetGeneralInfo,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(filterParameters),
-            success: function (result) {
-                if (result) {
-                    renderGeneralInfo(result);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-    var getTeamReport = function () {
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.GetTeamReport,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(filterParameters),
-            success: function (result) {
-                if (result) {
-                    renderTeamGrid(result);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
     // Init page fields and events
     var initPageFields = function () {
         //Date picker
-        initDatePicker(datePeriodType.Year);
+        initDatePicker(datePeriodType.Date);
 
         //btnSearch
         domElements.btnSearch.on('click', function () {
@@ -136,6 +116,10 @@ Fanex.TGRS.PerformanceSummary = function () {
         var minDate = new Date(toDate.getFullYear() - maxYearRange, 0, 1);
 
         if (type === datePeriodType.Date) {
+            domElements.ddlYear.hide();
+            domElements.dpkFromDate.show();
+            domElements.dpkToDate.show();
+
             //max date is yesterdate
             maxDate = new Date(toDate);
             maxDate.setDate(maxDate.getDate() - 1);
@@ -149,6 +133,10 @@ Fanex.TGRS.PerformanceSummary = function () {
                 "", 'col_1', maxDate, minDate, maxDate, 'col_5');
         }
         else if(type === datePeriodType.Month) {
+            domElements.ddlYear.hide();
+            domElements.dpkFromDate.show();
+            domElements.dpkToDate.show();
+
             //max date: end of last month
             maxDate = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
             //default date: begin of last month
@@ -191,8 +179,7 @@ Fanex.TGRS.PerformanceSummary = function () {
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'left' }],
-            showNumberColumn: true,
-            gridExpandHeight: 150
+            gridExpandHeight: 50
         };
         var bodyData = [];
         var row;
@@ -209,6 +196,92 @@ Fanex.TGRS.PerformanceSummary = function () {
         }
         gridOptions.bodyRows = bodyData;
         domElements.divTeamGrid.fanexGrid(gridOptions);
+    };
+
+    // Render win league grid.
+    var renderWinLeagueGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'left' }],
+            gridExpandHeight: 50
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
+                              { Name: 'ColTurnOver', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColMargin', Value: item.Margin }]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        domElements.divTopWinLeagueGrid.fanexGrid(gridOptions);
+    };
+
+    // Render win league grid.
+    var renderLoseLeagueGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'left' }],
+            gridExpandHeight: 50
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
+                              { Name: 'ColTurnOver', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColMargin', Value: item.Margin }]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        domElements.divTopLoseLeagueGrid.fanexGrid(gridOptions);
+    };
+
+    // Render win league grid.
+    var renderBetTypeGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'left' }],
+            gridExpandHeight: 50
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColBetType', Value: item.TypeName },
+                              { Name: 'ColTurnOver', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColMargin', Value: item.Margin }]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        domElements.divTopLoseLeagueGrid.fanexGrid(gridOptions);
+    };
+
+    var getAllReports = function() {
+        getReportByType(urls.GetGeneralInfo, renderGeneralInfo);
+        getReportByType(urls.GetTeamPerformance, renderTeamGrid);
+        getReportByType(urls.GetTopWinLeague, renderWinLeagueGrid);
+        getReportByType(urls.GetTopLoseLeague, renderLoseLeagueGrid);
+        getReportByType(urls.GetBetTypePerformance, renderBetTypeGrid);
     };
 
     $this.Initialize = function () {

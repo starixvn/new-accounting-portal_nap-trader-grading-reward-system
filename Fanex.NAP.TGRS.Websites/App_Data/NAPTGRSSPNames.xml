@@ -31,5 +31,10 @@
   <Function Name="SummaryReport">
     <Setting Key="TGRS_Rpt_SummaryGeneralInfo" SpName="TGRS_Rpt_SummaryGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_SummaryTeamPerformance" SpName="TGRS_Rpt_SummaryTeamPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_SummaryTopLoseLeague" SpName="TGRS_Rpt_SummaryTopLoseLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_SummaryTopTrader" SpName="TGRS_Rpt_SummaryTopTrader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_SummaryTopWinLeague" SpName="TGRS_Rpt_SummaryTopWinLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_SummaryTraderPerformace" SpName="TGRS_Rpt_SummaryTraderPerformace" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_SummaryBetTypePerformance" SpName="TGRS_Rpt_SummaryBetTypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
 </Functions>
