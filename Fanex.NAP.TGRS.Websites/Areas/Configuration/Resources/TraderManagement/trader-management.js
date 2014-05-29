@@ -208,57 +208,6 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
 
-    //Get team history of Trader
-    var getTeamHistory = function (custId) {
-        common.DisableInput();
-        var param = {
-            custId: custId
-        };
-        $.ajax({
-            type: 'POST',
-            url: urls.GetTeamHistory,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(param),
-            success: function (result) {
-                if (result) {
-                    renderTeamHistoryGrid(result);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-
-    //Get grade history of Trader
-    var getGradeHistory = function (custId) {
-        common.DisableInput();
-        var param = {
-            custId: custId
-        };
-        $.ajax({
-            type: 'POST',
-            url: urls.GetGradeHistory,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(param),
-            success: function (result) {
-                if (result) {
-                    renderGradeHistoryGrid(result);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
     //Insert new Trader
     var insertTrader = function (parameter) {
         common.DisableInput();
@@ -331,8 +280,8 @@ Fanex.TGRS.TraderManagement = function () {
         var nameColFormat = '<span class="edit-trader-link link" data-cust-id="{0}"';
         nameColFormat += 'data-username="{1}" data-trader-team="{2}" data-trader-grade="{3}"';
         nameColFormat += 'data-trader-employeeId="{4}" data-trader-teamEffectiveDate="{5}" data-trader-gradeEffectiveDate="{6}">{1}</span>';
-        var teamColFormat = '<span class="view-teamHistory-link link" data-cust-id="{0}">{1}</span>';
-        var gradeColFormat = '<span class="view-gradeHistory-link link" data-cust-id="{0}">{1}</span>';
+        var teamColFormat = '<span class="view-teamHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var gradeColFormat = '<span class="view-gradeHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 130, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -363,8 +312,8 @@ Fanex.TGRS.TraderManagement = function () {
                                 nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.Grade, item.EmployeeId, item.TeamEffectiveDate,
                                 item.GradeEffectiveDate) 
                                 : item.UserName;
-                TeamNameCol = teamColFormat.format(item.CustId, item.TeamName);
-                GradeCol = gradeColFormat.format(item.CustId, item.Grade);
+                TeamNameCol = teamColFormat.format(item.CustId, item.UserName, item.TeamName);
+                GradeCol = gradeColFormat.format(item.CustId, item.UserName, item.Grade);
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
                               { Name: 'ColName', Value: TraderNameCol },
@@ -588,39 +537,83 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.divTradersGrid.on('click','span.view-teamHistory-link', function () {
             var $obj = $(this);
             var custId = $obj.attr('data-cust-id');
-            makeTeamHistoryForm(custId);
+            var userName = $obj.attr('data-username');
+            makeTeamHistoryForm(custId, userName);
         });
 
         //event: click on grade
         domElements.divTradersGrid.on('click','span.view-gradeHistory-link', function () {
             var $obj = $(this);
             var custId = $obj.attr('data-cust-id');
-            makeGradeHistoryForm(custId);
+            var userName = $obj.attr('data-username');
+            makeGradeHistoryForm(custId, userName);
         });
     };
 
     // Display new Trader form.
-    var makeTeamHistoryForm = function (custId) {
+    var makeTeamHistoryForm = function (custId, userName) {
         var form = domElements.divTeamHistoryForm.clone();
 
         refreshPopup();
-        common.Modal(labels.NewTrader, form);
+        common.Modal(labels.TeamHistory + " - " + userName, form);
 
         //prepare data
         cachePopupElements();
-        getTeamHistory(custId);
+        common.DisableInput();
+        var param = {
+            custId: custId
+        };
+        $.ajax({
+            type: 'POST',
+            url: urls.GetTeamHistory,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(param),
+            success: function (result) {
+                if (result) {
+                    renderTeamHistoryGrid(result);
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
     };
 
     // Display new Trader form.
-    var makeGradeHistoryForm = function (custId) {
+    var makeGradeHistoryForm = function (custId, userName) {
         var form = domElements.divGradeHistoryForm.clone();
 
         refreshPopup();
-        common.Modal(labels.NewTrader, form);
+        common.Modal(labels.GradeHistory  + " - " + userName, form);
 
         //prepare data
         cachePopupElements();
-        getGradeHistory(custId);
+        common.DisableInput();
+        var param = {
+            custId: custId
+        };
+        $.ajax({
+            type: 'POST',
+            url: urls.GetGradeHistory,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(param),
+            success: function (result) {
+                if (result) {
+                    renderGradeHistoryGrid(result);
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
        
     };
 

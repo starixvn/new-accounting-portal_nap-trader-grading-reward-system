@@ -375,4 +375,10 @@
   <data name="TeamEffectiveDate" xml:space="preserve">
     <value>Team Effective Date</value>
   </data>
+  <data name="GradeHistory" xml:space="preserve">
+    <value>Grade History</value>
+  </data>
+  <data name="TeamHistory" xml:space="preserve">
+    <value>Team History</value>
+  </data>
 </root>

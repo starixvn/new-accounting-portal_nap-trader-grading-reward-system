@@ -75,6 +75,7 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />

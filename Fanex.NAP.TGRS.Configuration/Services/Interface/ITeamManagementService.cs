@@ -17,6 +17,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement
     {
         TeamInfoList GetAllTeam(GetAllTeamsCriteria criteria);
 
+        TeamInfoList GetTeamSelectList(GetTeamSelectListCriteria criteria);
+
         ICommandResult InsertTeam(InsertTeamCriteria criteria);
 
         ICommandResult UpdateTeam(UpdateTeamCriteria criteria);

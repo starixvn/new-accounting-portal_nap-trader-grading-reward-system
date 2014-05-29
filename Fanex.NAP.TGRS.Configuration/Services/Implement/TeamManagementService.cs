@@ -47,6 +47,32 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement
         }
 
         /// <summary>
+        /// Get all team for select list.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of Team information.</returns>
+        public TeamInfoList GetTeamSelectList(GetTeamSelectListCriteria criteria)
+        {
+            TeamInfoList result = null;
+
+            var rawData = this.GetData<TeamInfo>(criteria);
+
+            if (rawData != null)
+            {
+                result = new TeamInfoList();
+
+                foreach (TeamInfo team in rawData)
+                {
+                    var teamInfoItem = new TeamInfoItem(team);
+
+                    result.Add(teamInfoItem);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Insert new team.
         /// </summary>
         /// <param name="criteria">The criteria that are used to insert data.</param>

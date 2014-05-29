@@ -118,7 +118,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetInitializedData()
         {
-            TeamInfoList teams = this._teamService.GetAllTeam(new GetAllTeamsCriteria());
+            TeamInfoList teams = this._teamService.GetTeamSelectList(new GetTeamSelectListCriteria());
 
             return Json(new
             {
