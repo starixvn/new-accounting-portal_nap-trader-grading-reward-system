@@ -353,6 +353,7 @@
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail.less" />
     <Content Include="Areas\Configuration\Views\TraderManagement\TeamHistoryForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TraderManagement\GradeHistoryForm.cshtml" />
+    <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

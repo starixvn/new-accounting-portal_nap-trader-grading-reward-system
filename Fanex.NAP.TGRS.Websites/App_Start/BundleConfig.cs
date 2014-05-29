@@ -108,6 +108,10 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
 
             bundles.AddAndInclude(
+                "~/styles/traderManagement",
+                "~/Areas/Configuration/Resources/TraderManagement/trader-management.less");
+
+            bundles.AddAndInclude(
                 "~/styles/benchmarkManagement",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/benchmark-management.less");
 

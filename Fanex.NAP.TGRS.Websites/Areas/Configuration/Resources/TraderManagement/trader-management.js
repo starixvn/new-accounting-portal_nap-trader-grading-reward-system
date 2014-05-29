@@ -28,7 +28,7 @@ Fanex.TGRS.TraderManagement = function () {
         teamId: null,
         grade: null,
         username: null,
-        employeeId: null,
+        employeeId: null
     };
     var currentFilterVal = {
         teamId: null,
@@ -67,7 +67,7 @@ Fanex.TGRS.TraderManagement = function () {
         divTeamHistoryForm : null,
         divGradeHistoryForm : null,
         divTeamHistoryGrid : null,
-        divGradeHistoryGrid : null,
+        divGradeHistoryGrid : null
     };
     var cacheTeamData = null;
     var cacheTeamDataId = {};
@@ -588,10 +588,10 @@ Fanex.TGRS.TraderManagement = function () {
         var form = domElements.divGradeHistoryForm.clone();
 
         refreshPopup();
-        common.Modal(labels.GradeHistory  + " - " + userName, form);
+        //common.Modal(labels.GradeHistory  + " - " + userName, form);
 
         //prepare data
-        cachePopupElements();
+        //cachePopupElements();
         common.DisableInput();
         var param = {
             custId: custId
@@ -604,6 +604,8 @@ Fanex.TGRS.TraderManagement = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
+                    common.Popup(labels.GradeHistory  + " - " + userName, form);
+                    cachePopupElements();
                     renderGradeHistoryGrid(result);
                 }
             },
