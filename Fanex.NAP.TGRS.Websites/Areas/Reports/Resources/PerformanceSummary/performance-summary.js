@@ -251,6 +251,31 @@ Fanex.TGRS.PerformanceSummary = function () {
     };
 
     // Render win league grid.
+    var renderTraderGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Turnover, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Winloss, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'left' }],
+            gridExpandHeight: 50
+        };
+        var bodyData = [];
+        var traderData = ["Top 10", "Bottom 10"];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColTraderType', Value: traderData[index] },
+                              { Name: 'ColMinMargin', Value: item.MinMargin },
+                              { Name: 'ColMaxMargin', Value: item.MaxMargin }]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        domElements.divTraderGrid.fanexGrid(gridOptions);
+    };
+
+    // Render win league grid.
     var renderBetTypeGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
@@ -273,7 +298,7 @@ Fanex.TGRS.PerformanceSummary = function () {
             });
         }
         gridOptions.bodyRows = bodyData;
-        domElements.divTopLoseLeagueGrid.fanexGrid(gridOptions);
+        domElements.divBetTypeGrid.fanexGrid(gridOptions);
     };
 
     var getAllReports = function() {
@@ -282,6 +307,7 @@ Fanex.TGRS.PerformanceSummary = function () {
         getReportByType(urls.GetTopWinLeague, renderWinLeagueGrid);
         getReportByType(urls.GetTopLoseLeague, renderLoseLeagueGrid);
         getReportByType(urls.GetBetTypePerformance, renderBetTypeGrid);
+        getReportByType(urls.GetTraderPerformance, renderTraderGrid);
     };
 
     $this.Initialize = function () {
