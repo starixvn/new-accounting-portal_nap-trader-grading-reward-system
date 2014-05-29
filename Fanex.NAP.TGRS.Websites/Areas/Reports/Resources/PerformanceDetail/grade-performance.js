@@ -3,13 +3,13 @@
 
 'use strict';
 $(document).ready(function () {
-    var traderPerformance = new Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance();
+    var gradePerformance = new Fanex.NAP.TGRS.PerformanceDetail.GradePerformance();
 
-    traderPerformance.InitPage();
+    gradePerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance');
-Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.GradePerformance');
+Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     var $this = this;
     var domElements = {
         divGradePerformanceFilter: null,

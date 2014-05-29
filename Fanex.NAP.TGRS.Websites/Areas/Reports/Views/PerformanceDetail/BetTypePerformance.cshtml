@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="header-button">
-        <a href="#" class="green-button change-list disabled">
+        <a href="@Url.Content("/Reports/PerformanceDetail/LeaguePerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.League
         </a>
         <a href="@Url.Content("/Reports/PerformanceDetail/TraderPerformance")" class="green-button change-list">
@@ -23,23 +23,15 @@
         <a href="@Url.Content("/Reports/PerformanceDetail/TeamPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Team
         </a>
-        <a href="@Url.Content("/Reports/PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+        <a href="#" class="green-button change-list disabled">
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
     </div>
 }
 <div class="filter-bar">
-    <div id="divLeaguePerformanceFilter" class="filter-form">
+    <div id="divBetTypePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
-            <div class="lbl-field col_2 align-right">
-                <label for="txtLeague">@ViewLang.League</label>
-            </div>
-            <div class="edit-field col_12 align-left">
-                <input type="text" id="txtLeague" class="width-200" />
-            </div>
-        </div>
-        <div class="filter-row">
             <div class="lbl-field col_5 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
@@ -47,6 +39,8 @@
                 <select id="ddlBetType" class="width-140">
                 </select>
             </div>
+        </div>
+        <div class="filter-row">
             <div class="lbl-field col_5 align-right">
                 <label for="txtMarginFrom">@ViewLang.Margin</label>
             </div>
@@ -54,10 +48,10 @@
                 <input type="text" id="txtMarginFrom" class="width-60"/> - <input type="text" id="txtMarginTo"  class="width-60"/>
             </div>
             <div class="lbl-field col_3 align-right">
-                <label for="txtLeagueBMFrom">@ViewLang.LeagueBM</label>
+                <label for="txtLeagueBMFrom">@ViewLang.BetTypeBM</label>
             </div>
             <div class="edit-field col_7 align-left">
-                <input type="text" id="txtLeagueBMFrom" class="width-60" /> - <input type="text" id="txtLeagueBMTo" class="width-60" />
+                <input type="text" id="txtBetTypeBMFrom" class="width-60" /> - <input type="text" id="txtBetTypeBMTo" class="width-60" />
             </div>
         </div>
         <div class="filter-row">
@@ -79,8 +73,8 @@
         </div>
     </div>
 </div>
-<div id="divLeaguePerformanceContainer" class="content-grid display-none">
-    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+<div id="divBetTypePerformanceContainer" class="content-grid display-none">
+    <div id="divBetTypePerformanceGrid" class="freegrid"></div>
 </div>
 <div id="divTraderPerformanceContainer" class="content-grid display-none">
     <div id="divTraderPerformanceGrid" class="freegrid"></div>
@@ -93,10 +87,10 @@
     @Scripts.Render("~/scripts/betTypePerformance")
     <script type="text/javascript">
         var datepickerSetting = {
-            MinDate: '@DateTime.Today.AddYears(AppSettings.PerformanceDetailYearRange * -1).ToShortFormatedDate()',
-            DefaultFromDate: '@DateTime.Today.AddDays(AppSettings.PerformanceDetailDefaultDayRange * -1).ToShortFormatedDate()',
-            DefaultToDate: '@DateTime.Today.AddDays(-1).ToShortFormatedDate()',
-            AllowYearRange: parseInt('@AppSettings.PerformanceDetailAllowYearRange')
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
             FromDate: '@ViewLang.FromDate',

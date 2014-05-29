@@ -3,13 +3,13 @@
 
 'use strict';
 $(document).ready(function () {
-    var leaguePerformance = new Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance();
+    var gradePerformance = new Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance();
 
-    leaguePerformance.InitPage();
+    gradePerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance');
-Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance');
+Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     var $this = this;
     var domElements = {
         divTeamPerformanceFilter: null,
