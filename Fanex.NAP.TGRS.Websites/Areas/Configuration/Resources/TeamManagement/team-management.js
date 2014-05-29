@@ -113,7 +113,7 @@ Fanex.TGRS.TeamManagement = function () {
 
     //Insert new team
     var insertTeam = function (teamName, description) {
-        var isertingParameters = {
+        var insertParameters = {
             TeamName: teamName,
             Description: description
         };
@@ -124,10 +124,10 @@ Fanex.TGRS.TeamManagement = function () {
             url: urls.InsertTeam,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(isertingParameters),
+            data: JSON.stringify(insertParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.AddTeamSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddTeamSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();
@@ -162,7 +162,7 @@ Fanex.TGRS.TeamManagement = function () {
             data: JSON.stringify(updateParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateTeamSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateTeamSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();
@@ -190,7 +190,7 @@ Fanex.TGRS.TeamManagement = function () {
                       { HeaderText: labels.TeamName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Description, Width: 280, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.AvgGrade, Width: 120, Name: 'ColAvgGrade', HeaderAlign: 'right', CellAlign: 'right',
+                      { HeaderText: labels.AvgGrade, Width: 120, Name: 'ColAvgGrade', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },

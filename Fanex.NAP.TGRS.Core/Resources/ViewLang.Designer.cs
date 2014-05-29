@@ -187,6 +187,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bottom 10 By Margin.
+        /// </summary>
+        public static string Bottom10ByMargin {
+            get {
+                return ResourceManager.GetString("Bottom10ByMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -741,6 +750,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top 10 By Margin.
+        /// </summary>
+        public static string Top10ByMargin {
+            get {
+                return ResourceManager.GetString("Top10ByMargin", resourceCulture);
             }
         }
         

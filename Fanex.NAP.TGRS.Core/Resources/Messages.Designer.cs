@@ -277,7 +277,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no change, no need to update.
+        ///   Looks up a localized string similar to There is no change.
         /// </summary>
         public static string UpdateNoChange {
             get {

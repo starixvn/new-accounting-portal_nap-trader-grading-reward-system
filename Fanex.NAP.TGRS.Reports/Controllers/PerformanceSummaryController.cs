@@ -84,7 +84,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            IEnumerable<TraderPerformance> result = this._summaryReportService.GetTraderPerformance(criteria);
+            TraderPerformance result = this._summaryReportService.GetTraderPerformance(criteria);
 
             return Json(result);
         }

@@ -381,4 +381,10 @@
   <data name="TeamHistory" xml:space="preserve">
     <value>Team History</value>
   </data>
+  <data name="Bottom10ByMargin" xml:space="preserve">
+    <value>Bottom 10 By Margin</value>
+  </data>
+  <data name="Top10ByMargin" xml:space="preserve">
+    <value>Top 10 By Margin</value>
+  </data>
 </root>

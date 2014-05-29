@@ -223,7 +223,7 @@ Fanex.TGRS.TraderManagement = function () {
             data: JSON.stringify(combineParameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.AddTraderSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddTraderSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();
@@ -256,7 +256,7 @@ Fanex.TGRS.TraderManagement = function () {
             data: JSON.stringify(combineParameter),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateTraderSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateTraderSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();
@@ -280,8 +280,8 @@ Fanex.TGRS.TraderManagement = function () {
         var nameColFormat = '<span class="edit-trader-link link" data-cust-id="{0}"';
         nameColFormat += 'data-username="{1}" data-trader-team="{2}" data-trader-grade="{3}"';
         nameColFormat += 'data-trader-employeeId="{4}" data-trader-teamEffectiveDate="{5}" data-trader-gradeEffectiveDate="{6}">{1}</span>';
-        var teamColFormat = '<span class="view-teamHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
-        var gradeColFormat = '<span class="view-gradeHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var teamDateColFormat = '<span class="view-teamHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var gradeDateColFormat = '<span class="view-gradeHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.UserName, Width: 130, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -302,8 +302,8 @@ Fanex.TGRS.TraderManagement = function () {
             }
         };
         var TraderNameCol = "";
-        var TeamNameCol = "";
-        var GradeCol = "";
+        var TeamDateCol = "";
+        var GradeDateCol = "";
         var bodyData = [];
         var row;
         if (data && data.length > 0) {
@@ -312,16 +312,16 @@ Fanex.TGRS.TraderManagement = function () {
                                 nameColFormat.format(item.CustId, item.UserName, item.TeamName, item.Grade, item.EmployeeId, item.TeamEffectiveDate,
                                 item.GradeEffectiveDate) 
                                 : item.UserName;
-                TeamNameCol = teamColFormat.format(item.CustId, item.UserName, item.TeamName);
-                GradeCol = gradeColFormat.format(item.CustId, item.UserName, item.Grade);
+                TeamDateCol = teamDateColFormat.format(item.CustId, item.UserName, item.TeamEffectiveDate);
+                GradeDateCol = gradeDateColFormat.format(item.CustId, item.UserName, item.GradeEffectiveDate);
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
                               { Name: 'ColName', Value: TraderNameCol },
                               { Name: 'ColEmployee', Value: item.EmployeeId },
-                              { Name: 'ColTeam', Value: TeamNameCol },
-                              { Name: 'ColTeamEffectiveDate', Value: item.TeamEffectiveDate },
-                              { Name: 'ColGrade', Value: GradeCol },
-                              { Name: 'ColGradeEffectiveDate', Value: item.GradeEffectiveDate },
+                              { Name: 'ColTeam', Value: item.TeamName },
+                              { Name: 'ColTeamEffectiveDate', Value: TeamDateCol },
+                              { Name: 'ColGrade', Value: item.Grade },
+                              { Name: 'ColGradeEffectiveDate', Value: GradeDateCol },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedUsername}]
                 };

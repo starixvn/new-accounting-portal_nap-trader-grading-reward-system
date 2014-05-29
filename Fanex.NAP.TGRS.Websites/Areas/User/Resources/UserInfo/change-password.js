@@ -41,7 +41,7 @@ Fanex.TGRS.ChangePassword = function () {
 
     var handleEvents = function () {
         if (passedData.IsSuccess) {
-            common.ShowInlineInfoMsg(domElements.divMessage, passedData.ChangedPasswordSuccessfully);
+            common.ShowInlineSuccessMsg(domElements.divMessage, passedData.ChangedPasswordSuccessfully);
         } else if (passedData.ErrorMessage && passedData.ErrorMessage.length > 0) {
             common.ShowInlineErrorMsg(domElements.divMessage, passedData.ErrorMessage);
         }

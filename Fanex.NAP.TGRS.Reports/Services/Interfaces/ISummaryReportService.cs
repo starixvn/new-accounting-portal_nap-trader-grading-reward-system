@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport
 
         IEnumerable<League> GetTopWinLeague(GetTopWinLeagueCriteria criteria);
 
-        IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria);
+        TraderPerformance GetTraderPerformance(GetTraderPerformanceCriteria criteria);
 
         IEnumerable<BetTypePerformance> GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
     }

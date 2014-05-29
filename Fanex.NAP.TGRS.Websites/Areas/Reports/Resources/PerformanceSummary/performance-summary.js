@@ -30,8 +30,6 @@ Fanex.TGRS.PerformanceSummary = function () {
         dpkToDate: null,
         ddlYear: null,
         btnSearch: null,
-        dpkFromDateCalendar: null,
-        dpkToDateCalendar: null,
 
         divGeneralInfo: null,
         lblWinLoss: null,
@@ -102,8 +100,8 @@ Fanex.TGRS.PerformanceSummary = function () {
         //btnSearch
         domElements.btnSearch.on('click', function () {
             setTimeout(function () {
-                filterParameters.FromDate = domElements.dpkFromDate.nexDatePicker('getSingleDate');
-                filterParameters.ToDate = domElements.dpkToDate.nexDatePicker('getSingleDate');
+                filterParameters.FromDate = $("#txtFromDate").val();
+                filterParameters.ToDate = $("#txtToDate").val();
                 filterParameters.ReportType = domElements.ddlPeriodType.val();
                 getAllReports();
             }, 70);// Delay 70ms for jQuery-UI combo-box to verify its state.
@@ -253,23 +251,28 @@ Fanex.TGRS.PerformanceSummary = function () {
     // Render win league grid.
     var renderTraderGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.TraderPerformance, Width: 200, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'left' }],
             gridExpandHeight: 50
         };
         var bodyData = [];
-        var traderData = ["Top 10", "Bottom 10"];
+        var traderData = [labels.Top10ByMargin, labels.Bottom10ByMargin];
         var row;
-        if (data && data.length > 0) {
-            $.each(data, function (index, item) {
-                row = {
-                    Columns: [{ Name: 'ColTraderType', Value: traderData[index] },
-                              { Name: 'ColMinMargin', Value: item.MinMargin },
-                              { Name: 'ColMaxMargin', Value: item.MaxMargin }]
+        if (data) {
+            row = {
+                    Columns: [{ Name: 'ColTraderType', Value: traderData[0] },
+                              { Name: 'ColMinMargin', Value: data.TopMinMargin },
+                              { Name: 'ColMaxMargin', Value: data.TopMaxMargin }]
                 };
-                bodyData.push(row);
-            });
+            bodyData.push(row);
+
+            row = {
+                    Columns: [{ Name: 'ColTraderType', Value: traderData[1] },
+                              { Name: 'ColMinMargin', Value: data.BottomMinMargin },
+                              { Name: 'ColMaxMargin', Value: data.BottomMaxMargin }]
+                };
+            bodyData.push(row);
         }
         gridOptions.bodyRows = bodyData;
         domElements.divTraderGrid.fanexGrid(gridOptions);

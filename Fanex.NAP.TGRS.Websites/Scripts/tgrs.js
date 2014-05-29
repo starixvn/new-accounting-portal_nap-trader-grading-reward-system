@@ -70,14 +70,29 @@ Fanex.TGRS.Common = function () {
     // Show inline error message in the case of form or popup.
     $this.ShowInlineErrorMsg = function ($obj, message) {
         $obj.html(message);
-        $obj.removeClass('success').addClass('error').slideDown();
+        $obj.removeClass('success').removeClass('info').addClass('error').slideDown();
+    };
+
+    // Show inline success message in the case of form or popup.
+    $this.ShowInlineSuccessMsg = function ($obj, message, autoHide, callbackFunc) {
+        autoHide = autoHide === undefined ? true : autoHide;
+        $obj.html(message);
+        $obj.removeClass('error').removeClass('info').addClass('success').slideDown();
+
+        if (autoHide) {
+            setTimeout(function () {
+                $this.HideInlineMsg($obj, callbackFunc);
+            }, 3000);
+        } else if (callbackFunc) {
+            callbackFunc();
+        }
     };
 
     // Show inline infomation message in the case of form or popup.
     $this.ShowInlineInfoMsg = function ($obj, message, autoHide, callbackFunc) {
         autoHide = autoHide === undefined ? true : autoHide;
         $obj.html(message);
-        $obj.removeClass('error').addClass('info').slideDown();
+        $obj.removeClass('error').removeClass('success').addClass('info').slideDown();
 
         if (autoHide) {
             setTimeout(function () {

@@ -268,6 +268,7 @@
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />
+    <Content Include="Content\Themes\Images\icon-info-message.png" />
     <Content Include="Content\Themes\Images\logo-tgrs.png" />
     <Content Include="Content\Themes\Images\sprites.png" />
     <Content Include="Content\Themes\Images\tgrs.ico" />

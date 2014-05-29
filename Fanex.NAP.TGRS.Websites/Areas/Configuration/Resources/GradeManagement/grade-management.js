@@ -114,7 +114,7 @@ Fanex.TGRS.GradeManagement = function () {
 
     //Insert new grade
     var insertGrade = function (gradeName, description) {
-        var isertingParameters = {
+        var insertParameters = {
             GradeName: gradeName,
             Description: description
         };
@@ -125,10 +125,10 @@ Fanex.TGRS.GradeManagement = function () {
             url: urls.InsertGrade,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(isertingParameters),
+            data: JSON.stringify(insertParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.AddGradeSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddGradeSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();
@@ -163,7 +163,7 @@ Fanex.TGRS.GradeManagement = function () {
             data: JSON.stringify(updateParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateGradeSuccessfully, false, function () {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateGradeSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
                     disablePopup();

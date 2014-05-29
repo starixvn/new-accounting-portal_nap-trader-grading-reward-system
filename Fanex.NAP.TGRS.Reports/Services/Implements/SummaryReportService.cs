@@ -8,10 +8,15 @@
 
 namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
 {
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Data;
+    using Fanex.Data;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.Reposistories.Interface;
+    using Fanex.NAP.TGRS.Reports.Repositories.Implements;
     using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
 
     /// <summary>
@@ -19,6 +24,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
     /// </summary>
     public class SummaryReportService : TGRSBaseService, ISummaryReportService
     {
+        private readonly ISummaryReportRepository _summaryReportRepository;
+
+        public SummaryReportService() :
+            this(null)
+        {
+        }
+
+        public SummaryReportService(ISummaryReportRepository summaryReportRepository)
+        {
+            this._summaryReportRepository = summaryReportRepository ?? new SummaryReportRepository();
+        }
+
         public IEnumerable<GeneralInfo> GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
             IEnumerable<GeneralInfo> result = null;
@@ -64,11 +81,14 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             return result;
         }
 
-        public IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        /// <summary>
+        /// Get trader performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that used to query trader performance.</param>
+        /// <returns>Trader performance model.</returns>
+        public TraderPerformance GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            IEnumerable<TraderPerformance> result = null;
-
-            result = this.GetData<TraderPerformance>(criteria);
+            TraderPerformance result = this._summaryReportRepository.GetTraderPerformance(criteria);
 
             return result;
         }

@@ -29,7 +29,7 @@ Fanex.TGRS.UserProfile = function () {
 
     var handleEvents = function () {
         if (passedData.IsSuccess) {
-            common.ShowInlineInfoMsg(domElements.divMessage, passedData.ChangedSuccessfully);
+            common.ShowInlineSuccessMsg(domElements.divMessage, passedData.ChangedSuccessfully);
         } else if (domElements.divValidationSummary.find('li:first').text() !== '') {
             common.ShowInlineErrorMsg(domElements.divMessage, domElements.divValidationSummary.html());
         }

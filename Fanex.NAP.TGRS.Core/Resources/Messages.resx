@@ -199,6 +199,6 @@
     <value>The benchmark value has been updated successfully!</value>
   </data>
   <data name="UpdateNoChange" xml:space="preserve">
-    <value>There is no change, no need to update</value>
+    <value>There is no change</value>
   </data>
 </root>
