@@ -555,10 +555,7 @@ Fanex.TGRS.TraderManagement = function () {
         var form = domElements.divTeamHistoryForm.clone();
 
         refreshPopup();
-        common.Modal(labels.TeamHistory + " - " + userName, form);
 
-        //prepare data
-        cachePopupElements();
         common.DisableInput();
         var param = {
             custId: custId
@@ -571,6 +568,8 @@ Fanex.TGRS.TraderManagement = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
+                    common.Popup(labels.TeamHistory + " - " + userName, form);
+                    cachePopupElements();
                     renderTeamHistoryGrid(result);
                 }
             },
@@ -588,7 +587,6 @@ Fanex.TGRS.TraderManagement = function () {
         var form = domElements.divGradeHistoryForm.clone();
 
         refreshPopup();
-        //common.Modal(labels.GradeHistory  + " - " + userName, form);
 
         //prepare data
         //cachePopupElements();
