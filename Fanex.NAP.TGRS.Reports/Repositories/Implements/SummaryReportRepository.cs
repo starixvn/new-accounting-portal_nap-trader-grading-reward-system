@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.Reports.Repositories.Implements
     /// <summary>
     /// Trader Management Service.
     /// </summary>
-    public class SummaryReportRepository :  ISummaryReportRepository
+    public class SummaryReportRepository : ISummaryReportRepository
     {
         /// <summary>
         /// Get trader performance.
@@ -43,6 +43,7 @@ namespace Fanex.NAP.TGRS.Reports.Repositories.Implements
                     }
                 }
             }
+
             return result;
         }
     }
