@@ -27,18 +27,49 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 
         public TraderPerformance(DataRow topTraderRow, DataRow bottomTraderRow)
         {
-            this.TopMinMargin = Convert.ToDecimal(topTraderRow["TopMinMargin"]);
-            this.TopMaxMargin = Convert.ToDecimal(topTraderRow["TopMaxMargin"]);
-            this.BottomMinMargin = Convert.ToDecimal(bottomTraderRow["BottomMinMargin"]);
-            this.BottomMaxMargin = Convert.ToDecimal(bottomTraderRow["BottomMaxMargin"]);
+            if (topTraderRow["TopMinMargin"] != System.DBNull.Value)
+            {
+                this.TopMinMargin = Convert.ToDecimal(topTraderRow["TopMinMargin"]);
+            }
+            else
+            {
+                this.TopMinMargin = null;
+            }
+
+            if (topTraderRow["TopMaxMargin"] != System.DBNull.Value)
+            {
+                this.TopMaxMargin = Convert.ToDecimal(topTraderRow["TopMaxMargin"]);
+            }
+            else
+            {
+                this.TopMaxMargin = null;
+            }
+
+            if (bottomTraderRow["BottomMinMargin"] != System.DBNull.Value)
+            {
+                this.BottomMinMargin = Convert.ToDecimal(bottomTraderRow["BottomMinMargin"]);
+            }
+            else
+            {
+                this.BottomMinMargin = null;
+            }
+
+            if (bottomTraderRow["BottomMaxMargin"] != System.DBNull.Value)
+            {
+                this.BottomMaxMargin = Convert.ToDecimal(bottomTraderRow["BottomMaxMargin"]);
+            }
+            else
+            {
+                this.BottomMaxMargin = null;
+            }
         }
 
-        public decimal TopMinMargin { get; set; }
+        public decimal? TopMinMargin { get; set; }
 
-        public decimal TopMaxMargin { get; set; }
+        public decimal? TopMaxMargin { get; set; }
 
-        public decimal BottomMinMargin { get; set; }
+        public decimal? BottomMinMargin { get; set; }
 
-        public decimal BottomMaxMargin { get; set; }
+        public decimal? BottomMaxMargin { get; set; }
     }
 }
