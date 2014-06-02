@@ -1,0 +1,74 @@
+﻿@model Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary.GetTopTraderCriteria
+@{
+    if (@Model.IsBottom == 1)
+    {
+        ViewBag.Title = String.Format(ViewLang.BottomTraderPerformanceFromTo, Model.FromDate.ToShortDateString(), Model.ToDate.ToShortDateString());
+    }
+    else
+    {
+        ViewBag.Title = String.Format(ViewLang.TopTraderPerformanceFromTo, Model.FromDate.ToShortDateString(), Model.ToDate.ToShortDateString());
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/styles/performanceSummary")
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divReportFilterForm" class="filter-form" style="float: left !important;">
+        <div class="filter-row width-800">
+            <div class="lbl-field col_4">
+                <label>@ViewLang.RowsToDisplay</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlType">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="0">All</option>
+                </select>
+            </div>
+    </div>
+    </div>
+</div>
+<div id="divReportGridContainer" class="content-grid display-none">
+    <div id="divRankGrid" class="freegrid display-none"></div>
+</div>
+<div id="divHiddenForm" class="display-none">
+        @Html.Partial("HistoryForm")
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/traderRank")
+    <script type="text/javascript">
+        var labels = {
+            Trader: '@ViewLang.Trader',
+            Team: '@ViewLang.Team',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            NewTeam: '@ViewLang.NewTeam',
+            NewGrade: '@ViewLang.NewGrade',
+            NoOfMatches: '@ViewLang.NoOfMatches',
+            Turnover: '@ViewLang.Turnover',
+            Winloss: '@ViewLang.WinLoss',
+            BetCount: '@ViewLang.BetCount',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            TopTraderPerformanceFromTo: '@ViewLang.TopTraderPerformanceFromTo',
+            Grade: '@ViewLang.Grade',
+            TeamHistory: '@ViewLang.TeamHistory',
+            GradeHistory: '@ViewLang.GradeHistory'
+        };
+        var filterParameters = {
+            Top: '@Model.Top',
+            IsBottom: '@Model.IsBottom',
+            ReportType: '@Model.ReportType',
+            FromDate: '@Model.FromDate',
+            ToDate: '@Model.ToDate'
+        };
+    </script>
+}

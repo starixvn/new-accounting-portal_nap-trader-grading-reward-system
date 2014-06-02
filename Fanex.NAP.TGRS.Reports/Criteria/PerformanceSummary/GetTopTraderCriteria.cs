@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     {
         public int Top { get; set; }
 
-        public bool IsBottom { get; set; }
+        public int IsBottom { get; set; }
 
         public int ReportType { get; set; }
 

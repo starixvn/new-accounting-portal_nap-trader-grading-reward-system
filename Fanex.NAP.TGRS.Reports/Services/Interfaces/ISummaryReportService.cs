@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport
     using System.Collections.Generic;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
     public interface ISummaryReportService
     {
@@ -28,5 +29,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport
         TraderPerformance GetTraderPerformance(GetTraderPerformanceCriteria criteria);
 
         IEnumerable<BetTypePerformance> GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
+
+        GradeHistory GetGradeHistory(GetGradeHistoryCriteria criteria);
+
+        TeamHistory GetTeamHistory(GetTeamHistoryCriteria criteria);
     }
 }

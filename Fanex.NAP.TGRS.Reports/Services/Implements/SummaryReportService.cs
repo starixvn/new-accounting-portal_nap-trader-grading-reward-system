@@ -10,14 +10,13 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Data;
-    using Fanex.Data;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
-    using Fanex.NAP.TGRS.Reports.Reposistories.Interface;
     using Fanex.NAP.TGRS.Reports.Repositories.Implements;
+    using Fanex.NAP.TGRS.Reports.Repositories.Interface;
     using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
     /// <summary>
     /// Trader Management Service.
@@ -98,6 +97,20 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             IEnumerable<BetTypePerformance> result = null;
 
             result = this.GetData<BetTypePerformance>(criteria);
+
+            return result;
+        }
+
+        public GradeHistory GetGradeHistory(GetGradeHistoryCriteria criteria)
+        {
+            GradeHistory result = this._summaryReportRepository.GetGradeHistory(criteria);
+
+            return result;
+        }
+
+        public TeamHistory GetTeamHistory(GetTeamHistoryCriteria criteria)
+        {
+            TeamHistory result = this._summaryReportRepository.GetTeamHistory(criteria);
 
             return result;
         }

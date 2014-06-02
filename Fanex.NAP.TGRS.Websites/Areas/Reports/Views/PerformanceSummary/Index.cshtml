@@ -1,5 +1,4 @@
-﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
-@{
+﻿@{
     ViewBag.Title = ViewLang.PerformanceSummaryReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -12,7 +11,7 @@
     </div>
 }
 <div class="filter-bar">
-    <div id="divReportFilterForm" class="filter-form">
+    <div id="divReportFilterForm" class="filter-form" style="float: left !important;">
         <div class="filter-row width-800">
             <div class="lbl-field col_3">
                 <label>@ViewLang.PeriodType</label>
@@ -24,13 +23,18 @@
                     <option value="3">Year</option>
                 </select>
             </div>
-            <div id="dpkFromDate"></div> 
-            <div id="dpkToDate"></div> 
-            <div id="dpkFromMonth"></div> 
-            <div id="dpkToMonth"></div> 
+            <div id="dpkFromDate">
+            </div>
+            <div id="dpkToDate">
+            </div>
+            <div id="dpkFromMonth">
+            </div>
+            <div id="dpkToMonth">
+            </div>
             <div class="edit-field col_3 display-none">
                 <div class="lbl-field col_2">
-                    <label></label>
+                    <label>
+                    </label>
                 </div>
                 <select id="ddlYear">
                 </select>
@@ -41,23 +45,40 @@
         </div>
     </div>
 </div>
-<div id="divGeneralInfo" class="content-grid display-none">
-        <label class="width-140">Live Win Loss</label>
-        <label class="col_3" id="lblWinLoss"></label>
-        <label class="col_3">Margin</label>
-        <label class="col_3" id="lblMargin"></label>
-        <br />
-        <label class="col_3">Live Turnover</label>
-        <label class="col_3" id="lblTurnOver"></label>
-        <label class="col_3">No. Of Matches</label>
-        <label class="col_3" id="lblMatches"></label>
+<div id="divGeneralInfo" class="content-generalInfo display-none">
+    <label class="col_4">@ViewLang.LiveWinLoss:</label>
+    <label class="col_7" id="lblWinLoss">
+    </label>
+    <label class="col_4">@ViewLang.Margin:</label>
+    <label class="col_7" id="lblMargin">
+    </label>
+    <br />
+    <label class="col_4">@ViewLang.LiveTurnover:</label>
+    <label class="col_7" id="lblTurnOver">
+    </label>
+    <label class="col_4">@ViewLang.NoOfMatches:</label>
+    <label class="col_7" id="lblMatches">
+    </label>
 </div>
-<div id="divReportGridContainer" class="content-grid display-none">
-    <div id="divTeamGrid" class="freegrid display-none"></div>
-    <div id="divTraderGrid" class="freegrid display-none"></div>
-    <div id="divTopWinLeagueGrid" class="freegrid display-none"></div>
-    <div id="divTopLoseLeagueGrid" class="freegrid display-none"></div>
-    <div id="divBetTypeGrid" class="freegrid display-none"></div>
+<div class="content-grid display-none">
+    <div id="divTeamGrid" class="freegrid display-none">
+    </div>
+</div>
+<div class="content-grid display-none">
+    <div id="divTraderGrid" class="freegrid display-none">
+    </div>
+</div>
+<div class="content-grid display-none">
+    <div id="divTopWinLeagueGrid" class="freegrid display-none">
+    </div>
+</div>
+<div class="content-grid display-none">
+    <div id="divTopLoseLeagueGrid" class="freegrid display-none">
+    </div>
+</div>
+<div class="content-grid margin-bottom display-none">
+    <div id="divBetTypeGrid" class="freegrid display-none">
+    </div>
 </div>
 @section Foot
 {
@@ -74,7 +95,14 @@
             Top10ByMargin: '@ViewLang.Top10ByMargin',
             Bottom10ByMargin: '@ViewLang.Bottom10ByMargin',
             TraderPerformance: '@ViewLang.TraderPerformance',
+            TeamPerformance: '@ViewLang.TeamPerformance',
+            Top5WinLeague: '@ViewLang.Top5WinLeague',
+            Top5LoseLeague: '@ViewLang.Top5LoseLeague',
+            BetTypePerformance: '@ViewLang.BetTypePerformance',
             NA: '@ViewLang.NA'
         };
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
     </script>
 }

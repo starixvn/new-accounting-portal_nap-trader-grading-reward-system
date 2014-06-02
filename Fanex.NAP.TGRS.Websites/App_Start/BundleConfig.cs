@@ -131,6 +131,13 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
             bundles.Add(new ScriptBundle("~/scripts/performanceSummary").Include(
                 "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/traderRank").Include(
+                "~/Areas/Reports/Resources/PerformanceSummary/trader-rank.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/performanceSummary",
+                "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.less");
+
             bundles.AddAndInclude(
                 "~/styles/performanceDetail",
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail.less");

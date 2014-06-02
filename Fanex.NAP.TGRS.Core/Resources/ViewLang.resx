@@ -382,12 +382,33 @@
     <value>Team History</value>
   </data>
   <data name="Bottom10ByMargin" xml:space="preserve">
-    <value>Bottom 10 By Margin</value>
+    <value>Bottom 10 traders by margin</value>
   </data>
   <data name="Top10ByMargin" xml:space="preserve">
-    <value>Top 10 By Margin</value>
+    <value>Top 10 traders by margin</value>
   </data>
   <data name="NA" xml:space="preserve">
     <value>N/A</value>
+  </data>
+  <data name="Top5LoseLeague" xml:space="preserve">
+    <value>Top  5 losing leagues</value>
+  </data>
+  <data name="Top5WinLeague" xml:space="preserve">
+    <value>Top 5 win leagues</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="TopTraderPerformanceFromTo" xml:space="preserve">
+    <value>Top trader performance from {0} to {1}</value>
+  </data>
+  <data name="RowsToDisplay" xml:space="preserve">
+    <value>Rows to display</value>
+  </data>
+  <data name="BottomTraderPerformanceFromTo" xml:space="preserve">
+    <value>Bottom trader performance from {0} to {1}</value>
   </data>
 </root>

@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport;
     using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
     /// <summary>
     /// Performance summary report controller.
@@ -48,6 +49,17 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets TraderRank page.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>TraderRank view.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public ActionResult TraderRank(GetTopTraderCriteria criteria)
+        {
+            return View(criteria);
+        }
+
+        /// <summary>
         /// Get Summary Info.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -57,6 +69,48 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
             GeneralInfo result = this._summaryReportService.GetGeneralInfo(criteria).First();
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get team history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTeamHistory(GetTeamHistoryCriteria criteria)
+        {
+            TeamHistory result = this._summaryReportService.GetTeamHistory(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get grade history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetGradeHistory(GetGradeHistoryCriteria criteria)
+        {
+            GradeHistory result = this._summaryReportService.GetGradeHistory(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get top, bottom trader by performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderRankData(GetTopTraderCriteria criteria)
+        {
+            IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
 
             return Json(result);
         }

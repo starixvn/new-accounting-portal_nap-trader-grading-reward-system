@@ -61,6 +61,12 @@
   <ItemGroup>
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetGradeHistoryCriteria.cs" />
+    <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
+    <Compile Include="Models\PerformanceSummary\TeamHistoryDetail.cs" />
+    <Compile Include="Models\PerformanceSummary\GradeHistoryDetail.cs" />
+    <Compile Include="Models\PerformanceSummary\GradeHistoryGeneral.cs" />
+    <Compile Include="Models\PerformanceSummary\TeamHistoryGeneral.cs" />
     <Compile Include="Repositories\Implements\SummaryReportRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISummaryReportRepository.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetBetTypePerformanceCriteria.cs" />
@@ -93,6 +99,10 @@
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\GradeHistory.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\GradeHistoryGeneralItem.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\TeamHistory.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\TeamHistoryGeneralItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
@@ -103,7 +113,6 @@
   <ItemGroup>
     <Folder Include="Criteria\PerformanceDetail\" />
     <Folder Include="Models\PerformanceDetail\" />
-    <Folder Include="ViewModels\PerformanceSummary\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

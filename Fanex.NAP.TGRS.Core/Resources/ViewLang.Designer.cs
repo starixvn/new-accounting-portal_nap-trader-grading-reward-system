@@ -187,11 +187,20 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bottom 10 By Margin.
+        ///   Looks up a localized string similar to Bottom 10 traders by margin.
         /// </summary>
         public static string Bottom10ByMargin {
             get {
                 return ResourceManager.GetString("Bottom10ByMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom trader performance from {0} to {1}.
+        /// </summary>
+        public static string BottomTraderPerformanceFromTo {
+            get {
+                return ResourceManager.GetString("BottomTraderPerformanceFromTo", resourceCulture);
             }
         }
         
@@ -309,6 +318,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Forecast {
             get {
                 return ResourceManager.GetString("Forecast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to from.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -619,6 +637,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rows to display.
+        /// </summary>
+        public static string RowsToDisplay {
+            get {
+                return ResourceManager.GetString("RowsToDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
@@ -754,6 +781,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to to.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
         public static string ToDate {
@@ -763,11 +799,20 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Top 10 By Margin.
+        ///   Looks up a localized string similar to Top 10 traders by margin.
         /// </summary>
         public static string Top10ByMargin {
             get {
                 return ResourceManager.GetString("Top10ByMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top  5 losing leagues.
+        /// </summary>
+        public static string Top5LoseLeague {
+            get {
+                return ResourceManager.GetString("Top5LoseLeague", resourceCulture);
             }
         }
         
@@ -781,11 +826,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Top 5 win leagues.
+        /// </summary>
+        public static string Top5WinLeague {
+            get {
+                return ResourceManager.GetString("Top5WinLeague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Top 5 winning leagues.
         /// </summary>
         public static string Top5WinningLeagues {
             get {
                 return ResourceManager.GetString("Top5WinningLeagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top trader performance from {0} to {1}.
+        /// </summary>
+        public static string TopTraderPerformanceFromTo {
+            get {
+                return ResourceManager.GetString("TopTraderPerformanceFromTo", resourceCulture);
             }
         }
         

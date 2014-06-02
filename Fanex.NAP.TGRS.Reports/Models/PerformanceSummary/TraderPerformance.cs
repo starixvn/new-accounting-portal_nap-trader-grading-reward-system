@@ -27,7 +27,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 
         public TraderPerformance(DataRow topTraderRow, DataRow bottomTraderRow)
         {
-            if (topTraderRow["TopMinMargin"] != System.DBNull.Value)
+            if (topTraderRow["TopMinMargin"] != DBNull.Value)
             {
                 this.TopMinMargin = Convert.ToDecimal(topTraderRow["TopMinMargin"]);
             }
@@ -36,7 +36,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
                 this.TopMinMargin = null;
             }
 
-            if (topTraderRow["TopMaxMargin"] != System.DBNull.Value)
+            if (topTraderRow["TopMaxMargin"] != DBNull.Value)
             {
                 this.TopMaxMargin = Convert.ToDecimal(topTraderRow["TopMaxMargin"]);
             }
@@ -45,7 +45,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
                 this.TopMaxMargin = null;
             }
 
-            if (bottomTraderRow["BottomMinMargin"] != System.DBNull.Value)
+            if (bottomTraderRow["BottomMinMargin"] != DBNull.Value)
             {
                 this.BottomMinMargin = Convert.ToDecimal(bottomTraderRow["BottomMinMargin"]);
             }
@@ -54,7 +54,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
                 this.BottomMinMargin = null;
             }
 
-            if (bottomTraderRow["BottomMaxMargin"] != System.DBNull.Value)
+            if (bottomTraderRow["BottomMaxMargin"] != DBNull.Value)
             {
                 this.BottomMaxMargin = Convert.ToDecimal(bottomTraderRow["BottomMaxMargin"]);
             }
