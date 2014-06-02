@@ -1,12 +1,13 @@
-﻿@model Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary.GetTopTraderCriteria
+﻿@using Fanex.NAP.Core.Web;
+@model Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary.GetTopTraderCriteria
 @{
     if (@Model.IsBottom == 1)
     {
-        ViewBag.Title = String.Format(ViewLang.BottomTraderPerformanceFromTo, Model.FromDate.ToShortDateString(), Model.ToDate.ToShortDateString());
+        ViewBag.Title = String.Format(ViewLang.BottomTraderPerformanceFromTo, Model.FromDate.ToShortFormatedDate(), Model.ToDate.ToShortFormatedDate());
     }
     else
     {
-        ViewBag.Title = String.Format(ViewLang.TopTraderPerformanceFromTo, Model.FromDate.ToShortDateString(), Model.ToDate.ToShortDateString());
+        ViewBag.Title = String.Format(ViewLang.TopTraderPerformanceFromTo, Model.FromDate.ToShortFormatedDate(), Model.ToDate.ToShortFormatedDate());
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }

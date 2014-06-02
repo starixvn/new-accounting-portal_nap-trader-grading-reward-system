@@ -9,8 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary
 {
-    using System;
-    using System.Data;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
 
     /// <summary>
@@ -22,7 +21,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary
         {
             this.TeamId = item.TeamId;
             this.TeamName = item.TeamName;
-            this.EffectiveDate = item.EffectiveDate.ToShortDateString();
+            this.EffectiveDate = item.EffectiveDate.ToShortFormatedDate();
         }
 
         public int TeamId { get; set; }
