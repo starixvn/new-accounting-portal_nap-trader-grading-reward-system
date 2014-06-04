@@ -17,30 +17,13 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
     /// </summary>
     public class TeamHistoryDetail
     {
-        public TeamHistoryDetail(DataRow row)
-        {
-            this.CustId = Convert.ToInt32(row["CustId"]);
-            this.TeamId = Convert.ToInt32(row["TeamId"]);
-            this.TeamName = Convert.ToString(row["TeamName"]);
-            this.MatchCount = Convert.ToInt32(row["MatchCount"]);
-            this.BetCount = Convert.ToInt32(row["BetCount"]);
-            this.WinLost = Convert.ToDecimal(row["Winlost"]);
-            this.Turnover = Convert.ToDecimal(row["Turnover"]);
-            if (row["Margin"] != DBNull.Value)
-            {
-                this.Margin = Convert.ToDecimal(row["Margin"]);
-            }
-            else
-            {
-                this.Margin = null;
-            }
-        }
-
         public int CustId { get; set; }
 
         public int TeamId { get; set; }
 
         public string TeamName { get; set; }
+
+        public DateTime TeamEffectiveDate { get; set; }
 
         public int MatchCount { get; set; }
 

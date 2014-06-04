@@ -11,6 +11,7 @@ Namespace.Register("Fanex.TGRS.PerformanceSummary");
 Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     var $this = this;
     var maxYearRange = 3;
+    var maxYearRangeSelect = 1;
     var urls = {
         GetGeneralInfo: common.ResolveRootUrl('Reports/PerformanceSummary/GetGeneralInfo'),
         GetTeamPerformance: common.ResolveRootUrl('Reports/PerformanceSummary/GetTeamPerformance'),
@@ -27,13 +28,13 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         Year: 3
     };
     var domElements = {
-        dpkFromDate: null,
-        dpkToDate: null,
-        dpkFromMonth: null,
-        dpkToMonth: null,
+        divDatePair: null,
+        divFromMonthContainer: null,
+        divFromMonth: null,
+        divToMonthContainer: null,
+        divToMonth: null,
         ddlYear: null,
         btnSearch: null,
-
         divGeneralInfo: null,
         lblWinLoss: null,
         lblMargin: null,
@@ -44,7 +45,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         divTopWinLeagueGrid: null,
         divTopLoseLeagueGrid: null,
         divBetTypeGrid: null,
-        ddlPeriodType: null,
+        ddlPeriodType: null
     };
     var filterParameters = {
         ReportType: null,
@@ -55,21 +56,18 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         FromDate: null,
         ToDate: null
     };
-//    var selectMonthDate = {
-//        FromDate: null,
-//        ToDate: null
-//    };
+
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
-        domElements.dpkFromDate = $('#dpkFromDate');
-        domElements.dpkToDate = $('#dpkToDate');
-        domElements.dpkFromMonth = $('#dpkFromMonth');
-        domElements.dpkToMonth = $('#dpkToMonth');
+        domElements.divDatePair = $('#divDatePair');
+        domElements.divFromMonthContainer = $('#divFromMonthContainer');
+        domElements.divFromMonth = $('#divFromMonth');
+        domElements.divToMonthContainer = $('#divToMonthContainer');
+        domElements.divToMonth = $('#divToMonth');
         domElements.ddlYear = $('#ddlYear');
         domElements.btnSearch = $('#btnSearch');
         domElements.divGeneralInfo = $('#divGeneralInfo');
-
         domElements.divTeamGrid = $('#divTeamGrid');
         domElements.divTraderGrid = $('#divTraderGrid');
         domElements.divTopWinLeagueGrid = $('#divTopWinLeagueGrid');
@@ -112,43 +110,36 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         changeDatePicker(datePeriodType.Date);
         //btnSearch
         domElements.btnSearch.on('click', function () {
-            setTimeout(function () {
-                filterParameters.ReportType = domElements.ddlPeriodType.val()*1;
-                if (filterParameters.ReportType === datePeriodType.Date)
-                {
-                    filterParameters.FromDate = domElements.txtFromDate.val();
-                    filterParameters.ToDate = domElements.txtToDate.val();
-                }
-                else if (filterParameters.ReportType === datePeriodType.Month)
-                {
-                    filterParameters.FromDate = domElements.dpkFromMonth.nexDatePicker('getSingleFromMonth');
-                    filterParameters.ToDate = domElements.dpkToMonth.nexDatePicker('getSingleToMonth');
-                }
-                else
-                {
-                    filterParameters.FromDate = selectYearDate.FromDate;
-                    filterParameters.ToDate = selectYearDate.ToDate;
-                }
-                getAllReports();
-            }, 70);// Delay 70ms for jQuery-UI combo-box to verify its state.
+            filterParameters.ReportType = domElements.ddlPeriodType.val() * 1;
+            if (filterParameters.ReportType === datePeriodType.Date) {
+                filterParameters.FromDate = $("#dpkFromDate").val();
+                filterParameters.ToDate = $("#dpkToDate").val();
+            }
+            else if (filterParameters.ReportType === datePeriodType.Month) {
+                var fromDateVal = domElements.divFromMonth.monPickr("getMonth", 'MMM dd, yyyy');
+                var fromDate = new Date(fromDateVal);
+                var toDateVal = domElements.divToMonth.monPickr("getMonth", 'MMM dd, yyyy');
+                var toDate = new Date(toDateVal);
+                toDate = new Date(toDate.getFullYear(), toDate.getMonth() + 1, 0);
+
+                filterParameters.FromDate = fromDate;
+                filterParameters.ToDate = toDate;
+            }
+            else {
+                filterParameters.FromDate = selectYearDate.FromDate;
+                filterParameters.ToDate = selectYearDate.ToDate;
+            }
+            getAllReports();
         });
 
         domElements.ddlPeriodType.on('change', function () {
-            var selectType = $("option:selected", this).val()*1;
+            var selectType = $("option:selected", this).val() * 1;
             changeDatePicker(selectType);
         });
         domElements.ddlYear.on('change', function () {
-            var selectYear = $("option:selected", this).val()*1;
+            var selectYear = $("option:selected", this).val() * 1;
             selectYearDate.FromDate = new Date(selectYear, 0, 1);
             selectYearDate.ToDate = new Date(selectYear + 1, 0, 1);
-        });
-
-        domElements.txtFromMonth.on('change', function () {
-                alert('month change');
-//            var fromDate = new Date(domElements.txtFromMonth.val());
-//            var toDate = new Date(domElements.txtToMonth.val());
-//            selectMonthDate.FromDate = new Date(selectYear, 0, 1);
-//            selectMonthDate.ToDate = new Date(selectYear + 1, 0, 1);
         });
 
         //event: click on top 10
@@ -176,13 +167,51 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         window.open(url, '_blank');
     };
 
-    var initDatePicker = function() {
+    var changeMaxDate = function () {
+        var dateVal = $("#dpkFromDate").val();
+        //max date is select date + [maxYearRangeSelect] year
+        var maxDate = new Date(dateVal);
+        maxDate.setYear(maxDate.getFullYear() + maxYearRangeSelect);
+        maxDate.setDate(maxDate.getDate() - 1);
+
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        //if maxdate > yesterday, set maxdate = yesterday
+        if (maxDate > yesterday) {
+            maxDate = yesterday;
+        }
+
+        $("#dpkToDate").datepicker('option', 'maxDate', maxDate);
+    };
+
+    var changeMaxMonth = function () {
+        var dateVal = domElements.divFromMonth.monPickr("getMonth", 'MMM dd, yyyy');
+
+        //max date is select date + [maxYearRangeSelect] year
+        var minDate = new Date(dateVal);
+        var maxDate = new Date(dateVal);
+        maxDate.setYear(maxDate.getFullYear() + maxYearRangeSelect);
+        maxDate.setDate(maxDate.getDate() - 1);
+
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        //if maxdate > yesterday, set maxdate = yesterday
+        if (maxDate > yesterday) {
+            maxDate = yesterday;
+        }
+
+        domElements.divToMonth.monPickr('setMinMaxDate', minDate, maxDate);
+    };
+
+    var initDatePicker = function () {
         var toDate = new Date();
         var maxDate = null;
         var defaultFromDate = null;
         var minDate = new Date(toDate.getFullYear() - maxYearRange, 0, 1);
 
-        //Date
+        //Date Pair
         //max date is yesterdate
         maxDate = new Date(toDate);
         maxDate.setDate(maxDate.getDate() - 1);
@@ -190,10 +219,12 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         defaultFromDate = new Date(toDate);
         defaultFromDate.setDate(toDate.getDate() - 14);
 
-        layout.CreateDatepicker(domElements.dpkFromDate, 'txtFromDate',
-        "", 'col_1', defaultFromDate, minDate, maxDate, '');
-        layout.CreateDatepicker(domElements.dpkToDate, 'txtToDate',
-            "", 'col_1', maxDate, minDate, maxDate, '');
+        layout.CreateDatePair(
+            domElements.divDatePair,
+            '', '', null,
+            defaultFromDate,
+            ' - ', 'col_1 align-center', null,
+            maxDate, minDate, maxDate, changeMaxDate, null);
 
         //Month
         //max date: end of last month
@@ -201,10 +232,37 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         //default date: begin of last month
         defaultFromDate = new Date(toDate.getFullYear(), toDate.getMonth() - 1, 1);
 
-        layout.CreateDatepickerMY(domElements.dpkFromMonth, 'txtFromMonth',
-            "", 'col_1', defaultFromDate, minDate, maxDate, '');
-        layout.CreateDatepickerMY(domElements.dpkToMonth, 'txtToMonth',
-            "", 'col_1', maxDate, minDate, maxDate, '');
+        //Date Month
+        domElements.divFromMonth.monPickr({
+            plugInId: '#divFromMonth',
+            today: defaultFromDate,
+            maxDate: maxDate,
+            minDate: minDate,
+            showDateRange: false,
+            fromDayId: 'monthFromDate',
+            toDayId: 'monthToDate',
+            fromDayLabel: ' ',
+            toDayLabel: ' ',
+            afterChangeMonth: changeMaxMonth,
+            log: function (msg) {
+                console.warn(msg);
+            }
+        });
+
+        domElements.divToMonth.monPickr({
+            plugInId: '#divToMonth',
+            today: defaultFromDate,
+            maxDate: maxDate,
+            minDate: minDate,
+            showDateRange: false,
+            fromDayId: 'monthFromDate',
+            toDayId: 'monthToDate',
+            fromDayLabel: ' ',
+            toDayLabel: ' ',
+            log: function (msg) {
+                console.warn(msg);
+            }
+        });
 
         //Year
         //max date: end of last month
@@ -218,48 +276,49 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         }
         domElements.ddlYear.val(maxYear);
 
+        //Begin of current year
         selectYearDate.FromDate = new Date(maxYear, 0, 1);
+        //End of current year (begin of next year - 1)
         selectYearDate.ToDate = new Date(maxYear + 1, 0, 0);
-
-        domElements.txtFromDate = $('#txtFromDate');
-        domElements.txtToDate = $('#txtToDate');
-        domElements.txtFromMonth = $('#txtFromMonth');
-        domElements.txtToMonth = $('#txtToMonth');
     };
 
-    var changeDatePicker = function(type) {
+    var changeDatePicker = function (type) {
         if (type === datePeriodType.Date) {
             domElements.ddlYear.hide();
-            domElements.txtFromMonth.hide();
-            domElements.txtToMonth.hide();
-            domElements.txtFromDate.show();
-            domElements.txtToDate.show();
+            domElements.divFromMonthContainer.hide();
+            domElements.divToMonthContainer.hide();
+            $(".month_lbl_field").hide();
+            $("#dpkFromDate").show();
+            $("#dpkToDate").show();
+            $(".ui_nexdatepicker_lbl_field").show();
         }
-        else if(type === datePeriodType.Month) {
+        else if (type === datePeriodType.Month) {
             domElements.ddlYear.hide();
-            domElements.txtFromMonth.show();
-            domElements.txtToMonth.show();
-            domElements.txtFromDate.hide();
-            domElements.txtToDate.hide();
+            domElements.divFromMonthContainer.show();
+            domElements.divToMonthContainer.show();
+            $(".month_lbl_field").show();
+            $("#dpkFromDate").hide();
+            $("#dpkToDate").hide();
+            $(".ui_nexdatepicker_lbl_field").hide();
         }
-        else if(type === datePeriodType.Year) {
+        else if (type === datePeriodType.Year) {
             domElements.ddlYear.show();
-            domElements.txtFromMonth.hide();
-            domElements.txtToMonth.hide();
-            domElements.txtFromDate.hide();
-            domElements.txtToDate.hide();
+            domElements.divFromMonthContainer.hide();
+            domElements.divToMonthContainer.hide();
+            $(".month_lbl_field").hide();
+            $("#dpkFromDate").hide();
+            $("#dpkToDate").hide();
+            $(".ui_nexdatepicker_lbl_field").hide();
         }
     };
 
-    var renderGeneralInfo = function(data) {
-        domElements.divGeneralInfo.css({display: "block"});
+    var renderGeneralInfo = function (data) {
+        domElements.divGeneralInfo.css({ display: "block" });
         domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
-        if (data.Margin != null)
-        {
+        if (data.Margin != null) {
             domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat));
         }
-        else
-        {
+        else {
             domElements.lblMargin.text(labels.NA);
         }
         domElements.lblTurnOver.text(numeral(data.Turnover).format(common.Formats.DecimalFormat));
@@ -269,13 +328,16 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render team grid.
     var renderTeamGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.Team, Width: 300, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat }],
+                          FormatNumber: common.Formats.DecimalFormat
+                      }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
@@ -291,7 +353,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                     Columns: [{ Name: 'ColTeam', Value: item.TeamName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                              { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
             });
@@ -303,13 +365,16 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderWinLeagueGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat }],
+                          FormatNumber: common.Formats.DecimalFormat
+                      }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
@@ -324,7 +389,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                     Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                              { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
             });
@@ -336,13 +401,16 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderLoseLeagueGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 200, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat }],
+                          FormatNumber: common.Formats.DecimalFormat
+                      }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
@@ -357,7 +425,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                     Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                              { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
             });
@@ -369,11 +437,13 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderTraderGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.TraderPerformance, Width: 200, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.TraderPerformance, Width: 300, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat }],
+                          FormatNumber: common.Formats.DecimalFormat
+                      }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
@@ -381,22 +451,22 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
             }
         };
         var bodyData = [];
-        var top10Col = '<span class="top10-link link">'+ labels.Top10ByMargin +'</span>';
-        var bottom10Col = '<span class="bottom10-link link">'+labels.Bottom10ByMargin+'</span>';
+        var top10Col = '<span class="top10-link link">' + labels.Top10ByMargin + '</span>';
+        var bottom10Col = '<span class="bottom10-link link">' + labels.Bottom10ByMargin + '</span>';
         var row;
         if (data) {
             row = {
-                    Columns: [{ Name: 'ColTraderType', Value: top10Col },
-                              { Name: 'ColMinMargin', Value: data.TopMinMargin|| labels.NA },
-                              { Name: 'ColMaxMargin', Value: data.TopMaxMargin|| labels.NA }]
-                };
+                Columns: [{ Name: 'ColTraderType', Value: top10Col },
+                              { Name: 'ColMinMargin', Value: data.TopMinMargin || labels.NA },
+                              { Name: 'ColMaxMargin', Value: data.TopMaxMargin || labels.NA}]
+            };
             bodyData.push(row);
 
             row = {
-                    Columns: [{ Name: 'ColTraderType', Value: bottom10Col },
-                              { Name: 'ColMinMargin', Value: data.BottomMinMargin|| labels.NA },
-                              { Name: 'ColMaxMargin', Value: data.BottomMaxMargin|| labels.NA }]
-                };
+                Columns: [{ Name: 'ColTraderType', Value: bottom10Col },
+                              { Name: 'ColMinMargin', Value: data.BottomMinMargin || labels.NA },
+                              { Name: 'ColMaxMargin', Value: data.BottomMaxMargin || labels.NA}]
+            };
             bodyData.push(row);
         }
         gridOptions.bodyRows = bodyData;
@@ -406,13 +476,16 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderBetTypeGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.BetType, Width: 300, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat },
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
                       { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                       FormatNumber: common.Formats.DecimalFormat }],
+                          FormatNumber: common.Formats.DecimalFormat
+                      }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
@@ -427,7 +500,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                     Columns: [{ Name: 'ColBetType', Value: item.TypeName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                              { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
             });
@@ -436,7 +509,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.divBetTypeGrid.fanexGrid(gridOptions);
     };
 
-    var getAllReports = function() {
+    var getAllReports = function () {
         getReportByType(urls.GetGeneralInfo, renderGeneralInfo);
         getReportByType(urls.GetTeamPerformance, renderTeamGrid);
         getReportByType(urls.GetTopWinLeague, renderWinLeagueGrid);

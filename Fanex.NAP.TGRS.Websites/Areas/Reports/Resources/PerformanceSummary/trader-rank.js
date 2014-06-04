@@ -24,8 +24,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     };
 
     var popupElements = {
-        divHistoryGrid: null,
-        lblTraderName: null,
+        divHistoryGrid: null
     };
 
     // Cache DOM Elements.
@@ -40,7 +39,6 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     var cachePopupElements = function () {
         popupElements.divHistoryDetailGrid = $("#divHistoryDetailGrid", domElements.divPopup);
         popupElements.divHistoryGrid = $("#divHistoryGrid", domElements.divPopup);
-        popupElements.lblTraderName = $("#lblTraderName", domElements.divPopup);
     };
     function getReportByType(reportUrl, renderFunction) {
         common.DisableInput();
@@ -97,10 +95,10 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Team, Width: 180, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left',
                           FormatNumber: common.Formats.IntegerFormat
                       },
+                      { HeaderText: labels.Team, Width: 180, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
@@ -124,10 +122,10 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                 TeamDateCol = teamDateColFormat.format(item.CustId, item.UserName, item.TeamName);
                 GradeDateCol = gradeDateColFormat.format(item.CustId, item.UserName, item.Grade);
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColTrader', Value: item.UserName },
-                              { Name: 'ColTeam', Value: TeamDateCol },
                               { Name: 'ColGrade', Value: GradeDateCol },
+                              { Name: 'ColTeam', Value: TeamDateCol },
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinloss', Value: item.Winlost },
@@ -158,9 +156,8 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
-                    common.Popup(labels.TeamHistory, form);
+                    common.Popup(labels.TeamHistory + " - " + userName, form);
                     cachePopupElements();
-                    popupElements.lblTraderName.text(userName);
                     renderTeamHistoryGrid(result);
                 }
             },
@@ -191,9 +188,8 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
-                    common.Popup(labels.GradeHistory, form);
+                    common.Popup(labels.GradeHistory + " - " + userName, form);
                     cachePopupElements();
-                    popupElements.lblTraderName.text(userName);
                     renderGradeHistoryGrid(result);
                 }
             },
@@ -207,37 +203,11 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     };
 
     var renderTeamHistoryGrid = function (data) {
-        //general
+        //detail
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NewTeam, Width: 130, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
-                        { HeaderText: labels.EffectiveDate, Width: 100, Name: 'ColEffectiveDate', HeaderAlign: 'center', CellAlign: 'center'}],
-            showNumberColumn: true,
-            gridExpandHeight: 150,
-            showTitle: true,
-            titleInfo: {
-                text: labels.TeamHistory
-            }
-        };
-        var bodyData = [];
-        var row;
-        if (data.TeamHistoryGeneral && data.TeamHistoryGeneral.length > 0) {
-            $.each(data.TeamHistoryGeneral, function (index, item) {
-                row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
-                                { Name: 'ColTeamName', Value: item.TeamName },
-                                { Name: 'ColEffectiveDate', Value: item.EffectiveDate}]
-                };
-                bodyData.push(row);
-            });
-        }
-        gridOptions.bodyRows = bodyData;
-        popupElements.divHistoryGrid.fanexGrid(gridOptions);
-
-        //detail
-        gridOptions = {
-            columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.Team, Width: 130, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
+                        { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColTeamEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.NoOfMatches, Width: 130, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
                         { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
@@ -252,13 +222,14 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             gridExpandHeight: 150
         };
 
-        bodyData = [];
-        row = null;
-        if (data.TeamHistoryDetail && data.TeamHistoryDetail.length > 0) {
-            $.each(data.TeamHistoryDetail, function (index, item) {
+        var bodyData = [];
+        var row = null;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
                                 { Name: 'ColTeamName', Value: item.TeamName },
+                                { Name: 'ColTeamEffectiveDate', Value: item.TeamEffectiveDate },
                                 { Name: 'ColNoOfMatches', Value: item.MatchCount },
                                 { Name: 'ColTurnover', Value: item.Turnover },
                                 { Name: 'ColWinloss', Value: item.WinLost },
@@ -273,37 +244,11 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     };
 
     var renderGradeHistoryGrid = function (data) {
-        //general
+        //detail
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NewGrade, Width: 130, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right' },
-                        { HeaderText: labels.EffectiveDate, Width: 100, Name: 'ColEffectiveDate', HeaderAlign: 'center', CellAlign: 'center'}],
-            showNumberColumn: true,
-            gridExpandHeight: 150,
-            showTitle: true,
-            titleInfo: {
-                text: labels.GradeHistory
-            }
-        };
-        var bodyData = [];
-        var row;
-        if (data.GradeHistoryGeneral && data.GradeHistoryGeneral.length > 0) {
-            $.each(data.GradeHistoryGeneral, function (index, item) {
-                row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
-                                { Name: 'ColGrade', Value: item.Grade },
-                                { Name: 'ColEffectiveDate', Value: item.EffectiveDate}]
-                };
-                bodyData.push(row);
-            });
-        }
-        gridOptions.bodyRows = bodyData;
-        popupElements.divHistoryGrid.fanexGrid(gridOptions);
-
-        //detail
-        gridOptions = {
-            columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.Grade, Width: 130, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right' },
+                        { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColGradeEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.NoOfMatches, Width: 130, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
                         { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
@@ -318,13 +263,14 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             gridExpandHeight: 150
         };
 
-        bodyData = [];
-        row = null;
-        if (data.GradeHistoryDetail && data.GradeHistoryDetail.length > 0) {
-            $.each(data.GradeHistoryDetail, function (index, item) {
+        var bodyData = [];
+        var row = null;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index },
                                 { Name: 'ColGrade', Value: item.Grade },
+                                { Name: 'ColGradeEffectiveDate', Value: item.GradeEffectiveDate },
                                 { Name: 'ColNoOfMatches', Value: item.MatchCount },
                                 { Name: 'ColTurnover', Value: item.Turnover },
                                 { Name: 'ColWinloss', Value: item.WinLost },

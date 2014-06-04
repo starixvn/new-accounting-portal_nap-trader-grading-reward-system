@@ -10,11 +10,10 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
-    using Fanex.NAP.TGRS.Reports.Repositories.Implements;
-    using Fanex.NAP.TGRS.Reports.Repositories.Interface;
     using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
@@ -23,18 +22,6 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
     /// </summary>
     public class SummaryReportService : TGRSBaseService, ISummaryReportService
     {
-        private readonly ISummaryReportRepository _summaryReportRepository;
-
-        public SummaryReportService() :
-            this(null)
-        {
-        }
-
-        public SummaryReportService(ISummaryReportRepository summaryReportRepository)
-        {
-            this._summaryReportRepository = summaryReportRepository ?? new SummaryReportRepository();
-        }
-
         public IEnumerable<GeneralInfo> GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
             IEnumerable<GeneralInfo> result = null;
@@ -85,9 +72,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
         /// </summary>
         /// <param name="criteria">Criteria that used to query trader performance.</param>
         /// <returns>Trader performance model.</returns>
-        public TraderPerformance GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        public IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            TraderPerformance result = this._summaryReportRepository.GetTraderPerformance(criteria);
+            IEnumerable<TraderPerformance> result = this.GetData<TraderPerformance>(criteria);
 
             return result;
         }
@@ -101,16 +88,38 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             return result;
         }
 
-        public GradeHistory GetGradeHistory(GetGradeHistoryCriteria criteria)
+        /// <summary>
+        /// Get grade history.
+        /// </summary>
+        /// <param name="criteria">Criteria that used to query data.</param>
+        /// <returns>List of Grade History Detail Item.</returns>
+        public IEnumerable<GradeHistoryDetailItem> GetGradeHistory(GetGradeHistoryCriteria criteria)
         {
-            GradeHistory result = this._summaryReportRepository.GetGradeHistory(criteria);
+            IEnumerable<GradeHistoryDetail> rawData = this.GetData<GradeHistoryDetail>(criteria);
+            IEnumerable<GradeHistoryDetailItem> result = null;
+
+            if (rawData != null && rawData.Any())
+            {
+                result = rawData.Select(obj => new GradeHistoryDetailItem(obj));
+            }
 
             return result;
         }
 
-        public TeamHistory GetTeamHistory(GetTeamHistoryCriteria criteria)
+        /// <summary>
+        /// Get team history.
+        /// </summary>
+        /// <param name="criteria">Criteria that used to query data.</param>
+        /// <returns>List of Team History Detail Item.</returns>
+        public IEnumerable<TeamHistoryDetailItem> GetTeamHistory(GetTeamHistoryCriteria criteria)
         {
-            TeamHistory result = this._summaryReportRepository.GetTeamHistory(criteria);
+            IEnumerable<TeamHistoryDetail> rawData = this.GetData<TeamHistoryDetail>(criteria);
+            IEnumerable<TeamHistoryDetailItem> result = null;
+
+            if (rawData != null && rawData.Any())
+            {
+                result = rawData.Select(obj => new TeamHistoryDetailItem(obj));
+            }
 
             return result;
         }

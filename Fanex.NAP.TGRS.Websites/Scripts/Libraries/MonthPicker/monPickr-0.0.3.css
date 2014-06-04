@@ -19,8 +19,8 @@
     position: relative;
 }
 
-.monpickr-arrows input.monpickr-input {
-    height: 1.1em;
+.monpickr-arrows input.monpickr-input{
+    height: 22px;
     margin: 0 2px 0 20px;
     padding: 2px;
     text-align: center;
@@ -109,7 +109,7 @@
 }
 
 .daypickr.monpickr-arrows input.monpickr-input {
-    height: 11px;
+    height: 22px;
     margin: 0 2px 0 0;
     padding: 2px;
     width: 25px;

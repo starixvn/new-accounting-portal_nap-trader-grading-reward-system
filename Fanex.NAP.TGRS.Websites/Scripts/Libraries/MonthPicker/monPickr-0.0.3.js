@@ -54,7 +54,8 @@
 
         cacheData = {
             lastFromDate: null,
-            lastToDate: null
+            lastToDate: null,
+            plugIn: null
         },
 
     /*
@@ -124,7 +125,12 @@
             data.year = year;
             data.month = month;
         },
-
+        _setMaxDate = function (data, maxDate) {
+            data.maxDate = maxDate;
+        },
+        _setMinDate = function (data, minDate) {
+            data.minDate = minDate;
+        },
         _setMonthLabel = function (data) {
             data.lblSelectedMonth.val(new Date(data.year, data.month, 1).toStringFormat(data.monthFormat));
         },
@@ -245,6 +251,382 @@
         _hideDropDown = function (data, target) {
             target.dropDown.slideUp(data.showDropDownSpeed);
         },
+    _reRender = function (data) {
+        if (!data) {
+            return;
+        }
+        _hideDropDown(data, data);
+        //#region Month Picker
+        var $this = cacheData.plugIn;
+        $this.html('');
+        $this.addClass('monpickr monpickr-arrows ui-widget ui-widget-header ui-helper-clearfix ui-corner-all').width(data.width + 8);
+        data.btnPrev = $('<a href="javascript:;" class="prev monpickr-prev ui-corner-all" title="' + data.prevText + '"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a>');
+        data.btnNext = $('<a href="javascript:;" class="next monpickr-next ui-corner-all" title="' + data.nextText + '"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>');
+        data.lblSelectedMonth = $('<input type="text" class="monpickr-selected-month monpickr-input ui-widget-content" />').width(data.width + 2);
+        _setMonthLabel(data);
+        $this.append(data.btnPrev, data.lblSelectedMonth, data.btnNext);
+
+        $this.wrap('<div class="monpickr-wrap" style="z-index: ' + data.zIndex + '" />');
+        data.wrap = $this.parents('.monpickr-wrap');
+        data.wrap.wrap('<div class="monpickr-wrap-parent" style="position: relative" />')
+                    .css({ 'position': 'absolute' }).parent().width(data.wrap.outerWidth()).height(data.wrap.outerHeight());
+
+        data.dropDown = $('<div class="monpickr-dropdown ui-monpickr ui-widget ui-helper-clearfix ui-widget-content ui-corner-all" />')
+                    .width(data.width).css({ maxHeight: data.dropDownMaxHeight });
+
+        var currentYear = data.minDate.getFullYear(),
+                    currentMonth = data.minDate.getMonth(),
+                    minYear = data.minDate.getFullYear(),
+                    minMonth = data.minDate.getMonth(),
+                    maxYear = data.maxDate.getFullYear(),
+                    maxMonth = data.maxDate.getMonth(),
+                    dropDownInner, temp;
+
+        dropDownInner = '<ul class="ui-widget-content">';
+
+        if (data.sortDesc) {
+
+            currentYear = data.maxDate.getFullYear();
+            currentMonth = data.maxDate.getMonth();
+
+            while (currentYear > minYear || (currentYear == minYear && currentMonth >= minMonth)) {
+                temp = currentYear == data.year ? 'selected' : '';
+                temp += data.expandYearOnhover ? ' hover' : '';
+
+                dropDownInner +=
+                        '<li class="year ui-corner-all ' + temp + '">' +
+                            '<a year="' + currentYear + '" class="' + temp + '" href="javascript:;">' +
+                                currentYear +
+                            '</a>' +
+                        '</li>';
+
+                if (currentYear == data.year) {
+                    dropDownInner += '<li class="month-wrap ui-corner-all selected" year="' + currentYear + '" style="display: list-item"><ul>';
+                } else {
+                    dropDownInner += '<li class="month-wrap ui-corner-all" year="' + currentYear + '"><ul>';
+                }
+
+                while ((currentYear > minYear || (currentYear == minYear && currentMonth >= minMonth)) && currentMonth >= 0) {
+                    var isThisMonthSelected = currentYear == data.year && currentMonth == data.month,
+                                liClass = isThisMonthSelected ? 'ui-state-active' : '',
+                                aClass = currentYear == data.year && currentMonth == data.month ? 'class="selected"' : '';
+
+                    dropDownInner +=
+                            '<li class="ui-corner-all ' + liClass + '">' +
+                                '<a month="' + (currentMonth + 1) + '" ' + aClass + ' href="javascript:;">' +
+                                    new Date(currentYear, currentMonth).toStringFormat('MMMM') + '</a>' +
+                            '</li>';
+
+                    currentMonth--;
+                }
+
+                dropDownInner += '</ul></li>';
+
+                currentYear--;
+                currentMonth = 11;
+            }
+
+        } else {
+
+            while (currentYear < maxYear || (currentYear == maxYear && currentMonth <= maxMonth)) {
+                temp = currentYear == data.year ? 'selected' : '';
+                temp += data.expandYearOnhover ? ' hover' : '';
+
+                dropDownInner +=
+                        '<li class="year ui-corner-all ' + temp + '">' +
+                            '<a year="' + currentYear + '" class="' + temp + '" href="javascript:;">' +
+                                currentYear +
+                            '</a>' +
+                        '</li>';
+
+                if (currentYear == data.year) {
+                    dropDownInner += '<li class="month-wrap ui-corner-all selected" year="' + currentYear + '" style="display: list-item"><ul>';
+                } else {
+                    dropDownInner += '<li class="month-wrap ui-corner-all" year="' + currentYear + '"><ul>';
+                }
+
+                while ((currentYear < maxYear || (currentYear == maxYear && currentMonth <= maxMonth)) && currentMonth < 12) {
+                    var isThisMonthSelected = currentYear == data.year && currentMonth == data.month,
+                                liClass = isThisMonthSelected ? 'ui-state-active' : '',
+                                aClass = currentYear == data.year && currentMonth == data.month ? 'class="selected"' : '';
+
+                    dropDownInner +=
+                            '<li class="ui-corner-all ' + liClass + '">' +
+                                '<a month="' + (currentMonth + 1) + '" ' + aClass + ' href="javascript:;">' +
+                                    new Date(currentYear, currentMonth).toStringFormat('MMMM') + '</a>' +
+                            '<li>';
+
+                    currentMonth++;
+                }
+
+                dropDownInner += '</ul></li>';
+
+                currentYear++;
+                currentMonth = 0;
+            }
+
+        }
+
+        dropDownInner += '</ul>';
+
+        data.dropDown.append(dropDownInner);
+        $this.after(data.dropDown);
+
+        //_checkReachBound(data, data.year, data.month);
+
+        //#region Events
+
+        // Toggle the dropdown when users click on selected month label
+        data.wrap.on('click.monpickr', function (e) {
+            if ($(e.target).hasClass('monpickr-selected-month')) {
+                if (data.dropDown.is(':hidden')) {
+                    _showDropDown(data, data);
+                } else {
+                    _hideDropDown(data, data);
+                }
+            }
+
+            try {
+                $('div.ui-multiselect-options').trigger('close', [true, true, 'html']);
+            }
+            catch (e) { };
+
+            e.stopPropagation();
+        });
+
+        // Collapse all dropdowns when users click outside the picker
+        $('html').on('click.monpickr', function () {
+            _hideDropDown(data, data);
+        });
+
+        // Toggle a dropdown when users click/hover on its "the year" link
+        var expectedEvent = data.expandYearOnhover ? 'mouseenter' : 'click';
+        data.dropDown.on(expectedEvent + '.monpickr', '.year a', function () {
+            var $this = $(this), year = $this.attr('year'),
+                        thisIsNotSelected = $this.hasClass('selected') == false;
+
+            switch (expectedEvent) {
+                case 'mouseenter':
+                    {
+                        if (thisIsNotSelected) {
+                            _hideCurrentYear(data);
+                            _showSelectedYear(data, year); // expand this
+                        }
+                    } break;
+                case 'click':
+                    {
+                        _hideCurrentYear(data);
+
+                        if (thisIsNotSelected) {
+                            // We have to expand "the year" which was clicked.
+                            // Else means this is the current year itself --> we don't need to expand it
+                            _showSelectedYear(data, year);
+                        }
+
+                        data.dropDown.find('.year a.selected:first').parent().addClass('selected');
+                    } break;
+            }
+        });
+
+        // Change current month when users select a month
+        data.dropDown.on('click.monpickr', '.month-wrap a[month]', function () {
+            var $this = $(this);
+            _selectMonth(data, $this.parents('.month-wrap').attr('year'), $this.attr('month') - 1);
+            _hideDropDown(data, data);
+        });
+
+        // hover styles for list elements
+        data.dropDown.on('hover.monpickr', '.year', function () { $(this).toggleClass('ui-state-hover'); });
+        data.dropDown.on('hover.monpickr', '.month-wrap li', function () { $(this).toggleClass('ui-state-hover'); });
+
+        var disableInput = function (e) {
+            switch (e.keyCode) {
+                case 9: break; //tab
+                default: return false;
+            }
+        };
+
+        // disable any key stroke but tab
+        data.lblSelectedMonth.on('keydown.monpickr', disableInput);
+
+        // Move to next month when users click next button
+        data.btnNext
+                    .on('hover.monpickr', function () { $(this).toggleClass('ui-state-hover'); })
+                    .on('click.monpickr', function () {
+                        var nextMonth = data.month + 1,
+                            year = data.year;
+
+                        if (nextMonth > 11) {
+                            nextMonth = 0;
+                            year++;
+                        }
+
+                        if (_validateMonth(data.minDate, data.maxDate, year, nextMonth)) {
+                            _selectMonth(data, year, nextMonth);
+                        }
+                    });
+
+        // Move to previous month when users click prev button
+        data.btnPrev
+                    .on('hover.monpickr', function () { $(this).toggleClass('ui-state-hover'); })
+                    .on('click.monpickr', function () {
+                        var prevMonth = data.month - 1,
+                            year = data.year;
+
+                        if (prevMonth < 0) {
+                            prevMonth = 11;
+                            year--;
+                        }
+
+                        if (_validateMonth(data.minDate, data.maxDate, year, prevMonth)) {
+                            _selectMonth(data, year, prevMonth);
+                        }
+                    });
+
+        //#endregion Events
+
+        //#endregion Month Picker
+
+        //#region Day Picker
+
+        if (data.showDateRange) { // Renders date range component (fromDate & toDate)
+            var renderDayPicker = function (data, dayPickr, dayPickrId, selectedDay) {
+
+                dayPickr = $('#' + dayPickrId);
+
+                if (dayPickr.length > 0) {
+                    dayPickr.addClass('daypickr monpickr-arrows ui-widget ui-widget-header ui-helper-clearfix ui-corner-all')
+                                .append('<input type="text" class="daypickr-selected-day monpickr-input ui-widget-content" value="' + selectedDay + '" />')
+                                .append('<a class="monpickr-down ui-corner-all" href="javascript:;"><span class="ui-icon ui-icon-circle-triangle-s"></span></a>')
+                                .wrap('<div class="daypickr-wrap" style="z-index: ' + data.zIndex + '" />');
+
+                    dayPickr.wrap = dayPickr.parents('.daypickr-wrap')
+                                .wrap('<div class="daypickr-wrap-parent" style="position: relative" />')
+                                .css({ 'position': 'absolute' });
+                    dayPickr.wrap.parent().width(dayPickr.wrap.outerWidth()).height(dayPickr.wrap.outerHeight());
+                    dayPickr.dropDown = $('<div class="daypickr-dropdown ui-monpickr ui-widget ui-helper-clearfix ui-widget-content ui-corner-all" />');
+
+                    var currentDay = 1,
+                                minDay = _getMinDayInMonth(data.minDate, data.year, data.month),
+                                maxDay = _getMaxDayInMonth(data.maxDate, data.year, data.month),
+                                dayPickrDropDown;
+
+                    dayPickrDropDown = '<ul class="ui-widget-content">';
+
+                    while (currentDay <= 31) {
+                        temp = currentDay < minDay || currentDay > maxDay ? 'style="display: none"' : '';
+                        dayPickrDropDown += '<li class="ui-corner-all" ' + temp + '><a href="javascript:;">' + currentDay + '</a></li>';
+                        currentDay++;
+                    }
+
+                    dayPickrDropDown += '</ul>';
+
+                    dayPickr.dropDown.append(dayPickrDropDown);
+                    dayPickr.after(dayPickr.dropDown);
+
+                    return dayPickr;
+                } else {
+                    logger.log('Oops! fromDayId (' + data.fromDayId + ') or toDayId (' + data.toDayId + ') does not exist');
+                }
+            };
+
+            if (data.autoGenerateDateRange) {
+                var token = (new Date()).getTime();
+
+                data.fromDayId = 'fromDay' + token;
+                data.toDayId = 'toDay' + token;
+
+                data.target.parents('.monpickr-wrap-parent').css({ float: 'left' }).wrap('<div class="monpickr-super-wrapper" />')
+                            .after('<div id="' + data.toDayId + '" />')
+                            .after('<div class="monpickr-label">' + data.toDayLabel + '</div>')
+                            .after('<div id="' + data.fromDayId + '" />')
+                            .after('<div class="monpickr-label">' + data.fromDayLabel + '</div>');
+            }
+
+            if (data.fromDayId && data.toDayId) {
+
+                data.ddlFromDate = renderDayPicker(data, data.ddlFromDate, data.fromDayId, data.fromDay);
+                data.ddlToDate = renderDayPicker(data, data.ddlToDate, data.toDayId, data.toDay);
+
+                if (data.autoGenerateDateRange) {
+                    data.target.parents('.monpickr-super-wrapper:first').find('.daypickr-wrap-parent').css({ float: 'left' });
+                }
+
+                //#region Events
+
+                var dayExpectedEvent = data.expandDayOnhover ? 'hover' : 'click',
+                        toggleDayPickr = function (e) {
+                            if (data.isClosingDropDown) {
+                                data.isClosingDropDown = false;
+                                return;
+                            }
+
+                            var target = e.data.target;
+
+                            if (target.dropDown.is(':hidden')) {
+                                _showDropDown(data, target);
+                            } else {
+                                _hideDropDown(data, target);
+                            }
+
+                            try {
+                                $('div.ui-multiselect-options').trigger('close', [true, true, 'html']);
+                            }
+                            catch (e) { };
+
+                            e.stopPropagation();
+                        };
+
+                // Toggle the day picker dropdown when users click/hover on selected day label
+                data.ddlFromDate.wrap.on(dayExpectedEvent, { target: data.ddlFromDate }, toggleDayPickr);
+                data.ddlToDate.wrap.on(dayExpectedEvent, { target: data.ddlToDate }, toggleDayPickr);
+
+                if (!data.expandDayOnhover) {
+                    // Collapse all day picker dropdowns when users click outside the picker
+                    $('html').on('click.monpickr', function () {
+                        _hideDropDown(data, data.ddlFromDate);
+                        _hideDropDown(data, data.ddlToDate);
+                    });
+                }
+
+                var changeCurrentDay = function (e) {
+                    var $this = $(this),
+                            selectedDay = $this.find('a').html();
+
+                    // prevent conflict when closing day dropdown
+                    if (data.expandDayOnhover) data.isClosingDropDown = true;
+
+                    $this.parents('.daypickr-dropdown').hide();
+                    _selectDay(data, e.data.target, selectedDay, e.data.isFromDay);
+
+                    try {
+                        $('div.ui-multiselect-options').trigger('close', [true, true, 'html']);
+                    }
+                    catch (e) { };
+
+                    e.stopPropagation();
+                };
+
+                // Change current fromDay/toDay when users select a day
+                data.ddlFromDate.dropDown
+                        .on('hover.monpickr', 'li', function () { $(this).toggleClass('ui-state-hover'); })
+                        .on('click.monpickr', 'li', { target: data.ddlFromDate, isFromDay: true }, changeCurrentDay);
+                data.ddlToDate.dropDown
+                        .on('hover.monpickr', 'li', function () { $(this).toggleClass('ui-state-hover'); })
+                        .on('click.monpickr', 'li', { target: data.ddlToDate, isFromDay: false }, changeCurrentDay);
+
+                // hover styles for list elements
+                data.ddlFromDate.on('hover.monpickr', '.monpickr-down', function () { $(this).toggleClass('ui-state-hover'); });
+                data.ddlToDate.on('hover.monpickr', '.monpickr-down', function () { $(this).toggleClass('ui-state-hover'); });
+
+                // disable any key stroke but tab
+                data.ddlFromDate.find('input').on('keydown.monpickr', disableInput);
+                data.ddlToDate.find('input').on('keydown.monpickr', disableInput);
+
+                //#endregion Events
+            }
+        }
+    },
 
     _methods = {
         init: function (options) {
@@ -256,7 +638,7 @@
             }
 
             if (options.today && !isValidDate(options.today, true)) return;
-
+            cacheData.plugIn = $(options.plugInId);
             today = options.today ? new Date(options.today) : new Date();
             thisYear = today.getFullYear();
             thisMonth = today.getMonth();
@@ -300,7 +682,7 @@
                 monthFormat: 'MMM yyyy',
                 nextText: 'Next Month',
                 prevText: 'Previous Month',
-                width: 144,
+                width: 118,
                 dropDownMaxHeight: 400,
                 zIndex: 9999,
 
@@ -434,7 +816,7 @@
                         afterChangeDay: settings.afterChangeDay
                     });
 
-                    data = $this.data('monPickr')
+                    data = $this.data('monPickr');
                 }
 
                 //#region INIT DOM ELEMENTS
@@ -868,6 +1250,20 @@
             }
 
             return data.fromDate;
+        },
+
+        setMinMaxDate: function (minDate, maxDate) {
+            var data = _getData(this);
+            if (!data) return;
+            if (isValidDate(maxDate)) {
+                _setMaxDate(data, maxDate);
+                _setMinDate(data, minDate);
+                _reRender(data);
+                _selectMonth(data, maxDate.getFullYear(), maxDate.getMonth());
+            }
+            else {
+                logger.log('Oops! Can\'t set max date because of invalid input (' + maxDate.toString() + ')');
+            }
         },
 
         // Returns the current toDate or null if the invoker's data does not exist

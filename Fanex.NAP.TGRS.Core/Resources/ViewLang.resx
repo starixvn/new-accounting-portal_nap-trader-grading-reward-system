@@ -411,4 +411,10 @@
   <data name="BottomTraderPerformanceFromTo" xml:space="preserve">
     <value>Bottom trader performance from {0} to {1}</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
 </root>

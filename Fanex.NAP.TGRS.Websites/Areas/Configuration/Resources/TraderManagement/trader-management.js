@@ -88,6 +88,7 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.txtUserName = $('#txtUserName');
         domElements.txtEmployeeId = $('#txtEmployeeId');
         domElements.divTraderFilterForm = $('#divTraderFilterForm');
+
         $('#divHiddenForm').empty();
     };
 
@@ -505,7 +506,7 @@ Fanex.TGRS.TraderManagement = function () {
         domElements.btnSearch.on('click', function () {
             // Delay 70ms for jQuery-UI combo-box to verify its state.
             setTimeout(function () {
-                if (validator.CountErrors(domElements.divTraderFilterForm) === 0) {
+                if (validator.ValidateForm(domElements.divTraderFilterForm, 'w') === 0) {
                     filterParameters.teamId = domElements.ddlTeam.val();
                     filterParameters.grade = domElements.ddlGrade.val();
                     filterParameters.username = domElements.txtUserName.val();

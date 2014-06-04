@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamHistory(GetTeamHistoryCriteria criteria)
         {
-            TeamHistory result = this._summaryReportService.GetTeamHistory(criteria);
+            IEnumerable<TeamHistoryDetailItem> result = this._summaryReportService.GetTeamHistory(criteria);
 
             return Json(result);
         }
@@ -96,7 +96,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetGradeHistory(GetGradeHistoryCriteria criteria)
         {
-            GradeHistory result = this._summaryReportService.GetGradeHistory(criteria);
+            IEnumerable<GradeHistoryDetailItem> result = this._summaryReportService.GetGradeHistory(criteria);
 
             return Json(result);
         }
@@ -138,7 +138,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            TraderPerformance result = this._summaryReportService.GetTraderPerformance(criteria);
+            TraderPerformance result = this._summaryReportService.GetTraderPerformance(criteria).First();
 
             return Json(result);
         }

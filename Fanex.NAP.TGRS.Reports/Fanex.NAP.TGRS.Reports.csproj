@@ -65,10 +65,6 @@
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
     <Compile Include="Models\PerformanceSummary\TeamHistoryDetail.cs" />
     <Compile Include="Models\PerformanceSummary\GradeHistoryDetail.cs" />
-    <Compile Include="Models\PerformanceSummary\GradeHistoryGeneral.cs" />
-    <Compile Include="Models\PerformanceSummary\TeamHistoryGeneral.cs" />
-    <Compile Include="Repositories\Implements\SummaryReportRepository.cs" />
-    <Compile Include="Repositories\Interfaces\ISummaryReportRepository.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTopWinLeagueCriteria.cs" />
@@ -99,10 +95,8 @@
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceList.cs" />
-    <Compile Include="ViewModels\PerformanceSummary\GradeHistory.cs" />
-    <Compile Include="ViewModels\PerformanceSummary\GradeHistoryGeneralItem.cs" />
-    <Compile Include="ViewModels\PerformanceSummary\TeamHistory.cs" />
-    <Compile Include="ViewModels\PerformanceSummary\TeamHistoryGeneralItem.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
@@ -113,6 +107,8 @@
   <ItemGroup>
     <Folder Include="Criteria\PerformanceDetail\" />
     <Folder Include="Models\PerformanceDetail\" />
+    <Folder Include="Repositories\Implements\" />
+    <Folder Include="Repositories\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

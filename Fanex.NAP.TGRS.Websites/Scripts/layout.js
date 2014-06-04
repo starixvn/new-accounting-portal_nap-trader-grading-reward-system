@@ -156,6 +156,79 @@ Fanex.TGRS.Layout = function () {
 
         return $obj.nexDatePicker(configObj);
     };
+
+    // Create date range picker.
+    $this.CreateDatePair = function (
+                                $obj,
+                                fromLabel,
+                                fromLabelCss,
+                                fromCss,
+                                defaultFromDate,
+                                toLabel,
+                                toLabelCss,
+                                toCss,
+                                defaultToDate,
+                                minDate,
+                                maxDate,
+                                onFromDateChangeHandler,
+                                onToDateChangeHandler) {
+        var configObj = null;
+
+        if (fromLabelCss)
+        {
+            fromLabelCss = 'lbl-field ' + fromLabelCss;
+        }
+        if (toLabelCss) {
+            toLabelCss = 'lbl-field ' + toLabelCss;
+        }
+        toLabelCss = toLabelCss || 'col_3';
+        fromCss = fromCss || 'col_6 width-auto';
+        toCss = toCss || 'col_6 width-auto';
+        onFromDateChangeHandler = onFromDateChangeHandler || function () { };
+        onToDateChangeHandler = onToDateChangeHandler || function () { };
+
+        configObj = {
+            nexDatePickerType: 'daterange',
+            firstDatePicker: {
+                Id: 'dpkFromDate',
+                Label: fromLabel,
+                InitDate: defaultFromDate,
+                LabelCss: fromLabelCss,
+                TextboxCss: 'edit-field' + ' ' + fromCss
+            },
+            secondDatePicker: {
+                Id: 'dpkToDate',
+                Label: toLabel,
+                InitDate: defaultToDate,
+                LabelCss: toLabelCss,
+                TextboxCss: 'edit-field' + ' ' + toCss
+            },
+            datePickerFormat: {
+                dateFormat: common.Formats.DateFormat,
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true
+            },
+            onSelectDatePicker: function (selectedDate, control) {
+                if (control.attr('id') === 'dpkFromDate') {
+                    onFromDateChangeHandler(selectedDate, control);
+                } else {
+                    onToDateChangeHandler(selectedDate, control);
+                }
+            }
+        };
+
+        if (minDate) {
+            configObj.datePickerFormat.minDate = new Date(minDate);
+        }
+
+        if (maxDate) {
+            configObj.datePickerFormat.maxDate = new Date(maxDate);
+        }
+
+        return $obj.nexDatePicker(configObj);
+    };
 };
 
 var layout = new Fanex.TGRS.Layout();

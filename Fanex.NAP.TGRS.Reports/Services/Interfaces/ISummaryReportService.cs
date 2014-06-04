@@ -26,12 +26,12 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport
 
         IEnumerable<League> GetTopWinLeague(GetTopWinLeagueCriteria criteria);
 
-        TraderPerformance GetTraderPerformance(GetTraderPerformanceCriteria criteria);
+        IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria);
 
         IEnumerable<BetTypePerformance> GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
 
-        GradeHistory GetGradeHistory(GetGradeHistoryCriteria criteria);
+        IEnumerable<GradeHistoryDetailItem> GetGradeHistory(GetGradeHistoryCriteria criteria);
 
-        TeamHistory GetTeamHistory(GetTeamHistoryCriteria criteria);
+        IEnumerable<TeamHistoryDetailItem> GetTeamHistory(GetTeamHistoryCriteria criteria);
     }
 }

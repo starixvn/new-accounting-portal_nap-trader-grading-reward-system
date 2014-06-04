@@ -61,6 +61,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Bet Types.
         /// </summary>
         public static string AllBetTypes {
@@ -525,6 +534,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string MinimumWinLoss {
             get {
                 return ResourceManager.GetString("MinimumWinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         

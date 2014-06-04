@@ -16,12 +16,6 @@
         getSingleDate: function () {
             return $(this).parent().find(".ui_nexdatepicker_fromdate").val();
         },
-        getSingleFromMonth: function () {
-            return $(this).parent().find("#txtFromMonth").val();
-        },
-        getSingleToMonth: function () {
-            return $(this).parent().find("#txtToMonth").val();
-        },
         getDateRange: function () {
             var $this = $(this).parent();
             var dateRange =
