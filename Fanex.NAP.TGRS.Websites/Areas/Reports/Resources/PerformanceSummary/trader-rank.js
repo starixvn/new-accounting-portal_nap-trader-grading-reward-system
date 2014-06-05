@@ -90,8 +90,11 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
 
     // Render rank grid.
     var renderRankGrid = function (data) {
-        var teamDateColFormat = '<span class="view-teamHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
-        var gradeDateColFormat = '<span class="view-gradeHistory-link link" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var teamDateColFormatIcon = '<span class="width-team-icon">{0}';
+        teamDateColFormatIcon += '</span><span class="view-teamHistory-link detail-icon" data-cust-id="{1}" data-username="{2}"></span>';
+        var colFormatNoIcon = '<span>{0}</span>';
+        var gradeDateColFormatIcon = '<span class="width-grade-icon">{0}';
+        gradeDateColFormatIcon += '</span><span class="view-gradeHistory-link detail-icon" data-cust-id="{1}" data-username="{2}"></span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
@@ -119,8 +122,19 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
         var GradeDateCol = "";
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                TeamDateCol = teamDateColFormat.format(item.CustId, item.UserName, item.TeamName);
-                GradeDateCol = gradeDateColFormat.format(item.CustId, item.UserName, item.Grade);
+                if (item.NoOfTeamChange > 1) {
+                    TeamDateCol = teamDateColFormatIcon.format(item.TeamName, item.CustId, item.UserName);
+                }
+                else {
+                    TeamDateCol = colFormatNoIcon.format(item.TeamName);
+                }
+                if (item.NoOfGradeChange > 1) {
+                    GradeDateCol = gradeDateColFormatIcon.format(item.Grade, item.CustId, item.UserName);
+                }
+                else {
+                    GradeDateCol = colFormatNoIcon.format(item.Grade);
+                }
+                
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColTrader', Value: item.UserName },

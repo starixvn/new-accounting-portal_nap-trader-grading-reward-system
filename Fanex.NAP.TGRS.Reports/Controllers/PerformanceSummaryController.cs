@@ -74,48 +74,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
-        /// Get team history of trader.
-        /// </summary>
-        /// <param name="criteria">Criteria that are used to query data.</param>
-        /// <returns>List of JSON objects.</returns>
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetTeamHistory(GetTeamHistoryCriteria criteria)
-        {
-            IEnumerable<TeamHistoryDetailItem> result = this._summaryReportService.GetTeamHistory(criteria);
-
-            return Json(result);
-        }
-
-        /// <summary>
-        /// Get grade history of trader.
-        /// </summary>
-        /// <param name="criteria">Criteria that are used to query data.</param>
-        /// <returns>List of JSON objects.</returns>
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetGradeHistory(GetGradeHistoryCriteria criteria)
-        {
-            IEnumerable<GradeHistoryDetailItem> result = this._summaryReportService.GetGradeHistory(criteria);
-
-            return Json(result);
-        }
-
-        /// <summary>
-        /// Get top, bottom trader by performance.
-        /// </summary>
-        /// <param name="criteria">Criteria that are used to query data.</param>
-        /// <returns>List of JSON objects.</returns>
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderRankData(GetTopTraderCriteria criteria)
-        {
-            IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
-
-            return Json(result);
-        }
-
-        /// <summary>
         /// Get Team Performance.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -186,6 +144,58 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Get performance summary reports.
+        /// </summary>
+        /// <param name="filter">Filter model of performance summary reports.</param>
+        /// <returns>List of JSON objects.</returns>
+        public JsonResult GetReports(ReportFilter filter)
+        {
+            var generalCriteria = new GetGeneralInfoCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            GeneralInfo generalInfo = this._summaryReportService.GetGeneralInfo(generalCriteria).First();
+
+            var teamCriteria = new GetTeamPerformanceCriteria { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            IEnumerable<TeamPerformance> teamResult = this._summaryReportService.GetTeamPerformance(teamCriteria);
+
+            var traderCriteria = new GetTraderPerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            TraderPerformance traderResult = this._summaryReportService.GetTraderPerformance(traderCriteria).First();
+
+            var betTypeCriteria = new GetBetTypePerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            IEnumerable<BetTypePerformance> betTypeResult = this._summaryReportService.GetBetTypePerformance(betTypeCriteria);
+
+            var winLeagueCriteria = new GetTopWinLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            IEnumerable<League> winLeagueResult = this._summaryReportService.GetTopWinLeague(winLeagueCriteria);
+
+            var loseLeagueCriteria = new GetTopLoseLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            IEnumerable<League> loseLeagueResult = this._summaryReportService.GetTopLoseLeague(loseLeagueCriteria);
+
+            Reports reports = new Reports()
+            {
+                GeneralInfo = generalInfo,
+                TeamPerformances = teamResult,
+                TraderPerformance = traderResult,
+                BetTypePerformances = betTypeResult,
+                WinLeagues = winLeagueResult,
+                LoseLeagues = loseLeagueResult
+            };
+
+            return Json(reports);
+        }
+
+        /// <summary>
+        /// Get top, bottom trader by performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderRankData(GetTopTraderCriteria criteria)
+        {
+            IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
         /// Get Top Trader.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -195,6 +205,34 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTopTrader(GetTopTraderCriteria criteria)
         {
             IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get team history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetTeamHistory(GetTeamHistoryCriteria criteria)
+        {
+            IEnumerable<TeamHistoryDetailItem> result = this._summaryReportService.GetTeamHistory(criteria);
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get grade history of trader.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetGradeHistory(GetGradeHistoryCriteria criteria)
+        {
+            IEnumerable<GradeHistoryDetailItem> result = this._summaryReportService.GetGradeHistory(criteria);
 
             return Json(result);
         }

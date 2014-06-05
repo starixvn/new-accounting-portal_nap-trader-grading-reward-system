@@ -13,13 +13,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     var maxYearRange = 3;
     var maxYearRangeSelect = 1;
     var urls = {
-        GetGeneralInfo: common.ResolveRootUrl('Reports/PerformanceSummary/GetGeneralInfo'),
-        GetTeamPerformance: common.ResolveRootUrl('Reports/PerformanceSummary/GetTeamPerformance'),
-        GetTraderPerformance: common.ResolveRootUrl('Reports/PerformanceSummary/GetTraderPerformance'),
-        GetBetTypePerformance: common.ResolveRootUrl('Reports/PerformanceSummary/GetBetTypePerformance'),
-        GetTopWinLeague: common.ResolveRootUrl('Reports/PerformanceSummary/GetTopWinLeague'),
-        GetTopLoseLeague: common.ResolveRootUrl('Reports/PerformanceSummary/GetTopLoseLeague'),
-        GetTopTrader: common.ResolveRootUrl('Reports/PerformanceSummary/GetTopTrader'),
+        GetReports: common.ResolveRootUrl('Reports/PerformanceSummary/GetReports'),
         GetTraderRank: common.ResolveRootUrl('Reports/PerformanceSummary/TraderRank')
     };
     var datePeriodType = {
@@ -81,17 +75,17 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
     };
 
-    function getReportByType(reportUrl, renderFunction) {
+    function getReports() {
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: reportUrl,
+            url: urls.GetReports,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(filterParameters),
             success: function (result) {
                 if (result) {
-                    renderFunction(result);
+                    renderReports(result);
                 }
             },
             error: function (xhr) {
@@ -129,7 +123,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                 filterParameters.FromDate = selectYearDate.FromDate;
                 filterParameters.ToDate = selectYearDate.ToDate;
             }
-            getAllReports();
+            getReports();
         });
 
         domElements.ddlPeriodType.on('change', function () {
@@ -221,7 +215,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
 
         layout.CreateDatePair(
             domElements.divDatePair,
-            '', '', null,
+            '', 'hide', null,
             defaultFromDate,
             ' - ', 'col_1 align-center', null,
             maxDate, minDate, maxDate, changeMaxDate, null);
@@ -266,7 +260,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
 
         //Year
         //max date: end of last month
-        var maxYear = toDate.getFullYear();
+        var maxYear = toDate.getFullYear() - 1;
         //default date: begin of last month
         var minYear = maxYear - maxYearRange;
         for (var i = minYear; i <= maxYear; i++) {
@@ -310,6 +304,15 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
             $("#dpkToDate").hide();
             $(".ui_nexdatepicker_lbl_field").hide();
         }
+    };
+
+    var renderReports = function (data) {
+        renderGeneralInfo(data.GeneralInfo);
+        renderTeamGrid(data.TeamPerformances);
+        renderWinLeagueGrid(data.WinLeagues);
+        renderLoseLeagueGrid(data.LoseLeagues);
+        renderTraderGrid(data.TraderPerformance);
+        renderBetTypeGrid(data.BetTypePerformances);
     };
 
     var renderGeneralInfo = function (data) {
@@ -507,15 +510,6 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         }
         gridOptions.bodyRows = bodyData;
         domElements.divBetTypeGrid.fanexGrid(gridOptions);
-    };
-
-    var getAllReports = function () {
-        getReportByType(urls.GetGeneralInfo, renderGeneralInfo);
-        getReportByType(urls.GetTeamPerformance, renderTeamGrid);
-        getReportByType(urls.GetTopWinLeague, renderWinLeagueGrid);
-        getReportByType(urls.GetTopLoseLeague, renderLoseLeagueGrid);
-        getReportByType(urls.GetBetTypePerformance, renderBetTypeGrid);
-        getReportByType(urls.GetTraderPerformance, renderTraderGrid);
     };
 
     $this.Initialize = function () {

@@ -95,6 +95,8 @@
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\ReportFilter.cs" />
+    <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
   </ItemGroup>

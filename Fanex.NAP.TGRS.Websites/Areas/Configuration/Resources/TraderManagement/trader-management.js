@@ -504,17 +504,12 @@ Fanex.TGRS.TraderManagement = function () {
 
         //btnSearch
         domElements.btnSearch.on('click', function () {
-            // Delay 70ms for jQuery-UI combo-box to verify its state.
-            setTimeout(function () {
-                if (validator.ValidateForm(domElements.divTraderFilterForm, 'w') === 0) {
-                    filterParameters.teamId = domElements.ddlTeam.val();
-                    filterParameters.grade = domElements.ddlGrade.val();
-                    filterParameters.username = domElements.txtUserName.val();
-                    filterParameters.employeeId = domElements.txtEmployeeId.val();
+            filterParameters.teamId = domElements.ddlTeam.val();
+            filterParameters.grade = domElements.ddlGrade.val();
+            filterParameters.username = domElements.txtUserName.val();
+            filterParameters.employeeId = domElements.txtEmployeeId.val();
 
-                    getAllTraders();
-                }
-            }, 70);
+            getAllTraders();
         });
 
         //Grid's event
