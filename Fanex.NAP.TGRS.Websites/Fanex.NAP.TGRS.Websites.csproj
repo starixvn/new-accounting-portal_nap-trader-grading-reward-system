@@ -260,14 +260,9 @@
     <Content Include="Content\jQuery-UI\images\ui-icons_f7a50d_256x240.png" />
     <Content Include="Content\jQuery-UI\images\ui-icons_fcd113_256x240.png" />
     <Content Include="Content\jQuery-UI\jquery-ui-1.10.4.custom.min.css" />
-    <Content Include="Content\MonthPicker\Images\bg-demo-docs-param.gif" />
-    <Content Include="Content\MonthPicker\Images\demo-spindown-closed.gif" />
-    <Content Include="Content\MonthPicker\Images\demo-spindown-open.gif" />
     <Content Include="Content\MonthPicker\Images\dropdown-icon.png" />
     <Content Include="Content\MonthPicker\Images\icon-left.png" />
     <Content Include="Content\MonthPicker\Images\icon-right.png" />
-    <Content Include="Content\MonthPicker\Images\spindown-closed.png" />
-    <Content Include="Content\MonthPicker\Images\spindown-open.png" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3.css" />
     <Content Include="Content\MsgBox\images\alert.png" />
     <Content Include="Content\MsgBox\images\btn-close.png" />
