@@ -68,8 +68,8 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/Fanex.Grid/Fanex.Grid.css",
                 "~/Content/Fanex.Grid/Fanex.Pagination.css",
                 "~/Content/DatePicker/jquery.nexDatePicker.css",
-                "~/Scripts/Libraries/MonthPicker/monPickr-0.0.3.css",
-                "~/Scripts/Libraries/MonthPicker/monPickr-0.0.3-custom.less",
+                "~/Content/MonthPicker/monPickr-0.0.3.css",
+                "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
                 "~/Content/Themes/reset.less",
                 "~/Content/Themes/style.less",
                 "~/Content/Themes/custom.less");
