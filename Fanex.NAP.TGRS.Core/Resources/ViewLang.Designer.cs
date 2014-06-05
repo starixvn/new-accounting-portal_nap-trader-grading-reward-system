@@ -520,7 +520,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MaxMargin.
+        ///   Looks up a localized string similar to Max Margin.
         /// </summary>
         public static string MaxMargin {
             get {

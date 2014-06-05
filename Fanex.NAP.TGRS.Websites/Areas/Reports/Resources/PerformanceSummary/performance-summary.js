@@ -1,5 +1,5 @@
 ﻿/* File Created: May 12, 2014 */
-/* global Namespace, common, labels, layout, numeral */
+/* global Namespace, common, labels, layout, numeral, yearOptions  */
 'use strict';
 
 $(document).ready(function () {
@@ -10,8 +10,9 @@ $(document).ready(function () {
 Namespace.Register("Fanex.TGRS.PerformanceSummary");
 Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     var $this = this;
-    var maxYearRange = 3;
-    var maxYearRangeSelect = 1;
+    var maxYearRange = yearOptions.maxYearRange;
+    var maxYearRangeSelect = yearOptions.maxYearRangeSelect;
+
     var urls = {
         GetReports: common.ResolveRootUrl('Reports/PerformanceSummary/GetReports'),
         GetTraderRank: common.ResolveRootUrl('Reports/PerformanceSummary/TraderRank')
@@ -110,19 +111,21 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                 filterParameters.ToDate = $("#dpkToDate").val();
             }
             else if (filterParameters.ReportType === datePeriodType.Month) {
-                var fromDateVal = domElements.divFromMonth.monPickr("getMonth", 'MMM dd, yyyy');
+                var fromDateVal = domElements.divFromMonth.monPickr("getMonth", common.Formats.MonthFormat);
                 var fromDate = new Date(fromDateVal);
-                var toDateVal = domElements.divToMonth.monPickr("getMonth", 'MMM dd, yyyy');
+                var toDateVal = domElements.divToMonth.monPickr("getMonth", common.Formats.MonthFormat);
                 var toDate = new Date(toDateVal);
                 toDate = new Date(toDate.getFullYear(), toDate.getMonth() + 1, 0);
 
-                filterParameters.FromDate = fromDate;
-                filterParameters.ToDate = toDate;
+                filterParameters.FromDate = fromDate.toStringFormat(common.Formats.ShortDateFormat);
+                filterParameters.ToDate = toDate.toStringFormat(common.Formats.ShortDateFormat);
             }
             else {
-                filterParameters.FromDate = selectYearDate.FromDate;
-                filterParameters.ToDate = selectYearDate.ToDate;
+                filterParameters.FromDate = selectYearDate.FromDate.toStringFormat(common.Formats.ShortDateFormat);
+                filterParameters.ToDate = selectYearDate.ToDate.toStringFormat(common.Formats.ShortDateFormat);
             }
+            console.log(filterParameters.FromDate);
+            console.log(filterParameters.ToDate);
             getReports();
         });
 
@@ -150,14 +153,18 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Display new Trader form.
     var makeTopForm = function () {
         var urlFormat = urls.GetTraderRank + "?Top={0}&IsBottom={1}&ReportType={2}&FromDate={3}&ToDate={4}";
-        var url = urlFormat.format(10, 0, filterParameters.ReportType, filterParameters.FromDate, filterParameters.ToDate);
+        var fromDate = filterParameters.FromDate;
+        var toDate = filterParameters.ToDate;
+        var url = urlFormat.format(10, 0, filterParameters.ReportType, fromDate, toDate);
         window.open(url, '_blank');
     };
 
     // Display new Trader form.
     var makeBottomForm = function () {
         var urlFormat = urls.GetTraderRank + "?Top={0}&IsBottom={1}&ReportType={2}&FromDate={3}&ToDate={4}";
-        var url = urlFormat.format(10, 1, filterParameters.ReportType, filterParameters.FromDate, filterParameters.ToDate);
+        var fromDate = filterParameters.FromDate;
+        var toDate = filterParameters.ToDate;
+        var url = urlFormat.format(10, 1, filterParameters.ReportType, fromDate, toDate);
         window.open(url, '_blank');
     };
 
@@ -331,14 +338,14 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render team grid.
     var renderTeamGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.Team, Width: 300, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.Team, Width: 350, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,
@@ -368,20 +375,20 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderWinLeagueGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
-                text: labels.Top5WinLeague
+                text: labels.Top5WinningLeagues
             }
         };
         var bodyData = [];
@@ -404,20 +411,20 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderLoseLeagueGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
-                text: labels.Top5LoseLeague
+                text: labels.Top5LosingLeagues
             }
         };
         var bodyData = [];
@@ -440,11 +447,11 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderTraderGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.TraderPerformance, Width: 300, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.TraderPerformance, Width: 350, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.MinMargin, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.MaxMargin, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.MaxMargin, Width: 100, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,
@@ -479,14 +486,14 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Render win league grid.
     var renderBetTypeGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.BetType, Width: 300, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.BetType, Width: 350, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.Winloss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,

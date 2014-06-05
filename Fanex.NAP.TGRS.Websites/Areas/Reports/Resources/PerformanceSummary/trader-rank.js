@@ -96,7 +96,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
         var gradeDateColFormatIcon = '<span class="width-grade-icon">{0}';
         gradeDateColFormatIcon += '</span><span class="view-gradeHistory-link detail-icon" data-cust-id="{1}" data-username="{2}"></span>';
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left',
                           FormatNumber: common.Formats.IntegerFormat
@@ -122,13 +122,13 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
         var GradeDateCol = "";
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                if (item.NoOfTeamChange > 1) {
+                if (item.NoOfTeamChanged > 1) {
                     TeamDateCol = teamDateColFormatIcon.format(item.TeamName, item.CustId, item.UserName);
                 }
                 else {
                     TeamDateCol = colFormatNoIcon.format(item.TeamName);
                 }
-                if (item.NoOfGradeChange > 1) {
+                if (item.NoOfGradeChanged > 1) {
                     GradeDateCol = gradeDateColFormatIcon.format(item.Grade, item.CustId, item.UserName);
                 }
                 else {

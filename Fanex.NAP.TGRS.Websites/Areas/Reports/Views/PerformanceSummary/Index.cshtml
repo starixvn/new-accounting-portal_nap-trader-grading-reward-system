@@ -17,8 +17,8 @@
                 <label>@ViewLang.PeriodType</label>
             </div>
             <div class="edit-field">
-                <select id="ddlPeriodType" class="col_4">
-                    <option value="1">@ViewLang.Date</option>
+                <select id="ddlPeriodType" class="col_3">
+                    <option value="1" selected>@ViewLang.Date</option>
                     <option value="2">@ViewLang.Month</option>
                     <option value="3">@ViewLang.Year</option>
                 </select>
@@ -39,18 +39,18 @@
 </div>
 <div id="divReportData">
 <div id="divGeneralInfo" class="content-generalInfo display-none">
-    <label class="col_5">@ViewLang.LiveWinLoss:</label>
-    <label class="col_7" id="lblWinLoss">
+    <label class="col_4">@ViewLang.LiveTurnover:</label>
+    <label class="col_4 align-right" id="lblTurnOver">
     </label>
-    <label class="col_5">@ViewLang.Margin:</label>
-    <label class="col_7" id="lblMargin">
+    <label class="col_4">   @ViewLang.Margin:</label>
+    <label class="col_4 align-right" id="lblMargin">
     </label>
     <br />
-    <label class="col_5">@ViewLang.LiveTurnover:</label>
-    <label class="col_7" id="lblTurnOver">
+    <label class="col_4">@ViewLang.LiveWinLoss:</label>
+    <label class="col_4 align-right" id="lblWinLoss">
     </label>
-    <label class="col_5">@ViewLang.NoOfMatches:</label>
-    <label class="col_7" id="lblMatches">
+    <label class="col_4">   @ViewLang.NoOfMatches:</label>
+    <label class="col_4 align-right" id="lblMatches">
     </label>
 </div>
 <div class="content-grid display-none">
@@ -92,10 +92,14 @@
             Bottom10ByMargin: '@ViewLang.Bottom10ByMargin',
             TraderPerformance: '@ViewLang.TraderPerformance',
             TeamPerformance: '@ViewLang.TeamPerformance',
-            Top5WinLeague: '@ViewLang.Top5WinLeague',
-            Top5LoseLeague: '@ViewLang.Top5LoseLeague',
+            Top5WinningLeagues: '@ViewLang.Top5WinningLeagues',
+            Top5LosingLeagues: '@ViewLang.Top5LosingLeagues',
             BetTypePerformance: '@ViewLang.BetTypePerformance',
             NA: '@ViewLang.NA'
         };
+        var yearOptions = {
+            maxYearRange : @ViewBag.PerformanceYearRange,
+            maxYearRangeSelect : @ViewBag.PerformanceAllowYearRange
+        }
     </script>
 }

@@ -13,7 +13,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// Get all Trader.
+    /// Get team performance.
     /// </summary>
     public class GetTeamPerformanceCriteria : CriteriaBase
     {

@@ -34,8 +34,8 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 
         public decimal? Margin { get; set; }
 
-        public int NoOfTeamChange { get; set; }
+        public int NoOfTeamChanged { get; set; }
 
-        public int NoOfGradeChange { get; set; }
+        public int NoOfGradeChanged { get; set; }
     }
 }
