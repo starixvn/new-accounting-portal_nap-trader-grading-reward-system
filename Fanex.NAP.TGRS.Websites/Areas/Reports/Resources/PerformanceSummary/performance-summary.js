@@ -441,10 +441,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     var renderTraderGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: labels.TraderPerformance, Width: 300, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Turnover, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.MinMargin, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Winloss, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.MaxMargin, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,

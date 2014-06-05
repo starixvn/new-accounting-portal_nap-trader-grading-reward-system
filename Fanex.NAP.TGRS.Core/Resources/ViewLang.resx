@@ -417,4 +417,10 @@
   <data name="Month" xml:space="preserve">
     <value>Month</value>
   </data>
+  <data name="MaxMargin" xml:space="preserve">
+    <value>MaxMargin</value>
+  </data>
+  <data name="MinMargin" xml:space="preserve">
+    <value>Min Margin</value>
+  </data>
 </root>

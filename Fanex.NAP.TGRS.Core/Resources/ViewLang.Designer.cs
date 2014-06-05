@@ -520,6 +520,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MaxMargin.
+        /// </summary>
+        public static string MaxMargin {
+            get {
+                return ResourceManager.GetString("MaxMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Turnover.
         /// </summary>
         public static string MinimumTurnover {
@@ -534,6 +543,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string MinimumWinLoss {
             get {
                 return ResourceManager.GetString("MinimumWinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Margin.
+        /// </summary>
+        public static string MinMargin {
+            get {
+                return ResourceManager.GetString("MinMargin", resourceCulture);
             }
         }
         
