@@ -170,7 +170,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
-                    common.Popup(labels.TeamHistory + " - " + userName, form);
+                    common.Popup(labels.TeamHistoryDetail + " - " + userName, form);
                     cachePopupElements();
                     renderTeamHistoryGrid(result);
                 }
@@ -202,7 +202,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             data: JSON.stringify(param),
             success: function (result) {
                 if (result) {
-                    common.Popup(labels.GradeHistory + " - " + userName, form);
+                    common.Popup(labels.GradeHistoryDetail + " - " + userName, form);
                     cachePopupElements();
                     renderGradeHistoryGrid(result);
                 }
@@ -219,18 +219,18 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     var renderTeamHistoryGrid = function (data) {
         //detail
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.Team, Width: 130, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColTeamEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NoOfMatches, Width: 130, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
                         { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat },
                         { HeaderText: labels.Winloss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.BetCount, Width: 130, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat}],
             showNumberColumn: true,
             gridExpandHeight: 150
@@ -260,18 +260,18 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     var renderGradeHistoryGrid = function (data) {
         //detail
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.Grade, Width: 130, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right' },
+            columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: labels.Grade, Width: 130, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColGradeEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NoOfMatches, Width: 130, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
                         { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat },
                         { HeaderText: labels.Winloss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.BetCount, Width: 130, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                        { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                             FormatNumber: common.Formats.DecimalFormat}],
             showNumberColumn: true,
             gridExpandHeight: 150

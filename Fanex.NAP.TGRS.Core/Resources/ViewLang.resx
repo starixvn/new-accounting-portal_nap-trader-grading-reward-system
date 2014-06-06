@@ -423,4 +423,10 @@
   <data name="MinMargin" xml:space="preserve">
     <value>Min Margin</value>
   </data>
+  <data name="GradeHistoryDetail" xml:space="preserve">
+    <value>Grade History Detail</value>
+  </data>
+  <data name="TeamHistoryDetail" xml:space="preserve">
+    <value>Team History Detail</value>
+  </data>
 </root>

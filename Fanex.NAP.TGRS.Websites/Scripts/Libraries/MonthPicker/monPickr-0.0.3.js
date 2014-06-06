@@ -55,7 +55,9 @@
         cacheData = {
             lastFromDate: null,
             lastToDate: null,
-            plugIn: null
+            plugIn: null,
+            year: null,
+            month: null
         },
 
     /*
@@ -258,7 +260,7 @@
         _hideDropDown(data, data);
         //#region Month Picker
         var $this = cacheData.plugIn;
-        $this.html('');
+        $this.empty();
         $this.addClass('monpickr monpickr-arrows ui-widget ui-widget-header ui-helper-clearfix ui-corner-all').width(data.width + 8);
         data.btnPrev = $('<a href="javascript:;" class="prev monpickr-prev ui-corner-all" title="' + data.prevText + '"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a>');
         data.btnNext = $('<a href="javascript:;" class="next monpickr-next ui-corner-all" title="' + data.nextText + '"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>');
@@ -267,7 +269,7 @@
         $this.append(data.btnPrev, data.lblSelectedMonth, data.btnNext);
 
         $this.wrap('<div class="monpickr-wrap" style="z-index: ' + data.zIndex + '" />');
-        data.wrap = $this.parents('.monpickr-wrap');
+        data.wrap = $this.parents('.monpickr-wrap').clone();
         data.wrap.wrap('<div class="monpickr-wrap-parent" style="position: relative" />')
                     .css({ 'position': 'absolute' }).parent().width(data.wrap.outerWidth()).height(data.wrap.outerHeight());
 
@@ -372,7 +374,7 @@
         data.dropDown.append(dropDownInner);
         $this.after(data.dropDown);
 
-        //_checkReachBound(data, data.year, data.month);
+        _checkReachBound(data, cacheData.year, cacheData.month);
 
         //#region Events
 
@@ -709,6 +711,8 @@
 
             var year = settings.month.getFullYear(),
                 month = settings.month.getMonth();
+            cacheData.year = year;
+            cacheData.month = month;
 
             // Make sure selected month are not out of range (minDate ~ maxDate)
             if (!_validateMonth(settings.minDate, settings.maxDate, year, month)) {

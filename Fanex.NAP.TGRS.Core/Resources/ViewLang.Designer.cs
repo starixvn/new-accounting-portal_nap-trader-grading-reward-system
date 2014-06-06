@@ -394,6 +394,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade History Detail.
+        /// </summary>
+        public static string GradeHistoryDetail {
+            get {
+                return ResourceManager.GetString("GradeHistoryDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grade Management.
         /// </summary>
         public static string GradeManagement {
@@ -777,6 +786,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string TeamHistory {
             get {
                 return ResourceManager.GetString("TeamHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team History Detail.
+        /// </summary>
+        public static string TeamHistoryDetail {
+            get {
+                return ResourceManager.GetString("TeamHistoryDetail", resourceCulture);
             }
         }
         

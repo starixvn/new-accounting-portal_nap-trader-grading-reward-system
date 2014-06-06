@@ -101,6 +101,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Init page fields and events
     var initPageFields = function () {
         //Date picker
+        domElements.ddlPeriodType.val(1);
         initDatePicker();
         changeDatePicker(datePeriodType.Date);
         //btnSearch
