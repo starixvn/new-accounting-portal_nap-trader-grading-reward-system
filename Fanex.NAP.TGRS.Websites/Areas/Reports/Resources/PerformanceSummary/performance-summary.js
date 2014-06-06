@@ -124,8 +124,6 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                 filterParameters.FromDate = selectYearDate.FromDate.toStringFormat(common.Formats.ShortDateFormat);
                 filterParameters.ToDate = selectYearDate.ToDate.toStringFormat(common.Formats.ShortDateFormat);
             }
-            console.log(filterParameters.FromDate);
-            console.log(filterParameters.ToDate);
             getReports();
         });
 
