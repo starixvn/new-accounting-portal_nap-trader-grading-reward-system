@@ -1,5 +1,5 @@
 ﻿/* File Created: May 19, 2014 */
-/* global Namespace, numeral, moment, Fanex, common, layout, validator, labels, datepickerSetting */
+/* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting */
 
 'use strict';
 $(document).ready(function () {
@@ -73,37 +73,15 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Bind event handlers.
     var initializeFields = function () {
-        layout.CreateDateRange(
-            domElements.divDateRange,
-            labels.FromDate,
-            'col_5',
-            'datepicker',
-            datepickerSetting.DefaultFromDate,
-            labels.ToDate,
-            'col_5',
-            'datepicker',
-            datepickerSetting.DefaultToDate,
-            datepickerSetting.MinDate,
-            datepickerSetting.DefaultToDate,
-            function (selectedDate) {
-                var limitedDate = moment(selectedDate).add('year', datepickerSetting.AllowYearRange);
-                var maxDate = moment(datepickerSetting.DefaultToDate) > limitedDate ?
-                              limitedDate.format(common.Formats.MomentDateFormat) :
-                              datepickerSetting.DefaultToDate;
-
-                domElements.dpkToDate.datepicker('option', 'maxDate', maxDate);
-            },
-            function (selectedDate) {
-                var limitedDate = moment(selectedDate).add('year', datepickerSetting.AllowYearRange * -1);
-                var minDate = moment(datepickerSetting.MinDate) < limitedDate ?
-                              limitedDate.format(common.Formats.MomentDateFormat) :
-                              datepickerSetting.MinDate;
-
-                domElements.dpkToDate.datepicker('option', 'minDate', minDate);
-            });
-
-        domElements.dpkFromDate = domElements.divLeaguePerformanceFilter.find('#dpkFromDate');
-        domElements.dpkToDate = domElements.divLeaguePerformanceFilter.find('#dpkToDate');
+        domElements.divDateRange = domElements.divDateRange.timeRange({
+            minDate: datepickerSetting.MinDate,
+            maxDate: datepickerSetting.DefaultToDate,
+            defaultFromDate: datepickerSetting.DefaultFromDate,
+            defaultToDate: datepickerSetting.DefaultToDate,
+            allowYearRange: datepickerSetting.AllowYearRange,
+            yearRanges: null,
+            labelCss: 'col_5'
+        });
 
         domElements.txtLeague.focusout(function () {
             var value = $.trim(domElements.txtLeague.val());
@@ -155,8 +133,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w')) {
-                parameters.DateFrom = domElements.dpkFromDate.val();
-                parameters.DateTo = domElements.dpkToDate.val();
+                parameters.DateFrom = domElements.divDateRange.getFrom();
+                parameters.DateTo = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
                 parameters.BetType = domElements.ddlBetType.val();
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');

@@ -1,4 +1,5 @@
 ﻿/* File Created: Nay 14, 2014 */
+/*global moment, numeral */
 'use strict';
 
 (function ($) {
@@ -154,7 +155,7 @@
                     setCaret($obj, cursorPos);
                 }
             }
-        }).on('blur', function (event) {
+        }).on('blur', function () {
             var $obj = $(this);
             var value = $.trim($obj.val());
             var rawValue = value.replace(/,/g, '');
@@ -257,5 +258,261 @@
         };
 
         return $obj;
+    };
+
+    // Period type.
+    $.fn.timeRange = function (opts) {
+        var $obj = $(this);
+        var currentDate = new Date();
+        var defaultOptions = {
+            minDate: null,
+            maxDate: null,
+            defaultFromDate: currentDate,
+            defaultToDate: currentDate,
+            allowYearRange: null,
+            yearRanges: null,
+            labelCss: 'col_3'
+        };
+        var elements = {
+            ddlPeriodTypes: null,
+            divDatePickers: null,
+            divDatePickersInner: null,
+            dpkFromDate: null,
+            dpkToDate: null,
+            divMonthPickers: null,
+            divMonthFrom: null,
+            divMonthTo: null,
+            divYearPicker: null,
+            ddlYear: null
+        };
+        var options = $.extend(defaultOptions, opts);
+
+        var template = $('<div class="lbl-field ' + options.labelCss + '"><label>Period Type</label></div>' +
+                         '<div class="edit-field"><select id="ddlPeriodType" class="col_3"></select></div>' +
+                         '<div class="edit-field"><div></div></div>' +
+                         '<div class="edit-field">' +
+                            '<div class="col_5"><div id="divMonthFrom"></div></div>' +
+                            '<div class="ui-separate-label">-</div>' +
+                            '<div class="col_5"><div id="divMonthTo"></div></div>' +
+                         '</div>' +
+                         '<div class="edit-field"><select id="ddlYear"></select></div>');
+
+        var queryElements = function () {
+            elements.ddlPeriodTypes = template.find('#ddlPeriodType');
+            elements.divDatePickers = $(template.get(2));
+            elements.divDatePickersInner = elements.divDatePickers.find('div');
+            elements.divMonthPickers = $(template.get(3));
+            elements.divMonthFrom = elements.divMonthPickers.find('#divMonthFrom');
+            elements.divMonthTo = elements.divMonthPickers.find('#divMonthTo');
+            elements.divYearPicker = $(template.get(4));
+            elements.ddlYear = elements.divYearPicker.find('#ddlYear');
+        };
+
+        var initializePeriodTypes = function () {
+            elements.ddlPeriodTypes.append($('<option value="0" selected>Date</option>'));
+            elements.ddlPeriodTypes.append($('<option value="1">Month</option>'));
+            elements.ddlPeriodTypes.append($('<option value="2">Year</option>'));
+
+            elements.ddlPeriodTypes.on('change', function () {
+                var selectedValue = parseInt(elements.ddlPeriodTypes.val());
+
+                switch (selectedValue) {
+                    case 0:
+                        elements.divDatePickers.show();
+                        elements.divMonthPickers.hide();
+                        elements.divYearPicker.hide();
+                        break;
+
+                    case 1:
+                        elements.divDatePickers.hide();
+                        elements.divMonthPickers.show();
+                        elements.divYearPicker.hide();
+                        break;
+
+                    case 2:
+                        elements.divDatePickers.hide();
+                        elements.divMonthPickers.hide();
+                        elements.divYearPicker.show();
+                        break;
+                }
+            });
+            elements.ddlPeriodTypes.change();
+        };
+
+        var intializeDatePickers = function () {
+            var configuration = null;
+            var fromDateChangeHandler = function (selectedDate) {
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange);
+                var maxDate = moment(options.maxDate) > limitedDate ? limitedDate.format('MM/DD/YYYY') : options.maxDate;
+
+                elements.dpkToDate.datepicker('option', 'maxDate', maxDate);
+            };
+            var toDateChangeHandler = function (selectedDate) {
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange * -1);
+                var minDate = moment(options.minDate) < limitedDate ? limitedDate.format('MM/DD/YYYY') : options.minDate;
+
+                elements.dpkFromDate.datepicker('option', 'minDate', minDate);
+            };
+
+            configuration = {
+                nexDatePickerType: 'daterange',
+                firstDatePicker: {
+                    Id: 'dpkFromDate',
+                    Label: '',
+                    InitDate: options.defaultFromDate,
+                    LabelCss: '',
+                    TextboxCss: 'edit-field width-auto'
+                },
+                secondDatePicker: {
+                    Id: 'dpkToDate',
+                    Label: '-',
+                    InitDate: options.defaultToDate,
+                    LabelCss: 'ui-separate-label',
+                    TextboxCss: 'edit-field width-auto'
+                },
+                datePickerFormat: {
+                    dateFormat: 'mm/dd/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showOtherMonths: true,
+                    selectOtherMonths: true
+                },
+                onSelectDatePicker: function (selectedDate, control) {
+                    if (control.attr('id') === 'dpkFromDate') {
+                        fromDateChangeHandler(selectedDate);
+                    } else {
+                        toDateChangeHandler(selectedDate);
+                    }
+                }
+            };
+
+            if (options.minDate) {
+                configuration.datePickerFormat.minDate = new Date(options.minDate);
+            }
+
+            if (options.maxDate) {
+                configuration.datePickerFormat.maxDate = new Date(options.maxDate);
+            }
+
+            elements.divDatePickersInner.nexDatePicker(configuration);
+            elements.dpkFromDate = elements.divDatePickers.find('#dpkFromDate');
+            elements.dpkToDate = elements.divDatePickers.find('#dpkToDate');
+        };
+
+        var intializeMonthPickers = function () {
+            var changeMonthFromHandler = function () {
+                var selectedDate = elements.divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange).add('month', -1);
+                var maxDate = moment(options.maxDate) > limitedDate ? limitedDate.format('MM/DD/YYYY') : options.maxDate;
+                var minDate = moment(selectedDate).startOf('month').format('MM/DD/YYYY');
+
+                elements.divMonthTo.monPickr('setMinMaxDate', minDate, maxDate);
+            };
+            var changeMonthToHandler = function () {
+                var selectedDate = elements.divMonthTo.monPickr('getMonth', 'MM/dd/yyyy');
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange * -1).add('month', 1);
+                var minDate = moment(options.minDate) < limitedDate ? limitedDate.format('MM/DD/YYYY') : options.minDate;
+                var maxDate = moment(selectedDate).endOf('month').format('MM/DD/YYYY');
+
+                elements.divMonthFrom.monPickr('setMinMaxDate', minDate, maxDate);
+            };
+
+            elements.divMonthFrom.monPickr({
+                plugInId: '#divMonthFrom',
+                today: options.defaultFromDate,
+                maxDate: options.maxDate,
+                minDate: options.minDate,
+                showDateRange: false,
+                width: 118,
+                zIndex: 99,
+                afterChangeMonth: changeMonthFromHandler
+            });
+            elements.divMonthTo.monPickr({
+                plugInId: '#divMonthTo',
+                today: options.defaultFromDate, //options.defaultToDate,
+                maxDate: options.maxDate,
+                minDate: options.minDate,
+                showDateRange: false,
+                width: 118,
+                zIndex: 99,
+                afterChangeMonth: changeMonthToHandler
+            });
+
+            elements.divMonthFrom.on('click', 'input.monpickr-input', function () {
+                elements.divMonthTo.monPickr('hideDropDown');
+            });
+            elements.divMonthTo.on('click', 'input.monpickr-input', function () {
+                elements.divMonthFrom.monPickr('hideDropDown');
+            });
+        };
+
+        var initalizeYearPicker = function () {
+            var maxYear = (new Date(options.maxDate)).getFullYear();
+            var minYear = (new Date(options.minDate)).getFullYear();
+
+            if (!options.yearRanges) {
+                options.yearRanges = [];
+
+                for (var index = minYear; index < maxYear; index++) {
+                    options.yearRanges.push(index);
+                }
+            }
+
+            $.each(options.yearRanges, function (index, item) {
+                elements.ddlYear.append($('<option value="' + item + '" selected>' + item +'</option>'));
+            });
+        };
+
+        //options = $.extend(defaultOptions, options);
+        $obj.hide().after(template);
+        queryElements();
+        initializePeriodTypes();
+        intializeDatePickers();
+        intializeMonthPickers();
+        initalizeYearPicker();
+
+        template.getFrom = function () {
+            var selectedValue = parseInt(elements.ddlPeriodTypes.val());
+            var fromDate = '';
+
+            switch (selectedValue) {
+                case 0:
+                    fromDate = elements.dpkFromDate.val();
+                    break;
+
+                case 1:
+                    fromDate = elements.divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
+                    break;
+
+                case 2:
+                    fromDate = '01/01/' + elements.ddlYear.val();
+                    break;
+            }
+
+            return fromDate;
+        };
+
+        template.getTo = function () {
+            var selectedValue = parseInt(elements.ddlPeriodTypes.val());
+            var toDate = '';
+
+            switch (selectedValue) {
+                case 0:
+                    toDate = elements.dpkToDate.val();
+                    break;
+
+                case 1:
+                    toDate = moment(elements.divMonthTo.monPickr('getMonth', 'MM/dd/yyyy')).endOf('month').format('MM/DD/YYYY');
+                    break;
+
+                case 2:
+                    toDate = '12/31/' + elements.ddlYear.val();
+                    break;
+            }
+
+            return toDate;
+        };
+
+        return template;
     };
 })(jQuery);
