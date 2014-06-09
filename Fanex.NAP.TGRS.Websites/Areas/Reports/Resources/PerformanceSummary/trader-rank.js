@@ -92,13 +92,15 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     var renderRankGrid = function (data) {
         var teamDateColFormatIcon = '<span class="width-team-icon">{0}';
         teamDateColFormatIcon += '</span><span class="view-teamHistory-link detail-icon" data-cust-id="{1}" data-username="{2}"></span>';
-        var colFormatNoIcon = '<span>{0}</span>';
-        var gradeDateColFormatIcon = '<span class="width-grade-icon">{0}';
-        gradeDateColFormatIcon += '</span><span class="view-gradeHistory-link detail-icon" data-cust-id="{1}" data-username="{2}"></span>';
+        var colTeamFormatNoIcon = '<span>{0}</span>';
+
+        var gradeDateColFormatIcon = '<span class="width-grade-icon grade-column-text">{0}';
+        gradeDateColFormatIcon += '</span><span class="view-gradeHistory-link detail-icon grade-column-icon" data-cust-id="{1}" data-username="{2}"></span>';
+        var colGradeFormatNoIcon = '<span class="grade-column-text">{0}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left',
+                      { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       { HeaderText: labels.Team, Width: 180, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
@@ -126,13 +128,13 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                     TeamDateCol = teamDateColFormatIcon.format(item.TeamName, item.CustId, item.UserName);
                 }
                 else {
-                    TeamDateCol = colFormatNoIcon.format(item.TeamName);
+                    TeamDateCol = colTeamFormatNoIcon.format(item.TeamName);
                 }
                 if (item.NoOfGradeChanged > 1) {
                     GradeDateCol = gradeDateColFormatIcon.format(item.Grade, item.CustId, item.UserName);
                 }
                 else {
-                    GradeDateCol = colFormatNoIcon.format(item.Grade);
+                    GradeDateCol = colGradeFormatNoIcon.format(item.Grade);
                 }
                 
                 row = {
