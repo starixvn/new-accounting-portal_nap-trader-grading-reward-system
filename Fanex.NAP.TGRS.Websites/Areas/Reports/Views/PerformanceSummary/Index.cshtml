@@ -13,24 +13,7 @@
 <div class="filter-bar">
     <div id="divReportFilterForm" class="filter-form">
         <div class="filter-row ">
-            <div class="lbl-field col_3">
-                <label>@ViewLang.PeriodType</label>
-            </div>
-            <div class="edit-field">
-                <select id="ddlPeriodType" class="col_3">
-                    <option value="1" selected>@ViewLang.Date</option>
-                    <option value="2">@ViewLang.Month</option>
-                    <option value="3">@ViewLang.Year</option>
-                </select>
-            </div>
-            <div id="divDatePair"></div>
-            <div class="col_5" id="divFromMonthContainer" ><div id="divFromMonth"></div></div>
-            <div class="month_lbl_field lbl-field col_1 align-center"> - </div>
-            <div class="col_5" id="divToMonthContainer"><div id="divToMonth"></div></div>
-            <div class="edit-field">
-                <select id="ddlYear">
-                </select>
-            </div>
+            <div id="divDateRange"></div>
             <div class="submit col_4">
                 <input id="btnSearch" type="submit" class="blue-button" value="Search">
             </div>
@@ -98,8 +81,8 @@
             NA: '@ViewLang.NA'
         };
         var yearOptions = {
-            maxYearRange : @ViewBag.PerformanceYearRange,
-            maxYearRangeSelect : @ViewBag.PerformanceAllowYearRange
+            PerformanceYearRange : @ViewBag.PerformanceYearRange,
+            PerformanceAllowYearRange : @ViewBag.PerformanceAllowYearRange
         }
     </script>
 }

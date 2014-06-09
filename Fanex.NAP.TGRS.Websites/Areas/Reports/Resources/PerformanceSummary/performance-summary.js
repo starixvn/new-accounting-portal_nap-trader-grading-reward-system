@@ -1,5 +1,5 @@
 ﻿/* File Created: May 12, 2014 */
-/* global Namespace, common, labels, layout, numeral, yearOptions  */
+/* global Namespace, common, labels, numeral, yearOptions  */
 'use strict';
 
 $(document).ready(function () {
@@ -10,25 +10,12 @@ $(document).ready(function () {
 Namespace.Register("Fanex.TGRS.PerformanceSummary");
 Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     var $this = this;
-    var maxYearRange = yearOptions.maxYearRange;
-    var maxYearRangeSelect = yearOptions.maxYearRangeSelect;
-
     var urls = {
         GetReports: common.ResolveRootUrl('Reports/PerformanceSummary/GetReports'),
         GetTraderRank: common.ResolveRootUrl('Reports/PerformanceSummary/TraderRank')
     };
-    var datePeriodType = {
-        Date: 1,
-        Month: 2,
-        Year: 3
-    };
     var domElements = {
-        divDatePair: null,
-        divFromMonthContainer: null,
-        divFromMonth: null,
-        divToMonthContainer: null,
-        divToMonth: null,
-        ddlYear: null,
+        divDateRange: null,
         btnSearch: null,
         divGeneralInfo: null,
         lblWinLoss: null,
@@ -41,13 +28,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         divTopLoseLeagueGrid: null,
         divBetTypeGrid: null,
         ddlPeriodType: null
+
     };
     var filterParameters = {
         ReportType: null,
-        FromDate: null,
-        ToDate: null
-    };
-    var selectYearDate = {
         FromDate: null,
         ToDate: null
     };
@@ -55,6 +39,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
+        domElements.divDateRange = $('#divDateRange');
         domElements.divDatePair = $('#divDatePair');
         domElements.divFromMonthContainer = $('#divFromMonthContainer');
         domElements.divFromMonth = $('#divFromMonth');
@@ -103,39 +88,12 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         //Date picker
         domElements.ddlPeriodType.val(1);
         initDatePicker();
-        changeDatePicker(datePeriodType.Date);
         //btnSearch
         domElements.btnSearch.on('click', function () {
-            filterParameters.ReportType = domElements.ddlPeriodType.val() * 1;
-            if (filterParameters.ReportType === datePeriodType.Date) {
-                filterParameters.FromDate = $("#dpkFromDate").val();
-                filterParameters.ToDate = $("#dpkToDate").val();
-            }
-            else if (filterParameters.ReportType === datePeriodType.Month) {
-                var fromDateVal = domElements.divFromMonth.monPickr("getMonth", common.Formats.MonthFormat);
-                var fromDate = new Date(fromDateVal);
-                var toDateVal = domElements.divToMonth.monPickr("getMonth", common.Formats.MonthFormat);
-                var toDate = new Date(toDateVal);
-                toDate = new Date(toDate.getFullYear(), toDate.getMonth() + 1, 0);
-
-                filterParameters.FromDate = fromDate.toStringFormat(common.Formats.ShortDateFormat);
-                filterParameters.ToDate = toDate.toStringFormat(common.Formats.ShortDateFormat);
-            }
-            else {
-                filterParameters.FromDate = selectYearDate.FromDate.toStringFormat(common.Formats.ShortDateFormat);
-                filterParameters.ToDate = selectYearDate.ToDate.toStringFormat(common.Formats.ShortDateFormat);
-            }
+            filterParameters.FromDate = domElements.divDateRange.getFrom();
+            filterParameters.ToDate = domElements.divDateRange.getTo();
+            filterParameters.ReportType = domElements.divDateRange.getPeriodType();
             getReports();
-        });
-
-        domElements.ddlPeriodType.on('change', function () {
-            var selectType = $("option:selected", this).val() * 1;
-            changeDatePicker(selectType);
-        });
-        domElements.ddlYear.on('change', function () {
-            var selectYear = $("option:selected", this).val() * 1;
-            selectYearDate.FromDate = new Date(selectYear, 0, 1);
-            selectYearDate.ToDate = new Date(selectYear + 1, 0, 1);
         });
 
         //event: click on top 10
@@ -167,149 +125,26 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         window.open(url, '_blank');
     };
 
-    var changeMaxDate = function () {
-        var dateVal = $("#dpkFromDate").val();
-        //max date is select date + [maxYearRangeSelect] year
-        var maxDate = new Date(dateVal);
-        maxDate.setYear(maxDate.getFullYear() + maxYearRangeSelect);
-        maxDate.setDate(maxDate.getDate() - 1);
-
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        //if maxdate > yesterday, set maxdate = yesterday
-        if (maxDate > yesterday) {
-            maxDate = yesterday;
-        }
-
-        $("#dpkToDate").datepicker('option', 'maxDate', maxDate);
-    };
-
-    var changeMaxMonth = function () {
-        var dateVal = domElements.divFromMonth.monPickr("getMonth", 'MMM dd, yyyy');
-
-        //max date is select date + [maxYearRangeSelect] year
-        var minDate = new Date(dateVal);
-        var maxDate = new Date(dateVal);
-        maxDate.setYear(maxDate.getFullYear() + maxYearRangeSelect);
-        maxDate.setDate(maxDate.getDate() - 1);
-
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        //if maxdate > yesterday, set maxdate = yesterday
-        if (maxDate > yesterday) {
-            maxDate = yesterday;
-        }
-
-        domElements.divToMonth.monPickr('setMinMaxDate', minDate, maxDate);
-    };
-
     var initDatePicker = function () {
         var toDate = new Date();
-        var maxDate = null;
-        var defaultFromDate = null;
-        var minDate = new Date(toDate.getFullYear() - maxYearRange, 0, 1);
+        var minDate = new Date(toDate.getFullYear() - yearOptions.PerformanceYearRange, 0, 1);
 
-        //Date Pair
-        //max date is yesterdate
-        maxDate = new Date(toDate);
+        var maxDate = new Date(toDate);
         maxDate.setDate(maxDate.getDate() - 1);
         //default date: 2 weeks after yesterday
-        defaultFromDate = new Date(toDate);
+        var defaultFromDate = new Date(toDate);
         defaultFromDate.setDate(toDate.getDate() - 14);
 
-        layout.CreateDatePair(
-            domElements.divDatePair,
-            '', 'hide', null,
-            defaultFromDate,
-            ' - ', 'col_1 align-center', null,
-            maxDate, minDate, maxDate, changeMaxDate, null);
-
-        //Month
-        //max date: end of last month
-        maxDate = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
-        //default date: begin of last month
-        defaultFromDate = new Date(toDate.getFullYear(), toDate.getMonth() - 1, 1);
-
-        //Date Month
-        domElements.divFromMonth.monPickr({
-            plugInId: '#divFromMonth',
-            today: defaultFromDate,
-            maxDate: maxDate,
+        //Period date range control
+        domElements.divDateRange = domElements.divDateRange.timeRange({
             minDate: minDate,
-            showDateRange: false,
-            fromDayId: 'monthFromDate',
-            toDayId: 'monthToDate',
-            fromDayLabel: ' ',
-            toDayLabel: ' ',
-            afterChangeMonth: changeMaxMonth,
-            log: function (msg) {
-                console.warn(msg);
-            }
-        });
-
-        domElements.divToMonth.monPickr({
-            plugInId: '#divToMonth',
-            today: defaultFromDate,
             maxDate: maxDate,
-            minDate: minDate,
-            showDateRange: false,
-            fromDayId: 'monthFromDate',
-            toDayId: 'monthToDate',
-            fromDayLabel: ' ',
-            toDayLabel: ' ',
-            log: function (msg) {
-                console.warn(msg);
-            }
+            defaultFromDate: defaultFromDate,
+            defaultToDate: maxDate,
+            allowYearRange: yearOptions.PerformanceAllowYearRange,
+            yearRanges: null,
+            labelCss: 'col_3'
         });
-
-        //Year
-        //max date: end of last month
-        var maxYear = toDate.getFullYear() - 1;
-        //default date: begin of last month
-        var minYear = maxYear - maxYearRange;
-        for (var i = minYear; i <= maxYear; i++) {
-            domElements.ddlYear.append(
-                $('<option></option>').val(i).html(i)
-            );
-        }
-        domElements.ddlYear.val(maxYear);
-
-        //Begin of current year
-        selectYearDate.FromDate = new Date(maxYear, 0, 1);
-        //End of current year (begin of next year - 1)
-        selectYearDate.ToDate = new Date(maxYear + 1, 0, 0);
-    };
-
-    var changeDatePicker = function (type) {
-        if (type === datePeriodType.Date) {
-            domElements.ddlYear.hide();
-            domElements.divFromMonthContainer.hide();
-            domElements.divToMonthContainer.hide();
-            $(".month_lbl_field").hide();
-            $("#dpkFromDate").show();
-            $("#dpkToDate").show();
-            $(".ui_nexdatepicker_lbl_field").show();
-        }
-        else if (type === datePeriodType.Month) {
-            domElements.ddlYear.hide();
-            domElements.divFromMonthContainer.show();
-            domElements.divToMonthContainer.show();
-            $(".month_lbl_field").show();
-            $("#dpkFromDate").hide();
-            $("#dpkToDate").hide();
-            $(".ui_nexdatepicker_lbl_field").hide();
-        }
-        else if (type === datePeriodType.Year) {
-            domElements.ddlYear.show();
-            domElements.divFromMonthContainer.hide();
-            domElements.divToMonthContainer.hide();
-            $(".month_lbl_field").hide();
-            $("#dpkFromDate").hide();
-            $("#dpkToDate").hide();
-            $(".ui_nexdatepicker_lbl_field").hide();
-        }
     };
 
     var renderReports = function (data) {
@@ -463,14 +298,15 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         var top10Col = '<span class="top10-link link">' + labels.Top10ByMargin + '</span>';
         var bottom10Col = '<span class="bottom10-link link">' + labels.Bottom10ByMargin + '</span>';
         var row;
-        if (data) {
+        if (data.TopMinMargin && data.TopMaxMargin) {
             row = {
                 Columns: [{ Name: 'ColTraderType', Value: top10Col },
                               { Name: 'ColMinMargin', Value: data.TopMinMargin || labels.NA },
                               { Name: 'ColMaxMargin', Value: data.TopMaxMargin || labels.NA}]
             };
             bodyData.push(row);
-
+        }
+        if (data.BottomMinMargin && data.BottomMaxMargin) {
             row = {
                 Columns: [{ Name: 'ColTraderType', Value: bottom10Col },
                               { Name: 'ColMinMargin', Value: data.BottomMinMargin || labels.NA },

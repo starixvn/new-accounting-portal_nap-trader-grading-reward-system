@@ -309,27 +309,27 @@
         };
 
         var initializePeriodTypes = function () {
-            elements.ddlPeriodTypes.append($('<option value="0" selected>Date</option>'));
-            elements.ddlPeriodTypes.append($('<option value="1">Month</option>'));
-            elements.ddlPeriodTypes.append($('<option value="2">Year</option>'));
+            elements.ddlPeriodTypes.append($('<option value="1" selected>Date</option>'));
+            elements.ddlPeriodTypes.append($('<option value="2">Month</option>'));
+            elements.ddlPeriodTypes.append($('<option value="3">Year</option>'));
 
             elements.ddlPeriodTypes.on('change', function () {
                 var selectedValue = parseInt(elements.ddlPeriodTypes.val());
 
                 switch (selectedValue) {
-                    case 0:
+                    case 1:
                         elements.divDatePickers.show();
                         elements.divMonthPickers.hide();
                         elements.divYearPicker.hide();
                         break;
 
-                    case 1:
+                    case 2:
                         elements.divDatePickers.hide();
                         elements.divMonthPickers.show();
                         elements.divYearPicker.hide();
                         break;
 
-                    case 2:
+                    case 3:
                         elements.divDatePickers.hide();
                         elements.divMonthPickers.hide();
                         elements.divYearPicker.show();
@@ -476,15 +476,15 @@
             var fromDate = '';
 
             switch (selectedValue) {
-                case 0:
+                case 1:
                     fromDate = elements.dpkFromDate.val();
                     break;
 
-                case 1:
+                case 2:
                     fromDate = elements.divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
                     break;
 
-                case 2:
+                case 3:
                     fromDate = '01/01/' + elements.ddlYear.val();
                     break;
             }
@@ -497,15 +497,15 @@
             var toDate = '';
 
             switch (selectedValue) {
-                case 0:
+                case 1:
                     toDate = elements.dpkToDate.val();
                     break;
 
-                case 1:
+                case 2:
                     toDate = moment(elements.divMonthTo.monPickr('getMonth', 'MM/dd/yyyy')).endOf('month').format('MM/DD/YYYY');
                     break;
 
-                case 2:
+                case 3:
                     toDate = '12/31/' + elements.ddlYear.val();
                     break;
             }
@@ -513,6 +513,12 @@
             return toDate;
         };
 
-        return template;
+        template.getPeriodType = function() {
+            return parseInt(elements.ddlPeriodTypes.val());
+        };
+
+    return template;
     };
+
+        
 })(jQuery);
