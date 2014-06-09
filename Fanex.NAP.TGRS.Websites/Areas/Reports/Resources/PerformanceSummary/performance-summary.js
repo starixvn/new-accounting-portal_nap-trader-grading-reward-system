@@ -285,7 +285,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                       { HeaderText: labels.MinMargin, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.MaxMargin, Width: 100, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.MaxMargin, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 50,
