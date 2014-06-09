@@ -30,6 +30,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary
             this.Margin = item.Margin;
         }
 
+        public TeamHistoryDetailItem()
+        {
+            this.CustId = 0;
+            this.TeamId = 0;
+            this.TeamName = string.Empty;
+            this.TeamEffectiveDate = string.Empty;
+            this.MatchCount = 0;
+            this.BetCount = 0;
+            this.Turnover = 0;
+            this.WinLost = 0;
+            this.Margin = 0;
+        }
+
         public int CustId { get; set; }
 
         public int TeamId { get; set; }

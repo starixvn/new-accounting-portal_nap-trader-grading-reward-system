@@ -171,11 +171,9 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             dataType: 'json',
             data: JSON.stringify(param),
             success: function (result) {
-                if (result) {
-                    common.Popup(labels.TeamHistoryDetail + " - " + userName, form);
-                    cachePopupElements();
-                    renderTeamHistoryGrid(result);
-                }
+                common.Popup(labels.TeamHistoryDetail + " - " + userName, form);
+                cachePopupElements();
+                renderTeamHistoryGrid(result);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -203,11 +201,9 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             dataType: 'json',
             data: JSON.stringify(param),
             success: function (result) {
-                if (result) {
-                    common.Popup(labels.GradeHistoryDetail + " - " + userName, form);
-                    cachePopupElements();
-                    renderGradeHistoryGrid(result);
-                }
+                common.Popup(labels.GradeHistoryDetail + " - " + userName, form);
+                cachePopupElements();
+                renderGradeHistoryGrid(result);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);

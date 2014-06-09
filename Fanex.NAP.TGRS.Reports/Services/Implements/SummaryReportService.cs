@@ -102,6 +102,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             {
                 result = rawData.Select(obj => new GradeHistoryDetailItem(obj));
             }
+            else
+            {
+                // empty result, not null
+                result = new List<GradeHistoryDetailItem>();
+            }
 
             return result;
         }
@@ -119,6 +124,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
             if (rawData != null && rawData.Any())
             {
                 result = rawData.Select(obj => new TeamHistoryDetailItem(obj));
+            }
+            else
+            {
+                // empty result, not null
+                result = new List<TeamHistoryDetailItem>();
             }
 
             return result;
