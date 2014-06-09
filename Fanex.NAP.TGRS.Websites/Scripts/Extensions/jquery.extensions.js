@@ -294,8 +294,8 @@
                             '<div class="col_5"><div id="divMonthFrom"></div></div>' +
                             '<div class="ui-separate-label">-</div>' +
                             '<div class="col_5"><div id="divMonthTo"></div></div>' +
-                         '</div>' +
-                         '<div class="edit-field"><select id="ddlYear"></select></div>');
+                         '</div>');
+                         //'<div class="edit-field"><select id="ddlYear"></select></div>');
 
         var queryElements = function () {
             elements.ddlPeriodTypes = template.find('#ddlPeriodType');
@@ -311,7 +311,7 @@
         var initializePeriodTypes = function () {
             elements.ddlPeriodTypes.append($('<option value="1" selected>Date</option>'));
             elements.ddlPeriodTypes.append($('<option value="2">Month</option>'));
-            elements.ddlPeriodTypes.append($('<option value="3">Year</option>'));
+            //elements.ddlPeriodTypes.append($('<option value="3">Year</option>'));
 
             elements.ddlPeriodTypes.on('change', function () {
                 var selectedValue = parseInt(elements.ddlPeriodTypes.val());
@@ -469,7 +469,7 @@
         initializePeriodTypes();
         intializeDatePickers();
         intializeMonthPickers();
-        initalizeYearPicker();
+        //initalizeYearPicker();
 
         template.getFrom = function () {
             var selectedValue = parseInt(elements.ddlPeriodTypes.val());
