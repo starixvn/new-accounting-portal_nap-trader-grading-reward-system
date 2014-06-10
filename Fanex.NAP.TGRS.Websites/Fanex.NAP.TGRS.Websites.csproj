@@ -272,9 +272,6 @@
     <Content Include="Content\MsgBox\images\info.png" />
     <Content Include="Content\MsgBox\images\question.png" />
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
-    <Content Include="Content\MultipleSelect\Images\sprites.png" />
-    <Content Include="Content\MultipleSelect\Images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\MultipleSelect\jquery.multiselect.css" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />
     <Content Include="Content\Themes\Images\icon-detail.png" />

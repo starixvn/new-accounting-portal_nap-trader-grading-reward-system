@@ -468,6 +468,20 @@ Fanex.TGRS.TraderManagement = function () {
             popupElements.ddlGrade.find(":selected").val('');
         }
 
+        //init multi select
+        popupElements.ddlGrade.multiselect({
+            selectedList: 1,
+            minWidth: 180,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+        popupElements.ddlTeam.multiselect({
+            selectedList: 1,
+            minWidth: 180,
+            height: 200,
+            multiple: false
+        }).multiselectfilter({ width: 125 }); ;
     };
 
     // Disable pop up form.
