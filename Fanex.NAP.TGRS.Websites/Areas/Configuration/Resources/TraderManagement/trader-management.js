@@ -108,8 +108,8 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
-        popupElements.ddlGrade = $('#ddlGrade', domElements.divPopup);
-        popupElements.ddlTeam = $('#ddlTeam', domElements.divPopup);
+        popupElements.ddlGrade = $('#ddlGradePopup', domElements.divPopup);
+        popupElements.ddlTeam = $('#ddlTeamPopup', domElements.divPopup);
         popupElements.dpkTeamEffectiveDate = $('#dpkTeamEffectiveDate', domElements.divPopup);
         popupElements.dpkGradeEffectiveDate = $('#dpkGradeEffectiveDate', domElements.divPopup);
     };
@@ -124,8 +124,15 @@ Fanex.TGRS.TraderManagement = function () {
                     TeamId: popupElements.ddlTeam.val(),
                     grade: popupElements.ddlGrade.val()
                 };
-
                 insertTrader(parameters);
+            }
+            else {
+                if (!popupElements.ddlTeam.val()) {
+                    validator.ShowError(popupElements.ddlTeam.multiselect('getButton'), messages.RequiredFieldError, 'w');
+                }
+                if (!popupElements.ddlGrade.val()) {
+                    validator.ShowError(popupElements.ddlGrade.multiselect('getButton'), messages.RequiredFieldError, 'w');
+                }
             }
         });
 
@@ -362,6 +369,40 @@ Fanex.TGRS.TraderManagement = function () {
         popupElements.divTeamHistoryGrid.fanexGrid(gridOptions);
     };
 
+    var makeMultiFilterDropdown = function () {
+        domElements.ddlTeam.multiselect({
+            selectedList: 1,
+            minWidth: 150,
+            height: 200,
+            multiple: false
+        }).multiselectfilter({ width: 75 });
+        domElements.ddlGrade.multiselect({
+            selectedList: 1,
+            minWidth: 120,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+    };
+
+    var makeMultiPopupDropdown = function () {
+        popupElements.ddlGrade.multiselect({
+            selectedList: 1,
+            minWidth: 200,
+            height: 200,
+            noneSelectedText: labels.SelectAGrade,
+            header: false,
+            multiple: false
+        });
+        popupElements.ddlTeam.multiselect({
+            selectedList: 1,
+            minWidth: 200,
+            height: 200,
+            noneSelectedText: labels.SelectATeam,
+            multiple: false
+        }).multiselectfilter({ width: 125 });
+    };
+
     var renderGradeHistoryGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
@@ -403,6 +444,7 @@ Fanex.TGRS.TraderManagement = function () {
                     updateTeamDropdown(cacheTeamData, domElements.ddlTeam, labels.AllTeams, defaultSelectVal);
                 }
                 updateGradeDropdown(domElements.ddlGrade, labels.AllGrades, defaultSelectVal);
+                makeMultiFilterDropdown();
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -416,10 +458,12 @@ Fanex.TGRS.TraderManagement = function () {
     var updateTeamDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
         ddlDiv.html('');
+        var isAutoSelect = false;
 
         //Default value
         if (defaultLabel != null) {
             ddlDiv.append($('<option></option>').attr('value', defaultSelectVal).text(defaultLabel));
+            isAutoSelect = true;
         }
 
         // Add new values.
@@ -431,17 +475,25 @@ Fanex.TGRS.TraderManagement = function () {
         }
 
         //auto select val
-        ddlDiv.val(selectVal);
+        if (isAutoSelect || selectVal !== defaultSelectVal) {
+            ddlDiv.val(selectVal);
+        }
+        else {
+            ddlDiv.val('');
+        }
+
     };
 
     // Update Grade drop-down list.
     var updateGradeDropdown = function (ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
         ddlDiv.html('');
+        var isAutoSelect = false;
 
         //Default value
         if (defaultLabel != null) {
             ddlDiv.append($('<option></option>').attr('value', defaultSelectVal).text(defaultLabel));
+            isAutoSelect = true;
         }
 
         // Add new values.
@@ -450,7 +502,12 @@ Fanex.TGRS.TraderManagement = function () {
         }
 
         //auto select val
-        ddlDiv.val(selectVal);
+        if (isAutoSelect || selectVal !== defaultSelectVal) {
+            ddlDiv.val(selectVal);
+        }
+        else {
+            ddlDiv.val('');
+        }
     };
 
     // Update Popup drop-down list.
@@ -460,8 +517,8 @@ Fanex.TGRS.TraderManagement = function () {
             updateGradeDropdown(popupElements.ddlGrade, null, selectGrade);
         }
         else {
-            updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, labels.SelectATeam, selectTeam);
-            updateGradeDropdown(popupElements.ddlGrade, labels.SelectAGrade, selectGrade);
+            updateTeamDropdown(cacheTeamData, popupElements.ddlTeam, null, selectTeam);
+            updateGradeDropdown(popupElements.ddlGrade, null, selectGrade);
 
             //edit to null val for validator to check data-val-required
             popupElements.ddlTeam.find(":selected").val('');
@@ -469,19 +526,7 @@ Fanex.TGRS.TraderManagement = function () {
         }
 
         //init multi select
-        popupElements.ddlGrade.multiselect({
-            selectedList: 1,
-            minWidth: 180,
-            height: 200,
-            header: false,
-            multiple: false
-        });
-        popupElements.ddlTeam.multiselect({
-            selectedList: 1,
-            minWidth: 180,
-            height: 200,
-            multiple: false
-        }).multiselectfilter({ width: 125 });
+        makeMultiPopupDropdown();
     };
 
     // Disable pop up form.
