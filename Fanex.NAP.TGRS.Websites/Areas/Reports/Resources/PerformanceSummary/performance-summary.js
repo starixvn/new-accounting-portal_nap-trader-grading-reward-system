@@ -135,7 +135,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         }
         var maxDate = new Date(toDate);
         maxDate.setDate(maxDate.getDate() - 1);
-        //default date: 2 weeks after yesterday
+        //default date: 2 weeks before yesterday
         var defaultFromDate = new Date(toDate);
         defaultFromDate.setDate(toDate.getDate() - 14);
 
