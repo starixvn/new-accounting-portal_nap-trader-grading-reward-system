@@ -481,7 +481,7 @@ Fanex.TGRS.TraderManagement = function () {
             minWidth: 180,
             height: 200,
             multiple: false
-        }).multiselectfilter({ width: 125 }); ;
+        }).multiselectfilter({ width: 125 });
     };
 
     // Disable pop up form.
