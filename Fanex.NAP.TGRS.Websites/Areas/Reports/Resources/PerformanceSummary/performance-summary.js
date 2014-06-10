@@ -127,8 +127,12 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
 
     var initDatePicker = function () {
         var toDate = new Date();
+        var begin2014Date = new Date(2014, 0, 1);
         var minDate = new Date(toDate.getFullYear() - yearOptions.PerformanceYearRange, 0, 1);
 
+        if (minDate.getFullYear() < 2014) {
+            minDate = begin2014Date;
+        }
         var maxDate = new Date(toDate);
         maxDate.setDate(maxDate.getDate() - 1);
         //default date: 2 weeks after yesterday
