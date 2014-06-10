@@ -10,23 +10,35 @@
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Reports.Services.Implements;
+    using Fanex.NAP.TGRS.Reports.Services.Interfaces;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
 
     /// <summary>
     /// Performance detail report controller.
     /// </summary>
     public class PerformanceDetailController : TGRSBaseController
     {
+        private readonly IDetailReportService _detailReportService;
+
         public PerformanceDetailController()
+            : this(null)
         {
             ViewBag.MinDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+        }
+
+        public PerformanceDetailController(IDetailReportService detailReportService)
+        {
+            this._detailReportService = detailReportService ?? new DetailReportService();
         }
 
         /// <summary>
@@ -46,6 +58,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
         }
 

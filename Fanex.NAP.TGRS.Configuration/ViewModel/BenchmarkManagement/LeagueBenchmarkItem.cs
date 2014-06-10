@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
             {
                 this.LeagueId = rawData.LeagueId;
                 this.LeagueName = rawData.LeagueName;
-                this.Margin = Converter.ToDecimal(Margin);
+                this.Margin = Converter.ToDecimal(rawData.Margin);
                 this.Benchmark = Converter.ToDecimal(rawData.Benchmark);
             }
         }

@@ -336,7 +336,13 @@
                         break;
                 }
             });
-            elements.ddlPeriodTypes.change();
+            elements.ddlPeriodTypes.multiselect({
+                multiple: false,
+                selectedList: 1,
+                header: false,
+                minWidth: 70,
+                height: 47
+            }).change();
         };
 
         var intializeDatePickers = function () {

@@ -80,8 +80,18 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             defaultToDate: datepickerSetting.DefaultToDate,
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
-            labelCss: 'col_5'
+            labelCss: 'col_3'
         });
+
+        domElements.ddlBetType.multiselect({
+            selectedList: 2,
+            minWidth: 215,
+            height: 200,
+            //multiple: false,
+            create: function () {
+                domElements.ddlBetType.multiselect('checkAll');
+            }
+        }).multiselectfilter({ width: 125 });
 
         domElements.txtLeague.focusout(function () {
             var value = $.trim(domElements.txtLeague.val());

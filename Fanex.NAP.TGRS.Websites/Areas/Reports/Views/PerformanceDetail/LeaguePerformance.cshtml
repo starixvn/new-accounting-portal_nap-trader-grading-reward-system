@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Web
+﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -35,40 +35,17 @@
 <div class="filter-bar">
     <div id="divLeaguePerformanceFilter" class="filter-form">
         <div class="filter-row">
-            <div id="divDateRange"></div>
             <div class="lbl-field col_3 align-right">
-                <label for="txtLeague">@ViewLang.League</label>
-            </div>
-            <div class="edit-field col_12 align-left">
-                <input type="text" id="txtLeague" class="width-200" maxlength="100" />
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <select id="ddlBetType" class="bet-type">
+            <div class="edit-field col_9 align-left">
+                <select id="ddlBetType" multiple="multiple">
+                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                    {
+                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                    }
                 </select>
             </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="txtMarginFrom">@ViewLang.Margin</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_3 align-right">
-                <label for="txtLeagueBMFrom">@ViewLang.LeagueBM</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtLeagueBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtLeagueBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-        </div>
-        <div class="filter-row">
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
@@ -81,8 +58,35 @@
             <div class="edit-field col_6 align-left">
                 <input type="text" id="txtMinWinLoss" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="submit col_4">
-                <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtLeague">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <input type="text" id="txtLeague" class="league" maxlength="100" />
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtLeagueBMFrom">@ViewLang.LeagueBM</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtLeagueBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtLeagueBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMarginFrom">@ViewLang.Margin</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div id="divDateRange"></div>
+            <div class="submit col_5">
+                <input id="btnGenerate" type="button" class="blue-button float-right" value="@ViewLang.Generate" />
             </div>
         </div>
     </div>

@@ -70,6 +70,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/DatePicker/jquery.nexDatePicker.css",
                 "~/Content/MonthPicker/monPickr-0.0.3.css",
                 "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
+                "~/Content/MultipleSelect/jquery.multiselect.less",
                 "~/Content/Themes/reset.less",
                 "~/Content/Themes/style.less",
                 "~/Content/Themes/custom.less");
@@ -87,6 +88,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Scripts/Libraries/Others/namespace.js",
                 "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
                 "~/Scripts/Libraries/MonthPicker/monPickr-0.0.3.js",
+                "~/Scripts/Libraries/MultipleSelect/jquery.multiselect.js",
                 "~/Scripts/Extensions/native-object-extensions.js",
                 "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Areas/User/Resources/Login/reCheckIn.js",

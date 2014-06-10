@@ -272,6 +272,9 @@
     <Content Include="Content\MsgBox\images\info.png" />
     <Content Include="Content\MsgBox\images\question.png" />
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
+    <Content Include="Content\MultipleSelect\Images\sprites.png" />
+    <Content Include="Content\MultipleSelect\Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\MultipleSelect\jquery.multiselect.css" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />
     <Content Include="Content\Themes\Images\icon-detail.png" />
@@ -291,6 +294,7 @@
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
+    <Content Include="Scripts\Libraries\MultipleSelect\jquery.multiselect.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\Libraries\Modernizr\modernizr.30715.min.js" />
@@ -381,6 +385,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
+    <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
