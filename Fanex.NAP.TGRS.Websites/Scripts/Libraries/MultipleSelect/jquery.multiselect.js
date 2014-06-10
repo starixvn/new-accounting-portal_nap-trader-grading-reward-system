@@ -14,6 +14,7 @@
             checkAllText: 'Check all',
             uncheckAllText: 'Uncheck all',
             noneSelectedText: 'Select options',
+            allSelectedText: null,
             selectedText: '# selected',
             selectedList: 0,
             show: null,
@@ -62,7 +63,7 @@
                         return '';
                     }
                 })
-                //.append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></li>')
+            //.append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></li>')
                 .appendTo(header),
 
             checkboxContainer = (this.checkboxContainer = $('<ul />'))
@@ -197,6 +198,8 @@
                     value = o.selectedText.call(this, numChecked, $inputs.length, $checked.get());
                 } else if (/\d/.test(o.selectedList) && o.selectedList > 0 && numChecked <= o.selectedList) {
                     value = $checked.map(function () { return $(this).next().html(); }).get().join(', ');
+                } else if (numChecked === $inputs.length && o.allSelectedText) {
+                    value = o.allSelectedText;
                 } else {
                     value = o.selectedText.replace('#', numChecked).replace('#', $inputs.length);
                 }
@@ -492,7 +495,7 @@
                 // remember which elements this widget disabled (not pre-disabled)
                 // elements, so that they can be restored if the widget is re-enabled.
                 inputs = inputs.filter(':enabled')
-                .data(key, true)
+                .data(key, true);
             } else {
                 inputs = inputs.filter(function () {
                     return $.data(this, key) === true;

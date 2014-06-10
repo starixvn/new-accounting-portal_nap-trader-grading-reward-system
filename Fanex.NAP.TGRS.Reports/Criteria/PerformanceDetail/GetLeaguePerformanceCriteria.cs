@@ -23,17 +23,17 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string LeagueName { get; set; }
 
-        public decimal LeagueBMFrom { get; set; }
+        public decimal? LeagueBMFrom { get; set; }
 
-        public decimal LeagueBMTo { get; set; }
+        public decimal? LeagueBMTo { get; set; }
 
-        public decimal Turnover { get; set; }
+        public decimal? Turnover { get; set; }
 
-        public decimal WinLost { get; set; }
+        public decimal? WinLost { get; set; }
 
-        public decimal MarginFrom { get; set; }
+        public decimal? MarginFrom { get; set; }
 
-        public decimal MarginTo { get; set; }
+        public decimal? MarginTo { get; set; }
 
         public string BetTypes { get; set; }
 

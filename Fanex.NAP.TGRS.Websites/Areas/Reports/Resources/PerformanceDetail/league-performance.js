@@ -1,5 +1,5 @@
 ﻿/* File Created: May 19, 2014 */
-/* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting */
+/* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting, messages */
 
 'use strict';
 $(document).ready(function () {
@@ -87,6 +87,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             selectedList: 2,
             minWidth: 215,
             height: 200,
+            allSelectedText: labels.AllBetTypes,
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
@@ -141,7 +142,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         });
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w')) {
+            if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w') && validateFilterForm()) {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
@@ -156,6 +157,32 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 getLeaguePerformanceReport();
             }
         });
+    };
+
+    // Validate filter form.
+    var validateFilterForm = function () {
+        return validateValueRange(domElements.txtLeagueBMFrom, domElements.txtLeagueBMTo) &&
+               validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo);
+    };
+
+    // Validate From/To values.
+    var validateValueRange = function ($from, $to) {
+        var fromValue = $from.val();
+        var toValue = $to.val();
+        var isValid = true;
+
+        if (fromValue !== '' && toValue !== '') {
+            fromValue = fromValue.replace(/,/g, '');
+            toValue = toValue.replace(/,/g, '');
+
+            isValid = $.isNumeric(fromValue) && $.isNumeric(toValue) && parseFloat(fromValue) < parseFloat(toValue);
+        }
+
+        if (!isValid) {
+            validator.ShowError($to, messages.InvalidValue, 'w');
+        }
+
+        return isValid;
     };
 
     // Get league performance report data.
@@ -186,15 +213,15 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.League, Width: 200, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
-                      { HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -206,14 +233,15 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       { HeaderText: labels.LeagueBM, Width: 100, Name: 'ColLeagueBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
-            gridExpandHeight: 180,
+            gridExpandHeight: 250,
             showNumberColumn: true,
             showPager: true,
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            }
+            },
+            showFooter: true
         };
         var bodyData = [];
         var footerData = [];
@@ -238,7 +266,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2 },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
                           { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
