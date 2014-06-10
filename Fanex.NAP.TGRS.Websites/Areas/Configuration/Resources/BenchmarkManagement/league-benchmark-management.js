@@ -54,6 +54,37 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
 
     // Bind event handlers.
     var bindEventHandlers = function () {
+        domElements.ddlSport.multiselect({
+            selectedList: 1,
+            minWidth: 160,
+            height: 23,
+            header: false,
+            multiple: false
+        });
+
+        domElements.ddlSpecialLeague.multiselect({
+            selectedList: 1,
+            minWidth: 160,
+            height: 116,
+            header: false,
+            multiple: false
+        });
+
+        domElements.ddlCountry.multiselect({
+            selectedList: 1,
+            minWidth: 160,
+            height: 200,
+            multiple: false
+        }).multiselectfilter({ width: 85 });
+
+        domElements.ddlMarket.multiselect({
+            selectedList: 1,
+            minWidth: 160,
+            height: 47,
+            header: false,
+            multiple: false
+        });
+
         domElements.txtLeague.off('keyup').on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();

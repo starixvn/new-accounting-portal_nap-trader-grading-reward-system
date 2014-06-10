@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
 {
     using System.Collections.Generic;
+    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
 
     public interface IDetailReportService
@@ -19,5 +20,12 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// </summary>
         /// <returns>List of BetTypeItem objects.</returns>
         IEnumerable<BetTypeItem> GetBetTypes();
+
+        /// <summary>
+        /// Gets the league performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>LeaguePerformanceList object.</returns>
+        LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
     }
 }

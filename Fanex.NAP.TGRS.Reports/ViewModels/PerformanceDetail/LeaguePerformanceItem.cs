@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// League performance view model.
@@ -17,6 +19,26 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class LeaguePerformanceItem
     {
+        public LeaguePerformanceItem()
+        {
+        }
+
+        public LeaguePerformanceItem(LeaguePerformanceInfo leagueData)
+        {
+            if (leagueData != null && leagueData.LeagueId.HasValue)
+            {
+                this.LeagueId = leagueData.LeagueId.Value;
+                this.LeagueName = leagueData.LeagueName;
+                this.NoOfTraders = Converter.ToInt(leagueData.TraderCount);
+                this.NoOfMatches = Converter.ToInt(leagueData.MatchCount);
+                this.Turnover = Converter.ToDecimal(leagueData.Turnover);
+                this.WinLoss = Converter.ToDecimal(leagueData.WinLoss);
+                this.BetCount = Converter.ToInt(leagueData.BetCount);
+                this.Margin = Converter.ToDecimal(leagueData.Margin);
+                this.LeagueBM = Converter.ToDecimal(leagueData.LeagueBenchmark);
+            }
+        }
+
         public int LeagueId { get; set; }
 
         public string LeagueName { get; set; }

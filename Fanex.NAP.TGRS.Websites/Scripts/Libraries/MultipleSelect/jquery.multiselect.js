@@ -44,7 +44,7 @@
             menu = (this.menu = $('<div />'))
                 .addClass('ui-multiselect-menu ui-widget ui-widget-content ui-corner-all')
                 .addClass(o.classes)
-                .appendTo(document.body),
+                .appendTo($(el).parent()), //.appendTo(document.body),
 
             header = (this.header = $('<div />'))
                 .addClass('ui-widget-header ui-multiselect-header ui-helper-clearfix')

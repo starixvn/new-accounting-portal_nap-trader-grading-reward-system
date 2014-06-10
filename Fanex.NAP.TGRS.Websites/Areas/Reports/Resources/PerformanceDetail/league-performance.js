@@ -38,16 +38,16 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTrader')
     };
     var parameters = {
-        DateFrom: null,
-        DateTo: null,
+        FromDate: null,
+        ToDate: null,
         LeagueName: null,
-        BetType: null,
+        BetTypes: null,
         MarginFrom: null,
         MarginTo: null,
         LeagueBMFrom: null,
         LeagueBMTo: null,
-        MinTurnover: null,
-        MinWinLoss: null
+        Turnover: null,
+        WinLoss: null
     };
 
     // Cache DOM Elements.
@@ -87,7 +87,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             selectedList: 2,
             minWidth: 215,
             height: 200,
-            //multiple: false,
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
@@ -143,16 +142,16 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w')) {
-                parameters.DateFrom = domElements.divDateRange.getFrom();
-                parameters.DateTo = domElements.divDateRange.getTo();
+                parameters.FromDate = domElements.divDateRange.getFrom();
+                parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
-                parameters.BetType = domElements.ddlBetType.val();
+                parameters.BetTypes = domElements.ddlBetType.val().join(',');
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.LeagueBMFrom = domElements.txtLeagueBMFrom.val().replace(/,/g, '');
                 parameters.LeagueBMTo = domElements.txtLeagueBMTo.val().replace(/,/g, '');
-                parameters.MinTurnover = domElements.txtMinTurnover.val().replace(/,/g, '');
-                parameters.MinWinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
+                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
 
                 getLeaguePerformanceReport();
             }

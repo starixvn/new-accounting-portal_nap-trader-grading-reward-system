@@ -16,6 +16,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Implements;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
@@ -25,6 +26,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     /// </summary>
     public class PerformanceDetailController : TGRSBaseController
     {
+        #region Attributes and Constructors
+
         private readonly IDetailReportService _detailReportService;
 
         public PerformanceDetailController()
@@ -40,6 +43,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             this._detailReportService = detailReportService ?? new DetailReportService();
         }
+
+        #endregion Attributes and Constructors
+
+        #region League Performance
 
         /// <summary>
         /// Gets Index page.
@@ -66,6 +73,27 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets the league performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the league performance data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            LeaguePerformanceList leaguePerformance = null;
+
+            criteria.LeagueName = criteria.LeagueName ?? string.Empty;
+            leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria);
+
+            return Json(leaguePerformance);
+        }
+
+        #endregion League Performance
+
+        #region Trader Performance
+
+        /// <summary>
         /// Gets TraderPerformance page.
         /// </summary>
         /// <returns>Return TraderPerformance View.</returns>
@@ -74,6 +102,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             return View();
         }
+
+        #endregion Trader Performance
+
+        #region Grade Performance
 
         /// <summary>
         /// Gets GradePerformance page.
@@ -85,6 +117,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return View();
         }
 
+        #endregion Grade Performance
+
+        #region Team Performance
+
         /// <summary>
         /// Gets TeamPerformance page.
         /// </summary>
@@ -95,6 +131,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return View();
         }
 
+        #endregion Team Performance
+
+        #region Bet Type Performance
+
         /// <summary>
         /// Gets BetTypePerformance page.
         /// </summary>
@@ -104,5 +144,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             return View();
         }
+
+        #endregion Bet Type Performance
     }
 }

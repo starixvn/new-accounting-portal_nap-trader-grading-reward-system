@@ -30,9 +30,35 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         {
             var criteria = new GetBetTypesCriteria();
             IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
-            IEnumerable<BetTypeItem> betTypes = data.Select(obj => new BetTypeItem(obj));
+            IEnumerable<BetTypeItem> betTypes = null;
+
+            if (data != null && data.Any())
+            {
+                betTypes = data.Select(obj => new BetTypeItem(obj));
+            }
 
             return betTypes;
+        }
+
+        /// <summary>
+        /// Gets the league performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>LeaguePerformanceList object.</returns>
+        public LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+
+            if (leagueData != null && leagueData.Any())
+            {
+                foreach (LeaguePerformanceInfo item in leagueData)
+                {
+                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
+                }
+            }
+
+            return leaguePerformance;
         }
     }
 }
