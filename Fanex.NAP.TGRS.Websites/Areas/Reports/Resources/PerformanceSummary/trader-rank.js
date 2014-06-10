@@ -64,6 +64,13 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
 
     // Init page fields and events
     var initPageFields = function () {
+        domElements.ddlType.multiselect({
+            selectedList: 1,
+            minWidth: 50,
+            height: 95,
+            header: false,
+            multiple: false
+        });
         //btnSearch
         domElements.ddlType.on('change', function () {
             var selectType = $("option:selected", this).val() * 1;
