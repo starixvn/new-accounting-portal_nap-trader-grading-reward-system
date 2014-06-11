@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Core.Configurations
 {
+    using System;
     using System.Configuration;
     using Fanex.Common;
 
@@ -21,6 +22,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceYearRange;
         private static int performanceAllowYearRange;
         private static int performanceDefaultDayRange;
+        private static DateTime? availableDate;
 
         public static string ServerTimezone
         {
@@ -71,6 +73,19 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return performanceDefaultDayRange;
+            }
+        }
+
+        public static DateTime AvailableDate
+        {
+            get
+            {
+                if (availableDate == null)
+                {
+                    availableDate = Converter.ToDateTime(GetValue("AvailableDate"));
+                }
+
+                return availableDate.Value;
             }
         }
 

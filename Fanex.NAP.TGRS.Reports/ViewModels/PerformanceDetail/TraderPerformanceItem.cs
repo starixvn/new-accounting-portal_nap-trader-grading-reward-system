@@ -30,9 +30,10 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TraderId = traderData.CustId.Value;
                 this.TraderName = traderData.Username;
                 this.Grade = Converter.ToInt(traderData.Grade);
-                this.HasGradeHistory = Converter.ToInt(traderData.NoOfGradeChanged) > 0;
+                this.HasGradeHistory = Converter.ToInt(traderData.NoOfGradeChanged) > 1;
+                this.TeamId = Converter.ToInt(traderData.TeamId);
                 this.TeamName = traderData.TeamName;
-                this.HasTeamHistory = Converter.ToInt(traderData.NoOfTeamChanged) > 0;
+                this.HasTeamHistory = Converter.ToInt(traderData.NoOfTeamChanged) > 1;
                 this.NoOfMatches = Converter.ToInt(traderData.MatchCount);
                 this.Turnover = Converter.ToDecimal(traderData.Turnover);
                 this.WinLoss = Converter.ToDecimal(traderData.WinLoss);
@@ -47,6 +48,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public int Grade { get; set; }
 
         public bool HasGradeHistory { get; set; }
+
+        public int TeamId { get; set; }
 
         public string TeamName { get; set; }
 

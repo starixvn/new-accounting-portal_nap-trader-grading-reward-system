@@ -181,7 +181,8 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
-    <Content Include="Areas\Reports\Resources\PerformanceDetail\Backup\league-performance.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\trader-rank.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\bettype-performance.js" />

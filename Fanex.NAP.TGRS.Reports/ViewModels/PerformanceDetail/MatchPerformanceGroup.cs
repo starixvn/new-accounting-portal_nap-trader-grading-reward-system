@@ -51,7 +51,6 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.Total.Turnover += item.Turnover;
                 this.Total.WinLoss += item.WinLoss;
                 this.Total.BetCount += item.BetCount;
-                this.Total.Margin += item.Margin;
             }
         }
     }

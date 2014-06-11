@@ -35,7 +35,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public PerformanceDetailController()
             : this(null)
         {
-            ViewBag.MinDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
@@ -118,6 +122,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfLeague(criteria);
 
             return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of a pair of league and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a pair of league and trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
+        {
+            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);
+
+            return Json(matchPerformance);
         }
 
         #endregion League Performance

@@ -10,6 +10,10 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Match performance view model.
@@ -17,9 +21,23 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class MatchPerformanceItem
     {
-        public int MatchId { get; set; }
+        public MatchPerformanceItem()
+        {
+        }
 
-        public string MatchCode { get; set; }
+        public MatchPerformanceItem(MatchPerformanceInfo matchData)
+        {
+            if (matchData != null && matchData.MatchId.HasValue)
+            {
+                this.MatchId = matchData.MatchId.Value;
+                this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(matchData.HomeId), ViewLang.Vs, CacheRef.GetTeamName(matchData.AwayId));
+                this.Turnover = Converter.ToDecimal(matchData.Turnover);
+                this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
+                this.BetCount = Converter.ToInt(matchData.BetCount);
+            }
+        }
+
+        public int MatchId { get; set; }
 
         public string MatchName { get; set; }
 
@@ -29,6 +47,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin
+        {
+            get
+            {
+                if (this.Turnover != 0)
+                {
+                    return this.WinLoss / this.Turnover;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

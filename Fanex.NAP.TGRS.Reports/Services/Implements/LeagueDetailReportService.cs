@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -22,6 +23,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     /// </summary>
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
+        private const string LeaguePerformanceDetailReportSeesionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
+
         /// <summary>
         /// Gets the bet types.
         /// </summary>
@@ -56,6 +59,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 {
                     leaguePerformance.AddItem(new LeaguePerformanceItem(item));
                 }
+
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSeesionKey, leaguePerformance);
             }
 
             return leaguePerformance;
@@ -80,6 +85,27 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return traderPerformance;
+        }
+
+        /// <summary>
+        /// Gets the match performance of a pair of league and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        public MatchPerformanceGroup GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
+        {
+            IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
+            MatchPerformanceGroup matchPerformance = new MatchPerformanceGroup();
+
+            if (matchData != null && matchData.Any())
+            {
+                foreach (MatchPerformanceInfo item in matchData)
+                {
+                    matchPerformance.AddItem(new MatchPerformanceItem(item));
+                }
+            }
+
+            return matchPerformance;
         }
     }
 }

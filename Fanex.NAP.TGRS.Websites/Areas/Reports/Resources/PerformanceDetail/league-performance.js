@@ -35,8 +35,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     var urls = {
         GetLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
         ExportLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/ExportLeaguePerformance'),
-        GetTraderPerformanceOfLeague: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
-        GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTrader')
+        GetTraderPerformanceOfLeague: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfLeague'),
+        GetMatchPerformanceOfLeagueTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfLeagueTrader')
     };
     var parameters = {
         FromDate: null,
@@ -50,6 +50,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         Turnover: null,
         WinLoss: null
     };
+    var gradeHistory = new Fanex.TGRS.PerformanceSummary.GradeHistory();
+    var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -157,11 +159,19 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 parameters.LeagueBMTo = domElements.txtLeagueBMTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
                 parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
-                parameters.BetTypes = parameters.BetTypes ? parameters.BetTypes.join(',') : '';
+                parameters.BetTypes = parameters.BetTypes ? parameters.BetTypes.join(',') : '0';
 
+                hideAllReports();
                 getLeaguePerformanceReport();
             }
         });
+    };
+
+    // Hide all reports.
+    var hideAllReports = function () {
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
     };
 
     // Validate filter form.
@@ -270,7 +280,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin },
+                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
                               { Name: 'ColLeagueBM', Value: item.LeagueBM}]
                 };
 
@@ -284,7 +294,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin },
+                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA },
                           { Name: 'ColLeagueBM', Value: ''}]
             };
             footerData.push(row);
@@ -300,8 +310,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     var handleLeaguePerformanceGridEvents = function () {
         domElements.divLeaguePerformanceGrid.find('span.trader-link').click(function () {
             var $link = $(this);
+            var $leagueName = $link.closest('tr').find('div.league-name');
             var leagueId = $link.attr('data-league-id');
-            var leagueName = $link.closest('tr').find('div.league-name').text();
+            var leagueName = $leagueName.attr('title');
+
+            leagueName = leagueName || $leagueName.text();
 
             getTraderPerformanceReport(leagueId, leagueName);
         });
@@ -322,7 +335,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Get trader performance on a specific league.
     var getTraderPerformanceReport = function (leagueId, leagueName) {
         var traderPerformanceParamrters = {
-            LeagueId: leagueId
+            LeagueId: leagueId,
+            BetTypes: parameters.BetTypes,
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate
         };
 
         common.DisableInput();
@@ -346,21 +362,27 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Render trader performance of a specific league grid.
     var renderTraderPerformanceGrid = function (data, leagueId, leagueName) {
-        var noOfTradersFormat = '<span class="trader-name-link link" data-league-id="{0}" data-trader-id="{1}">{2}</span>';
-        var noOfTradersCol = '';
+        var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}">{2}</span>';
+        var noOfMatchesFormat = '<span class="match-link link" data-trader-id="{0}">{1}</span>';
+        var gradeFormat = '<span class="grade">{0}</span>';
+        var teamFormat = '<span class="team">{0}</span>';
+        var detailIcon = '<span class="detail-icon {0}"></span>';
+
+        var traderCol = '';
+        var gradeCol = '';
+        var teamCol = '';
+        var noOfMatchesCol = '';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Traders, Width: 170, Name: 'ColTraders', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right' },
-                      { HeaderText: labels.Team, Width: 170, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      { HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Trader, Width: 200, Name: 'ColTraders', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -369,18 +391,19 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
-            gridExpandHeight: 180,
+            gridExpandHeight: 250,
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: '<span id="spanLeagueLink">{0}</span><span>{1}</span>'.format(labels.LeaguePerformance, leagueName)
+                text: '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>'.format(labels.LeaguePerformance, leagueName)
             },
             showPager: true,
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            }
+            },
+            showFooter: true
         };
         var bodyData = [];
         var footerData = [];
@@ -388,29 +411,35 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                noOfTradersCol = noOfTradersFormat.format(leagueId, item.TraderId, item.TraderName);
+                traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
+                noOfMatchesCol = noOfMatchesFormat.format(item.TraderId, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+                gradeCol = gradeFormat.format(item.Grade);
+                gradeCol += item.HasGradeHistory ? detailIcon.format('grade-column') : '';
+                teamCol = teamFormat.format(item.TeamName);
+                teamCol += item.HasTeamHistory ? detailIcon.format('team-column') : '';
+
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
-                              { Name: 'ColTraders', Value: noOfTradersCol },
-                              { Name: 'ColGrade', Value: item.Grade },
-                              { Name: 'ColTeam', Value: item.TeamName },
-                              { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                              { Name: 'ColTraders', Value: traderCol },
+                              { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
+                              { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
+                              { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin}]
+                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
                 };
 
                 bodyData.push(row);
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4 },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin}]
+                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA}]
             };
             footerData.push(row);
         }
@@ -421,16 +450,48 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
-        handleTraderPerformanceGridEvents(leagueName);
+        handleTraderPerformanceGridEvents(leagueId, leagueName);
     };
 
     // Handle trander performance grid's events.
-    var handleTraderPerformanceGridEvents = function (leagueName) {
-        domElements.divTraderPerformanceGrid.find('span.trader-name-link').click(function () {
+    var handleTraderPerformanceGridEvents = function (leagueId, leagueName) {
+        domElements.divTraderPerformanceGrid.find('span.grade-column').click(function () {
             var $link = $(this);
-            var leagueId = $link.attr('data-league-id');
+            var $trader = $link.closest('tr').find('span.trader');
+            var traderId = $trader.attr('data-cust-id');
+            var traderName = $trader.text();
+
+            gradeHistory.GetGradeHistory({
+                CustId: traderId,
+                Username: traderName,
+                LeagueId: leagueId,
+                BetTypes: parameters.BetTypes,
+                FromDate: parameters.FromDate,
+                ToDate: parameters.ToDate
+            });
+        });
+
+        domElements.divTraderPerformanceGrid.find('span.team-column').click(function () {
+            var $link = $(this);
+            var $trader = $link.closest('tr').find('span.trader');
+            var traderId = $trader.attr('data-cust-id');
+            var traderName = $trader.text();
+
+            teamHistory.GetTeamHistory({
+                CustId: traderId,
+                Username: traderName,
+                LeagueId: leagueId,
+                BetTypes: parameters.BetTypes,
+                FromDate: parameters.FromDate,
+                ToDate: parameters.ToDate
+            });
+        });
+
+        domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
+            var $link = $(this);
+            var $trader = $link.closest('tr').find('span.trader');
             var traderId = $link.attr('data-trader-id');
-            var traderName = $link.text();
+            var traderName = $trader.text();
 
             getMatchPerformanceReport(leagueId, leagueName, traderId, traderName);
         });
@@ -451,13 +512,16 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     var getMatchPerformanceReport = function (leagueId, leagueName, traderId, traderName) {
         var matchPerformanceParamrters = {
             LeagueId: leagueId,
-            TraderId: traderId
+            CustId: traderId,
+            BetTypes: parameters.BetTypes,
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate
         };
 
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetMatchPerformanceOfTrader,
+            url: urls.GetMatchPerformanceOfLeagueTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(matchPerformanceParamrters),
@@ -475,17 +539,19 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Render match performance of a specific trader grid.
     var renderMatchPerformanceGrid = function (data, leagueId, leagueName, traderId, traderName) {
-        var titleFormat = '<span id="spanLeagueLink">{0}</span><span id="spanTraderLink">{1}</span><span>{2}</span>';
-        var forecastFormat = '<span class="forecast link" data-league-id="{0}" data-trader-id="{1}" data-match-id="{2}">{3}</span>';
+        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +
+                          '<span id="spanTraderLink"  class="breadcrumb-link"> >> {1}</span>' +
+                          '<span> >> {2}</span>';
+        var forecastFormat = '<span class="forecast-icon" data-league-id="{0}" data-trader-id="{1}" data-match-id="{2}" title="{3}"></span>';
         var forecastCol = '';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Match, Width: 300, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -506,7 +572,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            }
+            },
+            showFooter: true
         };
         var bodyData = [];
         var footerData = [];
@@ -514,14 +581,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                forecastCol = forecastFormat.format(leagueId, traderId, item.MatchId);
+                forecastCol = forecastFormat.format(leagueId, traderId, item.MatchId, labels.Forecast);
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
                               { Name: 'ColMatch', Value: item.MatchName },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin },
+                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
                               { Name: 'ColForecast', Value: forecastCol}]
                 };
 
@@ -529,17 +596,17 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2 },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin}]
+                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA}]
             };
             footerData.push(row);
         }
 
         // Hide previous report.
-        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
@@ -549,14 +616,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Handle match performance grid's events.
     var handleMatchPerformanceGridEvents = function () {
-        domElements.divMatchPerformanceGrid.find('span.forecast').click(function () {
+        domElements.divMatchPerformanceGrid.find('span.forecast-icon').click(function () {
         });
 
-        domElements.divTraderPerformanceContainer.find('#spanLeagueLink').click(function () {
+        domElements.divMatchPerformanceContainer.find('#spanLeagueLink').click(function () {
             showLeaguePerformanceReport();
         });
 
-        domElements.divTraderPerformanceContainer.find('#spanTraderLink').click(function () {
+        domElements.divMatchPerformanceContainer.find('#spanTraderLink').click(function () {
             showTraderPerformanceReport();
         });
     };

@@ -979,6 +979,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -vs-.
+        /// </summary>
+        public static string Vs {
+            get {
+                return ResourceManager.GetString("Vs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Win Loss.
         /// </summary>
         public static string WinLoss {
