@@ -59,6 +59,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Dependencies\Others\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="RemotingRef">
       <HintPath>..\Dependencies\Others\RemotingRef.dll</HintPath>
     </Reference>
@@ -81,6 +84,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TGRSFunctionKeys.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExcelUtility\ExcelTemplateWriter.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellRangeAddressExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\HSSFRowExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\HSSFSheetExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\HSSFWorkbookExtensions.cs" />
+    <Compile Include="ExcelUtility\RichTextExtensions\RichTextRender.cs" />
+    <Compile Include="ExcelUtility\RichTextExtensions\TextBlock.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\CacheRef.cs" />
     <Compile Include="Helpers\SessionManager.cs" />

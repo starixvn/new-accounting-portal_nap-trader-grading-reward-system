@@ -319,6 +319,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Reports\ExcelTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
