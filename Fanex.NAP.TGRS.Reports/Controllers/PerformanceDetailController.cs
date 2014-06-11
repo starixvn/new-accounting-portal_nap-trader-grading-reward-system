@@ -28,6 +28,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     {
         #region Attributes and Constructors
 
+        private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xlsx";
+
         private readonly IDetailReportService _detailReportService;
 
         public PerformanceDetailController()
@@ -87,6 +89,35 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria);
 
             return Json(leaguePerformance);
+        }
+
+        /// <summary>
+        /// Exports the league performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>Excel file.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            string templateUrl = Server.MapPath(LeaguePerformanceDetail);
+
+            ////this._detailReportService.ExportLeaguePerformance(criteria, templateUrl);
+
+            return new EmptyResult();
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance of a league data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfLeague(criteria);
+
+            return Json(traderPerformance);
         }
 
         #endregion League Performance

@@ -34,6 +34,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     };
     var urls = {
         GetLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
+        ExportLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/ExportLeaguePerformance'),
         GetTraderPerformanceOfLeague: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
         GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTrader')
     };
@@ -90,6 +91,9 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             allSelectedText: labels.AllBetTypes,
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
+            },
+            checkAll: function () {
+                domElements.ddlBetType.val('');
             }
         }).multiselectfilter({ width: 125 });
 
@@ -146,13 +150,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
-                parameters.BetTypes = domElements.ddlBetType.val().join(',');
+                parameters.BetTypes = domElements.ddlBetType.val(); //.join(',');
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.LeagueBMFrom = domElements.txtLeagueBMFrom.val().replace(/,/g, '');
                 parameters.LeagueBMTo = domElements.txtLeagueBMTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
                 parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.BetTypes = parameters.BetTypes ? parameters.BetTypes.join(',') : '';
 
                 getLeaguePerformanceReport();
             }
@@ -234,6 +239,13 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       }],
             gridExpandHeight: 250,
+            showTitle: true,
+            titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportLeaguePerformance();
+                }
+            },
             showNumberColumn: true,
             showPager: true,
             pagerOption: {
@@ -273,7 +285,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: data.Total.Margin },
-                          { Name: 'ColLeagueBM', Value: data.Total.LeagueBM}]
+                          { Name: 'ColLeagueBM', Value: ''}]
             };
             footerData.push(row);
         }
@@ -300,6 +312,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divLeaguePerformanceContainer.removeClass('display-none');
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
+    };
+
+    // Export league performance to excel.
+    var exportLeaguePerformance = function () {
+        common.DownloadFile(urls.ExportLeaguePerformance, parameters);
     };
 
     // Get trader performance on a specific league.

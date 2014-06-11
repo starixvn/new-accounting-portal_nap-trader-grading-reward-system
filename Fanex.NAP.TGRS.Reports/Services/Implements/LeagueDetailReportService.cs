@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="DetailReportService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="LeagueDetailReportService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -20,7 +20,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     /// <summary>
     /// Detail report service.
     /// </summary>
-    public class DetailReportService : TGRSBaseService, IDetailReportService
+    public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         /// <summary>
         /// Gets the bet types.
@@ -59,6 +59,27 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return leaguePerformance;
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        public TraderPerformanceList GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
+        {
+            IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
+            TraderPerformanceList traderPerformance = new TraderPerformanceList();
+
+            if (traderData != null && traderData.Any())
+            {
+                foreach (TraderPerformanceInfo item in traderData)
+                {
+                    traderPerformance.AddItem(new TraderPerformanceItem(item));
+                }
+            }
+
+            return traderPerformance;
         }
     }
 }

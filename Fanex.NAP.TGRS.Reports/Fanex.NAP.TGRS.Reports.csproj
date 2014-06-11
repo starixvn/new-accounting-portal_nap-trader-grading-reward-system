@@ -91,8 +91,12 @@
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsAreaRegistration.cs" />
-    <Compile Include="Services\Implements\DetailReportService.cs" />
+    <Compile Include="Services\Implements\BetTypeDetailReportService.cs" />
+    <Compile Include="Services\Implements\GradeDetailReportService.cs" />
+    <Compile Include="Services\Implements\LeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\SummaryReportService.cs" />
+    <Compile Include="Services\Implements\TeamDetailReportService.cs" />
+    <Compile Include="Services\Implements\TraderDetailReportService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />

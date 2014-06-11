@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Trader performance view model.
@@ -17,13 +19,38 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class TraderPerformanceItem
     {
+        public TraderPerformanceItem()
+        {
+        }
+
+        public TraderPerformanceItem(TraderPerformanceInfo traderData)
+        {
+            if (traderData != null && traderData.CustId.HasValue)
+            {
+                this.TraderId = traderData.CustId.Value;
+                this.TraderName = traderData.Username;
+                this.Grade = Converter.ToInt(traderData.Grade);
+                this.HasGradeHistory = Converter.ToInt(traderData.NoOfGradeChanged) > 0;
+                this.TeamName = traderData.TeamName;
+                this.HasTeamHistory = Converter.ToInt(traderData.NoOfTeamChanged) > 0;
+                this.NoOfMatches = Converter.ToInt(traderData.MatchCount);
+                this.Turnover = Converter.ToDecimal(traderData.Turnover);
+                this.WinLoss = Converter.ToDecimal(traderData.WinLoss);
+                this.BetCount = Converter.ToInt(traderData.BetCount);
+            }
+        }
+
         public int TraderId { get; set; }
 
         public string TraderName { get; set; }
 
         public int Grade { get; set; }
 
+        public bool HasGradeHistory { get; set; }
+
         public string TeamName { get; set; }
+
+        public bool HasTeamHistory { get; set; }
 
         public int NoOfLeagues { get; set; }
 
@@ -35,6 +62,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin
+        {
+            get
+            {
+                if (this.Turnover != 0)
+                {
+                    return this.WinLoss / this.Turnover;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

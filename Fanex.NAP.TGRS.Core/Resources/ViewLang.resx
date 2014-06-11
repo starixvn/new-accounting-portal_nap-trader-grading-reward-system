@@ -298,7 +298,7 @@
     <value>Live Win Loss</value>
   </data>
   <data name="Margin" xml:space="preserve">
-    <value>Margin</value>
+    <value>Margin %</value>
   </data>
   <data name="Match" xml:space="preserve">
     <value>Match</value>

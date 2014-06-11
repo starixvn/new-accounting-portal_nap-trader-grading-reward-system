@@ -502,7 +502,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Margin.
+        ///   Looks up a localized string similar to Margin %.
         /// </summary>
         public static string Margin {
             get {
