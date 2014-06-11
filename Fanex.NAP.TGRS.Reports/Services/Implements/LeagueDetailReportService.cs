@@ -60,6 +60,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                     leaguePerformance.AddItem(new LeaguePerformanceItem(item));
                 }
 
+                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSeesionKey, leaguePerformance);
             }
 
@@ -82,6 +83,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 {
                     traderPerformance.AddItem(new TraderPerformanceItem(item));
                 }
+
+                traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
 
             return traderPerformance;
@@ -103,9 +106,29 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 {
                     matchPerformance.AddItem(new MatchPerformanceItem(item));
                 }
+
+                matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
             }
 
             return matchPerformance;
+        }
+
+        /// <summary>
+        /// Calculates the total margin.
+        /// </summary>
+        /// <param name="winLoss">The win loss.</param>
+        /// <param name="turnover">The turnover.</param>
+        /// <returns>The margin value.</returns>
+        private decimal? CalculateTotalMargin(decimal winLoss, decimal turnover)
+        {
+            decimal? margin = null;
+
+            if (turnover != 0)
+            {
+                margin = winLoss / turnover * 100;
+            }
+
+            return margin;
         }
     }
 }

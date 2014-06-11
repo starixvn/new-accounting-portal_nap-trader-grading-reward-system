@@ -35,6 +35,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.WinLoss = Converter.ToDecimal(leagueData.WinLoss);
                 this.BetCount = Converter.ToInt(leagueData.BetCount);
                 this.LeagueBM = Converter.ToDecimal(leagueData.LeagueBenchmark);
+                this.Margin = leagueData.Margin;
             }
         }
 
@@ -52,20 +53,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal? Margin
-        {
-            get
-            {
-                if (this.Turnover != 0)
-                {
-                    return this.WinLoss / this.Turnover;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        public decimal? Margin { get; set; }
 
         public decimal LeagueBM { get; set; }
     }
