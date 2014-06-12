@@ -418,10 +418,10 @@
     <value>Month</value>
   </data>
   <data name="MaxMargin" xml:space="preserve">
-    <value>Max Margin</value>
+    <value>Max Margin %</value>
   </data>
   <data name="MinMargin" xml:space="preserve">
-    <value>Min Margin</value>
+    <value>Min Margin %</value>
   </data>
   <data name="GradeHistoryDetail" xml:space="preserve">
     <value>Grade History Detail</value>

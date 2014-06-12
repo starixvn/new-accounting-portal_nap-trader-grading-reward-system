@@ -17,29 +17,19 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
     };
     var domElements = {
         ddlType: null,
-        divRankGrid: null,
-        divHistoryGrid: null,
-        divHistoryDetailGrid: null,
-        divHistoryForm: null,
+        divRankGrid: null
     };
 
-    var popupElements = {
-        divHistoryGrid: null
-    };
+    var gradeHistory = new Fanex.TGRS.PerformanceSummary.GradeHistory();
+    var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.ddlType = $('#ddlType');
         domElements.divRankGrid = $('#divRankGrid');
-        domElements.divHistoryForm = $('#divHistoryForm').clone();
-        $('#divHiddenForm').empty();
     };
 
-    var cachePopupElements = function () {
-        popupElements.divHistoryDetailGrid = $("#divHistoryDetailGrid", domElements.divPopup);
-        popupElements.divHistoryGrid = $("#divHistoryGrid", domElements.divPopup);
-    };
     function getReportByType(reportUrl, renderFunction) {
         common.DisableInput();
         $.ajax({
@@ -83,7 +73,14 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             var $obj = $(this);
             var custId = $obj.attr('data-cust-id');
             var userName = $obj.attr('data-username');
-            makeTeamHistoryForm(custId, userName);
+            teamHistory.GetTeamHistory({
+                CustId: custId,
+                Username: userName,
+                LeagueId: 0,
+                BetTypes: 0,
+                FromDate: filterParameters.FromDate,
+                ToDate: filterParameters.ToDate
+            });
         });
 
         //grade history icon click
@@ -91,7 +88,14 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             var $obj = $(this);
             var custId = $obj.attr('data-cust-id');
             var userName = $obj.attr('data-username');
-            makeGradeHistoryForm(custId, userName);
+            gradeHistory.GetGradeHistory({
+                CustId: custId,
+                Username: userName,
+                LeagueId: 0,
+                BetTypes: 0,
+                FromDate: filterParameters.FromDate,
+                ToDate: filterParameters.ToDate
+            });
         });
     };
 
@@ -159,148 +163,6 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
         }
         gridOptions.bodyRows = bodyData;
         domElements.divRankGrid.fanexGrid(gridOptions);
-    };
-
-    // Display new Trader form.
-    var makeTeamHistoryForm = function (custId, userName) {
-        var form = domElements.divHistoryForm.clone();
-
-        common.DisableInput();
-        var param = {
-            CustId: custId,
-            FromDate: filterParameters.FromDate,
-            ToDate: filterParameters.ToDate
-        };
-        $.ajax({
-            type: 'POST',
-            url: urls.GetTeamHistory,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(param),
-            success: function (result) {
-                common.Popup(labels.TeamHistoryDetail + " - " + userName, form);
-                cachePopupElements();
-                renderTeamHistoryGrid(result);
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-
-    // Display new Trader form.
-    var makeGradeHistoryForm = function (custId, userName) {
-        var form = domElements.divHistoryForm.clone();
-
-        common.DisableInput();
-        var param = {
-            CustId: custId,
-            FromDate: filterParameters.FromDate,
-            ToDate: filterParameters.ToDate
-        };
-        $.ajax({
-            type: 'POST',
-            url: urls.GetGradeHistory,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(param),
-            success: function (result) {
-                common.Popup(labels.GradeHistoryDetail + " - " + userName, form);
-                cachePopupElements();
-                renderGradeHistoryGrid(result);
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-
-    var renderTeamHistoryGrid = function (data) {
-        //detail
-        var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.Team, Width: 130, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
-                        { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColTeamEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.Winloss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat}],
-            showNumberColumn: true,
-            gridExpandHeight: 150
-        };
-
-        var bodyData = [];
-        var row = null;
-        if (data && data.length > 0) {
-            $.each(data, function (index, item) {
-                row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
-                                { Name: 'ColTeamName', Value: item.TeamName },
-                                { Name: 'ColTeamEffectiveDate', Value: item.TeamEffectiveDate },
-                                { Name: 'ColNoOfMatches', Value: item.MatchCount },
-                                { Name: 'ColTurnover', Value: item.Turnover },
-                                { Name: 'ColWinloss', Value: item.WinLost },
-                                { Name: 'ColBetCount', Value: item.BetCount },
-                                { Name: 'ColMargin', Value: item.Margin || labels.NA}]
-                };
-                bodyData.push(row);
-            });
-        }
-        gridOptions.bodyRows = bodyData;
-        popupElements.divHistoryDetailGrid.fanexGrid(gridOptions);
-    };
-
-    var renderGradeHistoryGrid = function (data) {
-        //detail
-        var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.Grade, Width: 130, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColGradeEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.Winloss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat },
-                        { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.IntegerFormat },
-                        { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat}],
-            showNumberColumn: true,
-            gridExpandHeight: 150
-        };
-
-        var bodyData = [];
-        var row = null;
-        if (data && data.length > 0) {
-            $.each(data, function (index, item) {
-                row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
-                                { Name: 'ColGrade', Value: item.Grade },
-                                { Name: 'ColGradeEffectiveDate', Value: item.GradeEffectiveDate },
-                                { Name: 'ColNoOfMatches', Value: item.MatchCount },
-                                { Name: 'ColTurnover', Value: item.Turnover },
-                                { Name: 'ColWinloss', Value: item.WinLost },
-                                { Name: 'ColBetCount', Value: item.BetCount },
-                                { Name: 'ColMargin', Value: item.Margin || labels.NA}]
-                };
-                bodyData.push(row);
-            });
-        }
-        gridOptions.bodyRows = bodyData;
-        popupElements.divHistoryDetailGrid.fanexGrid(gridOptions);
     };
 
     var getReports = function () {

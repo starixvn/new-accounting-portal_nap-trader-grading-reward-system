@@ -357,7 +357,6 @@
     <Content Include="Areas\Configuration\Views\TraderManagement\GradeHistoryForm.cshtml" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.less" />
     <Content Include="Areas\Reports\Views\PerformanceSummary\TraderRank.cshtml" />
-    <Content Include="Areas\Reports\Views\PerformanceSummary\HistoryForm.cshtml" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
