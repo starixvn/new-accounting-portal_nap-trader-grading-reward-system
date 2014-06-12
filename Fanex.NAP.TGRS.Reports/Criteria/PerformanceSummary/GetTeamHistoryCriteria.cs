@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 
         public int LeagueId { get; set; }
 
-        public int Bettypes { get; set; }
+        public string Bettypes { get; set; }
 
         /// <summary>
         /// Gets Setting Key.

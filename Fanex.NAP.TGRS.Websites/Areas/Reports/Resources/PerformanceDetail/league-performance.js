@@ -93,9 +93,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             allSelectedText: labels.AllBetTypes,
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
-            },
-            checkAll: function () {
-                domElements.ddlBetType.val('');
             }
         }).multiselectfilter({ width: 125 });
 
@@ -149,17 +146,19 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w') && validateFilterForm()) {
+                var selectedBetTypes = domElements.ddlBetType.val();
+                var betTypeOptions = domElements.ddlBetType.find('option');
+
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
-                parameters.BetTypes = domElements.ddlBetType.val(); //.join(',');
+                parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.LeagueBMFrom = domElements.txtLeagueBMFrom.val().replace(/,/g, '');
                 parameters.LeagueBMTo = domElements.txtLeagueBMTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
                 parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
-                parameters.BetTypes = parameters.BetTypes ? parameters.BetTypes.join(',') : '0';
 
                 hideAllReports();
                 getLeaguePerformanceReport();
