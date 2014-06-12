@@ -24,6 +24,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.GrandTotal = new MatchPerformanceItem();
         }
 
+        public int TotalItems { get; set; }
+
         public List<MatchPerformanceGroup> GroupList { get; set; }
 
         public MatchPerformanceItem GrandTotal { get; set; }

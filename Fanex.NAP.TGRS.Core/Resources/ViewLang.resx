@@ -235,7 +235,7 @@
     <value>Configure</value>
   </data>
   <data name="ProfitMargin" xml:space="preserve">
-    <value>Profit Margin</value>
+    <value>Profit Margin %</value>
   </data>
   <data name="BetType" xml:space="preserve">
     <value>Bet Type</value>
@@ -434,5 +434,11 @@
   </data>
   <data name="Vs" xml:space="preserve">
     <value>-vs-</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="EventDate" xml:space="preserve">
+    <value>Event Date</value>
   </data>
 </root>

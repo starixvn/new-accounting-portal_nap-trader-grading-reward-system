@@ -24,6 +24,8 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public string TeamName { get; set; }
 
+        public int? LeagueCount { get; set; }
+
         public int? MatchCount { get; set; }
 
         public decimal? Turnover { get; set; }

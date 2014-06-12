@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
     using Fanex.Common;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
@@ -31,6 +32,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             {
                 this.MatchId = matchData.MatchId.Value;
                 this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(matchData.HomeId), ViewLang.Vs, CacheRef.GetTeamName(matchData.AwayId));
+                this.EventDate = Convert.ToDateTime(matchData.EventDate).ToShortFormatedDate();
                 this.Turnover = Converter.ToDecimal(matchData.Turnover);
                 this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
                 this.BetCount = Converter.ToInt(matchData.BetCount);
@@ -41,6 +43,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public int MatchId { get; set; }
 
         public string MatchName { get; set; }
+
+        public string EventDate { get; set; }
 
         public decimal Turnover { get; set; }
 

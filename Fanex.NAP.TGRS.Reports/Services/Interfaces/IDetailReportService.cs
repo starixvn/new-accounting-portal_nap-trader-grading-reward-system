@@ -41,5 +41,19 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceGroup object.</returns>
         MatchPerformanceGroup GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria);
+
+        /// <summary>
+        /// Gets the trader performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        TraderPerformanceList GetTraderPerformance(GetTraderPerformanceCriteria criteria);
+
+        /// <summary>
+        /// Gets the match performance of a trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceList object.</returns>
+        MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria);
     }
 }

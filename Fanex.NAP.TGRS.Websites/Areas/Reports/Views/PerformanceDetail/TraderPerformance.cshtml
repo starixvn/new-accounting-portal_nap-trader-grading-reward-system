@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Web
+﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,21 +36,19 @@
     <div id="divTraderPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
-            <div class="lbl-field col_5 align-right">
-                <label for="ddlBetType">@ViewLang.BetType</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <select id="ddlBetType" class="bet-type">
-                </select>
-            </div>
-            <div class="lbl-field col_3 align-right">
-                <label for="txtTrader">@ViewLang.Trader</label>
-            </div>
-            <div class="edit-field col_12 align-left">
-                <input type="text" id="txtTrader" class="width-200" maxlength="100" />
-            </div>
         </div>
         <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlBetType">@ViewLang.BetType</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <select id="ddlBetType" multiple="multiple">
+                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                    {
+                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                    }
+                </select>
+            </div>
             <div class="lbl-field col_3 align-right">
                 <label for="txtMarginFrom">@ViewLang.Margin</label>
             </div>
@@ -62,16 +60,24 @@
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinTurnover" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinWinLoss" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="submit col_4">
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtTrader">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <input type="text" id="txtTrader" class="trader" maxlength="30" />
+            </div>
+            <div class="submit col_5">
                 <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
             </div>
         </div>
@@ -94,23 +100,30 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
-            FromDate: '@ViewLang.FromDate',
-            ToDate: '@ViewLang.ToDate',
             No: '#',
-            League: '@ViewLang.League',
-            League: '@ViewLang.League',
-            NoOfTraders: '@ViewLang.NoOfTraders',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
             NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             BetCount: '@ViewLang.BetCount',
             Margin: '@ViewLang.Margin',
-            LeagueBM: '@ViewLang.LeagueBM',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
             Match: '@ViewLang.Match',
-            TraderPerformance: '@ViewLang.TraderPerformance'
+            Total: '@ViewLang.Total',
+            GrandTotal: '@ViewLang.GrandTotal',
+            AllBetTypes: '@ViewLang.AllBetTypes',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            EventDate: '@ViewLang.EventDate',
+            NA: '@ViewLang.NA',
+            Forecast: '@ViewLang.Forecast',
+            TraderPerformance: '@ViewLang.TraderPerformance',
+            TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
+            GradeHistoryDetail: '@ViewLang.GradeHistoryDetail'
+        };
+      var messages = {
+            InvalidValue: '@Messages.InvalidValueError'
         };
     </script>
 }

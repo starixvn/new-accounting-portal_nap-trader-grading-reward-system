@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.NAP.TGRS.Core.Helpers;
 
     /// <summary>
     /// Match performance group view model.
@@ -24,11 +25,14 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.Total = new MatchPerformanceItem();
         }
 
-        public MatchPerformanceGroup(int leagueId, string leagueName)
+        public MatchPerformanceGroup(int? leagueId)
             : this()
         {
-            this.LeagueId = leagueId;
-            this.LeagueName = leagueName;
+            if (leagueId.HasValue)
+            {
+                this.LeagueId = leagueId.Value;
+                this.LeagueName = CacheRef.GetLeagueName(this.LeagueId);
+            }
         }
 
         public int LeagueId { get; set; }

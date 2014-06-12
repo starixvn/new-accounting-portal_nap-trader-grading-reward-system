@@ -35,6 +35,9 @@
 <div class="filter-bar">
     <div id="divLeaguePerformanceFilter" class="filter-form">
         <div class="filter-row">
+            <div id="divDateRange"></div>
+        </div>
+        <div class="filter-row">
             <div class="lbl-field col_3 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
@@ -46,17 +49,25 @@
                     }
                 </select>
             </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtMarginFrom">@ViewLang.Margin</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            </div>
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinTurnover" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinWinLoss" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
         </div>
         <div class="filter-row">
@@ -66,7 +77,7 @@
             <div class="edit-field col_9 align-left">
                 <input type="text" id="txtLeague" class="league" maxlength="100" />
             </div>
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_3 align-right">
                 <label for="txtLeagueBMFrom">@ViewLang.LeagueBM</label>
             </div>
             <div class="edit-field col_6 align-left">
@@ -74,19 +85,8 @@
                 <span> - </span>
                 <input type="text" id="txtLeagueBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="txtMarginFrom">@ViewLang.Margin</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-        </div>
-        <div class="filter-row">
-            <div id="divDateRange"></div>
             <div class="submit col_5">
-                <input id="btnGenerate" type="button" class="blue-button float-right" value="@ViewLang.Generate" />
+                <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
             </div>
         </div>
     </div>
@@ -111,8 +111,6 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
-            FromDate: '@ViewLang.FromDate',
-            ToDate: '@ViewLang.ToDate',
             No: '#',
             League: '@ViewLang.League',
             NoOfTraders: '@ViewLang.NoOfTraders',
@@ -126,6 +124,7 @@
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
             Match: '@ViewLang.Match',
+            Total: '@ViewLang.Total',
             GrandTotal: '@ViewLang.GrandTotal',
             AllBetTypes: '@ViewLang.AllBetTypes',
             EffectiveDate: '@ViewLang.EffectiveDate',
@@ -135,7 +134,7 @@
             TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
             GradeHistoryDetail: '@ViewLang.GradeHistoryDetail'
         };
-        messages = {
+        var messages = {
             InvalidValue: '@Messages.InvalidValueError'
         };
     </script>

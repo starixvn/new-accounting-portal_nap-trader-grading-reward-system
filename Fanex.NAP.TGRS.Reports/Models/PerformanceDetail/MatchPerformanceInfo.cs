@@ -16,6 +16,8 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
     /// </summary>
     public class MatchPerformanceInfo
     {
+        public int? LeagueId { get; set; }
+
         public int? MatchId { get; set; }
 
         public int? HomeId { get; set; }

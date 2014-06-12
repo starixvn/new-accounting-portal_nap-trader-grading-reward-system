@@ -149,7 +149,42 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
+        }
+
+        /// <summary>
+        /// Gets the trader performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = null;
+
+            criteria.Username = criteria.Username ?? string.Empty;
+            traderPerformance = this._detailReportService.GetTraderPerformance(criteria);
+
+            return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of a trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
+        {
+            MatchPerformanceList martchPerformance = this._detailReportService.GetMatchPerformanceOfTrader(criteria);
+
+            return Json(martchPerformance);
         }
 
         #endregion Trader Performance

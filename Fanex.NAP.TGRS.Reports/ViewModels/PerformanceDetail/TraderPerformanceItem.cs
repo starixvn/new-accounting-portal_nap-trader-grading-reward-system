@@ -34,6 +34,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TeamId = Converter.ToInt(traderData.TeamId);
                 this.TeamName = traderData.TeamName;
                 this.HasTeamHistory = Converter.ToInt(traderData.NoOfTeamChanged) > 1;
+                this.NoOfLeagues = Converter.ToInt(traderData.LeagueCount);
                 this.NoOfMatches = Converter.ToInt(traderData.MatchCount);
                 this.Turnover = Converter.ToDecimal(traderData.Turnover);
                 this.WinLoss = Converter.ToDecimal(traderData.WinLoss);

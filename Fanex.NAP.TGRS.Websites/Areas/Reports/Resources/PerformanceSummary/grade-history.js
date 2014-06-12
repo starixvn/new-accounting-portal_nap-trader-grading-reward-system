@@ -65,10 +65,18 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
                       { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       }],
-            showNumberColumn: true
+            showNumberColumn: true,
+            showFooter: true
         };
         var bodyData = [];
+        var footerData = [];
         var row = null;
+        var total = {
+            MatchCount: 0,
+            Turnover: 0,
+            WinLost: 0,
+            BetCount: 0
+        };
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
@@ -83,10 +91,25 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
                               { Name: 'ColMargin', Value: item.Margin || labels.NA}]
                 };
                 bodyData.push(row);
+                total.MatchCount += item.MatchCount;
+                total.Turnover += item.Turnover;
+                total.WinLost += item.WinLost;
+                total.BetCount += item.BetCount;
             });
+
+            row = {
+                Columns: [{ Name: 'ColNum', Value: labels.Total, MergeColNumber: 3, CellAlign: 'right' },
+                          { Name: 'ColNoOfMatches', Value: total.MatchCount },
+                          { Name: 'ColTurnover', Value: total.Turnover },
+                          { Name: 'ColWinloss', Value: total.WinLost },
+                          { Name: 'ColBetCount', Value: total.BetCount },
+                          { Name: 'ColMargin', Value: total.Turnover === 0 ? labels.NA : total.WinLost / total.Turnover * 100}]
+            };
+            footerData.push(row);
         }
 
         gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
         $('#divGradeHistory', '#divPopup').fanexGrid(gridOptions);
     };
 
