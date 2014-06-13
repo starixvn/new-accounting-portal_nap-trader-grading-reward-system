@@ -89,7 +89,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             var cellRange = new CellRangeAddress(rowIndex, rowIndex + totalRow - 1, colIndex, colIndex + totalCol - 1);
             this._sheet.AddMergedRegion(cellRange);
 
-            var cell = this._sheet.GetCell(rowIndex, colIndex);
+            ICell cell = this._sheet.GetCell(rowIndex, colIndex);
             cell.SetCellValue(value);
         }
 
@@ -240,7 +240,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
         /// <param name="recordList">List of values that will be filled into rows.</param>
         public void WriteRows(int rowId, IEnumerable<object> recordList)
         {
-            foreach (var record in recordList)
+            foreach (object record in recordList)
             {
                 this.WriteRow(rowId, record);
             }

@@ -155,7 +155,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
             // Copy merged cells.
             CellRangeAddress sourceRange = null;
 
-            for (var i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
+            for (int i = 0; i < sourceCell.Sheet.NumMergedRegions; i++)
             {
                 CellRangeAddress range = sourceCell.Sheet.GetMergedRegion(i);
 

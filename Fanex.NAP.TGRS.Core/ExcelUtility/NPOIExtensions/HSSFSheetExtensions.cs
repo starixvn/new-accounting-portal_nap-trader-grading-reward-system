@@ -30,7 +30,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// <param name="total">Number of rows that will be copied.</param>
         public static void CopyRows(this ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int rowIndex, int total)
         {
-            for (var i = 0; i < total; i++)
+            for (int i = 0; i < total; i++)
             {
                 sheet.CopyRow(sourceSheet, sourceRowIndex + i, rowIndex + i);
             }
@@ -49,17 +49,17 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         public static void CopyRow(this ISheet sheet, ISheet sourceSheet, int sourceRowIndex, int rowIndex, int firstColumnIndex, int lastColumnIndex)
         {
             // Expand the sheet to satisfy the number of needed rows.
-            for (var i = sheet.LastRowNum + 1; i <= rowIndex; i++)
+            for (int i = sheet.LastRowNum + 1; i <= rowIndex; i++)
             {
                 sheet.CreateRow(i);
             }
 
             // Get source row that will be copied.
-            var sourceRow = sourceSheet.GetRow(sourceRowIndex);
+            IRow sourceRow = sourceSheet.GetRow(sourceRowIndex);
             if (sourceRow != null)
             {
                 // Get the row at a specific index of the current sheet.
-                var newRow = sheet.GetRow(rowIndex);
+                IRow newRow = sheet.GetRow(rowIndex);
                 newRow = newRow ?? sheet.CreateRow(rowIndex);
                 newRow.Height = sourceRow.Height;
 
@@ -71,7 +71,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
                 for (int i = firstCellNum; i < lastCellNum; i++)
                 {
                     // Get the source cell.
-                    var sourceCell = sourceRow.GetCell(i);
+                    ICell sourceCell = sourceRow.GetCell(i);
 
                     // If the source cell is null then jump to next cell
                     if (sourceCell == null)
@@ -80,12 +80,12 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
                     }
 
                     // Create a new cell at current sheet, and clone the source cell data and style to it.
-                    var newCell = newRow.CreateCell(i);
+                    ICell newCell = newRow.CreateCell(i);
                     CloneCell(newCell, sourceCell);
 
                     // Copy merged area.
                     CellRangeAddress sourceRange = null;
-                    for (var j = 0; j < sourceSheet.NumMergedRegions; j++)
+                    for (int j = 0; j < sourceSheet.NumMergedRegions; j++)
                     {
                         CellRangeAddress range = sourceSheet.GetMergedRegion(j);
                         if (range.FirstColumn == sourceCell.ColumnIndex && range.FirstRow == sourceCell.RowIndex)
@@ -155,7 +155,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
             bool adjustColumn = true;
             for (int rowIndex = sheet.FirstRowNum; rowIndex <= sheet.LastRowNum; rowIndex++)
             {
-                var row = sheet.GetRow(rowIndex);
+                IRow row = sheet.GetRow(rowIndex);
 
                 // If no row exists here then skip to next row.
                 if (row != null)
@@ -168,17 +168,17 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
                         for (int currentCol = columnIndex; currentCol < lastColumn; currentCol++)
                         {
                             // Remove old cell.
-                            var oldCell = row.GetCell(currentCol);
+                            ICell oldCell = row.GetCell(currentCol);
                             if (oldCell != null)
                             {
                                 row.RemoveCell(oldCell);
                             }
 
                             // Move cell.
-                            var nextCell = row.GetCell(currentCol + 1);
+                            ICell nextCell = row.GetCell(currentCol + 1);
                             if (nextCell != null)
                             {
-                                var newCell = row.CreateCell(currentCol, nextCell.CellType);
+                                ICell newCell = row.CreateCell(currentCol, nextCell.CellType);
                                 if (adjustColumn)
                                 {
                                     sheet.SetColumnWidth(newCell.ColumnIndex, sheet.GetColumnWidth(nextCell.ColumnIndex));
@@ -189,7 +189,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
                         }
 
                         // Remove last cell.
-                        var removeCell = row.GetCell(lastColumn);
+                        ICell removeCell = row.GetCell(lastColumn);
                         if (removeCell != null)
                         {
                             row.RemoveCell(removeCell);
@@ -199,7 +199,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
                     // Adjust merged region
                     for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
                     {
-                        var mergedRegion = sheet.GetMergedRegion(i);
+                        CellRangeAddress mergedRegion = sheet.GetMergedRegion(i);
 
                         if (rowIndex == mergedRegion.FirstRow)
                         {
@@ -259,7 +259,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// <returns>Index of merged cells.</returns>
         public static int MergeCells(this ISheet sheet, int firstRow, int firstCol, int lastRow, int lastCol)
         {
-            var rangeAddress = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
+            CellRangeAddress rangeAddress = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
             return sheet.AddMergedRegion(rangeAddress);
         }
 
@@ -275,7 +275,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         {
             for (int i = sheet.NumMergedRegions - 1; i >= 0; i--)
             {
-                var mergedRegion = sheet.GetMergedRegion(i);
+                CellRangeAddress mergedRegion = sheet.GetMergedRegion(i);
                 if ((mergedRegion.FirstRow >= firstRow)
                     && (mergedRegion.LastRow <= lastRow)
                     && (mergedRegion.FirstColumn >= firstCol)

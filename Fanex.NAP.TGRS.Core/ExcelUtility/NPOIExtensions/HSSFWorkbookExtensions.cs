@@ -26,9 +26,9 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// <returns>Sheet instance.</returns>
         public static ISheet CloneSheet(this IWorkbook workbook, string sourceSheetName, string newSheetName)
         {
-            var sheetIndex = workbook.GetSheetIndex(sourceSheetName);
-            var newSheet = workbook.CloneSheet(sheetIndex);
-            var newSheetIndex = workbook.GetSheetIndex(newSheet);
+            int sheetIndex = workbook.GetSheetIndex(sourceSheetName);
+            ISheet newSheet = workbook.CloneSheet(sheetIndex);
+            int newSheetIndex = workbook.GetSheetIndex(newSheet);
             workbook.SetSheetName(newSheetIndex, newSheetName);
             return newSheet;
         }
@@ -40,7 +40,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// <param name="fileName">The file name.</param>
         public static void ToReponseStream(this IWorkbook workbook, string fileName)
         {
-            var response = HttpContext.Current.Response;
+            HttpResponse response = HttpContext.Current.Response;
 
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";

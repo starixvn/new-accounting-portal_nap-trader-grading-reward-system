@@ -41,7 +41,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         public static void WriteCells(this IRow row, int colIndex, object[] values)
         {
             int id = colIndex;
-            foreach (var value in values)
+            foreach (object value in values)
             {
                 row.GetCell(id).SetCellValue(value);
                 id++;
