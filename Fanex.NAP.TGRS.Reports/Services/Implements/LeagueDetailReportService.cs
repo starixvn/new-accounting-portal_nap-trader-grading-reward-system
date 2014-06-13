@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.Helpers;
@@ -127,7 +128,12 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
             if ((leagueData != null) && (leagueData.ItemList.Count > 0))
             {
-                var writer = new ExcelTemplateWriter(templateUrl, ViewLang.LeaguePerformance, ViewLang.LeaguePerformance);
+                string reportName = string.Format(
+                                ViewLang.PerformanceDetailFileName,
+                                ViewLang.League,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.LeaguePerformance);
                 writer.CopyRows(0, 4);
 
                 // Write content.

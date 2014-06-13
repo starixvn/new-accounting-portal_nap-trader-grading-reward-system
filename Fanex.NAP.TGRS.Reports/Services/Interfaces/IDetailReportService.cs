@@ -78,6 +78,13 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         GradePerformanceList GetGradePerformance(GetGradePerformanceCriteria criteria);
 
         /// <summary>
+        /// Export Grade Performance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templateUrl);
+
+        /// <summary>
         /// Gets the trader performance of a grade.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
