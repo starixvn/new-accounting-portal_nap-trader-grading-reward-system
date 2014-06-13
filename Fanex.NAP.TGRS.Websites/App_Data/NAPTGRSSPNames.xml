@@ -59,5 +59,14 @@
     <Setting Key="TGRS_Rpt_DetailTrader_Match" SpName="TGRS_Rpt_DetailTrader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
+    <Setting Key="TGRS_Rpt_DetailGradePerformance" SpName="TGRS_Rpt_DetailGradePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailGrade_Trader" SpName="TGRS_Rpt_DetailGrade_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailGrade_Match" SpName="TGRS_Rpt_DetailGrade_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
   </Function>
 </Functions>

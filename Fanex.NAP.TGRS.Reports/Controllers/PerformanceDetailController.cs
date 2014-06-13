@@ -29,7 +29,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         #region Attributes and Constructors
 
         private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls";
-
         private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
 
         private readonly IDetailReportService _detailReportService;
@@ -38,6 +37,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             : this(null)
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
 
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
@@ -45,6 +45,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.BetTypes = betTypes;
         }
 
         public PerformanceDetailController(IDetailReportService detailReportService)
@@ -73,10 +74,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
-
-            ViewBag.BetTypes = betTypes;
-
             return View();
         }
 
@@ -151,10 +148,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
-
-            ViewBag.BetTypes = betTypes;
-
             return View();
         }
 
@@ -216,6 +209,48 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult GradePerformance()
         {
             return View();
+        }
+
+        /// <summary>
+        /// Gets the grade performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the grade performance data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
+        {
+            GradePerformanceList gradePerformance = this._detailReportService.GetGradePerformance(criteria);
+
+            return Json(gradePerformance);
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a grade.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance of a grade data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfGrade(criteria);
+
+            return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of a pair of grade and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a pair of grade and trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
+        {
+            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfGradeTrader(criteria);
+
+            return Json(matchPerformance);
         }
 
         #endregion Grade Performance

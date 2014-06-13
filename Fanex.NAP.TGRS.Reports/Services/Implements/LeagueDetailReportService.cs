@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     /// </summary>
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
-        private const string LeaguePerformanceDetailReportSeesionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
+        private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
 
         /// <summary>
         /// Gets the bet types.
@@ -63,7 +63,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 }
 
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSeesionKey, leaguePerformance);
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }
 
             return leaguePerformance;
@@ -122,7 +122,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// <param name="templateUrl">Path to Excel template file.</param>
         public void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templateUrl)
         {
-            LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSeesionKey);
+            LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey);
 
             if ((leagueData != null) && (leagueData.ItemList.Count > 0))
             {

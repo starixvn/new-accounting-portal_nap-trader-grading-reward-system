@@ -356,8 +356,8 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.less" />
     <Content Include="Areas\Reports\Views\PerformanceSummary\TraderRank.cshtml" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.less" />
-    <None Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls" />
-    <None Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Grade performance view model.
@@ -17,9 +19,26 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class GradePerformanceItem
     {
-        public int GradeId { get; set; }
+        public GradePerformanceItem()
+        {
+        }
 
-        public string GradeName { get; set; }
+        public GradePerformanceItem(GradePerformanceInfo gradeData)
+        {
+            if (gradeData != null)
+            {
+                this.Grade = gradeData.Grade.Value;
+                this.NoOfTraders = Converter.ToInt(gradeData.TraderCount);
+                this.NoOfLeagues = Converter.ToInt(gradeData.LeagueCount);
+                this.NoOfMatches = Converter.ToInt(gradeData.MatchCount);
+                this.Turnover = Converter.ToDecimal(gradeData.Turnover);
+                this.WinLoss = Converter.ToDecimal(gradeData.WinLoss);
+                this.BetCount = Converter.ToInt(gradeData.BetCount);
+                this.Margin = gradeData.Margin;
+            }
+        }
+
+        public int Grade { get; set; }
 
         public int NoOfTraders { get; set; }
 
@@ -33,6 +52,6 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
     }
 }

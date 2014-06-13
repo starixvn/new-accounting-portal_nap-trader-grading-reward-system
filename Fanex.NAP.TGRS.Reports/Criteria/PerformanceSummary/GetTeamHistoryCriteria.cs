@@ -19,6 +19,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     {
         public int CustId { get; set; }
 
+        public byte Grade { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

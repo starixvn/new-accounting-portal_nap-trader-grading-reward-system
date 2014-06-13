@@ -69,5 +69,26 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templateUrl">Path to Excel template file.</param>
         void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templateUrl);
+
+        /// <summary>
+        /// Gets the grade performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>GradePerformanceList object.</returns>
+        GradePerformanceList GetGradePerformance(GetGradePerformanceCriteria criteria);
+
+        /// <summary>
+        /// Gets the trader performance of a grade.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        TraderPerformanceList GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria);
+
+        /// <summary>
+        /// Gets the match performance of a pair of grade and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        MatchPerformanceGroup GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria);
     }
 }

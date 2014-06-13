@@ -26,11 +26,17 @@
 
 .ui-multiselect-menu {
     display: none;
-    padding: 3px;
-    position: fixed;
-    z-index: 2;
+    position: absolute;
     text-align: left;
     margin-top: 1px;
+
+    &.ui-dialog {
+        padding: 3px;
+
+        &.ui-front {
+            z-index: 101;
+        }
+    }
 
     &.ui-widget {
         font-family: Tahoma,Arial,Helvetica,sans-serif;
@@ -52,15 +58,16 @@
 
     .ui-multiselect-hasfilter {
         border: none;
-        border-bottom: 1px solid #000 !important;
+        border-bottom: 1px solid #9b9a9a !important;
     }
 
     .ui-multiselect-header {
         background: none;
-        margin-bottom: 3px;
-        padding: 3px 0 5px 4px;
+        margin-bottom: 7px;
+        padding: 3px 0 7px 4px;
 
         ul {
+            top: 4px;
             font-size: 0.9em;
 
             li {
@@ -70,8 +77,12 @@
 
             &.ui-helper-reset {
                 .ui-multiselect-all, .ui-multiselect-none {
-                    color: #5476BB;
+                    color: #0136ac;
                     font-size: 11px;
+
+                    .ui-icon-closethick, .ui-icon-check {
+                        margin-right: 3px;
+                    }
                 }
             }
         }
@@ -89,7 +100,9 @@
         }
 
         .ui-multiselect-close {
-            float: right;
+            position: absolute;
+            top: 1px;
+            right: 1px;
             text-align: right;
             padding-right: 0;
         }
@@ -183,8 +196,8 @@
     input {
         margin: 0 10px 0 5px;
         height: 15px;
-        padding: 2px;
-        border: 1px solid #777;
+        padding: 2px 5px;
+        border: 1px solid #9b9a9a;
         -webkit-appearance: textfield;
         box-sizing: content-box;
         -moz-box-sizing: content-box;
