@@ -28,7 +28,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     {
         #region Attributes and Constructors
 
-        private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xlsx";
+        private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -105,7 +105,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             string templateUrl = Server.MapPath(LeaguePerformanceDetail);
 
-            ////this._detailReportService.ExportLeaguePerformance(criteria, templateUrl);
+            this._detailReportService.ExportLeaguePerformance(criteria, templateUrl);
 
             return new EmptyResult();
         }

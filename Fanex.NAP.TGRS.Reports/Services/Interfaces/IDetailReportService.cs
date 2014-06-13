@@ -42,6 +42,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <returns>MatchPerformanceGroup object.</returns>
         MatchPerformanceGroup GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria);
 
+        void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templateUrl);
+        
         /// <summary>
         /// Gets the trader performance.
         /// </summary>

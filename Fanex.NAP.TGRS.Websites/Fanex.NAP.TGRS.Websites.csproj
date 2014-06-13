@@ -319,9 +319,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Reports\ExcelTemplates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -358,6 +356,7 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.less" />
     <Content Include="Areas\Reports\Views\PerformanceSummary\TraderRank.cshtml" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.less" />
+    <None Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

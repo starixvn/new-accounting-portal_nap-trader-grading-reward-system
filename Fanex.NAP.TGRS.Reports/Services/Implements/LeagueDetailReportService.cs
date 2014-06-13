@@ -12,7 +12,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -114,6 +116,30 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         }
 
         /// <summary>
+        /// Export LeaguePerformance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        public void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templateUrl)
+        {
+            LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSeesionKey);
+
+            if ((leagueData != null) && (leagueData.ItemList.Count > 0))
+            {
+                var writer = new ExcelTemplateWriter(templateUrl, ViewLang.LeaguePerformance, ViewLang.LeaguePerformance);
+                writer.CopyRows(0, 3);
+
+                // Write content.
+                FillContentRow(leagueData.ItemList, ref writer);
+
+                // Fill grand total.
+                ////FillGrandTotalRow(leagueData.Total, ref writer);
+                writer.SyncColumnsWidth(9);
+                writer.Render();
+            }
+        }
+
+        /// <summary>
         /// Calculates the total margin.
         /// </summary>
         /// <param name="winLoss">The win loss.</param>
@@ -129,6 +155,37 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return margin;
+        }
+
+        /// <summary>
+        /// Fills the content row.
+        /// </summary>
+        /// <param name="contentData">The content data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        private void FillContentRow(List<LeaguePerformanceItem> contentData, ref ExcelTemplateWriter writer)
+        {
+            int len = contentData.Count;
+            LeaguePerformanceItem item;
+
+            for (int i = 0; i < len; i++)
+            {
+                int styleIndex = (i % 2 == 0) ? 4 : 5;
+                item = contentData[i];
+
+                var record = new object[]
+                {
+                    i + 1,
+                    item.LeagueName, 
+                    item.NoOfTraders,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.WinLoss,
+                    item.BetCount,
+                    item.LeagueBM,
+                    item.Margin
+                };
+                writer.WriteRow(styleIndex, record);
+            }
         }
     }
 }
