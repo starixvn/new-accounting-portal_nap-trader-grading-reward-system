@@ -127,13 +127,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             if ((leagueData != null) && (leagueData.ItemList.Count > 0))
             {
                 var writer = new ExcelTemplateWriter(templateUrl, ViewLang.LeaguePerformance, ViewLang.LeaguePerformance);
-                writer.CopyRows(0, 3);
+                writer.CopyRows(0, 4);
 
                 // Write content.
-                FillContentRow(leagueData.ItemList, ref writer);
+                FillRowData(leagueData, ref writer);
 
-                // Fill grand total.
-                ////FillGrandTotalRow(leagueData.Total, ref writer);
                 writer.SyncColumnsWidth(9);
                 writer.Render();
             }
@@ -162,29 +160,63 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillContentRow(List<LeaguePerformanceItem> contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(LeaguePerformanceList contentData, ref ExcelTemplateWriter writer)
         {
-            int len = contentData.Count;
+            // Content rows
+            int len = contentData.ItemList.Count;
             LeaguePerformanceItem item;
 
             for (int i = 0; i < len; i++)
             {
                 int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData[i];
+                item = contentData.ItemList[i];
 
                 var record = new object[]
                 {
                     i + 1,
-                    item.LeagueName, 
+                    item.LeagueName,
                     item.NoOfTraders,
                     item.NoOfMatches,
                     item.Turnover,
                     item.WinLoss,
                     item.BetCount,
-                    item.LeagueBM,
-                    item.Margin
+                    item.Margin,
+                    item.LeagueBM
                 };
                 writer.WriteRow(styleIndex, record);
+            }
+
+            // Total row
+            LeaguePerformanceItem total = contentData.Total;
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                total.NoOfTraders,
+                total.NoOfMatches,
+                total.Turnover,
+                total.WinLoss,
+                total.BetCount,
+                CalculateMarginVal(total.WinLoss, total.Turnover)
+            };
+            writer.WriteRow(6, totalRecord);
+        }
+
+        /// <summary>
+        /// Calculates Margin.
+        /// </summary>
+        /// <param name="winloss">WINLOSS value.</param>
+        /// <param name="turnover">Turnover value.</param>
+        /// <returns>Margin value.</returns>
+        private object CalculateMarginVal(decimal winloss, decimal turnover)
+        {
+            if (turnover != 0)
+            {
+                return (winloss / turnover) * 100;
+            }
+            else
+            {
+                return ViewLang.NA;
             }
         }
     }
