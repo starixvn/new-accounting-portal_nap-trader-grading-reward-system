@@ -28,7 +28,6 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         divTopLoseLeagueGrid: null,
         divBetTypeGrid: null,
         ddlPeriodType: null
-
     };
     var filterParameters = {
         ReportType: null,

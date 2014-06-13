@@ -12,7 +12,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -85,6 +87,78 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return matchPerformance;
+        }
+
+        /// <summary>
+        /// Export Trader Performance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templateUrl)
+        {
+            TraderPerformanceList traderData = SessionManager.Get<TraderPerformanceList>(TraderPerformanceDetailReportSessionKey);
+
+            if ((traderData != null) && (traderData.ItemList.Count > 0))
+            {
+                var writer = new ExcelTemplateWriter(templateUrl, ViewLang.TraderPerformance, ViewLang.TraderPerformance);
+                writer.CopyRows(0, 4);
+
+                // Write content.
+                FillRowData(traderData, ref writer);
+
+                writer.SyncColumnsWidth(10);
+                writer.Render();
+            }
+        }
+
+        /// <summary>
+        /// Fills the content row.
+        /// </summary>
+        /// <param name="contentData">The content data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        private void FillRowData(TraderPerformanceList contentData, ref ExcelTemplateWriter writer)
+        {
+            // Content rows
+            int len = contentData.ItemList.Count;
+            TraderPerformanceItem item;
+
+            for (int i = 0; i < len; i++)
+            {
+                int styleIndex = (i % 2 == 0) ? 4 : 5;
+                item = contentData.ItemList[i];
+
+                var record = new object[]
+                {
+                    i + 1,
+                    item.TraderName,
+                    item.Grade,
+                    item.TeamName,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.WinLoss,
+                    item.BetCount,
+                    item.Margin
+                };
+                writer.WriteRow(styleIndex, record);
+            }
+
+            // Total row
+            TraderPerformanceItem total = contentData.Total;
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                null,
+                null,
+                total.NoOfLeagues,
+                total.NoOfMatches,
+                total.Turnover,
+                total.WinLoss,
+                total.BetCount,
+                (object)total.Margin ?? ViewLang.NA
+            };
+            writer.WriteRow(6, totalRecord);
         }
     }
 }

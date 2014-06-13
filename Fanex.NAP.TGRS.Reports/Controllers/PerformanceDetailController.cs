@@ -30,6 +30,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls";
 
+        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
+
         private readonly IDetailReportService _detailReportService;
 
         public PerformanceDetailController()
@@ -171,6 +173,21 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             traderPerformance = this._detailReportService.GetTraderPerformance(criteria);
 
             return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Exports the trader performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>Excel file.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
+        {
+            string templateUrl = Server.MapPath(TraderPerformanceDetail);
+
+            this._detailReportService.ExportTraderPerformance(criteria, templateUrl);
+
+            return new EmptyResult();
         }
 
         /// <summary>

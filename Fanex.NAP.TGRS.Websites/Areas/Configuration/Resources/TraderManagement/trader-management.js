@@ -163,7 +163,6 @@ Fanex.TGRS.TraderManagement = function () {
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
-
                 var parameters = {
                     CustId: popupElements.txtCustId.val(),
                     NewTeamId: popupElements.ddlTeam.val(),
@@ -189,7 +188,6 @@ Fanex.TGRS.TraderManagement = function () {
                 else {
                     common.ShowInlineInfoMsg(popupElements.divErrorSuccessMsg, messages.UpdateNoChange, false);
                 }
-
             }
         });
 
@@ -481,7 +479,6 @@ Fanex.TGRS.TraderManagement = function () {
         else {
             ddlDiv.val('');
         }
-
     };
 
     // Update Grade drop-down list.
@@ -583,7 +580,6 @@ Fanex.TGRS.TraderManagement = function () {
             var teamName = $obj.attr('data-trader-team');
             var grade = $obj.attr('data-trader-grade');
 
-
             //get teamId and grade by name
             var teamId = cacheTeamDataId[teamName];
             makeUpdateTraderForm(custId, username, employeeId, teamId, grade, teamEffectiveDate, gradeEffectiveDate);
@@ -670,7 +666,6 @@ Fanex.TGRS.TraderManagement = function () {
                 common.EnableInput();
             }
         });
-
     };
 
     // Display new Trader form.

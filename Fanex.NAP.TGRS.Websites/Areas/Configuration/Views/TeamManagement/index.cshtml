@@ -12,22 +12,22 @@
     @if (ViewBag.HasEditRight)
     {
         <div class="header-button">
-            <a href="#" id="lnkAddNewTeam" class="green-button change-list"><span class="add-icon"></span>@ViewLang.NewTeam</a>
+            <a href="#" id="lnkAddNewTeam" class="green-button change-list"><span class="add-icon">
+            </span>@ViewLang.NewTeam</a>
         </div>
     }
 }
 <div id="resultContainer" class="content-grid">
-    <div  id="divTeamsGrid" class="freegrid">
+    <div id="divTeamsGrid" class="freegrid">
     </div>
 </div>
 @if (ViewBag.HasEditRight)
-{ 
+{
     <div id="divHiddenForm" class="display-none">
         @Html.Partial("InsertTeamForm")
         @Html.Partial("UpdateTeamForm")
     </div>
 }
-
 @section Foot
 {
     @Scripts.Render("~/scripts/teamManagement")

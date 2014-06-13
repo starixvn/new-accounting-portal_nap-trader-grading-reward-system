@@ -147,7 +147,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                 else {
                     GradeDateCol = colGradeFormatNoIcon.format(item.Grade);
                 }
-                
+
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColTrader', Value: item.UserName },

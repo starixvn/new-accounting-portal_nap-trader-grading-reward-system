@@ -116,7 +116,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         }
 
         /// <summary>
-        /// Export LeaguePerformance to excel.
+        /// Export League Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templateUrl">Path to Excel template file.</param>
@@ -197,27 +197,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 total.Turnover,
                 total.WinLoss,
                 total.BetCount,
-                CalculateMarginVal(total.WinLoss, total.Turnover)
+                (object)total.Margin ?? ViewLang.NA
             };
             writer.WriteRow(6, totalRecord);
-        }
-
-        /// <summary>
-        /// Calculates Margin.
-        /// </summary>
-        /// <param name="winloss">WINLOSS value.</param>
-        /// <param name="turnover">Turnover value.</param>
-        /// <returns>Margin value.</returns>
-        private object CalculateMarginVal(decimal winloss, decimal turnover)
-        {
-            if (turnover != 0)
-            {
-                return (winloss / turnover) * 100;
-            }
-            else
-            {
-                return ViewLang.NA;
-            }
         }
     }
 }

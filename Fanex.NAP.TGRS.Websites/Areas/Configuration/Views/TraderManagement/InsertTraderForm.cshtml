@@ -1,12 +1,13 @@
 ﻿<div id="divInsertTraderForm" class="form-bar width-400">
     <div class="form expand-form">
-        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div id="divErrorSuccessMsg" class="inline-message">
+        </div>
         <div class="form-row">
             <div class="lbl-field width-80">
                 <label>@ViewLang.Username</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError"  maxlength="30"/>
+                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError"  maxlength="30" />
             </div>
         </div>
         <div class="form-row">
@@ -14,7 +15,7 @@
                 <label>@ViewLang.EmployeeId</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtEmployeeId" class="width-200 " data-val-required="@Messages.RequiredFieldError" maxlength="20"/>
+                <input type="text" id="txtEmployeeId" class="width-200 " data-val-required="@Messages.RequiredFieldError" maxlength="20" />
             </div>
         </div>
         <div class="form-row">
@@ -22,7 +23,8 @@
                 <label>@ViewLang.Team</label>
             </div>
             <div class="edit-field">
-                <select id="ddlTeamPopup" data-val-required="@Messages.RequiredFieldError"></select>
+                <select id="ddlTeamPopup" data-val-required="@Messages.RequiredFieldError">
+                </select>
             </div>
         </div>
         <div class="form-row">
@@ -30,11 +32,13 @@
                 <label>@ViewLang.Grade</label>
             </div>
             <div class="edit-field">
-                <select id="ddlGradePopup" data-val-required="@Messages.RequiredFieldError"></select>
+                <select id="ddlGradePopup" data-val-required="@Messages.RequiredFieldError">
+                </select>
             </div>
         </div>
         <div class="form-row button-row">
-            <div class="lbl-field width-80"></div>
+            <div class="lbl-field width-80">
+            </div>
             <div class="edit-field">
                 <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
                 <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
