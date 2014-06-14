@@ -95,7 +95,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// Gets the match performance of a pair of grade and trader.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>MatchPerformanceGroup object.</returns>
-        MatchPerformanceGroup GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria);
+        /// <returns>MatchPerformanceList object.</returns>
+        MatchPerformanceList GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria);
     }
 }

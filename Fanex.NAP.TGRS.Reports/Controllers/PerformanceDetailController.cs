@@ -250,7 +250,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
-            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfGradeTrader(criteria);
+            MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfGradeTrader(criteria);
 
             return Json(matchPerformance);
         }

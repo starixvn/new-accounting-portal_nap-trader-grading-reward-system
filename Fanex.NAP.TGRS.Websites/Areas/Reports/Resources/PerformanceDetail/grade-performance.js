@@ -42,6 +42,13 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         Turnover: null,
         WinLost: null
     };
+    var cachedData = {
+        MatchPerformance: null,
+        GrandTotal: null,
+        TotalItems: 0,
+        PageSize: common.Constants.PageSize,
+        PageIndex: 0
+    };
     var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
 
     // Cache DOM Elements.
@@ -493,7 +500,12 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(matchPerformanceParamrters),
             success: function (result) {
-                renderMatchPerformanceGrid(result, grade, traderId, traderName);
+                cachedData.PageSize = common.Constants.PageSize;
+                cachedData.PageIndex = 0;
+                cachedData.MatchPerformance = result.GroupList;
+                cachedData.GrandTotal = result.GrandTotal;
+                cachedData.TotalItems = result.TotalItems;
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, grade, traderId, traderName);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -502,6 +514,52 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 common.EnableInput();
             }
         });
+    };
+
+    // Customize reloading page.
+    var reloadPage = function (pageIndex, pageSize, grade, traderId, traderName) {
+        var pageData = [];
+        var startIndex = 0;
+        var endIndex = 0;
+        var counter = 0;
+
+        if (cachedData.MatchPerformance && cachedData.MatchPerformance.length > 0) {
+            pageIndex = parseInt(pageIndex);
+            pageSize = parseInt(pageSize);
+            startIndex = pageIndex * pageSize;
+            endIndex = startIndex + pageSize - 1;
+
+            $.each(cachedData.MatchPerformance, function (groupIndex, group) {
+                var temCounter = counter + group.ItemList.length - 1;
+                var currentGroup = null;
+
+                if (temCounter < startIndex || counter > endIndex) {
+                    counter = temCounter + 1;
+                } else {
+                    currentGroup = {
+                        LeagueId: group.LeagueId,
+                        LeagueName: group.LeagueName,
+                        Total: group.Total,
+                        ItemList: []
+                    };
+
+                    $.each(group.ItemList, function (index, item) {
+                        if (counter >= startIndex && counter <= endIndex) {
+                            item.Order = counter;
+                            currentGroup.ItemList.push(item);
+                        }
+
+                        counter++;
+                    });
+
+                    pageData.push(currentGroup);
+                }
+            });
+        }
+
+        cachedData.PageIndex = pageIndex;
+        cachedData.PageSize = pageSize;
+        renderMatchPerformanceGrid(pageData, grade, traderId, traderName);
     };
 
     // Render match performance of a specific trader grid.
@@ -513,8 +571,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var forecastCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
                       { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
@@ -533,45 +592,67 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             titleInfo: {
                 text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, traderName)
             },
+            showTree: true,
+            showDistinctRow: false,
             showPager: true,
+            customPager: true,
             pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
+                currentPage: cachedData.PageIndex,
+                itemsPerPage: cachedData.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    handleMatchPerformanceGridEvents();
-
-                    return rows;
+                totalItem: cachedData.TotalItems,
+                pagerSelectCallBack: function (pageIndex, pageSize) {
+                    reloadPage(pageIndex, pageSize, grade, traderId, traderName);
                 }
             },
             showFooter: true
         };
         var bodyData = [];
         var footerData = [];
+        var subRows;
         var row;
+        var counter = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
-                forecastCol = forecastFormat.format(traderId, item.MatchId, labels.Forecast);
+        if (data && data.length > 0) {
+            $.each(data, function (groupIndex, group) {
+                subRows = [];
+
+                $.each(group.ItemList, function (index, item) {
+                    counter++;
+                    forecastCol = forecastFormat.format(traderId, item.MatchId);
+
+                    row = {
+                        Columns: [{ Name: 'ColNo', Value: item.Order + 1, CssClass: 'order-column' },
+                                  { Name: 'ColMatch', Value: item.MatchName },
+                                  { Name: 'ColEventDate', Value: item.EventDate },
+                                  { Name: 'ColTurnover', Value: item.Turnover },
+                                  { Name: 'ColWinLoss', Value: item.WinLoss },
+                                  { Name: 'ColBetCount', Value: item.BetCount },
+                                  { Name: 'ColMargin', Value: item.Margin || labels.NA },
+                                  { Name: 'ColForecast', Value: forecastCol}]
+                    };
+                    subRows.push(row);
+                });
+
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
-                              { Name: 'ColMatch', Value: item.MatchName },
-                              { Name: 'ColTurnover', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColForecast', Value: forecastCol}]
+                    Columns: [{ Name: 'ColNo', Value: group.LeagueName, MergeColNumber: 3, CellAlign: 'left' },
+                              { Name: 'ColTurnover', Value: group.Total.Turnover },
+                              { Name: 'ColWinLoss', Value: group.Total.WinLoss },
+                              { Name: 'ColBetCount', Value: group.Total.BetCount },
+                              { Name: 'ColMargin', Value: group.Total.Margin || labels.NA },
+                              { Name: 'ColForecast', Value: ''}],
+                    SubRows: subRows
                 };
-
                 bodyData.push(row);
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA}]
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+                          { Name: 'ColTurnover', Value: cachedData.GrandTotal.Turnover },
+                          { Name: 'ColWinLoss', Value: cachedData.GrandTotal.WinLoss },
+                          { Name: 'ColBetCount', Value: cachedData.GrandTotal.BetCount },
+                          { Name: 'ColMargin', Value: cachedData.GrandTotal.Margin || labels.NA },
+                          { Name: 'ColForecast', Value: ''}]
             };
             footerData.push(row);
         }

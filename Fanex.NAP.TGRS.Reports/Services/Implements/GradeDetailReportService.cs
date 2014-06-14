@@ -79,20 +79,36 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// Gets the match performance of a pair of grade and trader.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>MatchPerformanceGroup object.</returns>
-        public MatchPerformanceGroup GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
+        /// <returns>MatchPerformanceList object.</returns>
+        public MatchPerformanceList GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
             IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
-            MatchPerformanceGroup matchPerformance = new MatchPerformanceGroup();
+            MatchPerformanceList matchPerformance = new MatchPerformanceList();
 
             if (matchData != null && matchData.Any())
             {
-                foreach (MatchPerformanceInfo item in matchData)
+                IEnumerable<IGrouping<int?, MatchPerformanceInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
+                MatchPerformanceGroup leagueGroup = null;
+
+                foreach (IGrouping<int?, MatchPerformanceInfo> group in leagueGroups)
                 {
-                    matchPerformance.AddItem(new MatchPerformanceItem(item));
+                    if (group.Key.HasValue)
+                    {
+                        leagueGroup = new MatchPerformanceGroup(group.Key);
+
+                        foreach (MatchPerformanceInfo match in group)
+                        {
+                            leagueGroup.AddItem(new MatchPerformanceItem(match));
+                        }
+
+                        leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
+                        matchPerformance.AddItem(leagueGroup);
+                    }
                 }
 
-                matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
+                matchPerformance.GroupList = matchPerformance.GroupList.OrderBy(obj => obj.LeagueName).ToList();
+                matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
+                matchPerformance.TotalItems = matchData.Count();
             }
 
             return matchPerformance;
