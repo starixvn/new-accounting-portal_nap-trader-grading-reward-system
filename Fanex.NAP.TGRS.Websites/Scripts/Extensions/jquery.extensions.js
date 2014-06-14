@@ -291,8 +291,9 @@
                          '<div class="edit-field"><select id="ddlPeriodType" class="col_3"></select></div>' +
                          '<div class="edit-field"><div></div></div>' +
                          '<div class="edit-field">' +
+                            '<div class="ui-separate-label-small"></div>' +
                             '<div class="col_5"><div id="divMonthFrom"></div></div>' +
-                            '<div class="ui-separate-label">-</div>' +
+                            '<div class="ui-separate-label month-label">-</div>' +
                             '<div class="col_5"><div id="divMonthTo"></div></div>' +
                          '</div>');
                          //'<div class="edit-field"><select id="ddlYear"></select></div>');
@@ -366,7 +367,7 @@
                     Id: 'dpkFromDate',
                     Label: '',
                     InitDate: options.defaultFromDate,
-                    LabelCss: '',
+                    LabelCss: 'ui-separate-label-small',
                     TextboxCss: 'edit-field width-auto'
                 },
                 secondDatePicker: {

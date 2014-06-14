@@ -56,7 +56,7 @@ Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
                       { HeaderText: labels.Turnover, Width: 130, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Winloss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.WinLoss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
