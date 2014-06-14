@@ -23,6 +23,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 
         public DateTime ToDate { get; set; }
 
+        public short TeamId { get; set; }
+
         public int LeagueId { get; set; }
 
         public string Bettypes { get; set; }

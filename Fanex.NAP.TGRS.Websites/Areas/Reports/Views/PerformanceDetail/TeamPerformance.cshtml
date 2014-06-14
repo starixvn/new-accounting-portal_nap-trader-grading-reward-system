@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Web
+﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,29 +36,51 @@
     <div id="divTeamPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
-            <div class="lbl-field col_3 align-right">
-                <label for="ddlTeam">@ViewLang.Team</label>
-            </div>
-            <div class="edit-field col_12 align-left">
-                <select id="ddlTeam" class="team">
-                </select>
-            </div>
         </div>
         <div class="filter-row">
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_3 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <select id="ddlBetType" class="bet-type">
+            <div class="edit-field col_9 align-left">
+                <select id="ddlBetType" multiple="multiple">
+                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                    {
+                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                    }
                 </select>
             </div>
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_3 align-right">
                 <label for="txtMarginFrom">@ViewLang.Margin</label>
             </div>
             <div class="edit-field col_6 align-left">
                 <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
                 <span> - </span>
                 <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlTeam">@ViewLang.Team</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <select id="ddlTeam" multiple="multiple">
+                    @foreach (var item in (IEnumerable<TeamItem>)ViewBag.Teams)
+                    {
+                        <option value="@item.TeamId">@item.TeamName</option>
+                    }
+                </select>
             </div>
             <div class="lbl-field col_3 align-right">
                 <label for="txtTeamBMFrom">@ViewLang.TeamBM</label>
@@ -67,20 +89,6 @@
                 <input type="text" id="txtTeamBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
                 <span> - </span>
                 <input type="text" id="txtTeamBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5 align-right">
-                <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinTurnover" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinWinLoss" class="width-140" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="submit col_4">
                 <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
@@ -108,23 +116,32 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
-            FromDate: '@ViewLang.FromDate',
-            ToDate: '@ViewLang.ToDate',
             No: '#',
-            League: '@ViewLang.League',
-            League: '@ViewLang.League',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
             NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             BetCount: '@ViewLang.BetCount',
             Margin: '@ViewLang.Margin',
-            LeagueBM: '@ViewLang.LeagueBM',
+            TeamBM: '@ViewLang.TeamBM',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
             Match: '@ViewLang.Match',
-            LeaguePerformance: '@ViewLang.LeaguePerformance'
+            Total: '@ViewLang.Total',
+            GrandTotal: '@ViewLang.GrandTotal',
+            AllBetTypes: '@ViewLang.AllBetTypes',
+            AllTeams: '@ViewLang.AllTeams',
+            EventDate: '@ViewLang.EventDate',
+            NA: '@ViewLang.NA',
+            Forecast: '@ViewLang.Forecast',
+            TeamPerformance: '@ViewLang.TeamPerformance',
+            TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
+            GradeHistoryDetail: '@ViewLang.GradeHistoryDetail'
+        };
+        var messages = {
+            InvalidValue: '@Messages.InvalidValueError'
         };
     </script>
 }

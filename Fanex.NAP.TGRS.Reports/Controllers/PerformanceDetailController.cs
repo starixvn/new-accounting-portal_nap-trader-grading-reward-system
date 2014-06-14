@@ -281,7 +281,53 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TeamPerformance()
         {
+            IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
+
+            ViewBag.Teams = teams;
+
             return View();
+        }
+
+        /// <summary>
+        /// Gets the team performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the team performance data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
+        {
+            TeamPerformanceList teamPerformance = this._detailReportService.GetTeamPerformance(criteria);
+
+            return Json(teamPerformance);
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a team.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance of a team data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfTeam(criteria);
+
+            return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of a pair of team and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a pair of team and trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria)
+        {
+            MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfTeamTrader(criteria);
+
+            return Json(matchPerformance);
         }
 
         #endregion Team Performance

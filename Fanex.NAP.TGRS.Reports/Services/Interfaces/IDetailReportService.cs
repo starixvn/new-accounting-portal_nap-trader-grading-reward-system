@@ -97,5 +97,32 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceList object.</returns>
         MatchPerformanceList GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria);
+
+        /// <summary>
+        /// Gets the teams.
+        /// </summary>
+        /// <returns>List of TeamItem objects.</returns>
+        IEnumerable<TeamItem> GetTeams();
+
+        /// <summary>
+        /// Gets the team performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TeamPerformanceList object.</returns>
+        TeamPerformanceList GetTeamPerformance(GetTeamPerformanceCriteria criteria);
+
+        /// <summary>
+        /// Gets the trader performance who belongs to a specific team.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        TraderPerformanceList GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria);
+
+        /// <summary>
+        /// Gets the performance data on a match of trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceList object.</returns>
+        MatchPerformanceList GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria);
     }
 }

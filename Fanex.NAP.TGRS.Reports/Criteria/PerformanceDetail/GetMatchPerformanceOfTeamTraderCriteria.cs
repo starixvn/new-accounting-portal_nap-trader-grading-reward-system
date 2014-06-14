@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public int CustId { get; set; }
 
-        public string Bettypes { get; set; }
+        public string BetTypes { get; set; }
 
         /// <summary>
         /// Gets the setting key.

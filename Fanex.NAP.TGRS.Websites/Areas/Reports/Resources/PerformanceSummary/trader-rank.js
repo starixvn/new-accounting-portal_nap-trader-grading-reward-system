@@ -121,7 +121,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                       { HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Winloss, Width: 100, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
@@ -155,7 +155,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                               { Name: 'ColTeam', Value: TeamDateCol },
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
-                              { Name: 'ColWinloss', Value: item.Winlost },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA}]
                 };
                 bodyData.push(row);
