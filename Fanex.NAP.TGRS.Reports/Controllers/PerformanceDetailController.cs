@@ -32,6 +32,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls";
         private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
         private const string GradePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls";
+        private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -330,6 +331,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return Json(matchPerformance);
         }
 
+        /// <summary>
+        /// Exports the team performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>Excel file.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
+        {
+            string templateUrl = Server.MapPath(TeamPerformanceDetail);
+
+            this._detailReportService.ExportTeamPerformance(criteria, templateUrl);
+
+            return new EmptyResult();
+        }
         #endregion Team Performance
 
         #region Bet Type Performance

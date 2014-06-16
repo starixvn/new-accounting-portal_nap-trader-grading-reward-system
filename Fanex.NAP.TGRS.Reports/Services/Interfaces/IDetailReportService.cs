@@ -124,5 +124,12 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceList object.</returns>
         MatchPerformanceList GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria);
+
+        /// <summary>
+        /// Export Team Performance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templateUrl);
     }
 }

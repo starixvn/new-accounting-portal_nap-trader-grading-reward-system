@@ -11,8 +11,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -126,6 +129,83 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return matchPerformance;
+        }
+
+        /// <summary>
+        /// Export Team Performance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templateUrl)
+        {
+            TeamPerformanceList teamData = SessionManager.Get<TeamPerformanceList>(TeamPerformanceDetailReportSessionKey);
+
+            if ((teamData != null) && (teamData.ItemList.Count > 0))
+            {
+                string reportName = string.Format(
+                                ViewLang.PerformanceDetailFileName,
+                                ViewLang.Team,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.TeamPerformance);
+                writer.CopyRows(0, 4);
+
+                // Write content.
+                FillRowData(teamData, ref writer);
+
+                writer.SyncColumnsWidth(10);
+                writer.Render();
+            }
+        }
+
+        /// <summary>
+        /// Fills the content row.
+        /// </summary>
+        /// <param name="contentData">The content data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        private void FillRowData(TeamPerformanceList contentData, ref ExcelTemplateWriter writer)
+        {
+            // Content rows
+            int len = contentData.ItemList.Count;
+            TeamPerformanceItem item;
+
+            for (int i = 0; i < len; i++)
+            {
+                int styleIndex = (i % 2 == 0) ? 4 : 5;
+                item = contentData.ItemList[i];
+
+                var record = new object[]
+                {
+                    i + 1,
+                    item.TeamName,
+                    item.NoOfTraders,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.WinLoss,
+                    item.BetCount,
+                    item.Margin,
+                    item.TeamBM
+                };
+                writer.WriteRow(styleIndex, record);
+            }
+
+            // Total row
+            TeamPerformanceItem total = contentData.Total;
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                total.NoOfTraders,
+                total.NoOfLeagues,
+                total.NoOfMatches,
+                total.Turnover,
+                total.WinLoss,
+                total.BetCount,
+                (object)total.Margin ?? ViewLang.NA,
+                null
+            };
+            writer.WriteRow(6, totalRecord);
         }
     }
 }
