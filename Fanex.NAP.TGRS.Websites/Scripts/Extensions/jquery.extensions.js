@@ -349,13 +349,13 @@
         var intializeDatePickers = function () {
             var configuration = null;
             var fromDateChangeHandler = function (selectedDate) {
-                var limitedDate = moment(selectedDate).add('year', options.allowYearRange);
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange).add('day', -1);
                 var maxDate = moment(options.maxDate) > limitedDate ? limitedDate.format('MM/DD/YYYY') : options.maxDate;
 
                 elements.dpkToDate.datepicker('option', 'maxDate', maxDate);
             };
             var toDateChangeHandler = function (selectedDate) {
-                var limitedDate = moment(selectedDate).add('year', options.allowYearRange * -1);
+                var limitedDate = moment(selectedDate).add('year', options.allowYearRange * -1).add('day', 1);
                 var minDate = moment(options.minDate) < limitedDate ? limitedDate.format('MM/DD/YYYY') : options.minDate;
 
                 elements.dpkFromDate.datepicker('option', 'minDate', minDate);
