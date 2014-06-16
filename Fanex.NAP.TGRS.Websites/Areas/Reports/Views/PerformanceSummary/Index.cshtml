@@ -84,9 +84,11 @@
             BetTypePerformance: '@ViewLang.BetTypePerformance',
             NA: '@ViewLang.NA'
         };
-        var yearOptions = {
-            PerformanceYearRange : @ViewBag.PerformanceYearRange,
-            PerformanceAllowYearRange : @ViewBag.PerformanceAllowYearRange
-        }
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
     </script>
 }

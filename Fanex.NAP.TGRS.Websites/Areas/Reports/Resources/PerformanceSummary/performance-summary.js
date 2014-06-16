@@ -1,5 +1,5 @@
 ﻿/* File Created: May 12, 2014 */
-/* global Namespace, common, labels, numeral, yearOptions  */
+/* global Namespace, common, labels, numeral, datepickerSetting  */
 'use strict';
 
 $(document).ready(function () {
@@ -125,26 +125,13 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     };
 
     var initDatePicker = function () {
-        var toDate = new Date();
-        var begin2014Date = new Date(2014, 0, 1);
-        var minDate = new Date(toDate.getFullYear() - yearOptions.PerformanceYearRange, 0, 1);
-
-        if (minDate.getFullYear() < 2014) {
-            minDate = begin2014Date;
-        }
-        var maxDate = new Date(toDate);
-        maxDate.setDate(maxDate.getDate() - 1);
-        //default date: 2 weeks before yesterday
-        var defaultFromDate = new Date(toDate);
-        defaultFromDate.setDate(toDate.getDate() - 14);
-
         //Period date range control
         domElements.divDateRange = domElements.divDateRange.timeRange({
-            minDate: minDate,
-            maxDate: maxDate,
-            defaultFromDate: defaultFromDate,
-            defaultToDate: maxDate,
-            allowYearRange: yearOptions.PerformanceAllowYearRange,
+            minDate: datepickerSetting.MinDate,
+            maxDate: datepickerSetting.DefaultToDate,
+            defaultFromDate: datepickerSetting.DefaultFromDate,
+            defaultToDate: datepickerSetting.DefaultToDate,
+            allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
             labelCss: 'col_3'
         });

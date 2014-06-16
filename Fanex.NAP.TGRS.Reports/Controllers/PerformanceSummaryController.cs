@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -46,8 +47,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.PerformanceYearRange = AppSettings.PerformanceYearRange;
-            ViewBag.PerformanceAllowYearRange = AppSettings.PerformanceAllowYearRange;
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             return View();
         }
 
