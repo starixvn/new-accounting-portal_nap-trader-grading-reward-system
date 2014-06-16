@@ -352,7 +352,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Traders, Width: 200, Name: 'ColTraders', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Trader, Width: 200, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
@@ -409,7 +409,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
-                              { Name: 'ColTraders', Value: traderCol },
+                              { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
                               { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
