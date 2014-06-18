@@ -444,4 +444,7 @@
   <data name="PerformanceDetailFileName" xml:space="preserve">
     <value>Performance_Detail_{0}_{1}_{2}</value>
   </data>
+  <data name="MatchPerformance" xml:space="preserve">
+    <value>Match Performance</value>
+  </data>
 </root>

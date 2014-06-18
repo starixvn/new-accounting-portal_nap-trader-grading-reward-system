@@ -17,7 +17,7 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
         FromDate: null,
         ToDate: null
     };
-    var template = '<div class="min-width-history">' +
+    var template = '<div class="min-width-grade-history">' +
                        '<div class="display-none">' +
                            '<div  id="divGradeHistory" class="freegrid"></div>' +
                        '</div>' +

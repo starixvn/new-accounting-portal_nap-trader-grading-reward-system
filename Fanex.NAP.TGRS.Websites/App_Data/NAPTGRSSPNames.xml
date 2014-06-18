@@ -77,5 +77,23 @@
     <Setting Key="TGRS_Rpt_DetailTeam_Match" SpName="TGRS_Rpt_DetailTeam_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetType_Trader" SpName="TGRS_Rpt_DetailBetType_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetTypePerformance" SpName="TGRS_Rpt_DetailBetTypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetType_Match" SpName="TGRS_Rpt_DetailBetType_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetType_League" SpName="TGRS_Rpt_DetailBetType_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetType_TraderByLeague" SpName="TGRS_Rpt_DetailBetType_TraderByLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
+    <Setting Key="TGRS_Rpt_DetailBetType_MatchByTraderLeague" SpName="TGRS_Rpt_DetailBetType_MatchByTraderLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
   </Function>
 </Functions>

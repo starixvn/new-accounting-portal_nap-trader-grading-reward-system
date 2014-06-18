@@ -131,5 +131,47 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templateUrl">Path to Excel template file.</param>
         void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templateUrl);
+
+        /// <summary>
+        /// Gets the bet type performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>BetTypePerformanceList object.</returns>
+        BetTypePerformanceList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
+
+        /// <summary>
+        /// Gets the trader performance of a bet type.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        TraderPerformanceList GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria);
+
+        /// <summary>
+        /// Gets the match performance of a pair of bet type and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceList object.</returns>
+        MatchPerformanceList GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria);
+
+        /// <summary>
+        /// Gets the league performance of bet type.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>LeaguePerformanceList object.</returns>
+        LeaguePerformanceList GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria);
+
+        /// <summary>
+        /// Gets the trader performance of a bet type, league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>TraderPerformanceList object.</returns>
+        TraderPerformanceList GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria);
+
+        /// <summary>
+        /// Gets the match performance of bet type, league and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        MatchPerformanceGroup GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria);
     }
 }

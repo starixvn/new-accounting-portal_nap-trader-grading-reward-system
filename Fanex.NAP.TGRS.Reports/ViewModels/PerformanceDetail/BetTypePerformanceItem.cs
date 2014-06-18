@@ -10,6 +10,8 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using Fanex.Common;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Bet type performance view model.
@@ -17,6 +19,26 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class BetTypePerformanceItem
     {
+        public BetTypePerformanceItem()
+        {
+        }
+
+        public BetTypePerformanceItem(BetTypePerformanceInfo betTypeData)
+        {
+            if (betTypeData != null && betTypeData.BetType.HasValue)
+            {
+                this.BetTypeId = betTypeData.BetType.Value;
+                this.BetTypeName = betTypeData.TypeName;
+                this.NoOfTraders = Converter.ToInt(betTypeData.TraderCount);
+                this.NoOfLeagues = Converter.ToInt(betTypeData.LeagueCount);
+                this.NoOfMatches = Converter.ToInt(betTypeData.MatchCount);
+                this.Turnover = Converter.ToDecimal(betTypeData.Turnover);
+                this.WinLoss = Converter.ToDecimal(betTypeData.WinLoss);
+                this.BetCount = Converter.ToInt(betTypeData.BetCount);
+                this.Margin = betTypeData.Margin;
+            }
+        }
+
         public int BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
@@ -33,6 +55,6 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
     }
 }

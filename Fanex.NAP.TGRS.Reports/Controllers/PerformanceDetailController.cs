@@ -33,6 +33,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
         private const string GradePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls";
         private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls";
+        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -345,6 +346,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             return new EmptyResult();
         }
+
         #endregion Team Performance
 
         #region Bet Type Performance
@@ -357,6 +359,105 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult BetTypePerformance()
         {
             return View();
+        }
+
+        /// <summary>
+        /// Gets the bet type performance.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type performance data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        {
+            BetTypePerformanceList betTypePerformance = this._detailReportService.GetBetTypePerformance(criteria);
+
+            return Json(betTypePerformance);
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a bet type.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance of a bet type data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetType(criteria);
+
+            return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of a pair of bet type and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a pair of bet type and trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
+        {
+            MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeTrader(criteria);
+
+            return Json(matchPerformance);
+        }
+
+        /// <summary>
+        /// Gets the league performance of bet type.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the league performance of bet type.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
+        {
+            LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfBetType(criteria);
+
+            return Json(leaguePerformance);
+        }
+
+        /// <summary>
+        /// Gets the trader performance of a pair of bet type and league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance of bet type and league.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetTypeLeague(criteria);
+
+            return Json(traderPerformance);
+        }
+
+        /// <summary>
+        /// Gets the match performance of bet type, league and trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of bet type, league and trader.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
+        {
+            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeLeagueTrader(criteria);
+
+            return Json(matchPerformance);
+        }
+
+        /// <summary>
+        /// Exports the bet type performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>Excel file.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        {
+            string templateUrl = Server.MapPath(BetTypePerformanceDetail);
+
+            ////this._detailReportService.ExportTeamPerformance(criteria, templateUrl);
+
+            return new EmptyResult();
         }
 
         #endregion Bet Type Performance

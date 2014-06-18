@@ -222,7 +222,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Render league performance grid.
     var renderLeaguePerformanceGrid = function (data) {
-        var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}">{1}</span>';
+        var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}" title="{1}">{2}</span>';
         var noOfTradersCol = '';
 
         var gridOptions = {
@@ -282,7 +282,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                noOfTradersCol = noOfTradersFormat.format(item.LeagueId, numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+                noOfTradersCol = noOfTradersFormat.format(
+                                    item.LeagueId,
+                                    labels.TraderPerformance,
+                                    numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
                               { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
@@ -374,10 +378,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Render trader performance of a specific league grid.
     var renderTraderPerformanceGrid = function (data, leagueId, leagueName) {
         var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}">{2}</span>';
-        var noOfMatchesFormat = '<span class="match-link link" data-trader-id="{0}">{1}</span>';
+        var noOfMatchesFormat = '<span class="match-link link" title="{0}">{1}</span>';
         var gradeFormat = '<span class="grade">{0}</span>';
         var teamFormat = '<span class="team">{0}</span>';
-        var detailIcon = '<span class="detail-icon {0}"></span>';
+        var detailIcon = '<span class="detail-icon {0}" title="{1}"></span>';
 
         var traderCol = '';
         var gradeCol = '';
@@ -435,11 +439,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
                 traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
-                noOfMatchesCol = noOfMatchesFormat.format(item.TraderId, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
                 gradeCol = gradeFormat.format(item.Grade);
-                gradeCol += item.HasGradeHistory ? detailIcon.format('grade-column') : '';
+                gradeCol += item.HasGradeHistory ? detailIcon.format('grade-column', labels.GradeHistoryDetail) : '';
                 teamCol = teamFormat.format(item.TeamName);
-                teamCol += item.HasTeamHistory ? detailIcon.format('team-column') : '';
+                teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
@@ -513,7 +517,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
             var $link = $(this);
             var $trader = $link.closest('tr').find('span.trader');
-            var traderId = $link.attr('data-trader-id');
+            var traderId = $trader.attr('data-cust-id');
             var traderName = $trader.text();
 
             getMatchPerformanceReport(leagueId, leagueName, traderId, traderName);

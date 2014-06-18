@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             {
                 HttpContext.Current.Session[sessionKey] = value;
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -47,7 +47,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
                 T value = (T)HttpContext.Current.Session[sessionKey];
                 return value;
             }
-            catch (Exception)
+            catch
             {
                 return default(T);
             }

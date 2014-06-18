@@ -17,7 +17,7 @@ Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
         FromDate: null,
         ToDate: null
     };
-    var template = '<div class="min-width-history">' +
+    var template = '<div class="min-width-team-history">' +
                        '<div class="display-none">' +
                            '<div  id="divTeamHistory" class="freegrid"></div>' +
                        '</div>' +
@@ -48,7 +48,7 @@ Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
     var renderTeamHistoryGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 60, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Team, Width: 130, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Team, Width: 200, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.EffectiveDate, Width: 130, Name: 'ColTeamEffectiveDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat

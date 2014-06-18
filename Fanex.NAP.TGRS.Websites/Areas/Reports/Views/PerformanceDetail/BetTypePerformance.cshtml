@@ -1,7 +1,11 @@
-﻿@using Fanex.NAP.Core.Web
+﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/performanceDetail")
 }
 @section Headline
 {
@@ -32,40 +36,48 @@
     <div id="divBetTypePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div id="divDateRange"></div>
-            <div class="lbl-field col_5 align-right">
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <select id="ddlBetType" class="width-140">
+            <div class="edit-field col_9 align-left">
+                <select id="ddlBetType" multiple="multiple">
+                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                    {
+                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                    }
                 </select>
             </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_3 align-right">
                 <label for="txtMarginFrom">@ViewLang.Margin</label>
             </div>
-            <div class="edit-field col_7 align-left">
-                <input type="text" id="txtMarginFrom" class="width-60"/> - <input type="text" id="txtMarginTo"  class="width-60"/>
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="lbl-field col_3 align-right">
-                <label for="txtLeagueBMFrom">@ViewLang.BetTypeBM</label>
-            </div>
-            <div class="edit-field col_7 align-left">
-                <input type="text" id="txtBetTypeBMFrom" class="width-60" /> - <input type="text" id="txtBetTypeBMTo" class="width-60" />
-            </div>
-        </div>
-        <div class="filter-row">
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMinTurnover" class="width-140"/>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="lbl-field col_5 align-right">
                 <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
             </div>
-            <div class="edit-field col_7 align-left">
-                <input type="text" id="txtMinWinLoss" class="width-140"/>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtLeagueBMFrom">@ViewLang.BetTypeBM</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <input type="text" id="txtBetTypeBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtBetTypeBMTo" class="width-60"  maxlength="5" data-val-number="@Messages.InvalidValueError"/>
             </div>
             <div class="submit width-auto col_4">
                 <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
@@ -82,6 +94,9 @@
 <div id="divMatchPerformanceContainer" class="content-grid display-none">
     <div id="divMatchPerformanceGrid" class="freegrid"></div>
 </div>
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/betTypePerformance")
@@ -93,22 +108,37 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
-            FromDate: '@ViewLang.FromDate',
-            ToDate: '@ViewLang.ToDate',
             No: '#',
-            League: '@ViewLang.League',
-            League: '@ViewLang.League',
+            BetType: '@ViewLang.BetType',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
             NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             BetCount: '@ViewLang.BetCount',
             Margin: '@ViewLang.Margin',
-            LeagueBM: '@ViewLang.LeagueBM',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
-            Match: '@ViewLang.Match'
+            Match: '@ViewLang.Match',
+            League: '@ViewLang.League',
+            BetTypeBM: '@ViewLang.BetTypeBM',
+            Total: '@ViewLang.Total',
+            GrandTotal: '@ViewLang.GrandTotal',
+            AllBetTypes: '@ViewLang.AllBetTypes',
+            EventDate: '@ViewLang.EventDate',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            NA: '@ViewLang.NA',
+            Forecast: '@ViewLang.Forecast',
+            BetTypePerformance: '@ViewLang.BetTypePerformance',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
+            TraderPerformance: '@ViewLang.TraderPerformance',
+            MatchPerformance: '@ViewLang.MatchPerformance',
+            TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
+            GradeHistoryDetail: '@ViewLang.GradeHistoryDetail'
+        };
+        var messages = {
+            InvalidValue: '@Messages.InvalidValueError'
         };
     </script>
 }
