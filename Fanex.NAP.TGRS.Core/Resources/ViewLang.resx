@@ -447,4 +447,7 @@
   <data name="MatchPerformance" xml:space="preserve">
     <value>Match Performance</value>
   </data>
+  <data name="MarginSummary" xml:space="preserve">
+    <value>Margin</value>
+  </data>
 </root>

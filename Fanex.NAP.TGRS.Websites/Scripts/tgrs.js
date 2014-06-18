@@ -23,6 +23,7 @@ Fanex.TGRS.Common = function () {
         MomentDateFormat: 'MM/DD/YYYY',
         IntegerFormat: '0,0',
         DecimalFormat: '0,0.00',
+        PercentFormat: '0,0.00%',
         MonthYearDateFormat: 'MM-yy',
         MonthFormat: 'MMM dd, yyyy',
         ShortDateFormat: 'MM/dd/yyyy'

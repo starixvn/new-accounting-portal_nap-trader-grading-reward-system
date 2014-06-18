@@ -23,11 +23,15 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         lblTurnOver: null,
         lblMatches: null,
         divTeamGrid: null,
-        divTraderGrid: null,
+        divTraderPerformance: null,
         divTopWinLeagueGrid: null,
         divTopLoseLeagueGrid: null,
         divBetTypeGrid: null,
-        ddlPeriodType: null
+        ddlPeriodType: null,
+        top10MinMargin: null,
+        top10MaxMargin: null,
+        bottom10MinMargin: null,
+        bottom10MaxMargin: null,
     };
     var filterParameters = {
         ReportType: null,
@@ -48,7 +52,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.btnSearch = $('#btnSearch');
         domElements.divGeneralInfo = $('#divGeneralInfo');
         domElements.divTeamGrid = $('#divTeamGrid');
-        domElements.divTraderGrid = $('#divTraderGrid');
+        domElements.divTraderPerformance = $('#divTraderPerformance');
         domElements.divTopWinLeagueGrid = $('#divTopWinLeagueGrid');
         domElements.divTopLoseLeagueGrid = $('#divTopLoseLeagueGrid');
         domElements.divBetTypeGrid = $('#divBetTypeGrid');
@@ -58,6 +62,11 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.lblMargin = $("#lblMargin", domElements.divGeneralInfo);
         domElements.lblTurnOver = $("#lblTurnOver", domElements.divGeneralInfo);
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
+
+        domElements.top10MinMargin = $("#top10MinMargin", domElements.divTraderPerformance);
+        domElements.top10MaxMargin = $("#top10MaxMargin", domElements.divTraderPerformance);
+        domElements.bottom10MinMargin = $("#bottom10MinMargin", domElements.divTraderPerformance);
+        domElements.bottom10MaxMargin = $("#bottom10MaxMargin", domElements.divTraderPerformance);
     };
 
     function getReports() {
@@ -96,12 +105,12 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         });
 
         //event: click on top 10
-        domElements.divTraderGrid.on('click', '.top10-link', function () {
+        domElements.divTraderPerformance.on('click', '.top10-link', function () {
             makeTopForm();
         });
 
         //event: click on top 10
-        domElements.divTraderGrid.on('click', '.bottom10-link', function () {
+        domElements.divTraderPerformance.on('click', '.bottom10-link', function () {
             makeBottomForm();
         });
     };
@@ -142,7 +151,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         renderTeamGrid(data.TeamPerformances);
         renderWinLeagueGrid(data.WinLeagues);
         renderLoseLeagueGrid(data.LoseLeagues);
-        renderTraderGrid(data.TraderPerformance);
+        renderTraderPerformance(data.TraderPerformance);
         renderBetTypeGrid(data.BetTypePerformances);
     };
 
@@ -150,7 +159,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.divGeneralInfo.css({ display: "block" });
         domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
         if (data.Margin != null) {
-            domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat));
+            domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat) + "%");
         }
         else {
             domElements.lblMargin.text(labels.NA);
@@ -269,43 +278,17 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
     };
 
     // Render win league grid.
-    var renderTraderGrid = function (data) {
-        var gridOptions = {
-            columns: [{ HeaderText: labels.TraderPerformance, Width: 350, Name: 'ColTraderType', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.MinMargin, Width: 150, Name: 'ColMinMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
-                      },
-                      { HeaderText: labels.MaxMargin, Width: 150, Name: 'ColMaxMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
-                      }],
-            gridExpandHeight: 50,
-            showTitle: true,
-            titleInfo: {
-                text: labels.TraderPerformance
-            }
-        };
-        var bodyData = [];
-        var top10Col = '<span class="top10-link link">' + labels.Top10ByMargin + '</span>';
-        var bottom10Col = '<span class="bottom10-link link">' + labels.Bottom10ByMargin + '</span>';
-        var row;
+    var renderTraderPerformance = function (data) {
+        domElements.divTraderPerformance.css({ display: "block" });
         if (data.TopMinMargin && data.TopMaxMargin) {
-            row = {
-                Columns: [{ Name: 'ColTraderType', Value: top10Col },
-                              { Name: 'ColMinMargin', Value: data.TopMinMargin || labels.NA },
-                              { Name: 'ColMaxMargin', Value: data.TopMaxMargin || labels.NA}]
-            };
-            bodyData.push(row);
+            domElements.top10MinMargin.text(numeral(data.TopMinMargin).format(common.Formats.DecimalFormat) + "%");
+            domElements.top10MaxMargin.text(numeral(data.TopMaxMargin).format(common.Formats.DecimalFormat) + "%");
         }
+        
         if (data.BottomMinMargin && data.BottomMaxMargin) {
-            row = {
-                Columns: [{ Name: 'ColTraderType', Value: bottom10Col },
-                              { Name: 'ColMinMargin', Value: data.BottomMinMargin || labels.NA },
-                              { Name: 'ColMaxMargin', Value: data.BottomMaxMargin || labels.NA}]
-            };
-            bodyData.push(row);
+            domElements.bottom10MinMargin.text(numeral(data.BottomMinMargin).format(common.Formats.DecimalFormat) + "%");
+            domElements.bottom10MaxMargin.text(numeral(data.BottomMaxMargin).format(common.Formats.DecimalFormat) + "%");
         }
-        gridOptions.bodyRows = bodyData;
-        domElements.divTraderGrid.fanexGrid(gridOptions);
     };
 
     // Render win league grid.

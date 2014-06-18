@@ -23,29 +23,55 @@
     </div>
 </div>
 <div id="divReportData">
-    <div id="divGeneralInfo" class="content-generalInfo display-none">
-        <label class="col_4">@ViewLang.LiveTurnover:</label>
-        <label class="col_5 align-right" id="lblTurnOver">
-        </label>
-        <label class="col_4 margin-left-100">
-            @ViewLang.Margin:</label>
-        <label class="col_3 align-right" id="lblMargin">
-        </label>
-        <br />
-        <label class="col_4">@ViewLang.LiveWinLoss:</label>
-        <label class="col_5 align-right" id="lblWinLoss">
-        </label>
-        <label class="col_4 margin-left-100">
-            @ViewLang.NoOfMatches:</label>
-        <label class="col_3 align-right" id="lblMatches">
-        </label>
+    <div id="divGeneralInfo" class="content-general-info display-none">
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.LiveTurnover</label>
+            <label class="number" id="lblTurnOver">
+            </label>
+        </div>
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.LiveWinLoss</label>
+            <label class="number" id="lblWinLoss">
+            </label>
+        </div>
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.MarginSummary</label>
+            <label class="number" id="lblMargin">
+            </label>
+        </div>
+        <div class="info-cell-1">
+            <label class="title">
+                @ViewLang.NoOfMatches</label>
+            <label class="number" id="lblMatches">
+            </label>
+        </div>
     </div>
-    <div class="content-grid display-none">
-        <div id="divTeamGrid" class="freegrid display-none">
+    <div id="divTraderPerformance" class="content-general-info display-none">
+        <div class="info-cell-2 top10-link">
+            <label class="title">@ViewLang.Top10ByMargin</label>
+            <div class="number-row">
+                <label class="number min" id="top10MinMargin">@ViewLang.NA</label>
+                <label class="margin-icon">
+                </label>
+                <label class="number max" id="top10MaxMargin">@ViewLang.NA</label>
+            </div>
+        </div>
+        <div class="info-cell-2 bottom10-link">
+            <label class="title">@ViewLang.Bottom10ByMargin</label>
+            <div class="number-row">
+                <label class="number min" id="bottom10MinMargin">@ViewLang.NA</label>
+                <label class="margin-icon">
+                </label>
+                <label class="number max" id="bottom10MaxMargin">@ViewLang.NA</label>
+            </div>
         </div>
     </div>
     <div class="content-grid display-none">
         <div id="divTraderGrid" class="freegrid display-none">
+        </div>
+    </div>
+    <div class="content-grid display-none">
+        <div id="divTeamGrid" class="freegrid display-none">
         </div>
     </div>
     <div class="content-grid display-none">

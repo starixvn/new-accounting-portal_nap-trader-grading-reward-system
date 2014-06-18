@@ -29,34 +29,75 @@
     margin-left: 80px;
 }
 
-.content-generalInfo {
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    min-width: 99%;
+.info-cell-1 {
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    width: 172px;
+    padding: 10px 10px 10px 10px;
+    margin-top: 12px;
+    border: solid 1px #c5c5c5;
+    border-top: solid 3px #5a7dc1;
 
     label {
-        font-weight: 500;
-    }
-
-    .col {
         display: inline;
         float: left;
-        margin: 0 3px;
+        cursor: auto;
+        width: 169px;
     }
+    label.title {
+        font-weight: normal;
+    }
+    label.number {
+        font-weight: bold;
+    }
+}
 
-    .col_3 {
-        .col;
-        width: 72px;
-    }
+.info-cell-2 {
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    width: 370px;
+    padding: 10px 10px 10px 10px;
+    border: solid 1px #c5c5c5;
+    cursor: pointer;
 
-    .col_4 {
-        .col;
-        width: 98px;
+    label {
+        display: inline-block;
+        float: left;
     }
+    label.image {
+        background: url("Images/sprites.png") no-repeat -132px -25px;
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+    }
+    label.title {
+        width: 100%;
+        color: #4f82c6;
+        font-weight: normal;
+        
+    }
+    label.number {
+        margin-top: 11px;
+        font-weight: bold;
+    }
+    label.number.min {
+        color: #e85f27;
+        margin-right: 4px;
+    }
+    label.number.max {
+        color: #48cad8;
+        margin-left: 4px;
+    }
+    .number-row {
+        margin-top: 11px;
+        display: inline-block;
+        float: center;
+        text-align: center;
+    }
+}
 
-    .col_5 {
-        .col;
-        width: 124px;
-    }
+.content-general-info {
+    margin-left: 10px;
 }
