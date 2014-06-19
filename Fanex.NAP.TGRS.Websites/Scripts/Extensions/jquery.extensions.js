@@ -292,9 +292,9 @@
                          '<div class="edit-field"><div></div></div>' +
                          '<div class="edit-field">' +
                             '<div class="ui-separate-label-small"></div>' +
-                            '<div class="col_5"><div id="divMonthFrom"></div></div>' +
+                            '<div class="ui-month-picker"><div id="divMonthFrom"></div></div>' +
                             '<div class="ui-separate-label month-label">-</div>' +
-                            '<div class="col_5"><div id="divMonthTo"></div></div>' +
+                            '<div class="ui-month-picker second-month"><div id="divMonthTo"></div></div>' +
                          '</div>');
                          //'<div class="edit-field"><select id="ddlYear"></select></div>');
 

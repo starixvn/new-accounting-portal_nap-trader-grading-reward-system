@@ -35,13 +35,11 @@
 <div class="filter-bar">
     <div id="divTeamPerformanceFilter" class="filter-form">
         <div class="filter-row">
-            <div id="divDateRange"></div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_3 align-right">
+            <div class="date-range"><div id="divDateRange"></div></div>
+            <div class="lbl-field col_3">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_9 align-left">
+            <div class="edit-field col_9">
                 <select id="ddlBetType" multiple="multiple">
                     @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
                     {
@@ -49,32 +47,34 @@
                     }
                 </select>
             </div>
-            <div class="lbl-field col_3 align-right">
-                <label for="txtMarginFrom">@ViewLang.Margin</label>
-            </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtMarginFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtMarginTo"  class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_5 align-right">
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
-            <div class="edit-field col_5 align-left">
+            <div class="edit-field col_5">
                 <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
             </div>
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_5 min-winloss">
                 <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
             </div>
-            <div class="edit-field col_5 align-left">
+            <div class="edit-field col_5">
                 <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+            </div>
+            <div class="lbl-field col_3 margin">
+                <label for="txtMarginFrom">@ViewLang.Margin</label>
+            </div>
+            <div class="edit-field col_9">
+                <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <span> - </span>
+                <input type="text" id="txtMarginTo"  class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
         </div>
         <div class="filter-row">
-            <div class="lbl-field col_3 align-right">
+            <div class="lbl-field col_5">
                 <label for="ddlTeam">@ViewLang.Team</label>
             </div>
-            <div class="edit-field col_9 align-left">
+            <div class="edit-field col_8">
                 <select id="ddlTeam" multiple="multiple">
                     @foreach (var item in (IEnumerable<TeamItem>)ViewBag.Teams)
                     {
@@ -82,16 +82,16 @@
                     }
                 </select>
             </div>
-            <div class="lbl-field col_3 align-right">
+            <div class="lbl-field col_3 team-bm">
                 <label for="txtTeamBMFrom">@ViewLang.TeamBM</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtTeamBMFrom" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+            <div class="edit-field col_6">
+                <input type="text" id="txtTeamBMFrom" class="benchmark" maxlength="5" data-val-number="@Messages.InvalidValueError" />
                 <span> - </span>
-                <input type="text" id="txtTeamBMTo" class="width-60" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <input type="text" id="txtTeamBMTo" class="benchmark" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
             <div class="submit col_4">
-                <input id="btnGenerate" type="button" class="blue-button generate" value="@ViewLang.Generate" />
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
         </div>
     </div>

@@ -87,12 +87,12 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             defaultToDate: datepickerSetting.DefaultToDate,
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
-            labelCss: 'col_3'
+            labelCss: 'col_5'
         });
 
         domElements.ddlBetType.multiselect({
             selectedList: 2,
-            minWidth: 215,
+            minWidth: 200,
             height: 200,
             allSelectedText: labels.AllBetTypes,
             create: function () {
@@ -102,7 +102,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         domElements.ddlTeam.multiselect({
             selectedList: 2,
-            minWidth: 215,
+            minWidth: 200,
             height: 200,
             allSelectedText: labels.AllTeams,
             create: function () {

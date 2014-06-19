@@ -1,20 +1,55 @@
 .filter-bar {
     .filter-form {
         .filter-row {
-            .edit-field {
-                .league {
-                    width: 215px;
+            .lbl-field {
+                &.min-winloss {
+                    width: 159px;
+                }
+
+                &.league-bm {
+                    width: 81px;
+                }
+
+                &.team-bm {
+                    width: 81px;
+                }
+
+                &.margin {
+                    width: 77px;
                 }
             }
 
-            .datepicker {
+            .edit-field {
+                .league, .trader {
+                    width: 195px;
+                }
+
+                .margin {
+                    width: 90px;
+                }
+
+                .benchmark {
+                    width: 50px;
+                }
+            }
+
+            .date-range {
                 display: inline-block;
                 float: left;
-                width: 150px;
-                margin: 0 3px;
 
-                input {
-                    width: 140px;
+                .ui-multiselect {
+                    width: 126px !important;
+                }
+
+                .datepicker {
+                    display: inline-block;
+                    float: left;
+                    width: 150px;
+                    margin: 0 3px;
+
+                    input {
+                        width: 140px;
+                    }
                 }
             }
 
@@ -22,8 +57,12 @@
                 margin-left: 17px;
             }
 
-            .trader {
-                width: 215px !important;
+            .bettype-generate {
+                margin-left: 24px;
+            }
+
+            .trader-generate {
+                margin-left: 60px;
             }
         }
     }
