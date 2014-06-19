@@ -11,8 +11,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -43,7 +46,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 }
 
                 betTypePerformance.Total.Margin = CalculateTotalMargin(betTypePerformance.Total.WinLoss, betTypePerformance.Total.Turnover);
-                SessionManager.Set<BetTypePerformanceList>(GradePerformanceDetailReportSessionKey, betTypePerformance);
+                SessionManager.Set<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey, betTypePerformance);
             }
 
             return betTypePerformance;
@@ -179,6 +182,81 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return matchPerformance;
+        }
+
+        /// <summary>
+        /// Export Bet Type Performance to excel.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="templateUrl">Path to Excel template file.</param>
+        public void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templateUrl)
+        {
+            BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
+
+            if ((betTypeData != null) && (betTypeData.ItemList.Count > 0))
+            {
+                string reportName = string.Format(
+                                    ViewLang.PerformanceDetailFileName,
+                                    ViewLang.BetTypeExcelFile,
+                                    criteria.FromDate.ToShortFormatedDateForFileName(),
+                                    criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.BetTypePerformance);
+                writer.CopyRows(0, 4);
+
+                // Write content.
+                FillRowData(betTypeData, ref writer);
+
+                writer.SyncColumnsWidth(9);
+                writer.Render();
+            }
+        }
+
+        /// <summary>
+        /// Fills the content row.
+        /// </summary>
+        /// <param name="contentData">The content data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        private void FillRowData(BetTypePerformanceList contentData, ref ExcelTemplateWriter writer)
+        {
+            // Content rows
+            int len = contentData.ItemList.Count;
+            BetTypePerformanceItem item;
+
+            for (int i = 0; i < len; i++)
+            {
+                int styleIndex = (i % 2 == 0) ? 4 : 5;
+                item = contentData.ItemList[i];
+
+                var record = new object[]
+                {
+                    i + 1,
+                    item.BetTypeName,
+                    item.NoOfTraders,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.WinLoss,
+                    item.BetCount,
+                    item.Margin
+                };
+                writer.WriteRow(styleIndex, record);
+            }
+
+            // Total row
+            BetTypePerformanceItem total = contentData.Total;
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                total.NoOfTraders,
+                total.NoOfLeagues,
+                total.NoOfMatches,
+                total.Turnover,
+                total.WinLoss,
+                total.BetCount,
+                (object)total.Margin ?? ViewLang.NA
+            };
+            writer.WriteRow(6, totalRecord);
         }
     }
 }

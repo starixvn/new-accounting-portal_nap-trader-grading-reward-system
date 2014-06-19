@@ -360,6 +360,7 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -187,6 +187,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BetType.
+        /// </summary>
+        public static string BetTypeExcelFile {
+            get {
+                return ResourceManager.GetString("BetTypeExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type Performance.
         /// </summary>
         public static string BetTypePerformance {
