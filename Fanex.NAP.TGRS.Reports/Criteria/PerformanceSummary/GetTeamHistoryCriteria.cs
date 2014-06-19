@@ -29,6 +29,10 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 
         public string Bettypes { get; set; }
 
+        public decimal? BetTypeBMFrom { get; set; }
+
+        public decimal? BetTypeBMTo { get; set; }
+
         /// <summary>
         /// Gets Setting Key.
         /// </summary>

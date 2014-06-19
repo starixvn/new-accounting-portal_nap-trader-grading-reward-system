@@ -510,9 +510,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gradeHistory.GetGradeHistory({
                 CustId: traderId,
                 Username: traderName,
-                BetTypes: betTypeId, //BetTypes: parameters.BetTypes,
+                BetTypes: betTypeId,
                 FromDate: parameters.FromDate,
-                ToDate: parameters.ToDate
+                ToDate: parameters.ToDate,
+                BetTypeBMFrom: parameters.BetTypeBMFrom,
+                BetTypeBMTo: parameters.BetTypeBMTo
             });
         });
 
@@ -525,9 +527,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             teamHistory.GetTeamHistory({
                 CustId: traderId,
                 Username: traderName,
-                BetTypes: betTypeId, //BetTypes: parameters.BetTypes,
+                BetTypes: betTypeId,
                 FromDate: parameters.FromDate,
-                ToDate: parameters.ToDate
+                ToDate: parameters.ToDate,
+                BetTypeBMFrom: parameters.BetTypeBMFrom,
+                BetTypeBMTo: parameters.BetTypeBMTo
             });
         });
 
@@ -1061,7 +1065,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 LeagueId: leagueId,
                 BetTypes: betTypeId,
                 FromDate: parameters.FromDate,
-                ToDate: parameters.ToDate
+                ToDate: parameters.ToDate,
+                BetTypeBMFrom: parameters.BetTypeBMFrom,
+                BetTypeBMTo: parameters.BetTypeBMTo
             });
         });
 
@@ -1077,7 +1083,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 LeagueId: leagueId,
                 BetTypes: betTypeId,
                 FromDate: parameters.FromDate,
-                ToDate: parameters.ToDate
+                ToDate: parameters.ToDate,
+                BetTypeBMFrom: parameters.BetTypeBMFrom,
+                BetTypeBMTo: parameters.BetTypeBMTo
             });
         });
 
