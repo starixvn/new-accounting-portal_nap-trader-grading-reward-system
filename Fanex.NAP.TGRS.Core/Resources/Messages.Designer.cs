@@ -313,7 +313,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Trader Grading &amp; Reward System.
+        ///   Looks up a localized string similar to Welcome to Trader Grading &amp; Reward.
         /// </summary>
         public static string WelcomeMessage {
             get {
