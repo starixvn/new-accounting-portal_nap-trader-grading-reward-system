@@ -89,7 +89,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 125 }).change(function () {
+            validator.ClearError(domElements.ddlBetType.next());
+        });
 
         domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
             var value = $.trim(domElements.txtMarginFrom.val());
@@ -147,7 +149,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo);
+        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
+               validateBetType();
     };
 
     // Validate From/To values.
@@ -168,6 +171,19 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         }
 
         return isValid;
+    };
+
+    // Validate Bet Type field.
+    var validateBetType = function () {
+        var selectedBetTypes = domElements.ddlBetType.val();
+
+        if (!selectedBetTypes) {
+            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
+
+            return false;
+        } else {
+            return true;
+        }
     };
 
     // Get grade performance on a specific league.
@@ -197,7 +213,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var noOfTradersCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
@@ -216,7 +232,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -234,17 +250,6 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 }
             },
             showNumberColumn: true,
-            showPager: true,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    handleGradePerformanceGridEvents();
-
-                    return rows;
-                }
-            },
             showFooter: true
         };
         var bodyData = [];
@@ -371,7 +376,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,

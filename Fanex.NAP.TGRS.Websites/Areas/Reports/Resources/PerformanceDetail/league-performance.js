@@ -94,7 +94,9 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 125 }).change(function () {
+            validator.ClearError(domElements.ddlBetType.next());
+        });
 
         domElements.txtLeague.focusout(function () {
             var value = $.trim(domElements.txtLeague.val());
@@ -176,7 +178,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Validate filter form.
     var validateFilterForm = function () {
         return validateValueRange(domElements.txtLeagueBMFrom, domElements.txtLeagueBMTo) &&
-               validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo);
+               validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
+               validateBetType();
     };
 
     // Validate From/To values.
@@ -197,6 +200,19 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         }
 
         return isValid;
+    };
+
+    // Validate Bet Type field.
+    var validateBetType = function () {
+        var selectedBetTypes = domElements.ddlBetType.val();
+
+        if (!selectedBetTypes) {
+            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
+
+            return false;
+        } else {
+            return true;
+        }
     };
 
     // Get league performance report data.
@@ -242,7 +258,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       },
                       { HeaderText: labels.LeagueBM, Width: 100, Name: 'ColLeagueBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -404,7 +420,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,

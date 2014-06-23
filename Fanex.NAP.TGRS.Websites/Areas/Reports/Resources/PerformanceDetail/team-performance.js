@@ -98,7 +98,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 125 }).change(function () {
+            validator.ClearError(domElements.ddlBetType.next());
+        });
 
         domElements.ddlTeam.multiselect({
             selectedList: 2,
@@ -108,7 +110,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             create: function () {
                 domElements.ddlTeam.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 125 }).change(function () {
+            validator.ClearError(domElements.ddlTeam.next());
+        });
 
         domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
             var value = $.trim(domElements.txtMarginFrom.val());
@@ -186,7 +190,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     // Validate filter form.
     var validateFilterForm = function () {
         return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateValueRange(domElements.txtTeamBMFrom, domElements.txtTeamBMTo);
+               validateValueRange(domElements.txtTeamBMFrom, domElements.txtTeamBMTo) &&
+               validateDropdownFields();
     };
 
     // Validate From/To values.
@@ -207,6 +212,24 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         }
 
         return isValid;
+    };
+
+    // Validate dropdown fields.
+    var validateDropdownFields = function () {
+        var selectedBetTypes = domElements.ddlBetType.val();
+        var selectedTeams = domElements.ddlTeam.val();
+
+        if (!selectedBetTypes) {
+            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
+
+            return false;
+        } else if (!selectedTeams) {
+            validator.ShowError(domElements.ddlTeam.next(), messages.RequiredField, 'w');
+
+            return false;
+        } else {
+            return true;
+        }
     };
 
     // Get team performance report data.
@@ -255,7 +278,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       },
                       { HeaderText: labels.TeamBM, Width: 100, Name: 'ColTeamBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -276,17 +299,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 }
             },
             showNumberColumn: true,
-            showPager: true,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    handleTeamPerformanceGridEvents();
-
-                    return rows;
-                }
-            },
             showFooter: true
         };
         var bodyData = [];
@@ -416,7 +428,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,

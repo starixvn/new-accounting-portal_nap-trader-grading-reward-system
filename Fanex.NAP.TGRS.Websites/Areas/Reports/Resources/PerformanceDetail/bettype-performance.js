@@ -103,7 +103,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 125 }).change(function () {
+            validator.ClearError(domElements.ddlBetType.next());
+        });
 
         domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
             var value = $.trim(domElements.txtMarginFrom.val());
@@ -179,7 +181,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     // Validate filter form.
     var validateFilterForm = function () {
         return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateValueRange(domElements.txtBetTypeBMFrom, domElements.txtBetTypeBMTo);
+               validateValueRange(domElements.txtBetTypeBMFrom, domElements.txtBetTypeBMTo) &&
+               validateBetType();
     };
 
     // Validate From/To values.
@@ -200,6 +203,19 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         }
 
         return isValid;
+    };
+
+    // Validate Bet Type field.
+    var validateBetType = function () {
+        var selectedBetTypes = domElements.ddlBetType.val();
+
+        if (!selectedBetTypes) {
+            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
+
+            return false;
+        } else {
+            return true;
+        }
     };
 
     // Get bet type performance.
@@ -233,7 +249,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfLeaguesCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right' },
@@ -250,7 +266,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -268,17 +284,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 }
             },
             showNumberColumn: true,
-            showPager: true,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    handleBetTypePerformanceGridEvents();
-
-                    return rows;
-                }
-            },
             showFooter: true
         };
         var bodyData = [];
@@ -421,7 +426,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,
@@ -808,7 +813,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       },
                       { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -975,7 +980,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,

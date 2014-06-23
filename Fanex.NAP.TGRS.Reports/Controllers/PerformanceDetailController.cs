@@ -41,7 +41,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             : this(null)
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
 
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
@@ -49,7 +48,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
-            ViewBag.BetTypes = betTypes;
         }
 
         public PerformanceDetailController(IDetailReportService detailReportService)
@@ -78,6 +76,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
         }
 
@@ -152,6 +154,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
         }
 
@@ -212,6 +218,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
         }
 
@@ -284,7 +294,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult TeamPerformance()
         {
             IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
 
+            ViewBag.BetTypes = betTypes;
             ViewBag.Teams = teams;
 
             return View();
@@ -358,6 +370,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            ViewBag.BetTypes = betTypes;
+
             return View();
         }
 
