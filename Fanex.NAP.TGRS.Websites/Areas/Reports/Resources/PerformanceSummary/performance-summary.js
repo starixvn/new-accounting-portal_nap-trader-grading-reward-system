@@ -18,6 +18,8 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         divDateRange: null,
         btnSearch: null,
         divGeneralInfo: null,
+        divTopTrader: null,
+        divBottomTrader: null,
         lblWinLoss: null,
         lblMargin: null,
         lblTurnOver: null,
@@ -51,6 +53,8 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.ddlYear = $('#ddlYear');
         domElements.btnSearch = $('#btnSearch');
         domElements.divGeneralInfo = $('#divGeneralInfo');
+        domElements.divTopTrader = $('#divTopTrader');
+        domElements.divBottomTrader = $('#divBottomTrader');
         domElements.divTeamGrid = $('#divTeamGrid');
         domElements.divTraderPerformance = $('#divTraderPerformance');
         domElements.divTopWinLeagueGrid = $('#divTopWinLeagueGrid');
@@ -283,11 +287,23 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         if (data.TopMinMargin && data.TopMaxMargin) {
             domElements.top10MinMargin.text(numeral(data.TopMinMargin).format(common.Formats.DecimalFormat) + "%");
             domElements.top10MaxMargin.text(numeral(data.TopMaxMargin).format(common.Formats.DecimalFormat) + "%");
+            //domElements.divTopTrader.addClass("top10-link");
         }
-        
+        else{
+            domElements.top10MinMargin.text(labels.NA);
+            domElements.top10MaxMargin.text(labels.NA);
+            //domElements.divTopTrader.removeClass("top10-link");
+        }
+
         if (data.BottomMinMargin && data.BottomMaxMargin) {
             domElements.bottom10MinMargin.text(numeral(data.BottomMinMargin).format(common.Formats.DecimalFormat) + "%");
             domElements.bottom10MaxMargin.text(numeral(data.BottomMaxMargin).format(common.Formats.DecimalFormat) + "%");
+            //domElements.divBottomTrader.addClass("bottom10-link");
+        }
+        else {
+            domElements.bottom10MinMargin.text(labels.NA);
+            domElements.bottom10MaxMargin.text(labels.NA);
+            //domElements.divBottomTrader.removeClass("bottom10-link");
         }
     };
 
