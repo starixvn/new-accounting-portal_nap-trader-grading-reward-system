@@ -31,6 +31,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
+        private const string BetTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
 
         /// <summary>
         /// Gets the bet types.
@@ -38,13 +39,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// <returns>List of BetTypeItem objects.</returns>
         public IEnumerable<BetTypeItem> GetBetTypes()
         {
-            var criteria = new GetBetTypesCriteria();
-            IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
-            IEnumerable<BetTypeItem> betTypes = null;
+            List<BetTypeItem> betTypes = SessionManager.Get<List<BetTypeItem>>(BetTypesSessionKey);
 
-            if (data != null && data.Any())
+            if (betTypes == null || betTypes.Count == 0)
             {
-                betTypes = data.Select(obj => new BetTypeItem(obj));
+                var criteria = new GetBetTypesCriteria();
+                IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
+
+                if (data != null && data.Any())
+                {
+                    betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
+                    SessionManager.Set<List<BetTypeItem>>(BetTypesSessionKey, betTypes);
+                }
             }
 
             return betTypes;
@@ -167,6 +173,10 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             return margin;
         }
 
+        /// <summary>
+        /// Fills the header.
+        /// </summary>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
         private void FillHeader(ref ExcelTemplateWriter writer)
         {
             writer.CopyRows(3, 1);

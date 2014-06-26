@@ -9,11 +9,13 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
+    using System;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Bet type view model.
     /// </summary>
+    [Serializable]
     public class BetTypeItem
     {
         public BetTypeItem(BetTypeInfo betType)
