@@ -163,7 +163,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             fromValue = fromValue.replace(/,/g, '');
             toValue = toValue.replace(/,/g, '');
 
-            isValid = $.isNumeric(fromValue) && $.isNumeric(toValue) && parseFloat(fromValue) < parseFloat(toValue);
+            isValid = $.isNumeric(fromValue) && $.isNumeric(toValue) && parseFloat(fromValue) <= parseFloat(toValue);
         }
 
         if (!isValid) {
