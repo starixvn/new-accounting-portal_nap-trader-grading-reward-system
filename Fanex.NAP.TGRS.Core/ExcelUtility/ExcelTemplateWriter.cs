@@ -77,6 +77,16 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
         }
 
         /// <summary>
+        /// Freeze excel's pane by column index and row index.
+        /// </summary>
+        /// <param name="colSplit">Column index.</param>
+        /// <param name="rowSplit">Row index.</param>
+        public void FreezeRow(int colSplit, int rowSplit)
+        {
+            this._sheet.CreateFreezePane(colSplit, rowSplit);
+        }
+
+        /// <summary>
         /// Writes cell range value.
         /// </summary>
         /// <param name="rowIndex">Start row index.</param>

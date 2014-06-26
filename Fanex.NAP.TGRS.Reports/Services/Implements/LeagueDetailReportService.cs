@@ -12,15 +12,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
+    using NPOI.SS.UserModel;
 
     /// <summary>
     /// Detail report service.
@@ -134,9 +137,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.LeaguePerformance);
-                writer.CopyRows(0, 4);
+                writer.CopyRows(0, 1);
 
-                // Write content.
+                FilterBlock(criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 3);
                 FillRowData(leagueData, ref writer);
 
                 writer.SyncColumnsWidth(9);
@@ -160,6 +165,30 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             return margin;
+        }
+
+        private void FillHeader(ref ExcelTemplateWriter writer)
+        {
+            writer.CopyRows(3, 1);
+        }
+
+        /// <summary>
+        /// Generate bet type string.
+        /// </summary>
+        /// <param name="data">List of bet types.</param>
+        /// <returns>Bet type string.</returns>
+        private string FormatSelectString(List<BetTypeItem> data)
+        {
+            StringBuilder betTypeString = new StringBuilder();
+            foreach (var item in data)
+            {
+                betTypeString.Append(item.BetTypeName);
+                betTypeString.Append(", ");
+            }
+
+            betTypeString.Remove(betTypeString.Length - 2, 2);
+
+            return betTypeString.ToString();
         }
 
         /// <summary>
@@ -207,6 +236,93 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 (object)total.Margin ?? ViewLang.NA
             };
             writer.WriteRow(6, totalRecord);
+        }
+
+        /// <summary>
+        /// Append formatted block to the given rich text render.
+        /// </summary>
+        /// <param name="content">The rich text render object to append.</param>
+        /// <param name="name">Name part of append block.</param>
+        /// <param name="nameFont">Font of name part.</param>
+        /// <param name="value">Value part of append block.</param>
+        /// <param name="valueFont">Font of value part.</param>
+        /// <param name="endString">End string.</param>
+        private void AppendBlockContent(ref RichTextRender content, string name, IFont nameFont, string value, IFont valueFont, string endString)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            // Name
+            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            content = content.AddText(nameBlock);
+
+            // Value
+            TextBlock valueBlock = new TextBlock(value, valueFont);
+            content = content.AddText(valueBlock);
+
+            if (endString != string.Empty)
+            {
+                content = content.AddText(endString);
+            }
+        }
+
+        /// <summary>
+        /// Make Filter row.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        private void FilterBlock(GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            RichTextRender contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(10, 0);
+            IFont normalFont = writer.GetFont(11, 0);
+            List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
+            AppendBlockContent(ref contentRender, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, "  ");
+            AppendBlockContent(ref contentRender, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ViewLang.BetType, boldFont, FormatSelectString(betTypes), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ViewLang.MinimumTurnover, boldFont, criteria.Turnover.ToString(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ViewLang.MinimumWinLoss, boldFont, criteria.WinLost.ToString(), normalFont, "\n");
+            //// Margin
+            string marginFromString = "min";
+            string marginToString = "max";
+            if (criteria.MarginFrom != null)
+            {
+                marginFromString = criteria.MarginFrom.ToString();
+            }
+
+            if (criteria.MarginTo != null)
+            {
+                marginToString = criteria.MarginTo.ToString();
+            }
+
+            string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+            AppendBlockContent(ref contentRender, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+
+            //// League
+            AppendBlockContent(ref contentRender, ViewLang.League + ": contains ", boldFont, criteria.LeagueName, normalFont, "\n");
+
+            //// LeagueBM
+            var leagueBMFromString = "min";
+            var leagueBMToString = "max";
+            if (criteria.LeagueBMFrom != null)
+            {
+                leagueBMFromString = criteria.LeagueBMFrom.ToString();
+            }
+
+            if (criteria.LeagueBMTo != null)
+            {
+                leagueBMToString = criteria.LeagueBMTo.ToString();
+            }
+
+            string leagueBMString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
+            AppendBlockContent(ref contentRender, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
+
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(7, contentRichTextArray);
         }
     }
 }
