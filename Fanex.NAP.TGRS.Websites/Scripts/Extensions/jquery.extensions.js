@@ -526,6 +526,4 @@
 
     return template;
     };
-
-        
 })(jQuery);

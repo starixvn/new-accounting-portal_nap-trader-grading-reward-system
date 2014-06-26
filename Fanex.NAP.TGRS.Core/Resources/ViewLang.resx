@@ -453,4 +453,7 @@
   <data name="BetTypeExcelFile" xml:space="preserve">
     <value>BetType</value>
   </data>
+  <data name="AvgProfitMargin" xml:space="preserve">
+    <value>Avg. Profit Margin %</value>
+  </data>
 </root>
