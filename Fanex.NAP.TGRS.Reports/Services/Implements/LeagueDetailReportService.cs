@@ -10,9 +10,10 @@
 
 namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Text;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
@@ -32,6 +33,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
         private const string BetTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
+        private const int PointInPixel = 225;
 
         /// <summary>
         /// Gets the bet types.
@@ -187,18 +189,9 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// </summary>
         /// <param name="data">List of bet types.</param>
         /// <returns>Bet type string.</returns>
-        private string FormatSelectString(List<BetTypeItem> data)
+        private string MakeBetTypeSelectString(List<BetTypeItem> data)
         {
-            StringBuilder betTypeString = new StringBuilder();
-            foreach (var item in data)
-            {
-                betTypeString.Append(item.BetTypeName);
-                betTypeString.Append(", ");
-            }
-
-            betTypeString.Remove(betTypeString.Length - 2, 2);
-
-            return betTypeString.ToString();
+            return string.Join(", ", data.Select(obj => obj.BetTypeName));
         }
 
         /// <summary>
@@ -252,12 +245,13 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// Append formatted block to the given rich text render.
         /// </summary>
         /// <param name="content">The rich text render object to append.</param>
+        /// <param name="lineCount">Content's line count.</param>
         /// <param name="name">Name part of append block.</param>
         /// <param name="nameFont">Font of name part.</param>
         /// <param name="value">Value part of append block.</param>
         /// <param name="valueFont">Font of value part.</param>
         /// <param name="endString">End string.</param>
-        private void AppendBlockContent(ref RichTextRender content, string name, IFont nameFont, string value, IFont valueFont, string endString)
+        private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -276,6 +270,14 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             {
                 content = content.AddText(endString);
             }
+
+            lineCount += CountLine(name + value);
+        }
+
+        private int CountLine(string line)
+        {
+            int charPerLine = 216;
+            return Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }
 
         /// <summary>
@@ -283,17 +285,25 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(10, 0);
             IFont normalFont = writer.GetFont(11, 0);
+            int lineCount = 0;
+
             List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
-            AppendBlockContent(ref contentRender, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, "  ");
-            AppendBlockContent(ref contentRender, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ViewLang.BetType, boldFont, FormatSelectString(betTypes), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ViewLang.MinimumTurnover, boldFont, criteria.Turnover.ToString(), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ViewLang.MinimumWinLoss, boldFont, criteria.WinLost.ToString(), normalFont, "\n");
+            string betTypeString = MakeBetTypeSelectString(betTypes);
+            string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
+            string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
+
             //// Margin
             string marginFromString = "min";
             string marginToString = "max";
@@ -308,10 +318,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
-            AppendBlockContent(ref contentRender, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
 
             //// League
-            AppendBlockContent(ref contentRender, ViewLang.League + ": contains ", boldFont, criteria.LeagueName, normalFont, "\n");
+            string leagueString = (criteria.LeagueName != null) ? string.Format("contains '{0}'", criteria.LeagueName) : string.Empty;
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, leagueString, normalFont, "\n");
 
             //// LeagueBM
             var leagueBMFromString = "min";
@@ -327,12 +338,13 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             }
 
             string leagueBMString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
-            AppendBlockContent(ref contentRender, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(7, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
         }
     }
 }

@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
@@ -142,6 +143,16 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             {
                 this._sheet.SetColumnWidth(i, this._templateSheet.GetColumnWidth(i));
             }
+        }
+
+        /// <summary>
+        /// Synchronizes row' height of the templates with the current sheet.
+        /// </summary>
+        /// <param name="index">The row index.</param>
+        /// /// <param name="height">Row height.</param>
+        public void SetRowHeight(int index, int height)
+        {
+            this._sheet.GetRow(index).Height = Convert.ToInt16(height);
         }
 
         /// <summary>

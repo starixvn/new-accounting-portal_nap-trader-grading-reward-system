@@ -10,16 +10,19 @@
 namespace Fanex.NAP.TGRS.Reports.Services.Implements
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
+    using NPOI.SS.UserModel;
 
     /// <summary>
     /// Detail report service.
@@ -148,11 +151,12 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.TeamPerformance);
-                writer.CopyRows(0, 4);
 
-                // Write content.
+                writer.CopyRows(0, 1);
+                FilterBlock(criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 3);
                 FillRowData(teamData, ref writer);
-
                 writer.SyncColumnsWidth(10);
                 writer.Render();
             }
@@ -206,6 +210,84 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 null
             };
             writer.WriteRow(6, totalRecord);
+        }
+
+        /// <summary>
+        /// Generate team string.
+        /// </summary>
+        /// <param name="data">List of bet types.</param>
+        /// <returns>Bet type string.</returns>
+        private string MakeTeamSelectString(List<TeamItem> data)
+        {
+            return string.Join(", ", data.Select(obj => obj.TeamName));
+        }
+
+        /// <summary>
+        /// Make Filter row.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <param name="writer">The writer that is used to write Excel content.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        private void FilterBlock(GetTeamPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            RichTextRender contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(10, 0);
+            IFont normalFont = writer.GetFont(11, 0);
+            int lineCount = 0;
+
+            List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
+            string betTypeString = MakeBetTypeSelectString(betTypes);
+            string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
+            string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
+
+            //// Margin
+            string marginFromString = "min";
+            string marginToString = "max";
+            if (criteria.MarginFrom != null)
+            {
+                marginFromString = criteria.MarginFrom.ToString();
+            }
+
+            if (criteria.MarginTo != null)
+            {
+                marginToString = criteria.MarginTo.ToString();
+            }
+
+            string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+
+            //// Team
+            List<TeamItem> teams = this.GetTeams().ToList();
+            string teamString = MakeTeamSelectString(teams);
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Team, boldFont, teamString, normalFont, "\n");
+
+            //// teamBM
+            var teamBMFromString = "min";
+            var teamBMToString = "max";
+            if (criteria.TeamBMFrom != null)
+            {
+                teamBMFromString = criteria.TeamBMFrom.ToString();
+            }
+
+            if (criteria.TeamBMTo != null)
+            {
+                teamBMToString = criteria.TeamBMTo.ToString();
+            }
+
+            string teamBMString = string.Format("from {0} to {1}", teamBMFromString, teamBMToString);
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, teamBMString, normalFont, "\n");
+
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(7, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
         }
     }
 }
