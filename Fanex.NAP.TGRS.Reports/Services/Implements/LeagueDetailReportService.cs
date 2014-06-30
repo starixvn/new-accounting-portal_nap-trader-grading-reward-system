@@ -34,6 +34,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
         private const string BetTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
         private const int PointInPixel = 225;
+        private const string MinPercentString = "min";
+        private const string MaxPercentString = "max";
 
         /// <summary>
         /// Gets the bet types.
@@ -187,11 +189,19 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// <summary>
         /// Generate bet type string.
         /// </summary>
-        /// <param name="data">List of bet types.</param>
+        /// <param name="data">List of all bet types.</param>
+        /// <param name="betTypes">String contains criteria's bet types id.</param>
         /// <returns>Bet type string.</returns>
-        private string MakeBetTypeSelectString(List<BetTypeItem> data)
+        private string MakeBetTypeSelectString(List<BetTypeItem> data, string betTypes)
         {
-            return string.Join(", ", data.Select(obj => obj.BetTypeName));
+            if (betTypes == "0")
+            {
+                return string.Join(", ", data.Select(obj => obj.BetTypeName));
+            }
+            else
+            {
+                return string.Join(", ", data.Where(obj => betTypes.Contains(obj.BetTypeId.ToString())).Select(obj => obj.BetTypeName));
+            }
         }
 
         /// <summary>
@@ -294,7 +304,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             int lineCount = 0;
 
             List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes);
+            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
 
@@ -305,8 +315,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
 
             //// Margin
-            string marginFromString = "min";
-            string marginToString = "max";
+            string marginFromString = MinPercentString;
+            string marginToString = MaxPercentString;
             if (criteria.MarginFrom != null)
             {
                 marginFromString = criteria.MarginFrom.ToString();
@@ -317,16 +327,19 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 marginToString = criteria.MarginTo.ToString();
             }
 
-            string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            if (criteria.MarginFrom != null || criteria.MarginTo != null)
+            {
+                string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            }
 
             //// League
             string leagueString = (criteria.LeagueName != null) ? string.Format("contains '{0}'", criteria.LeagueName) : string.Empty;
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, leagueString, normalFont, "\n");
 
             //// LeagueBM
-            var leagueBMFromString = "min";
-            var leagueBMToString = "max";
+            var leagueBMFromString = MinPercentString;
+            var leagueBMToString = MaxPercentString;
             if (criteria.LeagueBMFrom != null)
             {
                 leagueBMFromString = criteria.LeagueBMFrom.ToString();
@@ -337,8 +350,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 leagueBMToString = criteria.LeagueBMTo.ToString();
             }
 
-            string leagueBMString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
+            if (criteria.LeagueBMFrom != null || criteria.LeagueBMTo != null)
+            {
+                string leagueBMString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];

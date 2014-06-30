@@ -207,7 +207,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             int lineCount = 0;
 
             List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes);
+            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
 
@@ -218,8 +218,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
 
             //// Margin
-            string marginFromString = "min";
-            string marginToString = "max";
+            string marginFromString = MinPercentString;
+            string marginToString = MaxPercentString;
             if (criteria.MarginFrom != null)
             {
                 marginFromString = criteria.MarginFrom.ToString();
@@ -230,8 +230,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 marginToString = criteria.MarginTo.ToString();
             }
 
-            string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            if (criteria.MarginFrom != null || criteria.MarginTo != null)
+            {
+                string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];

@@ -215,11 +215,19 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// <summary>
         /// Generate team string.
         /// </summary>
-        /// <param name="data">List of bet types.</param>
+        /// <param name="data">List of all teams.</param>
+        /// <param name="teamIds">String of criteria's team id.</param>
         /// <returns>Bet type string.</returns>
-        private string MakeTeamSelectString(List<TeamItem> data)
+        private string MakeTeamSelectString(List<TeamItem> data, string teamIds)
         {
-            return string.Join(", ", data.Select(obj => obj.TeamName));
+            if (teamIds == "0")
+            {
+                return string.Join(", ", data.Select(obj => obj.TeamName));
+            }
+            else
+            {
+                return string.Join(", ", data.Where(obj => teamIds.Contains(obj.TeamId.ToString())).Select(obj => obj.TeamName));
+            }
         }
 
         /// <summary>
@@ -236,7 +244,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             int lineCount = 0;
 
             List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes);
+            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
 
@@ -247,8 +255,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
 
             //// Margin
-            string marginFromString = "min";
-            string marginToString = "max";
+            string marginFromString = MinPercentString;
+            string marginToString = MaxPercentString;
             if (criteria.MarginFrom != null)
             {
                 marginFromString = criteria.MarginFrom.ToString();
@@ -259,17 +267,20 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 marginToString = criteria.MarginTo.ToString();
             }
 
-            string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            if (criteria.MarginFrom != null || criteria.MarginTo != null)
+            {
+                string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+            }
 
             //// Team
             List<TeamItem> teams = this.GetTeams().ToList();
-            string teamString = MakeTeamSelectString(teams);
+            string teamString = MakeTeamSelectString(teams, criteria.TeamIds);
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Team, boldFont, teamString, normalFont, "\n");
 
             //// teamBM
-            var teamBMFromString = "min";
-            var teamBMToString = "max";
+            var teamBMFromString = MinPercentString;
+            var teamBMToString = MaxPercentString;
             if (criteria.TeamBMFrom != null)
             {
                 teamBMFromString = criteria.TeamBMFrom.ToString();
@@ -280,8 +291,11 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 teamBMToString = criteria.TeamBMTo.ToString();
             }
 
-            string teamBMString = string.Format("from {0} to {1}", teamBMFromString, teamBMToString);
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, teamBMString, normalFont, "\n");
+            if (criteria.TeamBMFrom != null || criteria.TeamBMTo != null)
+            {
+                string teamBMString = string.Format("from {0} to {1}", teamBMFromString, teamBMToString);
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, teamBMString, normalFont, "\n");
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
