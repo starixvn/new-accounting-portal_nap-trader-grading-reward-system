@@ -542,33 +542,33 @@
     };
 
     // Clear field.
-    $.fn.clearField = function () {
-        var $input = $(this).wrap('<div class="clearable-field"></div>');
+    $.fn.clearField = function (refresh) {
+        var $input = $(this); //.addClass('clearable-input').wrap('<div class="clearable-field"></div>');
         var $xIcon = $('<span class="x-icon disabled"></span>').css('left', $input.width() - 8);
 
-        $input.after($xIcon);
+        if (!refresh) {
+            $input.addClass('clearable-input').wrap('<div class="clearable-field"></div>').after($xIcon);
+        } else {
+            $xIcon = $input.next();
+        }
 
-        $input.focus(function () {
+        $input.on('focus', function () {
             if ($input.val().length > 0) {
                 $xIcon.removeClass('disabled');
-                $input.addClass('clearable-input');
             }
         }).focusout(function () {
             $xIcon.addClass('disabled');
-            $input.removeClass('clearable-input');
         }).keyup(function () {
             if ($input.val().length > 0) {
                 $xIcon.removeClass('disabled');
-                $input.addClass('clearable-input');
             } else {
                 $xIcon.addClass('disabled');
-                $input.removeClass('clearable-input');
             }
         });
 
         $xIcon.on('mousedown', function () {
             if ($input.val().length > 0) {
-                $input.val('').removeClass('clearable-input');
+                $input.val('');
                 $xIcon.addClass('disabled');
 
                 setTimeout(function () {

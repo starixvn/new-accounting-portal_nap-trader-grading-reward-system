@@ -8,19 +8,21 @@ Fanex.TGRS.Validator = function () {
     var $this = this;
 
     $this.ShowError = function ($obj, message, gravity) {
-        if ($obj.is(':hidden')) {
+        var $wrapper = $obj.hasClass('clearable-input') ? $obj.parent() : $obj;
+
+        if ($wrapper.is(':hidden')) {
             return;
         }
 
-        $obj.attr('title', message);
-        $obj.tipsy({
+        $wrapper.attr('title', message);
+        $wrapper.tipsy({
             trigger: 'manual',
             gravity: gravity ? gravity : 'sw',
             classStyle: 'error',
             inDocument: false,
             opacity: 0.97
         });
-        $obj.tipsy('show').triggerHandler('raiseError');
+        $wrapper.tipsy('show').triggerHandler('raiseError');
 
         // FireFox will not re-focus to the control until blur event finshes.
         setTimeout(function () {
@@ -29,11 +31,15 @@ Fanex.TGRS.Validator = function () {
 
         // Hide error when changing the field.
         $obj.change(function () {
-            $this.ClearError($obj);
+            $this.ClearError($wrapper);
         });
     };
 
     $this.ClearError = function ($obj) {
+        if ($obj.hasClass('clearable-input')) {
+            $obj = $obj.parent();
+        }
+
         $obj.tipsy('hide');
         $obj.removeAttr('original-title').triggerHandler('clearError');
     };

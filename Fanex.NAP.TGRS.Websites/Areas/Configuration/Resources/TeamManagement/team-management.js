@@ -60,6 +60,8 @@ Fanex.TGRS.TeamManagement = function () {
 
     // Bind event handlers to elements on the insert team popup.
     var bindNewTeamPopupEvent = function () {
+        popupElements.txtTeamName.clearField(true).focus();
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTeamForm, 'w')) {
                 var teamName = $.trim(popupElements.txtTeamName.val());
@@ -75,6 +77,13 @@ Fanex.TGRS.TeamManagement = function () {
     };
 
     var bindUpdateTeamPopupEvent = function () {
+        popupElements.txtTeamName.clearField(true);
+
+        // Waiting for clearField function completed.
+        setTimeout(function () {
+            popupElements.txtTeamName.focus();
+        }, 10);
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divUpdateTeamForm, 'w')) {
                 var txtTeamId = $.trim(popupElements.txtTeamId.val());
@@ -198,7 +207,7 @@ Fanex.TGRS.TeamManagement = function () {
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
-            gridExpandHeight: 100,
+            gridExpandHeight: 100
         };
         var editableTeamNameCol = "";
         var teamDescCol = "";

@@ -74,7 +74,6 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
-        // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divTradersGrid = $('#divTradersGrid');
         domElements.lnkAddNewTrader = $('#lnkAddNewTrader');
         domElements.divInsertTraderForm = $('#divInsertTraderForm').clone();
@@ -116,7 +115,7 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Bind event handlers to elements on the insert Trader popup.
     var bindNewTraderPopupEvent = function () {
-        popupElements.txtUserName.focus();
+        popupElements.txtUserName.clearField(true).focus();
 
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
@@ -395,6 +394,8 @@ Fanex.TGRS.TraderManagement = function () {
             noneSelectedText: labels.SelectAGrade,
             header: false,
             multiple: false
+        }).multiselectfilter({ width: 135 }).change(function () {
+            validator.ClearError(popupElements.ddlGrade.next());
         });
         popupElements.ddlTeam.multiselect({
             selectedList: 1,
@@ -402,7 +403,9 @@ Fanex.TGRS.TraderManagement = function () {
             height: 200,
             noneSelectedText: labels.SelectATeam,
             multiple: false
-        }).multiselectfilter({ width: 135 });
+        }).multiselectfilter({ width: 135 }).change(function () {
+            validator.ClearError(popupElements.ddlTeam.next());
+        });
     };
 
     var renderGradeHistoryGrid = function (data) {
