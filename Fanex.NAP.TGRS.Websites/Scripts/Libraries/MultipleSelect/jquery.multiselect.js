@@ -49,8 +49,7 @@
 
             header = (this.header = $('<div />'))
                 .addClass('ui-widget-header ui-multiselect-header ui-helper-clearfix')
-                .appendTo(menu)
-                .append('<div class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></div>'),
+                .appendTo(menu),
 
             headerLinkContainer = (this.headerLinkContainer = $('<ul />'))
                 .addClass('ui-helper-reset')
@@ -697,6 +696,7 @@
         },
 
         _create: function () {
+            var self = this;
             var opts = this.options;
             var elem = $(this.element);
 
@@ -707,7 +707,13 @@
             var header = (this.header = instance.menu.find('.ui-multiselect-header').addClass('ui-multiselect-hasfilter'));
 
             // wrapper elem
-            var wrapper = (this.wrapper = $('<div class="ui-multiselect-filter">' + (opts.label.length ? opts.label : '') + '<input placeholder="' + opts.placeholder + '" type="text"' + (/\d/.test(opts.width) ? 'style="width:' + opts.width + 'px"' : '') + ' /></div>').prependTo(this.header));
+            // var wrapper = (this.wrapper = $('<div class="ui-multiselect-filter">' + (opts.label.length ? opts.label : '') + '<input placeholder="' + opts.placeholder + '" type="text"' + (/\d/.test(opts.width) ? 'style="width:' + opts.width + 'px"' : '') + ' /></div>').prependTo(this.header));
+            var wrapper = this.wrapper = $('<div class="ui-multiselect-filter">' + (opts.label.length ? opts.label : '') +
+                                               '<input placeholder="' + opts.placeholder + '" type="text"' + (/\d/.test(opts.width) ? 'style="width:' + opts.width + 'px"' : '') + ' />' +
+                                               '<span class="ui-icon ui-icon-close disabled" style="left: ' + (/\d/.test(opts.width) ? opts.width + 40 : 140) + 'px"></span>' +
+                                           '</div>');
+
+            this.wrapper.prependTo(this.header);
 
             // reference to the actual inputs
             this.inputs = instance.menu.find('input[type="checkbox"], input[type="radio"]');
@@ -720,8 +726,29 @@
                         e.preventDefault();
                     }
                 },
-                keyup: $.proxy(this._handler, this),
-                click: $.proxy(this._handler, this)
+                keyup: $.proxy(self._handler, self),
+                click: $.proxy(this._handler, this),
+                focus: function () {
+                    if (self.input.val().length > 0) {
+                        self.span.removeClass('disabled');
+                    }
+                }
+            }).bind('keyup', function () {
+                if (self.input.val().length > 0) {
+                    self.span.removeClass('disabled');
+                } else {
+                    self.span.addClass('disabled');
+                }
+            });
+
+            // build the clear field icon
+            this.span = wrapper.find('span').bind({
+                click: function () {
+                    if (self.input.val().length > 0) {
+                        self.input.val('').keyup().focus();
+                        self.span.addClass('disabled');
+                    }
+                }
             });
 
             // cache input values for searching
@@ -771,6 +798,12 @@
             if (this.options.autoReset) {
                 doc.bind('multiselectclose', $.proxy(this._reset, this));
             }
+
+            doc.bind('click', function (e) {
+                if (!$(e.target).parent().hasClass('ui-multiselect-filter')) {
+                    self.span.addClass('disabled');
+                }
+            });
         },
 
         // thx for the logic here ben alman

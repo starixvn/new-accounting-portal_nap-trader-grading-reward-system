@@ -209,6 +209,10 @@ Fanex.TGRS.Common = function () {
         domElements.divPopup.on('dialogclose', function () {
             $this.CloseMsgBox();
         });
+
+        $('input[type=text]').each(function () {
+            $(this).clearField();
+        });
     };
 };
 

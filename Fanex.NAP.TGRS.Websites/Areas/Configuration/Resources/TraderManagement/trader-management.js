@@ -116,6 +116,8 @@ Fanex.TGRS.TraderManagement = function () {
 
     // Bind event handlers to elements on the insert Trader popup.
     var bindNewTraderPopupEvent = function () {
+        popupElements.txtUserName.focus();
+
         popupElements.btnSave.on('click', function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
                 var parameters = {
@@ -140,6 +142,7 @@ Fanex.TGRS.TraderManagement = function () {
             common.ClosePopup();
         });
     };
+
     var bindUpdateTraderPopupEvent = function (teamEffectiveDate, gradeEffectiveDate) {
         //Date picker
         var maxDate = new Date(datepickerSetting.Today);
@@ -196,7 +199,7 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
 
-    //Get all Traders
+    // Get all Traders
     var getAllTraders = function () {
         common.DisableInput();
         $.ajax({
@@ -219,7 +222,7 @@ Fanex.TGRS.TraderManagement = function () {
         });
     };
 
-    //Insert new Trader
+    // Insert new Trader
     var insertTrader = function (parameter) {
         common.DisableInput();
         var combineParameter = {
@@ -252,7 +255,8 @@ Fanex.TGRS.TraderManagement = function () {
             }
         });
     };
-    //insert Trader
+
+    // Insert Trader
     var updateTrader = function (parameter) {
         common.DisableInput();
         var combineParameter = {
@@ -373,7 +377,7 @@ Fanex.TGRS.TraderManagement = function () {
             minWidth: 150,
             height: 200,
             multiple: false
-        }).multiselectfilter({ width: 75 });
+        }).multiselectfilter({ width: 85 });
         domElements.ddlGrade.multiselect({
             selectedList: 1,
             minWidth: 120,
@@ -398,7 +402,7 @@ Fanex.TGRS.TraderManagement = function () {
             height: 200,
             noneSelectedText: labels.SelectATeam,
             multiple: false
-        }).multiselectfilter({ width: 125 });
+        }).multiselectfilter({ width: 135 });
     };
 
     var renderGradeHistoryGrid = function (data) {
@@ -424,6 +428,7 @@ Fanex.TGRS.TraderManagement = function () {
         gridOptions.bodyRows = bodyData;
         popupElements.divGradeHistoryGrid.fanexGrid(gridOptions);
     };
+
     var reloadPage = function (data) {
         renderGrid(data);
     };
@@ -452,6 +457,7 @@ Fanex.TGRS.TraderManagement = function () {
             }
         });
     };
+
     // Update Team drop-down list.
     var updateTeamDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
         // Clear old values.
@@ -547,12 +553,12 @@ Fanex.TGRS.TraderManagement = function () {
         });
 
         //Enter on fields
-        domElements.txtUserName.off('keyup').on('keyup', function (event) {
+        domElements.txtUserName.on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }
         });
-        domElements.txtEmployeeId.off('keyup').on('keyup', function (event) {
+        domElements.txtEmployeeId.on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }

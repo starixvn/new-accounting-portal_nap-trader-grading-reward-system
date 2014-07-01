@@ -57,6 +57,18 @@
             }
         };
 
+        var formatNumber = function (rawValue, decimalPos) {
+            var value = null;
+
+            if (decimalPos < 0) {
+                value = numeral(rawValue).format('0,0');
+            } else if (decimalPos < rawValue.length - 1) {
+                value = numeral(rawValue).format('0,0.0[000]');
+            }
+
+            return value;
+        };
+
         if ($this.attr('maxlength')) {
             $this.attr('original-maxlength', $this.attr('maxlength'));
         }
@@ -137,13 +149,15 @@
                 var decimalPos = rawValue.indexOf('.');
                 var cursorPos = getCaret($obj);
                 var cursorLastPos = cursorPos === value.length;
+                var maxlength = parseInt($obj.attr('maxlength'));
+                var lengthOffset = maxlength / 3 > 2 ? maxlength % 3 : 0;
 
                 rawValue = rawValue === '' ? '0' : rawValue;
+                value = formatNumber(rawValue, decimalPos) || value;
 
-                if (decimalPos < 0) {
-                    value = numeral(rawValue).format('0,0');
-                } else if (decimalPos < rawValue.length - 1) {
-                    value = numeral(rawValue).format('0,0.0[000]');
+                if (value.length > maxlength) {
+                    value = value.substring(0, maxlength + lengthOffset);
+                    value = formatNumber(value.replace(/,/g, ''), decimalPos) || value;
                 }
 
                 if ((48 <= event.keyCode && event.keyCode <= 57) ||
@@ -168,7 +182,7 @@
                 if (decimalPos < 0) {
                     value = numeral(rawValue).format('0,0');
                 } else if (decimalPos < rawValue.length - 1) {
-                    value = numeral(rawValue).format('0,0.0[000]');
+                    value = numeral(rawValue).format('0,0.00[00]');
                 }
 
                 $obj.val(value);
@@ -525,5 +539,44 @@
         };
 
     return template;
+    };
+
+    // Clear field.
+    $.fn.clearField = function () {
+        var $input = $(this).wrap('<div class="clearable-field"></div>');
+        var $xIcon = $('<span class="x-icon disabled"></span>').css('left', $input.width() - 8);
+
+        $input.after($xIcon);
+
+        $input.focus(function () {
+            if ($input.val().length > 0) {
+                $xIcon.removeClass('disabled');
+                $input.addClass('clearable-input');
+            }
+        }).focusout(function () {
+            $xIcon.addClass('disabled');
+            $input.removeClass('clearable-input');
+        }).keyup(function () {
+            if ($input.val().length > 0) {
+                $xIcon.removeClass('disabled');
+                $input.addClass('clearable-input');
+            } else {
+                $xIcon.addClass('disabled');
+                $input.removeClass('clearable-input');
+            }
+        });
+
+        $xIcon.on('mousedown', function () {
+            if ($input.val().length > 0) {
+                $input.val('').removeClass('clearable-input');
+                $xIcon.addClass('disabled');
+
+                setTimeout(function () {
+                    $input.focus();
+                }, 50);
+            }
+        });
+
+        return $input;
     };
 })(jQuery);

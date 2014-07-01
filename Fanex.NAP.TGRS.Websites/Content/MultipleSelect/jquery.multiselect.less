@@ -204,4 +204,15 @@
         -moz-box-sizing: content-box;
         -webkit-box-sizing: content-box;
     }
+
+    span {
+        display: inline-block;
+        position: absolute;
+        top: 8px;
+        cursor: pointer;
+
+        &.disabled {
+            display: none;
+        }
+    }
 }

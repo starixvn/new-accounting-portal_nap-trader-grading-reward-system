@@ -155,8 +155,12 @@ iframe {
     display: none;
 }
 
-:focus { outline:none; }
-::-moz-focus-inner { border:0; }
+:focus { outline: none; }
+::-moz-focus-inner { border: 0; }
+
+input::-ms-reveal, input::-ms-clear {
+    display: none;
+}
 
 /********************************************************/
 /*                        Headers                       */
@@ -618,6 +622,14 @@ header {
     display: inline-block;
     height: 38px;
     width: 35px;
+}
+
+.x-icon {
+    background: url(Images/sprites.png) no-repeat -55px -53px;
+    width: 12px;
+    height: 10px;
+    cursor: pointer;
+    display: inline-block;
 }
 
 /********************************************************/

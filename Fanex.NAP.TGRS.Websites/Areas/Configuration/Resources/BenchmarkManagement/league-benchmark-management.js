@@ -85,13 +85,13 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
             multiple: false
         });
 
-        domElements.txtLeague.off('keyup').on('keyup', function (event) {
+        domElements.txtLeague.off('keyup.league-benchmark').on('keyup.league-benchmark', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }
         });
 
-        domElements.btnSearch.off('click').on('click', function () {
+        domElements.btnSearch.off('click.league-benchmark').on('click.league-benchmark', function () {
             var specialLeagueValues = domElements.ddlSpecialLeague.val().split(';');
             var displayMode = 0;
             var programId = '';
@@ -116,7 +116,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         });
 
         // Hide instruction tipsy when clicking on document.
-        $('html').off('mousedown').on('mousedown', function (event) {
+        $('html').off('mousedown.league-benchmark').on('mousedown.league-benchmark', function (event) {
             if (!$(event.target).hasClass('benchmark')) {
                 domElements.divLeagueBMGrid.find('input.benchmark').each(function () {
                     var $input = $(this);

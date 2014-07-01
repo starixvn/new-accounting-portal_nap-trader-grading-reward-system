@@ -98,7 +98,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 }).change(function () {
+        }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
         });
 
@@ -110,7 +110,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             create: function () {
                 domElements.ddlTeam.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 }).change(function () {
+        }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlTeam.next());
         });
 

@@ -163,6 +163,11 @@ input.ui-multiselect-state-default{
     .col_footer table thead th {
         font-weight: bold;
     }
+
+    input[type=text] {
+        border: 1px solid #cecccd;
+        padding: 2px;
+    }
 }
 
 /********************************************************/
@@ -304,5 +309,41 @@ input.ui-multiselect-state-default{
 
     &.second-month {
         margin: 0 5px 0 1px;
+    }
+}
+
+/********************************************************/
+/*              Custom jQuery Clear Field               */
+/********************************************************/
+.clearable-field {
+    display: inline-block;
+    position: relative;
+    height: 26px;
+
+    span.x-icon {
+        display: inline-block;
+        position: absolute;
+        float: left;
+        top: 8px;
+
+        &.disabled {
+            display: none;
+        }
+    }
+}
+
+.grid-clearable {
+    display: inline-block;
+    position: relative;
+    height: 22px;
+
+    span.x-icon {
+        position: absolute;
+        top: 6px;
+        right: 2px;
+
+        &.disabled {
+            display: none;
+        }
     }
 }

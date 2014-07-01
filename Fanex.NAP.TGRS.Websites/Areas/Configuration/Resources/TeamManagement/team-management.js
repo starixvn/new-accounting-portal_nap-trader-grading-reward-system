@@ -73,6 +73,7 @@ Fanex.TGRS.TeamManagement = function () {
             common.ClosePopup();
         });
     };
+
     var bindUpdateTeamPopupEvent = function () {
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divUpdateTeamForm, 'w')) {
@@ -145,7 +146,8 @@ Fanex.TGRS.TeamManagement = function () {
             }
         });
     };
-    //insert team
+
+    //Insert team
     var updateTeam = function (teamId, teamName, teamDes) {
         var updateParameters = {
             TeamId: teamId,
@@ -224,6 +226,7 @@ Fanex.TGRS.TeamManagement = function () {
         gridOptions.bodyRows = bodyData;
         domElements.divTeamsGrid.fanexGrid(gridOptions);
     };
+
     var reloadPage = function (data) {
         renderGrid(data);
     };
@@ -267,6 +270,7 @@ Fanex.TGRS.TeamManagement = function () {
         cachePopupElements();
         bindNewTeamPopupEvent();
     };
+
     // Display update team form.
     var makeUpdateTeamForm = function (teamId, teamName, teamDes) {
         var form = domElements.divUpdateTeamForm.clone();
@@ -282,8 +286,7 @@ Fanex.TGRS.TeamManagement = function () {
         popupElements.txtTeamId.val(teamId);
     };
 
-    var refreshPopup = function()
-    {
+    var refreshPopup = function() {
         clearTimeout(timeout);
         common.CloseMsgBox();
     };

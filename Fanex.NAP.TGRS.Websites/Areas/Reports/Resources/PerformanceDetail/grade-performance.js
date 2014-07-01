@@ -89,7 +89,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             create: function () {
                 domElements.ddlBetType.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 125 }).change(function () {
+        }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
         });
 
