@@ -329,7 +329,20 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
             if (criteria.MarginFrom != null || criteria.MarginTo != null)
             {
-                string marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+                string marginString;
+                if (criteria.MarginFrom == null)
+                {
+                    marginString = string.Format("≤ {0}", criteria.MarginTo);
+                }
+                else if (criteria.MarginTo == null)
+                {
+                    marginString = string.Format("≥ {0}", criteria.MarginFrom);
+                }
+                else
+                {
+                    marginString = string.Format("from {0} to {1}", marginFromString, marginToString);
+                }
+
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
             }
 
@@ -352,8 +365,21 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
             if (criteria.LeagueBMFrom != null || criteria.LeagueBMTo != null)
             {
-                string leagueBMString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, leagueBMString, normalFont, "\n");
+                string marginString;
+                if (criteria.LeagueBMFrom == null)
+                {
+                    marginString = string.Format("≤ {0}", criteria.LeagueBMTo);
+                }
+                else if (criteria.LeagueBMTo == null)
+                {
+                    marginString = string.Format("≥ {0}", criteria.LeagueBMFrom);
+                }
+                else
+                {
+                    marginString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
+                }
+
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, marginString, normalFont, "\n");
             }
 
             IRichTextString contentRichTextString = contentRender.Render();
