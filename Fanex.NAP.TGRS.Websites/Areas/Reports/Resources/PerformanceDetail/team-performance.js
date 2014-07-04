@@ -646,7 +646,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }, ],
+                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }],
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
