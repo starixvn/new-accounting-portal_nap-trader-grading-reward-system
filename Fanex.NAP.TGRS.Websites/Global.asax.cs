@@ -24,7 +24,7 @@ namespace Fanex.NAP.TGRS.Websites
     /// MVC application configuration.
     /// </summary>
     [System.Runtime.InteropServices.GuidAttribute("62BE590A-9400-4F23-B796-EA091818AF78")]
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         /// <summary>
         /// Sets all needed configuration when the application starts.

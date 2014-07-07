@@ -286,7 +286,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
         private int CountLine(string line)
         {
-            int charPerLine = 216;
+            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
             return Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }
 
