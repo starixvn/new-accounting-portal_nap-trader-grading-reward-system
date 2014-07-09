@@ -72,8 +72,7 @@ namespace Fanex.NAP.TGRS.Websites.App_Start
                 "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
                 "~/Content/MultipleSelect/jquery.multiselect.less",
                 "~/Content/Themes/reset.less",
-                "~/Content/Themes/style.less",
-                "~/Content/Themes/custom.less");
+                "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
