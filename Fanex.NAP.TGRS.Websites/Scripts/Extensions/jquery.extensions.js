@@ -60,10 +60,15 @@
         var formatNumber = function (rawValue, decimalPos) {
             var value = null;
 
-            if (decimalPos < 0) {
-                value = numeral(rawValue).format('0,0');
-            } else if (decimalPos < rawValue.length - 1) {
-                value = numeral(rawValue).format('0,0.0[000]');
+            // Ignore the case of when user has just input -0 or -0.0.
+            if (rawValue !== '-0' && rawValue != '-0.0') {
+                if (decimalPos < 0) {
+                    value = numeral(rawValue).format('0,0');
+                } else if (decimalPos < rawValue.length - 1) {
+                    value = numeral(rawValue).format('0,0.0[000]');
+                }
+            } else {
+                value = rawValue;
             }
 
             return value;
