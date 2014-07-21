@@ -16,7 +16,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
     /// </summary>
     public class GetBetTypeBenchmarkCriteria : CriteriaBase
     {
-        public int LeagueID { get; set; }
+        public int LeagueId { get; set; }
 
         /// <summary>
         /// Gets the setting key.

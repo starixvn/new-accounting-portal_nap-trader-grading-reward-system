@@ -18,7 +18,6 @@ namespace Fanex.NAP.TGRS.Websites
     using System.Web.Routing;
     using Fanex.Data.Configuration;
     using Fanex.Logging;
-    using Fanex.NAP.TGRS.Websites.App_Start;
 
     /// <summary>
     /// MVC application configuration.
@@ -48,6 +47,7 @@ namespace Fanex.NAP.TGRS.Websites
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
+            SqlException sqlEx = ex as SqlException;
             string exceptionFormat = "{0}\r\nType: {1}" +
                                      "\r\nSource: {2}" +
                                      "\r\nDomain: {3}" +
@@ -76,13 +76,13 @@ namespace Fanex.NAP.TGRS.Websites
                                             ex.StackTrace);
 
                 // Get additional exception data for SqlException.
-                if (ex is SqlException)
+                if (sqlEx != null)
                 {
                     message += string.Format(
                                           "\r\nProcedure: {0}\r\nLine Number: {1}\r\nServer: {2}",
-                                          (ex as SqlException).Procedure,
-                                          (ex as SqlException).LineNumber,
-                                          (ex as SqlException).Server);
+                                          sqlEx.Procedure,
+                                          sqlEx.LineNumber,
+                                          sqlEx.Server);
                 }
 
                 LogService.Error(message);

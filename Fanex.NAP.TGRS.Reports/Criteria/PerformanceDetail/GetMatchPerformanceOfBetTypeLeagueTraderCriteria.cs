@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public int LeagueId { get; set; }
 
-        public int CustID { get; set; }
+        public int CustId { get; set; }
 
         public DateTime FromDate { get; set; }
 

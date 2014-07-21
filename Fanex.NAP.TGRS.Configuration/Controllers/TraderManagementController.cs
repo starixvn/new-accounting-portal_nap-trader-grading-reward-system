@@ -34,22 +34,20 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         private readonly ITraderManagementService _traderService;
         private readonly ITeamManagementService _teamService;
-        private readonly IGradeManagementService _gradeService;
 
         #endregion Members
 
         #region Constructors
 
         public TraderManagementController()
-            : this(null, null, null)
+            : this(null, null)
         {
         }
 
-        public TraderManagementController(ITraderManagementService traderService, IGradeManagementService gradeService, ITeamManagementService teamService)
+        public TraderManagementController(ITraderManagementService traderService, ITeamManagementService teamService)
         {
             this._traderService = traderService ?? new TraderManagementService();
             this._teamService = teamService ?? new TeamManagementService();
-            this._gradeService = gradeService ?? new GradeManagementService();
         }
 
         #endregion Constructors

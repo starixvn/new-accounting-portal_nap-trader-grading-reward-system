@@ -30,49 +30,49 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <summary>
         /// Gets bet type name by bet type ID and bet ID.
         /// </summary>
-        /// <param name="bettypeId">Bet type ID.</param>
-        /// <param name="betID">Bet ID value.</param>
+        /// <param name="betTypeId">Bet type ID.</param>
+        /// <param name="betId">Bet ID value.</param>
         /// <returns>Bet type name.</returns>
-        public static string GetBetType(object bettypeId, object betID)
+        public static string GetBetType(object betTypeId, object betId)
         {
             // resourceId remove first character
             string resourceId = string.Empty;
-            if (betID != null && betID.ToString().Length > 1)
+            if (betId != null && betId.ToString().Length > 1)
             {
-                resourceId = betID.ToString().Substring(1);
+                resourceId = betId.ToString().Substring(1);
             }
 
-            return RefData.GetBetTypeName(bettypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
+            return RefData.GetBetTypeName(betTypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
         }
 
         /// <summary>
         /// Gets sport name by ID.
         /// </summary>
-        /// <param name="sportID">Sport ID value.</param>
+        /// <param name="sportId">Sport ID value.</param>
         /// <returns>Sport name.</returns>
-        public static string GetSportName(object sportID)
+        public static string GetSportName(object sportId)
         {
-            return RefData.GetSportName(Converter.ToString2(sportID), TWLang("en-US"), string.Empty);
+            return RefData.GetSportName(Converter.ToString2(sportId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
         /// Gets team name.
         /// </summary>
-        /// <param name="teamID">Team ID value.</param>
+        /// <param name="teamId">Team ID value.</param>
         /// <returns>Team name.</returns>
-        public static string GetTeamName(object teamID)
+        public static string GetTeamName(object teamId)
         {
-            return RefData.GetTeamName(Converter.ToString2(teamID), TWLang("en-US"), string.Empty);
+            return RefData.GetTeamName(Converter.ToString2(teamId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
         /// Gets league name by ID.
         /// </summary>
-        /// <param name="leagueID">League ID.</param>
+        /// <param name="leagueId">League ID.</param>
         /// <returns>League name.</returns>
-        public static string GetLeagueName(object leagueID)
+        public static string GetLeagueName(object leagueId)
         {
-            return RefData.GetLeagueName(Converter.ToString2(leagueID), TWLang("en-US"), string.Empty);
+            return RefData.GetLeagueName(Converter.ToString2(leagueId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <summary>
         /// Gets combination name.
         /// </summary>
-        /// <param name="betteam">Bet team name.</param>
+        /// <param name="betTeam">Bet team name.</param>
         /// <returns>Combination name.</returns>
-        public static string GetCombinationName(string betteam)
+        public static string GetCombinationName(string betTeam)
         {
             string name = string.Empty;
-            switch (betteam)
+            switch (betTeam)
             {
                 case "110":
                     name = "Trixie";

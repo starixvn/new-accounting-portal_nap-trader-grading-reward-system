@@ -14,7 +14,7 @@ namespace Fanex.NAP.TGRS.Websites
     /// <summary>
     /// Register custom filter configurations.
     /// </summary>
-    public class FilterConfig
+    public static class FilterConfig
     {
         /// <summary>
         /// Registers the global filters.

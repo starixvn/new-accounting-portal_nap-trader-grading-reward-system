@@ -235,7 +235,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             {
                 var gettingCriteria = new GetBetTypeBenchmarkCriteria
                 {
-                    LeagueID = criteria.LeagueId
+                    LeagueId = criteria.LeagueId
                 };
 
                 benchmarks = this._benchmarkService.GetBetTypeBenchmark(gettingCriteria);

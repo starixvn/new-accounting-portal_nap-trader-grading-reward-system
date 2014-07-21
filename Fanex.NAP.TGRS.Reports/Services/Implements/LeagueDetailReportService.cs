@@ -276,7 +276,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             TextBlock valueBlock = new TextBlock(value, valueFont);
             content = content.AddText(valueBlock);
 
-            if (endString != string.Empty)
+            if (!string.IsNullOrEmpty(endString))
             {
                 content = content.AddText(endString);
             }

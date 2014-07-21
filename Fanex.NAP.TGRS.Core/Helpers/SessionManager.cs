@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
     /// <summary>
     /// Gets and sets data to session.
     /// </summary>
-    public class SessionManager
+    public static class SessionManager
     {
         /// <summary>
         /// Sets a value to session.
@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             {
                 HttpContext.Current.Session[sessionKey] = value;
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
             }
         }
@@ -47,7 +47,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
                 T value = (T)HttpContext.Current.Session[sessionKey];
                 return value;
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
                 return default(T);
             }
