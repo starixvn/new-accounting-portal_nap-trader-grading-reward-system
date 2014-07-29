@@ -226,10 +226,10 @@
     <value>Sport</value>
   </data>
   <data name="Benchmark" xml:space="preserve">
-    <value>Benchmark</value>
+    <value>Benchmark %</value>
   </data>
   <data name="BetTypeBM" xml:space="preserve">
-    <value>Bet Type BM</value>
+    <value>Bet Type BM %</value>
   </data>
   <data name="Configure" xml:space="preserve">
     <value>Configure</value>
@@ -289,7 +289,7 @@
     <value>Grand Total</value>
   </data>
   <data name="LeagueBM" xml:space="preserve">
-    <value>League BM</value>
+    <value>League BM %</value>
   </data>
   <data name="LiveTurnover" xml:space="preserve">
     <value>Live Turnover</value>
@@ -361,7 +361,7 @@
     <value>Grade Performance</value>
   </data>
   <data name="TeamBM" xml:space="preserve">
-    <value>Team BM</value>
+    <value>Team BM %</value>
   </data>
   <data name="PeriodType" xml:space="preserve">
     <value>Period Type</value>
@@ -455,5 +455,8 @@
   </data>
   <data name="AvgProfitMargin" xml:space="preserve">
     <value>Avg. Profit Margin %</value>
+  </data>
+  <data name="BetTypeDetail" xml:space="preserve">
+    <value>Bet Type Detail</value>
   </data>
 </root>

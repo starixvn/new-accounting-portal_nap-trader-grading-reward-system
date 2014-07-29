@@ -191,8 +191,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         /// Export Bet Type Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        public void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templateUrl)
+        /// <param name="templatePath">Path to Excel template file.</param>
+        public void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath)
         {
             BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
 
@@ -203,7 +203,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                                     ViewLang.BetTypeExcelFile,
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
                                     criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.BetTypePerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
 
                 writer.CopyRows(0, 1);
                 FilterBlock(criteria, ref writer);

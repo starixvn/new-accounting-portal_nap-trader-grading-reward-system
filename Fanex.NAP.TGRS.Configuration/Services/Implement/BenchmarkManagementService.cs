@@ -101,7 +101,6 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
             if (rawData.Any())
             {
                 result = rawData.Select(obj => new ProfitMarginItem(obj));
-                result = result.OrderBy(obj => obj.Year);
             }
 
             return result;

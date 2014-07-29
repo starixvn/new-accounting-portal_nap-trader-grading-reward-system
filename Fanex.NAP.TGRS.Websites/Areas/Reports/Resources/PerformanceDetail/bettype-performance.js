@@ -1,5 +1,5 @@
 ﻿/* File Created: May 19, 2014 */
-/* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting, messages */
+/* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting, forecastBettype, messages */
 
 'use strict';
 $(document).ready(function () {
@@ -667,7 +667,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }],
+                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
@@ -743,8 +743,17 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+        if (!canForecast(betTypeId)) {
+            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [7]);
+        }
+
         handleMatchPerformanceOfTraderGridEvents();
+    };
+
+    var canForecast = function (bettype) {
+        return (forecastBettype.indexOf(bettype) > -1);
     };
 
     // Handle match performance grid's events.
@@ -815,7 +824,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
                       },
-                      { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.BetTypeBM, Width: 110, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       }],
             gridExpandHeight: 260,
@@ -1168,7 +1177,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
-                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }],
+                      { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 260,
             showNumberColumn: true,
             showTitle: true,
@@ -1224,6 +1233,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+        if (!canForecast(betTypeId)) {
+            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
         handleMatchPerformanceOfLeagueTraderGridEvents();
     };
 

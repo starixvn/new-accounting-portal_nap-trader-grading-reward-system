@@ -43,11 +43,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         MatchPerformanceGroup GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria);
 
         /// <summary>
+        /// Gets the bet type detail from league report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailLeague(GetBettypeDetailLeague criteria);
+
+        /// <summary>
         /// Export League Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templateUrl);
+        /// <param name="templatePath">Path to Excel template file.</param>
+        void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templatePath);
 
         /// <summary>
         /// Gets the trader performance.
@@ -64,11 +71,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria);
 
         /// <summary>
+        /// Gets the bet type detail from trader report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailTrader(GetBettypeDetailTrader criteria);
+
+        /// <summary>
         /// Export Trader Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templateUrl);
+        /// <param name="templatePath">Path to Excel template file.</param>
+        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath);
 
         /// <summary>
         /// Gets the grade performance.
@@ -78,11 +92,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         GradePerformanceList GetGradePerformance(GetGradePerformanceCriteria criteria);
 
         /// <summary>
+        /// Gets the bet type detail from grade report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGrade criteria);
+
+        /// <summary>
         /// Export Grade Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templateUrl);
+        /// <param name="templatePath">Path to Excel template file.</param>
+        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath);
 
         /// <summary>
         /// Gets the trader performance of a grade.
@@ -126,11 +147,18 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         MatchPerformanceList GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria);
 
         /// <summary>
+        /// Gets the bet type detail from team report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailTeam(GetBettypeDetailTeam criteria);
+
+        /// <summary>
         /// Export Team Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templateUrl);
+        /// <param name="templatePath">Path to Excel template file.</param>
+        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath);
 
         /// <summary>
         /// Gets the bet type performance.
@@ -178,7 +206,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
         /// Export Bet Type Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templateUrl);
+        /// <param name="templatePath">Path to Excel template file.</param>
+        void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath);
     }
 }

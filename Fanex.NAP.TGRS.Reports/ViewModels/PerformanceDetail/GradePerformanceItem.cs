@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public GradePerformanceItem(GradePerformanceInfo gradeData)
         {
-            if (gradeData != null)
+            if (gradeData != null && gradeData.Grade.HasValue)
             {
                 this.Grade = gradeData.Grade.Value;
                 this.NoOfTraders = Converter.ToInt(gradeData.TraderCount);

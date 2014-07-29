@@ -37,6 +37,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         private readonly IDetailReportService _detailReportService;
 
+        private readonly int[] _forecastBetType = { 1, 3, 7, 8 };
+
         public PerformanceDetailController()
             : this(null)
         {
@@ -48,6 +50,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.ForecastBetType = string.Join(",", this._forecastBetType);
         }
 
         public PerformanceDetailController(IDetailReportService detailReportService)
@@ -108,9 +111,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
-            string templateUrl = Server.MapPath(LeaguePerformanceDetail);
+            string templatePath = Server.MapPath(LeaguePerformanceDetail);
 
-            this._detailReportService.ExportLeaguePerformance(criteria, templateUrl);
+            this._detailReportService.ExportLeaguePerformance(criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -143,6 +146,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return Json(matchPerformance);
         }
 
+        /// <summary>
+        /// Gets bet type detail from league report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type detail.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
+        {
+            IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailLeague(criteria);
+
+            return Json(bettypeDetail);
+        }
+        
         #endregion League Performance
 
         #region Trader Performance
@@ -179,6 +196,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets bet type detail from trader report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type detail.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypeDetailTrader(GetBettypeDetailTrader criteria)
+        {
+            IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTrader(criteria);
+
+            return Json(bettypeDetail);
+        }
+
+        /// <summary>
         /// Exports the trader performance.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -186,9 +217,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            string templateUrl = Server.MapPath(TraderPerformanceDetail);
+            string templatePath = Server.MapPath(TraderPerformanceDetail);
 
-            this._detailReportService.ExportTraderPerformance(criteria, templateUrl);
+            this._detailReportService.ExportTraderPerformance(criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -268,6 +299,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets bet type detail from grade report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type detail.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
+        {
+            IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailGrade(criteria);
+
+            return Json(bettypeDetail);
+        }
+
+        /// <summary>
         /// Exports the grade performance.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -275,9 +320,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
-            string templateUrl = Server.MapPath(GradePerformanceDetail);
+            string templatePath = Server.MapPath(GradePerformanceDetail);
 
-            this._detailReportService.ExportGradePerformance(criteria, templateUrl);
+            this._detailReportService.ExportGradePerformance(criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -345,6 +390,20 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets bet type detail from team report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type detail.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeam criteria)
+        {
+            IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTeam(criteria);
+
+            return Json(bettypeDetail);
+        }
+
+        /// <summary>
         /// Exports the team performance.
         /// </summary>
         /// <param name="criteria">Criteria that are used to query data.</param>
@@ -352,9 +411,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
-            string templateUrl = Server.MapPath(TeamPerformanceDetail);
+            string templatePath = Server.MapPath(TeamPerformanceDetail);
 
-            this._detailReportService.ExportTeamPerformance(criteria, templateUrl);
+            this._detailReportService.ExportTeamPerformance(criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -469,9 +528,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            string templateUrl = Server.MapPath(BetTypePerformanceDetail);
+            string templatePath = Server.MapPath(BetTypePerformanceDetail);
 
-            this._detailReportService.ExportBetTypePerformance(criteria, templateUrl);
+            this._detailReportService.ExportBetTypePerformance(criteria, templatePath);
 
             return new EmptyResult();
         }

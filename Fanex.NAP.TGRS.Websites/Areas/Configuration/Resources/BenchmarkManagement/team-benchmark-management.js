@@ -73,7 +73,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
     var renderGrid = function (data) {
         var profitMarginFormat = '<span class="profit-margin link" data-team-id="{0}">{1}</span>';
         var benchmarkFormat = '<span class="benchmark-link link" data-team-id="{0}">{1}</span>' +
-                              '<input type="text" maxlength="4" class="benchmark hide" />';
+                              '<input type="text" maxlength="5" class="benchmark hide" />';
         var profitMarginCol = '';
         var benchmark = '';
         var benchmarkCol = '';
@@ -196,7 +196,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
 
         if (isValid) {
             value = parseFloat(value);
-            isValid = 0 <= value && value <= 1;
+            isValid = 0 <= value && value <= 100;
         }
 
         if (!isValid) {

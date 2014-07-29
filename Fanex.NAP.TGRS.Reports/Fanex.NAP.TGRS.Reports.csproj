@@ -64,6 +64,10 @@
   <ItemGroup>
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTrader.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTeam.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailGrade.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailLeague.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetTypesCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetGradePerformanceCriteria.cs" />
@@ -87,6 +91,7 @@
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\BetTypeDetailInfo.cs" />
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
@@ -121,6 +126,7 @@
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\BetTypeDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\GradePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\GradePerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceItem.cs" />

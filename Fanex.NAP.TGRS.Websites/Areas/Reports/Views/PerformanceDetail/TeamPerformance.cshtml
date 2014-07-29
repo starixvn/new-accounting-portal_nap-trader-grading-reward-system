@@ -105,6 +105,9 @@
 <div id="divMatchPerformanceContainer" class="content-grid display-none">
     <div id="divMatchPerformanceGrid" class="freegrid"></div>
 </div>
+<div id="divBettypeDetailContainer" class="content-grid display-none">
+    <div id="divBettypeDetailGrid" class="freegrid"></div>
+</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/teamPerformance")
@@ -115,6 +118,7 @@
             DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
+        var forecastBettype = '@ViewBag.ForecastBetType';
         var labels = {
             No: '#',
             NoOfLeagues: '@ViewLang.NoOfLeagues',
@@ -125,6 +129,9 @@
             BetCount: '@ViewLang.BetCount',
             Margin: '@ViewLang.Margin',
             TeamBM: '@ViewLang.TeamBM',
+            BetTypeBM: '@ViewLang.BetTypeBM',
+            BetType: '@ViewLang.BetType',
+            BetTypeDetail: '@ViewLang.BetTypeDetail',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',

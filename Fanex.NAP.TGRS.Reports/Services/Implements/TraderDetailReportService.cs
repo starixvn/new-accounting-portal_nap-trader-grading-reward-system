@@ -96,11 +96,32 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         }
 
         /// <summary>
+        /// Gets the bet type detail from trader report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        public IEnumerable<BetTypeDetailItem> GetBettypeDetailTrader(GetBettypeDetailTrader criteria)
+        {
+            IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
+            List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
+
+            if (bettypeData != null && bettypeData.Any())
+            {
+                foreach (var item in bettypeData)
+                {
+                    bettypeDetail.Add(new BetTypeDetailItem(item));
+                }
+            }
+
+            return bettypeDetail;
+        }
+
+        /// <summary>
         /// Export Trader Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templateUrl)
+        /// <param name="templatePath">Path to Excel template file.</param>
+        public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath)
         {
             TraderPerformanceList traderData = SessionManager.Get<TraderPerformanceList>(TraderPerformanceDetailReportSessionKey);
 
@@ -112,7 +133,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
-                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.TraderPerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderPerformance);
                 writer.CopyRows(0, 1);
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);

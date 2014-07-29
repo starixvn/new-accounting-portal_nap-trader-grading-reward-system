@@ -135,11 +135,32 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         }
 
         /// <summary>
+        /// Gets the bet type detail from team report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of bet type detail objects.</returns>
+        public IEnumerable<BetTypeDetailItem> GetBettypeDetailTeam(GetBettypeDetailTeam criteria)
+        {
+            IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
+            List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
+
+            if (bettypeData != null && bettypeData.Any())
+            {
+                foreach (var item in bettypeData)
+                {
+                    bettypeDetail.Add(new BetTypeDetailItem(item));
+                }
+            }
+
+            return bettypeDetail;
+        }
+
+        /// <summary>
         /// Export Team Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="templateUrl">Path to Excel template file.</param>
-        public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templateUrl)
+        /// <param name="templatePath">Path to Excel template file.</param>
+        public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath)
         {
             TeamPerformanceList teamData = SessionManager.Get<TeamPerformanceList>(TeamPerformanceDetailReportSessionKey);
 
@@ -150,7 +171,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                                 ViewLang.Team,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templateUrl, reportName, ViewLang.TeamPerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TeamPerformance);
 
                 writer.CopyRows(0, 1);
                 FilterBlock(criteria, ref writer);
