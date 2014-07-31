@@ -10,13 +10,11 @@
 namespace Fanex.NAP.TGRS.Websites.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
     /// <summary>
     /// Error controller.
     /// </summary>
-    [NapSuperAuth]
     public class ErrorController : TGRSBaseController
     {
         /// <summary>
