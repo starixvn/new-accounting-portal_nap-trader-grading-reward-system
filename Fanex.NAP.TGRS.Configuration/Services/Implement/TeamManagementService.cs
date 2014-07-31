@@ -6,12 +6,12 @@
 //   <change who="Ken.Nguyen" date="2014.5.12">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.TeamManagement
 {
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Models.TeamManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 

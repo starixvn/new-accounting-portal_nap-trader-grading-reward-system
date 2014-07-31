@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -135,6 +136,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <returns>JSON object indicates the league profit margin.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.BenchmarkManagement, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Need to review here.")]
         public JsonResult GetLeagueProfitMargin(GetLeagueProfitMarginCriteria criteria)
         {
             IEnumerable<ProfitMarginItem> profitMargins = null;
@@ -194,6 +196,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <returns>JSON object indicates the league profit margin.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.BenchmarkManagement, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Need to review here.")]
         public JsonResult GetTeamProfitMargin(GetTeamProfitMarginCriteria criteria)
         {
             IEnumerable<ProfitMarginItem> profitMargins = null;
@@ -256,6 +259,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <returns>JSON object indicates the league profit margin.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.BenchmarkManagement, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Need to review here.")]
         public JsonResult GetBetTypeProfitMargin(GetBetTypeProfitMarginCriteria criteria)
         {
             IEnumerable<ProfitMarginItem> profitMargins = null;

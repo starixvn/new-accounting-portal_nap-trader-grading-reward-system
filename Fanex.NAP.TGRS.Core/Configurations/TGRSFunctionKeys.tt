@@ -27,6 +27,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <summary>
 /// Function keys.
 /// </summary>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
 [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
 [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
 [SuppressMessage("Microsoft.StyleCop.CSharp.LayoutRules", "SA1508:ClosingCurlyBracketsMustNotBePrecededByBlankLine", Justification = "Generated code")] 

@@ -6,7 +6,7 @@
 //   <change who="Ken.Nguyen" date="2014.5.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
+namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -14,7 +14,6 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
-    using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
     /// <summary>

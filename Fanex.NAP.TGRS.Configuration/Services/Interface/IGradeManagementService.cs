@@ -7,7 +7,7 @@
 //   <change who="Ken.Nguyen" date="2014.5.12">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Interface.GradeManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.GradeManagement
 {
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.GradeManagement;

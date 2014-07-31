@@ -19,8 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
-    using Fanex.NAP.TGRS.Reports.Services.Implement.SummaryReport;
-    using Fanex.NAP.TGRS.Reports.Services.Interface.SummaryReport;
+    using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
 
     /// <summary>

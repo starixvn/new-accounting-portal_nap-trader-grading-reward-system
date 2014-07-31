@@ -25,7 +25,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public int CustId { get; set; }
 
-        public int MatchID { get; set; }
+        public int MatchId { get; set; }
 
         public string Bettypes { get; set; }
 

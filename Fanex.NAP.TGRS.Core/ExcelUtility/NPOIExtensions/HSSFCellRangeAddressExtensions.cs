@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
 {
+    using System.Diagnostics.CodeAnalysis;
     using NPOI.SS.Util;
 
     /// <summary>
@@ -21,6 +22,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// </summary>
         /// <param name="range">Current cell range address.</param>
         /// <returns>New cell range address instance.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Need to review here.")]
         public static CellRangeAddress Clone(this CellRangeAddress range)
         {
             var result = new CellRangeAddress(range.FirstRow, range.LastRow, range.FirstColumn, range.LastColumn);

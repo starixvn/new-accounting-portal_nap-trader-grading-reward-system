@@ -7,7 +7,7 @@
 //   <change who="Ken.Nguyen" date="2014.5.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.TraderManagement
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;

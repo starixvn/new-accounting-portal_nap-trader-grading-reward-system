@@ -9,18 +9,15 @@
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Implement.GradeManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.GradeManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -114,6 +111,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <returns>List of JSON objects represents the team list and grade list.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed. Suppression is OK here.")]
         public JsonResult GetInitializedData()
         {
             TeamInfoList teams = this._teamService.GetTeamSelectList(new GetTeamSelectListCriteria());

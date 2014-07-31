@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
     using Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement;
@@ -21,12 +22,14 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         /// Gets the list of countries which have active leagues.
         /// </summary>
         /// <returns>List of CountryItem objects.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need to review here.")]
         IEnumerable<CountryItem> GetCountryList();
 
         /// <summary>
         /// Gets the list of special leagues.
         /// </summary>
         /// <returns>List of SpecialLeagueItem objects.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need to review here.")]
         IEnumerable<SpecialLeagueItem> GetSpecialLeagueList();
 
         /// <summary>

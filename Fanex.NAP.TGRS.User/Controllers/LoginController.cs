@@ -152,27 +152,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                         if ((group == null || group.IsActive) && siteLevelList.Where(x => x.IsActive).Any())
                         {
                             // check-in user
-                            var criteria = new UserCheckInUserCriteria
-                            {
-                                UserId = user.Id,
-                                SiteId = this.SiteId,
-                                NetSessionId = Session.SessionID,
-                                Ip = CurrentContext.IP,
-                                LoginDate = DateTime.Now,
-                                BrowserName = CurrentContext.BrowserName,
-                                CountryCode = CurrentContext.CountryCode,
-                                Domain = CurrentContext.DomainName,
-                                Platform = CurrentContext.Platform
-                            };
-
-                            this._userService.UserCheckIn(ref criteria);
-
-                            // saves user session
-                            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
-                            this._currentSession.UserId = user.Id;
-                            this._currentSession.Username = username;
-                            this._currentSession.OnUserId = criteria.OnUserId;
-                            this._currentSession.SessionId = Session.SessionID.ToString();
+                            DoCheckin(user);
 
                             // current site is not NAP Hub
                             if (this.SiteId != 0)
@@ -251,7 +231,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// </summary>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public ActionResult ReCheckLogin()
+        public ActionResult RecheckLogin()
         {
             var maintenanceInfo = this._maintenanceService.GetDowntimeInfo();
 
@@ -281,6 +261,35 @@ namespace Fanex.NAP.TGRS.User.Controllers
         #endregion Other Actions
 
         #region Helpers
+
+        /// <summary>
+        /// Check in user.
+        /// </summary>
+        /// <param name="user">The user to be checked in.</param>
+        private void DoCheckin(User user)
+        {
+            var criteria = new UserCheckInUserCriteria
+            {
+                UserId = user.Id,
+                SiteId = this.SiteId,
+                NetSessionId = Session.SessionID,
+                Ip = CurrentContext.IP,
+                LoginDate = DateTime.Now,
+                BrowserName = CurrentContext.BrowserName,
+                CountryCode = CurrentContext.CountryCode,
+                Domain = CurrentContext.DomainName,
+                Platform = CurrentContext.Platform
+            };
+
+            this._userService.UserCheckIn(ref criteria);
+
+            // saves user session
+            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+            this._currentSession.UserId = user.Id;
+            this._currentSession.Username = user.Username;
+            this._currentSession.OnUserId = criteria.OnUserId;
+            this._currentSession.SessionId = Session.SessionID.ToString();
+        }
 
         /// <summary>
         /// Create user menu.

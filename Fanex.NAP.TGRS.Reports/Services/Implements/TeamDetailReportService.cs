@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Reports.Services.Implements
+namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -20,7 +20,6 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.Services.Interfaces;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
 

@@ -39,7 +39,7 @@ Fanex.TGRS.ReCheckIn = function () {
 
     var reCheckIn = function () {
         $.ajax({
-            url: cachedElements.RootURL + 'User/Login/ReCheckLogin',
+            url: cachedElements.RootURL + 'User/Login/RecheckLogin',
             type: 'POST',
             dataType: 'json',
             success: function (result) {

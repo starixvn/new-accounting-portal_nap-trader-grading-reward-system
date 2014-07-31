@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Core.BaseClasses
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
@@ -25,15 +26,15 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
     /// </summary>
     public class TGRSBaseController : Controller
     {
-        protected readonly ICurrentContext CurrentContext;
+        private readonly ICurrentContext _currentContext;
 
-        protected readonly ICurrentSession CurrentSession;
+        private readonly ICurrentSession _currentSession;
 
-        protected readonly IServiceContext ServiceContext;
+        private readonly IServiceContext _serviceContext;
 
-        protected readonly string Environment = NapSettings.Settings.Environment;
+        private readonly string _environment = NapSettings.Settings.Environment;
 
-        protected readonly int SiteId = NapSettings.Settings.SiteId;
+        private readonly int _siteId = NapSettings.Settings.SiteId;
 
         private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
@@ -41,9 +42,9 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
         public TGRSBaseController()
         {
-            this.CurrentContext = new CurrentContext();
-            ViewBag.Session = this.CurrentSession = new CurrentSession();
-            this.ServiceContext = new ServiceContext
+            this._currentContext = new CurrentContext();
+            ViewBag.Session = this._currentSession = new CurrentSession();
+            this._serviceContext = new ServiceContext
             {
                 UserId = this.CurrentSession.UserId,
                 SiteId = this.SiteId,
@@ -60,6 +61,31 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
 
             this._userService = new UserService { ServiceContext = ServiceContext };
+        }
+
+        public ICurrentContext CurrentContext
+        {
+            get { return _currentContext; }
+        }
+
+        public ICurrentSession CurrentSession
+        {
+            get { return _currentSession; }
+        }
+
+        public IServiceContext ServiceContext
+        {
+            get { return _serviceContext; }
+        }
+
+        public string Environment
+        {
+            get { return _environment; }
+        }
+
+        public int SiteId
+        {
+            get { return _siteId; }
         }
 
         /// <summary>

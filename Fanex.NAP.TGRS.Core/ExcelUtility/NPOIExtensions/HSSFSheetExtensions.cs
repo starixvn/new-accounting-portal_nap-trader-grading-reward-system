@@ -231,6 +231,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// <param name="sheet">Current sheet.</param>
         /// <param name="newCell">New cell instance.</param>
         /// <param name="sourceCell">Source cell instance.</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Need to review here.")]
         public static void CloneCell(this ISheet sheet, ICell newCell, ICell sourceCell)
         {
             CloneCell(newCell, sourceCell);

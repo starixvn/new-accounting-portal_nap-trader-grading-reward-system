@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.TGRS.Core.Resources;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
@@ -24,6 +25,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
         /// </summary>
         /// <param name="cell">Current cell.</param>
         /// <param name="value">Cell value.</param>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Need to review here.")]
         public static void SetCellValue(this ICell cell, object value)
         {
             if (value == null)

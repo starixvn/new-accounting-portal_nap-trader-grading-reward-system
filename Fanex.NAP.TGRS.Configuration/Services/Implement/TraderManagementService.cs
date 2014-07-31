@@ -6,13 +6,13 @@
 //   <change who="Ken.Nguyen" date="2014.5.14">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Configuration.Services.Implement.TraderManagement
+namespace Fanex.NAP.TGRS.Configuration.Services.TraderManagement
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 

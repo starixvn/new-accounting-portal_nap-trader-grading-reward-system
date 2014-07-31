@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Reports.Services.Interfaces
+namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;

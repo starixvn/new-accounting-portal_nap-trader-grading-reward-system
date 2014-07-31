@@ -8,13 +8,13 @@
 // </history>
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Implement.TeamManagement;
-    using Fanex.NAP.TGRS.Configuration.Services.Interface.TeamManagement;
+    using Fanex.NAP.TGRS.Configuration.Services.TeamManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
 
@@ -60,6 +60,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need to review here.")]
         public JsonResult GetAllTeam()
         {
             TeamInfoList result = this._teamService.GetAllTeam(new GetAllTeamsCriteria());

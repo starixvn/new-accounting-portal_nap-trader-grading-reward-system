@@ -41,7 +41,7 @@ namespace Fanex.NAP.TGRS.Websites.Controllers
         /// </summary>
         /// <returns>Partial menu view.</returns>
         [ChildActionOnly]
-        public PartialViewResult _Menu()
+        public PartialViewResult Menu()
         {
             ViewBag.MenuItemList = CurrentSession.MenuItemList;
             return PartialView("~/Views/Shared/_Menu.cshtml");
