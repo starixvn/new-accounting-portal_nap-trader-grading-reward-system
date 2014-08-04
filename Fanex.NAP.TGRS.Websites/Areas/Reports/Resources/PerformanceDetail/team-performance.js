@@ -849,7 +849,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                     forecastCol = forecastFormat.format(matchId, item.BetType, labels.Forecast);
                 }
                 else {
-                    forecastCol = '';
+                    forecastCol = 'N/A';
                 }
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },

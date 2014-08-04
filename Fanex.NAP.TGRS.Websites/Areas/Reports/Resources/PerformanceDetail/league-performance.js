@@ -795,7 +795,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     forecastCol = forecastFormat.format(matchId, item.BetType, labels.Forecast);
                 }
                 else {
-                    forecastCol = '';
+                    forecastCol = 'N/A';
                 }
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
