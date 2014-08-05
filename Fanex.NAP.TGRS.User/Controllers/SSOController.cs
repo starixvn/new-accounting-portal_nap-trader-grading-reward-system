@@ -73,7 +73,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
             string currentTime = this._userService.UserSSOGetTime();
-            string forwardLink = string.IsNullOrEmpty(redirectUrl.ToString()) ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
+            string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
             TimeSpan expiration = new TimeSpan();
 
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));

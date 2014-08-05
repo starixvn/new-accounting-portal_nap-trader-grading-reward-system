@@ -95,5 +95,9 @@
     <Setting Key="TGRS_Rpt_DetailBetType_MatchByTraderLeague" SpName="TGRS_Rpt_DetailBetType_MatchByTraderLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
+    <Setting Key="TGRS_Rpt_DetailLeague_Bettype" SpName="TGRS_Rpt_DetailLeague_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_DetailGrade_BetType" SpName="TGRS_Rpt_DetailGrade_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_DetailTeam_Bettype" SpName="TGRS_Rpt_DetailTeam_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_DetailTrader_Bettype" SpName="TGRS_Rpt_DetailTrader_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
 </Functions>
