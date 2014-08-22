@@ -20,9 +20,9 @@
 </head>
 <body>
     <header>
-        <div class="logo">
-            <a href="~/?ref=logo"></a>
-        </div>
+        <a href="~/?ref=logo" class="logo">
+            @ViewLang.TGR
+        </a>
         @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
         <div class="user-info">
             <div class="greeting">

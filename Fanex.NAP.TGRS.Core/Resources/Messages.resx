@@ -172,7 +172,7 @@
     <value>The team has been updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to Trader Grading &amp; Reward</value>
+    <value>Welcome</value>
   </data>
   <data name="FieldMaxLengthError50" xml:space="preserve">
     <value>This field can have maximum 50 characters.</value>

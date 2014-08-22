@@ -459,4 +459,7 @@
   <data name="BetTypeDetail" xml:space="preserve">
     <value>Bet Type Detail</value>
   </data>
+  <data name="TGR" xml:space="preserve">
+    <value>TGR</value>
+  </data>
 </root>

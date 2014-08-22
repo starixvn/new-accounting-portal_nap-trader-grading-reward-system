@@ -184,24 +184,26 @@ header {
     .font_tahoma;
 
     .logo {
-        display: inline-block;
+         display: inline-block;
         float: left;
         padding: 0px;
         z-index:1;
+        font-family: Syncopate, tahoma;
+        font-size: 22px;
+        color: @white;
+        font-weight: bold;
+        margin: 5px 0 3px 12px;
+        height: 28px;
+        width: 85px;
+        border-right: 1px solid #7ea3e9;
+        .box_shadow(1px 0 #244799);
 
-        a {
-            display: block;
-            background: url(Images/logo-tgrs.png) center left no-repeat;
-            margin: 5px 0 3px 15px;
-            height:28px;
-            width:213px;
-            border-right: 1px solid #7ea3e9;
-            .box_shadow(1px 0 #244799);
-
-            &:hover {
-                text-decoration: none;
-            }
+        &:hover {
+            color: #c9d9f2;
+            text-decoration: none;
         }
+
+
     }
 
     nav {
@@ -228,6 +230,7 @@ header {
                     font-size: 1em;
                     padding:8px 16px;
                     border:solid 1px transparent;
+                    line-height: 13px;
                 }
 
                 ul {
