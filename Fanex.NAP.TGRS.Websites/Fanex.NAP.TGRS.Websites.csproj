@@ -176,6 +176,8 @@
     <Content Include="App_Data\local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\sandbox\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\sandbox\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\uat\NAPCommonSpNames.xml" />
     <Content Include="App_Data\uat\NAPTGRSSPNames.xml" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
@@ -393,26 +395,31 @@
     <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
+    <Content Include="Web.local.config" />
+    <Content Include="Web.prod.config" />
+    <Content Include="Web.uat.config" />
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.uat.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.local.config" />
-    <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config" />
+    <Content Include="Web.sandbox.config" />
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.uat.config" />
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.uat.config">
+    <Content Include="Web.AppSettings.sandbox.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.sandbox.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.uat.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
