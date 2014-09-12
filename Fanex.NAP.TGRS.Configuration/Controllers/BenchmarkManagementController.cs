@@ -172,6 +172,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult UpdateTeamBenchmark(UpdateTeamBenchmarkCriteria criteria)
         {
             IEnumerable<TeamBenchmarkItem> benchmarks = null;
+            criteria.UserId = this.CurrentSession.UserId;
             ICommandResult updatingResult = this._benchmarkService.UpdateTeamBenchmark(criteria);
 
             if (updatingResult.IsSuccessful)
@@ -232,6 +233,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult UpdateBetTypeBenchmark(UpdateBetTypeBenchmarkCriteria criteria)
         {
             IEnumerable<BetTypeBenchmarkItem> benchmarks = null;
+            criteria.UserId = this.CurrentSession.UserId;
             ICommandResult updatingResult = this._benchmarkService.UpdateBetTypeBenchmark(criteria);
 
             if (updatingResult.IsSuccessful)
