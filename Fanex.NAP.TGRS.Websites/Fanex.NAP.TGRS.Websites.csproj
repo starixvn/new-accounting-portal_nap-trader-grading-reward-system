@@ -175,12 +175,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\dev\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\local\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPTGRSSPNames.xml" />
-    <Content Include="App_Data\sandbox\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\sandbox\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\master\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\master\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\uat\NAPCommonSpNames.xml" />
     <Content Include="App_Data\uat\NAPTGRSSPNames.xml" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
@@ -401,29 +403,31 @@
     <Content Include="Web.local.config" />
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config" />
+	<Content Include="Web.master.config" />
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.sandbox.config" />
+    </Content>  
+	<Content Include="Web.ConnectionString.uat.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>    
+    <Content Include="Web.ConnectionString.master.config" >
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>	
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.uat.config" />
+    <Content Include="Web.AppSettings.uat.config" >
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+	<Content Include="Web.AppSettings.master.config" >
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.sandbox.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionString.sandbox.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionString.uat.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
+    </Content>    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
