@@ -122,10 +122,10 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 150
         };

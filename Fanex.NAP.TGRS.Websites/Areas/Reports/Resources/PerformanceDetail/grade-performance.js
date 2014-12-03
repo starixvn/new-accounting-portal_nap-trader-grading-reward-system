@@ -233,13 +233,13 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -378,13 +378,13 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat, Sort: true
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,
@@ -595,13 +595,13 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -742,13 +742,13 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                         FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetTypeBM, Width: 110, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat

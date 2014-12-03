@@ -180,10 +180,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 50,
             showTitle: true,
@@ -217,10 +217,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 50,
             showTitle: true,
@@ -245,7 +245,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.divTopWinLeagueGrid.fanexGrid(gridOptions);
     };
 
-    // Render win league grid.
+    // Render lose league grid.
     var renderLoseLeagueGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
@@ -253,10 +253,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 50,
             showTitle: true,
@@ -281,7 +281,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         domElements.divTopLoseLeagueGrid.fanexGrid(gridOptions);
     };
 
-    // Render win league grid.
+    // Render trader grid.
     var renderTraderPerformance = function (data) {
         domElements.divTraderPerformance.css({ display: "block" });
         if (data.TopMinMargin && data.TopMaxMargin) {
@@ -307,7 +307,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         }
     };
 
-    // Render win league grid.
+    // Render bettype grid.
     var renderBetTypeGrid = function (data) {
         var gridOptions = {
             columns: [{ HeaderText: labels.BetType, Width: 350, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
@@ -315,10 +315,10 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 50,
             showTitle: true,
