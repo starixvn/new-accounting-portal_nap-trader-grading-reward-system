@@ -73,8 +73,9 @@
                 </div>
                 <div class="edit-field col_7 align-left">
                     <select id="ddlMarket" class="width-160">
-                        <option value="true">@ViewLang.AllMarkets</option>
-                        <option value="false">@ViewLang.MainMarkets</option>
+                        <option value="-1">@ViewLang.AllMarkets</option>
+                        <option value="1">@ViewLang.MainMarkets</option>
+                        <option value="0">@ViewLang.OtherMarkets</option>
                     </select>
                 </div>
                 <div class="submit width-auto col_4">
@@ -104,6 +105,9 @@
 <div id="divPopupContent" class="display-none">
     <div id="divProfitMargin" class="freegrid profit-margin-popup"></div>
 </div>
+<div id="bettypeProfitMarginPopup" class="display-none">
+    <div id="bettypeprofitMarginContent" class="freegrid profit-margin-popup-content"></div>
+</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/benchmarkManagement")
@@ -121,7 +125,19 @@
             Percentage: '@ViewLang.BetType',
             LeagueName: '@ViewLang.LeagueName',
             BetType: '@ViewLang.BetType',
-            Year: '@ViewLang.Year'
+            Year: '@ViewLang.Year',
+            ProfitMargin_2Years: '@ViewLang.ProfitMargin_2Years',
+            ProfitMargin_3Years: '@ViewLang.ProfitMargin_3Years',
+            ProfitMargin_4Years: '@ViewLang.ProfitMargin_4Years',
+            Afternoon: '@ViewLang.Afternoon',
+            Night: '@ViewLang.Night',
+            Midnight: '@ViewLang.Midnight',
+            Afternoon_Shift: '@ViewLang.Afternoon_Shift',
+            Night_Shift: '@ViewLang.Night_Shift',
+            Midnight_Shift: '@ViewLang.Midnight_Shift',
+            Total: '@ViewLang.Total',
+            Win_Loss: '@ViewLang.WinLoss',
+            Turnover: '@ViewLang.Turnover'
         };
         var messages = {
             UpdateBenchmarkConfirmMessage: '@Messages.UpdateBenchmarkConfirmMessage',

@@ -209,7 +209,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.WinLoss,
                     item.BetCount,
                     item.Margin,
-                    item.TeamBM
+                    item.TeamBM,
+                    item.Score
                 };
                 writer.WriteRow(styleIndex, record);
             }
@@ -227,7 +228,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 total.WinLoss,
                 total.BetCount,
                 (object)total.Margin ?? ViewLang.NA,
-                null
+                string.Empty,
+                string.Empty
+
             };
             writer.WriteRow(6, totalRecord);
         }

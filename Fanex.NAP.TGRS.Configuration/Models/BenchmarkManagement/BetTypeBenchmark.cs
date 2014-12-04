@@ -18,8 +18,16 @@ namespace Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement
 
         public string TypeName { get; set; }
 
-        public decimal? Benchmark { get; set; }
+        public decimal? Margin2 { get; set; }
 
-        public decimal? Margin { get; set; }
+        public decimal? Margin3 { get; set; }
+
+        public decimal? Margin4 { get; set; }
+
+        public decimal? BenchMarkShift1 { get; set; }
+
+        public decimal? BenchMarkShift2 { get; set; }
+
+        public decimal? BenchMarkShift3 { get; set; }
     }
 }

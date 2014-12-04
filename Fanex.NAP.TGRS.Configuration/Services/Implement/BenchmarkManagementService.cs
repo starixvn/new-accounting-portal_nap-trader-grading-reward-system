@@ -17,6 +17,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
     using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using System;
+    using Fanex.Common;
 
     /// <summary>
     /// Benchmark management service.
@@ -161,6 +163,92 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         public ICommandResult UpdateBetTypeBenchmark(UpdateBetTypeBenchmarkCriteria criteria)
         {
             return this.UpdateData(criteria);
+        }
+
+        /// <summary>
+        /// Gets the profit margin of a league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of ProfitMarginItem objects.</returns>
+        public ProfitMarginItem GetProfitMarginByBettype(GetBetTypeProfitMarginCriteria criteria)
+        {
+            IEnumerable<ProfitMargin> rawData = this.GetData<ProfitMargin>(criteria);
+            var profitMarginDataByYearGroups = rawData.GroupBy(x => x.Year);
+            ProfitMarginItem result = this.InitProfitMarginByYearType(criteria.Type);
+            Dictionary<int, int> profitMarginByYearDictonary = this.InitProfitMarginByYearDictonary(criteria.Type);
+
+            //if (rawData.Any())
+            //{
+            //    result = rawData.Select(obj => new ProfitMarginItem(obj));
+            //}
+
+            foreach (var profitMarginrByYearGroup in profitMarginDataByYearGroups)
+            {
+                int year = Converter.ToInt(profitMarginrByYearGroup.Key);
+                int profitMarginByYearIndex = this.GetProfitMarginByYearIndex(year, profitMarginByYearDictonary);
+                foreach (var profitMarginByShift in profitMarginrByYearGroup)
+                {
+                    int shift = profitMarginByShift.WorkShift;
+                    ProfitMarginItem profitMarginItem = new ProfitMarginItem
+                    {
+                        WinLoss = Converter.ToDecimal(profitMarginByShift.WinLoss),
+                        Stake = Converter.ToDecimal(profitMarginByShift.Stake),
+                        Margin = Converter.ToDecimal(profitMarginByShift.Margin)
+                    };
+
+                    result.ReportRows[profitMarginByYearIndex].ReportRows[shift - 1] = profitMarginItem;
+                    result.ReportRows[profitMarginByYearIndex].ReportRows[3].CalculateTotal(profitMarginItem);
+                }
+                
+                result.ReportRows[profitMarginByYearIndex].ReportRows[3].CalculateMargin();
+            }
+
+            return result;
+        }
+
+        private ProfitMarginItem InitProfitMarginByYearType(int type)
+        {
+            int currentYear = DateTime.Now.Year;
+            ProfitMarginItem result = new ProfitMarginItem();
+            for (int i = 0; i < type; i++)
+            {
+                ProfitMarginItem profitMarginItemByYear = new ProfitMarginItem
+                {
+                    Year = currentYear - type + 1 + i
+                };
+
+                //// Init profit margin information of three shift and total.
+                for (int j = 0; j < 4; j++)
+                {
+                    profitMarginItemByYear.ReportRows.Add(new ProfitMarginItem
+                    {
+                        WinLoss = 0,
+                        Stake = 0,
+                        Margin = 0
+                    });
+                }
+
+                result.ReportRows.Add(profitMarginItemByYear);
+            }
+
+            return result;
+        }
+
+        private Dictionary<int, int> InitProfitMarginByYearDictonary(int type)
+        {
+            int currentYear = DateTime.Now.Year;
+            Dictionary<int, int> profitMarginByYearDictonary = new Dictionary<int, int>();
+            for (int i = 0; i < type; i++)
+            {
+                profitMarginByYearDictonary.Add(i, currentYear - type + 1 + i);
+            }
+
+            return profitMarginByYearDictonary;
+        }
+
+        private int GetProfitMarginByYearIndex(int year, Dictionary<int, int> profitMarginByYearDictonary)
+        {
+            return profitMarginByYearDictonary.FirstOrDefault(x => x.Value == year).Key;
         }
     }
 }

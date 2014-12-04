@@ -22,6 +22,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 
         public decimal Benchmark { get; set; }
 
+        public int WorkShift { get; set; }
+
         public int UserId { get; set; }
 
         public int ErrCode { get; set; }

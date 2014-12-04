@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 {
     using System;
+    using System.Collections.Generic;
     using Fanex.Common;
     using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
 
@@ -19,6 +20,11 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
     [Serializable]
     public class ProfitMarginItem
     {
+        public ProfitMarginItem()
+        {
+            ReportRows = new List<ProfitMarginItem>();
+        }
+
         public ProfitMarginItem(ProfitMargin data)
         {
             if (data != null)
@@ -28,8 +34,27 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
             }
         }
 
+        public int WorkShift { get; set; }
+
         public int Year { get; set; }
 
+        public decimal WinLoss { get; set; }
+
+        public decimal Stake { get; set; }
+
         public decimal Margin { get; set; }
+
+        public List<ProfitMarginItem> ReportRows { get; set; }
+
+        public void CalculateTotal(ProfitMarginItem item)
+        {
+            this.WinLoss += item.WinLoss;
+            this.Stake += item.Stake;
+        }
+
+        public void CalculateMargin()
+        {
+            this.Margin = this.Stake == 0 ? 0 : (this.WinLoss / this.Stake) * 100;
+        }
     }
 }

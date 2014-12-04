@@ -20,6 +20,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 
         public int BetType { get; set; }
 
+        public int Type { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

@@ -264,11 +264,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Need to review here.")]
         public JsonResult GetBetTypeProfitMargin(GetBetTypeProfitMarginCriteria criteria)
         {
-            IEnumerable<ProfitMarginItem> profitMargins = null;
-
-            profitMargins = this._benchmarkService.GetProfitMargin(criteria);
-            profitMargins = profitMargins ?? new List<ProfitMarginItem>();
-
+            var profitMargins = this._benchmarkService.GetProfitMarginByBettype(criteria);
             return Json(profitMargins);
         }
     }

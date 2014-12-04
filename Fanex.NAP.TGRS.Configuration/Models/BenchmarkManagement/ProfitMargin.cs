@@ -14,7 +14,17 @@ namespace Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement
     /// </summary>
     public class ProfitMargin
     {
+        public int LeagueId { get; set; }
+
+        public int BetType { get; set; }
+
+        public int WorkShift { get; set; }
+
         public int? Year { get; set; }
+
+        public decimal? WinLoss { get; set; }
+
+        public decimal? Stake { get; set; }
 
         public decimal? Margin { get; set; }
     }

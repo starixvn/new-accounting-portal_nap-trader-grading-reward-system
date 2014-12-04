@@ -468,7 +468,38 @@
   <data name="ScoreCalculationPeriod" xml:space="preserve">
     <value>Score Calculation Period</value>
   </data>
-  <data name="SystemConfiguration" xml:space="preserve">
-    <value>System Configuration</value>
+  <data name="Afternoon" xml:space="preserve">
+    <value>Afternoon</value>
+  </data>
+  <data name="Afternoon_Shift" xml:space="preserve">
+    <value>Afternoon (12:00:00 ~ 17:59:59)</value>
+  </data>
+  <data name="Midnight" xml:space="preserve">
+    <value>Midnight</value>
+  </data>
+  </data>
+  <data name="Midnight_Shift" xml:space="preserve">
+    <value>Midnight (4:00:00 ~ 11:59:59)</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>Night</value>
+  </data>
+  <data name="Night_Shift" xml:space="preserve">
+    <value>Night (18:00:00 ~3:59:59)</value>
+  </data>
+  <data name="ProfitMargin_2Years" xml:space="preserve">
+    <value>Profit Margin % (2 years)</value>
+  </data>
+  <data name="ProfitMargin_3Years" xml:space="preserve">
+    <value>Profit Margin % (3 years)</value>
+  </data>
+  <data name="ProfitMargin_4Years" xml:space="preserve">
+    <value>Profit Margin % (4 years)</value>
+  </data>
+  <data name="OtherMarkets" xml:space="preserve">
+    <value>OtherMarkets</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Score</value>
   </data>
 </root>

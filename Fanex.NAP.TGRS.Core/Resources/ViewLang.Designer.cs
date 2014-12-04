@@ -61,6 +61,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Afternoon.
+        /// </summary>
+        public static string Afternoon {
+            get {
+                return ResourceManager.GetString("Afternoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Afternoon (12:00:00 ~ 17:59:59).
+        /// </summary>
+        public static string Afternoon_Shift {
+            get {
+                return ResourceManager.GetString("Afternoon_Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -601,6 +619,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Midnight.
+        /// </summary>
+        public static string Midnight {
+            get {
+                return ResourceManager.GetString("Midnight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Midnight (4:00:00 ~ 11:59:59).
+        /// </summary>
+        public static string Midnight_Shift {
+            get {
+                return ResourceManager.GetString("Midnight_Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Turnover.
         /// </summary>
         public static string MinimumTurnover {
@@ -673,6 +709,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Night.
+        /// </summary>
+        public static string Night {
+            get {
+                return ResourceManager.GetString("Night", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Night (18:00:00 ~3:59:59).
+        /// </summary>
+        public static string Night_Shift {
+            get {
+                return ResourceManager.GetString("Night_Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No. Of Leagues.
         /// </summary>
         public static string NoOfLeagues {
@@ -705,6 +759,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Olympic {
             get {
                 return ResourceManager.GetString("Olympic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OtherMarkets.
+        /// </summary>
+        public static string OtherMarkets {
+            get {
+                return ResourceManager.GetString("OtherMarkets", resourceCulture);
             }
         }
         
@@ -754,11 +817,47 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profit Margin % (2 years).
+        /// </summary>
+        public static string ProfitMargin_2Years {
+            get {
+                return ResourceManager.GetString("ProfitMargin_2Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profit Margin % (3 years).
+        /// </summary>
+        public static string ProfitMargin_3Years {
+            get {
+                return ResourceManager.GetString("ProfitMargin_3Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profit Margin % (4 years).
+        /// </summary>
+        public static string ProfitMargin_4Years {
+            get {
+                return ResourceManager.GetString("ProfitMargin_4Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rows to display.
         /// </summary>
         public static string RowsToDisplay {
             get {
                 return ResourceManager.GetString("RowsToDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score.
+        /// </summary>
+        public static string Score {
+            get {
+                return ResourceManager.GetString("Score", resourceCulture);
             }
         }
         

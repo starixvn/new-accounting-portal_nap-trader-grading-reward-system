@@ -80,7 +80,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         domElements.ddlMarket.multiselect({
             selectedList: 1,
             minWidth: 160,
-            height: 47,
+            height: 70,
             header: false,
             multiple: false
         });
@@ -105,7 +105,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                 parameters.SportType = domElements.ddlSport.val();
                 parameters.CountryCode = domElements.ddlCountry.val();
                 parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
-                parameters.AllMarket = domElements.ddlMarket.val();
+                parameters.AllMarket = domElements.ddlMarket.val() === null ? -1 : domElements.ddlMarket.val();
                 parameters.LeagueName = $.trim(domElements.txtLeague.val());
                 parameters.DisplayMode = displayMode;
                 parameters.ProgramId = programId;

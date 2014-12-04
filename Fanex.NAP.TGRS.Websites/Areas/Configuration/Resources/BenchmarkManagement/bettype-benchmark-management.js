@@ -1,4 +1,5 @@
 ﻿/* File Created: May 14, 2014 */
+/*jshint camelcase: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
 'use strict';
@@ -24,13 +25,25 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
         LeagueId: null
     };
 
+    var profitMarginEnums = {
+        profitMarginTwoYear: 2,
+        profitMarginThreeYear: 3,
+        profitMarginFourYear: 4
+    };
+
+    var benchMarkEnums = {
+        afternoon: 1,
+        night: 2,
+        midnight: 3
+    };
+
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divBetTypeBMContent = domElements.divBetTypeBMContent || $('#divBetTypeBMContent');
         domElements.spanLeagueName = domElements.divBetTypeBMContent.find('#spanLeagueName');
         domElements.divBetTypeBMGridContainer = domElements.divBetTypeBMContent.find('#divBetTypeBMGridContainer');
         domElements.divBetTypeBMGrid = domElements.divBetTypeBMContent.find('#divBetTypeBMGrid');
-        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopupContent = $('#bettypeprofitMarginContent');
         domElements.divPopup = $('#divPopup');
     };
 
@@ -76,18 +89,38 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var profitMarginFormat = '<span class="profit-margin link" data-bettype-id="{0}">{1}</span>';
-        var benchmarkFormat = '<span class="benchmark-link link" data-bettype-id="{0}">{1}</span>' +
+        var profitMarginFormat = '<span class="profit-margin link" data-bettype-id="{0}" data-profit-margin-type="{1}">{2}</span>';
+        var benchmarkFormat = '<span class="benchmark-link link" data-bettype-id="{0}" data-benchmark-type="{1}">{2}</span>' +
                               '<input type="text" maxlength="5" class="benchmark hide" />';
-        var profitMarginCol = '';
-        var benchmark = '';
-        var benchmarkCol = '';
+        var profitMarginCol2 = '';
+        var profitMarginCol3 = '';
+        var profitMarginCol4 = '';
+        var benchmark1 = '';
+        var benchmarkCol1 = '';
+        var benchmark2 = '';
+        var benchmarkCol2 = '';
+        var benchmark3 = '';
+        var benchmarkCol3 = '';
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
+                    { HeaderText: labels.ProfitMargin_2Years, Name: "ColProfitMargin_2Years", MergeRowNumber: 2 },
+                    { HeaderText: labels.ProfitMargin_3Years, Name: "ColProfitMargin_3Years", MergeRowNumber: 2 },
+                    { HeaderText: labels.ProfitMargin_4Years, Name: "ColProfitMargin_4Years", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetTypeBM, Name: "ColBettypeBenchmark", MergeColNumber: 3}]
+            }],
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.BetType, Width: 300, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AvgProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
-                      { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right'}],
+                      { HeaderText: labels.ProfitMargin_2Years, Width: 120, Name: 'ColProfitMargin_2Years', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin_3Years, Width: 120, Name: 'ColProfitMargin_3Years', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin_4Years, Width: 120, Name: 'ColProfitMargin_4Years', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.Afternoon, Width: 100, Name: 'ColBettypeBenchmark', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.Night, Width: 100, Name: 'ColBenchmarkNight', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.Midnight, Width: 100, Name: 'ColBenchmarkMidnight', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 120,
             showNumberColumn: true,
             showPager: true,
@@ -103,17 +136,34 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                profitMarginCol = profitMarginFormat.format(item.BetTypeId, numeral(item.Margin).format(common.Formats.DecimalFormat));
-                benchmark = numeral(item.Benchmark).format(common.Formats.DecimalFormat);
-                benchmarkCol = hasEditRight ?
-                               benchmarkFormat.format(item.BetTypeId, benchmark) :
-                               benchmark;
+                profitMarginCol2 = profitMarginFormat.format(item.BetTypeId, profitMarginEnums.profitMarginTwoYear,
+                 numeral(item.Margin2).format(common.Formats.DecimalFormat));
+                profitMarginCol3 = profitMarginFormat.format(item.BetTypeId, profitMarginEnums.profitMarginThreeYear,
+                 numeral(item.Margin3).format(common.Formats.DecimalFormat));
+                profitMarginCol4 = profitMarginFormat.format(item.BetTypeId, profitMarginEnums.profitMarginFourYear,
+                 numeral(item.Margin4).format(common.Formats.DecimalFormat));
+                benchmark1 = numeral(item.BenchMarkShift1).format(common.Formats.DecimalFormat);
+                benchmarkCol1 = hasEditRight ?
+                               benchmarkFormat.format(item.BetTypeId, benchMarkEnums.afternoon, benchmark1) :
+                               benchmark1;
+                benchmark2 = numeral(item.BenchMarkShift2).format(common.Formats.DecimalFormat);
+                benchmarkCol2 = hasEditRight ?
+                               benchmarkFormat.format(item.BetTypeId, benchMarkEnums.night, benchmark2) :
+                               benchmark2;
+                benchmark3 = numeral(item.BenchMarkShift3).format(common.Formats.DecimalFormat);
+                benchmarkCol3 = hasEditRight ?
+                               benchmarkFormat.format(item.BetTypeId, benchMarkEnums.midnight, benchmark3) :
+                               benchmark3;
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index },
                               { Name: 'ColBetType', Value: item.BetTypeName, CssClass: 'bettype-name' },
-                              { Name: 'ColProfitMargin', Value: profitMarginCol },
-                              { Name: 'ColBenchmark', Value: benchmarkCol}]
+                              { Name: 'ColProfitMargin_2Years', Value: profitMarginCol2 },
+                              { Name: 'ColProfitMargin_3Years', Value: profitMarginCol3 },
+                              { Name: 'ColProfitMargin_4Years', Value: profitMarginCol4 },
+                              { Name: 'ColBettypeBenchmark', Value: benchmarkCol1 },
+                              { Name: 'ColBenchmarkNight', Value: benchmarkCol2 },
+                              { Name: 'ColBenchmarkMidnight', Value: benchmarkCol3}]
                 };
 
                 bodyData.push(row);
@@ -161,7 +211,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
                 betTypeName = betTypeName.length > 53 ? betTypeName.substring(0, 50) + '...' : betTypeName;
 
                 common.ShowConfirmMessage(messages.UpdateBenchmarkConfirmMessage.format('<b>' + betTypeName + '</b>'), function () {
-                    if (updateBenchmark($link.attr('data-bettype-id'), benchmark.replace(/,/g, ''))) {
+                    if (updateBenchmark($link.attr('data-bettype-id'), benchmark.replace(/,/g, ''), $link.attr('data-benchmark-type'))) {
                         $link.text(benchmark);
                         $input.addClass('hide');
                         $link.removeClass('hide');
@@ -179,9 +229,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
             var $link = $(this);
             var betTypeId = $link.attr('data-bettype-id');
             var betTypeName = $link.closest('tr').find('div.bettype-name').text();
+            var profitMarginType = $link.attr('data-profit-margin-type');
 
             betTypeName = betTypeName.length > 53 ? betTypeName.substring(0, 50) + '...' : betTypeName;
-            getProfitMarginData(betTypeId, betTypeName);
+            getProfitMarginData(betTypeId, betTypeName, profitMarginType);
         });
 
         // Hide tooltip.
@@ -212,11 +263,12 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
     };
 
     // Update benchmark.
-    var updateBenchmark = function (betType, benchmark) {
+    var updateBenchmark = function (betType, benchmark, benchmarkType) {
         var updatingParameters = {
             LeagueId: parameters.LeagueId,
             BetType: betType,
-            Benchmark: benchmark
+            Benchmark: benchmark,
+            WorkShift: benchmarkType
         };
 
         common.DisableInput();
@@ -248,10 +300,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
     };
 
     // Get profit margin data.
-    var getProfitMarginData = function (betType, betTypeName) {
+    var getProfitMarginData = function (betType, betTypeName, profitMarginType) {
         var profitMarginParameters = {
             LeagueId: parameters.LeagueId,
-            BetType: betType
+            BetType: betType,
+            Type: profitMarginType
         };
 
         common.DisableInput();
@@ -278,19 +331,73 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
     // Render profit margin grid.
     var renderProfitMarginGrid = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.Year, Width: 150, Name: 'ColYear', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.ProfitMargin, Width: 250, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
-                      }]
+            customizeHeader: true,
+            groupHeaderRows: [{
+                Columns: [
+                    { HeaderText: labels.Year, Name: "ColYear", MergeRowNumber: 2 },
+                    { HeaderText: labels.Afternoon_Shift, Name: "ColAfternoon_Shift_WinLoss", MergeColNumber: 3 },
+                    { HeaderText: labels.Night_Shift, Name: "ColNight_Shift_WinLoss", MergeColNumber: 3 },
+                    { HeaderText: labels.Midnight_Shift, Name: "ColMidnight_Shift_WinLoss", MergeColNumber: 3 },
+                    { HeaderText: labels.Total, Name: "ColTotalWinLoss", MergeColNumber: 3}]
+            }],
+            columns: [
+                        { HeaderText: labels.Year, Width: 100, Name: 'ColYear', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: labels.Win_Loss, Width: 120, Name: 'ColAfternoon_Shift_WinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Turnover, Width: 120, Name: 'ColAfternoon_Shift_Turnover', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColAfternoon_Shift_ProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Win_Loss, Width: 120, Name: 'ColNight_Shift_WinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Turnover, Width: 120, Name: 'ColNight_Shift_Turnover', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColNight_Shift_ProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Win_Loss, Width: 120, Name: 'ColMidnight_Shift_WinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Turnover, Width: 120, Name: 'ColMidnight_Shift_Turnover', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColMidnight_Shift_ProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Win_Loss, Width: 120, Name: 'ColTotalWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.Turnover, Width: 120, Name: 'ColTotalTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        },
+                        { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColTotalProfitMargin', HeaderAlign: 'center', CellAlign: 'right',
+                            FormatNumber: common.Formats.DecimalFormat
+                        }]
         };
         var bodyData = [];
         var row;
 
-        if (data && data.length > 0) {
-            $.each(data, function (index, item) {
+        if (data && data.ReportRows.length > 0) {
+            $.each(data.ReportRows, function (index, item) {
                 row = {
                     Columns: [{ Name: 'ColYear', Value: item.Year },
-                              { Name: 'ColProfitMargin', Value: item.Margin}]
+                              { Name: 'ColAfternoon_Shift_WinLoss', Value: item.ReportRows[0].WinLoss },
+                              { Name: 'ColAfternoon_Shift_Turnover', Value: item.ReportRows[0].Stake },
+                              { Name: 'ColAfternoon_Shift_ProfitMargin', Value: item.ReportRows[0].Margin },
+                              { Name: 'ColNight_Shift_WinLoss', Value: item.ReportRows[1].WinLoss },
+                              { Name: 'ColNight_Shift_Turnover', Value: item.ReportRows[1].Stake },
+                              { Name: 'ColNight_Shift_ProfitMargin', Value: item.ReportRows[1].Margin },
+                              { Name: 'ColMidnight_Shift_WinLoss', Value: item.ReportRows[2].WinLoss },
+                              { Name: 'ColMidnight_Shift_Turnover', Value: item.ReportRows[2].Stake },
+                              { Name: 'ColMidnight_Shift_ProfitMargin', Value: item.ReportRows[2].Margin },
+                              { Name: 'ColTotalWinLoss', Value: item.ReportRows[3].WinLoss },
+                              { Name: 'ColTotalTurnover', Value: item.ReportRows[3].Stake },
+                              { Name: 'ColTotalProfitMargin', Value: item.ReportRows[3].Margin}]
                 };
 
                 bodyData.push(row);
@@ -298,7 +405,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
         }
 
         gridOptions.bodyRows = bodyData;
-        domElements.divProfitMargin = domElements.divPopup.find('#divProfitMargin');
+        domElements.divProfitMargin = domElements.divPopup.find('#bettypeprofitMarginContent');
         domElements.divProfitMargin.fanexGrid(gridOptions);
     };
 
