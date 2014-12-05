@@ -29,7 +29,6 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.IsDefaultCheck = betType.IsDefaultCheck;
 
                 //// Ken: for test
-                int randNum = rnd.Next(1, 100);
                 this.IsDefaultCheck = rnd.Next(1, 100) > 50 ? true : false;
             }
         }

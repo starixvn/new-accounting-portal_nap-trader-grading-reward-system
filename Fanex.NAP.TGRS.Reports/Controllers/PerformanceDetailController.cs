@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
@@ -78,11 +79,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects represents the team list and grade list.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
         public JsonResult GetDefaultBettypes()
         {
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
-
-            var defaultBettypes = from betType in betTypes where betType.IsDefaultCheck == true select betType.BetTypeId;
 
             return Json(new
             {

@@ -69,9 +69,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
             criteria.BetTypes = criteria.BetTypes ?? string.Empty;
-            ICommandResult result = null;
 
-            result = this._systemConfigurationService.UpdateDefaultBettype(criteria);
+            this._systemConfigurationService.UpdateDefaultBettype(criteria);
 
             return Json(new
             {
