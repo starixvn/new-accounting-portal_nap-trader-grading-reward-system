@@ -69,13 +69,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
             criteria.BetTypes = criteria.BetTypes ?? string.Empty;
-<<<<<<< HEAD
-
-            this._systemConfigurationService.UpdateDefaultBettype(criteria);
-
-=======
             ICommandResult result = this._systemConfigurationService.UpdateDefaultBettype(criteria);
->>>>>>> #26955 - WEB - Implement Configure the Score Calculation Period.
             return Json(new
             {
                 ErrorCode = 0,
