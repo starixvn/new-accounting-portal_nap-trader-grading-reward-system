@@ -30,11 +30,13 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         divBettypeDetailGrid: null
     };
     var urls = {
+        GetInitializedData: common.ResolveRootUrl('PerformanceDetail/GetInitializedData'),
         GetTraderPerformance: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformance'),
         ExportTraderPerformance: common.ResolveRootUrl('PerformanceDetail/ExportTraderPerformance'),
         GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTrader'),
         GetBettypeDetail: common.ResolveRootUrl('PerformanceDetail/GetBettypeDetailTrader')
     };
+
     var parameters = {
         FromDate: null,
         ToDate: null,
@@ -54,6 +56,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     };
     var gradeHistory = new Fanex.TGRS.PerformanceSummary.GradeHistory();
     var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
+    var performanceDetailHelper = new Fanex.NAP.TGRS.PerformanceDetail.Helper();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -92,7 +95,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             height: 200,
             allSelectedText: labels.AllBetTypes,
             create: function () {
-                domElements.ddlBetType.multiselect('checkAll');
+                performanceDetailHelper.SelectDefaultBettypes(domElements.ddlBetType, performanceDetailHelper.GetDefaultBettypes());
             }
         }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
@@ -756,6 +759,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
+        performanceDetailHelper.IntializeFilterData();
         initializeFields();
     };
 };

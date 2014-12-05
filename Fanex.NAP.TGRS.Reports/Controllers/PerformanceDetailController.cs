@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -72,6 +73,24 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         /// <summary>
+        /// Gets initialized data for index page.
+        /// </summary>
+        /// <returns>List of JSON objects represents the team list and grade list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetDefaultBettypes()
+        {
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+
+            var defaultBettypes = from betType in betTypes where betType.IsDefaultCheck == true select betType.BetTypeId;
+
+            return Json(new
+            {
+                DefaultBettypes = from betType in betTypes where betType.IsDefaultCheck == true select betType.BetTypeId
+            });
+        }
+
+        /// <summary>
         /// Gets LeaguePerformance page.
         /// </summary>
         /// <returns>Return LeaguePerformance View.</returns>
@@ -81,7 +100,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
 
             ViewBag.BetTypes = betTypes;
-
             return View();
         }
 

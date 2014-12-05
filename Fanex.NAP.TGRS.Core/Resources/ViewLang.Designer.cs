@@ -295,6 +295,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Bet Type Filter.
+        /// </summary>
+        public static string DefaultBetTypeFilter {
+            get {
+                return ResourceManager.GetString("DefaultBetTypeFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -754,6 +763,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Score Calculation Period.
+        /// </summary>
+        public static string ScoreCalculationPeriod {
+            get {
+                return ResourceManager.GetString("ScoreCalculationPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
@@ -813,6 +831,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Configuration.
+        /// </summary>
+        public static string SystemConfiguration {
+            get {
+                return ResourceManager.GetString("SystemConfiguration", resourceCulture);
             }
         }
         

@@ -120,6 +120,13 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/page-manager.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/systemConfiguration").Include(
+                "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/systemConfiguration",
+                "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
         }
 
         /// <summary>
@@ -146,24 +153,29 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.less");
 
             bundles.Add(new ScriptBundle("~/scripts/leaguePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/league-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/traderPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/trader-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/gradePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/grade-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/teamPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/team-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/betTypePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/bettype-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));

@@ -53,7 +53,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         PageSize: common.Constants.PageSize,
         PageIndex: 0
     };
+
     var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
+    var performanceDetailHelper = new Fanex.NAP.TGRS.PerformanceDetail.Helper();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -93,7 +95,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             height: 200,
             allSelectedText: labels.AllBetTypes,
             create: function () {
-                domElements.ddlBetType.multiselect('checkAll');
+                performanceDetailHelper.SelectDefaultBettypes(domElements.ddlBetType, performanceDetailHelper.GetDefaultBettypes());
             }
         }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
@@ -883,6 +885,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
+        performanceDetailHelper.IntializeFilterData();
         initializeFields();
     };
 };

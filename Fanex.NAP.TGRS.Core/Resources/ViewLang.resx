@@ -462,4 +462,13 @@
   <data name="TGR" xml:space="preserve">
     <value>TGR</value>
   </data>
+  <data name="DefaultBetTypeFilter" xml:space="preserve">
+    <value>Default Bet Type Filter</value>
+  </data>
+  <data name="ScoreCalculationPeriod" xml:space="preserve">
+    <value>Score Calculation Period</value>
+  </data>
+  <data name="SystemConfiguration" xml:space="preserve">
+    <value>System Configuration</value>
+  </data>
 </root>

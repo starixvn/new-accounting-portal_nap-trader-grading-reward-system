@@ -191,9 +191,11 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\trader-rank.js" />
@@ -376,6 +378,8 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls" />
+    <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.less" />
+    <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

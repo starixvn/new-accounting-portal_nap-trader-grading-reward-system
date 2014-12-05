@@ -43,7 +43,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
         public IEnumerable<BetTypeItem> GetBetTypes()
         {
             List<BetTypeItem> betTypes = SessionManager.Get<List<BetTypeItem>>(BetTypesSessionKey);
-
             if (betTypes == null || betTypes.Count == 0)
             {
                 var criteria = new GetBetTypesCriteria();

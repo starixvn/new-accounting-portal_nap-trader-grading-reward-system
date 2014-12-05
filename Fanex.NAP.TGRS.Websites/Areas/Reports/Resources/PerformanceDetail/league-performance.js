@@ -36,6 +36,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         divBettypeDetailGrid: null
     };
     var urls = {
+        GetInitializedData: common.ResolveRootUrl('PerformanceDetail/GetInitializedData'),
         GetLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformance'),
         ExportLeaguePerformance: common.ResolveRootUrl('PerformanceDetail/ExportLeaguePerformance'),
         GetTraderPerformanceOfLeague: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfLeague'),
@@ -54,8 +55,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         Turnover: null,
         WinLost: null
     };
+
     var gradeHistory = new Fanex.TGRS.PerformanceSummary.GradeHistory();
     var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
+    var performanceDetailHelper = new Fanex.NAP.TGRS.PerformanceDetail.Helper();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -98,7 +101,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             height: 200,
             allSelectedText: labels.AllBetTypes,
             create: function () {
-                domElements.ddlBetType.multiselect('checkAll');
+                performanceDetailHelper.SelectDefaultBettypes(domElements.ddlBetType, performanceDetailHelper.GetDefaultBettypes());
             }
         }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
@@ -874,6 +877,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
+        performanceDetailHelper.IntializeFilterData();
         initializeFields();
     };
 };
