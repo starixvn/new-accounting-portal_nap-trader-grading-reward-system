@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UpdateScoreCalculationPeriodCriteria.cs" company="">
-// TODO: Update copyright text.
+// <copyright file="UpdateScoreCalculationPeriodCriteria.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 

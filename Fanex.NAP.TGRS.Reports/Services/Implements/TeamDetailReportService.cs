@@ -230,8 +230,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 (object)total.Margin ?? ViewLang.NA,
                 string.Empty,
                 string.Empty
-
             };
+
             writer.WriteRow(6, totalRecord);
         }
 

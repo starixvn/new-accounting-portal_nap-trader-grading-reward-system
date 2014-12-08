@@ -10,17 +10,16 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Models.SystemConfiguration;
     using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
-    using Fanex.NAP.TGRS.Configuration.Models.SystemConfiguration;
-    using Fanex.Common;
-    using System.Web;
 
     /// <summary>
     /// Trader Management Service.

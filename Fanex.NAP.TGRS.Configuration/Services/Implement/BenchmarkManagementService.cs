@@ -9,16 +9,16 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
     using Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.Models.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
-    using System;
-    using Fanex.Common;
 
     /// <summary>
     /// Benchmark management service.
@@ -177,11 +177,6 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
             ProfitMarginItem result = this.InitProfitMarginByYearType(criteria.Type);
             Dictionary<int, int> profitMarginByYearDictonary = this.InitProfitMarginByYearDictonary(criteria.Type);
 
-            //if (rawData.Any())
-            //{
-            //    result = rawData.Select(obj => new ProfitMarginItem(obj));
-            //}
-
             foreach (var profitMarginrByYearGroup in profitMarginDataByYearGroups)
             {
                 int year = Converter.ToInt(profitMarginrByYearGroup.Key);
@@ -199,13 +194,18 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
                     result.ReportRows[profitMarginByYearIndex].ReportRows[shift - 1] = profitMarginItem;
                     result.ReportRows[profitMarginByYearIndex].ReportRows[3].CalculateTotal(profitMarginItem);
                 }
-                
+
                 result.ReportRows[profitMarginByYearIndex].ReportRows[3].CalculateMargin();
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Initializes the type of the profit margin by year.
+        /// </summary>
+        /// <param name="type">The type of year.</param>
+        /// <returns>Profit margin by year type.</returns>
         private ProfitMarginItem InitProfitMarginByYearType(int type)
         {
             int currentYear = DateTime.Now.Year;
