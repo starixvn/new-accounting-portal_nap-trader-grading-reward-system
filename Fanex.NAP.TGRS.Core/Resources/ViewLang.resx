@@ -477,7 +477,6 @@
   <data name="Midnight" xml:space="preserve">
     <value>Midnight</value>
   </data>
-  </data>
   <data name="Midnight_Shift" xml:space="preserve">
     <value>Midnight (4:00:00 ~ 11:59:59)</value>
   </data>
@@ -501,5 +500,8 @@
   </data>
   <data name="Score" xml:space="preserve">
     <value>Score</value>
+  </data>
+  <data name="SystemConfiguration" xml:space="preserve">
+    <value>System Configuration</value>
   </data>
 </root>

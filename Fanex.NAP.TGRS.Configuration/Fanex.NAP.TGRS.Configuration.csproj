@@ -73,7 +73,9 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateDefaultBettypeCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\UpdateScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\SystemConfiguration\ScoreCalculationPeriod.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
     <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />

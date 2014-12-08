@@ -1,4 +1,5 @@
-﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
+﻿@using System
+@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
     ViewBag.Title = "System Configuration";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,38 +22,78 @@
                 <span class="curr">@ViewLang.ScoreCalculationPeriod</span>
             </div>
         </div>
-        <div id="scoreCalculateFilter" class="filter-form">
-            <div class="filter-row">
+        <div id="scoreCalculateFilter" class="filter-form full-width">
+            <div class="filter-row position-relative full-width height30">
+                <div class="selectDate position-absolute">
+                    <select id="selectDateOption">
+                    </select>
+                    <select id="selectMonthOption">
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row possition-relative full-width">
+                <div class="beginDate float-left display-inline-block">
+                    <select id="beginSelectDateOption">
+                    </select>
+                    <select id="beginSelectMonthOption">
+                    </select>
+                </div>
+                <div class="timeRange float-left display-inline-block">
+                </div>
+                <div class="endDate float-left display-inline-block">
+                    <select id="endSelectDateOption">
+                    </select>
+                    <select id="endSelectMonthOption">
+                    </select>
+                </div>
+                <div class="clear">
+                </div>
             </div>
             <div class="filter-row">
-                <div class="submit width-auto col_4">
+                <div class="timePeriodInfo">
+                    <div class="bold">
+                        Period 1: <span id="firstPeriodInfo">
+                            @string.Format(
+                            "{0} to {1}",
+                            ViewBag.ScoreCalculationPeriod.BeginDay.ToString("d-MMM"),
+                            ViewBag.ScoreCalculationPeriod.SelectedDay.ToString("d-MMM"))
+                        </span>
+                    </div>
+                    <div class="bold">
+                        Period 2: <span id="seconPeriodInfo">
+                            @string.Format(
+                            "{0} to {1}",
+                            ViewBag.ScoreCalculationPeriod.SelectedDay.ToString("d-MMM"),
+                            ViewBag.ScoreCalculationPeriod.EndDay.ToString("d-MMM"))
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-row full-width">
+                <div class="submit">
                     <input id="btnScoreCalculateSubmit" class="blue-button" type="submit" value="@ViewLang.Submit" />
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 <div id="divBettypeConfigGroup" class="bettype-config-group">
     <div class="filter-bar">
-
         <div class="group-title">
             <div>
                 <span class="curr">@ViewLang.DefaultBetTypeFilter</span>
             </div>
         </div>
-
         <div id="divBettypeContent" class="filter-form bettype-content">
             <div class="filter-row bettype-filter-row">
                 <div class="edit-field col_9">
-                <select id="ddlBetType" multiple="multiple">
-                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
-                    {
-                        <option value="@item.BetTypeId">@item.BetTypeName</option>
-                    }
-                </select>
-            </div>
+                    <select id="ddlBetType" multiple="multiple">
+                        @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                        {
+                            <option value="@item.BetTypeId">@item.BetTypeName</option>
+                        }
+                    </select>
+                </div>
             </div>
             <div class="filter-row bettype-submit-row">
                 <div class="submit">
@@ -62,7 +103,6 @@
         </div>
     </div>
 </div>
-
 @section Foot
 {
     @Scripts.Render("~/scripts/systemConfiguration")
@@ -74,6 +114,16 @@
         var messages = {
             UpdateBettypeSuccessfully: '@Messages.UpdateBettypeSuccessfully',
             InvalidValueError: '@Messages.InvalidValueError'
+        };
+
+        var scoreCalculationPeriodInfo = {
+            selectedDate: '@ViewBag.ScoreCalculationPeriod.SelectedDay.Day',
+            selectedMonth: '@ViewBag.ScoreCalculationPeriod.SelectedDay.Month',
+            beginDate: '@ViewBag.ScoreCalculationPeriod.BeginDay.Day',
+            beginMonth: '@ViewBag.ScoreCalculationPeriod.BeginDay.Month',
+            endDate: '@ViewBag.ScoreCalculationPeriod.EndDay.Day',
+            endMonth: '@ViewBag.ScoreCalculationPeriod.EndDay.Month',
+            year: '1900'
         };
     </script>
 }

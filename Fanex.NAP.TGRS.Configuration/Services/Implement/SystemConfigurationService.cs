@@ -18,6 +18,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
+    using Fanex.NAP.TGRS.Configuration.Models.SystemConfiguration;
+    using Fanex.Common;
+    using System.Web;
 
     /// <summary>
     /// Trader Management Service.
@@ -79,6 +82,19 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
             }
 
             return null;
+        }
+
+        public List<ScoreCalculationPeriod> GetScoreCalculationPeriod()
+        {
+            return this.GetData<ScoreCalculationPeriod>(new ScoreCalculationPeriodCriteria()).ToList();
+        }
+
+        public ICommandResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria)
+        {
+            criteria.BeginDay = Converter.ToDateTime(criteria.BeginDay).ToString("yyyy-MM-dd");
+            criteria.EndDay = Converter.ToDateTime(criteria.EndDay).ToString("yyyy-MM-dd");
+            criteria.SelectedDay = Converter.ToDateTime(criteria.SelectedDay).ToString("yyyy-MM-dd");
+            return this.UpdateData(criteria);
         }
     }
 }

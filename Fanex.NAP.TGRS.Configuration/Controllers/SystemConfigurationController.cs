@@ -55,7 +55,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
             ViewBag.BetTypes = betTypes;
-
+            ViewBag.ScoreCalculationPeriod = this._systemConfigurationService.GetScoreCalculationPeriod()[0];
             return View();
         }
 
@@ -69,13 +69,23 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
             criteria.BetTypes = criteria.BetTypes ?? string.Empty;
-
-            this._systemConfigurationService.UpdateDefaultBettype(criteria);
-
+            ICommandResult result = this._systemConfigurationService.UpdateDefaultBettype(criteria);
             return Json(new
             {
                 ErrorCode = 0,
                 ErrorMessage = string.Empty
+            });
+        }
+
+        [HttpPost]
+        public JsonResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria)
+        {
+            criteria.UserId = this.CurrentSession.UserId;
+            ICommandResult updatedResult = this._systemConfigurationService.UpdateScoreCalculationPeriod(criteria);
+            return Json(new
+            {
+                ErrorCode = updatedResult.Code,
+                ErrorMessage = updatedResult.Message
             });
         }
     }
