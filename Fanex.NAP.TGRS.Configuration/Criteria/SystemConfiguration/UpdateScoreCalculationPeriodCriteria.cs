@@ -25,6 +25,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration
 
         public int UserId { get; set; }
 
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override bool IsValid()
         {
             return true;

@@ -134,7 +134,7 @@ eSchool.SystemConfiguration = function () {
                 data: JSON.stringify(updateParams),
                 success: function (result) {
                     if (result.ErrorCode === 0) {
-                        common.ShowInfoMessage("Success");
+                        common.ShowInfoMessage("Update successful");
                     } else {
                         common.ShowErrorMessage(result.ErrorMessage);
                         return false;

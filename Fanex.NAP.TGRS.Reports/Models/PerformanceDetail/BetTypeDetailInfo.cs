@@ -27,5 +27,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public decimal? Margin { get; set; }
 
         public decimal? Benchmark { get; set; }
+
+        public decimal? Score { get; set; }
     }
 }

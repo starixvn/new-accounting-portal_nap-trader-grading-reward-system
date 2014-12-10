@@ -79,6 +79,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTeamTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTraderCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamsCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceCriteria.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\ScoreByPeriodInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamPerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TraderPerformanceInfo.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceGroup.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\ScoreByPeriodItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />

@@ -123,6 +123,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of bet type detail objects.</returns>
         public IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
         {
+            GetScoreByPeriodCriteria scoreByPeriodCriteria = new GetScoreByPeriodCriteria
+            {
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate,
+                CustId = criteria.CustId,
+                MatchId = criteria.MatchId,
+            };
+
             IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
             List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
 
@@ -130,7 +138,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (var item in bettypeData)
                 {
-                    bettypeDetail.Add(new BetTypeDetailItem(item));
+                    var bettypeItem = new BetTypeDetailItem(item);
+                    bettypeItem.ScoreByPeriod = new List<ScoreByPeriodItem>();
+                    scoreByPeriodCriteria.Bettypes = item.BetType.ToString();
+                    IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
+                    foreach (var scoreByPeriodInfo in scoreByPeriodData)
+                    {
+                        bettypeItem.ScoreByPeriod.Add(new ScoreByPeriodItem(scoreByPeriodInfo));
+                    }
+
+                    bettypeDetail.Add(bettypeItem);
                 }
             }
 

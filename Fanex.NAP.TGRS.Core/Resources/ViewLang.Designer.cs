@@ -862,6 +862,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Score By Latest BM.
+        /// </summary>
+        public static string ScoreByLatestBenchMark {
+            get {
+                return ResourceManager.GetString("ScoreByLatestBenchMark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score By Period.
+        /// </summary>
+        public static string ScoreByPeriod {
+            get {
+                return ResourceManager.GetString("ScoreByPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Score Calculation Period.
         /// </summary>
         public static string ScoreCalculationPeriod {

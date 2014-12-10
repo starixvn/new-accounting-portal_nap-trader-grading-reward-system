@@ -504,4 +504,10 @@
   <data name="SystemConfiguration" xml:space="preserve">
     <value>System Configuration</value>
   </data>
+  <data name="ScoreByLatestBenchMark" xml:space="preserve">
+    <value>Score By Latest BM</value>
+  </data>
+  <data name="ScoreByPeriod" xml:space="preserve">
+    <value>Score By Period</value>
+  </data>
 </root>
