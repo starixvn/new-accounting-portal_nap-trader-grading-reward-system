@@ -20,7 +20,11 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public decimal? LeagueBenchmark { get; set; }
 
-        public decimal? BetTypeBenchmark { get; set; }
+        public decimal? BetTypeBMShift1 { get; set; }
+
+        public decimal? BetTypeBMShift2 { get; set; }
+
+        public decimal? BetTypeBMShift3 { get; set; }
 
         public int? TraderCount { get; set; }
 

@@ -812,8 +812,21 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfTradersCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+            customizeHeader: true,
+            groupHeaderRows: [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.Turnover, Name: "ColTurnover", MergeRowNumber: 2 },
+                    { HeaderText: labels.WinLoss, Name: "ColWinLoss", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: labels.Margin, Name: "ColMargin", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetTypeBM, Name: "ColBetTypeBM", MergeColNumber: 3}]
+            }],
+            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
@@ -830,7 +843,13 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
-                      { HeaderText: labels.BetTypeBM, Width: 110, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
+                      { HeaderText: labels.Afternoon, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      { HeaderText: labels.Night, Width: 100, Name: 'ColBenchmarkNight', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      { HeaderText: labels.Midnight, Width: 100, Name: 'ColBenchmarkMidnight', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       }],
             gridExpandHeight: 260,
@@ -878,7 +897,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColBetTypeBM', Value: item.BetTypeBM}]
+                              { Name: 'ColBetTypeBM', Value: item.BetTypeBMShift1 },
+                              { Name: 'ColBenchmarkNight', Value: item.BetTypeBMShift2 },
+                              { Name: 'ColBenchmarkMidnight', Value: item.BetTypeBMShift3}]
                 };
 
                 bodyData.push(row);
@@ -892,7 +913,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: data.Total.Margin || labels.NA },
-                          { Name: 'ColBetTypeBM', Value: ''}]
+                          { Name: 'ColBetTypeBM', Value: '' },
+                          { Name: 'ColBenchmarkNight', Value: '' },
+                          { Name: 'ColBenchmarkMidnight', Value: ''}]
             };
             footerData.push(row);
         }
