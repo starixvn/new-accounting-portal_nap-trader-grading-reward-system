@@ -850,7 +850,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                         }
 
                         currentRowData.push({ Name: 'ColScoreByPeriod',
-                            Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' + scoreByPeriodItem.Score
+                            Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
+                                numeral(scoreByPeriodItem.Score).format("0,0.00")
                         });
 
                         if (isStartRow) {
