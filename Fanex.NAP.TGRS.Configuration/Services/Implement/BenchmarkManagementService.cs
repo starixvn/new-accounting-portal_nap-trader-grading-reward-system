@@ -174,8 +174,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         {
             IEnumerable<ProfitMargin> rawData = this.GetData<ProfitMargin>(criteria);
             var profitMarginDataByYearGroups = rawData.GroupBy(x => x.Year);
-            ProfitMarginItem result = this.InitProfitMarginByYearType(criteria.Type);
-            Dictionary<int, int> profitMarginByYearDictonary = this.InitProfitMarginByYearDictonary(criteria.Type);
+            ProfitMarginItem result = this.InitProfitMarginByYearType(criteria.MarginType);
+            Dictionary<int, int> profitMarginByYearDictonary = this.InitProfitMarginByYearDictonary(criteria.MarginType);
 
             foreach (var profitMarginrByYearGroup in profitMarginDataByYearGroups)
             {

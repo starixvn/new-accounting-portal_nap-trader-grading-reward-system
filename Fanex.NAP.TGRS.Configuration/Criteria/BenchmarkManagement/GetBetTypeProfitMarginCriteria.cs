@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 {
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -20,7 +21,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 
         public int BetType { get; set; }
 
-        public int Type { get; set; }
+        [SpParam(SqlParamName = "Type")]
+        public int MarginType { get; set; }
 
         /// <summary>
         /// Gets the setting key.

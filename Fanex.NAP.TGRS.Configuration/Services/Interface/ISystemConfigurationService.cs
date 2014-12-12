@@ -22,7 +22,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
 
         ICommandResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria);
 
-        List<ScoreCalculationPeriod> GetScoreCalculationPeriod();
+        List<ScoreCalculationPeriod> GetScoreCalculationPeriod(ScoreCalculationPeriodCriteria criteria);
 
         ICommandResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria);
     }

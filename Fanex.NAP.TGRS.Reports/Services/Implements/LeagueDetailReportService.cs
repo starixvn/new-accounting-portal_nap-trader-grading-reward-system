@@ -31,7 +31,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
-        private const string BetTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
         private const int PointInPixel = 225;
         private const string MinPercentString = "min";
         private const string MaxPercentString = "max";
@@ -42,17 +41,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of BetTypeItem objects.</returns>
         public IEnumerable<BetTypeItem> GetBetTypes()
         {
-            List<BetTypeItem> betTypes = SessionManager.Get<List<BetTypeItem>>(BetTypesSessionKey);
-            if (betTypes == null || betTypes.Count == 0)
-            {
-                var criteria = new GetBetTypesCriteria();
-                IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
+            List<BetTypeItem> betTypes = null;
+            var criteria = new GetBetTypesCriteria();
+            IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
 
-                if (data != null && data.Any())
-                {
-                    betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
-                    SessionManager.Set<List<BetTypeItem>>(BetTypesSessionKey, betTypes);
-                }
+            if (data != null && data.Any())
+            {
+                betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
             }
 
             return betTypes;

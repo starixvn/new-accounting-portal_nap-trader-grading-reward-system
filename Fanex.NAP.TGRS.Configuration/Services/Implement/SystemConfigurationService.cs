@@ -59,33 +59,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
         /// <returns>The result of action.</returns>
         public ICommandResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
-            //// Tmp, save session
-            string betTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
-            List<BetTypeItem> betTypes = SessionManager.Get<List<BetTypeItem>>(betTypesSessionKey);
-            var selectedBettype = criteria.BetTypes.Split(',');
-            if (betTypes != null)
-            {
-                foreach (var item in betTypes)
-                {
-                    if (selectedBettype.Contains(item.BetTypeId.ToString()) || criteria.BetTypes == "0")
-                    {
-                        item.IsDefaultCheck = true;
-                    }
-                    else
-                    {
-                        item.IsDefaultCheck = false;
-                    }
-                }
-
-                SessionManager.Set<List<BetTypeItem>>(betTypesSessionKey, betTypes);
-            }
-
-            return null;
+            return this.UpdateData(criteria);
         }
 
-        public List<ScoreCalculationPeriod> GetScoreCalculationPeriod()
+        public List<ScoreCalculationPeriod> GetScoreCalculationPeriod(ScoreCalculationPeriodCriteria criteria)
         {
-            return this.GetData<ScoreCalculationPeriod>(new ScoreCalculationPeriodCriteria()).ToList();
+            return this.GetData<ScoreCalculationPeriod>(criteria).ToList();
         }
 
         public ICommandResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria)

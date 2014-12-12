@@ -104,6 +104,7 @@
     <Setting Key="TGRS_Rpt_DetailTrader_Bettype" SpName="TGRS_Rpt_DetailTrader_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="SystemConfiguration">
+    <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Setting_ScorePeriodSel" SpName="TGRS_Setting_ScorePeriodSel" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Setting_ScorePeriodUpd" SpName="TGRS_Setting_ScorePeriodUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>

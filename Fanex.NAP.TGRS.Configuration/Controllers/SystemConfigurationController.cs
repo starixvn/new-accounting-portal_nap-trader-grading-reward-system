@@ -55,7 +55,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
             ViewBag.BetTypes = betTypes;
-            ViewBag.ScoreCalculationPeriod = this._systemConfigurationService.GetScoreCalculationPeriod()[0];
+            ViewBag.ScoreCalculationPeriod = this._systemConfigurationService.GetScoreCalculationPeriod(new ScoreCalculationPeriodCriteria())[0];
             return View();
         }
 
@@ -68,12 +68,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SystemConfiguration, Policy = Constant.Policy.Read)]
         public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
-            criteria.BetTypes = criteria.BetTypes ?? string.Empty;
+            criteria.IsDefaultBettypes = criteria.IsDefaultBettypes ?? string.Empty;
             ICommandResult result = this._systemConfigurationService.UpdateDefaultBettype(criteria);
             return Json(new
             {
-                ErrorCode = 0,
-                ErrorMessage = string.Empty
+                ErrorCode = result.Code,
+                ErrorMessage = result.Message
             });
         }
 

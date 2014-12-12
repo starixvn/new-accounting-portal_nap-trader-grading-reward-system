@@ -16,11 +16,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration
     /// </summary>
     public class UpdateDefaultBettypeCriteria : CriteriaBase
     {
-        public string BetTypes { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
+        public string IsDefaultBettypes { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -28,7 +24,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_DefaultBettype_Update";
+            return "TGRS_Bettype_ListUpd";
         }
 
         /// <summary>

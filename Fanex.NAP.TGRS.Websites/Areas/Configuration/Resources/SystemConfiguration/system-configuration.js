@@ -190,7 +190,7 @@ eSchool.SystemConfiguration = function () {
             bettypes = '';
         }
         var updateParameter = {
-            BetTypes: bettypes
+            IsDefaultBettypes: bettypes
         };
 
         common.DisableInput();

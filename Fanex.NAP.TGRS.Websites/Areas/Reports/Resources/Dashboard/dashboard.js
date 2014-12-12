@@ -175,7 +175,6 @@ Fanex.TGRS.Reports.Dashboard = function () {
     //}
 
     //{ helper functions
-
     //{ element-render
     var showHideMonthPick = function () {
         if (domElements.divMonthSelect && currentTabId === 0) {
@@ -261,57 +260,21 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var prepareSummaryColumnData = function (data, chartData) {
         chartData.TurnoverData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.WinlossData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.MarginData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.MatchData = [{
-            name: 'Percent',
+            name: 'Match Count',
             data: []
         }];
 
@@ -332,57 +295,21 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var prepareTeamColumnData = function (data, chartData) {
         chartData.TurnoverData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.WinlossData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.MarginData = [{
             name: 'Amount',
-            data: [],
-            dataLabels: {
-                enabled: true,
-                color: '#E0E0E3',
-                align: 'right',
-                x: 0,
-                y: -5,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif',
-                    textShadow: '0 0 3px black'
-                }
-            }
+            data: []
         }];
 
         chartData.MatchData = [{
-            name: 'Percent',
+            name: 'Match Count',
             data: []
         }];
 
@@ -407,7 +334,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.marginContainer.html('');
         domElements.matchContainer.html('');
 
-        var summaryColumnOption = ChartOptions.SummaryColumnChartOption();
+        var summaryColumnOption = ChartOptions.ColumnChartOption();
         var monthNames = Highcharts.getOptions().lang.shortMonths;
         summaryColumnOption.xAxis = {
             categories: monthNames
@@ -446,8 +373,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
     };
 
     var drawTeamChart = function (data) {
-        var teamColumnOption = ChartOptions.TeamColumnChartOption();
-
+        var teamColumnOption = ChartOptions.ColumnChartOption();
+        teamColumnOption.plotOptions.column.colorByPoint = true;
         //make data
         var chartData = {
             TurnoverData: [],

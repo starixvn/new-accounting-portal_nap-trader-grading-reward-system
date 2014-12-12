@@ -304,7 +304,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
         var profitMarginParameters = {
             LeagueId: parameters.LeagueId,
             BetType: betType,
-            Type: profitMarginType
+            MarginType: profitMarginType
         };
 
         common.DisableInput();

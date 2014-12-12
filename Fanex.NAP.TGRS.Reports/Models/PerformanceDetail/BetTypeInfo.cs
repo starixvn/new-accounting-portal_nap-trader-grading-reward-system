@@ -18,6 +18,6 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public string TypeName { get; set; }
 
-        public bool IsDefaultCheck { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

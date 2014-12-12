@@ -18,18 +18,13 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     [Serializable]
     public class BetTypeItem
     {
-        private static Random rnd = new Random();
-
         public BetTypeItem(BetTypeInfo betType)
         {
             if (betType != null)
             {
                 this.BetTypeId = betType.BetType;
                 this.BetTypeName = betType.TypeName;
-                this.IsDefaultCheck = betType.IsDefaultCheck;
-
-                //// Ken: for test
-                this.IsDefaultCheck = rnd.Next(1, 100) > 50 ? true : false;
+                this.IsDefaultCheck = betType.IsDefault;
             }
         }
 
