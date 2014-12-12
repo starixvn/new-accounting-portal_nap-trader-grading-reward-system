@@ -1,0 +1,170 @@
+.black-content {
+    background: #353535;
+    color: #fff;
+}
+body {
+    background: #353535;
+}
+.first-tab {
+    margin-left: 98px !important;
+}
+.tab-content {
+    height: 0;
+}
+.main-col {
+    padding-top: 5px;
+    width: 72%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+.full-col {
+    padding-top: 5px;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+.sub-col {
+    width: 28%;
+    height: 100%;
+    padding-top: 5px;
+    display: inline-block;
+    //float: left;
+}
+
+.absolute-padding {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.info-cell-container {
+    .absolute-padding;
+    display: inline-block;
+    float: left;
+}
+
+.general-info {
+    height: 7.5%;
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+.info-cell-1 {
+    .info-cell-container;
+    text-align: center;
+    width: 25%;
+    height: 100%;
+    padding: 0 1px 1px 0;
+}
+
+
+.info-cell1-content {
+    .absolute-padding;
+    .black-content;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-top: 10px;
+
+    label {
+        display: block;
+        float: center;
+        margin-top: 5px;
+        cursor: auto;
+    }
+    label.title {
+        font-weight: normal;
+    }
+    label.number {
+        font-weight: bold;
+    }
+}
+
+.info-cell-2 {
+    .info-cell-container;
+    text-align: center;
+    width: 50%;
+    height: 46%;
+}
+
+.info-cell2-content {
+    .black-content;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-cell-3 {
+    .info-cell-container;
+    padding: 0 1px 1px 1px;
+    width: 100%;
+    height: 33.333%;
+}
+
+.info-cell-3-last {
+    .info-cell-3;
+    padding: 0 1px 3px 1px;
+}
+
+.info-cell3-content {
+    .absolute-padding;
+    .black-content;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 10px 5px 5px 10px;
+
+    .rank-row {
+        display: inline-block;
+        width: 100%;
+        .name {
+            float: left;
+            width: 78%;
+        }
+        .value {
+            float: right;
+            width: 22%;
+            text-align: center;
+            .center-value {
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+
+.info-cell-team {
+    .info-cell-container;
+    //padding: 0 1px 1px 1px;
+    width: 50%;
+    height: 48%;
+}
+
+.info-cell-team-content {
+    .black-content;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-cell-month {
+    .info-cell-container;
+    //padding: 0 1px 1px 1px;
+    width: 100%;
+    height: 4%;
+    clear: left;
+}
+.team-month-picker {
+    float: right;
+    margin-top: 8px;
+    margin-right: 17px;
+    background: black;
+    color: white;
+}
+

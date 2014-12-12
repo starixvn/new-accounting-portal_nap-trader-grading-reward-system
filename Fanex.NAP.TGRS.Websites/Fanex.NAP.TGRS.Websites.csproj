@@ -195,6 +195,8 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
@@ -226,6 +228,8 @@
     <Content Include="Content\Bootstrap\Css\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\Css\bootstrap.css" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\ReponsiveTabs\responsive-tabs-theme.css" />
+    <Content Include="Content\ReponsiveTabs\responsive-tabs.css" />
     <Content Include="Content\DatePicker\images\icon-calendar.png" />
     <Content Include="Content\DatePicker\jquery.nexDatePicker.css" />
     <Content Include="Content\Fanex.Grid\Fanex.Grid.css" />
@@ -305,6 +309,10 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
+    <Content Include="Scripts\Libraries\Highcharts\exporting.js" />
+    <Content Include="Scripts\Libraries\Highcharts\highcharts-3d.js" />
+    <Content Include="Scripts\Libraries\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libraries\ReponsiveTabs\jquery.responsiveTabs.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
     <Content Include="Scripts\Libraries\MultipleSelect\jquery.multiselect.js" />
@@ -380,6 +388,8 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.less" />
     <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

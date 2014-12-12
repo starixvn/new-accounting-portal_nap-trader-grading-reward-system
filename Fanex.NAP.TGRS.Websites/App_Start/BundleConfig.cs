@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Optimization;
 
     /// <summary>
@@ -133,6 +134,7 @@ namespace Fanex.NAP.TGRS.Websites
         /// Registers the reports module's bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public static void RegisterReportsBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/scripts/performanceSummary").Include(
@@ -179,6 +181,19 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceDetail/bettype-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/dashboard",
+                "~/Content/ReponsiveTabs/responsive-tabs-theme.css",
+                "~/Content/ReponsiveTabs/responsive-tabs.css",
+                "~/Areas/Reports/Resources/Dashboard/dashboard.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/dashboard").Include(
+                "~/Scripts/Libraries/ReponsiveTabs/jquery.responsiveTabs.js",
+                "~/Scripts/Libraries/Highcharts/highcharts.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
+                "~/Areas/Reports/Resources/Dashboard/dashboard-chart.js",
+                "~/Areas/Reports/Resources/Dashboard/dashboard.js"));
         }
     }
 }

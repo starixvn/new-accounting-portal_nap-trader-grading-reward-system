@@ -33,7 +33,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
         top10MinMargin: null,
         top10MaxMargin: null,
         bottom10MinMargin: null,
-        bottom10MaxMargin: null,
+        bottom10MaxMargin: null
     };
     var filterParameters = {
         ReportType: null,
