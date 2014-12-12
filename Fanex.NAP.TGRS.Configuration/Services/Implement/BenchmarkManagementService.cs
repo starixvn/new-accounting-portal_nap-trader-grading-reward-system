@@ -32,7 +32,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         public IEnumerable<CountryItem> GetCountryList()
         {
             IEnumerable<Country> rawData = this.GetData<Country>(new GetCountryCodesCriteria());
-            IEnumerable<CountryItem> result = null;
+            IEnumerable<CountryItem> result = new List<CountryItem>();
 
             if (rawData.Any())
             {
@@ -50,7 +50,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         public IEnumerable<SpecialLeagueItem> GetSpecialLeagueList()
         {
             IEnumerable<SpecialLeague> rawData = this.GetData<SpecialLeague>(new GetSpecialLeaguesCriteria());
-            IEnumerable<SpecialLeagueItem> result = null;
+            IEnumerable<SpecialLeagueItem> result = new List<SpecialLeagueItem>();
 
             if (rawData.Any())
             {
@@ -184,6 +184,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
                 foreach (var profitMarginByShift in profitMarginrByYearGroup)
                 {
                     int shift = profitMarginByShift.WorkShift;
+                    if (shift == 0)
+                        return new ProfitMarginItem();
+
                     ProfitMarginItem profitMarginItem = new ProfitMarginItem
                     {
                         WinLoss = Converter.ToDecimal(profitMarginByShift.WinLoss),

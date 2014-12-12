@@ -63,7 +63,7 @@ namespace Fanex.NAP.TGRS.Websites
             {
                 string message = string.Format(
                                             exceptionFormat,
-                                            ex.Message,
+                                            ex.Message + "\r\n" + ex.InnerException.Message,
                                             ex.GetType().ToString(),
                                             ex.Source,
                                             HttpContext.Current.Request.Headers["Host"],
