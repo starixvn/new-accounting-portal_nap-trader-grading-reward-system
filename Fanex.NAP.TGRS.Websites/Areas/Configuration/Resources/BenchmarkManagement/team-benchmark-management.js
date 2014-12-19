@@ -105,7 +105,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
                                benchmark;
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTeamName', Value: item.TeamName, CssClass: 'team-name' },
                               { Name: 'ColProfitMargin', Value: profitMarginCol },
                               { Name: 'ColBenchmark', Value: benchmarkCol}]

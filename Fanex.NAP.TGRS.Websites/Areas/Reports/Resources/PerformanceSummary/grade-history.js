@@ -81,7 +81,7 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColGrade', Value: item.Grade },
                               { Name: 'ColGradeEffectiveDate', Value: item.GradeEffectiveDate },
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },

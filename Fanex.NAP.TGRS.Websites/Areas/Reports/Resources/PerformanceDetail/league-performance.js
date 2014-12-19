@@ -313,7 +313,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                               { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
@@ -475,7 +475,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
@@ -645,7 +645,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             $.each(data.ItemList, function (index, item) {
                 matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.MatchName);
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColMatch', Value: matchDetailCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
@@ -815,7 +815,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 var scoreByPeriodLength = item.ScoreByPeriod.length;
                 if (scoreByPeriodLength === 0) {
                     currentRowData = [];
-                    currentRowData.push({ Name: 'ColNo', Value: index },
+                    currentRowData.push({ Name: 'ColNo', Value: index + 1 },
                                         { Name: 'ColBettype', Value: item.TypeName },
                                         { Name: 'ColTurnover', Value: item.Turnover },
                                         { Name: 'ColWinLoss', Value: item.WinLost },
@@ -834,7 +834,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                         currentRowData = [];
                         var isStartRow = scoreByPeriodIndex === 0;
                         if (isStartRow) {
-                            currentRowData.push({ Name: 'ColNo', Value: index, MergeRowNumber: scoreByPeriodLength },
+                            currentRowData.push({ Name: 'ColNo', Value: index + 1, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColBettype', Value: item.TypeName, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColTurnover', Value: item.Turnover, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColWinLoss', Value: item.WinLost, MergeRowNumber: scoreByPeriodLength },

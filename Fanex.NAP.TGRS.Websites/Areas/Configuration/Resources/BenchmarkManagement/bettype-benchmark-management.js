@@ -156,7 +156,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
                                benchmark3;
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColBetType', Value: item.BetTypeName, CssClass: 'bettype-name' },
                               { Name: 'ColProfitMargin_2Years', Value: profitMarginCol2 },
                               { Name: 'ColProfitMargin_3Years', Value: profitMarginCol3 },

@@ -302,7 +302,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
@@ -695,7 +695,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 var scoreByPeriodLength = item.ScoreByPeriod.length;
                 if (scoreByPeriodLength === 0) {
                     currentRowData = [];
-                    currentRowData.push({ Name: 'ColNo', Value: index },
+                    currentRowData.push({ Name: 'ColNo', Value: index + 1 },
                                         { Name: 'ColBettype', Value: item.TypeName },
                                         { Name: 'ColTurnover', Value: item.Turnover },
                                         { Name: 'ColWinLoss', Value: item.WinLost },
@@ -714,7 +714,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                         currentRowData = [];
                         var isStartRow = scoreByPeriodIndex === 0;
                         if (isStartRow) {
-                            currentRowData.push({ Name: 'ColNo', Value: index, MergeRowNumber: scoreByPeriodLength },
+                            currentRowData.push({ Name: 'ColNo', Value: index + 1, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColBettype', Value: item.TypeName, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColTurnover', Value: item.Turnover, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColWinLoss', Value: item.WinLost, MergeRowNumber: scoreByPeriodLength },

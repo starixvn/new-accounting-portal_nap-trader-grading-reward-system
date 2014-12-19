@@ -194,7 +194,7 @@ Fanex.TGRS.GradeManagement = function () {
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
             showNumberColumn: true,
-            gridExpandHeight: 100,
+            gridExpandHeight: 100
         };
         var editableGradeNameCol = "";
         var gradeDescCol = "";
@@ -208,7 +208,7 @@ Fanex.TGRS.GradeManagement = function () {
                 gradeNameCol = item.GradeName;
                 gradeDescCol = descColFormat.format(item.GradeId, item.Description);
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableGradeNameCol : gradeNameCol },
                               { Name: 'ColDes', Value: gradeDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },

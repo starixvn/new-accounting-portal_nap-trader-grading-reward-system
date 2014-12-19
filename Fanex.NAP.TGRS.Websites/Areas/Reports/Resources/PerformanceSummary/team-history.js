@@ -81,7 +81,7 @@ Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColTeamName', Value: item.TeamName },
                               { Name: 'ColTeamEffectiveDate', Value: item.TeamEffectiveDate },
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },

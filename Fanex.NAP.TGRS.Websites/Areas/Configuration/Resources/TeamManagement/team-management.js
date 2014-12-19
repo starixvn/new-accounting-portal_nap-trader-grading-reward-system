@@ -221,7 +221,7 @@ Fanex.TGRS.TeamManagement = function () {
                 teamNameCol = item.TeamName;
                 teamDescCol = descColFormat.format(item.TeamId, item.Description);
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTeamNameCol : teamNameCol },
                               { Name: 'ColDes', Value: teamDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },

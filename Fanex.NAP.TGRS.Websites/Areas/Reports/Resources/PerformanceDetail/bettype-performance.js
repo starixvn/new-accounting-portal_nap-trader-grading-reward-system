@@ -298,7 +298,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 noOfLeaguesCol = noOfLeaguesFormat.format(labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColBetType', Value: betTypeCol },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                               { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
@@ -472,7 +472,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
@@ -889,7 +889,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                                      labels.TraderPerformance,
                                      numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                               { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
@@ -1063,7 +1063,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
@@ -1239,7 +1239,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             $.each(data.ItemList, function (index, item) {
                 forecastCol = forecastFormat.format(leagueId, traderId, item.MatchId, labels.Forecast);
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColMatch', Value: item.MatchName },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },

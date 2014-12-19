@@ -193,7 +193,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                 configurationCol = configurationFormat.format(item.LeagueId, labels.Configure);
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeagueName', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColProfitMargin', Value: profitMarginCol },
                               { Name: 'ColBenchmark', Value: benchmarkCol },
