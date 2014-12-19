@@ -39,7 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = DateTime.Now
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
             };
             result = this.GetData<GeneralInfo>(summaryCriteria);
 
@@ -59,7 +59,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = DateTime.Now
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
             };
 
             IEnumerable<League> result = this.GetData<League>(topLeagueCriteria);
@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = DateTime.Now,
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
                 Top = 5,
                 IsBottom = 0
             };
@@ -105,7 +105,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = DateTime.Now
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
             };
 
             IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
@@ -126,10 +126,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = DateTime.Now
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
             };
 
             List<MonthAmount> rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
+            rawData = rawData.OrderBy(x => x.EventDate).ToList();
 
             var result = new List<MonthAmountItem>();
             foreach (var item in rawData)

@@ -1,4 +1,4 @@
-﻿/* global Namespace, Highcharts, common, numeral */
+﻿/* global Namespace, Highcharts */
 'use strict';
 
 Namespace.Register("Fanex.TGRS.DashboardColumnChart");
@@ -247,20 +247,20 @@ Fanex.TGRS.DashboardChart = function () {
                     }
                 }
             },
-            yAxis: {
-                labels: {
-                    formatter: function () {
-                        var maxValue = this.axis.max;
-                        if (maxValue >= 1000000000) {
-                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
-                        } else if (maxValue > 1000000) {
-                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
-                        } else {
-                            return this.value;
-                        }
-                    }
-                }
-            },
+//            yAxis: {
+//                labels: {
+//                    formatter: function () {
+//                        var maxValue = this.axis.max;
+//                        if (maxValue >= 1000000000) {
+//                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+//                        } else if (maxValue > 1000000) {
+//                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+//                        } else {
+//                            return this.value;
+//                        }
+//                    }
+//                }
+//            },
             credits: {
                 enabled: false
             },
@@ -280,18 +280,18 @@ Fanex.TGRS.DashboardChart = function () {
                             fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif',
                             textShadow: '0 0 3px black'
-                        },
-                        formatter: function () {
-                            var maxValue = this.series.chart.axes[1].dataMax;
-                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
-                            if (maxValue >= 1000000000) {
-                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
-                            }
-                            else if (maxValue >= 1000000) {
-                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
-                            }
-                            return value;
                         }
+//                        formatter: function () {
+//                            var maxValue = this.series.chart.axes[1].dataMax;
+//                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
+//                            if (maxValue >= 1000000000) {
+//                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
+//                            }
+//                            else if (maxValue >= 1000000) {
+//                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
+//                            }
+//                            return value;
+//                        }
                     }
                 }
             }
@@ -411,18 +411,18 @@ Fanex.TGRS.DashboardChart = function () {
                             fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif',
                             textShadow: '0 0 3px black'
-                        },
-                        formatter: function () {
-                            var maxValue = this.series.chart.axes[1].dataMax;
-                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
-                            if (maxValue >= 1000000000) {
-                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
-                            }
-                            else if (maxValue >= 1000000) {
-                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
-                            }
-                            return value;
                         }
+//                        formatter: function () {
+//                            var maxValue = this.series.chart.axes[1].dataMax;
+//                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
+//                            if (maxValue >= 1000000000) {
+//                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
+//                            }
+//                            else if (maxValue >= 1000000) {
+//                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
+//                            }
+//                            return value;
+//                        }
                     }
                 }
             }

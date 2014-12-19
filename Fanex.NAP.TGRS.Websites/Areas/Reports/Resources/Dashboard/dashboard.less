@@ -18,7 +18,7 @@ body {
 }
 .main-col {
     width: 72%;
-    height: 96%;
+    height: 100%;
     display: inline-block;
     float: left;
 }
@@ -30,7 +30,7 @@ body {
 }
 .sub-col {
     width: 28%;
-    height: 96%;
+    height: 100%;
     display: inline-block;
     //float: left;
 }
@@ -40,7 +40,16 @@ body {
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
-
+.dashboard-border {
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow:    0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+}
+.title-border {
+    -webkit-box-shadow: 0px 1px 2px 0px #d8d9dc;
+    -moz-box-shadow:    0px 1px 2px 0px #d8d9dc;
+    box-shadow:         0px 1px 2px 0px #d8d9dc;
+}
 .info-cell-container {
     .absolute-padding;
     display: inline-block;
@@ -51,14 +60,29 @@ body {
     height: 8%;
 }
 
-.dash-board-title {
+.dashboard-title {
     .white-content;
     .absolute-padding;
-    padding: 5px 0 0 6px;
-    height: 4%;
     width: 100%;
     text-transform: uppercase;
     font-size: 145%;
+    .title-border;
+
+    height: 36px;
+    line-height: 36px;
+    vertical-align: middle;
+    padding-left: 10px;
+
+    .team-month-picker {
+        float: right;
+        margin-right: 8px;
+        margin-top: 9px;
+    }
+    .chart-type-picker {
+        float: right;
+        margin-right: 8px;
+        margin-top: 9px;
+    }
 }
 
 .chart-container {
@@ -82,9 +106,8 @@ body {
 
 .info-cell1-content {
     .white-content;
-    border: 0.5px solid #5a7dc1 ;
+    .dashboard-border;
     border-top: solid 3px #5a7dc1;
-    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1 ;
     width: 100%;
     height: 100%;
     position: relative;
@@ -100,11 +123,12 @@ body {
     }
     label.title {
         margin-top: 8px;
-        font-weight: normal;
+        font-size: 120%;
+        font-weight: bold;
     }
     label.number {
-        font-weight: bold;
-        margin-top: 4px;
+        margin-top: 1px;
+        font-size: 120%;
     }
 }
 .info-cell1-content-border {
@@ -129,8 +153,7 @@ body {
 
 .info-cell2-content {
     .white-content;
-    border: 0.5px solid #5a7dc1 ;
-    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1 ;
+    .dashboard-border;
     width: 100%;
     height: 100%;
     position: relative;
@@ -160,22 +183,24 @@ body {
     .white-content;
     width: 100%;
     height: 100%;
-    border: 0.5px solid #5a7dc1 ;
-    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1;
+    .dashboard-border;
 
     .title {
         .absolute-padding;
-        padding: 6px 0 0 6px;
+        padding: 5px 0 0 6px;
         height: 30px;
         border: 1px solid #5a7dc1;
         background: #5a7dc1;
         color: white;
-        font-size: 110%;
+        font-size: 125%;
+    }
+    .no-border {
+        border-bottom: none !important;
     }
     .rank-row {
         display: inline-block;
         width: 100%;
-        border-bottom: 1px dotted #5a7dc1;
+        border-bottom: 1px dotted #dedede;
 
         .name {
             .absolute-padding;
@@ -183,28 +208,33 @@ body {
             float: left;
             width: 78%;
             color: black;
+            font-size: 97%;
         }
         .value {
             float: right;
             width: 22%;
             text-align: center;
             .center-value {
-                margin: 0 auto;
+                float: right;
+                margin-right: 5px;
             }
+            font-size: 97%;
             color: black;
         }
 
         .title-name {
-            //padding: 6px 0 0 6px;
             padding-top: 5px;
             color: #5a7dc1;
-            font-size: 110%;
+            font-size: 115%;
         }
         .title-value {
-            //padding: 6px 0 0 6px;
             padding-top: 5px;
             color: #5a7dc1;
-            font-size: 110%;
+            font-size: 115%;
+        }
+        .number-value {
+            float: right;
+            margin-right: 7px;
         }
     }
 }
@@ -230,10 +260,5 @@ body {
     width: 100%;
     height: 4%;
     clear: left;
-}
-.team-month-picker {
-    float: right;
-    margin-top: 3px;
-    margin-right: 8px;
 }
 

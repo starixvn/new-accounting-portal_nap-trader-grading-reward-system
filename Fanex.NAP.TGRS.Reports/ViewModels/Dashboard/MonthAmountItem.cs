@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.Dashboard
         public MonthAmountItem(MonthAmount item)
         {
             this.Month = item.EventDate.Value.Month;
+            this.Year = item.EventDate.Value.Year;
             this.Turnover = item.Turnover;
             this.Winloss = item.Winlost;
             this.MatchCount = item.MatchCount;
@@ -26,6 +27,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.Dashboard
         }
 
         public int Month { get; set; }
+
+        public int Year { get; set; }
 
         public decimal Turnover { get; set; }
 

@@ -5,8 +5,15 @@
 @Styles.Render("~/styles/dashboard")
 <div id="divHorizontalTab">
     <div id="divTabSummaryContent" class="tab-content">
-    <div class="dash-board-title">
-        Performance for last <label id ="titleMonthCount">6</label> months
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            Performance of last <label id ="titleMonthCount">6</label> months
+
+            <select class="chart-type-picker" id="divChartTypePicker">
+            </select>
+            <select class="team-month-picker" id="divTeamMonthPicker">
+            </select>
+        </div>
     </div>
         <div class="main-col">
             <div id="divGeneralInfo" class="general-info">
@@ -67,8 +74,8 @@
         <div class="sub-col">
             <div class="info-cell-3-top">
                 <div class="info-cell3-content">
-                    <div class="title">Best leagues performance</div>
-                    <div class="rank-row">
+                    <div class="title">Top 5 leagues</div>
+                    <div class="rank-row no-border">
                         <div class="name title-name">League</div>
                         <div class="value title-value"><div class="center-value">Margin %</div></div>
                     </div>
@@ -78,8 +85,8 @@
             </div>
             <div class="info-cell-3">
                 <div class="info-cell3-content">
-                    <div class="title">Best trader performance</div>
-                    <div class="rank-row">
+                    <div class="title">Top 5 traders</div>
+                    <div class="rank-row no-border">
                         <div class="name title-name">Trader</div>
                         <div class="value title-value"><div class="center-value">Margin %</div></div>
                     </div>
@@ -89,8 +96,8 @@
             </div>
             <div class="info-cell-3-last">
                 <div class="info-cell3-content">
-                    <div class="title">Best bet type performance</div>
-                    <div class="rank-row">
+                    <div class="title">Top 10 bet types</div>
+                    <div class="rank-row no-border">
                         <div class="name title-name">Bet type</div>
                         <div class="value title-value"><div class="center-value">Margin %</div></div>
                     </div>
