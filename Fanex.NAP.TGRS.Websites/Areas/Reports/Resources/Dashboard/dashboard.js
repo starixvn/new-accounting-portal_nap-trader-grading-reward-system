@@ -12,8 +12,8 @@ Namespace.Register("Fanex.TGRS.Reports.Dashboard");
 Fanex.TGRS.Reports.Dashboard = function () {
     var $this = this;
 
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
+    //    var monthNames = ["January", "February", "March", "April", "May", "June",
+    //    "July", "August", "September", "October", "November", "December"];
 
     //{ variable-declare
     var ChartOptions = null;
@@ -26,15 +26,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var domElements = {
         divHorizontalTab: null,
 
-        turnoverContainer: null,
-        winlossContainer: null,
-        marginContainer: null,
-        matchContainer: null,
-
-        teamTurnoverContainer: null,
+        monthteamWinlossContainer: null,
+        monthteamMarginContainer: null,
         teamWinlossContainer: null,
         teamMarginContainer: null,
-        teamMatchContainer: null,
 
         divBestLeague: null,
         divBestTrader: null,
@@ -45,7 +40,9 @@ Fanex.TGRS.Reports.Dashboard = function () {
         lblMargin: null,
         lblMatches: null,
 
-        divMonthSelect: null
+        divMonthSelect: null,
+
+        titleMonthCount: null
     };
     //}
 
@@ -53,15 +50,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var cacheDomElements = function () {
         domElements.divHorizontalTab = $('#divHorizontalTab');
 
-        domElements.turnoverContainer = $('#turnoverContainer');
-        domElements.winlossContainer = $('#winlossContainer');
-        domElements.marginContainer = $('#marginContainer');
-        domElements.matchContainer = $('#matchContainer');
-
-        domElements.teamTurnoverContainer = $('#teamTurnoverContainer');
+        domElements.monthMarginContainer = $('#monthMarginContainer');
+        domElements.monthMatchContainer = $('#monthMatchContainer');
         domElements.teamWinlossContainer = $('#teamWinlossContainer');
         domElements.teamMarginContainer = $('#teamMarginContainer');
-        domElements.teamMatchContainer = $('#teamMatchContainer');
 
         domElements.divBestLeague = $('#divBestLeague');
         domElements.divBestTrader = $('#divBestTrader');
@@ -71,6 +63,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.lblWinLoss = $('#lblWinLoss');
         domElements.lblMargin = $('#lblMargin');
         domElements.lblMatches = $('#lblMatches');
+
+        domElements.titleMonthCount = $('#titleMonthCount');
     };
 
     //}
@@ -78,7 +72,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
     //{ module-init
     var initialize = function () {
         ChartOptions = new Fanex.TGRS.DashboardChart();
-        ChartOptions.ApplyDarkTheme();
+        //ChartOptions.ApplyDarkTheme();
     };
 
     $this.Initialize = function () {
@@ -92,48 +86,35 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
     //{ page-events & make-form.
     var setResponsiveHeight = function () {
-        var maxHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - (33 + 38 + 15 + 5); // menu + tabs + tabs padding + unknown
+        var maxHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - (33 + 15); // menu + tabs + tabs padding + unknown
         $("#divTabSummaryContent").css({ height: maxHeight });
         $("#divTabTeamContent").css({ height: maxHeight });
     };
 
-    var currentTabId = 0;
     var handlePageEvents = function () {
-
-        domElements.divHorizontalTab.responsiveTabs({
-            rotate: false,
-            startCollapsed: 'accordion',
-            collapsible: 'accordion',
-            setHash: true,
-            activate: function (e, tab) {
-                currentTabId = tab.id;
-                if (tab.id === 0) {
-                    showHideMonthPick();
-                    ajaxGetSummaryData();
-                }
-                else {
-                    showHideMonthPick();
-                    ajaxGetTeamData();
-                }
-            }
-        });
-
         $("#headline").hide();
+        makeMonthDropdown();
+        ajaxGetSummaryData();
 
         domElements.divMonthSelect.on('change', function () {
-            ajaxGetTeamData();
+            renderTitle(domElements.divMonthSelect.val() * 6);
+            ajaxGetSummaryData();
         });
     };
     //}
 
     //{ ajax functions
     var ajaxGetSummaryData = function () {
+        var monthCriteria = {
+            month: parseInt(domElements.divMonthSelect.val() * 6)
+        };
         common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetSummaryData,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
+            data: JSON.stringify(monthCriteria),
             success: function (result) {
                 if (result) {
                     renderSummaryReports(result);
@@ -148,58 +129,20 @@ Fanex.TGRS.Reports.Dashboard = function () {
         });
     };
 
-    var ajaxGetTeamData = function () {
-        var monthCriteria = {
-            month: parseInt(domElements.divMonthSelect.val()) + 1
-        };
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.GetTeamData,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(monthCriteria),
-            success: function (result) {
-                if (result) {
-                    renderTeamReports(result.TeamData);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
     //}
 
     //{ helper functions
     //{ element-render
-    var showHideMonthPick = function () {
-        if (domElements.divMonthSelect && currentTabId === 0) {
-            domElements.divMonthSelect.addClass('hide');
-        }
-        else if (domElements.divMonthSelect && currentTabId === 1) {
-            domElements.divMonthSelect.removeClass('hide');
-        }
-        else if (!domElements.divMonthSelect) {
-            makeMonthDropdown();
-        }
-    };
-
     var makeMonthDropdown = function () {
         var selectHtml = '<select class="team-month-picker" id="divTeamMonthPicker"></select>';
-        $(".r-tabs-nav").append(selectHtml);
+        $(".dash-board-title").append(selectHtml);
 
         domElements.divMonthSelect = $("#divTeamMonthPicker");
-        var currentMonth = (new Date()).getMonth();
 
-        for (var i = 0; i <= currentMonth; i++) {
-            domElements.divMonthSelect.append($('<option></option>').attr('value', i).text(monthNames[i]));
+        for (var i = 1; i <= 3; i++) {
+            domElements.divMonthSelect.append($('<option></option>').attr('value', i).text(i * 6 + 'months'));
         }
-        domElements.divMonthSelect.val(currentMonth);
-        showHideMonthPick();
+        domElements.divMonthSelect.val(1);
     };
     var renderSummaryReports = function (data) {
         renderGeneralInfo(data.GeneralInfo);
@@ -207,8 +150,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         renderRankInfo(data.BestLeagues, data.BestTraders, data.BestBettypes);
     };
 
-    var renderTeamReports = function (data) {
-        drawTeamChart(data);
+    var renderTitle = function (month) {
+        domElements.titleMonthCount.text(month);
     };
 
     var renderGeneralInfo = function (data) {
@@ -257,159 +200,103 @@ Fanex.TGRS.Reports.Dashboard = function () {
         }
     };
 
-    var prepareSummaryColumnData = function (data, chartData) {
-        chartData.TurnoverData = [{
+    var prepareSummaryColumnData = function (monthData, teamData, chartData) {
+        chartData.MonthMarginData = [{
             name: 'Amount',
             data: []
         }];
 
-        chartData.WinlossData = [{
-            name: 'Amount',
-            data: []
-        }];
-
-        chartData.MarginData = [{
-            name: 'Amount',
-            data: []
-        }];
-
-        chartData.MatchData = [{
+        chartData.MonthMatchData = [{
             name: 'Match Count',
             data: []
         }];
 
-        $.each(data, function (index, item) {
-            chartData.TurnoverData[0].data.push(item.Turnover);
-            chartData.WinlossData[0].data.push(item.Winloss);
-            chartData.MarginData[0].data.push(item.Margin);
+        chartData.TeamMarginData = [{
+            name: 'Amount',
+            data: []
+        }];
 
-            //match data
+        chartData.TeamMixData = [{
+            type: 'column',
+            name: 'Win loss',
+            data: []
+        }, {
+            type: 'spline',
+            name: 'Turn over',
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            },
+            data: []
+        }];
+
+        $.each(monthData, function (index, item) {
+            chartData.MonthMarginData[0].data.push(item.Margin);
+            chartData.MonthCategories.push(Highcharts.getOptions().lang.shortMonths[item.Month - 1]);
+
+            //month match data
             var pipeItem = {
                 name: Highcharts.getOptions().lang.shortMonths[item.Month - 1],
                 y: item.MatchCount
             };
-            chartData.MatchData[0].data.push(pipeItem);
+            chartData.MonthMatchData[0].data.push(pipeItem);
         });
-    };
 
-    var prepareTeamColumnData = function (data, chartData) {
-        chartData.TurnoverData = [{
-            name: 'Amount',
-            data: []
-        }];
-
-        chartData.WinlossData = [{
-            name: 'Amount',
-            data: []
-        }];
-
-        chartData.MarginData = [{
-            name: 'Amount',
-            data: []
-        }];
-
-        chartData.MatchData = [{
-            name: 'Match Count',
-            data: []
-        }];
-
-        $.each(data, function (index, item) {
+        $.each(teamData, function (index, item) {
             chartData.Categories.push(item.TeamName);
-            chartData.TurnoverData[0].data.push(item.Turnover);
-            chartData.WinlossData[0].data.push(item.Winlost);
-            chartData.MarginData[0].data.push(item.Margin);
-
-            //match data
-            var pipeItem = {
-                name: item.TeamName,
-                y: item.Match
-            };
-            chartData.MatchData[0].data.push(pipeItem);
+            chartData.TeamMarginData[0].data.push(item.Margin);
+            chartData.TeamMixData[0].data.push(item.Turnover);
+            chartData.TeamMixData[1].data.push(item.Winlost);
         });
     };
 
     var drawSummaryChart = function (data) {
-        domElements.turnoverContainer.html('');
-        domElements.winlossContainer.html('');
-        domElements.marginContainer.html('');
-        domElements.matchContainer.html('');
+        domElements.monthMarginContainer.html('');
+        domElements.monthMatchContainer.html('');
+        domElements.teamWinlossContainer.html('');
+        domElements.teamMarginContainer.html('');
 
         var summaryColumnOption = ChartOptions.ColumnChartOption();
-        var monthNames = Highcharts.getOptions().lang.shortMonths;
-        summaryColumnOption.xAxis = {
-            categories: monthNames
-        };
 
         //make data
         var chartData = {
-            TurnoverData: [],
-            WinlossData: [],
-            MarginData: [],
-            MatchData: []
+            TeamMarginData: [],
+            TeamMixData: [],
+            MonthMarginData: [],
+            MonthMatchData: [],
+            Categories: [],
+            MonthCategories: []
         };
 
-        prepareSummaryColumnData(data, chartData);
+        prepareSummaryColumnData(data.MonthData, data.TeamData, chartData);
 
-        // turn over chart
-        summaryColumnOption.title.text = labels.Turnover;
-        summaryColumnOption.series = chartData.TurnoverData;
-        domElements.turnoverContainer.highcharts(summaryColumnOption);
+        // month turn over chart
+        summaryColumnOption.title.text = 'Month Margin %';
+        summaryColumnOption.series = chartData.MonthMarginData;
+        summaryColumnOption.xAxis.categories = chartData.MonthCategories;
+        domElements.monthMarginContainer.highcharts(summaryColumnOption);
 
-        // winloss chart
-        summaryColumnOption.title.text = labels.WinLoss;
-        summaryColumnOption.series = chartData.WinlossData;
-        domElements.winlossContainer.highcharts(summaryColumnOption);
-
-        // margin chart
-        summaryColumnOption.title.text = labels.Margin;
-        summaryColumnOption.series = chartData.MarginData;
-        domElements.marginContainer.highcharts(summaryColumnOption);
 
         // match
         var pipeChartOption = ChartOptions.PipeChartOption();
-        pipeChartOption.title.text = 'Match';
-        pipeChartOption.series = chartData.MatchData;
-        domElements.matchContainer.highcharts(pipeChartOption);
-    };
+        pipeChartOption.title.text = 'Month Match';
+        pipeChartOption.series = chartData.MonthMatchData;
+        domElements.monthMatchContainer.highcharts(pipeChartOption);
 
-    var drawTeamChart = function (data) {
-        var teamColumnOption = ChartOptions.ColumnChartOption();
-        teamColumnOption.plotOptions.column.colorByPoint = true;
-        //make data
-        var chartData = {
-            TurnoverData: [],
-            WinlossData: [],
-            MarginData: [],
-            MatchData: [],
-            Categories: []
-        };
+        // team turnover&winloss chart
+        var mixChartOption = ChartOptions.MixChartOption();
+        mixChartOption.xAxis.categories = chartData.Categories;
+        mixChartOption.title.text = 'Team Winloss/Turnover';
+        mixChartOption.series = chartData.TeamMixData;
+        domElements.teamWinlossContainer.highcharts(mixChartOption);
 
-        prepareTeamColumnData(data, chartData);
-        teamColumnOption.xAxis = {
-            categories: chartData.Categories
-        };
+        // team margin chart
+        summaryColumnOption.title.text = 'Team Margin';
+        summaryColumnOption.xAxis.categories = chartData.Categories;
 
-        // turn over chart
-        teamColumnOption.title.text = 'Turnover';
-        teamColumnOption.series = chartData.TurnoverData;
-        domElements.teamTurnoverContainer.highcharts(teamColumnOption);
-
-        // winloss chart
-        teamColumnOption.title.text = 'Win Loss';
-        teamColumnOption.series = chartData.WinlossData;
-        domElements.teamWinlossContainer.highcharts(teamColumnOption);
-
-        // margin chart
-        teamColumnOption.title.text = 'Margin (%)';
-        teamColumnOption.series = chartData.MarginData;
-        domElements.teamMarginContainer.highcharts(teamColumnOption);
-
-        // match
-        var pipeChartOption = ChartOptions.PipeChartOption();
-        pipeChartOption.title.text = 'Match';
-        pipeChartOption.series = chartData.MatchData;
-
-        domElements.teamMatchContainer.highcharts(pipeChartOption);
+        summaryColumnOption.series = chartData.TeamMarginData;
+        domElements.teamMarginContainer.highcharts(summaryColumnOption);
     };
     //}
 };

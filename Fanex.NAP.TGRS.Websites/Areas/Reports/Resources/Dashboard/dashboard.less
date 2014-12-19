@@ -1,9 +1,14 @@
 .black-content {
-    background: #353535;
-    color: #fff;
+    //background: #E4F2FD;
+    color: #353535;
+    background-color: #edecea;
+}
+.white-content {
+    background: #fff;
+    color: #5a7dc1;
 }
 body {
-    background: #353535;
+    .black-content;
 }
 .first-tab {
     margin-left: 98px !important;
@@ -12,14 +17,12 @@ body {
     height: 0;
 }
 .main-col {
-    padding-top: 5px;
     width: 72%;
-    height: 100%;
+    height: 96%;
     display: inline-block;
     float: left;
 }
 .full-col {
-    padding-top: 5px;
     width: 100%;
     height: 100%;
     display: inline-block;
@@ -27,8 +30,7 @@ body {
 }
 .sub-col {
     width: 28%;
-    height: 100%;
-    padding-top: 5px;
+    height: 96%;
     display: inline-block;
     //float: left;
 }
@@ -46,7 +48,17 @@ body {
 }
 
 .general-info {
-    height: 7.5%;
+    height: 8%;
+}
+
+.dash-board-title {
+    .white-content;
+    .absolute-padding;
+    padding: 5px 0 0 6px;
+    height: 4%;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 145%;
 }
 
 .chart-container {
@@ -60,30 +72,43 @@ body {
     text-align: center;
     width: 25%;
     height: 100%;
-    padding: 0 1px 1px 0;
+    padding: 8px 8px 11px 0;
 }
 
+.info-cell-1-left {
+    .info-cell-1;
+    padding: 8px 8px 11px 8px;
+}
 
 .info-cell1-content {
-    .absolute-padding;
-    .black-content;
+    .white-content;
+    border: 0.5px solid #5a7dc1 ;
+    border-top: solid 3px #5a7dc1;
+    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1 ;
     width: 100%;
     height: 100%;
     position: relative;
-    padding-top: 10px;
+
+    text-align: center;
+    text-transform: uppercase;
+
 
     label {
         display: block;
         float: center;
-        margin-top: 5px;
         cursor: auto;
     }
     label.title {
+        margin-top: 8px;
         font-weight: normal;
     }
     label.number {
         font-weight: bold;
+        margin-top: 4px;
     }
+}
+.info-cell1-content-border {
+    .white-content;
 }
 
 .info-cell-2 {
@@ -91,10 +116,21 @@ body {
     text-align: center;
     width: 50%;
     height: 46%;
+    padding: 0 8px 8px 0;
+}
+
+.info-cell-2-left {
+    .info-cell-2;
+    padding: 0 8px 8px 8px;
+}
+.no-padding-bot {
+    padding-bottom: 0px !important;
 }
 
 .info-cell2-content {
-    .black-content;
+    .white-content;
+    border: 0.5px solid #5a7dc1 ;
+    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1 ;
     width: 100%;
     height: 100%;
     position: relative;
@@ -102,30 +138,51 @@ body {
 
 .info-cell-3 {
     .info-cell-container;
-    padding: 0 1px 1px 1px;
+    padding: 0 8px 8px 0;
     width: 100%;
-    height: 33.333%;
+    height: 31%;
+}
+
+.info-cell-3-top {
+    .info-cell-3;
+    padding: 8px 8px 8px 0;
+    height: 31%;
 }
 
 .info-cell-3-last {
     .info-cell-3;
-    padding: 0 1px 3px 1px;
+    padding: 0 8px 0px 0;
+    height: 38%;
 }
 
 .info-cell3-content {
     .absolute-padding;
-    .black-content;
+    .white-content;
     width: 100%;
     height: 100%;
-    position: relative;
-    padding: 10px 5px 5px 10px;
+    border: 0.5px solid #5a7dc1 ;
+    box-shadow: 0.2px 0.2px 0.2px 0.2px #5a7dc1;
 
+    .title {
+        .absolute-padding;
+        padding: 6px 0 0 6px;
+        height: 30px;
+        border: 1px solid #5a7dc1;
+        background: #5a7dc1;
+        color: white;
+        font-size: 110%;
+    }
     .rank-row {
         display: inline-block;
         width: 100%;
+        border-bottom: 1px dotted #5a7dc1;
+
         .name {
+            .absolute-padding;
+            padding: 2px 0 0 6px;
             float: left;
             width: 78%;
+            color: black;
         }
         .value {
             float: right;
@@ -134,6 +191,20 @@ body {
             .center-value {
                 margin: 0 auto;
             }
+            color: black;
+        }
+
+        .title-name {
+            //padding: 6px 0 0 6px;
+            padding-top: 5px;
+            color: #5a7dc1;
+            font-size: 110%;
+        }
+        .title-value {
+            //padding: 6px 0 0 6px;
+            padding-top: 5px;
+            color: #5a7dc1;
+            font-size: 110%;
         }
     }
 }
@@ -147,7 +218,7 @@ body {
 }
 
 .info-cell-team-content {
-    .black-content;
+    .white-content;
     width: 100%;
     height: 100%;
     position: relative;
@@ -162,9 +233,7 @@ body {
 }
 .team-month-picker {
     float: right;
-    margin-top: 8px;
-    margin-right: 17px;
-    background: black;
-    color: white;
+    margin-top: 3px;
+    margin-right: 8px;
 }
 

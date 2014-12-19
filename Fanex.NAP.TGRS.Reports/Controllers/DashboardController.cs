@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -50,23 +51,32 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <summary>
         /// Gets the summary data.
         /// </summary>
-        /// <returns>JOSN result of action.</returns>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// JOSN result of action.
+        /// </returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        public JsonResult GetSummaryData()
+        public JsonResult GetSummaryData(int month)
         {
-            GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo().First();
-            IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague();
-            IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader();
-            IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype();
-            IEnumerable<MonthAmountItem> summaryData = this._dashboardService.GetSummaryData();
+            var currentMonth = DateTime.Now.Month;
 
+            GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo(month).First();
+            IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague(month);
+            IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader(month);
+            IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype(month);
+            IEnumerable<MonthAmountItem> monthData = this._dashboardService.GetSummaryData(month);
+            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(currentMonth);
             return Json(
-                new 
+                new
                 {
                     GeneralInfo = generalInfo,
-                    SummaryData = summaryData,
+                    SummaryData = new
+                    {
+                        MonthData = monthData,
+                        TeamData = teamData
+                    },
                     BestLeagues = bestLeagues,
                     BestTraders = bestTraders,
                     BestBettypes = bestBettypes

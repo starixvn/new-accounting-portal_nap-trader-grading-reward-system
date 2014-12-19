@@ -216,6 +216,7 @@ Fanex.TGRS.DashboardChart = function () {
             chart: {
                 type: 'column',
                 margin: 75,
+                marginLeft: 80,
                 options3d: {
                     enabled: true,
                     alpha: 15,
@@ -224,14 +225,27 @@ Fanex.TGRS.DashboardChart = function () {
                     viewDistance: 25
                 }
             },
+            colors: ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
             title: {
-                text: 'Chart Title'
+                style: {
+                    color: '#5a7dc1',
+                    textTransform: 'uppercase',
+                    fontSize: '18px'
+                }
             },
             legend: {
                 enabled: false
             },
             xAxis: {
-                categories: Highcharts.getOptions().lang.shortMonths
+                //categories: Highcharts.getOptions().lang.shortMonths
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
             },
             yAxis: {
                 labels: {
@@ -257,7 +271,7 @@ Fanex.TGRS.DashboardChart = function () {
                 },
                 series: {
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         color: '#E0E0E3',
                         align: 'right',
                         x: 0,
@@ -295,7 +309,11 @@ Fanex.TGRS.DashboardChart = function () {
                 }
             },
             title: {
-                text: $this.chartTitle
+                style: {
+                    color: '#5a7dc1',
+                    textTransform: 'uppercase',
+                    fontSize: '18px'
+                }
             },
             credits: {
                 enabled: false
@@ -314,10 +332,97 @@ Fanex.TGRS.DashboardChart = function () {
 
                         style: {
                             fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                            //textShadow: '0 0 3px black'
+                        },
+                        format: '<b>{point.name}</b>: {point.y: ,.0f}'
+                    }
+                }
+            }
+        };
+    };
+
+    $this.MixChartOption = function () {
+        return {
+            chart: {
+                type: 'column',
+                margin: 75,
+                marginLeft: 80,
+                options3d: {
+                    enabled: true,
+                    alpha: 15,
+                    beta: 15,
+                    depth: 75,
+                    viewDistance: 25
+                }
+            },
+            colors: ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
+            title: {
+                style: {
+                    color: '#5a7dc1',
+                    textTransform: 'uppercase',
+                    fontSize: '18px'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            xAxis: {
+                //categories: Highcharts.getOptions().lang.shortMonths
+                type: 'category',
+                labels: {
+                    rotation: -30,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            //            yAxis: {
+            //                labels: {
+            //                    formatter: function () {
+            //                        var maxValue = this.axis.max;
+            //                        if (maxValue >= 1000000000) {
+            //                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+            //                        } else if (maxValue > 1000000) {
+            //                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+            //                        } else {
+            //                            return this.value;
+            //                        }
+            //                    }
+            //                }
+            //            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    depth: 35,
+                    colors: ['#7cb5ec', '#B22222', '#90ed7d', '#8085e9', '#f7a35c', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1']
+                },
+                series: {
+                    dataLabels: {
+                        enabled: false,
+                        color: '#E0E0E3',
+                        align: 'right',
+                        x: 0,
+                        y: -5,
+                        style: {
+                            fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif',
                             textShadow: '0 0 3px black'
                         },
-                        format: '<b>{point.name}</b>: {point.y: ,.0f}'
+                        formatter: function () {
+                            var maxValue = this.series.chart.axes[1].dataMax;
+                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
+                            if (maxValue >= 1000000000) {
+                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
+                            }
+                            else if (maxValue >= 1000000) {
+                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
+                            }
+                            return value;
+                        }
                     }
                 }
             }

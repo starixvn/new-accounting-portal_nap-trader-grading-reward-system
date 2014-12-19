@@ -4,135 +4,100 @@
 }
 @Styles.Render("~/styles/dashboard")
 <div id="divHorizontalTab">
-    <ul>
-        <li class="first-tab"><a href="#summaryTab">Summary</a></li>
-        <li><a href="#teamTab">Team</a></li>
-    </ul>
-    <div id="summaryTab">
-        <div id="divTabSummaryContent" class="tab-content">
-            <div class="main-col">
-                <div id="divGeneralInfo" class="general-info">
-                    <div class="info-cell-1">
-                        <div class="info-cell1-content">
-                            <label class="title">@ViewLang.Turnover</label>
-                            <label class="number" id="lblTurnOver">123,456,789.00
-                            </label>
-                        </div>
-                    </div>
-                    <div class="info-cell-1">
-                        <div class="info-cell1-content">
-                            <label class="title">@ViewLang.WinLoss</label>
-                            <label class="number" id="lblWinLoss">123,456,789.00
-                            </label>
-                        </div>
-                    </div>
-                    <div class="info-cell-1">
-                        <div class="info-cell1-content">
-                            <label class="title">@ViewLang.Margin</label>
-                            <label class="number" id="lblMargin">123,456,789.00
-                            </label>
-                        </div>
-                    </div>
-                    <div class="info-cell-1">
-                        <div class="info-cell1-content">
-                            <label class="title">
-                                @ViewLang.NoOfMatches</label>
-                            <label class="number" id="lblMatches">123,456,789.00
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div id="divTurnover" class="info-cell-2">
-                    <div class="info-cell2-content">
-                        <div id="turnoverContainer" class="chart-container"></div>
-                    </div>
-                </div>
-                <div id="divWinloss" class="info-cell-2">
-                    <div class="info-cell2-content">
-                        <div id="winlossContainer" class="chart-container">
-                        </div>
-                    </div>
-                </div>
-                <div id="divMargin" class="info-cell-2">
-                    <div class="info-cell2-content">
-                        <div id="marginContainer" class="chart-container">
-                        </div>
-                    </div>
-                </div>
-                <div id="divMatch" class="info-cell-2">
-                    <div class="info-cell2-content">
-                        <div id="matchContainer" class="chart-container">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sub-col">
-                <div class="info-cell-3">
-                    <div class="info-cell3-content">
-                        <div>Best leagues performance</div>
-                        <hr>
-                        <div class="rank-row">
-                            <div class="name">League</div>
-                            <div class="value"><div class="center-value">Margin %</div></div>
-                        </div>
-                        <div id="divBestLeague">
-                        </div>
-                    </div>
-                </div>
-                <div class="info-cell-3">
-                    <div class="info-cell3-content">
-                        <div>Best trader performance</div>
-                        <hr>
-                        <div class="rank-row">
-                            <div class="name">Trader</div>
-                            <div class="value"><div class="center-value">Margin %</div></div>
-                        </div>
-                        <div id="divBestTrader">
-                        </div>
-                    </div>
-                </div>
-                <div class="info-cell-3-last">
-                    <div class="info-cell3-content">
-                        <div>Best bet type performance</div>
-                        <hr>
-                        <div class="rank-row">
-                            <div class="name">Bet type</div>
-                            <div class="value"><div class="center-value">Margin %</div></div>
-                        </div>
-                        <div id="divBestBettype">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="divTabSummaryContent" class="tab-content">
+    <div class="dash-board-title">
+        Performance for last <label id ="titleMonthCount">6</label> months
     </div>
-    <div id="teamTab">
-        <div id="divTabTeamContent" class="tab-content">
-            <div class="full-col">
-            <div id="divTeamTurnover" class="info-cell-team">
-                <div class="info-cell-team-content">
-                    <div id="teamTurnoverContainer" class="chart-container"></div>
+        <div class="main-col">
+            <div id="divGeneralInfo" class="general-info">
+                <div class="info-cell-1-left">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Turnover</label>
+                        <label class="number" id="lblTurnOver">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.WinLoss</label>
+                        <label class="number" id="lblWinLoss">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Margin</label>
+                        <label class="number" id="lblMargin">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">
+                            @ViewLang.NoOfMatches</label>
+                        <label class="number" id="lblMatches">123,456,789.00
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div id="divTeamWinloss" class="info-cell-team">
-                <div class="info-cell-team-content">
+            <div id="divTurnover" class="info-cell-2-left">
+                <div class="info-cell2-content">
+                    <div id="monthMarginContainer" class="chart-container"></div>
+                </div>
+            </div>
+            <div id="divWinloss" class="info-cell-2">
+                <div class="info-cell2-content">
+                    <div id="monthMatchContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div id="divMargin" class="info-cell-2-left no-padding-bot">
+                <div class="info-cell2-content">
                     <div id="teamWinlossContainer" class="chart-container">
                     </div>
                 </div>
             </div>
-            <div id="divTeamMargin" class="info-cell-team">
-                <div class="info-cell-team-content">
+            <div id="divMatch" class="info-cell-2 no-padding-bot">
+                <div class="info-cell2-content">
                     <div id="teamMarginContainer" class="chart-container">
                     </div>
                 </div>
             </div>
-            <div id="divTeamMatch" class="info-cell-team">
-                <div class="info-cell-team-content">
-                    <div id="teamMatchContainer" class="chart-container">
+        </div>
+        <div class="sub-col">
+            <div class="info-cell-3-top">
+                <div class="info-cell3-content">
+                    <div class="title">Best leagues performance</div>
+                    <div class="rank-row">
+                        <div class="name title-name">League</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestLeague">
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="info-cell-3">
+                <div class="info-cell3-content">
+                    <div class="title">Best trader performance</div>
+                    <div class="rank-row">
+                        <div class="name title-name">Trader</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestTrader">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-3-last">
+                <div class="info-cell3-content">
+                    <div class="title">Best bet type performance</div>
+                    <div class="rank-row">
+                        <div class="name title-name">Bet type</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestBettype">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

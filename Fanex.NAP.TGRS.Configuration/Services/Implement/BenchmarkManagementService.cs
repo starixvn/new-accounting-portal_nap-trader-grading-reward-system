@@ -185,7 +185,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
                 {
                     int shift = profitMarginByShift.WorkShift;
                     if (shift == 0)
+                    {
                         return new ProfitMarginItem();
+                    }
 
                     ProfitMarginItem profitMarginItem = new ProfitMarginItem
                     {

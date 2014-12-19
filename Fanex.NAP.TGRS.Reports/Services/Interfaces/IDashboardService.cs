@@ -16,22 +16,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
     public interface IDashboardService
     {
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        IEnumerable<GeneralInfo> GetGeneralInfo();
+        IEnumerable<GeneralInfo> GetGeneralInfo(int month);
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        IEnumerable<League> GetTopWinLeague();
+        IEnumerable<League> GetTopWinLeague(int month);
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        IEnumerable<TopTrader> GetTopTrader();
+        IEnumerable<TopTrader> GetTopTrader(int month);
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        IEnumerable<BetTypePerformance> GetTopBettype();
+        IEnumerable<BetTypePerformance> GetTopBettype(int month);
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
-        IEnumerable<MonthAmountItem> GetSummaryData();
+        IEnumerable<MonthAmountItem> GetSummaryData(int month);
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
         IEnumerable<TeamPerformance> GetTeamData(int month);
     }
 }

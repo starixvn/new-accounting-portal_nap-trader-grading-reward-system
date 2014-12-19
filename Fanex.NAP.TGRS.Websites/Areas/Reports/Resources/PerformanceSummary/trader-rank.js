@@ -62,7 +62,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             multiple: false
         });
         //btnSearch
-        domElements.ddlType.on('change', function () {
+        domElements.ddlType.on('change', domElements.ddlType, function () {
             var selectType = $("option:selected", this).val() * 1;
             filterParameters.Top = selectType;
             getReports();

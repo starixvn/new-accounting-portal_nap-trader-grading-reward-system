@@ -27,15 +27,18 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <summary>
         /// Gets the general information.
         /// </summary>
-        /// <returns>General info list.</returns>
-        public IEnumerable<GeneralInfo> GetGeneralInfo()
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// General info list.
+        /// </returns>
+        public IEnumerable<GeneralInfo> GetGeneralInfo(int month)
         {
             IEnumerable<GeneralInfo> result = null;
 
             var summaryCriteria = new GetGeneralInfoCriteria
             {
                 ReportType = 2,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = DateTime.Now
             };
             result = this.GetData<GeneralInfo>(summaryCriteria);
@@ -46,13 +49,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <summary>
         /// Gets the top win league.
         /// </summary>
-        /// <returns>List of league.</returns>
-        public IEnumerable<League> GetTopWinLeague()
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List of league.
+        /// </returns>
+        public IEnumerable<League> GetTopWinLeague(int month)
         {
             var topLeagueCriteria = new GetTopWinLeagueCriteria
             {
                 ReportType = 2,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = DateTime.Now
             };
 
@@ -66,13 +72,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <summary>
         /// Gets the top trader.
         /// </summary>
-        /// <returns>List Top Trader.</returns>
-        public IEnumerable<TopTrader> GetTopTrader()
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Top Trader.
+        /// </returns>
+        public IEnumerable<TopTrader> GetTopTrader(int month)
         {
             var topTraderCriteria = new GetTopTraderCriteria
             {
                 ReportType = 2,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = DateTime.Now,
                 Top = 5,
                 IsBottom = 0
@@ -86,31 +95,37 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <summary>
         /// Gets the top bet type.
         /// </summary>
-        /// <returns>List Bet type.</returns>
-        public IEnumerable<BetTypePerformance> GetTopBettype()
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Bet type.
+        /// </returns>
+        public IEnumerable<BetTypePerformance> GetTopBettype(int month)
         {
             var topBettypeCriteria = new GetBetTypePerformanceCriteria
             {
                 ReportType = 2,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = DateTime.Now
             };
 
             IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
 
-            return result;
+            return result.Take(10);
         }
 
         /// <summary>
         /// Gets the summary data.
         /// </summary>
-        /// <returns>List Month Items.</returns>
-        public IEnumerable<MonthAmountItem> GetSummaryData()
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Month Items.
+        /// </returns>
+        public IEnumerable<MonthAmountItem> GetSummaryData(int month)
         {
             var summaryCriteria = new GetSummaryInfoCriteria
             {
                 ReportType = 2,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = DateTime.Now
             };
 

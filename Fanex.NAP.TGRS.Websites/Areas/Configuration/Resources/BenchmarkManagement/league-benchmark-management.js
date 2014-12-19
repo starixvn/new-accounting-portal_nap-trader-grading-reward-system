@@ -167,7 +167,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.LeagueName, Width: 550, Name: 'ColLeagueName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AvgProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 180,

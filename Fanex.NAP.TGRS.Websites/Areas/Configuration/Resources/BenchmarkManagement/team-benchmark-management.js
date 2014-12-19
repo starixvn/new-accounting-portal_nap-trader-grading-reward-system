@@ -81,7 +81,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TeamName, Width: 350, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AvgProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 100,
             showNumberColumn: true,
