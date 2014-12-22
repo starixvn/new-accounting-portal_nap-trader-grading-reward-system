@@ -766,7 +766,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.ScoreByLatestBenchMark, Width: 110, Name: 'ColScoreByLatestBM', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.ScoreByPeriod, Width: 230, Name: 'ColScoreByPeriod', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center'}],
@@ -849,10 +849,17 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                                             { Name: 'ColScoreByLatestBM', Value: item.Score, MergeRowNumber: scoreByPeriodLength });
                         }
 
-                        currentRowData.push({ Name: 'ColScoreByPeriod',
-                            Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
+                        if (scoreByPeriodItem.Score >= 0) {
+                            currentRowData.push({ Name: 'ColScoreByPeriod',
+                                Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
                                 numeral(scoreByPeriodItem.Score).format("0,0.00")
-                        });
+                            });
+                        } else {
+                            currentRowData.push({ Name: 'ColScoreByPeriod',
+                                Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' + '<span class="format-negative">' +
+                                numeral(scoreByPeriodItem.Score).format("0,0.00") + '</span>'
+                            });
+                        }
 
                         if (isStartRow) {
                             currentRowData.push({ Name: 'ColForecast', Value: forecastCol, MergeRowNumber: scoreByPeriodLength });
