@@ -48,7 +48,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         domElements.btnSearch = domElements.divLeagueBMContent.find('#btnSearch');
         domElements.divLeagueBMGridContainer = domElements.divLeagueBMContent.find('#divLeagueBMGridContainer');
         domElements.divLeagueBMGrid = domElements.divLeagueBMContent.find('#divLeagueBMGrid');
-        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopupContent = $('#divProfitMargin');
         domElements.divPopup = $('#divPopup');
     };
 
@@ -346,6 +346,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
 
     // Get profit margin data.
     var getProfitMarginData = function (leagueId, leagueName) {
+        if ($('#divPopupContent').children().length === 0) {
+            $('#divPopupContent').append('<div id="divProfitMargin" class="freegrid profit-margin-popup"></div>');
+            domElements.divPopupContent = $('#divProfitMargin');
+        }
         var profitMarginParameters = {
             LeagueId: leagueId
         };

@@ -26,7 +26,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
         domElements.divTeamBMContent = domElements.divTeamBMContent || $('#divTeamBMContent');
         domElements.divTeamBMGridContainer = domElements.divTeamBMContent.find('#divTeamBMGridContainer');
         domElements.divTeamBMGrid = domElements.divTeamBMContent.find('#divTeamBMGrid');
-        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopupContent = $('#divProfitMargin');
         domElements.divPopup = $('#divPopup');
     };
 
@@ -243,6 +243,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
 
     // Get profit margin data.
     var getProfitMarginData = function (teamId, teamName) {
+        if ($('#divPopupContent').children().length === 0) {
+            $('#divPopupContent').append('<div id="divProfitMargin" class="freegrid profit-margin-popup"></div>');
+            domElements.divPopupContent = $('#divProfitMargin');
+        }
         var profitMarginParameters = {
             TeamId: teamId
         };
