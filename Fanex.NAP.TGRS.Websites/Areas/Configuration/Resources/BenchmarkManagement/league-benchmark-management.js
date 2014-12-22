@@ -82,7 +82,8 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
             minWidth: 160,
             height: 70,
             header: false,
-            multiple: false
+            multiple: false,
+            noneSelectedText: 'All Markets'
         });
 
         domElements.txtLeague.off('keyup.league-benchmark').on('keyup.league-benchmark', function (event) {
