@@ -117,6 +117,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         var monthCriteria = {
             month: parseInt(domElements.divMonthSelect.val() * 6)
         };
+        var chartType = parseInt(domElements.divChartTypePicker.val());
         common.DisableInput();
         $.ajax({
             type: 'POST',
@@ -126,7 +127,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
             data: JSON.stringify(monthCriteria),
             success: function (result) {
                 if (result) {
-                    renderSummaryReports(result);
+                    renderSummaryReports(result, chartType);
                 }
             },
             error: function (xhr) {
@@ -155,9 +156,9 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divChartTypePicker.val(3);
     };
 
-    var renderSummaryReports = function (data) {
+    var renderSummaryReports = function (data, chartType) {
         renderGeneralInfo(data.GeneralInfo);
-        drawSummaryChart(data.SummaryData, ChartType._3D);
+        drawSummaryChart(data.SummaryData, chartType);
         renderRankInfo(data.BestLeagues, data.BestTraders, data.BestBettypes);
     };
 

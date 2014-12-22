@@ -257,7 +257,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
                       { HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
             showNumberColumn: true,

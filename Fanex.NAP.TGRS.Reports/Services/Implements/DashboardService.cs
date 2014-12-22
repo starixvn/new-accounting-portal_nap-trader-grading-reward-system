@@ -149,14 +149,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of team performance.</returns>
         public IEnumerable<TeamPerformance> GetTeamData(int month)
         {
-            var beginDate = new DateTime(DateTime.Now.Year, month, 1);
-            var endDate = new DateTime(DateTime.Now.Year, month, DateTime.DaysInMonth(beginDate.Year, beginDate.Month));
-
             var teamCriteria = new GetTeamPerformanceCriteria
             {
                 ReportType = 2,
-                FromDate = beginDate,
-                ToDate = endDate
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
             };
 
             IEnumerable<TeamPerformance> teamData = this.GetData<TeamPerformance>(teamCriteria);

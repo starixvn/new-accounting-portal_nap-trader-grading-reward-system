@@ -60,14 +60,12 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
         public JsonResult GetSummaryData(int month)
         {
-            var currentMonth = DateTime.Now.Month;
-
             GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo(month).First();
             IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague(month);
             IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader(month);
             IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype(month);
             IEnumerable<MonthAmountItem> monthData = this._dashboardService.GetSummaryData(month);
-            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(currentMonth);
+            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(month);
             return Json(
                 new
                 {
