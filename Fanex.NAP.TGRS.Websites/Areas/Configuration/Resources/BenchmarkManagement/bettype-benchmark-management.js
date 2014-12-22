@@ -301,6 +301,11 @@ Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {
 
     // Get profit margin data.
     var getProfitMarginData = function (betType, betTypeName, profitMarginType) {
+        if ($('#bettypeProfitMarginPopup').children().length === 0) {
+            $('#bettypeProfitMarginPopup').append('<div id="bettypeprofitMarginContent" class="freegrid profit-margin-popup-content"></div>');
+            domElements.divPopupContent = $('#bettypeprofitMarginContent');
+        }
+
         var profitMarginParameters = {
             LeagueId: parameters.LeagueId,
             BetType: betType,
