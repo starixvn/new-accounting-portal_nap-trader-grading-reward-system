@@ -116,8 +116,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             criteria.LeagueName = criteria.LeagueName ?? string.Empty;
             leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria);
-
-            return Json(leaguePerformance);
+            JsonResult jsonResult = Json(leaguePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -145,8 +146,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfLeague(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -159,8 +161,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
             MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);
-
-            return Json(matchPerformance);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -173,10 +176,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
         {
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailLeague(criteria);
-
-            return Json(bettypeDetail);
+            JsonResult jsonResult = Json(bettypeDetail);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
-        
+
         #endregion League Performance
 
         #region Trader Performance
@@ -208,8 +212,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             criteria.Username = criteria.Username ?? string.Empty;
             traderPerformance = this._detailReportService.GetTraderPerformance(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -222,8 +227,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBettypeDetailTrader(GetBettypeDetailTrader criteria)
         {
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTrader(criteria);
-
-            return Json(bettypeDetail);
+            JsonResult jsonResult = Json(bettypeDetail);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -251,8 +257,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
         {
             MatchPerformanceList martchPerformance = this._detailReportService.GetMatchPerformanceOfTrader(criteria);
-
-            return Json(martchPerformance);
+            JsonResult jsonResult = Json(martchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         #endregion Trader Performance
@@ -283,8 +290,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
             GradePerformanceList gradePerformance = this._detailReportService.GetGradePerformance(criteria);
-
-            return Json(gradePerformance);
+            JsonResult jsonResult = Json(gradePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -297,8 +305,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfGrade(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -311,8 +320,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfGradeTrader(criteria);
-
-            return Json(matchPerformance);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -325,8 +335,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
         {
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailGrade(criteria);
-
-            return Json(bettypeDetail);
+            JsonResult jsonResult = Json(bettypeDetail);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -374,8 +385,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
             TeamPerformanceList teamPerformance = this._detailReportService.GetTeamPerformance(criteria);
-
-            return Json(teamPerformance);
+            JsonResult jsonResult = Json(teamPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -388,8 +400,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
         {
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfTeam(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -402,8 +415,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria)
         {
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfTeamTrader(criteria);
-
-            return Json(matchPerformance);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -416,8 +430,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeam criteria)
         {
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTeam(criteria);
-
-            return Json(bettypeDetail);
+            JsonResult jsonResult = Json(bettypeDetail);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -463,8 +478,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             BetTypePerformanceList betTypePerformance = this._detailReportService.GetBetTypePerformance(criteria);
-
-            return Json(betTypePerformance);
+            JsonResult jsonResult = Json(betTypePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -477,8 +493,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
         {
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetType(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -491,8 +508,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeTrader(criteria);
-
-            return Json(matchPerformance);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -505,8 +523,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfBetType(criteria);
-
-            return Json(leaguePerformance);
+            JsonResult jsonResult = Json(leaguePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -519,8 +538,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetTypeLeague(criteria);
-
-            return Json(traderPerformance);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
@@ -533,8 +553,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
             MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeLeagueTrader(criteria);
-
-            return Json(matchPerformance);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         /// <summary>
