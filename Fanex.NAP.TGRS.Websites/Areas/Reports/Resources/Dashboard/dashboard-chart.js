@@ -413,7 +413,7 @@ Fanex.TGRS.DashboardChart = function () {
                     }
                 },
                 title: {
-                    text: 'TURN OVER',
+                    text: 'TURNOVER',
                     style: {
                         color: '#f28f43'
                     }

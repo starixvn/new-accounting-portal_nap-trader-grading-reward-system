@@ -901,7 +901,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                                             { Name: 'ColScoreByLatestBM', Value: item.Score, MergeRowNumber: scoreByPeriodLength });
                         }
 
-                        if (scoreByPeriodItem.Score) {
+                        if (scoreByPeriodItem.Score >= 0) {
                             currentRowData.push({ Name: 'ColScoreByPeriod',
                                 Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
                                 numeral(scoreByPeriodItem.Score).format("0,0.00")

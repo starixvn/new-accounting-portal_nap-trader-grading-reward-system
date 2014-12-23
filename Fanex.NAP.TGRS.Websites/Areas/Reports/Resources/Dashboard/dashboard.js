@@ -256,7 +256,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         chartData.TeamMixData = [{
             type: 'column',
-            name: 'Turn over',
+            name: 'Turnover',
             data: []
         }, {
             type: 'spline',
