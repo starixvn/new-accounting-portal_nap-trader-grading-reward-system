@@ -110,6 +110,7 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+        $('#divPopup').find('.display-none').removeClass('display-none');
         $('#divGradeHistory', '#divPopup').fanexGrid(gridOptions);
     };
 

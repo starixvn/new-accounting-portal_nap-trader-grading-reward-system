@@ -110,6 +110,7 @@ Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+        $('#divPopup').find('.display-none').removeClass('display-none');
         $('#divTeamHistory', '#divPopup').fanexGrid(gridOptions);
     };
 
