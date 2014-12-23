@@ -1,4 +1,4 @@
-﻿/* global Namespace, Highcharts */
+﻿/* global Namespace, Highcharts, common, numeral */
 'use strict';
 
 Namespace.Register("Fanex.TGRS.DashboardColumnChart");
@@ -247,20 +247,34 @@ Fanex.TGRS.DashboardChart = function () {
                     }
                 }
             },
-//            yAxis: {
-//                labels: {
-//                    formatter: function () {
-//                        var maxValue = this.axis.max;
-//                        if (maxValue >= 1000000000) {
-//                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
-//                        } else if (maxValue > 1000000) {
-//                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
-//                        } else {
-//                            return this.value;
-//                        }
-//                    }
-//                }
-//            },
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    style: {
+                        color: 'black'
+                    }
+                },
+                title: {
+                    text: '',
+                    style: {
+                        color: 'black'
+                    }
+                },
+                opposite: false
+            }],
+            //            yAxis: {
+            //                labels: {
+            //                    formatter: function () {
+            //                        var maxValue = this.axis.max;
+            //                        if (maxValue >= 1000000000) {
+            //                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+            //                        } else if (maxValue > 1000000) {
+            //                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+            //                        } else {
+            //                            return this.value;
+            //                        }
+            //                    }
+            //                }
+            //            },
             credits: {
                 enabled: false
             },
@@ -281,17 +295,17 @@ Fanex.TGRS.DashboardChart = function () {
                             fontFamily: 'Verdana, sans-serif',
                             textShadow: '0 0 3px black'
                         }
-//                        formatter: function () {
-//                            var maxValue = this.series.chart.axes[1].dataMax;
-//                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
-//                            if (maxValue >= 1000000000) {
-//                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
-//                            }
-//                            else if (maxValue >= 1000000) {
-//                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
-//                            }
-//                            return value;
-//                        }
+                        //                        formatter: function () {
+                        //                            var maxValue = this.series.chart.axes[1].dataMax;
+                        //                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
+                        //                            if (maxValue >= 1000000000) {
+                        //                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
+                        //                            }
+                        //                            else if (maxValue >= 1000000) {
+                        //                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
+                        //                            }
+                        //                            return value;
+                        //                        }
                     }
                 }
             }
@@ -346,6 +360,7 @@ Fanex.TGRS.DashboardChart = function () {
         return {
             chart: {
                 type: 'column',
+                zoomType: 'xy',
                 margin: 75,
                 marginLeft: 80,
                 options3d: {
@@ -378,20 +393,47 @@ Fanex.TGRS.DashboardChart = function () {
                     }
                 }
             },
-            //            yAxis: {
-            //                labels: {
-            //                    formatter: function () {
-            //                        var maxValue = this.axis.max;
-            //                        if (maxValue >= 1000000000) {
-            //                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
-            //                        } else if (maxValue > 1000000) {
-            //                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
-            //                        } else {
-            //                            return this.value;
-            //                        }
-            //                    }
-            //                }
-            //            },
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    //format: '{value}',
+                    style: {
+                        color: '#f28f43'
+                    },
+                    formatter: function () {
+                        if (this.value >= 1000000000) {
+                            return numeral(this.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
+                        } else if (this.value > 1000000) {
+                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+                        }
+                        else if (this.value > 1000) {
+                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+                        } else {
+                            return this.value;
+                        }
+                    }
+                },
+                title: {
+                    text: 'TURN OVER',
+                    style: {
+                        color: '#f28f43'
+                    }
+                },
+                opposite: false
+            }, { // Secondary yAxis
+                gridLineWidth: 0,
+                title: {
+                    text: 'WIN LOSS',
+                    style: {
+                        color: '#7cb5ec'
+                    }
+                },
+                labels: {
+                    style: {
+                        color: '#7cb5ec'
+                    }
+                },
+                opposite: true
+            }],
             credits: {
                 enabled: false
             },
@@ -412,17 +454,17 @@ Fanex.TGRS.DashboardChart = function () {
                             fontFamily: 'Verdana, sans-serif',
                             textShadow: '0 0 3px black'
                         }
-//                        formatter: function () {
-//                            var maxValue = this.series.chart.axes[1].dataMax;
-//                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
-//                            if (maxValue >= 1000000000) {
-//                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
-//                            }
-//                            else if (maxValue >= 1000000) {
-//                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
-//                            }
-//                            return value;
-//                        }
+                        //                        formatter: function () {
+                        //                            var maxValue = this.series.chart.axes[1].dataMax;
+                        //                            var value = numeral(this.y).format(common.Formats.DecimalFormat);
+                        //                            if (maxValue >= 1000000000) {
+                        //                                value = numeral(this.y / 1000000).format(common.Formats.DecimalFormat);
+                        //                            }
+                        //                            else if (maxValue >= 1000000) {
+                        //                                value = numeral(this.y / 1000).format(common.Formats.DecimalFormat);
+                        //                            }
+                        //                            return value;
+                        //                        }
                     }
                 }
             }

@@ -11,12 +11,16 @@ $(document).ready(function () {
 Namespace.Register("Fanex.TGRS.Reports.Dashboard");
 Fanex.TGRS.Reports.Dashboard = function () {
     var $this = this;
-
+    var defaultMonthRange = 3;
+    var defaultChartType = 2;
     //    var monthNames = ["January", "February", "March", "April", "May", "June",
     //    "July", "August", "September", "October", "November", "December"];
 
     //{ variable-declare
     var ChartOptions = null;
+
+    var currentChartType = defaultChartType;
+    var currentMonthRange = defaultMonthRange;
 
     var urls = {
         GetSummaryData: common.ResolveRootUrl('Dashboard/GetSummaryData'),
@@ -41,7 +45,6 @@ Fanex.TGRS.Reports.Dashboard = function () {
         lblMatches: null,
 
         divMonthSelect: null,
-        divChartTypePicker: null,
         titleMonthCount: null
     };
     //}
@@ -67,7 +70,6 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.titleMonthCount = $('#titleMonthCount');
 
         domElements.divMonthSelect = $("#divTeamMonthPicker");
-        domElements.divChartTypePicker = $("#divChartTypePicker");
     };
 
     //}
@@ -75,7 +77,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
     //{ module-init
     var initialize = function () {
         ChartOptions = new Fanex.TGRS.DashboardChart();
-        //ChartOptions.ApplyDarkTheme();
+        getSettingFromCookies();
     };
 
     $this.Initialize = function () {
@@ -97,17 +99,24 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var handlePageEvents = function () {
         $("#headline").hide();
         makeMonthDropdown();
-        makeChartTypeDropdown();
         ajaxGetSummaryData();
 
         domElements.divMonthSelect.on('change', function () {
-            renderTitle(domElements.divMonthSelect.val() * 6);
+            currentMonthRange = parseInt(domElements.divMonthSelect.val());
+            renderTitle(currentMonthRange);
             ajaxGetSummaryData();
+            saveMonthRangeCookies();
         });
 
-        domElements.divChartTypePicker.on('change', function () {
-            //alert(domElements.divChartTypePicker.val());
-            reRenderChart(parseInt(domElements.divChartTypePicker.val()));
+        $('#chk2D').on('change', function () {
+            currentChartType = 2;
+            reRenderChart(currentChartType);
+            saveChartTypeCookies();
+        });
+        $('#chk3D').on('change', function () {
+            currentChartType = 3;
+            reRenderChart(currentChartType);
+            saveChartTypeCookies();
         });
     };
     //}
@@ -115,9 +124,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
     //{ ajax functions
     var ajaxGetSummaryData = function () {
         var monthCriteria = {
-            month: parseInt(domElements.divMonthSelect.val() * 6)
+            month: parseInt(domElements.divMonthSelect.val())
         };
-        var chartType = parseInt(domElements.divChartTypePicker.val());
         common.DisableInput();
         $.ajax({
             type: 'POST',
@@ -127,7 +135,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
             data: JSON.stringify(monthCriteria),
             success: function (result) {
                 if (result) {
-                    renderSummaryReports(result, chartType);
+                    renderSummaryReports(result, currentChartType);
                 }
             },
             error: function (xhr) {
@@ -143,17 +151,35 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
     //{ helper functions
     //{ element-render
-    var makeMonthDropdown = function () {
-        for (var i = 1; i <= 3; i++) {
-            domElements.divMonthSelect.append($('<option></option>').attr('value', i).text(i * 6 + ' months'));
+    var getSettingFromCookies = function () {
+        currentChartType = parseInt($.cookie("dashboardChartType")) || defaultChartType;
+        currentMonthRange = parseInt($.cookie("dashboardMonthRange")) || defaultMonthRange;
+
+        if (currentChartType === ChartType._2D) {
+            $('#chk2D').prop("checked", true);
         }
-        domElements.divMonthSelect.val(1);
+        else {
+            $('#chk3D').prop("checked", true);
+        }
+
+        // for new-new cookies
+        saveChartTypeCookies();
+        saveMonthRangeCookies();
     };
 
-    var makeChartTypeDropdown = function () {
-        domElements.divChartTypePicker.append($('<option></option>').attr('value', 2).text('2D'));
-        domElements.divChartTypePicker.append($('<option></option>').attr('value', 3).text('3D'));
-        domElements.divChartTypePicker.val(3);
+    var saveChartTypeCookies = function () {
+        $.cookie("dashboardChartType", currentChartType, { expires: 7 });
+    };
+
+    var saveMonthRangeCookies = function () {
+        $.cookie("dashboardMonthRange", currentMonthRange, { expires: 7 });
+    };
+
+    var makeMonthDropdown = function () {
+        for (var i = 1; i <= 12; i++) {
+            domElements.divMonthSelect.append($('<option></option>').attr('value', i).text(i + ' months'));
+        }
+        domElements.divMonthSelect.val(currentMonthRange);
     };
 
     var renderSummaryReports = function (data, chartType) {
@@ -230,14 +256,16 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         chartData.TeamMixData = [{
             type: 'column',
-            name: 'Win loss',
+            name: 'Turn over',
             data: []
         }, {
             type: 'spline',
-            name: 'Turn over',
+            name: 'Win loss',
+            yAxis: 1,
             marker: {
                 lineWidth: 2,
                 lineColor: Highcharts.getOptions().colors[3],
+                //lineColor: '#7cb5ec',
                 fillColor: 'white'
             },
             data: []

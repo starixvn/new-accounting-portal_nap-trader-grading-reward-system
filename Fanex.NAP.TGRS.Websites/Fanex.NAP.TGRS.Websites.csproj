@@ -306,12 +306,14 @@
     <Content Include="Content\Themes\Images\small-arrow-down.png" />
     <Content Include="Content\Themes\Images\user.png" />
     <Content Include="Content\Tipsy\tipsy.css" />
+    <Content Include="Content\ToggleSwitch\toggle-switch.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
     <Content Include="Scripts\Libraries\Highcharts\exporting.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libraries\jQuery\jquery.cookie.js" />
     <Content Include="Scripts\Libraries\ReponsiveTabs\jquery.responsiveTabs.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />

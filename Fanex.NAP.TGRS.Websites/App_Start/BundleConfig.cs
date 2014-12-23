@@ -184,12 +184,11 @@ namespace Fanex.NAP.TGRS.Websites
 
             bundles.AddAndInclude(
                 "~/styles/dashboard",
-                "~/Content/ReponsiveTabs/responsive-tabs-theme.css",
-                "~/Content/ReponsiveTabs/responsive-tabs.css",
+                "~/Content/ToggleSwitch/toggle-switch.css",
                 "~/Areas/Reports/Resources/Dashboard/dashboard.less");
 
             bundles.Add(new ScriptBundle("~/scripts/dashboard").Include(
-                "~/Scripts/Libraries/ReponsiveTabs/jquery.responsiveTabs.js",
+                "~/Scripts/Libraries/jQuery/jquery.cookie.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
                 "~/Areas/Reports/Resources/Dashboard/dashboard-chart.js",
