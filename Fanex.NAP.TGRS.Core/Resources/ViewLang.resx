@@ -510,4 +510,7 @@
   <data name="ScoreByPeriod" xml:space="preserve">
     <value>Score By Period</value>
   </data>
+  <data name="MatchCount" xml:space="preserve">
+    <value>Match Count</value>
+  </data>
 </root>

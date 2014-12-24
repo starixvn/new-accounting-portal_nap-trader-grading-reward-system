@@ -384,10 +384,10 @@ Fanex.TGRS.DashboardChart = function () {
             },
             legend: {
                 enabled: true,
-                align: 'left',
-                verticalAlign: 'top',
-                y: 40,
-                x: 60,
+                align: 'center',
+                verticalAlign: 'bottom',
+                y: 10,
+                x: 0,
                 layout: 'horizontal'
             },
             tooltip: {

@@ -330,7 +330,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         }
 
         // month turn over chart
-        summaryColumnOption.title.text = 'Month Margin %';
+        summaryColumnOption.title.text = 'Margin (%) By Month';
         summaryColumnOption.series = chartData.MonthMarginData;
         summaryColumnOption.xAxis.categories = chartData.MonthCategories;
         if (type === ChartType._2D) {
@@ -340,7 +340,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         // match
         var pipeChartOption = ChartOptions.PipeChartOption();
-        pipeChartOption.title.text = 'Month Match Count';
+        pipeChartOption.title.text = 'Match Count By Month';
         pipeChartOption.series = chartData.MonthMatchData;
         if (type === ChartType._2D) {
             pipeChartOption.chart.options3d.enabled = false;
@@ -350,7 +350,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         // team turnover&winloss chart
         var mixChartOption = ChartOptions.MixChartOption();
         mixChartOption.xAxis.categories = chartData.Categories;
-        mixChartOption.title.text = 'Team Winloss/Turnover';
+        mixChartOption.title.text = 'WinLoss/Turnover By Team';
         mixChartOption.series = chartData.TeamMixData;
         if (type === ChartType._2D) {
             mixChartOption.chart.options3d.enabled = false;
@@ -362,7 +362,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.teamWinlossContainer.highcharts(mixChartOption);
 
         // team margin chart
-        summaryColumnOption.title.text = 'Team Margin %';
+        summaryColumnOption.title.text = 'Margin (%) By Team';
         summaryColumnOption.xAxis.categories = chartData.Categories;
         if (type === ChartType._2D) {
             summaryColumnOption.chart.options3d.enabled = false;

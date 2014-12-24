@@ -601,6 +601,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match Count.
+        /// </summary>
+        public static string MatchCount {
+            get {
+                return ResourceManager.GetString("MatchCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match Performance.
         /// </summary>
         public static string MatchPerformance {

@@ -702,7 +702,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: item.Margin || labels.NA },
                                         { Name: 'ColBetTypeBM', Value: item.Benchmark },
-                                        { Name: 'ColScoreByLatestBM', Value: item.Score },
+                                        { Name: 'ColScoreByLatestBM', Value: item.Score || labels.NA },
                                         { Name: 'ColScoreByPeriod', Value: '' },
                                         { Name: 'ColForecast', Value: forecastCol });
                     row = {
@@ -721,7 +721,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                                             { Name: 'ColBetCount', Value: item.BetCount, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColMargin', Value: item.Margin || labels.NA, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColBetTypeBM', Value: item.Benchmark, MergeRowNumber: scoreByPeriodLength },
-                                            { Name: 'ColScoreByLatestBM', Value: item.Score, MergeRowNumber: scoreByPeriodLength });
+                                            { Name: 'ColScoreByLatestBM', Value: item.Score || labels.NA, MergeRowNumber: scoreByPeriodLength });
                         }
 
                         if (scoreByPeriodItem.Score >= 0) {
