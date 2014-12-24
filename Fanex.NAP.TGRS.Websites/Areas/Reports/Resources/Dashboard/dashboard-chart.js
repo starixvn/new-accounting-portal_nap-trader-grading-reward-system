@@ -400,12 +400,12 @@ Fanex.TGRS.DashboardChart = function () {
                         color: '#f28f43'
                     },
                     formatter: function () {
-                        if (this.value >= 1000000000) {
+                        if (Math.abs(this.value) >= 1000000000) {
                             return numeral(this.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
-                        } else if (this.value > 1000000) {
+                        } else if (Math.abs(this.value) > 1000000) {
                             return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
                         }
-                        else if (this.value > 1000) {
+                        else if (Math.abs(this.value) > 1000) {
                             return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
                         } else {
                             return this.value;

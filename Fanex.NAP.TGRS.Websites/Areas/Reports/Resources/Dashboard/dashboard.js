@@ -289,6 +289,9 @@ Fanex.TGRS.Reports.Dashboard = function () {
             chartData.TeamMarginData[0].data.push(item.Margin);
             chartData.TeamMixData[0].data.push(item.Turnover);
             chartData.TeamMixData[1].data.push(item.Winlost);
+            if (item.Turnover < 0 || item.Winlost < 0) {
+                chartData.MixDataMin = -1;
+            }
         });
     };
 
@@ -319,7 +322,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
                 MonthMarginData: [],
                 MonthMatchData: [],
                 Categories: [],
-                MonthCategories: []
+                MonthCategories: [],
+                MixDataMin: 0
             };
 
             prepareSummaryColumnData(data.MonthData, data.TeamData, chartData);
@@ -350,6 +354,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
         mixChartOption.series = chartData.TeamMixData;
         if (type === ChartType._2D) {
             mixChartOption.chart.options3d.enabled = false;
+        }
+        if (chartData.MixDataMin < 0) {
+            mixChartOption.yAxis[0].min = -1;
+            mixChartOption.yAxis[1].min = -1;
         }
         domElements.teamWinlossContainer.highcharts(mixChartOption);
 
