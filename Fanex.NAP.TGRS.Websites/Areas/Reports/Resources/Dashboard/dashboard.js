@@ -91,7 +91,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
     //{ page-events & make-form.
     var setResponsiveHeight = function () {
-        var maxHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - (33 + 15 + 36); // menu + tabs + tabs padding + unknown
+        var maxHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - (33 + 15 + 38); // menu + tabs + tabs padding + unknown
         $("#divTabSummaryContent").css({ height: maxHeight });
         $("#divTabTeamContent").css({ height: maxHeight });
     };

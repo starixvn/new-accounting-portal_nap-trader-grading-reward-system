@@ -333,7 +333,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA },
                               { Name: 'ColTeamBM', Value: item.TeamBM },
-                              { Name: 'ColScore', Value: item.Score}]
+                              { Name: 'ColScore', Value: item.Score || labels.NA}]
                 };
 
                 bodyData.push(row);
@@ -494,7 +494,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColScore', Value: item.Score}]
+                              { Name: 'ColScore', Value: item.Score || labels.NA}]
                 };
 
                 bodyData.push(row);

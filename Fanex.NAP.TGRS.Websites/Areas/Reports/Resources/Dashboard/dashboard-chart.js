@@ -236,6 +236,9 @@ Fanex.TGRS.DashboardChart = function () {
             legend: {
                 enabled: false
             },
+            tooltip: {
+                hideDelay: 250
+            },
             xAxis: {
                 //categories: Highcharts.getOptions().lang.shortMonths
                 type: 'category',
@@ -333,7 +336,8 @@ Fanex.TGRS.DashboardChart = function () {
                 enabled: false
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+                hideDelay: 250
             },
             plotOptions: {
                 pie: {
@@ -359,8 +363,7 @@ Fanex.TGRS.DashboardChart = function () {
     $this.MixChartOption = function () {
         return {
             chart: {
-                type: 'column',
-                zoomType: 'xy',
+                type: 'scatter',
                 margin: 75,
                 marginLeft: 80,
                 options3d: {
@@ -380,7 +383,17 @@ Fanex.TGRS.DashboardChart = function () {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true,
+                align: 'left',
+                verticalAlign: 'top',
+                y: 40,
+                x: 60,
+                layout: 'horizontal'
+            },
+            tooltip: {
+                hideDelay: 200,
+                shared: false,
+                followPointer: false
             },
             xAxis: {
                 //categories: Highcharts.getOptions().lang.shortMonths
@@ -401,12 +414,27 @@ Fanex.TGRS.DashboardChart = function () {
                     },
                     formatter: function () {
                         if (Math.abs(this.value) >= 1000000000) {
-                            return numeral(this.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
+                            if (this.value % 1000000000 === 0) {
+                                return numeral(this.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
+                            }
+                            else {
+                                return numeral(this.value / 1000000000).format(common.Formats.DecimalFormat) + " Bil";
+                            }
                         } else if (Math.abs(this.value) > 1000000) {
-                            return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+                            if (this.value % 1000000 === 0) {
+                                return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+                            }
+                            else {
+                                return numeral(this.value / 1000000).format(common.Formats.DecimalFormat) + " M";
+                            }
                         }
                         else if (Math.abs(this.value) > 1000) {
-                            return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+                            if (this.value % 1000 === 0) {
+                                return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
+                            }
+                            else {
+                                return numeral(this.value / 1000).format(common.Formats.DecimalFormat) + " K";
+                            }
                         } else {
                             return this.value;
                         }
@@ -443,6 +471,7 @@ Fanex.TGRS.DashboardChart = function () {
                     colors: ['#7cb5ec', '#B22222', '#90ed7d', '#8085e9', '#f7a35c', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1']
                 },
                 series: {
+                    stickyTracking: false,
                     dataLabels: {
                         enabled: false,
                         color: '#E0E0E3',

@@ -284,7 +284,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColScore', Value: item.Score}]
+                              { Name: 'ColScore', Value: item.Score || labels.NA}]
                 };
 
                 bodyData.push(row);
@@ -443,7 +443,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColScore', Value: item.Score}]
+                              { Name: 'ColScore', Value: item.Score || labels.NA}]
                 };
 
                 bodyData.push(row);
