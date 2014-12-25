@@ -122,7 +122,6 @@
             input {
                 position: relative;
                 top: 1px;
-                float: left;
 
                 &:focus, &:hover {
                     border: none !important;
@@ -133,13 +132,10 @@
             }
 
             input[type=radio] {
-                left: -9999px;
-                width: 0px;
-                /*display: none;*/
+                display: none;
             }
 
             span {
-                float: left;
                 margin-left: 5px;
             }
 
@@ -189,6 +185,21 @@
     .ui-multiselect-menu {
         &.ui-widget-content {
             border: 1px solid #dddddd;
+        }
+
+        &.ui-multiselect-single{
+            .ui-multiselect-checkboxes {
+                position: relative; // fixes bug in IE6/7
+                overflow-y: auto;
+
+                label {
+                    input[type=radio] {
+                        display: inline-block;
+                        left: -9999px;
+                        width: 0;
+                    }
+                }
+            }
         }
     }
 }
