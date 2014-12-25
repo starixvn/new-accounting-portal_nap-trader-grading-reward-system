@@ -45,7 +45,9 @@ Fanex.TGRS.Reports.Dashboard = function () {
         lblMatches: null,
 
         divMonthSelect: null,
-        titleMonthCount: null
+        titleMonthCount: null,
+
+        toggleA: null
     };
     //}
 
@@ -70,6 +72,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.titleMonthCount = $('#titleMonthCount');
 
         domElements.divMonthSelect = $("#divTeamMonthPicker");
+
+        domElements.toggleA = $("#toggleA");
     };
 
     //}
@@ -110,11 +114,13 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         $('#chk2D').on('change', function () {
             currentChartType = 2;
+            domElements.toggleA.removeClass('type3D');
             reRenderChart(currentChartType);
             saveChartTypeCookies();
         });
         $('#chk3D').on('change', function () {
             currentChartType = 3;
+            domElements.toggleA.addClass('type3D');
             reRenderChart(currentChartType);
             saveChartTypeCookies();
         });
@@ -160,6 +166,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         }
         else {
             $('#chk3D').prop("checked", true);
+            $('#toggleA').addClass('type3D');
         }
 
         // for new-new cookies
@@ -265,8 +272,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
             marker: {
                 lineWidth: 2,
                 lineColor: Highcharts.getOptions().colors[3],
-                //lineColor: '#7cb5ec',
-                fillColor: 'white'
+                //lineColor: '#7cb5ec'
+                fillColor: 'white',
+                width: 7,
+                height: 7
             },
             data: []
         }];

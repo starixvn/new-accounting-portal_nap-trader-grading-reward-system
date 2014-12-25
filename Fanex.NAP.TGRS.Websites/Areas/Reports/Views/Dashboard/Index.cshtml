@@ -4,7 +4,6 @@
 }
 @Styles.Render("~/styles/dashboard")
 <div id="divHorizontalTab">
-    <div id="divTabSummaryContent" class="tab-content">
     <div class="dashboard-title">
         <div class="dashboard-content">
             Performance of last <label id ="titleMonthCount" class="no-pointer">6</label> months
@@ -19,10 +18,11 @@
               <input id="chk3D" name="chartType" type="radio">
               <label for="chk3D">3D</label>
 
-              <a></a>
+              <a id="toggleA"></a>
             </div>
         </div>
     </div>
+    <div id="divTabSummaryContent" class="tab-content">
         <div class="main-col">
             <div id="divGeneralInfo" class="general-info">
                 <div class="info-cell-1-left">

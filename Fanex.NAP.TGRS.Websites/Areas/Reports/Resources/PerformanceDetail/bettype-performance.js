@@ -306,7 +306,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -320,7 +320,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA}]
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
             };
             footerData.push(row);
         }
@@ -481,8 +481,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColScore', Value: item.Score || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
                 };
 
                 bodyData.push(row);

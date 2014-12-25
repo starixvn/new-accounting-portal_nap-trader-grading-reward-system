@@ -33,6 +33,6 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public string ToDate { get; set; }
 
-        public decimal Score { get; set; }
+        public decimal? Score { get; set; }
     }
 }

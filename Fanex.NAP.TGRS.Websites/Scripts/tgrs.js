@@ -189,6 +189,15 @@ Fanex.TGRS.Common = function () {
         }
     };
 
+    $this.GetNumWithLabel = function (number, nullDisplay) {
+        if (number || number === 0) {
+            return number;
+        }
+        else {
+            return nullDisplay;
+        }
+    };
+
     $this.Initialize = function () {
         domElements.divPopup = $('#divPopup');
         domElements.divMsgBox = $.msgbox({
