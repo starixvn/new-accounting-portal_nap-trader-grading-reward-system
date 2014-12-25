@@ -263,12 +263,14 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         chartData.TeamMixData = [{
             type: 'column',
+            yAxis: 1,
             name: 'Turnover',
+            zIndex: 1,
             data: []
         }, {
             type: 'spline',
             name: 'Win loss',
-            yAxis: 1,
+            yAxis: 0,
             marker: {
                 lineWidth: 2,
                 lineColor: Highcharts.getOptions().colors[3],
@@ -277,6 +279,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
                 width: 7,
                 height: 7
             },
+            zIndex: 2,
             data: []
         }];
 
