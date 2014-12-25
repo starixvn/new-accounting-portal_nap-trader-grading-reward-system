@@ -156,7 +156,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA)}]
                 };
                 bodyData.push(row);
             });

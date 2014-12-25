@@ -25,12 +25,12 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
             {
                 this.BetTypeId = rawData.BetType;
                 this.BetTypeName = rawData.TypeName;
-                this.BenchMarkShift1 = Converter.ToDecimal(rawData.BenchMarkShift1);
-                this.BenchMarkShift2 = Converter.ToDecimal(rawData.BenchMarkShift2);
-                this.BenchMarkShift3 = Converter.ToDecimal(rawData.BenchMarkShift3);
-                this.Margin2 = Converter.ToDecimal(rawData.Margin2);
-                this.Margin3 = Converter.ToDecimal(rawData.Margin3);
-                this.Margin4 = Converter.ToDecimal(rawData.Margin4);
+                this.BenchMarkShift1 = rawData.BenchMarkShift1;
+                this.BenchMarkShift2 = rawData.BenchMarkShift2;
+                this.BenchMarkShift3 = rawData.BenchMarkShift3;
+                this.Margin2 = rawData.Margin2;
+                this.Margin3 = rawData.Margin3;
+                this.Margin4 = rawData.Margin4;
             }
         }
 
@@ -38,16 +38,16 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 
         public string BetTypeName { get; set; }
 
-        public decimal BenchMarkShift1 { get; set; }
+        public decimal? BenchMarkShift1 { get; set; }
 
-        public decimal BenchMarkShift2 { get; set; }
+        public decimal? BenchMarkShift2 { get; set; }
 
-        public decimal BenchMarkShift3 { get; set; }
+        public decimal? BenchMarkShift3 { get; set; }
 
-        public decimal Margin2 { get; set; }
+        public decimal? Margin2 { get; set; }
 
-        public decimal Margin3 { get; set; }
+        public decimal? Margin3 { get; set; }
 
-        public decimal Margin4 { get; set; }
+        public decimal? Margin4 { get; set; }
     }
 }

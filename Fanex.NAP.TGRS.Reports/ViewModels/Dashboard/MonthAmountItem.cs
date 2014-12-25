@@ -34,7 +34,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.Dashboard
 
         public decimal Winloss { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
 
         public int MatchCount { get; set; }
     }

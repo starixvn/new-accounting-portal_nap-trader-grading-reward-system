@@ -22,7 +22,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.Period = Converter.To<byte>(scoreInfo.Period);
             this.FromDate = Converter.ToDateTime(scoreInfo.FromDate).ToString("MM/dd/yyyy");
             this.ToDate = Converter.ToDateTime(scoreInfo.ToDate).ToString("MM/dd/yyyy");
-            this.Score = Converter.ToDecimal(scoreInfo.Score);
+            this.Score = scoreInfo.Score;
         }
 
         public short BetType { get; set; }

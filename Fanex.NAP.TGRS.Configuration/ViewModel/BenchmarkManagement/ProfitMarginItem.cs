@@ -30,7 +30,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
             if (data != null)
             {
                 this.Year = Converter.ToInt(data.Year);
-                this.Margin = Converter.ToDecimal(data.Margin);
+                this.Margin = data.Margin;
             }
         }
 
@@ -42,7 +42,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 
         public decimal Stake { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
 
         public List<ProfitMarginItem> ReportRows { get; set; }
 

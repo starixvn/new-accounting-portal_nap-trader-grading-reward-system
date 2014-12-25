@@ -331,9 +331,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
                               { Name: 'ColTeamBM', Value: item.TeamBM },
-                              { Name: 'ColScore', Value: item.Score || labels.NA}]
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA)}]
                 };
 
                 bodyData.push(row);
@@ -347,7 +347,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
                           { Name: 'ColTeamBM', Value: '' },
                           { Name: 'ColScore', Value: ''}]
             };
@@ -493,8 +493,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA },
-                              { Name: 'ColScore', Value: item.Score || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA)}]
                 };
 
                 bodyData.push(row);
@@ -507,7 +507,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: data.Total.Margin || labels.NA },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
                           { Name: 'ColScore', Value: ''}]
             };
             footerData.push(row);
@@ -706,7 +706,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                                   { Name: 'ColTurnover', Value: item.Turnover },
                                   { Name: 'ColWinLoss', Value: item.WinLoss },
                                   { Name: 'ColBetCount', Value: item.BetCount },
-                                  { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                                  { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA)}]
                     };
                     subRows.push(row);
                 });
@@ -716,7 +716,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                               { Name: 'ColTurnover', Value: group.Total.Turnover },
                               { Name: 'ColWinLoss', Value: group.Total.WinLoss },
                               { Name: 'ColBetCount', Value: group.Total.BetCount },
-                              { Name: 'ColMargin', Value: group.Total.Margin || labels.NA}],
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(group.Total.Margin, labels.NA)}],
                     SubRows: subRows
                 };
                 bodyData.push(row);
@@ -727,7 +727,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           { Name: 'ColTurnover', Value: cachedData.GrandTotal.Turnover },
                           { Name: 'ColWinLoss', Value: cachedData.GrandTotal.WinLoss },
                           { Name: 'ColBetCount', Value: cachedData.GrandTotal.BetCount },
-                          { Name: 'ColMargin', Value: cachedData.GrandTotal.Margin || labels.NA}]
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(cachedData.GrandTotal.Margin, labels.NA)}]
             };
             footerData.push(row);
         }
@@ -877,9 +877,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                                         { Name: 'ColTurnover', Value: item.Turnover },
                                         { Name: 'ColWinLoss', Value: item.WinLost },
                                         { Name: 'ColBetCount', Value: item.BetCount },
-                                        { Name: 'ColMargin', Value: item.Margin || labels.NA },
+                                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
                                         { Name: 'ColBetTypeBM', Value: item.Benchmark },
-                                        { Name: 'ColScoreByLatestBM', Value: item.Score || labels.NA },
+                                        { Name: 'ColScoreByLatestBM', Value: common.GetNumWithLabel(item.Score, labels.NA) },
                                         { Name: 'ColScoreByPeriod', Value: '' },
                                         { Name: 'ColForecast', Value: forecastCol });
                     row = {
@@ -896,20 +896,32 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                                             { Name: 'ColTurnover', Value: item.Turnover, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColWinLoss', Value: item.WinLost, MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColBetCount', Value: item.BetCount, MergeRowNumber: scoreByPeriodLength },
-                                            { Name: 'ColMargin', Value: item.Margin || labels.NA, MergeRowNumber: scoreByPeriodLength },
+                                            { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA), MergeRowNumber: scoreByPeriodLength },
                                             { Name: 'ColBetTypeBM', Value: item.Benchmark, MergeRowNumber: scoreByPeriodLength },
-                                            { Name: 'ColScoreByLatestBM', Value: item.Score || labels.NA, MergeRowNumber: scoreByPeriodLength });
+                                            {
+                                                Name: 'ColScoreByLatestBM',
+                                                Value: common.GetNumWithLabel(item.Score, labels.NA),
+                                                MergeRowNumber: scoreByPeriodLength 
+                                            });
                         }
 
-                        if (scoreByPeriodItem.Score >= 0) {
+                        if (scoreByPeriodItem.Score || scoreByPeriodItem.Score === 0) {
+                            if (scoreByPeriodItem.Score >= 0) {
+                                currentRowData.push({ Name: 'ColScoreByPeriod',
+                                    Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
+                                numeral(scoreByPeriodItem.Score).format("0,0.00")
+                                });
+                            } else {
+                                currentRowData.push({ Name: 'ColScoreByPeriod',
+                                    Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' + '<span class="format-negative">' +
+                                numeral(scoreByPeriodItem.Score).format("0,0.00") + '</span>'
+                                });
+                            }
+                        }
+                        else {
                             currentRowData.push({ Name: 'ColScoreByPeriod',
                                 Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' +
-                                numeral(scoreByPeriodItem.Score).format("0,0.00")
-                            });
-                        } else {
-                            currentRowData.push({ Name: 'ColScoreByPeriod',
-                                Value: scoreByPeriodItem.FromDate + ' ~ ' + scoreByPeriodItem.ToDate + ': ' + '<span class="format-negative">' +
-                                numeral(scoreByPeriodItem.Score).format("0,0.00") + '</span>'
+                                labels.NA
                             });
                         }
 
@@ -937,7 +949,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           { Name: 'ColTurnover', Value: total.Turnover },
                           { Name: 'ColWinLoss', Value: total.WinLost },
                           { Name: 'ColBetCount', Value: total.BetCount },
-                          { Name: 'ColMargin', Value: total.Margin || labels.NA },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) },
                           { Name: 'ColBetTypeBM', Value: '' },
                           { Name: 'ColScoreByLatestBM', Value: '' },
                           { Name: 'ColScoreByPeriod', Value: '' },

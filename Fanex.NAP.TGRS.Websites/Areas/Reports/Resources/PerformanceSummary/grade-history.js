@@ -88,7 +88,7 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinloss', Value: item.WinLost },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA)}]
                 };
                 bodyData.push(row);
                 total.MatchCount += item.MatchCount;

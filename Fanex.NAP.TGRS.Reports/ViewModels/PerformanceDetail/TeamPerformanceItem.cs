@@ -36,8 +36,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.WinLoss = Converter.ToDecimal(teamData.WinLoss);
                 this.BetCount = Converter.ToInt(teamData.BetCount);
                 this.Margin = teamData.Margin;
-                this.TeamBM = Converter.ToDecimal(teamData.TeamBenchmark);
-                this.Score = Converter.ToDecimal(teamData.Score);
+                this.TeamBM = teamData.TeamBenchmark;
+                this.Score = teamData.Score;
             }
         }
 
@@ -59,8 +59,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal? Margin { get; set; }
 
-        public decimal TeamBM { get; set; }
+        public decimal? TeamBM { get; set; }
 
-        public decimal Score { get; set; }
+        public decimal? Score { get; set; }
     }
 }

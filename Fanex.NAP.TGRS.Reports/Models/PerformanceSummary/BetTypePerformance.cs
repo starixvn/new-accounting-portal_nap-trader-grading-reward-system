@@ -24,6 +24,6 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 
         public decimal Winlost { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
     }
 }
