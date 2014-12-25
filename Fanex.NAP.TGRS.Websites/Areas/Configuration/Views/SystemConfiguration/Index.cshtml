@@ -63,7 +63,7 @@
                         Period 2: <span id="seconPeriodInfo">
                             @string.Format(
                             "{0} to {1}",
-                            ViewBag.ScoreCalculationPeriod.SelectedDay.ToString("d-MMM"),
+                            ViewBag.ScoreCalculationPeriod.SelectedDay.AddDays(1).ToString("d-MMM"),
                             ViewBag.ScoreCalculationPeriod.EndDay.ToString("d-MMM"))
                         </span>
                     </div>

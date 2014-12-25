@@ -365,12 +365,21 @@ eSchool.SystemConfiguration = function () {
             multiple: false
         });
 
+        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
+        var secondPeriodInfo = '';
         domElements.firstPeriodTime.empty();
         domElements.secondPeriodTime.empty();
         endDate = parseInt(domElements.endSelectDateElement.val());
         endMonth = parseInt(domElements.endSelectMonthElement.val());
         var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        var secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        if (selectedDateIsEndOfMonth) {
+            selectedDate = 1;
+            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
+        } else {
+            selectedDate += 1;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        }
         domElements.firstPeriodTime.append(firstPeriodInfo);
         domElements.secondPeriodTime.append(secondPeriodInfo);
     };
@@ -445,12 +454,21 @@ eSchool.SystemConfiguration = function () {
             multiple: false
         });
 
+        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
+        var secondPeriodInfo = '';
         domElements.firstPeriodTime.empty();
         domElements.secondPeriodTime.empty();
         beginDate = parseInt(domElements.beginSelectDateElement.val());
         beginMonth = parseInt(domElements.beginSelectMonthElement.val());
         var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        var secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        if (selectedDateIsEndOfMonth) {
+            selectedDate = 1;
+            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
+        } else {
+            selectedDate += 1;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        }
         domElements.firstPeriodTime.append(firstPeriodInfo);
         domElements.secondPeriodTime.append(secondPeriodInfo);
     };
@@ -487,10 +505,19 @@ eSchool.SystemConfiguration = function () {
         var endDate = parseInt(domElements.endSelectDateElement.val());
         var endMonth = parseInt(domElements.endSelectMonthElement.val());
 
+        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
+        var secondPeriodInfo = '';
         domElements.firstPeriodTime.empty();
         domElements.secondPeriodTime.empty();
         var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        var secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        if (selectedDateIsEndOfMonth) {
+            selectedDate = 1;
+            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
+        } else {
+            selectedDate += 1;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        }
         domElements.firstPeriodTime.append(firstPeriodInfo);
         domElements.secondPeriodTime.append(secondPeriodInfo);
     };
@@ -520,12 +547,21 @@ eSchool.SystemConfiguration = function () {
             multiple: false
         });
 
+        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
+        var secondPeriodInfo = '';
         domElements.firstPeriodTime.empty();
         domElements.secondPeriodTime.empty();
         selectedDate = parseInt(domElements.selectDateElement.val());
         selectedMonth = parseInt(domElements.selectMonthElement.val());
         var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        var secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        if (selectedDateIsEndOfMonth) {
+            selectedDate = 1;
+            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        } else {
+            selectedDate += 1;
+            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        }
         domElements.firstPeriodTime.append(firstPeriodInfo);
         domElements.secondPeriodTime.append(secondPeriodInfo);
     };
