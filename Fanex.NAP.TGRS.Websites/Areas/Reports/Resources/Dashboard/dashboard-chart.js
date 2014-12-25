@@ -394,7 +394,7 @@ Fanex.TGRS.DashboardChart = function () {
                             else {
                                 return numeral(this.value / 1000000000).format(common.Formats.DecimalFormat) + " Bil";
                             }
-                        } else if (Math.abs(this.value) > 1000000) {
+                        } else if (Math.abs(this.value) >= 1000000) {
                             if (this.value % 1000000 === 0) {
                                 return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
                             }
@@ -402,7 +402,7 @@ Fanex.TGRS.DashboardChart = function () {
                                 return numeral(this.value / 1000000).format(common.Formats.DecimalFormat) + " M";
                             }
                         }
-                        else if (Math.abs(this.value) > 1000) {
+                        else if (Math.abs(this.value) >= 1000) {
                             if (this.value % 1000 === 0) {
                                 return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
                             }
