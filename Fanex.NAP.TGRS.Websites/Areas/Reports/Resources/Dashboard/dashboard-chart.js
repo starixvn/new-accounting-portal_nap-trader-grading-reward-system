@@ -215,7 +215,7 @@ Fanex.TGRS.DashboardChart = function () {
         return {
             chart: {
                 type: 'column',
-                margin: 75,
+                margin: 65,
                 marginLeft: 80,
                 options3d: {
                     enabled: true,
@@ -338,8 +338,8 @@ Fanex.TGRS.DashboardChart = function () {
         return {
             chart: {
                 type: 'scatter',
-                margin: 75,
-                marginLeft: 80,
+                //margin: 75,
+                marginRight: 80,
                 options3d: {
                     enabled: true,
                     alpha: 15,
@@ -387,33 +387,10 @@ Fanex.TGRS.DashboardChart = function () {
                         color: '#f28f43'
                     },
                     formatter: function () {
-                        if (Math.abs(this.value) >= 1000000000) {
-                            if (this.value % 1000000000 === 0) {
-                                return numeral(this.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
-                            }
-                            else {
-                                return numeral(this.value / 1000000000).format(common.Formats.DecimalFormat) + " Bil";
-                            }
-                        } else if (Math.abs(this.value) >= 1000000) {
-                            if (this.value % 1000000 === 0) {
-                                return numeral(this.value / 1000000).format(common.Formats.IntegerFormat) + " M";
-                            }
-                            else {
-                                return numeral(this.value / 1000000).format(common.Formats.DecimalFormat) + " M";
-                            }
-                        }
-                        else if (Math.abs(this.value) >= 1000) {
-                            if (this.value % 1000 === 0) {
-                                return numeral(this.value / 1000).format(common.Formats.IntegerFormat) + " K";
-                            }
-                            else {
-                                return numeral(this.value / 1000).format(common.Formats.DecimalFormat) + " K";
-                            }
-                        } else {
-                            return this.value;
-                        }
+                        return formatAxis(this);
                     }
                 },
+                lineWidth: 1,
                 title: {
                     text: 'TURNOVER',
                     style: {
@@ -422,7 +399,7 @@ Fanex.TGRS.DashboardChart = function () {
                 },
                 opposite: false
             }, { // Secondary yAxis
-                gridLineWidth: 0,
+                lineWidth: 0.5,
                 title: {
                     text: 'WIN LOSS',
                     style: {
@@ -432,6 +409,9 @@ Fanex.TGRS.DashboardChart = function () {
                 labels: {
                     style: {
                         color: '#7cb5ec'
+                    },
+                    formatter: function () {
+                        return formatAxis(this);
                     }
                 },
                 opposite: true
@@ -461,5 +441,33 @@ Fanex.TGRS.DashboardChart = function () {
                 }
             }
         };
+    };
+
+    var formatAxis = function (data) {
+        if (Math.abs(data.value) >= 1000000000) {
+            if (data.value % 1000000000 === 0) {
+                return numeral(data.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
+            }
+            else {
+                return numeral(data.value / 1000000000).format(common.Formats.DecimalFormat) + " Bil";
+            }
+        } else if (Math.abs(data.value) >= 1000000) {
+            if (data.value % 1000000 === 0) {
+                return numeral(data.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+            }
+            else {
+                return numeral(data.value / 1000000).format(common.Formats.DecimalFormat) + " M";
+            }
+        }
+        else if (Math.abs(data.value) >= 1000) {
+            if (data.value % 1000 === 0) {
+                return numeral(data.value / 1000).format(common.Formats.IntegerFormat) + " K";
+            }
+            else {
+                return numeral(data.value / 1000).format(common.Formats.DecimalFormat) + " K";
+            }
+        } else {
+            return data.value;
+        }
     };
 };

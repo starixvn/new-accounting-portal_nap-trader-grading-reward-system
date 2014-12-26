@@ -263,14 +263,14 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         chartData.TeamMixData = [{
             type: 'column',
-            yAxis: 1,
+            yAxis: 0,
             name: 'Turnover',
             zIndex: 1,
             data: []
         }, {
             type: 'spline',
             name: 'Win loss',
-            yAxis: 0,
+            yAxis: 1,
             marker: {
                 lineWidth: 2,
                 lineColor: Highcharts.getOptions().colors[3],
@@ -301,8 +301,11 @@ Fanex.TGRS.Reports.Dashboard = function () {
             chartData.TeamMarginData[0].data.push(item.Margin);
             chartData.TeamMixData[0].data.push(item.Turnover);
             chartData.TeamMixData[1].data.push(item.Winlost);
-            if (item.Turnover < 0 || item.Winlost < 0) {
-                chartData.MixDataMin = -1;
+            if (item.Turnover < chartData.MixDataMin) {
+                chartData.MixDataMin = item.Turnover;
+            }
+            if (item.Winlost < chartData.MixDataMin) {
+                chartData.MixDataMin = item.Winlost;
             }
         });
     };
@@ -368,8 +371,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
             mixChartOption.chart.options3d.enabled = false;
         }
         if (chartData.MixDataMin < 0) {
-            mixChartOption.yAxis[0].min = -1;
-            mixChartOption.yAxis[1].min = -1;
+            mixChartOption.yAxis[0].min = chartData.MixDataMin;
+            mixChartOption.yAxis[1].min = chartData.MixDataMin;
         }
         domElements.teamWinlossContainer.highcharts(mixChartOption);
 
