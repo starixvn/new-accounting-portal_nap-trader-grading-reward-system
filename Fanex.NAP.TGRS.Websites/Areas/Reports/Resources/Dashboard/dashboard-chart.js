@@ -299,6 +299,8 @@ Fanex.TGRS.DashboardChart = function () {
                     beta: 0
                 }
             },
+            colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
+            //colors: ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
             title: {
                 style: {
                     color: '#5a7dc1',
