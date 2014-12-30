@@ -170,6 +170,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
             $('#toggleA').addClass('type3D');
         }
 
+        $('#titleMonthCount').text(currentMonthRange);
+
         // for new-new cookies
         saveChartTypeCookies();
         saveMonthRangeCookies();
