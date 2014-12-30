@@ -1,6 +1,7 @@
 ﻿/* File Created: April 1, 2014 */
+/*jshint strict: false*/
 /* global Namespace */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var reCheckIn = new Fanex.TGRS.ReCheckIn();

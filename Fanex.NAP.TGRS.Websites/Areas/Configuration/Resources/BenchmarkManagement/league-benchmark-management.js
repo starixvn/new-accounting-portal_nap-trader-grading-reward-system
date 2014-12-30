@@ -1,7 +1,8 @@
 ﻿/* File Created: May 14, 2014 */
+/*jshint strict: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.LeaguePage');
 Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {

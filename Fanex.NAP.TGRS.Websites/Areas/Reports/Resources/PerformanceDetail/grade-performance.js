@@ -1,7 +1,8 @@
 ﻿/* File Created: May 19, 2014 */
+/*jshint strict: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, datepickerSetting, forecastBettype, messages */
 
-'use strict';
+////'use strict';
 $(document).ready(function () {
     var gradePerformance = new Fanex.NAP.TGRS.PerformanceDetail.GradePerformance();
 

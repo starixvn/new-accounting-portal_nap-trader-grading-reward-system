@@ -1,6 +1,7 @@
 ﻿/* File Created: May 12, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, filterParameters */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var TraderRank = new Fanex.TGRS.PerformanceSummary.TraderRank();

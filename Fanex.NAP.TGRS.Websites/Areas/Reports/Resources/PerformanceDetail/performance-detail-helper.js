@@ -1,7 +1,8 @@
 ﻿/* File Created: May 19, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.Helper');
 Fanex.NAP.TGRS.PerformanceDetail.Helper = function () {

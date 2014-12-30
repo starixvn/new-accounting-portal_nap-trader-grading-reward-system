@@ -14,12 +14,12 @@
 //          + 04/16/2014: Auto fix header height, fix bug collapse/expand
 // </copyright>
 // --------------------------------------------------------------------------
-/*jshint maxdepth:false, maxstatements:false*/
+/*jshint maxdepth:false, maxstatements:false, strict: false*/
 /*global fanexGridCurrentLanguage:true,fanexGridLanguage, moment,numeral*/
 
 
 (function ($) {
-    'use strict';
+    ////'use strict';
 
 
     //// Method expose for user use

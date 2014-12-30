@@ -1,7 +1,8 @@
 ﻿/* File Created: June 11, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels */
 
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.PerformanceSummary.TeamHistory");
 Fanex.TGRS.PerformanceSummary.TeamHistory = function () {

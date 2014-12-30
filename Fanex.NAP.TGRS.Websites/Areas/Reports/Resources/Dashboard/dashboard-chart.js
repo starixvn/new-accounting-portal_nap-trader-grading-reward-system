@@ -1,5 +1,6 @@
-﻿/* global Namespace, Highcharts, common, numeral */
-'use strict';
+﻿/*jshint strict: false*/
+/* global Namespace, Highcharts, common, numeral */
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.DashboardColumnChart");
 Fanex.TGRS.DashboardChart = function () {

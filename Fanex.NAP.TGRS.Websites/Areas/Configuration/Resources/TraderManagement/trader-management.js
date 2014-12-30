@@ -1,6 +1,7 @@
 ﻿/* File Created: May 12, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, hasEditRight, validator, messages, datepickerSetting, layout */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var TraderManagement = new Fanex.TGRS.TraderManagement();

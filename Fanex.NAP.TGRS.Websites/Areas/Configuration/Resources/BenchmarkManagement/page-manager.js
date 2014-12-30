@@ -1,7 +1,8 @@
 ﻿/* File Created: May 14, 2014 */
+/*jshint strict: false*/
 /* global Namespace, Fanex, common */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.PageManager');
 Fanex.NAP.TGRS.BenchmarkManagement.PageManager = function () {

@@ -1,7 +1,8 @@
 ﻿/* File Created: April 29, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common */
 /* exported layout */
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.Layout");
 Fanex.TGRS.Layout = function () {

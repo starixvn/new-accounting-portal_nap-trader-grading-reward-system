@@ -1,7 +1,8 @@
 ﻿/* File Created: June 11, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, numeral, Highcharts */
 
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var Dashboard = new Fanex.TGRS.Reports.Dashboard();

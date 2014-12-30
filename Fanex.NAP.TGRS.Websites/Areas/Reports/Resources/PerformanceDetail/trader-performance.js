@@ -1,7 +1,8 @@
 ﻿/* File Created: May 19, 2014 */
+/*jshint strict: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, datepickerSetting, forecastBettype */
 
-'use strict';
+////'use strict';
 $(document).ready(function () {
     var traderPerformance = new Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance();
 

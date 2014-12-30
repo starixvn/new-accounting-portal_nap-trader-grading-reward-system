@@ -1,8 +1,8 @@
 ﻿/* File Created: May 14, 2014 */
-/*jshint camelcase: false*/
+/*jshint strict: false, camelcase: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark');
 Fanex.NAP.TGRS.BenchmarkManagement.BetTypeBenchmark = function () {

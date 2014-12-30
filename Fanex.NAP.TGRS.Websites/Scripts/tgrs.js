@@ -1,6 +1,7 @@
 ﻿/* File Created: April 29, 2014 */
+/*jshint strict: false*/
 /* global Namespace */
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.Common");
 Fanex.TGRS.Common = function () {

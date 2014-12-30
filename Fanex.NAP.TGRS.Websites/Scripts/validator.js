@@ -1,7 +1,8 @@
 ﻿/* File Created: April 29, 2014 */
+/*jshint strict: false*/
 /* global Namespace */
 /* exported validator */
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.Validator");
 Fanex.TGRS.Validator = function () {
