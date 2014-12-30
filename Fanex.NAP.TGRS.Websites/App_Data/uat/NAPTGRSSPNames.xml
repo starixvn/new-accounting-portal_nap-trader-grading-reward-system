@@ -21,15 +21,18 @@
   <Function Name="BenchmarkManagement">
     <Setting Key="TGRS_SpecialLeague_SelList" SpName="TGRS_SpecialLeague_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Country_SelList" SpName="TGRS_Country_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_BenchmarkLeague_SelectAll" SpName="TGRS_BenchmarkLeague_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkLeague_SelectAll" SpName="TGRS_BenchmarkLeague_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkLeague_ProfitMargin" SpName="TGRS_BenchmarkLeague_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkLeague_Update" SpName="TGRS_BenchmarkLeague_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkTeam_SelectAll" SpName="TGRS_BenchmarkTeam_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_Update" SpName="TGRS_BenchmarkTeam_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkTeam_ProfitMargin" SpName="TGRS_BenchmarkTeam_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_BenchmarkBetType_SelectAll" SpName="TGRS_BenchmarkBetType_SelectAll_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_BenchmarkBetType_Update" SpName="TGRS_BenchmarkBetType_Update_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkBetType_SelectAll" SpName="TGRS_BenchmarkBetType_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_BenchmarkBetType_Update" SpName="TGRS_BenchmarkBetType_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_BenchmarkBetType_ProfitMargin" SpName="TGRS_BenchmarkBetType_ProfitMargin" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+  </Function>
+  <Function Name="Dashboard">
+    <Setting Key="TGRS_Rpt_SummaryGeneralInfo_Detail" SpName="TGRS_Rpt_SummaryGeneralInfo_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="SummaryReport">
     <Setting Key="TGRS_Rpt_SummaryGeneralInfo" SpName="TGRS_Rpt_SummaryGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
@@ -47,19 +50,19 @@
     <Setting Key="TGRS_Rpt_DetailLeaguePerformance" SpName="TGRS_Rpt_DetailLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailLeague_Trader" SpName="TGRS_Rpt_DetailLeague_Trader_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailLeague_Trader" SpName="TGRS_Rpt_DetailLeague_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailLeague_Match" SpName="TGRS_Rpt_DetailLeague_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailTraderPerformance" SpName="TGRS_Rpt_DetailTraderPerformance_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailTraderPerformance" SpName="TGRS_Rpt_DetailTraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailTrader_Match" SpName="TGRS_Rpt_DetailTrader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailGradePerformance" SpName="TGRS_Rpt_DetailGradePerformance_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailGradePerformance" SpName="TGRS_Rpt_DetailGradePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailGrade_Trader" SpName="TGRS_Rpt_DetailGrade_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
@@ -68,10 +71,10 @@
     <Setting Key="TGRS_Rpt_DetailGrade_Match" SpName="TGRS_Rpt_DetailGrade_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailTeamPerformance" SpName="TGRS_Rpt_DetailTeamPerformance_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailTeamPerformance" SpName="TGRS_Rpt_DetailTeamPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailTeam_Trader" SpName="TGRS_Rpt_DetailTeam_Trader_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailTeam_Trader" SpName="TGRS_Rpt_DetailTeam_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailTeam_Match" SpName="TGRS_Rpt_DetailTeam_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
@@ -86,21 +89,22 @@
     <Setting Key="TGRS_Rpt_DetailBetType_Match" SpName="TGRS_Rpt_DetailBetType_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailBetType_League" SpName="TGRS_Rpt_DetailBetType_League_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailBetType_League" SpName="TGRS_Rpt_DetailBetType_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailBetType_TraderByLeague" SpName="TGRS_Rpt_DetailBetType_TraderByLeague_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailBetType_TraderByLeague" SpName="TGRS_Rpt_DetailBetType_TraderByLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailBetType_MatchByTraderLeague" SpName="TGRS_Rpt_DetailBetType_MatchByTraderLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_DetailLeague_Bettype" SpName="TGRS_Rpt_DetailLeague_Bettype_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_DetailLeague_Bettype" SpName="TGRS_Rpt_DetailLeague_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_DetailGrade_BetType" SpName="TGRS_Rpt_DetailGrade_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_DetailTeam_Bettype" SpName="TGRS_Rpt_DetailTeam_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_DetailTrader_Bettype" SpName="TGRS_Rpt_DetailTrader_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="SystemConfiguration">
+    <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Setting_ScorePeriodSel" SpName="TGRS_Setting_ScorePeriodSel" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Setting_ScorePeriodUpd" SpName="TGRS_Setting_ScorePeriodUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
