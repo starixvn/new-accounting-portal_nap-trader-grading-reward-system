@@ -58,4 +58,6 @@ public static class TGRSFunctionKeys
 
         public const string TraderManagement = "TraderManagement";
 
+        public const string SystemSetting = "SystemSetting";
+
     }

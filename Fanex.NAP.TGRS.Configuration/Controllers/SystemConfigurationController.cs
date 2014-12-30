@@ -50,7 +50,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// Gets Index page.
         /// </summary>
         /// <returns>Return Index View.</returns>
-        [NapAuth(FunctionKey = TGRSFunctionKeys.SystemConfiguration, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SystemSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
@@ -65,7 +65,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <param name="criteria">Criteria that are used to update data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.SystemConfiguration, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SystemSetting, Policy = Constant.Policy.Read)]
         public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
         {
             criteria.IsDefaultBettypes = criteria.IsDefaultBettypes ?? string.Empty;
@@ -78,6 +78,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SystemSetting, Policy = Constant.Policy.Read)]
         public JsonResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria)
         {
             criteria.UserId = this.CurrentSession.UserId;
