@@ -449,6 +449,9 @@
     <Content Include="Web.backupMNL.config" />
     <Content Include="Web.AppSettings.backupMNL.config" />
     <Content Include="Web.ConnectionString.backupMNL.config" />
+    <None Include="Content\Themes\Fonts\HmnHiRzvcnQr8CjBje6GQhTbgVql8nDJpwnrE27mub0.woff2" />
+    <None Include="Content\Themes\Fonts\VK2oK8L4CJesxwY5dF3zxeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
+    <None Include="Content\Themes\Fonts\Y82YH_MJJWnsH2yUA5AuYeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
