@@ -102,6 +102,7 @@
     <Setting Key="TGRS_Rpt_DetailGrade_BetType" SpName="TGRS_Rpt_DetailGrade_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_DetailTeam_Bettype" SpName="TGRS_Rpt_DetailTeam_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_DetailTrader_Bettype" SpName="TGRS_Rpt_DetailTrader_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_ScoreDetail" SpName="TGRS_Rpt_ScoreDetail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="SystemConfiguration">
     <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
