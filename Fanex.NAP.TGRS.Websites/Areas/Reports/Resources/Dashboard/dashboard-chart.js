@@ -246,7 +246,7 @@ Fanex.TGRS.DashboardChart = function () {
                 labels: {
                     rotation: -45,
                     style: {
-                        fontSize: '13px',
+                        fontSize: '12px',
                         fontFamily: 'Verdana, sans-serif'
                     }
                 }
@@ -281,7 +281,7 @@ Fanex.TGRS.DashboardChart = function () {
                         x: 0,
                         y: -5,
                         style: {
-                            fontSize: '13px',
+                            fontSize: '12px',
                             fontFamily: 'Verdana, sans-serif'
                         }
                     }
@@ -378,7 +378,7 @@ Fanex.TGRS.DashboardChart = function () {
                 labels: {
                     rotation: -30,
                     style: {
-                        fontSize: '13px',
+                        fontSize: '12px',
                         fontFamily: 'Verdana, sans-serif'
                     }
                 }
@@ -436,7 +436,7 @@ Fanex.TGRS.DashboardChart = function () {
                         x: 0,
                         y: -5,
                         style: {
-                            fontSize: '13px',
+                            fontSize: '12px',
                             fontFamily: 'Verdana, sans-serif'
                             //textShadow: '0 0 3px black'
                         }
