@@ -245,7 +245,7 @@ Fanex.TGRS.DashboardChart = function () {
                 //categories: Highcharts.getOptions().lang.shortMonths
                 type: 'category',
                 labels: {
-                    rotation: -45,
+                    rotation: -30,
                     formatter: function () {
                         var text = this.value;
                         var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
@@ -371,8 +371,12 @@ Fanex.TGRS.DashboardChart = function () {
                 enabled: true,
                 align: 'center',
                 verticalAlign: 'bottom',
-                y: 10,
+                y: 5,
                 x: 0,
+                itemMarginTop: -20,
+                itemStyle: {
+                    lineHeight: '10px'
+                },
                 layout: 'horizontal'
             },
             tooltip: {
@@ -384,7 +388,7 @@ Fanex.TGRS.DashboardChart = function () {
                 //categories: Highcharts.getOptions().lang.shortMonths
                 type: 'category',
                 labels: {
-                    rotation: -45,
+                    rotation: -30,
                     formatter: function () {
                         var text = this.value;
                         var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
@@ -448,7 +452,7 @@ Fanex.TGRS.DashboardChart = function () {
                     dataLabels: {
                         enabled: false,
                         color: '#E0E0E3',
-                        align: 'right',
+                        align: 'left',
                         x: 0,
                         y: -5,
                         style: {
