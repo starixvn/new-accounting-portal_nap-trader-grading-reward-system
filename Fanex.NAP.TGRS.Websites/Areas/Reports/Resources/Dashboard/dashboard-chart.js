@@ -216,8 +216,9 @@ Fanex.TGRS.DashboardChart = function () {
         return {
             chart: {
                 type: 'column',
-                margin: 65,
-                marginLeft: 80,
+                //margin: 65,
+                //marginLeft: 65,
+                //marginRight: 35,
                 options3d: {
                     enabled: true,
                     alpha: 15,
@@ -245,10 +246,17 @@ Fanex.TGRS.DashboardChart = function () {
                 type: 'category',
                 labels: {
                     rotation: -45,
+                    formatter: function () {
+                        var text = this.value;
+                        var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
+
+                        return '<div title="' + text + '">' + formatted + '</div>';
+                    },
                     style: {
                         fontSize: '12px',
                         fontFamily: 'Verdana, sans-serif'
-                    }
+                    },
+                    useHTML: true
                 }
             },
             yAxis: [{ // Primary yAxis
@@ -281,7 +289,7 @@ Fanex.TGRS.DashboardChart = function () {
                         x: 0,
                         y: -5,
                         style: {
-                            fontSize: '12px',
+                            fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif'
                         }
                     }
@@ -341,8 +349,8 @@ Fanex.TGRS.DashboardChart = function () {
         return {
             chart: {
                 type: 'scatter',
-                //margin: 75,
-                marginRight: 80,
+                //margin: 65,
+                //marginRight: 65,
                 options3d: {
                     enabled: true,
                     alpha: 15,
@@ -376,11 +384,19 @@ Fanex.TGRS.DashboardChart = function () {
                 //categories: Highcharts.getOptions().lang.shortMonths
                 type: 'category',
                 labels: {
-                    rotation: -30,
+                    rotation: -45,
+                    formatter: function () {
+                        var text = this.value;
+                        var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
+
+                        return '<div title="' + text + '">' + formatted + '</div>';
+                    },
                     style: {
                         fontSize: '12px',
+                        //fontWeight: 'normal',
                         fontFamily: 'Verdana, sans-serif'
-                    }
+                    },
+                    useHTML: true
                 }
             },
             yAxis: [{ // Primary yAxis
