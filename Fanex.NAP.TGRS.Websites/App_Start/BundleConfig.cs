@@ -59,7 +59,7 @@ namespace Fanex.NAP.TGRS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/common",
-                //"~/Content/jQuery-UI/jquery-ui-1.10.4.custom.min.css",
+                ////"~/Content/jQuery-UI/jquery-ui-1.10.4.custom.min.css",
                 "~/Content/jQuery-UI/jquery-ui-1.9.1.custom.min.css",
                 "~/Content/Tipsy/tipsy.css",
                 "~/Content/MsgBox/msgbox-0.0.1.css",
@@ -73,8 +73,8 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
-                //"~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
-                //"~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
+                ////"~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
+                ////"~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
                 "~/Scripts/Libraries/jQuery/jquery-1.8.2.min.js",
                 "~/Scripts/Libraries/jQuery/jquery-ui-1.9.1.min.js",
                 "~/Scripts/Libraries/jQuery/jquery.blockUI.2.66.min.js",

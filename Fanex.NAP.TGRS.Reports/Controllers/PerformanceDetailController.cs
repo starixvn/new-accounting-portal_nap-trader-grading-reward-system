@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
         public JsonResult GetDefaultBettypes()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypesFromSession();
 
             return Json(new
             {

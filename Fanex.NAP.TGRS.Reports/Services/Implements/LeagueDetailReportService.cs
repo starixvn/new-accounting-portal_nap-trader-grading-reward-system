@@ -31,6 +31,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
+        private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.DefaultBettype";
         private const int PointInPixel = 225;
         private const string MinPercentString = "min";
         private const string MaxPercentString = "max";
@@ -48,6 +49,22 @@ namespace Fanex.NAP.TGRS.Reports.Services
             if (data != null && data.Any())
             {
                 betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
+            }
+
+            SessionManager.Set<List<BetTypeItem>>(DefaultBettypeSessionKey, betTypes);
+            return betTypes;
+        }
+
+        /// <summary>
+        /// Gets the bet types from session.
+        /// </summary>
+        /// <returns>List of BetTypeItem objects.</returns>
+        public IEnumerable<BetTypeItem> GetBetTypesFromSession()
+        {
+            var betTypes = SessionManager.Get<List<BetTypeItem>>(DefaultBettypeSessionKey);
+            if (betTypes == null)
+            {
+                betTypes = this.GetBetTypes().ToList();
             }
 
             return betTypes;
