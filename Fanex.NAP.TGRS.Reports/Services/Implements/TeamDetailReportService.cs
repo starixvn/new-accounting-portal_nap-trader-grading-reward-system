@@ -227,7 +227,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.BetCount,
                     item.Margin,
                     item.TeamBM,
-                    item.Score
+                    (object)item.Score ?? ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }
