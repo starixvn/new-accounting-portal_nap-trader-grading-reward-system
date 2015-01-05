@@ -18,11 +18,11 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
     {
         public short? BetType { get; set; }
 
-        public byte? Period { get; set; }
-
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }
+
+        public decimal? Benchmark { get; set; }
 
         public decimal? Score { get; set; }
     }

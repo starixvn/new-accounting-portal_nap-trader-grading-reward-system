@@ -241,6 +241,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BM %.
+        /// </summary>
+        public static string BM {
+            get {
+                return ResourceManager.GetString("BM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bottom 10 traders by margin.
         /// </summary>
         public static string Bottom10ByMargin {
