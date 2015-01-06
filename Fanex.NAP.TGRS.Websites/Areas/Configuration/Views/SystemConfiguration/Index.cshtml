@@ -23,50 +23,50 @@
             </div>
         </div>
         <div id="scoreCalculateFilter" class="filter-form full-width">
-            <div class="filter-row position-relative full-width height30">
-                <div class="selectDate position-absolute">
-                    <select id="selectDateOption">
-                    </select>
-                    <select id="selectMonthOption">
-                    </select>
-                </div>
-            </div>
             <div class="filter-row possition-relative full-width">
-                <div class="beginDate float-left display-inline-block">
+                <div class="periodTile float-left">
+                    <label>
+                        Period 1:</label></div>
+                <div class="float-left width135">
                     <select id="beginSelectDateOption">
                     </select>
                     <select id="beginSelectMonthOption">
                     </select>
                 </div>
-                <div class="timeRange float-left display-inline-block">
+                <div class="float-left toTitle">
+                    <label>
+                        to</label>
                 </div>
-                <div class="endDate float-left display-inline-block">
+                <div class="float-left width135">
+                    <select id="firstSelectDateOption">
+                    </select>
+                    <select id="firstSelectMonthOption">
+                    </select>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="filter-row possition-relative full-width">
+                <div class="periodTile float-left">
+                    <label>
+                        Period 2:</label></div>
+                <div class="float-left width135">
+                    <select id="secondSelectDateOption">
+                    </select>
+                    <select id="secondSelectMonthOption">
+                    </select>
+                </div>
+                <div class="float-left toTitle">
+                    <label>
+                        to</label>
+                </div>
+                <div class="float-left width135">
                     <select id="endSelectDateOption">
                     </select>
                     <select id="endSelectMonthOption">
                     </select>
                 </div>
                 <div class="clear">
-                </div>
-            </div>
-            <div class="filter-row">
-                <div class="timePeriodInfo">
-                    <div class="bold">
-                        Period 1: <span id="firstPeriodInfo">
-                            @string.Format(
-                            "{0} to {1}",
-                            ViewBag.ScoreCalculationPeriod.BeginDay.ToString("d-MMM"),
-                            ViewBag.ScoreCalculationPeriod.SelectedDay.ToString("d-MMM"))
-                        </span>
-                    </div>
-                    <div class="bold">
-                        Period 2: <span id="seconPeriodInfo">
-                            @string.Format(
-                            "{0} to {1}",
-                            ViewBag.ScoreCalculationPeriod.SelectedDay.AddDays(1).ToString("d-MMM"),
-                            ViewBag.ScoreCalculationPeriod.EndDay.ToString("d-MMM"))
-                        </span>
-                    </div>
                 </div>
             </div>
             <div class="filter-row full-width">

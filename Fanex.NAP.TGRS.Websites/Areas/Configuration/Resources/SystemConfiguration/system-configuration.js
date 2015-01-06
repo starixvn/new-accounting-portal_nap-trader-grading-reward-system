@@ -23,12 +23,20 @@ $(document).ready(function () {
         SystemConfiguration.endSelectMonthChange();
     });
 
-    $("#selectDateOption").on("change", function () {
-        SystemConfiguration.selectedDateChange();
+    $("#firstSelectDateOption").on("change", function () {
+        SystemConfiguration.firstSelectedDateChange();
     });
 
-    $("#selectMonthOption").on("change", function () {
-        SystemConfiguration.selectedMonthChange();
+    $("#firstSelectMonthOption").on("change", function () {
+        SystemConfiguration.firstSelectedMonthChange();
+    });
+
+    $("#secondSelectDateOption").on("change", function () {
+        SystemConfiguration.secondSelectedDateChange();
+    });
+
+    $("#secondSelectMonthOption").on("change", function () {
+        SystemConfiguration.secondSelectedMonthChange();
     });
 });
 
@@ -58,11 +66,13 @@ eSchool.SystemConfiguration = function () {
         ddlBetType: null,
         btnBettypeFilterSubmit: null,
         divBettypeFilter: null,
-        selectDateElement: null,
         beginSelectDateElement: null,
+        firstSelectDateElement: null,
+        secondSelectDateElement: null,
         endSelectDateElement: null,
-        selectMonthElement: null,
         beginSelectMonthElement: null,
+        firstSelectMonthElement: null,
+        secondSelectMonthElement: null,
         endSelectMonthElement: null,
         firstPeriodTime: null,
         secondPeriodTime: null,
@@ -75,14 +85,14 @@ eSchool.SystemConfiguration = function () {
         domElements.ddlBetType = $('#ddlBetType');
         domElements.btnBettypeFilterSubmit = $('#btnBettypeFilterSubmit');
         domElements.divBettypeFilter = $('#divBettypeFilter');
-        domElements.selectDateElement = $('#selectDateOption');
-        domElements.selectMonthElement = $('#selectMonthOption');
+        domElements.firstSelectDateElement = $('#firstSelectDateOption');
+        domElements.firstSelectMonthElement = $('#firstSelectMonthOption');
+        domElements.secondSelectDateElement = $('#secondSelectDateOption');
+        domElements.secondSelectMonthElement = $('#secondSelectMonthOption');
         domElements.beginSelectDateElement = $('#beginSelectDateOption');
         domElements.beginSelectMonthElement = $('#beginSelectMonthOption');
         domElements.endSelectDateElement = $('#endSelectDateOption');
         domElements.endSelectMonthElement = $('#endSelectMonthOption');
-        domElements.firstPeriodTime = $('#firstPeriodInfo');
-        domElements.secondPeriodTime = $('#seconPeriodInfo');
         domElements.scoreCalculationPeriodSubmit = $('#btnScoreCalculateSubmit');
     };
 
@@ -99,7 +109,6 @@ eSchool.SystemConfiguration = function () {
 
     //{ page-events & make-form.
     var handlePageEvents = function () {
-
         domElements.ddlBetType.multiselect({
             selectedList: 2,
             minWidth: 200,
@@ -151,7 +160,6 @@ eSchool.SystemConfiguration = function () {
         });
     };
     //}
-
 
     //{ ajax functions
     var ajaxGetDefaultBettypes = function () {
@@ -258,11 +266,25 @@ eSchool.SystemConfiguration = function () {
     };
 
     var initScoreCalculationPeriod = function () {
-        initMonths(domElements.selectMonthElement);
-        domElements.selectMonthElement.val(parseInt(scoreCalculationPeriodInfo.selectedMonth));
-        initDays(domElements.selectMonthElement.val(), domElements.selectDateElement);
-        domElements.selectDateElement.val(parseInt(scoreCalculationPeriodInfo.selectedDate));
+        var selectedDate = parseInt(scoreCalculationPeriodInfo.selectedDate);
+        var selectedMonth = parseInt(scoreCalculationPeriodInfo.selectedMonth);
+        initMonths(domElements.firstSelectMonthElement);
+        domElements.firstSelectMonthElement.val(selectedMonth);
+        initDays(domElements.firstSelectMonthElement.val(), domElements.firstSelectDateElement);
+        domElements.firstSelectDateElement.val(selectedDate);
 
+        var isEndDayOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
+        if (isEndDayOfMonth) {
+            selectedDate = 1;
+            selectedMonth = selectedMonth === 12 ? 1 : selectedMonth + 1;
+        }
+        else {
+            selectedDate += 1;
+        }
+        initMonths(domElements.secondSelectMonthElement);
+        domElements.secondSelectMonthElement.val(selectedMonth);
+        initDays(domElements.secondSelectMonthElement.val(), domElements.secondSelectDateElement);
+        domElements.secondSelectDateElement.val(selectedDate);
 
         initMonths(domElements.beginSelectMonthElement);
         domElements.beginSelectMonthElement.val(parseInt(scoreCalculationPeriodInfo.beginMonth));
@@ -275,14 +297,29 @@ eSchool.SystemConfiguration = function () {
         initDays(domElements.endSelectMonthElement.val(), domElements.endSelectDateElement);
         domElements.endSelectDateElement.val(parseInt(scoreCalculationPeriodInfo.endDate));
 
-        domElements.selectDateElement.multiselect({
+        domElements.firstSelectDateElement.multiselect({
             selectedList: 1,
             minWidth: 40,
             height: 200,
             header: false,
             multiple: false
         });
-        domElements.selectMonthElement.multiselect({
+        domElements.firstSelectMonthElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+
+        domElements.secondSelectDateElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+        domElements.secondSelectMonthElement.multiselect({
             selectedList: 1,
             minWidth: 40,
             height: 200,
@@ -324,10 +361,6 @@ eSchool.SystemConfiguration = function () {
     $this.beginSelectDateChange = function () {
         var beginDate = parseInt(domElements.beginSelectDateElement.val());
         var beginMonth = parseInt(domElements.beginSelectMonthElement.val());
-        var selectedDate = parseInt(domElements.selectDateElement.val());
-        var selectedMonth = parseInt(domElements.selectMonthElement.val());
-        var endDate = parseInt(domElements.endSelectDateElement.val());
-        var endMonth = parseInt(domElements.endSelectMonthElement.val());
 
         if (beginDate === 1) {
             var endMonthValue = 0;
@@ -365,24 +398,6 @@ eSchool.SystemConfiguration = function () {
             header: false,
             multiple: false
         });
-
-        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
-        var secondPeriodInfo = '';
-        domElements.firstPeriodTime.empty();
-        domElements.secondPeriodTime.empty();
-        endDate = parseInt(domElements.endSelectDateElement.val());
-        endMonth = parseInt(domElements.endSelectMonthElement.val());
-        var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        if (selectedDateIsEndOfMonth) {
-            selectedDate = 1;
-            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
-        } else {
-            selectedDate += 1;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
-        }
-        domElements.firstPeriodTime.append(firstPeriodInfo);
-        domElements.secondPeriodTime.append(secondPeriodInfo);
     };
 
     $this.beginSelectMonthChange = function () {
@@ -410,10 +425,6 @@ eSchool.SystemConfiguration = function () {
     };
 
     $this.endSelectDateChange = function () {
-        var beginDate = parseInt(domElements.beginSelectDateElement.val());
-        var beginMonth = parseInt(domElements.beginSelectMonthElement.val());
-        var selectedDate = parseInt(domElements.selectDateElement.val());
-        var selectedMonth = parseInt(domElements.selectMonthElement.val());
         var endDate = parseInt(domElements.endSelectDateElement.val());
         var endMonth = parseInt(domElements.endSelectMonthElement.val());
 
@@ -454,24 +465,6 @@ eSchool.SystemConfiguration = function () {
             header: false,
             multiple: false
         });
-
-        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
-        var secondPeriodInfo = '';
-        domElements.firstPeriodTime.empty();
-        domElements.secondPeriodTime.empty();
-        beginDate = parseInt(domElements.beginSelectDateElement.val());
-        beginMonth = parseInt(domElements.beginSelectMonthElement.val());
-        var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        if (selectedDateIsEndOfMonth) {
-            selectedDate = 1;
-            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
-        } else {
-            selectedDate += 1;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
-        }
-        domElements.firstPeriodTime.append(firstPeriodInfo);
-        domElements.secondPeriodTime.append(secondPeriodInfo);
     };
 
     $this.endSelectMonthChange = function () {
@@ -498,49 +491,50 @@ eSchool.SystemConfiguration = function () {
         $this.endSelectDateChange();
     };
 
-    $this.selectedDateChange = function () {
-        var beginDate = parseInt(domElements.beginSelectDateElement.val());
-        var beginMonth = parseInt(domElements.beginSelectMonthElement.val());
-        var selectedDate = parseInt(domElements.selectDateElement.val());
-        var selectedMonth = parseInt(domElements.selectMonthElement.val());
-        var endDate = parseInt(domElements.endSelectDateElement.val());
-        var endMonth = parseInt(domElements.endSelectMonthElement.val());
+    $this.firstSelectedDateChange = function () {
+        var firstSelectedDate = parseInt(domElements.firstSelectDateElement.val());
+        var firstSelectedMonth = parseInt(domElements.firstSelectMonthElement.val());
 
-        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
-        var secondPeriodInfo = '';
-        domElements.firstPeriodTime.empty();
-        domElements.secondPeriodTime.empty();
-        var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        if (selectedDateIsEndOfMonth) {
-            selectedDate = 1;
-            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth] + " to " + endDate + '-' + months[endMonth - 1];
+        var secondSelectedDate = 0;
+        var secondSelectedMonth = 0;
+        var isEndDateOfMonth = checkDateIsEndDateOfMonth(firstSelectedDate, firstSelectedMonth);
+        if (isEndDateOfMonth) {
+            secondSelectedDate = 1;
+            secondSelectedMonth = firstSelectedMonth === 12 ? 1 : firstSelectedMonth + 1;
         } else {
-            selectedDate += 1;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+            secondSelectedDate = firstSelectedDate + 1;
+            secondSelectedMonth = firstSelectedMonth;
         }
-        domElements.firstPeriodTime.append(firstPeriodInfo);
-        domElements.secondPeriodTime.append(secondPeriodInfo);
+
+        initDays(secondSelectedMonth, domElements.secondSelectDateElement);
+        domElements.secondSelectDateElement.val(secondSelectedDate);
+        domElements.secondSelectMonthElement.val(secondSelectedMonth);
+
+        domElements.secondSelectDateElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+        domElements.secondSelectMonthElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
     };
 
-    $this.selectedMonthChange = function () {
-        var beginDate = parseInt(domElements.beginSelectDateElement.val());
-        var beginMonth = parseInt(domElements.beginSelectMonthElement.val());
-        var selectedDate = parseInt(domElements.selectDateElement.val());
-        var selectedMonth = parseInt(domElements.selectMonthElement.val());
-        var endDate = parseInt(domElements.endSelectDateElement.val());
-        var endMonth = parseInt(domElements.endSelectMonthElement.val());
+    $this.firstSelectedMonthChange = function () {
+        var firstSelectedDate = parseInt(domElements.firstSelectDateElement.val());
+        var firstSelectedMonth = parseInt(domElements.firstSelectMonthElement.val());
 
-        var maxDateOfMonth = getEndDateOfMonthValue(selectedMonth);
-        initDays(selectedMonth, domElements.selectDateElement);
-        if (endDate < maxDateOfMonth) {
-            domElements.selectDateElement.val(selectedDate);
-        }
-        else {
-            domElements.selectDateElement.val(1);
-        }
-
-        domElements.selectDateElement.multiselect({
+        var maxDateOfMonth = getEndDateOfMonthValue(firstSelectedMonth);
+        initDays(firstSelectedMonth, domElements.firstSelectDateElement);
+        firstSelectedDate = firstSelectedDate <= maxDateOfMonth ? firstSelectedDate : 1;
+        domElements.firstSelectDateElement.val(firstSelectedDate);
+        domElements.firstSelectDateElement.multiselect({
             selectedList: 1,
             minWidth: 40,
             height: 200,
@@ -548,23 +542,60 @@ eSchool.SystemConfiguration = function () {
             multiple: false
         });
 
-        var selectedDateIsEndOfMonth = checkDateIsEndDateOfMonth(selectedDate, selectedMonth);
-        var secondPeriodInfo = '';
-        domElements.firstPeriodTime.empty();
-        domElements.secondPeriodTime.empty();
-        selectedDate = parseInt(domElements.selectDateElement.val());
-        selectedMonth = parseInt(domElements.selectMonthElement.val());
-        var firstPeriodInfo = beginDate + '-' + months[beginMonth - 1] + " to " + selectedDate + '-' + months[selectedMonth - 1];
-        if (selectedDateIsEndOfMonth) {
-            selectedDate = 1;
-            selectedMonth = selectedMonth === 12 ? 0 : selectedMonth;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+        $this.firstSelectedDateChange();
+    };
+
+    $this.secondSelectedDateChange = function () {
+        var secondSelectedDate = parseInt(domElements.secondSelectDateElement.val());
+        var secondSelectedMonth = parseInt(domElements.secondSelectMonthElement.val());
+
+        var firstSelectedDate = 0;
+        var firstSelectedMonth = 0;
+        if (secondSelectedDate === 1) {
+            firstSelectedMonth = secondSelectedMonth === 1 ? 12 : secondSelectedMonth - 1;
+            firstSelectedDate = getEndDateOfMonthValue(firstSelectedMonth);
         } else {
-            selectedDate += 1;
-            secondPeriodInfo = selectedDate + '-' + months[selectedMonth - 1] + " to " + endDate + '-' + months[endMonth - 1];
+            firstSelectedDate = secondSelectedDate - 1;
+            firstSelectedMonth = secondSelectedMonth;
         }
-        domElements.firstPeriodTime.append(firstPeriodInfo);
-        domElements.secondPeriodTime.append(secondPeriodInfo);
+
+        initDays(firstSelectedMonth, domElements.firstSelectDateElement);
+        domElements.firstSelectDateElement.val(firstSelectedDate);
+        domElements.firstSelectMonthElement.val(firstSelectedMonth);
+
+        domElements.firstSelectDateElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+        domElements.firstSelectMonthElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+    };
+
+    $this.secondSelectedMonthChange = function () {
+        var secondSelectedDate = parseInt(domElements.secondSelectDateElement.val());
+        var secondSelectedMonth = parseInt(domElements.secondSelectMonthElement.val());
+
+        var maxDateOfMonth = getEndDateOfMonthValue(secondSelectedMonth);
+        initDays(secondSelectedMonth, domElements.secondSelectDateElement);
+        secondSelectedDate = secondSelectedDate <= maxDateOfMonth ? secondSelectedDate : 1;
+        domElements.secondSelectDateElement.val(secondSelectedDate);
+        domElements.secondSelectDateElement.multiselect({
+            selectedList: 1,
+            minWidth: 40,
+            height: 200,
+            header: false,
+            multiple: false
+        });
+
+        $this.secondSelectedDateChange();
     };
 
     var checkDateIsEndDateOfMonth = function (date, month) {
@@ -611,8 +642,8 @@ eSchool.SystemConfiguration = function () {
 
         updateScoreCalculationPeriodParams.SelectedDay =
             scoreCalculationPeriodInfo.year + '-' +
-            domElements.selectMonthElement.val() + '-' +
-            domElements.selectDateElement.val();
+            domElements.firstSelectMonthElement.val() + '-' +
+            domElements.firstSelectDateElement.val();
 
         return updateScoreCalculationPeriodParams;
     };
