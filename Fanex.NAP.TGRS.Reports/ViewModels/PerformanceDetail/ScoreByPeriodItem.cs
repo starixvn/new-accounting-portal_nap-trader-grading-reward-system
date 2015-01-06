@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public ScoreByPeriodItem(ScoreByPeriodInfo scoreInfo)
         {
             this.BetType = Converter.To<short>(scoreInfo.BetType);
-            this.Benchmark = Converter.To<byte>(scoreInfo.Benchmark);
+            this.Benchmark = scoreInfo.Benchmark;
             this.FromDate = Converter.ToDateTime(scoreInfo.FromDate).ToString("MM/dd/yyyy");
             this.ToDate = Converter.ToDateTime(scoreInfo.ToDate).ToString("MM/dd/yyyy");
             this.Score = scoreInfo.Score;
