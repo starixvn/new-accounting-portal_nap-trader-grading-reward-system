@@ -175,6 +175,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\MNL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\MNL\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\dev\NAPTGRSSPNames.xml" />
     <Content Include="App_Data\local\NAPTGRSSPNames.xml" />
@@ -403,31 +405,34 @@
     <Content Include="Web.local.config" />
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config" />
-	<Content Include="Web.master.config" />
+    <Content Include="Web.master.config" />
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>  
-	<Content Include="Web.ConnectionString.uat.config">
+    </Content>
+    <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>    
-    <Content Include="Web.ConnectionString.master.config" >
+    </Content>
+    <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>	
+    </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.uat.config" >
+    <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-	<Content Include="Web.AppSettings.master.config" >
+    <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>    
+    </Content>
+    <Content Include="Web.backupMNL.config" />
+    <Content Include="Web.AppSettings.backupMNL.config" />
+    <Content Include="Web.ConnectionString.backupMNL.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
