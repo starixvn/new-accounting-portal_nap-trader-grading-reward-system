@@ -1,0 +1,164 @@
+﻿// -----------------------------------------------------------------------
+// <copyright file="DashboardService.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// <history>
+//   <change who="Ken.Nguyen" date="2014.12.10">Created</change>
+// </history>
+
+namespace Fanex.NAP.TGRS.Reports.Services
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria;
+    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.Models.Dashboard;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
+
+    /// <summary>
+    /// Trader Management Service.
+    /// </summary>
+    public class DashboardService : TGRSBaseService, IDashboardService
+    {
+        /// <summary>
+        /// Gets the general information.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// General info list.
+        /// </returns>
+        public IEnumerable<GeneralInfo> GetGeneralInfo(int month)
+        {
+            IEnumerable<GeneralInfo> result = null;
+
+            var summaryCriteria = new GetGeneralInfoCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+            };
+            result = this.GetData<GeneralInfo>(summaryCriteria);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the top win league.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List of league.
+        /// </returns>
+        public IEnumerable<League> GetTopWinLeague(int month)
+        {
+            var topLeagueCriteria = new GetTopWinLeagueCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+            };
+
+            IEnumerable<League> result = this.GetData<League>(topLeagueCriteria);
+
+            result = result.Take(5);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the top trader.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Top Trader.
+        /// </returns>
+        public IEnumerable<TopTrader> GetTopTrader(int month)
+        {
+            var topTraderCriteria = new GetTopTraderCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                Top = 5,
+                IsBottom = 0
+            };
+
+            IEnumerable<TopTrader> result = this.GetData<TopTrader>(topTraderCriteria);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the top bet type.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Bet type.
+        /// </returns>
+        public IEnumerable<BetTypePerformance> GetTopBettype(int month)
+        {
+            var topBettypeCriteria = new GetBetTypePerformanceCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+            };
+
+            IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
+
+            return result.Take(10);
+        }
+
+        /// <summary>
+        /// Gets the summary data.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>
+        /// List Month Items.
+        /// </returns>
+        public IEnumerable<MonthAmountItem> GetSummaryData(int month)
+        {
+            var summaryCriteria = new GetSummaryInfoCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+            };
+
+            List<MonthAmount> rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
+            rawData = rawData.OrderBy(x => x.EventDate).ToList();
+
+            var result = new List<MonthAmountItem>();
+            foreach (var item in rawData)
+            {
+                var monthItem = new MonthAmountItem(item);
+                result.Add(monthItem);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the team data.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns>List of team performance.</returns>
+        public IEnumerable<TeamPerformance> GetTeamData(int month)
+        {
+            var teamCriteria = new GetTeamPerformanceCriteria
+            {
+                ReportType = 2,
+                FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+            };
+
+            IEnumerable<TeamPerformance> teamData = this.GetData<TeamPerformance>(teamCriteria);
+
+            return teamData;
+        }
+    }
+}

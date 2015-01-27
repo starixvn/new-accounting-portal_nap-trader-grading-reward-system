@@ -277,6 +277,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The default bettype has been updated successfully!.
+        /// </summary>
+        public static string UpdateBettypeSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateBettypeSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The grade has been updated successfully!.
         /// </summary>
         public static string UpdateGradeSuccessfully {

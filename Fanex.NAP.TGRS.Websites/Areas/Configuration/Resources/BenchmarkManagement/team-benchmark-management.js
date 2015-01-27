@@ -1,8 +1,8 @@
 ﻿/* File Created: May 14, 2014 */
-
+/*jshint strict: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark');
 Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
@@ -26,7 +26,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
         domElements.divTeamBMContent = domElements.divTeamBMContent || $('#divTeamBMContent');
         domElements.divTeamBMGridContainer = domElements.divTeamBMContent.find('#divTeamBMGridContainer');
         domElements.divTeamBMGrid = domElements.divTeamBMContent.find('#divTeamBMGrid');
-        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopupContent = $('#divProfitMargin');
         domElements.divPopup = $('#divPopup');
     };
 
@@ -81,7 +81,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TeamName, Width: 350, Name: 'ColTeamName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AvgProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 100,
             showNumberColumn: true,
@@ -105,7 +105,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
                                benchmark;
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTeamName', Value: item.TeamName, CssClass: 'team-name' },
                               { Name: 'ColProfitMargin', Value: profitMarginCol },
                               { Name: 'ColBenchmark', Value: benchmarkCol}]
@@ -243,6 +243,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.TeamBenchmark = function () {
 
     // Get profit margin data.
     var getProfitMarginData = function (teamId, teamName) {
+        if ($('#divPopupContent').children().length === 0) {
+            $('#divPopupContent').append('<div id="divProfitMargin" class="freegrid profit-margin-popup"></div>');
+            domElements.divPopupContent = $('#divProfitMargin');
+        }
         var profitMarginParameters = {
             TeamId: teamId
         };

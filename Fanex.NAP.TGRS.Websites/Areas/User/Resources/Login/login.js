@@ -1,7 +1,8 @@
 ﻿/* File Created: April 29, 2014 */
 /* Keep login being a pure javascript page only */
+/*jshint strict: false*/
 /* global CryptoJS */
-'use strict';
+////'use strict';
 
 var msg, innerMsg, username, password, btnSubmit;
 

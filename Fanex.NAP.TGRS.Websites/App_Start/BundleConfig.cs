@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Web.Optimization;
 
     /// <summary>
@@ -58,7 +59,8 @@ namespace Fanex.NAP.TGRS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/common",
-                "~/Content/jQuery-UI/jquery-ui-1.10.4.custom.min.css",
+                ////"~/Content/jQuery-UI/jquery-ui-1.10.4.custom.min.css",
+                "~/Content/jQuery-UI/jquery-ui-1.9.1.custom.min.css",
                 "~/Content/Tipsy/tipsy.css",
                 "~/Content/MsgBox/msgbox-0.0.1.css",
                 "~/Content/Fanex.Grid/Fanex.Grid.css",
@@ -71,8 +73,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
-                "~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
-                "~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
+                ////"~/Scripts/Libraries/jQuery/jquery-1.11.0.min.js",
+                ////"~/Scripts/Libraries/jQuery/jquery-ui-1.10.4.min.js",
+                "~/Scripts/Libraries/jQuery/jquery-1.8.2.min.js",
+                "~/Scripts/Libraries/jQuery/jquery-ui-1.9.1.min.js",
                 "~/Scripts/Libraries/jQuery/jquery.blockUI.2.66.min.js",
                 "~/Scripts/Libraries/Tipsy/jquery.tipsy.js",
                 "~/Scripts/Libraries/MsgBox/msgbox-0.0.1.js",
@@ -120,12 +124,20 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/BenchmarkManagement/league-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/bettype-benchmark-management.js",
                 "~/Areas/Configuration/Resources/BenchmarkManagement/page-manager.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/systemConfiguration").Include(
+                "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/systemConfiguration",
+                "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
         }
 
         /// <summary>
         /// Registers the reports module's bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public static void RegisterReportsBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/scripts/performanceSummary").Include(
@@ -146,27 +158,44 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.less");
 
             bundles.Add(new ScriptBundle("~/scripts/leaguePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/league-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/traderPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/trader-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/gradePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/grade-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/teamPerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/team-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/betTypePerformance").Include(
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/bettype-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/dashboard",
+                "~/Content/ToggleSwitch/toggle-switch.css",
+                "~/Areas/Reports/Resources/Dashboard/dashboard.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/dashboard").Include(
+                "~/Scripts/Libraries/jQuery/jquery.cookie.js",
+                "~/Scripts/Libraries/Highcharts/highcharts.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
+                "~/Areas/Reports/Resources/Dashboard/dashboard-chart.js",
+                "~/Areas/Reports/Resources/Dashboard/dashboard.js"));
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 
         public string LeagueName { get; set; }
 
-        public bool AllMarket { get; set; }
+        [SpParam(SqlParamName = "MainMarket")]
+        public int AllMarket { get; set; }
 
         /// <summary>
         /// Gets the setting key.

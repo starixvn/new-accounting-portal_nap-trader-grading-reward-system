@@ -1,7 +1,8 @@
 ﻿/* File Created: May 14, 2014 */
+/*jshint strict: false*/
 /* global Namespace, numeral, Fanex, common, validator, labels, messages, hasEditRight */
 
-'use strict';
+////'use strict';
 
 Namespace.Register('Fanex.NAP.TGRS.BenchmarkManagement.LeaguePage');
 Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
@@ -48,7 +49,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         domElements.btnSearch = domElements.divLeagueBMContent.find('#btnSearch');
         domElements.divLeagueBMGridContainer = domElements.divLeagueBMContent.find('#divLeagueBMGridContainer');
         domElements.divLeagueBMGrid = domElements.divLeagueBMContent.find('#divLeagueBMGrid');
-        domElements.divPopupContent = $('#divPopupContent');
+        domElements.divPopupContent = $('#divProfitMargin');
         domElements.divPopup = $('#divPopup');
     };
 
@@ -80,9 +81,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         domElements.ddlMarket.multiselect({
             selectedList: 1,
             minWidth: 160,
-            height: 47,
+            height: 70,
             header: false,
-            multiple: false
+            multiple: false,
+            noneSelectedText: 'All Markets'
         });
 
         domElements.txtLeague.off('keyup.league-benchmark').on('keyup.league-benchmark', function (event) {
@@ -105,7 +107,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                 parameters.SportType = domElements.ddlSport.val();
                 parameters.CountryCode = domElements.ddlCountry.val();
                 parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
-                parameters.AllMarket = domElements.ddlMarket.val();
+                parameters.AllMarket = domElements.ddlMarket.val() === null ? -1 : domElements.ddlMarket.val();
                 parameters.LeagueName = $.trim(domElements.txtLeague.val());
                 parameters.DisplayMode = displayMode;
                 parameters.ProgramId = programId;
@@ -167,7 +169,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.LeagueName, Width: 550, Name: 'ColLeagueName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AvgProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: labels.ProfitMargin, Width: 120, Name: 'ColProfitMargin', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.Benchmark, Width: 100, Name: 'ColBenchmark', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.BetTypeBM, Width: 100, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 180,
@@ -193,7 +195,7 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
                 configurationCol = configurationFormat.format(item.LeagueId, labels.Configure);
 
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index },
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeagueName', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColProfitMargin', Value: profitMarginCol },
                               { Name: 'ColBenchmark', Value: benchmarkCol },
@@ -346,6 +348,10 @@ Fanex.NAP.TGRS.BenchmarkManagement.LeagueBenchmark = function () {
 
     // Get profit margin data.
     var getProfitMarginData = function (leagueId, leagueName) {
+        if ($('#divPopupContent').children().length === 0) {
+            $('#divPopupContent').append('<div id="divProfitMargin" class="freegrid profit-margin-popup"></div>');
+            domElements.divPopupContent = $('#divProfitMargin');
+        }
         var profitMarginParameters = {
             LeagueId: leagueId
         };

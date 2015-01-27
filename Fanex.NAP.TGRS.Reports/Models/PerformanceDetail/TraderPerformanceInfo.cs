@@ -39,5 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public int? NoOfTeamChanged { get; set; }
 
         public int? NoOfGradeChanged { get; set; }
+
+        public decimal? Score { get; set; }
     }
 }

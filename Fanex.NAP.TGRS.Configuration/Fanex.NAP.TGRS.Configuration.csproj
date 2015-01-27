@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BenchmarkManagementController.cs" />
+    <Compile Include="Controllers\SystemConfigurationController.cs" />
     <Compile Include="Controllers\TraderManagementController.cs" />
     <Compile Include="Controllers\GradeManagementController.cs" />
     <Compile Include="Controllers\TeamManagementController.cs" />
@@ -72,6 +73,9 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\UpdateDefaultBettypeCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\UpdateScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\SystemConfiguration\ScoreCalculationPeriod.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
     <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
@@ -98,9 +103,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
+    <Compile Include="Services\Implement\SystemConfigurationService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
+    <Compile Include="Services\Interface\ISystemConfigurationService.cs" />
     <Compile Include="Services\Interface\IBenchmarkManagementService.cs" />
     <Compile Include="Services\Interface\ITraderManagementService.cs" />
     <Compile Include="Services\Interface\IGradeManagementService.cs" />
@@ -125,6 +132,10 @@
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
       <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
       <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Reports\Fanex.NAP.TGRS.Reports.csproj">
+      <Project>{F1E9E8DE-FFE3-4040-8532-21ABE82DC2E5}</Project>
+      <Name>Fanex.NAP.TGRS.Reports</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

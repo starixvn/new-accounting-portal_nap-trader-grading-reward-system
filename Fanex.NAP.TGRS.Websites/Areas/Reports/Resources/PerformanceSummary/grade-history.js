@@ -1,7 +1,8 @@
 ﻿/* File Created: June 11, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels */
 
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.PerformanceSummary.GradeHistory");
 Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
@@ -57,13 +58,13 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 130, Name: 'ColWinloss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       { HeaderText: labels.Margin, Width: 70, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             showNumberColumn: true,
             showFooter: true
@@ -81,14 +82,14 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColGrade', Value: item.Grade },
                               { Name: 'ColGradeEffectiveDate', Value: item.GradeEffectiveDate },
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinloss', Value: item.WinLost },
                               { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA)}]
                 };
                 bodyData.push(row);
                 total.MatchCount += item.MatchCount;
@@ -110,6 +111,7 @@ Fanex.TGRS.PerformanceSummary.GradeHistory = function () {
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+        $('#divPopup').find('.display-none').removeClass('display-none');
         $('#divGradeHistory', '#divPopup').fanexGrid(gridOptions);
     };
 

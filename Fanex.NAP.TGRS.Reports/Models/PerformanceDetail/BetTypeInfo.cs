@@ -17,5 +17,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public short BetType { get; set; }
 
         public string TypeName { get; set; }
+
+        public bool IsDefault { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿/* File Created: May 12, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, hasEditRight, validator, messages, datepickerSetting, layout */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var TraderManagement = new Fanex.TGRS.TraderManagement();
@@ -329,7 +330,7 @@ Fanex.TGRS.TraderManagement = function () {
                 TeamDateCol = teamDateColFormat.format(item.CustId, item.UserName, item.TeamEffectiveDate);
                 GradeDateCol = gradeDateColFormat.format(item.CustId, item.UserName, item.GradeEffectiveDate);
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: TraderNameCol },
                               { Name: 'ColEmployee', Value: item.EmployeeId },
                               { Name: 'ColTeam', Value: item.TeamName },
@@ -359,7 +360,7 @@ Fanex.TGRS.TraderManagement = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                                 { Name: 'ColTeamName', Value: item.TeamName },
                                 { Name: 'ColEffectiveDate', Value: item.EffectiveDate}]
                 };
@@ -421,7 +422,7 @@ Fanex.TGRS.TraderManagement = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                                 { Name: 'ColGradeName', Value: item.Grade },
                                 { Name: 'ColEffectiveDate', Value: item.EffectiveDate}]
                 };

@@ -33,7 +33,7 @@ namespace Fanex.NAP.TGRS.Websites.Controllers
         {
             Response.Cookies.Add(new HttpCookie("menu-id") { Expires = DateTime.Now.AddDays(-1d) });
 
-            return View();
+            return RedirectToAction("../Reports/Dashboard");
         }
 
         /// <summary>

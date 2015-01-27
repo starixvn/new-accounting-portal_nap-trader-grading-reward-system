@@ -204,4 +204,7 @@
   <data name="UpdateNoChange" xml:space="preserve">
     <value>There is no change!</value>
   </data>
+  <data name="UpdateBettypeSuccessfully" xml:space="preserve">
+    <value>The default bettype has been updated successfully!</value>
+  </data>
 </root>

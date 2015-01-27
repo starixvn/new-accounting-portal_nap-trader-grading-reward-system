@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
 
@@ -20,6 +21,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <returns>List of BetTypeItem objects.</returns>
         IEnumerable<BetTypeItem> GetBetTypes();
+
+        /// <summary>
+        /// Gets the bet types from session.
+        /// </summary>
+        /// <returns>List of BetTypeItem objects.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
+        IEnumerable<BetTypeItem> GetBetTypesFromSession();
 
         /// <summary>
         /// Gets the league performance.

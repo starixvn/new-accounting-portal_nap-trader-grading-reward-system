@@ -1,6 +1,7 @@
 ﻿/* File Created: May 12, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, hasEditRight, validator, messages */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var teamManagement = new Fanex.TGRS.TeamManagement();
@@ -221,7 +222,7 @@ Fanex.TGRS.TeamManagement = function () {
                 teamNameCol = item.TeamName;
                 teamDescCol = descColFormat.format(item.TeamId, item.Description);
                 row = {
-                    Columns: [{ Name: 'ColNum', Value: index },
+                    Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTeamNameCol : teamNameCol },
                               { Name: 'ColDes', Value: teamDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },

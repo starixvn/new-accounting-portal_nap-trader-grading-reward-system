@@ -31,6 +31,6 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 
         public string LeagueName { get; set; }
 
-        public bool AllMarket { get; set; }
+        public int AllMarket { get; set; }
     }
 }

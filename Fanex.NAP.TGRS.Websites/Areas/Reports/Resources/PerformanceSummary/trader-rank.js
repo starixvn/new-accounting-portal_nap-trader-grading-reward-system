@@ -1,6 +1,7 @@
 ﻿/* File Created: May 12, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, labels, filterParameters */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var TraderRank = new Fanex.TGRS.PerformanceSummary.TraderRank();
@@ -62,7 +63,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
             multiple: false
         });
         //btnSearch
-        domElements.ddlType.on('change', function () {
+        domElements.ddlType.on('change', domElements.ddlType, function () {
             var selectType = $("option:selected", this).val() * 1;
             filterParameters.Top = selectType;
             getReports();
@@ -122,10 +123,10 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       { HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 150
         };
@@ -156,7 +157,7 @@ Fanex.TGRS.PerformanceSummary.TraderRank = function () {
                               { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColMargin', Value: item.Margin || labels.NA}]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA)}]
                 };
                 bodyData.push(row);
             });

@@ -25,8 +25,8 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
             {
                 this.TeamId = benchmark.TeamId;
                 this.TeamName = benchmark.TeamName;
-                this.Benchmark = Converter.ToDecimal(benchmark.Benchmark);
-                this.Margin = Converter.ToDecimal(benchmark.Margin);
+                this.Benchmark = benchmark.Benchmark;
+                this.Margin = benchmark.Margin;
             }
         }
 
@@ -34,8 +34,8 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement
 
         public string TeamName { get; set; }
 
-        public decimal Benchmark { get; set; }
+        public decimal? Benchmark { get; set; }
 
-        public decimal Margin { get; set; }
+        public decimal? Margin { get; set; }
     }
 }

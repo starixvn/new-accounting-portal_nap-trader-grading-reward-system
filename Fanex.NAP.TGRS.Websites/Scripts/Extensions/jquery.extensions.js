@@ -1,6 +1,7 @@
 ﻿/* File Created: Nay 14, 2014 */
+/*jshint strict: false*/
 /*global moment, numeral */
-'use strict';
+////'use strict';
 
 (function ($) {
     // Input field allows digits and on exceptional character at the beginning of the input value.

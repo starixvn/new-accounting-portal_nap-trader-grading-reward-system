@@ -1,6 +1,7 @@
 ﻿/* File Created: April 3, 2014 */
+/*jshint strict: false*/
 /* global Namespace, common, validator, passedData */
-'use strict';
+////'use strict';
 
 $(document).ready(function () {
     var userProfile = new Fanex.TGRS.UserProfile();

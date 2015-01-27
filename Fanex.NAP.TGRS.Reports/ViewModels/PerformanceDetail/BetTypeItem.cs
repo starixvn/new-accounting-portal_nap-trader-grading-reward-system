@@ -24,11 +24,14 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             {
                 this.BetTypeId = betType.BetType;
                 this.BetTypeName = betType.TypeName;
+                this.IsDefaultCheck = betType.IsDefault;
             }
         }
 
         public short BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
+
+        public bool IsDefaultCheck { get; set; }
     }
 }

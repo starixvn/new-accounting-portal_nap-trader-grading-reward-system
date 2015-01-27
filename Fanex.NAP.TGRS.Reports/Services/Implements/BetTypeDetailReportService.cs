@@ -240,7 +240,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.Turnover,
                     item.WinLoss,
                     item.BetCount,
-                    item.Margin
+                    (object)item.Margin ?? ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }

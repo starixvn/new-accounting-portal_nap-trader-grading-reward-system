@@ -191,9 +191,13 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\trader-rank.js" />
@@ -224,6 +228,9 @@
     <Content Include="Content\Bootstrap\Css\bootstrap-theme.css" />
     <Content Include="Content\Bootstrap\Css\bootstrap.css" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\jQuery-UI\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Content\ReponsiveTabs\responsive-tabs-theme.css" />
+    <Content Include="Content\ReponsiveTabs\responsive-tabs.css" />
     <Content Include="Content\DatePicker\images\icon-calendar.png" />
     <Content Include="Content\DatePicker\jquery.nexDatePicker.css" />
     <Content Include="Content\Fanex.Grid\Fanex.Grid.css" />
@@ -300,9 +307,17 @@
     <Content Include="Content\Themes\Images\small-arrow-down.png" />
     <Content Include="Content\Themes\Images\user.png" />
     <Content Include="Content\Tipsy\tipsy.css" />
+    <Content Include="Content\ToggleSwitch\toggle-switch.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
     <Content Include="Scripts\Extensions\native-object-extensions.js" />
+    <Content Include="Scripts\Libraries\Highcharts\exporting.js" />
+    <Content Include="Scripts\Libraries\Highcharts\highcharts-3d.js" />
+    <Content Include="Scripts\Libraries\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libraries\jQuery\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\Libraries\jQuery\jquery-ui-1.9.1.min.js" />
+    <Content Include="Scripts\Libraries\jQuery\jquery.cookie.js" />
+    <Content Include="Scripts\Libraries\ReponsiveTabs\jquery.responsiveTabs.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
     <Content Include="Scripts\Libraries\MultipleSelect\jquery.multiselect.js" />
@@ -376,6 +391,10 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls" />
+    <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.less" />
+    <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -433,6 +452,9 @@
     <Content Include="Web.backupMNL.config" />
     <Content Include="Web.AppSettings.backupMNL.config" />
     <Content Include="Web.ConnectionString.backupMNL.config" />
+    <None Include="Content\Themes\Fonts\HmnHiRzvcnQr8CjBje6GQhTbgVql8nDJpwnrE27mub0.woff2" />
+    <None Include="Content\Themes\Fonts\VK2oK8L4CJesxwY5dF3zxeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
+    <None Include="Content\Themes\Fonts\Y82YH_MJJWnsH2yUA5AuYeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">

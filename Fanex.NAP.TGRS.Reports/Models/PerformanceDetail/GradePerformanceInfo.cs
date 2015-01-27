@@ -29,5 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public int? BetCount { get; set; }
 
         public decimal? Margin { get; set; }
+
+        public decimal? Score { get; set; }
     }
 }

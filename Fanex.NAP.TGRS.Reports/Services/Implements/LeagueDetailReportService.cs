@@ -31,7 +31,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
-        private const string BetTypesSessionKey = "Fanex.NAP.TGRS.Reports.BetTypes";
+        private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.DefaultBettype";
         private const int PointInPixel = 225;
         private const string MinPercentString = "min";
         private const string MaxPercentString = "max";
@@ -42,18 +42,29 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of BetTypeItem objects.</returns>
         public IEnumerable<BetTypeItem> GetBetTypes()
         {
-            List<BetTypeItem> betTypes = SessionManager.Get<List<BetTypeItem>>(BetTypesSessionKey);
+            List<BetTypeItem> betTypes = null;
+            var criteria = new GetBetTypesCriteria();
+            IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
 
-            if (betTypes == null || betTypes.Count == 0)
+            if (data != null && data.Any())
             {
-                var criteria = new GetBetTypesCriteria();
-                IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
+                betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
+            }
 
-                if (data != null && data.Any())
-                {
-                    betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
-                    SessionManager.Set<List<BetTypeItem>>(BetTypesSessionKey, betTypes);
-                }
+            SessionManager.Set<List<BetTypeItem>>(DefaultBettypeSessionKey, betTypes);
+            return betTypes;
+        }
+
+        /// <summary>
+        /// Gets the bet types from session.
+        /// </summary>
+        /// <returns>List of BetTypeItem objects.</returns>
+        public IEnumerable<BetTypeItem> GetBetTypesFromSession()
+        {
+            var betTypes = SessionManager.Get<List<BetTypeItem>>(DefaultBettypeSessionKey);
+            if (betTypes == null)
+            {
+                betTypes = this.GetBetTypes().ToList();
             }
 
             return betTypes;
@@ -136,6 +147,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of bet type detail objects.</returns>
         public IEnumerable<BetTypeDetailItem> GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
         {
+            GetScoreByPeriodCriteria scoreByPeriodCriteria = new GetScoreByPeriodCriteria
+            {
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate,
+                CustId = criteria.CustId,
+                MatchId = criteria.MatchId,
+            };
             IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
             List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
 
@@ -143,7 +161,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (var item in bettypeData)
                 {
-                    bettypeDetail.Add(new BetTypeDetailItem(item));
+                    var bettypeItem = new BetTypeDetailItem(item);
+                    bettypeItem.ScoreByPeriod = new List<ScoreByPeriodItem>();
+                    scoreByPeriodCriteria.Bettypes = item.BetType.ToString();
+                    IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
+                    foreach (var scoreByPeriodInfo in scoreByPeriodData)
+                    {
+                        bettypeItem.ScoreByPeriod.Add(new ScoreByPeriodItem(scoreByPeriodInfo));
+                    }
+
+                    bettypeDetail.Add(bettypeItem);
                 }
             }
 
@@ -249,7 +276,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.Turnover,
                     item.WinLoss,
                     item.BetCount,
-                    item.Margin,
+                    (object)item.Margin ?? ViewLang.NA,
                     item.LeagueBM
                 };
                 writer.WriteRow(styleIndex, record);

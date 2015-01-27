@@ -80,5 +80,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
         /// <param name="criteria">The criteria that contain updated benchmark value.</param>
         /// <returns>ICommandResult object indicates if the updating process is successful or not.</returns>
         ICommandResult UpdateBetTypeBenchmark(UpdateBetTypeBenchmarkCriteria criteria);
+
+        ProfitMarginItem GetProfitMarginByBettype(GetBetTypeProfitMarginCriteria criteria);
     }
 }

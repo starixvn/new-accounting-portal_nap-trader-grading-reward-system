@@ -1,6 +1,7 @@
 ﻿/* File Created: April 29, 2014 */
+/*jshint strict: false*/
 /* global Namespace */
-'use strict';
+////'use strict';
 
 Namespace.Register("Fanex.TGRS.Common");
 Fanex.TGRS.Common = function () {
@@ -23,6 +24,7 @@ Fanex.TGRS.Common = function () {
         MomentDateFormat: 'MM/DD/YYYY',
         IntegerFormat: '0,0',
         DecimalFormat: '0,0.00',
+        DecimalFormat3Digits: '0,0.000',
         PercentFormat: '0,0.00%',
         MonthYearDateFormat: 'MM-yy',
         MonthFormat: 'MMM dd, yyyy',
@@ -185,6 +187,15 @@ Fanex.TGRS.Common = function () {
             }
 
             iframe.attr('src', downloadUrl);
+        }
+    };
+
+    $this.GetNumWithLabel = function (number, nullDisplay) {
+        if (number || number === 0) {
+            return number;
+        }
+        else {
+            return nullDisplay;
         }
     };
 

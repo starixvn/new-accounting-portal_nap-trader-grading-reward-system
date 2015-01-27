@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
+    using System.Collections.Generic;
     using Fanex.Common;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
@@ -30,6 +31,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetCount = Converter.ToInt(betType.BetCount);
                 this.Margin = betType.Margin;
                 this.Benchmark = Converter.ToDecimal(betType.Benchmark);
+                this.Score = betType.Score;
             }
         }
 
@@ -45,6 +47,10 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal? Margin { get; set; }
 
-        public decimal Benchmark { get; set; }
+        public decimal? Benchmark { get; set; }
+
+        public decimal? Score { get; set; }
+
+        public List<ScoreByPeriodItem> ScoreByPeriod { get; set; }
     }
 }
