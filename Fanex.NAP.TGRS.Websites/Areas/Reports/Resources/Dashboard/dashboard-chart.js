@@ -256,7 +256,7 @@ Fanex.TGRS.DashboardChart = function () {
                         fontSize: '12px',
                         fontFamily: 'Verdana, sans-serif'
                     },
-                    useHTML: true
+                    useHTML: false
                 }
             },
             yAxis: [{ // Primary yAxis
@@ -383,6 +383,8 @@ Fanex.TGRS.DashboardChart = function () {
                 hideDelay: 200,
                 shared: false,
                 followPointer: false
+                //useHTML: true
+                //backgroundColor: "rgba(255,255,255,1)"
             },
             xAxis: {
                 //categories: Highcharts.getOptions().lang.shortMonths
@@ -394,13 +396,14 @@ Fanex.TGRS.DashboardChart = function () {
                         var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
 
                         return '<div title="' + text + '">' + formatted + '</div>';
+
                     },
                     style: {
                         fontSize: '12px',
                         //fontWeight: 'normal',
                         fontFamily: 'Verdana, sans-serif'
                     },
-                    useHTML: true
+                    useHTML: false
                 }
             },
             yAxis: [{ // Primary yAxis
