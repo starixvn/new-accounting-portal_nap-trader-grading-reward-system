@@ -24,15 +24,12 @@
     <div id="divTradersGrid" class="freegrid">
     </div>
 </div>
-@if (ViewBag.HasEditRight)
-{
-    <div id="divHiddenForm" class="display-none">
-        @Html.Partial("InsertTraderForm")
-        @Html.Partial("UpdateTraderForm")
-        @Html.Partial("GradeHistoryForm")
-        @Html.Partial("TeamHistoryForm")
-    </div>
-}
+<div id="divHiddenForm" class="display-none">
+    @Html.Partial("InsertTraderForm")
+    @Html.Partial("UpdateTraderForm")
+    @Html.Partial("GradeHistoryForm")
+    @Html.Partial("TeamHistoryForm")
+</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/TraderManagement")
