@@ -155,8 +155,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="UMControllerLibrary">
-      <HintPath>..\Dependencies\Others\UMControllerLibrary.dll</HintPath>
+    <Reference Include="UMControllerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\UMControllerLibrary.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -339,6 +340,7 @@
     <Content Include="Scripts\Libraries\Others\moment.js" />
     <Content Include="Scripts\Libraries\Others\numeral.js" />
     <Content Include="Scripts\Libraries\Tipsy\jquery.tipsy.js" />
+    <Content Include="UMControllerLibrary.dll" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -402,7 +404,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Web.AppSettings.config" />
-    <Content Include="Web.ConnectionString.config" />
+    <Content Include="Web.ConnectionString.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
