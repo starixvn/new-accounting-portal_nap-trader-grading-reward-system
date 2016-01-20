@@ -400,6 +400,7 @@
     <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
+    <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

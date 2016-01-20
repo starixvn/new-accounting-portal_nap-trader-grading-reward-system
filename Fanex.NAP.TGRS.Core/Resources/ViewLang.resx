@@ -516,4 +516,7 @@
   <data name="BM" xml:space="preserve">
     <value>BM %</value>
   </data>
+  <data name="SpreadManagement" xml:space="preserve">
+    <value>Spread Management</value>
+  </data>
 </root>

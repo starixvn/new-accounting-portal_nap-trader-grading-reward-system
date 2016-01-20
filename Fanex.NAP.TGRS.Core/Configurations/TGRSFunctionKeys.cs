@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 5/17/2014 4:35:06 PM
+// Lasted generated date: 1/20/2016 4:37:21 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -50,14 +50,15 @@ public static class TGRSFunctionKeys
 
         public const string Reports = "Reports";
 
+        public const string SpreadManagement = "SpreadManagement";
+
         public const string SystemConfiguration = "SystemConfiguration";
-
-        public const string TeamManagement = "TeamManagement";
-
-        public const string Test = "Test";
-
-        public const string TraderManagement = "TraderManagement";
 
         public const string SystemSetting = "SystemSetting";
 
+        public const string TeamManagement = "TeamManagement";
+
+        public const string TraderManagement = "TraderManagement";
+
     }
+ 
