@@ -15,6 +15,7 @@
         </div>
     </div>
 }
+<!-- Temporarily hidden
 <div id="divScoreCalculateConfig" class="score-calculate-config">
     <div class="filter-bar">
         <div class="group-title">
@@ -77,6 +78,7 @@
         </div>
     </div>
 </div>
+-->
 <div id="divBettypeConfigGroup" class="bettype-config-group">
     <div class="filter-bar">
         <div class="group-title">
@@ -87,7 +89,7 @@
         <div id="divBettypeContent" class="filter-form bettype-content">
             <div class="filter-row bettype-filter-row">
                 <div class="edit-field col_9">
-                    <select id="ddlBetType" multiple="multiple">
+                    <select id="ddlBetType" multiple="multiple" style="height:700px;">
                         @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
                         {
                             <option value="@item.BetTypeId">@item.BetTypeName</option>

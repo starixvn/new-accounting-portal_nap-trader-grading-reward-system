@@ -400,7 +400,6 @@
     <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
-    <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -431,7 +430,9 @@
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
     <Content Include="Web.local.config" />
     <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config" />
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.master.config" />
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
