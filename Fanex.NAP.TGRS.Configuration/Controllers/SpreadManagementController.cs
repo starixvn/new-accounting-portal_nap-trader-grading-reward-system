@@ -40,19 +40,16 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         [HttpGet]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetAllSpread(string leagueName)
+        public ActionResult GetAllSpread(GetAllSpreadCriteria criteria)
         {
-            var spreads = _spreadManagementService.GetAllSpread(new GetAllSpreadCriteria
-                {
-                    LeagueName = leagueName
-                });
+            var spreads = _spreadManagementService.GetAllSpread(criteria);
 
             return Json(spreads, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
-        public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
+        public ActionResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
         {
             var result = _spreadManagementService.UpdateSpread(criteria);
 
@@ -74,7 +71,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var templatePath = Server.MapPath(SpreadManagementExcelPath);
             var criteria = new GetAllSpreadCriteria
             {
-                LeagueName = leagueName
+                LeagueName = leagueName,
+                PageIndex = 1,
+                PageSize = int.MaxValue
             };
 
             _spreadManagementService.ExportSpreadList(criteria, templatePath);

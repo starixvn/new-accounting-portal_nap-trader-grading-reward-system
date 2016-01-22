@@ -15,6 +15,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
     {
         public string LeagueName { get; set; }
 
+        public int PageSize { get; set; }
+
+        public int PageIndex { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Spread_SelectAll";

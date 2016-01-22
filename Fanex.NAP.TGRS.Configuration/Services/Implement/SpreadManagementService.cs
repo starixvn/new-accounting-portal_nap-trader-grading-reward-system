@@ -30,7 +30,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             return GetData<SpreadInfo>(criteria);
         }
 
-        public ICommandResult UpdateSpread(UpdateSpreadCriteria criteria)
+        public ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
         {
             return UpdateData(criteria);
         }

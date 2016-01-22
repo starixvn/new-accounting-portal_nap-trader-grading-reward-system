@@ -13,6 +13,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
     public class DeleteSpreadCriteria : CriteriaBase
     {
+        public int CreatorId { get; set; }
+
         public int LeagueId { get; set; }
 
         public int BetTypeId { get; set; }
@@ -24,7 +26,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public override bool IsValid()
         {
-            return LeagueId > 0;
+            return true;
         }
     }
 }

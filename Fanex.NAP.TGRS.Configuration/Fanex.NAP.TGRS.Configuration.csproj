@@ -80,7 +80,7 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\DeleteSpreadCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\GetAllSpreadCriteria.cs" />
-    <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
+    <Compile Include="Criteria\SpreadManagement\UpdateSingleSpreadCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateDefaultBettypeCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateScoreCalculationPeriodCriteria.cs" />

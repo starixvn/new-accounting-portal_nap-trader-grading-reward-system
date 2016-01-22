@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UpdateSpreadCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="UpdateSingleSpreadCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,8 +11,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 {
     using Framework.Data;
 
-    public class UpdateSpreadCriteria : CriteriaBase
+    public class UpdateSingleSpreadCriteria : CriteriaBase
     {
+        public int CreatorId { get; set; }
+
         public int LeagueId { get; set; }
 
         public int BetTypeId { get; set; }
@@ -21,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public override string GetSettingKey()
         {
-            return "TGRS_Spread_Update";
+            return "TGRS_Spread_UpdateSingle";
         }
 
         public override bool IsValid()

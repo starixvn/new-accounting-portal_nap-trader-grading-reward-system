@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     {
         IEnumerable<SpreadInfo> GetAllSpread(GetAllSpreadCriteria criteria);
 
-        ICommandResult UpdateSpread(UpdateSpreadCriteria criteria);
+        ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria);
 
         ICommandResult DeleteSpread(DeleteSpreadCriteria criteria);
 
