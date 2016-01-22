@@ -519,4 +519,7 @@
   <data name="SpreadManagement" xml:space="preserve">
     <value>Spread Management</value>
   </data>
+  <data name="SpreadListFileName" xml:space="preserve">
+    <value>Spread_List_{0}</value>
+  </data>
 </root>

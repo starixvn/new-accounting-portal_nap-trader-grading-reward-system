@@ -49,6 +49,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Dependencies\Others\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -74,6 +77,7 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\SpreadManagement\DeleteSpreadCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\GetAllSpreadCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
@@ -146,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\SpreadManagement\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

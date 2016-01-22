@@ -961,6 +961,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spread_List_{0}.
+        /// </summary>
+        public static string SpreadListFileName {
+            get {
+                return ResourceManager.GetString("SpreadListFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spread Management.
         /// </summary>
         public static string SpreadManagement {

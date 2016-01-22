@@ -18,6 +18,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
     public class SpreadManagementController : TGRSBaseController
     {
+        private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
+
         private readonly ISpreadManagementService _spreadManagementService;
 
         public SpreadManagementController()
@@ -55,6 +57,29 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var result = _spreadManagementService.UpdateSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        public ActionResult DeleteSpread(DeleteSpreadCriteria criteria)
+        {
+            var result = _spreadManagementService.DeleteSpread(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
+        public ActionResult ExportSpreadList(string leagueName)
+        {
+            var templatePath = Server.MapPath(SpreadManagementExcelPath);
+            var criteria = new GetAllSpreadCriteria
+            {
+                LeagueName = leagueName
+            };
+
+            _spreadManagementService.ExportSpreadList(criteria, templatePath);
+
+            return new EmptyResult();
         }
     }
 }
