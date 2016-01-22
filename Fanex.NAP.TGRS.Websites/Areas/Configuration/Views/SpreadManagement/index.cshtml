@@ -34,7 +34,7 @@
             </div>
 
             <div class="filter-row">
-                <a href="#" style="margin-left:135px;">Download Template</a>
+                <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
             </div>
 
             <div class="filter-row">
@@ -71,15 +71,7 @@
 
 
 @section Foot{
-    <script>
-        $("#browseBtn").click(function () {
-            $("#File").click();
-        });
-
-        $("#File").change(function () {
-            $("#FileName").val($(this).val());
-        });
-    </script>
+    @Scripts.Render("~/scripts/SpreadManagement")
 }
 
 

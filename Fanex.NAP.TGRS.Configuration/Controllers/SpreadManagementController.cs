@@ -38,6 +38,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return View();
         }
 
+        public ActionResult DownloadTemplate()
+        {
+            return File("~/App_Data/SpreadTemplate/SpreadTemplate.xls", "application/ms-excel", "SpreadTemplate.xls");
+        }
+
         [HttpGet]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetAllSpread(GetAllSpreadCriteria criteria)
