@@ -112,7 +112,8 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/spreadManagement").Include(
-                "~/Areas/Configuration/Resources/SpreadManagement/spread-management.js"));
+                "~/Areas/Configuration/Resources/SpreadManagement/spread-management.js",
+                "~/Areas/Configuration/Resources/SpreadManagement/popup-result.js"));
 
             bundles.AddAndInclude(
                 "~/styles/traderManagement",
@@ -138,6 +139,9 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.AddAndInclude(
                 "~/styles/systemConfiguration",
                 "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
+
+            //bundles.Add(new ScriptBundle("~/scripts/spreadManagement").Include(
+            //    "~/Areas/Configuration/Resources/SpreadManagement/popup-result.js"));                
         }
 
         /// <summary>

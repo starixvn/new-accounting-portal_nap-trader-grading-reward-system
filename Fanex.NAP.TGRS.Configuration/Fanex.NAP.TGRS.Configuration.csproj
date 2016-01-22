@@ -79,6 +79,8 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
+    <Compile Include="Criteria\Common\GetLeagueIdsCriteria.cs" />
+    <Compile Include="Criteria\Common\GetBetTypeIdsCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\DeleteSpreadCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\GetAllSpreadCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSingleSpreadCriteria.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
+    <Compile Include="Services\Implement\CommonService.cs" />
     <Compile Include="Services\Implement\SpreadManagementService.cs" />
     <Compile Include="Services\Implement\SystemConfigurationService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />

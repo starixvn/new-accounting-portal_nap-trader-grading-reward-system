@@ -20,7 +20,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Models.SpreadManagement;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
+    using NAP.TGRS.Core.ExcelUtility;
     using Services.SpreadManagement;
+    using System.Web;
+    using System.Web.Mvc;
+    using TGRS.Core.ExcelUtility.DefaultImplementation;
+    using System.Linq;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -39,6 +44,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             _spreadManagementService = spreadManagementService ?? new SpreadManagementService();
             _excelReader = excelMapper ?? new HttpExcelMapper();
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.SpreadManagement, Constant.Policy.Host);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
@@ -57,27 +63,28 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             var datas = _excelReader.Read<SpreadChecker>(file);
 
-            var total = 0;
-            var error = 0;
-            var errorList = new Queue<SpreadChecker>();
+            //var total = 0;
+            //var error = 0;
+            //var errorList = new Queue<SpreadChecker>();
 
-            foreach (var data in datas)
-            {
-                ++total;
-                var spreadInfo = (SpreadInfo)data;
+            //foreach (var data in datas)
+            //{
+            //    ++total;
+            //    var spreadInfo = (SpreadInfo)data;
 
-                if (spreadInfo != null)
-                {
-                    ////////todo: check database here
-                }
-                else
-                {
-                    ++error;
-                    errorList.Enqueue(data);
-                }
-            }
+            //    if (spreadInfo != null)
+            //    {
+            //        ////////todo: check database here
+            //    }
+            //    else
+            //    {
+            //        ++error;
+            //        errorList.Enqueue(data);
+            //    }
+            //}
 
-            return Json(true);
+            //var test = _excelReader.Read<SpreadInfo>(file).ToList<SpreadInfo>();
+            return Json(datas, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -124,12 +131,14 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             return new EmptyResult();
         }
-
+        
         [HttpGet]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetHostPermission()
         {
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
+
+        
     }
 }

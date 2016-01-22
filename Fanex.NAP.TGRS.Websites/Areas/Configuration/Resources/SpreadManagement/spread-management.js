@@ -181,6 +181,15 @@ var spreadManagementService = (function ($) {
         return false;
     }
 
+    // Display new team form.
+    spreadManagementService.showPopupResult = function (result) {        
+        var form = $('#divUploadResultForm');
+        var option = { };
+        common.Popup('Upload Result', form, option);
+
+        spreadPopupResult.renderGrid(result);
+    }
+
     var handleGridEvents = function () {
         var spreadLinks = $('#divSpreadGrid').find('span.spread-link');
         var spreadInputs = $('#divSpreadGrid').find('input.spread');
@@ -281,6 +290,7 @@ var spreadManagementService = (function ($) {
 })(jQuery);
 
 $(document).ready(function () {
+
     $("#btnSearchSpread").on('click', function () {
         spreadManagementService.Search();
     });
@@ -297,7 +307,7 @@ $(document).ready(function () {
         $("#fileName").val($("#file").val());
     });
 
-    $("#uploadBtn").click(function() {
+    $("#uploadBtn").click(function () {
         var data = new FormData();
         var file = document.getElementById("file").files[0];
         data.append("file", file);
@@ -306,7 +316,10 @@ $(document).ready(function () {
             type: "POST",
             data: data,
             processData: false,
-            contentType: false
+            contentType: false,
+            success: function (result) {
+                spreadManagementService.showPopupResult(result);
+            }
         });
     });
 });

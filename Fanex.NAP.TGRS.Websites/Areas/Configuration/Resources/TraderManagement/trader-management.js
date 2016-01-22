@@ -696,7 +696,7 @@ Fanex.TGRS.TraderManagement = function () {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
-        common.Modal(labels.EditTrader, form);
+        common.Popup(labels.EditTrader, form);
 
         //prepare event, data
         cachePopupElements();

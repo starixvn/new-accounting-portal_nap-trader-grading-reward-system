@@ -1,0 +1,25 @@
+﻿@{
+    var error = 10;
+    var total = 100;
+}
+
+<div id="divUploadResultForm" class="form-bar width-600">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message">
+        </div>
+        <div>
+            <label>
+                There are @error/@total invalid record(s)</label>
+        </div>
+        <div id="resultContainer" class="content-grid">
+            <div id="divUploadResultGrid" class="freegrid">
+            </div>
+        </div>
+        <div class="form-row button-row">                    
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" onclick="spreadPopupResult.save();" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" onclick = "common.ClosePopup();" />
+            </div>
+        </div>
+    </div>
+</div>

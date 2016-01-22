@@ -78,6 +78,13 @@
     @Html.HiddenFor(s => s.PageCount)
 </div>
 
+@if (ViewBag.HasEditRight)
+{
+    <div id="divHiddenForm" class="display-none">
+        @Html.Partial("UploadResult")
+    </div>
+}
+
 @section Foot{
     @Scripts.Render("~/scripts/spreadManagement")
     
