@@ -1,0 +1,116 @@
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using Fanex.NAP.TGRS.Core.ExcelUtility;
+
+namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
+{
+    public class HttpExcelMapper : FileObjectMapper<HttpPostedFileBase>
+    {
+        private const string location = "~/App_Data/";
+
+        private ObjectMapper mapper = new ObjectMapper();
+
+        public override IEnumerable<T> Read<T>(HttpPostedFileBase source)
+        {
+            var sheet = WorkbookFactory.Create(source.InputStream).GetSheetAt(0);
+
+            var columnsMapping = GetColumnsMapping(sheet);
+            var methodsMapping = mapper.GetSetters<T>();
+            var finalMapping = GetFinalMapping(columnsMapping, methodsMapping);
+
+            for (int i = 1; i <= sheet.LastRowNum; ++i)
+            {
+                var obj = new T();
+
+                var row = sheet.GetRow(i);
+                foreach (var col in finalMapping)
+                {
+                    object setter = null;
+                    var key = row.GetCell(col.Key);
+                    try
+                    {
+                        setter = key.NumericCellValue;
+                    }
+                    catch (Exception)
+                    {
+                        setter = key.StringCellValue;
+                    }
+
+                    col.Value.Invoke(obj, setter);
+                }
+
+                yield return obj;
+            }
+        }
+
+        public override Stream Write<T>(IEnumerable<T> objs)
+        {
+            var workBook = new HSSFWorkbook();
+            var sheet = workBook.CreateSheet();
+
+            var columnMapping = mapper.GetGetters<T>();
+            var columnNames = mapper.GetPropertiesName<T>();
+
+            var rowHeader = sheet.CreateRow(0);
+            var col = 0;
+            foreach (var columnName in columnNames)
+            {
+                rowHeader.CreateCell(col++).SetCellValue(columnName);
+            }
+
+            var row = 1;
+            foreach (var obj in objs)
+            {
+                var rowObj = sheet.CreateRow(row++);
+                for (int i = 0; i < columnMapping.Count; ++i)
+                {
+                    rowObj.CreateCell(i).SetCellValue(columnMapping[i].Invoke(obj).ToString());
+                }
+            }
+
+            var stream = new MemoryStream();
+            workBook.Write(stream);
+            return stream;
+        }
+
+        protected override bool Validate(HttpPostedFileBase source)
+        {
+            var extension = source.FileName.Split('.').Last();
+            return extension == "xls" || extension == "xlsx" || extension == "csv";
+        }
+
+        #region Mapping Helper
+
+        private IDictionary<int, T> GetFinalMapping<T>(IDictionary<string, int> columnMapping, IDictionary<string, T> setterMapping)
+        {
+            var dictionary = new Dictionary<int, T>(columnMapping.Count);
+
+            foreach (var mapping in columnMapping)
+            {
+                dictionary.Add(mapping.Value, setterMapping[mapping.Key]);
+            }
+
+            return dictionary;
+        }
+
+        private IDictionary<string, int> GetColumnsMapping(ISheet sheet)
+        {
+            var lastColumn = sheet.GetRow(0).Cells.Count;
+            var dictionary = new Dictionary<string, int>(lastColumn);
+
+            for (int i = 0; i < lastColumn; ++i)
+            {
+                dictionary.Add(sheet.GetRow(0).GetCell(i).StringCellValue, i);
+            }
+
+            return dictionary;
+        }
+
+        #endregion Mapping Helper
+    }
+}
