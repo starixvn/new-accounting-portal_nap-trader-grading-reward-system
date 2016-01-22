@@ -9,14 +9,13 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
 {
-    using System.Collections.Generic;
     using Criteria.SpreadManagement;
     using Framework.Command;
-    using Models.SpreadManagement;
+    using ViewModel.SpreadManagement;
 
     public interface ISpreadManagementService
     {
-        IEnumerable<SpreadInfo> GetAllSpread(GetAllSpreadCriteria criteria);
+        SpreadInfoList GetAllSpread(GetAllSpreadCriteria criteria);
 
         ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria);
 

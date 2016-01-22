@@ -43,13 +43,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return File("~/App_Data/SpreadTemplate/SpreadTemplate.xls", "application/ms-excel", "SpreadTemplate.xls");
         }
 
-        [HttpGet]
+        [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetAllSpread(GetAllSpreadCriteria criteria)
         {
-            var spreads = _spreadManagementService.GetAllSpread(criteria);
+            var spreadList = _spreadManagementService.GetAllSpread(criteria);
 
-            return Json(spreads, JsonRequestBehavior.AllowGet);
+            return Json(spreadList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

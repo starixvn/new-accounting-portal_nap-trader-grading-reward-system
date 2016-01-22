@@ -16,18 +16,28 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     using Core.ExcelUtility.RichTextExtensions;
     using Core.Resources;
     using Criteria.SpreadManagement;
+    using DataAccess.Implement;
+    using DataAccess.Interface;
     using Framework.Command;
     using Models.SpreadManagement;
     using NAP.Core.Web;
     using NPOI.SS.UserModel;
+    using ViewModel.SpreadManagement;
 
     public class SpreadManagementService : TGRSBaseService, ISpreadManagementService
     {
         private const int PointInPixel = 225;
 
-        public IEnumerable<SpreadInfo> GetAllSpread(GetAllSpreadCriteria criteria)
+        private readonly ISpreadManagementDataAccess _spreadManagementDataAccess;
+
+        public SpreadManagementService()
         {
-            return GetData<SpreadInfo>(criteria);
+            _spreadManagementDataAccess = new SpreadManagementDataAccess();
+        }
+
+        public SpreadInfoList GetAllSpread(GetAllSpreadCriteria criteria)
+        {
+            return _spreadManagementDataAccess.GetAllSpread(criteria);
         }
 
         public ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
@@ -42,7 +52,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
 
         public void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath)
         {
-            var spreadList = GetAllSpread(criteria);
+            var spreadList = GetAllSpread(criteria).SpreadInfoItems;
 
             var reportName = string.Format(
                                 ViewLang.SpreadListFileName,
@@ -106,7 +116,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             writer.CopyRows(3, 1);
         }
 
-        private void FillRowData(IEnumerable<SpreadInfo> spreads, ref ExcelTemplateWriter writer)
+        private void FillRowData(IEnumerable<SpreadInfoModel> spreads, ref ExcelTemplateWriter writer)
         {
             for (var i = 0; i < spreads.Count(); i++)
             {

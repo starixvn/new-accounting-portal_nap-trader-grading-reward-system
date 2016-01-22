@@ -2,7 +2,7 @@
     ViewBag.Title = ViewLang.SpreadManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement.GetAllSpreadCriteria
 @section headline{
     <div class="title">
         <div>
@@ -10,68 +10,83 @@
         </div>
     </div>
 }
-
-
 <div id="uploader" class="row content">
     <div class="filter-bar">
         <div class="filter-form">
             <div class="filter-row">
                 <div class="lbl-field col_5">
-                    <label class="control-label" for="FileName">Add/Edit</label>
+                    <label class="control-label" for="FileName">
+                        Add/Edit</label>
                 </div>
-
                 <div class="edit-field col_12">
                     <div class="clearable-field">
-                        <input type="text" name="FileName" id="FileName" class="clearable-input" disabled style="width:300px;" />
+                        <input type="text" name="FileName" id="FileName" class="clearable-input" disabled
+                            style="width: 300px;" />
                     </div>
                 </div>
-
                 <div class="col_4">
-                    <button class="blue-button" id="browseBtn">Browse</button>
+                    <button class="blue-button" id="browseBtn">
+                        Browse</button>
                 </div>
-                <input type="file" id="File" name="File" style="display:none" />
-                <button class="blue-button" type="submit">Upload</button>
+                <input type="file" id="File" name="File" style="display: none" />
+                <button class="blue-button" type="submit">
+                    Upload</button>
             </div>
-
             <div class="filter-row">
                 <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
             </div>
-
             <div class="filter-row">
                 <div class="lbl-field col_5">
-                    <label class="control-label" for="League">League</label>
+                    <label class="control-label" for="League">
+                        League</label>
                 </div>
-
                 <div class="edit-field col_12">
                     <div class="clearable-field">
-                        <input class="form-control input-sm" type="text" name="League" id="League" style="width:300px">
+                        <input class="form-control input-sm" type="text" name="League" id="LeagueName" style="width: 300px">
                     </div>
                 </div>
-
-                <button class="blue-button">Search</button>
+                <button class="blue-button">
+                    Search</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<div class="content-grid display-none" id="divLeagueContainer">
-    <div id="divLeagueGrid" class="freegrid"></div>
+<div id="resultContainer" class="content-grid">
+    <div id="divSpreadGrid" class="freegrid">
+    </div>
+</div>
+<div>
+    @Html.HiddenFor(s => s.PageSize)
+    @Html.HiddenFor(s => s.PageIndex)
+    @Html.HiddenFor(s => s.PageCount)
+</div>
+@*
+<div class="content-grid" id="divLeagueContainer">
+    <div id="divLeagueGrid" class="freegrid">
+    </div>
 </div>
 <div class="content-grid display-none" id="divBetTypeContainer">
-    <div id="divBetTypeGrid" class="freegrid"></div>
+    <div id="divBetTypeGrid" class="freegrid">
+    </div>
 </div>
 <div class="content-grid display-none" id="divSpreadContainer">
-    <div id="divSpreadGrid" class="freegrid"></div>
+    <div id="divSpreadGrid" class="freegrid">
+    </div>
 </div>
 <div class="content-grid display-none" id="divDeleteContainer">
-    <div id="divSpreadGrid" class="freegrid"></div>
-</div>
-
+    <div id="divSpreadGrid" class="freegrid">
+    </div>
+</div>*@
 
 @section Foot{
-    @Scripts.Render("~/scripts/SpreadManagement")
+    <script src="~/Areas/Configuration/Resources/SpreadManagement/spread-management.js" type="text/javascript"></script>
+    <script>
+        $("#browseBtn").click(function () {
+            $("#File").click();
+        });
+
+        $("#File").change(function () {
+            $("#FileName").val($(this).val());
+        });
+    </script>
 }
-
-

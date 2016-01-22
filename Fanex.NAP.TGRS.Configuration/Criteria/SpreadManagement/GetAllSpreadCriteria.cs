@@ -19,6 +19,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public int PageIndex { get; set; }
 
+        public int PageCount { get; set; }
+
+        public int RowCount { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Spread_SelectAll";

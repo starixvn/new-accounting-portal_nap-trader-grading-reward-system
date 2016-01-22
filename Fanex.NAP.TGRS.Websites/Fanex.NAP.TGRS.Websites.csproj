@@ -201,6 +201,7 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\SpreadManagement.js" />
+    <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.js" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
@@ -408,7 +409,8 @@
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
     <Content Include="App_Data\SpreadTemplate\SpreadTemplate.xlsx" />
     <None Include="Areas\Configuration\ExcelTemplates\SpreadManagement.xls" />
-    <Content Include="Areas\Configuration\Views\SpreadManagement\Index.cshtml" />
+    <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.less" />
+    <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
