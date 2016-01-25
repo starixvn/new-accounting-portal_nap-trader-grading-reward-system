@@ -16,21 +16,24 @@
             <div class="filter-row">
                 <div class="lbl-field col_5">
                     <label class="control-label" for="FileName">
-                        Add/Edit</label>
+                        Add/Edit
+                    </label>
                 </div>
                 <div class="edit-field col_12">
                     <div class="clearable-field">
                         <input type="text" name="FileName" id="FileName" class="clearable-input" disabled
-                            style="width: 300px;" />
+                               style="width: 300px;" />
                     </div>
                 </div>
                 <div class="col_4">
                     <button class="blue-button" id="browseBtn">
-                        Browse</button>
+                        Browse
+                    </button>
                 </div>
                 <input type="file" id="File" name="File" style="display: none" />
                 <button class="blue-button" type="submit">
-                    Upload</button>
+                    Upload
+                </button>
             </div>
             <div class="filter-row">
                 <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
@@ -38,7 +41,8 @@
             <div class="filter-row">
                 <div class="lbl-field col_5">
                     <label class="control-label" for="League">
-                        League</label>
+                        League
+                    </label>
                 </div>
                 <div class="edit-field col_12">
                     <div class="clearable-field">
@@ -46,47 +50,31 @@
                     </div>
                 </div>
                 <button class="blue-button">
-                    Search</button>
+                    Search
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 <div id="resultContainer" class="content-grid">
+    <div id="divLeaguePerformanceGrid-grid-title" class="grid-title" style="width: 1232px;">
+        <div class="grid-title-label" id="reporttile"></div>
+        <div class="grid-toolbox">
+            <input type="button" id="excelBtn" class="btnExcel" title="Export to Excel">
+        </div>
+    </div>
     <div id="divSpreadGrid" class="freegrid">
     </div>
 </div>
+
 <div>
     @Html.HiddenFor(s => s.PageSize)
     @Html.HiddenFor(s => s.PageIndex)
     @Html.HiddenFor(s => s.PageCount)
 </div>
-@*
-<div class="content-grid" id="divLeagueContainer">
-    <div id="divLeagueGrid" class="freegrid">
-    </div>
-</div>
-<div class="content-grid display-none" id="divBetTypeContainer">
-    <div id="divBetTypeGrid" class="freegrid">
-    </div>
-</div>
-<div class="content-grid display-none" id="divSpreadContainer">
-    <div id="divSpreadGrid" class="freegrid">
-    </div>
-</div>
-<div class="content-grid display-none" id="divDeleteContainer">
-    <div id="divSpreadGrid" class="freegrid">
-    </div>
-</div>*@
 
 @section Foot{
+    <script src="~/Areas/Configuration/Resources/SpreadManagement/SpreadManagement.js"></script>
     <script src="~/Areas/Configuration/Resources/SpreadManagement/spread-management.js" type="text/javascript"></script>
-    <script>
-        $("#browseBtn").click(function () {
-            $("#File").click();
-        });
-
-        $("#File").change(function () {
-            $("#FileName").val($(this).val());
-        });
-    </script>
 }

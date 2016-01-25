@@ -1,26 +1,35 @@
-﻿using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using Fanex.NAP.TGRS.Core.ExcelUtility;
+﻿// --------------------------------------------------------------------------
+// <copyright file="ExcelTemplateWriter.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Simon.Huynh" date="2015.1.25">Created</change>
+// </history>
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
 {
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
+
     public class HttpExcelMapper : FileObjectMapper<HttpPostedFileBase>
     {
-        private const string location = "~/App_Data/";
+        private const string _Location = "~/App_Data/";
 
-        private ObjectMapper mapper = new ObjectMapper();
+        private ObjectMapper _mapper = new ObjectMapper();
 
         public override IEnumerable<T> Read<T>(HttpPostedFileBase source)
         {
             var sheet = WorkbookFactory.Create(source.InputStream).GetSheetAt(0);
 
             var columnsMapping = GetColumnsMapping(sheet);
-            var methodsMapping = mapper.GetSetters<T>();
+            var methodsMapping = _mapper.GetSetters<T>();
             var finalMapping = GetFinalMapping(columnsMapping, methodsMapping);
 
             for (int i = 1; i <= sheet.LastRowNum; ++i)
@@ -53,8 +62,8 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
             var workBook = new HSSFWorkbook();
             var sheet = workBook.CreateSheet();
 
-            var columnMapping = mapper.GetGetters<T>();
-            var columnNames = mapper.GetPropertiesName<T>();
+            var columnMapping = _mapper.GetGetters<T>();
+            var columnNames = _mapper.GetPropertiesName<T>();
 
             var rowHeader = sheet.CreateRow(0);
             var col = 0;

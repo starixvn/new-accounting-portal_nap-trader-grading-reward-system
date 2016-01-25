@@ -200,6 +200,7 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\SpreadManagement\Delete.ico" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\SpreadManagement.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.js" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />

@@ -1,20 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿// --------------------------------------------------------------------------
+// <copyright file="ExcelTemplateWriter.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Simon.Huynh" date="2015.1.25">Created</change>
+// </history>
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+
     public class ObjectMapper
     {
-        private readonly static Type ignoreAttr = typeof(Ignore);
+        private static Type ignoreAttr = typeof(Ignore);
 
-        private readonly static Type columnAttr = typeof(Column);
+        private static Type columnAttr = typeof(Column);
 
-        private readonly static Type objType = typeof(object);
+        private static Type objType = typeof(object);
 
-        private readonly static Type doubleType = typeof(double);
+        private static Type doubleType = typeof(double);
 
         public IDictionary<string, Action<T, object>> GetSetters<T>()
         {

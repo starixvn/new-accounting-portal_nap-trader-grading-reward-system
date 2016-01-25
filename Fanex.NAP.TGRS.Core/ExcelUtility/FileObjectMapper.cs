@@ -1,8 +1,17 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿// --------------------------------------------------------------------------
+// <copyright file="ExcelTemplateWriter.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Simon.Huynh" date="2015.1.25">Created</change>
+// </history>
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     public abstract class FileObjectMapper<TSource>
     {
         public abstract IEnumerable<T> Read<T>(TSource source) where T : new();
