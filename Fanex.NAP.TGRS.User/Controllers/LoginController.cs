@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Core.Helpers;
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
@@ -137,6 +138,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
             if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
             {
                 var user = this._userService.GetByUsername(username.Trim()) as User;
+                AppSession.CurrentUser = user;
 
                 if (user != null)
                 {

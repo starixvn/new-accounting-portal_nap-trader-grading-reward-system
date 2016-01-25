@@ -133,8 +133,7 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
 
             bundles.Add(new ScriptBundle("~/scripts/SpreadManagement").Include(
-                "~/areas/configuration/resources/spreadManagement/spreadManagement.js"
-                ));
+                "~/areas/configuration/resources/spreadManagement/spreadManagement.js"));
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     using System.Web.Mvc;
     using Core.BaseClasses;
+    using Core.Helpers;
     using Criteria.SpreadManagement;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
@@ -56,6 +57,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
         {
+            criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
             var result = _spreadManagementService.UpdateSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -65,6 +67,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeleteSpread(DeleteSpreadCriteria criteria)
         {
+            criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
             var result = _spreadManagementService.DeleteSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);

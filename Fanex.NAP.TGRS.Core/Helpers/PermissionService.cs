@@ -1,0 +1,56 @@
+﻿// ----------------------------------------------------------------------
+// <copyright file="PermissionService.cs" company="Nexcel Solutions Vietnam">
+//     Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// ------------------------------------------------------------------------
+// <history>
+//   <change who="Aaron.Cao" date="2016/01/25">Created</change>
+// </history>
+
+namespace Fanex.NAP.TGRS.Core.Helpers
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using NAP.Core.Business;
+    using NAP.Core.Model.ValueObject;
+
+    public static class PermissionService
+    {
+        /// <summary>
+        ///     Get Roll Access: get permission to access with each menu item of current user login.
+        /// </summary>
+        /// <param name="currentFunctions">Current Functions.</param>
+        /// <returns>Return Dictionary.</returns>
+        public static Dictionary<string, int> GetRoleAccess(IEnumerable<FunctionPolicy> currentFunctions)
+        {
+            return currentFunctions.Where(functionPolicy => functionPolicy.Policy >= (int)Constant.Policy.Read)
+                                   .ToDictionary(functionPolicy => functionPolicy.Function.Key, functionPolicy => functionPolicy.Policy);
+        }
+
+        public static bool HasHostPermission(string functionName)
+        {
+            return AppSession.RoleAccess != null &&
+                   AppSession.RoleAccess.ContainsKey(functionName) &&
+                   AppSession.RoleAccess[functionName] == (int)Constant.Policy.Host;
+        }
+
+        public static bool HasPermission(string functionName)
+        {
+            return AppSession.RoleAccess != null &&
+                   AppSession.RoleAccess.ContainsKey(functionName) &&
+                   AppSession.RoleAccess[functionName] >= (int)Constant.Policy.Read;
+        }
+
+        /// <summary>
+        ///     HasPermission: check that user has permission to access one menu link.
+        /// </summary>
+        /// <param name="functionName">Function Name.</param>
+        /// <returns>Return result check permission.</returns>
+        public static bool HasReadPermission(string functionName)
+        {
+            return AppSession.RoleAccess != null &&
+                   AppSession.RoleAccess.ContainsKey(functionName) &&
+                   AppSession.RoleAccess[functionName] == (int)Constant.Policy.Read;
+        }
+    }
+}
