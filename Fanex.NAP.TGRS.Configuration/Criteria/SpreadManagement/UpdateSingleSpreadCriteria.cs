@@ -21,6 +21,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public int Spread { get; set; }
 
+        public int ErrCode { get; set; }
+
+        public int ErrMsg { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Spread_UpdateSingle";

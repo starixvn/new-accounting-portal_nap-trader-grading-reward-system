@@ -19,6 +19,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public int BetTypeId { get; set; }
 
+        public int ErrCode { get; set; }
+
+        public int ErrMsg { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Spread_Delete";
