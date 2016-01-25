@@ -46,6 +46,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
         private IMaintenanceService _maintenanceService;
+        private IFunctionService _functionService;
         private HashAlgorithm _hashAlgorithm;
 
         #endregion Members
@@ -53,7 +54,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         #region Constructors
 
         public LoginController()
-            : this(null, null, null, null, null, null)
+            : this(null, null, null, null, null, null, null)
         {
         }
 
@@ -63,7 +64,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
             ISiteService siteService,
             IMenuItemService menuItemService,
             ICurrentSession currentSession,
-            IMaintenanceService maintenanceService)
+            IMaintenanceService maintenanceService,
+            IFunctionService functionService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
@@ -71,6 +73,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
             this._maintenanceService = maintenanceService ?? new MaintenanceService();
+            this._functionService = functionService ?? new FunctionService();
             this._hashAlgorithm = new SHA256Managed();
         }
 
@@ -138,7 +141,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
             if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
             {
                 var user = this._userService.GetByUsername(username.Trim()) as User;
-                AppSession.CurrentUser = user;
 
                 if (user != null)
                 {
@@ -163,6 +165,11 @@ namespace Fanex.NAP.TGRS.User.Controllers
                             }
 
                             this.CreateAuthInfo(user);
+
+                            var currentFunction =
+                                    _functionService.GetByUserAndSiteIncludeGroup(user.Id, NapSettings.Settings.SiteId, NapSettings.Settings.Environment);
+                            AppSession.CurrentUser = user;
+                            AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);
 
                             // if the user login directly, not through NAP Hub
                             if (this.EnableDirectLogin)

@@ -6,19 +6,19 @@ var spreadManagementFactory = (function ($) {
 
     return {
         getAllSpread: function (criteria) {
-            return $.post('SpreadManagement/GetAllSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/GetAllSpread'), criteria);
         },
 
         updateSpread: function (criteria) {
-            return $.post('SpreadManagement/UpdateSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/UpdateSpread'), criteria);
         },
 
         deleteSpread: function (criteria) {
-            return $.post('SpreadManagement/DeleteSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/DeleteSpread'), criteria);
         },
 
         exportSpreadList: function (criteria) {
-            return $.post('SpreadManagement/ExportSpreadList', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), criteria);
         }
     };
 
