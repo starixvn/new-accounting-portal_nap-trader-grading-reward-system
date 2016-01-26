@@ -118,12 +118,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TGRSFunctionKeys.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExcelUtility\Column.cs" />
-    <Compile Include="ExcelUtility\DefaultImplementation\HttpExcelMapper.cs" />
+    <Compile Include="ExcelUtility\SPU.ExcelUtility\Column.cs" />
+    <Compile Include="ExcelUtility\SPU.ExcelUtility\DefaultImplementation\HttpExcelMapper.cs" />
     <Compile Include="ExcelUtility\ExcelTemplateWriter.cs" />
-    <Compile Include="ExcelUtility\FileObjectMapper.cs" />
-    <Compile Include="ExcelUtility\Ignore.cs" />
-    <Compile Include="ExcelUtility\Mapper.cs" />
+    <Compile Include="ExcelUtility\SPU.ExcelUtility\FileObjectMapper.cs" />
+    <Compile Include="ExcelUtility\SPU.ExcelUtility\Ignore.cs" />
+    <Compile Include="ExcelUtility\SPU.ExcelUtility\Mapper.cs" />
     <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellExtensions.cs" />
     <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellRangeAddressExtensions.cs" />
     <Compile Include="ExcelUtility\NPOIExtensions\HSSFRowExtensions.cs" />

@@ -9,20 +9,15 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
-    using TGRS.Core.ExcelUtility;
-
     public class SpreadInfo
     {
-        [Column("League ID")]
+
         public int LeagueId { get; set; }
 
-        [Column("League Name")]
         public string LeagueName { get; set; }
 
-        [Column("Bet Type ID")]
         public int BetTypeId { get; set; }
 
-        [Column("Bet Type Name")]
         public string BetTypeName { get; set; }
 
         public int Spread { get; set; }

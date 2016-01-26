@@ -20,6 +20,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
+    using System.Linq;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -54,7 +55,24 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [HttpPost]
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
-            var datas = _excelReader.Read<SpreadInfo>(file);
+            var datas = _excelReader.Read<SpreadChecker>(file);
+
+            var total = 0;
+            var error = 0;
+
+            foreach (var data in datas)
+            {
+                ++total;
+                var spreadInfo = (SpreadInfo)data;
+                if (data != null)
+                {
+                    //todo: check database here
+                }
+                else
+                {
+                    ++error;
+                }
+            }
 
             return Json(true);
         }
