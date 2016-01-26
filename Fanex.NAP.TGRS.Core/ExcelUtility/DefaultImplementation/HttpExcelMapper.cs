@@ -9,14 +9,14 @@
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
 {
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Web;
-    using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using ExcelUtility;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
 
     public class HttpExcelMapper : FileObjectMapper<HttpPostedFileBase>
     {

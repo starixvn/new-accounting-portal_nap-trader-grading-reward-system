@@ -207,4 +207,16 @@
   <data name="UpdateBettypeSuccessfully" xml:space="preserve">
     <value>The default bettype has been updated successfully!</value>
   </data>
+  <data name="DeleteSpreadConfirmMessage" xml:space="preserve">
+    <value>Are you sure to remove this spread?</value>
+  </data>
+  <data name="UpdateSpreadConfirmMessage" xml:space="preserve">
+    <value>Are you sure to update this spread?</value>
+  </data>
+  <data name="UpdateSpreadSuccessfully" xml:space="preserve">
+    <value>The spread has been updated successfully!</value>
+  </data>
+  <data name="DeleteSpreadSuccessfully" xml:space="preserve">
+    <value>The spread has been removed successfully!</value>
+  </data>
 </root>

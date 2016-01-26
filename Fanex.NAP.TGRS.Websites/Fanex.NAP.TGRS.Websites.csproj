@@ -202,7 +202,6 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
-    <Content Include="Areas\Configuration\Resources\SpreadManagement\SpreadManagement.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.js" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
@@ -308,6 +307,8 @@
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />
+    <Content Include="Content\Themes\Images\delete-icon.png" />
+    <Content Include="Content\Themes\Images\delete.png" />
     <Content Include="Content\Themes\Images\icon-detail.png" />
     <Content Include="Content\Themes\Images\icon-info-message.png" />
     <Content Include="Content\Themes\Images\logo-tgrs.png" />
@@ -361,7 +362,9 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\SpreadTemplate\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

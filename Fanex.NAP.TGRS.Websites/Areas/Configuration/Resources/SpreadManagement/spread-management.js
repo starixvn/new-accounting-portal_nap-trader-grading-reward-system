@@ -1,4 +1,4 @@
-﻿/* File Created: May 12, 2014 */
+﻿/* File Created: Jan 22, 2016 */
 /*jshint strict: false*/
 
 var spreadManagementFactory = (function ($) {
@@ -6,19 +6,23 @@ var spreadManagementFactory = (function ($) {
 
     return {
         getAllSpread: function (criteria) {
-            return $.post('SpreadManagement/GetAllSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/GetAllSpread'), criteria);
         },
 
         updateSpread: function (criteria) {
-            return $.post('SpreadManagement/UpdateSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/UpdateSpread'), criteria);
         },
 
         deleteSpread: function (criteria) {
-            return $.post('SpreadManagement/DeleteSpread', criteria);
+            return $.post(common.ResolveRootUrl('SpreadManagement/DeleteSpread'), criteria);
         },
 
-        exportSpreadList: function (criteria) {
-            return $.post('SpreadManagement/ExportSpreadList', criteria);
+        getHostPermission: function () {
+            return $.get(common.ResolveRootUrl('SpreadManagement/GetHostPermission'));
+        },
+
+        exportSpreadList: function (leagueName) {
+            return $.get(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), { leagueName: leagueName });
         }
     };
 
@@ -29,69 +33,128 @@ var spreadManagementService = (function ($) {
 
     var spreadManagementService = {};
 
+    spreadManagementService.result = null;
+
+    spreadManagementService.hasHostPermission = false;
+
     spreadManagementService.filter = {
         pageIndex: 0,
         pageSize: 50,
         leagueName: ''
     };
 
-    spreadManagementService.renderSpreadTable = function (spreadList) {
-        spreadManagementService.gridOptions =
-        {
-            columns: [
-                { HeaderText: "#", Width: 50, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "LeagueId", Width: 100, Name: "LeagueId", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "League Name", Width: 350, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "BetTypeId", Width: 500, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "Bet Type Name", Width: 150, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "", Width: 50, Name: "DeleteSpread", HeaderAlign: "center", CellAlign: "center" }
-            ],
-            bodyRows: spreadManagementService.createSpreadTable(spreadList.SpreadInfoItems),
-            hideYBackGroundScroller: true,
-            gridExpandHeight: 180,
-            allowTruncate: true,
-            enableHiddenColumns: false,
-            hiddenColumns: [1, 3],
-            showPager: true,
-            customPager: true,
-            pagerOption: {
-                itemsPerPage: spreadManagementService.filter.pageSize,
-                currentPage: spreadManagementService.filter.pageIndex,
-                totalItem: spreadList.TotalItem,
-                itemsPerPageArray: [10, 20, 50, 100, 500],
-                pagerSelectCallBack: spreadManagementService.reRenderAfterPaged
-            }
+    spreadManagementFactory.getHostPermission().success(function (result) {
+        spreadManagementService.hasHostPermission = result;
+    });
+
+    spreadManagementService.Search = function () {
+        $('#PageSize').val(spreadManagementService.filter.pageSize);
+        $('#PageIndex').val(spreadManagementService.filter.pageIndex);
+        spreadManagementService.filter.leagueName = $('#LeagueName').text();
+
+        var searchParams = {
+            LeagueName: spreadManagementService.filter.leagueName,
+            PageSize: spreadManagementService.filter.pageSize,
+            PageIndex: spreadManagementService.filter.pageIndex + 1
         };
 
+        spreadManagementFactory.getAllSpread(searchParams).success(function (spreadList) {
+            renderSpreadTable(spreadList);
+        });
+    };
+
+    spreadManagementService.ExportExcel = function () {
+        spreadManagementService.filter.leagueName = $('#LeagueName').text();
+
+        spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName);
+    };
+
+    spreadManagementService.Update = function (leagueId, betTypeId, newSpread) {
+        var criteria = {
+            LeagueId: leagueId,
+            BetTypeId: betTypeId,
+            Spread: newSpread
+        };
+
+        return spreadManagementFactory.updateSpread(criteria).success(function (result) {
+            spreadManagementService.result = result;
+        });
+    };
+
+    spreadManagementService.Delete = function (leagueId, betTypeId) {
+        var criteria = {
+            LeagueId: leagueId,
+            BetTypeId: betTypeId
+        };
+
+        return spreadManagementFactory.deleteSpread(criteria).success(function (result) {
+            spreadManagementService.result = result;
+        });
+    };
+
+    function renderSpreadTable(spreadList) {
+        spreadManagementService.gridOptions =
+            {
+                columns: [
+                    { HeaderText: "#", Width: 50, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "League Name", Width: 350, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
+                    { HeaderText: "Bet Type Name", Width: 150, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Remove", Width: 50, Name: "Delete", HeaderAlign: "center", CellAlign: "center" }
+                ],
+                bodyRows: createSpreadTable(spreadList.SpreadInfoItems),
+                gridExpandHeight: 120,
+                showNumberColumn: true,
+                showPager: true,
+                customPager: true,
+                enableHiddenColumns: false,
+                hiddenColumns: spreadManagementService.hasHostPermission ? [] : [4],
+                pagerOption: {
+                    itemsPerPage: spreadManagementService.filter.pageSize,
+                    currentPage: spreadManagementService.filter.pageIndex,
+                    totalItem: spreadList.TotalItem,
+                    itemsPerPageArray: [10, 20, 50, 100, 500],
+                    pagerSelectCallBack: reRenderAfterPaged
+                }
+            };
+
         $("#divSpreadGrid").fanexGrid(spreadManagementService.gridOptions);
+
+        handleGridEvents();
+
+        $("#resultContainer").css("display: inline-block;");
     }
 
-    spreadManagementService.createSpreadTable = function (spreads) {
+    function createSpreadTable(spreads) {
+        var spreadFormat = '<span class="spread-link link" data-league-id="{0}" data-bettype-id="{1}" >{2}</span>' +
+                              '<input type="text" maxlength="2" class="spread hide" />';
+
+        var spreadFormatNoHost = '<span data-league-id="{0}" data-bettype-id="{1}" >{2}</span>';
+
+        var deleteButtonFormat = '<span class="spread-delete-button" data-league-id="{0}" data-bettype-id="{1}" ></span>';
+
         var rows = [];
 
         for (var index = 0; index < spreads.length; index++) {
             var spread = spreads[index];
             rows.push({
                 Columns: [
-                    { Name: "Row", Value: spread.Row },
-                    { Name: "LeagueId", Value: spread.LeagueId },
-                    { Name: "LeagueName", Value: spread.LeagueName },
-                    { Name: "BetTypeId", Value: spread.BetTypeId },
-                    { Name: "BetTypeName", Value: spread.BetTypeName },
-                    { Name: "Spread", Value: "<div contenteditable onfocusout='updateSpread(this)' onfocusin='registerValue(" + spread.LeagueId + "," + spread.BetTypeId + "," + spread.Spread + ")'>" + spread.Spread + "</div>" },
-                    {
-                        Name: "DeleteSpread",
-                        Value: "<img style='cursor: pointer;width:20px; height=20px;' src='../Areas/Configuration/Resources/SpreadManagement/Delete.ico' onclick='deleteSpread(" + spread.LeagueId + "," + spread.BetTypeId + ")'>"
-                    }
-                ]
+                        { Name: "Row", Value: spread.Row },
+                        { Name: "LeagueName", Value: spread.LeagueName },
+                        { Name: "BetTypeName", Value: spread.BetTypeName },
+                        { Name: "Spread", Value: spreadManagementService.hasHostPermission ?
+                            spreadFormat.format(spread.LeagueId, spread.BetTypeId, spread.Spread) :
+                            spreadFormatNoHost.format(spread.LeagueId, spread.BetTypeId, spread.Spread)
+                        },
+                        { Name: "Delete", Value: deleteButtonFormat.format(spread.LeagueId, spread.BetTypeId, spread.Spread) }
+                    ]
             });
-        };
+        }
 
         return rows;
     }
 
-    spreadManagementService.reRenderAfterPaged = function (pageIndex, itemsPerPage) {
+    function reRenderAfterPaged(pageIndex, itemsPerPage) {
         if (itemsPerPage !== $('#PageSize').val()) {
             $('#PageIndex').val(0);
             spreadManagementService.filter.pageIndex = 0;
@@ -109,74 +172,112 @@ var spreadManagementService = (function ($) {
         return false;
     }
 
-    spreadManagementService.Search = function () {
-        $('#PageSize').val(spreadManagementService.filter.pageSize);
-        $('#PageIndex').val(spreadManagementService.filter.pageIndex);
-        spreadManagementService.filter.leagueName = $('#LeagueName').text();
+    var handleGridEvents = function () {
+        var spreadLinks = $('#divSpreadGrid').find('span.spread-link');
+        var spreadInputs = $('#divSpreadGrid').find('input.spread');
+        var spreadDelete = $('#divSpreadGrid').find('span.spread-delete-button');
 
-        var searchParams = {
-            LeagueName: spreadManagementService.filter.leagueName,
-            PageSize: spreadManagementService.filter.pageSize,
-            PageIndex: spreadManagementService.filter.pageIndex + 1
-        };
+        // Format the benchmark value which is input into the text box.
+        spreadInputs.numberField(2, false);
 
-        spreadManagementFactory.getAllSpread(searchParams).success(function (spreadList) {
-            spreadManagementService.renderSpreadTable(spreadList);
+        // When user clicks on benchmark link.
+        spreadLinks.on('click', function () {
+            var $link = $(this);
+            var $input = $link.next();
+            var spread = $link.text();
+
+            // Disable other active fields.
+            $.each(spreadLinks, function (index, link) {
+                $(link).removeClass('hide').next().addClass('hide').tipsy('hide');
+            });
+
+            // Fill current value into text box.
+            $link.addClass('hide');
+            $input.val(spread).removeClass('hide').focus().select();
         });
+
+        // Handle key up event.
+        spreadInputs.on('keyup', function (event) {
+            var $input = $(this);
+            var $link = $input.prev();
+            var newSpread = $input.val();
+
+            if (event.keyCode === 13 && validateSpread($input)) {
+                common.ShowConfirmMessage(messages.UpdateSpreadConfirmMessage, function () {
+                    var leagueId = $link.attr('data-league-id');
+                    var betTypeId = $link.attr('data-bettype-id');
+
+                    spreadManagementService.Update(leagueId, betTypeId, newSpread).then(function () {
+                        if (spreadManagementService.result.IsSuccessful) {
+
+                            common.ShowInfoMessage(messages.UpdateSpreadSuccessfully);
+
+                            $link.text(newSpread);
+                            $input.addClass('hide');
+                            $link.removeClass('hide');
+                            $input.tipsy('hide');
+                        } else {
+                            common.ShowErrorMessage(spreadManagementService.result.Message);
+                        }
+                    });
+                });
+            } else if (event.keyCode === 27) {
+                $input.addClass('hide');
+                $link.removeClass('hide');
+                $input.tipsy('hide');
+            }
+        });
+
+        // Handle delete event.
+        spreadDelete.on('click', function () {
+            var $link = $(this);
+
+            common.ShowConfirmMessage(messages.DeleteSpreadConfirmMessage, function () {
+                debugger;
+                var leagueId = $link.attr('data-league-id');
+                var betTypeId = $link.attr('data-bettype-id');
+
+                spreadManagementService.Delete(leagueId, betTypeId).then(function () {
+                    if (spreadManagementService.result.IsSuccessful) {
+                        common.ShowInfoMessage(messages.DeleteSpreadSuccessfully);
+
+                        spreadManagementService.filter.pageSize = 50;
+                        spreadManagementService.filter.pageIndex = 0;
+                        spreadManagementService.Search();
+                    } else {
+                        common.ShowErrorMessage(spreadManagementService.result.Message);
+                    }
+                });
+            });
+        });
+    };
+
+    var validateSpread = function ($input) {
+        var value = $input.val().replace(/,/g, '');
+        var isValid = $.isNumeric(value);
+
+        if (isValid) {
+            value = parseFloat(value);
+            isValid = 0 < value && value <= 100;
+        }
+
+        if (!isValid) {
+            validator.ShowError($input, messages.InvalidValueError, 'e');
+        }
+
+        return isValid;
     };
 
     return spreadManagementService;
 })(jQuery);
 
 $(document).ready(function () {
-    spreadManagementService.Search();
-
-    $("#excelBtn").click(function () {
-        spreadManagementFactory.exportSpreadList({ leagueName: spreadManagementService.filter.leagueName });
-    })
-})
-
-var updateObj = {
-    LeagueId: null,
-    BetTypeId: null,
-    Spread: null
-}
-
-function deleteSpread(leagueId, bettypeId) {
-    common.ShowConfirmMessage("Are you sure you want to delete this ?", function () {
-        $.post("/spreadmanagement/deletespread", { LeagueId: leagueId, BetTypeId: bettypeId }, function (result) {
-            common.ShowInfoMessage("success!");
-            spreadManagementService.Search();
-        }, function (result) {
-            common.ShowErrorMessage(result);
-        });
+    $("#btnSearchSpread").on('click', function () {
+        spreadManagementService.Search();
     });
-};
 
-function updateSpread(div) {
-    var value = parseInt(div.innerHTML);
-
-    if (isNaN(value)) {
-        common.ShowErrorMessage("Please enter a valid number!");
-        return;
-    }
-
-    if (value != updateObj.Spread) {
-        updateObj.Spread = value;
-        spreadManagementFactory.updateSpread(updateObj).success(function (result) {
-            if (result.IsSuccessful) {
-                common.ShowInfoMessage("success");
-                spreadManagementService.Search();
-            }
-            else {
-                common.ShowErrorMessage(result.Message);
-            }
-        })
-    }
-}
-
-function registerValue(league, bet, spread) {
-    updateObj.LeagueId = league;
-    updateObj.BetTypeId = bet;
-    updateObj.Spread = spread;
-}
+    $("#excelBtn").on('click', function () {
+        debugger;
+        spreadManagementService.ExportExcel();
+    });
+});

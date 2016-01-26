@@ -9,18 +9,8 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
-    public class SpreadInfoModel
+    public class SpreadInfoModel : SpreadInfo
     {
         public int Row { get; set; }
-
-        public int LeagueId { get; set; }
-
-        public string LeagueName { get; set; }
-
-        public int BetTypeId { get; set; }
-
-        public string BetTypeName { get; set; }
-
-        public int Spread { get; set; }
     }
 }

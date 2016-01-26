@@ -9,18 +9,17 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using Core.BaseClasses;
-    using Core.Helpers;
-    using Criteria.SpreadManagement;
-    using Fanex.NAP.TGRS.Configuration.Models.SpreadManagement;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
-    using NAP.TGRS.Core.ExcelUtility;
-    using Services.SpreadManagement;
     using System.Web;
     using System.Web.Mvc;
-    using TGRS.Core.ExcelUtility.DefaultImplementation;
-    using System.Linq;
+    using Core.BaseClasses;
+    using Core.ExcelUtility;
+    using Core.ExcelUtility.DefaultImplementation;
+    using Core.Helpers;
+    using Criteria.SpreadManagement;
+    using Models.SpreadManagement;
+    using NAP.Core.Business;
+    using NAP.Core.Web.Attribute;
+    using Services.SpreadManagement;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -56,6 +55,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult Index(HttpPostedFileBase file)
         {
             var datas = _excelReader.Read<SpreadInfo>(file);
+
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
         {
             criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var result = _spreadManagementService.UpdateSpread(criteria);
+            var result = _spreadManagementService.UpdateSingleSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -102,6 +102,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             _spreadManagementService.ExportSpreadList(criteria, templatePath);
 
             return new EmptyResult();
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
+        public ActionResult GetHostPermission()
+        {
+            return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
     }
 }
