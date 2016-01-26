@@ -17,10 +17,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     {
         SpreadInfoList GetAllSpread(GetAllSpreadCriteria criteria);
 
-        ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria);
+        ICommandResult UpdateSingleSpread(UpdateSingleSpreadCriteria criteria);
 
         ICommandResult DeleteSpread(DeleteSpreadCriteria criteria);
 
         void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath);
+
+        ICommandResult UpdateSpread(UpdateSpreadCriteria criteria);
     }
 }

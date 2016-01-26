@@ -1,10 +1,10 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="IBenchmarkManagementService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ISpreadManagementDataAccess.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Jason.Ly" date="2016.1.22">Created</change>
+//   <change who="Long.Luu" date="2016.1.22">Created</change>
 // </history>
 
 namespace Fanex.NAP.TGRS.Configuration.DataAccess.Interface

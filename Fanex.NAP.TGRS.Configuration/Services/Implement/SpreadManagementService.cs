@@ -40,7 +40,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             return _spreadManagementDataAccess.GetAllSpread(criteria);
         }
 
-        public ICommandResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
+        public ICommandResult UpdateSingleSpread(UpdateSingleSpreadCriteria criteria)
         {
             return UpdateData(criteria);
         }
@@ -50,6 +50,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             return UpdateData(criteria);
         }
 
+        public ICommandResult UpdateSpread(UpdateSpreadCriteria criteria)
+        {
+            return UpdateData(criteria);
+        }
+
+        #region Utilities
         public void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath)
         {
             var spreadList = GetAllSpread(criteria).SpreadInfoItems;
@@ -135,5 +141,6 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
                 writer.WriteRow(styleIndex, record);
             }
         }
+        #endregion
     }
 }

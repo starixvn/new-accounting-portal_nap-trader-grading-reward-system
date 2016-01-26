@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 
         public int ErrCode { get; set; }
 
-        public int ErrMsg { get; set; }
+        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {
