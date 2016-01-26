@@ -1,5 +1,6 @@
 ﻿/* File Created: Jan 22, 2016 */
-/*jshint strict: false*/
+/*jshint strict: false, camelcase: false*/
+/* global common, validator, messages */
 
 var spreadManagementFactory = (function ($) {
     "use strict";
@@ -24,7 +25,7 @@ var spreadManagementFactory = (function ($) {
         exportSpreadList: function (leagueName) {
             var downloadUrl = common.ResolveRootUrl('SpreadManagement/ExportSpreadList') + "?leagueName=" + leagueName;
             var iframe = $('body iframe');
-            if (iframe.length == 0) {
+            if (iframe.length === 0) {
                 iframe = $('<iframe width="0" height="0" class="display-none"></iframe>');
                 iframe.appendTo('body');
             }
@@ -296,7 +297,7 @@ $(document).ready(function () {
         $("#fileName").val($("#file").val());
     });
 
-    $("#uploadBtn").click(function () {
+    $("#uploadBtn").click(function() {
         var data = new FormData();
         var file = document.getElementById("file").files[0];
         data.append("file", file);
@@ -307,5 +308,5 @@ $(document).ready(function () {
             processData: false,
             contentType: false
         });
-    })
+    });
 });

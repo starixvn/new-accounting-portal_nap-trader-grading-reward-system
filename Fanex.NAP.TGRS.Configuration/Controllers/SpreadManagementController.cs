@@ -55,6 +55,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
             var datas = _excelReader.Read<SpreadInfo>(file);
+
             return Json(true);
         }
 
