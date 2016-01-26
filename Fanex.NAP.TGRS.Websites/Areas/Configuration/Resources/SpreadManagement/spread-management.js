@@ -22,7 +22,14 @@ var spreadManagementFactory = (function ($) {
         },
 
         exportSpreadList: function (leagueName) {
-            return $.get(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), { leagueName: leagueName });
+            var downloadUrl = common.ResolveRootUrl('SpreadManagement/ExportSpreadList') + "?leagueName=" + leagueName;
+            var iframe = $('body iframe');
+            if (iframe.length == 0) {
+                iframe = $('<iframe width="0" height="0" class="display-none"></iframe>');
+                iframe.appendTo('body');
+            }
+
+            iframe.attr('src', downloadUrl);
         }
     };
 
@@ -50,7 +57,7 @@ var spreadManagementService = (function ($) {
     spreadManagementService.Search = function () {
         $('#PageSize').val(spreadManagementService.filter.pageSize);
         $('#PageIndex').val(spreadManagementService.filter.pageIndex);
-        spreadManagementService.filter.leagueName = $('#LeagueName').text();
+        spreadManagementService.filter.leagueName = $('#LeagueName').val();
 
         var searchParams = {
             LeagueName: spreadManagementService.filter.leagueName,
@@ -64,7 +71,7 @@ var spreadManagementService = (function ($) {
     };
 
     spreadManagementService.ExportExcel = function () {
-        spreadManagementService.filter.leagueName = $('#LeagueName').text();
+        spreadManagementService.filter.leagueName = $('#LeagueName').val();
 
         spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName);
     };
@@ -277,7 +284,6 @@ $(document).ready(function () {
     });
 
     $("#excelBtn").on('click', function () {
-        debugger;
         spreadManagementService.ExportExcel();
     });
 });
