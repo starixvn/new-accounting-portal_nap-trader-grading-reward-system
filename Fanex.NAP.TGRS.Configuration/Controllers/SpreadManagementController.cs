@@ -9,13 +9,18 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.Helpers;
     using Criteria.SpreadManagement;
+    using Fanex.NAP.TGRS.Configuration.Models.SpreadManagement;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
+    using NAP.TGRS.Core.ExcelUtility;
     using Services.SpreadManagement;
+    using System.Web;
+    using System.Web.Mvc;
+    using TGRS.Core.ExcelUtility.DefaultImplementation;
+    using System.Linq;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -23,14 +28,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         private readonly ISpreadManagementService _spreadManagementService;
 
+        private readonly FileObjectMapper<HttpPostedFileBase> _excelReader;
+
         public SpreadManagementController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public SpreadManagementController(ISpreadManagementService spreadManagementService)
+        public SpreadManagementController(ISpreadManagementService spreadManagementService, FileObjectMapper<HttpPostedFileBase> excelMapper)
         {
             _spreadManagementService = spreadManagementService ?? new SpreadManagementService();
+            _excelReader = excelMapper ?? new HttpExcelMapper();
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
@@ -42,6 +50,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult DownloadTemplate()
         {
             return File("~/App_Data/SpreadTemplate/SpreadTemplate.xls", "application/ms-excel", "SpreadTemplate.xls");
+        }
+
+        [HttpPost]
+        public ActionResult Index(HttpPostedFileBase file)
+        {
+            var datas = _excelReader.Read<SpreadInfo>(file);
+            return View();
         }
 
         [HttpPost]

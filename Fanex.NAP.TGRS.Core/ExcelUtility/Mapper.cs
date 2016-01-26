@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
         {
             var genericType = typeof(T);
             var properties = genericType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.GetCustomAttributes(ignoreAttr, true) == null).ToArray();
+                .Where(p => p.GetCustomAttributes(ignoreAttr, false).Length == 0).ToArray();
             var map = new Dictionary<string, Action<T, object>>(properties.Length);
 
             foreach (var property in properties)
@@ -45,7 +45,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
         {
             var genericType = typeof(T);
             var properties = genericType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.GetCustomAttributes(ignoreAttr, true) == null).ToArray();
+                .Where(p => p.GetCustomAttributes(ignoreAttr, true).Length == 0).ToArray();
             var getters = new List<Func<T, object>>(properties.Length);
 
             foreach (var property in properties)

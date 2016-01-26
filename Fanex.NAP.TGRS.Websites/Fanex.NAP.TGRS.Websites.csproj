@@ -408,7 +408,7 @@
     <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
-    <Content Include="App_Data\SpreadTemplate\SpreadTemplate.xlsx" />
+    <Content Include="App_Data\SpreadTemplate\SpreadTemplate.xls" />
     <None Include="Areas\Configuration\ExcelTemplates\SpreadManagement.xls" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.less" />
     <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />

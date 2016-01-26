@@ -32,11 +32,12 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
             var methodsMapping = _mapper.GetSetters<T>();
             var finalMapping = GetFinalMapping(columnsMapping, methodsMapping);
 
-            for (int i = 1; i <= sheet.LastRowNum; ++i)
+            var rowNum = 1;
+            IRow row;
+            while ((row = sheet.GetRow(rowNum++)) != null)
             {
                 var obj = new T();
 
-                var row = sheet.GetRow(i);
                 foreach (var col in finalMapping)
                 {
                     object setter = null;

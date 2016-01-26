@@ -18,6 +18,6 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             ColumnName = columnName;
         }
 
-        public string ColumnName { get; }
+        public string ColumnName { get; private set; }
     }
 }
