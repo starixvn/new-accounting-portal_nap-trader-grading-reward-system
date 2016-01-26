@@ -149,12 +149,13 @@ var spreadManagementService = (function ($) {
                         { Name: "Row", Value: spread.Row },
                         { Name: "LeagueName", Value: spread.LeagueName },
                         { Name: "BetTypeName", Value: spread.BetTypeName },
-                        { Name: "Spread", Value: spreadManagementService.hasHostPermission ?
-                            spreadFormat.format(spread.LeagueId, spread.BetTypeId, spread.Spread) :
-                            spreadFormatNoHost.format(spread.LeagueId, spread.BetTypeId, spread.Spread)
+                        {
+                            Name: "Spread", Value: spreadManagementService.hasHostPermission ?
+                              spreadFormat.format(spread.LeagueId, spread.BetTypeId, spread.Spread) :
+                              spreadFormatNoHost.format(spread.LeagueId, spread.BetTypeId, spread.Spread)
                         },
                         { Name: "Delete", Value: deleteButtonFormat.format(spread.LeagueId, spread.BetTypeId, spread.Spread) }
-                    ]
+                ]
             });
         }
 
@@ -286,4 +287,25 @@ $(document).ready(function () {
     $("#excelBtn").on('click', function () {
         spreadManagementService.ExportExcel();
     });
+
+    $("#browseBtn").click(function () {
+        $("#file").click();
+    });
+
+    $("#file").change(function () {
+        $("#fileName").val($("#file").val());
+    });
+
+    $("#uploadBtn").click(function () {
+        var data = new FormData();
+        var file = document.getElementById("file").files[0];
+        data.append("file", file);
+        $.ajax({
+            url: "SpreadManagement/PopupResult",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false
+        });
+    })
 });
