@@ -11,7 +11,6 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
     public class SpreadInfo
     {
-
         public int LeagueId { get; set; }
 
         public string LeagueName { get; set; }

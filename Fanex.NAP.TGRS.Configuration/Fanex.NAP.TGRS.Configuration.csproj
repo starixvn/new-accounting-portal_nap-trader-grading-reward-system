@@ -105,6 +105,7 @@
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\SpreadManagement\SpreadChecker.cs" />
     <Compile Include="Models\SpreadManagement\SpreadInfoModel.cs" />
     <Compile Include="Models\SpreadManagement\SpreadInfo.cs" />
     <Compile Include="Models\SystemConfiguration\ScoreCalculationPeriod.cs" />

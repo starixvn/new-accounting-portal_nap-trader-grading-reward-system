@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
     using Core.BaseClasses;
@@ -20,7 +21,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System.Linq;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -59,18 +59,21 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             var total = 0;
             var error = 0;
+            var errorList = new Queue<SpreadChecker>();
 
             foreach (var data in datas)
             {
                 ++total;
                 var spreadInfo = (SpreadInfo)data;
-                if (data != null)
+
+                if (spreadInfo != null)
                 {
-                    //todo: check database here
+                    ////////todo: check database here
                 }
                 else
                 {
                     ++error;
+                    errorList.Enqueue(data);
                 }
             }
 

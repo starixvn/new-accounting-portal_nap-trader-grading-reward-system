@@ -25,6 +25,8 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
 
         private static Type doubleType = typeof(double);
 
+        private static Type stringType = typeof(string);
+
         public IDictionary<string, Action<T, object>> GetSetters<T>()
         {
             var genericType = typeof(T);
@@ -79,6 +81,10 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             if (property.PropertyType.IsValueType)
             {
                 realSecondArg = Expression.Convert(Expression.Convert(secondArg, doubleType), property.PropertyType);
+            }
+            else if (property.PropertyType == typeof(string))
+            {
+                realSecondArg = Expression.Call(secondArg, objType.GetMethod("ToString"));
             }
             else
             {
