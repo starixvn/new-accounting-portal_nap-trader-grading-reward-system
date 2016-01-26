@@ -52,11 +52,10 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult PopupResult(HttpPostedFileBase file)
         {
             var datas = _excelReader.Read<SpreadInfo>(file);
-
-            return View();
+            return Json(true);
         }
 
         [HttpPost]

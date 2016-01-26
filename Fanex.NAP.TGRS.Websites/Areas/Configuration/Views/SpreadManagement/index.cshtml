@@ -18,29 +18,26 @@
     <div class="filter-bar">
         <div class="filter-form">
             <div class="filter-row">
-                @using (Html.BeginForm("Index", "SpreadManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="lbl-field col_5">
-                        <label class="control-label" for="FileName">
-                            Add/Edit
-                        </label>
+                <div class="lbl-field col_5">
+                    <label class="control-label" for="FileName">
+                        Add/Edit
+                    </label>
+                </div>
+                <div class="edit-field col_12">
+                    <div class="clearable-field">
+                        <input type="text" name="fileName" id="fileName" class="clearable-input" disabled
+                               style="width: 300px;" />
                     </div>
-                    <div class="edit-field col_12">
-                        <div class="clearable-field">
-                            <input type="text" name="FileName" id="FileName" class="clearable-input" disabled
-                                   style="width: 300px;" />
-                        </div>
-                    </div>
-                    <div class="col_4">
-                        <button class="blue-button" id="browseBtn" type="button">
-                            Browse
-                        </button>
-                    </div>
-                    <input type="file" id="File" name="file" style="display: none" />
-                    <button class="blue-button" type="submit">
-                        Upload
+                </div>
+                <div class="col_4">
+                    <button class="blue-button" id="browseBtn" type="button">
+                        Browse
                     </button>
-                }
+                </div>
+                <input type="file" id="file" name="file" style="display: none" />
+                <button id="uploadBtn" class="blue-button" type="button">
+                    Upload
+                </button>
             </div>
             <div class="filter-row">
                 <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
