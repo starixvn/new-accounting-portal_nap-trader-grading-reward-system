@@ -182,12 +182,14 @@ var spreadManagementService = (function ($) {
     }
 
     // Display new team form.
-    spreadManagementService.showPopupResult = function(result) {
+    spreadManagementService.showPopupResult = function (result) {
         var form = $('#divUploadResultForm');
         var option = {};
         common.Popup('Upload Result', form, option);
 
-        spreadPopupResult.renderGrid(result);
+        spreadPopupResult.renderGrid(result.ErrorSpreads);
+        $('#divErrorCount').text(result.ErrorSpreads.length);
+        $('#divTotalSpreads').text(result.TotalSpreads);        
     };
 
     var handleGridEvents = function () {

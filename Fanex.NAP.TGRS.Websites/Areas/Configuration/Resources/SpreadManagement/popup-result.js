@@ -8,8 +8,15 @@
         UpdateSpreads: common.ResolveRootUrl('SpreadManagement/UpdateSpreads')
     };
 
-    spreadPopupResult.save = function () {
-        alert('save shit');
+    spreadPopupResult.save = function () {        
+        $.ajax({
+            url: "SpreadManagement/UpdateSpread",
+            type: "POST",            
+            processData: false,
+            contentType: false,
+            success: function (result) {                
+            }
+        });
     };
    
     // Render grid.

@@ -9,6 +9,11 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.ExcelUtility;
     using Core.ExcelUtility.DefaultImplementation;
@@ -18,10 +23,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Collections.Generic;
-    using System.Linq;
     
     public class SpreadManagementController : TGRSBaseController
     {
@@ -56,42 +57,55 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         [HttpPost]
         public ActionResult PopupResult(HttpPostedFileBase file)
-        {
-            var bettypeIds = _spreadManagementService.GetBettypeIdsList();
-            var leagueIds = _spreadManagementService.GetLeagueIdsList();
-
+        {            
             var spreads = _excelReader.Read<SpreadChecker>(file);
-            var correctSpreads = new Queue<SpreadChecker>();
+            var correctSpreads = new Queue<SpreadInfo>();
             var errorSpreads = new Queue<SpreadChecker>();
-            var errorCount = 0;            
+            
+            var totalSpreads = ValidateSpreads(spreads, correctSpreads, errorSpreads);
+
+            CacheCorrectSpreads(correctSpreads);
+
+            var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = totalSpreads };
+            return Json(spreadValidation, JsonRequestBehavior.AllowGet);
+        }
+
+        private static void CacheCorrectSpreads(Queue<SpreadInfo> correctSpreads)
+        {
+            if (correctSpreads.Count > 0)
+            {
+                var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+                CacheManager.Set<IEnumerable<SpreadInfo>>(currentUser.ToString() + "_Spreads", correctSpreads);
+            }
+        }
+
+        private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadInfo> correctSpreads, Queue<SpreadChecker> errorSpreads)
+        {
+            var total = 0;
+            var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(x => x.BetType);
+            var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(x => x.LeagueId);
 
             foreach (var spreadInfo in spreads)
-            {                
+            {
+                total++;
                 if ((SpreadInfo)spreadInfo == null)
                 {                    
-                    errorCount++;
                     errorSpreads.Enqueue(spreadInfo);
                 }
                 else
                 {
                     if (bettypeIds.Contains<int>(int.Parse(spreadInfo.BetTypeId)) && leagueIds.Contains<int>(int.Parse(spreadInfo.LeagueId)))
                     {
-                        correctSpreads.Enqueue(spreadInfo);                        
+                        correctSpreads.Enqueue((SpreadInfo)spreadInfo);
                     }
                     else
-                    {
-                        errorCount++;
+                    {                        
                         errorSpreads.Enqueue(spreadInfo);
                     }
                 }
             }
 
-            if (correctSpreads.Count > 0)
-            {
-                SessionManager.Set(User.Identity.ToString() + "Spreads", correctSpreads);
-            }
-
-            return Json(errorSpreads, JsonRequestBehavior.AllowGet);
+            return total;
         }      
 
         [HttpPost]
@@ -105,10 +119,15 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
-        public ActionResult UpdateSpread(UpdateSingleSpreadCriteria criteria)
+        public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
+            var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadInfo>>(currentUser.ToString() + "_Spreads");
+
             criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var result = _spreadManagementService.UpdateSingleSpread(criteria);
+            criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSuspiciousInfo(correctSpreadsCache) : string.Empty;
+
+            var result = _spreadManagementService.UpdateSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -144,6 +163,30 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult GetHostPermission()
         {
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
+        }
+        
+        private string CreateXmlParamForInsertingSuspiciousInfo(IEnumerable<SpreadInfo> spreads)
+        {
+            var builder = new StringBuilder();
+            builder.Append("<Root>");
+
+            foreach (var spreadInfo in spreads)
+            {
+                builder.Append("<Row>");
+                builder.Append(GetElement("LeagueId", spreadInfo.LeagueId));                
+                builder.Append(GetElement("BettypeId", spreadInfo.BetTypeId));                                
+                builder.Append(GetElement("Spread", spreadInfo.Spread));                
+                builder.Append("</Row>");
+            }
+
+            builder.Append("</Root>");
+
+            return builder.ToString();
+        }
+
+        private string GetElement(string tagName, object value)
+        {
+            return string.Format("<{0}>{1}</{0}>", tagName, value);
         }
     }
 }

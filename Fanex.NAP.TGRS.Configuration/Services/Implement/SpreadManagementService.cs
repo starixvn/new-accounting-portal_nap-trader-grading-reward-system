@@ -18,12 +18,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     using Criteria.SpreadManagement;
     using DataAccess.Implement;
     using DataAccess.Interface;
+    using Fanex.NAP.TGRS.Configuration.Criteria.Common;
     using Framework.Command;
     using Models.SpreadManagement;
     using NAP.Core.Web;
     using NPOI.SS.UserModel;
     using ViewModel.SpreadManagement;
-    using Fanex.NAP.TGRS.Configuration.Criteria.Common;
 
     public class SpreadManagementService : TGRSBaseService, ISpreadManagementService
     {
@@ -60,9 +60,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         /// Gets the list of bettypes Id.
         /// </summary>
         /// <returns>List of bettypes Id.</returns>
-        public IEnumerable<int> GetBettypeIdsList()
+        public IEnumerable<Bettype> GetBettypeIdsList()
         {
-            IEnumerable<int> result = this.GetData<int>(new GetBetTypeIdsCriteria());
+            IEnumerable<Bettype> result = this.GetData<Bettype>(new GetBetTypeIdsCriteria());
             return result;
         }
 
@@ -70,9 +70,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         /// Gets the list of leagues Id.
         /// </summary>
         /// <returns>List of leagues Id.</returns>
-        public IEnumerable<int> GetLeagueIdsList()
+        public IEnumerable<League> GetLeagueIdsList()
         {
-            IEnumerable<int> result = this.GetData<int>(new GetLeagueIdsCriteria());
+            IEnumerable<League> result = this.GetData<League>(new GetLeagueIdsCriteria());
             return result;
         }        
 
