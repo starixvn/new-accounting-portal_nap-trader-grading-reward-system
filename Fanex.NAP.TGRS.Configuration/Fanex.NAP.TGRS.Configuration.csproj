@@ -128,7 +128,9 @@
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
-    <Compile Include="Services\Interface\ISpreadManagementService.cs" />
+    <Compile Include="Services\Interface\ISpreadManagementService.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Services\Interface\ISystemConfigurationService.cs" />
     <Compile Include="Services\Interface\IBenchmarkManagementService.cs" />
     <Compile Include="Services\Interface\ITraderManagementService.cs" />

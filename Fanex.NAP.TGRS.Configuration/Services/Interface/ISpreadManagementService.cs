@@ -9,11 +9,11 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
 {
+    using System.Collections.Generic;
     using Criteria.SpreadManagement;
+    using Fanex.NAP.TGRS.Configuration.Models.SpreadManagement;
     using Framework.Command;
     using ViewModel.SpreadManagement;
-    using System.Collections.Generic;
-    using Fanex.NAP.TGRS.Configuration.Models.SpreadManagement;
 
     public interface ISpreadManagementService
     {

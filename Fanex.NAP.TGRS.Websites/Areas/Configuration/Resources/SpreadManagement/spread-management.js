@@ -14,6 +14,10 @@ var spreadManagementFactory = (function ($) {
             return $.post(common.ResolveRootUrl('SpreadManagement/UpdateSpread'), criteria);
         },
 
+        updateSingleSpread: function (criteria) {
+            return $.post(common.ResolveRootUrl('SpreadManagement/UpdateSingleSpread'), criteria);
+        },
+
         deleteSpread: function (criteria) {
             return $.post(common.ResolveRootUrl('SpreadManagement/DeleteSpread'), criteria);
         },
@@ -84,7 +88,7 @@ var spreadManagementService = (function ($) {
             Spread: newSpread
         };
 
-        return spreadManagementFactory.updateSpread(criteria).success(function (result) {
+        return spreadManagementFactory.updateSingleSpread(criteria).success(function (result) {
             spreadManagementService.result = result;
         });
     };

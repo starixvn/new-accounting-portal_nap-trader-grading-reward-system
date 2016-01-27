@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    
+
     public class SpreadManagementController : TGRSBaseController
     {
         private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
@@ -57,11 +57,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         [HttpPost]
         public ActionResult PopupResult(HttpPostedFileBase file)
-        {            
+        {
             var spreads = _excelReader.Read<SpreadChecker>(file);
             var correctSpreads = new Queue<SpreadInfo>();
             var errorSpreads = new Queue<SpreadChecker>();
-            
+
             var totalSpreads = ValidateSpreads(spreads, correctSpreads, errorSpreads);
 
             CacheCorrectSpreads(correctSpreads);
@@ -89,7 +89,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             {
                 total++;
                 if ((SpreadInfo)spreadInfo == null)
-                {                    
+                {
                     errorSpreads.Enqueue(spreadInfo);
                 }
                 else
@@ -99,14 +99,14 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                         correctSpreads.Enqueue((SpreadInfo)spreadInfo);
                     }
                     else
-                    {                        
+                    {
                         errorSpreads.Enqueue(spreadInfo);
                     }
                 }
             }
 
             return total;
-        }      
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
@@ -128,6 +128,16 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSuspiciousInfo(correctSpreadsCache) : string.Empty;
 
             var result = _spreadManagementService.UpdateSpread(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        public ActionResult UpdateSingleSpread(UpdateSingleSpreadCriteria criteria)
+        {
+            criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+            var result = _spreadManagementService.UpdateSingleSpread(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -164,7 +174,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
-        
+
         private string CreateXmlParamForInsertingSuspiciousInfo(IEnumerable<SpreadInfo> spreads)
         {
             var builder = new StringBuilder();
@@ -173,9 +183,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             foreach (var spreadInfo in spreads)
             {
                 builder.Append("<Row>");
-                builder.Append(GetElement("LeagueId", spreadInfo.LeagueId));                
-                builder.Append(GetElement("BettypeId", spreadInfo.BetTypeId));                                
-                builder.Append(GetElement("Spread", spreadInfo.Spread));                
+                builder.Append(GetElement("LeagueId", spreadInfo.LeagueId));
+                builder.Append(GetElement("BettypeId", spreadInfo.BetTypeId));
+                builder.Append(GetElement("Spread", spreadInfo.Spread));
                 builder.Append("</Row>");
             }
 

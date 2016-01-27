@@ -7,10 +7,10 @@
 //   <change who="Thai.Tran" date="2016.1.27">Created</change>
 // </history>
 
-using System.Collections.Generic;
-
 namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
+    using System.Collections.Generic;
+
     public class SpreadValidation
     {
         public Queue<SpreadChecker> ErrorSpreads { get; set; }
