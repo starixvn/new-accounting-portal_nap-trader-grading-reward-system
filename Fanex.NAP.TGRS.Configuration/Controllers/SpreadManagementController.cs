@@ -74,7 +74,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 }
                 else
                 {
-                    if (bettypeIds.Contains<int>(spreadInfo.BetTypeId) && leagueIds.Contains<int>(spreadInfo.LeagueId))
+                    if (bettypeIds.Contains<int>(int.Parse(spreadInfo.BetTypeId)) && leagueIds.Contains<int>(int.Parse(spreadInfo.LeagueId)))
                     {
                         correctSpreads.Enqueue(spreadInfo);                        
                     }

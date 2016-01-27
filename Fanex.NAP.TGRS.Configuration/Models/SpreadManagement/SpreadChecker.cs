@@ -14,18 +14,18 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
     public class SpreadChecker
     {
         [Column("League ID")]
-        public int LeagueId { get; set; }
+        public string LeagueId { get; set; }
 
         [Column("League Name")]
         public string LeagueName { get; set; }
 
         [Column("Bet Type ID")]
-        public int BetTypeId { get; set; }
+        public string BetTypeId { get; set; }
 
         [Column("Bet Type Name")]
         public string BetTypeName { get; set; }
 
-        public int Spread { get; set; }
+        public string Spread { get; set; }
 
         public static explicit operator SpreadInfo(SpreadChecker checker)
         {
@@ -33,9 +33,9 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
             {
                 return new SpreadInfo
                 {                    
-                    LeagueId = int.Parse(checker.LeagueId.ToString()),                    
-                    BetTypeId = int.Parse(checker.BetTypeId.ToString()),                    
-                    Spread = int.Parse(checker.Spread.ToString())
+                    LeagueId = int.Parse(checker.LeagueId),                    
+                    BetTypeId = int.Parse(checker.BetTypeId),                    
+                    Spread = int.Parse(checker.Spread)
                 };
             }
             catch
