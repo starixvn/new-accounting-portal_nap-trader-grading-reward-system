@@ -22,7 +22,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.Common
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_BenchmarkBetType_SelectAll";
+            return "TGRS_Bettype_SelectList";
         }
 
         /// <summary>

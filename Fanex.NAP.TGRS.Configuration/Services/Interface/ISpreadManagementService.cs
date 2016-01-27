@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     using Criteria.SpreadManagement;
     using Framework.Command;
     using ViewModel.SpreadManagement;
+    using System.Collections.Generic;
 
     public interface ISpreadManagementService
     {
@@ -24,5 +25,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath);
 
         ICommandResult UpdateSpread(UpdateSpreadCriteria criteria);
+
+        IEnumerable<int> GetBettypeIdsList();
+
+        IEnumerable<int> GetLeagueIdsList();
     }
 }

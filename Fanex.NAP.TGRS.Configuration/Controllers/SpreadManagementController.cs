@@ -20,7 +20,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Services.SpreadManagement;
     using System.Web;
     using System.Web.Mvc;
-
+    using System.Collections.Generic;
+    using System.Linq;
+    
     public class SpreadManagementController : TGRSBaseController
     {
         private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
@@ -55,31 +57,42 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [HttpPost]
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
-            var datas = _excelReader.Read<SpreadChecker>(file);
+            var bettypeIds = _spreadManagementService.GetBettypeIdsList();
+            var leagueIds = _spreadManagementService.GetLeagueIdsList();
 
-            ////var total = 0;
-            ////var error = 0;
-            ////var errorList = new Queue<SpreadChecker>();
+            var spreads = _excelReader.Read<SpreadChecker>(file);
+            var correctSpreads = new Queue<SpreadChecker>();
+            var errorSpreads = new Queue<SpreadChecker>();
+            var errorCount = 0;            
 
-            ////foreach (var data in datas)
-            ////{
-            ////    ++total;
-            ////    var spreadInfo = (SpreadInfo)data;
+            foreach (var spreadInfo in spreads)
+            {                
+                if ((SpreadInfo)spreadInfo == null)
+                {                    
+                    errorCount++;
+                    errorSpreads.Enqueue(spreadInfo);
+                }
+                else
+                {
+                    if (bettypeIds.Contains<int>(spreadInfo.BetTypeId) && leagueIds.Contains<int>(spreadInfo.LeagueId))
+                    {
+                        correctSpreads.Enqueue(spreadInfo);                        
+                    }
+                    else
+                    {
+                        errorCount++;
+                        errorSpreads.Enqueue(spreadInfo);
+                    }
+                }
+            }
 
-            ////    if (spreadInfo != null)
-            ////    {
-            ////        ////////todo: check database here
-            ////    }
-            ////    else
-            ////    {
-            ////        ++error;
-            ////        errorList.Enqueue(data);
-            ////    }
-            ////}
+            if (correctSpreads.Count > 0)
+            {
+                SessionManager.Set(User.Identity.ToString() + "Spreads", correctSpreads);
+            }
 
-            ////var test = _excelReader.Read<SpreadInfo>(file).ToList<SpreadInfo>();
-            return Json(datas, JsonRequestBehavior.AllowGet);
-        }
+            return Json(errorSpreads, JsonRequestBehavior.AllowGet);
+        }      
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]

@@ -23,6 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     using NAP.Core.Web;
     using NPOI.SS.UserModel;
     using ViewModel.SpreadManagement;
+    using Fanex.NAP.TGRS.Configuration.Criteria.Common;
 
     public class SpreadManagementService : TGRSBaseService, ISpreadManagementService
     {
@@ -54,6 +55,26 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         {
             return UpdateData(criteria);
         }
+
+        /// <summary>
+        /// Gets the list of bettypes Id.
+        /// </summary>
+        /// <returns>List of bettypes Id.</returns>
+        public IEnumerable<int> GetBettypeIdsList()
+        {
+            IEnumerable<int> result = this.GetData<int>(new GetBetTypeIdsCriteria());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the list of leagues Id.
+        /// </summary>
+        /// <returns>List of leagues Id.</returns>
+        public IEnumerable<int> GetLeagueIdsList()
+        {
+            IEnumerable<int> result = this.GetData<int>(new GetLeagueIdsCriteria());
+            return result;
+        }        
 
         #region Utilities
         public void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath)
