@@ -106,12 +106,12 @@ var spreadManagementService = (function ($) {
                 columns: [
                     { HeaderText: "#", Width: 50, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "League Name", Width: 350, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
-                    { HeaderText: "Bet Type Name", Width: 150, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Bet Type Name", Width: 300, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "Remove", Width: 50, Name: "Delete", HeaderAlign: "center", CellAlign: "center" }
                 ],
                 bodyRows: createSpreadTable(spreadList.SpreadInfoItems),
-                gridExpandHeight: 120,
+                gridExpandHeight: 250,
                 showNumberColumn: true,
                 showPager: true,
                 customPager: true,
@@ -164,7 +164,7 @@ var spreadManagementService = (function ($) {
     }
 
     function reRenderAfterPaged(pageIndex, itemsPerPage) {
-        if (itemsPerPage !== $('#PageSize').val()) {
+        if (parseInt(itemsPerPage) !== parseInt($('#PageSize').val())) {
             $('#PageIndex').val(0);
             spreadManagementService.filter.pageIndex = 0;
         } else {
@@ -189,7 +189,7 @@ var spreadManagementService = (function ($) {
 
         spreadPopupResult.renderGrid(result.ErrorSpreads);
         $('#divErrorCount').text(result.ErrorSpreads.length);
-        $('#divTotalSpreads').text(result.TotalSpreads);        
+        $('#divTotalSpreads').text(result.TotalSpreads);
     };
 
     var handleGridEvents = function () {
@@ -253,7 +253,6 @@ var spreadManagementService = (function ($) {
             var $link = $(this);
 
             common.ShowConfirmMessage(messages.DeleteSpreadConfirmMessage, function () {
-                debugger;
                 var leagueId = $link.attr('data-league-id');
                 var betTypeId = $link.attr('data-bettype-id');
 
