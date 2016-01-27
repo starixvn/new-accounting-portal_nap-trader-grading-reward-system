@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             {
                 realSecondArg = Expression.Convert(Expression.Convert(secondArg, doubleType), property.PropertyType);
             }
-            else if (property.PropertyType == typeof(string))
+            else if (property.PropertyType == stringType)
             {
                 realSecondArg = Expression.Call(secondArg, objType.GetMethod("ToString"));
             }

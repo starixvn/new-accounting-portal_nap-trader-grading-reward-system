@@ -1,6 +1,14 @@
-﻿namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
+﻿// --------------------------------------------------------------------------
+// <copyright file="SpreadChecker.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Simon.Huynh" date="2015.1.26">Created</change>
+// </history>
+
+namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
-    using System;
     using TGRS.Core.ExcelUtility;
 
     public class SpreadChecker
