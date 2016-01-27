@@ -182,13 +182,13 @@ var spreadManagementService = (function ($) {
     }
 
     // Display new team form.
-    spreadManagementService.showPopupResult = function (result) {        
+    spreadManagementService.showPopupResult = function(result) {
         var form = $('#divUploadResultForm');
-        var option = { };
+        var option = {};
         common.Popup('Upload Result', form, option);
 
         spreadPopupResult.renderGrid(result);
-    }
+    };
 
     var handleGridEvents = function () {
         var spreadLinks = $('#divSpreadGrid').find('span.spread-link');
@@ -292,6 +292,9 @@ var spreadManagementService = (function ($) {
 $(document).ready(function () {
 
     $("#btnSearchSpread").on('click', function () {
+        spreadManagementService.filter.pageSize = 50;
+        spreadManagementService.filter.pageIndex = 0;
+
         spreadManagementService.Search();
     });
 
