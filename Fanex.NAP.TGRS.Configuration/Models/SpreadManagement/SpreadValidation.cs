@@ -13,7 +13,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 
     public class SpreadValidation
     {
-        public Queue<SpreadChecker> ErrorSpreads { get; set; }
+        public IEnumerable<SpreadChecker> ErrorSpreads { get; set; }
 
         public int TotalSpreads { get; set; }
     }

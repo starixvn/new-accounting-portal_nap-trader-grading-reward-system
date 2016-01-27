@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-
+    
     public class SpreadManagementController : TGRSBaseController
     {
         private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
@@ -82,21 +82,24 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadInfo> correctSpreads, Queue<SpreadChecker> errorSpreads)
         {
             var total = 0;
-            var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(x => x.BetType);
-            var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(x => x.LeagueId);
+
+            var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
+            var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
             foreach (var spreadInfo in spreads)
             {
                 total++;
-                if ((SpreadInfo)spreadInfo == null)
+                var spread = (SpreadInfo)spreadInfo;
+
+                if (spread == null)
                 {
                     errorSpreads.Enqueue(spreadInfo);
                 }
                 else
                 {
-                    if (bettypeIds.Contains<int>(int.Parse(spreadInfo.BetTypeId)) && leagueIds.Contains<int>(int.Parse(spreadInfo.LeagueId)))
+                    if (BinarySearch(bettypeIds, spread.BetTypeId) && BinarySearch(leagueIds, spread.LeagueId))
                     {
-                        correctSpreads.Enqueue((SpreadInfo)spreadInfo);
+                        correctSpreads.Enqueue(spread);
                     }
                     else
                     {
@@ -197,6 +200,25 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private string GetElement(string tagName, object value)
         {
             return string.Format("<{0}>{1}</{0}>", tagName, value);
+        }
+
+        private bool BinarySearch(IList<int> list, int criteria)
+        {
+            return BinarySearchHelper(list, 0, list.Count - 1, criteria);
+        }
+
+        private bool BinarySearchHelper(IList<int> list, int start, int end, int criteria)
+        {
+            if (start <= end)
+            {
+                var mid = (start + end) / 2;
+                var midElement = list[mid];
+                return midElement < criteria ? BinarySearchHelper(list, mid + 1, end, criteria) :
+                       midElement > criteria ? BinarySearchHelper(list, start, mid - 1, criteria) :
+                       true;
+            }
+
+            return false;
         }
     }
 }
