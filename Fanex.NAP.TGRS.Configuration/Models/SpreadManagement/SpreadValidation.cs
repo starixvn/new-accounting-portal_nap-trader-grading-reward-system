@@ -15,6 +15,6 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
     {
         public Queue<SpreadChecker> ErrorSpreads { get; set; }
 
-        public int TotalSpreads { get; set; }        
+        public int TotalSpreads { get; set; }
     }
 }

@@ -125,7 +125,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadInfo>>(currentUser.ToString() + "_Spreads");
 
             criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSuspiciousInfo(correctSpreadsCache) : string.Empty;
+            criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSpreadInfo(correctSpreadsCache) : string.Empty;
 
             var result = _spreadManagementService.UpdateSpread(criteria);
 
@@ -175,7 +175,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
 
-        private string CreateXmlParamForInsertingSuspiciousInfo(IEnumerable<SpreadInfo> spreads)
+        private string CreateXmlParamForInsertingSpreadInfo(IEnumerable<SpreadInfo> spreads)
         {
             var builder = new StringBuilder();
             builder.Append("<Root>");

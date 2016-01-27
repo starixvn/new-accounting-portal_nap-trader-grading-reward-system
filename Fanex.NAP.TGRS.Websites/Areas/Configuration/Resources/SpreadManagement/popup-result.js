@@ -8,30 +8,30 @@
         UpdateSpreads: common.ResolveRootUrl('SpreadManagement/UpdateSpreads')
     };
 
-    spreadPopupResult.save = function () {        
+    spreadPopupResult.save = function () {
         $.ajax({
             url: "SpreadManagement/UpdateSpread",
-            type: "POST",            
+            type: "POST",
             processData: false,
             contentType: false,
-            success: function (result) {                
+            success: function (result) {
             }
         });
     };
-   
+
     // Render grid.
     spreadPopupResult.renderGrid = function (data) {
         var gridOptions = {
             columns: [
                 { HeaderText: "#", Width: 50, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "LeagueId", Width: 100, Name: "LeagueId", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "League Name", Width: 100, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "BetTypeId", Width: 100, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "left" },
-                { HeaderText: "Bet Type Name", Width: 100, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "League Id", Width: 70, Name: "LeagueId", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "League Name", Width: 258, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
+                { HeaderText: "Bet Type Id", Width: 70, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Bet Type Name", Width: 250, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" }
             ],
             showNumberColumn: true,
-            gridExpandHeight: 150            
+            gridExpandHeight: 350
         };
 
         var bodyData = [];

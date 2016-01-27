@@ -202,7 +202,6 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
-    <Content Include="Areas\Configuration\Resources\SpreadManagement\SpreadManagement.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\popup-result.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.js" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.js" />
@@ -364,9 +363,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\SpreadTemplate\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -415,7 +412,6 @@
     <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.less" />
     <Content Include="App_Data\SpreadTemplate\SpreadTemplate.xls" />
-    <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
     <None Include="Areas\Configuration\ExcelTemplates\SpreadManagement.xls" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.less" />
     <Content Include="Areas\Configuration\Views\SpreadManagement\UploadResult.cshtml" />
