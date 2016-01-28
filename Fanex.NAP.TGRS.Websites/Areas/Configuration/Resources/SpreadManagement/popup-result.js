@@ -18,7 +18,7 @@
                 alert('This process may take a while...');
             },
             success: function (result) {
-                alert('done for updating spreads');
+                alert('The update of Spread setting has been completed.');
                 try{
                     common.ClosePopup();
                 }

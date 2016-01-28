@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Aaron.Cao" date="2016.1.20">Created</change>
+//   <change who="Thai.Tran" date="2016.1.20">Updated</change>
 // </history>
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
@@ -19,10 +20,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
     using Core.Helpers;
     using Criteria.SpreadManagement;
+    using Fanex.NAP.Core.Web;
     using Models.SpreadManagement;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
+    using Fanex.NAP.TGRS.Core.Configurations;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -115,15 +118,27 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
-            var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
+            var correctSpreadsCache = GetCorrectSpreadsCache();
 
-            criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSpreadInfo(correctSpreadsCache) : string.Empty;
+            var correctSpreads = IEnumerableExtensions.Batch<SpreadChecker>(correctSpreadsCache, AppSettings.BatchSizeForUpdateSpread);
+            bool result = true;
 
-            var result = _spreadManagementService.UpdateSpread(criteria);
+            foreach (var spread in correctSpreads)
+            {
+                criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+                criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSpreadInfo(spread) : string.Empty;
+
+                result = result && _spreadManagementService.UpdateSpread(criteria).IsSuccessful;
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private static IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
+        {
+            var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
+            return correctSpreadsCache;
         }
 
         [HttpPost]
@@ -226,6 +241,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return false;
-        }
+        }   
     }
 }

@@ -131,6 +131,7 @@
     <Compile Include="ExcelUtility\NPOIExtensions\HSSFWorkbookExtensions.cs" />
     <Compile Include="ExcelUtility\RichTextExtensions\RichTextRender.cs" />
     <Compile Include="ExcelUtility\RichTextExtensions\TextBlock.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\AppSession.cs" />
     <Compile Include="Helpers\CacheManager.cs" />

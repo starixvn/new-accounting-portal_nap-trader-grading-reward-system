@@ -23,6 +23,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceAllowYearRange;
         private static int performanceDefaultDayRange;
         private static DateTime? availableDate;
+        private static int batchSizeForUpdateSpread;
 
         public static string ServerTimezone
         {
@@ -86,6 +87,19 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return availableDate.Value;
+            }
+        }
+
+        public static int BatchSizeForUpdateSpread
+        {
+            get
+            {
+                if (batchSizeForUpdateSpread == 0)
+                {
+                    batchSizeForUpdateSpread = Converter.ToInt(GetValue("BatchSizeForUpdateSpread"));
+                }
+
+                return batchSizeForUpdateSpread;
             }
         }
 
