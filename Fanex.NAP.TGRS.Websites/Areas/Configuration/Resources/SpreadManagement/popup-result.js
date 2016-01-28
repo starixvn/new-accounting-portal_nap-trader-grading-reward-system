@@ -14,7 +14,15 @@
             type: "POST",
             processData: false,
             contentType: false,
+            beforeSend: function () {
+                alert('This process may take a while...');
+            },
             success: function (result) {
+                alert('done for updating spreads');
+                try{
+                    common.ClosePopup();
+                }
+                catch(err) { }
             }
         });
     };

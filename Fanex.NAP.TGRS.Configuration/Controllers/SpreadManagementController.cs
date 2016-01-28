@@ -60,12 +60,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var spreads = _excelReader.Read<SpreadChecker>(file);
             var correctSpreads = new Queue<SpreadChecker>();
             var errorSpreads = new Queue<SpreadChecker>();
-
-            var totalSpreads = ValidateSpreads(spreads, correctSpreads, errorSpreads);
+            
+            ValidateSpreads(spreads, correctSpreads, errorSpreads);
 
             CacheCorrectSpreads(correctSpreads);
 
-            var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = totalSpreads };
+            var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
             return Json(spreadValidation, JsonRequestBehavior.AllowGet);
         }
 
@@ -78,34 +78,23 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
         }
 
-        private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
-        {
-            var total = 0;
+        private void ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
+        {            
             var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
             var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
             foreach (var spreadInfo in spreads)
-            {
-                total++;
-
-                if (IsValidSpread(spreadInfo))
+            {                                
+                if (IsValidSpread(spreadInfo)
+                    && IsValidBettypeAndLeague(bettypeIds, leagueIds, spreadInfo))
                 {
-                    if (BinarySearch(bettypeIds, int.Parse(spreadInfo.BetTypeId)) && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId)))
-                    {
-                        correctSpreads.Enqueue(spreadInfo);
-                    }
-                    else
-                    {
-                        errorSpreads.Enqueue(spreadInfo);
-                    }
-                }
+                    correctSpreads.Enqueue(spreadInfo);
+                }                                
                 else
                 {
                     errorSpreads.Enqueue(spreadInfo);
                 }
             }
-
-            return total;
         }
 
         [HttpPost]
@@ -213,6 +202,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return int.TryParse(spread.BetTypeId, out outBettypeId) &&
                     int.TryParse(spread.LeagueId, out outLeagueId) &&
                     int.TryParse(spread.Spread, out outSpread);
+        }
+
+        private bool IsValidBettypeAndLeague(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
+        {
+            return BinarySearch(bettypeIds, int.Parse(spreadInfo.BetTypeId))
+                && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId));            
         }
 
         private bool BinarySearch(IList<int> list, int criteria)

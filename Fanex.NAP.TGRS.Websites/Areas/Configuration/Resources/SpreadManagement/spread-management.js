@@ -319,15 +319,24 @@ $(document).ready(function () {
         var data = new FormData();
         var file = document.getElementById("file").files[0];
         data.append("file", file);
-        $.ajax({
-            url: "SpreadManagement/PopupResult",
-            type: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (result) {
-                spreadManagementService.showPopupResult(result);
-            }
-        });
+        if (file == undefined) {
+            alert('Please choose an excel file');
+        }
+        else {
+            common.DisableInput();
+            $.ajax({
+                url: "SpreadManagement/PopupResult",
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    spreadManagementService.showPopupResult(result);
+                },
+                complete: function () {
+                    common.EnableInput();
+                }
+            });
+        }
     });
 });
