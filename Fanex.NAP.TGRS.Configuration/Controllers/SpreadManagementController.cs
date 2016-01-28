@@ -10,14 +10,8 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.ExcelUtility.ExcelIOExtensions;
-    using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
     using Core.Helpers;
     using Criteria.SpreadManagement;
     using Fanex.NAP.Core.Web;
@@ -26,8 +20,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System.Web.UI;
-    using System.Threading;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -70,13 +67,22 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
                 return Json(spreadValidation, JsonRequestBehavior.AllowGet);
             }
-            catch (KeyNotFoundException ex)
+            catch (ColumnMappingException ex)
             {
-                return Json(ex.Message);
+                var str = new StringBuilder();
+
+                foreach (var error in ex.ErrorColumns)
+                {
+                    str.Append(error);
+                    str.Append(", ");
+                }
+
+                str.Remove(str.Length - 2, 1);
+                return Json(str.ToString());
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                throw ex;
+                throw;
             }
         }
 

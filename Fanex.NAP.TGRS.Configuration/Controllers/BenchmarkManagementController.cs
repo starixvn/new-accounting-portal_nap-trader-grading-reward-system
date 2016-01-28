@@ -9,9 +9,6 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
@@ -20,6 +17,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Resources;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Benchmark controller.

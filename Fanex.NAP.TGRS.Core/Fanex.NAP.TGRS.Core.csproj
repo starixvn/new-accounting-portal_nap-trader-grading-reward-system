@@ -120,6 +120,7 @@
       <DependentUpon>TGRSFunctionKeys.tt</DependentUpon>
     </Compile>
     <Compile Include="ExcelUtility\ExcelIOExtensions\Column.cs" />
+    <Compile Include="ExcelUtility\ExcelIOExtensions\ColumnMappingError.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\DefaultImplementation\HttpExcelMapper.cs" />
     <Compile Include="ExcelUtility\ExcelTemplateWriter.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\FileObjectMapper.cs" />

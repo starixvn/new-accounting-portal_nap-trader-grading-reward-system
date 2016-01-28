@@ -9,13 +9,13 @@
 
 namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation
 {
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Web;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
 
     public class HttpExcelMapper : FileObjectMapper<HttpPostedFileBase>
     {
@@ -98,17 +98,22 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions.DefaultImplementati
         private IDictionary<int, T> GetFinalMapping<T>(IDictionary<string, int> columnMapping, IDictionary<string, T> setterMapping)
         {
             var dictionary = new Dictionary<int, T>(columnMapping.Count);
+            Queue<string> errors = null;
 
             foreach (var mapping in columnMapping)
             {
-                try
+                if (!setterMapping.ContainsKey(mapping.Key))
                 {
-                    dictionary.Add(mapping.Value, setterMapping[mapping.Key]);
+                    (errors = errors ?? new Queue<string>()).Enqueue(mapping.Key);
+                    continue;
                 }
-                catch (KeyNotFoundException)
-                {
-                    throw new KeyNotFoundException(mapping.Key);
-                }
+
+                dictionary.Add(mapping.Value, setterMapping[mapping.Key]);
+            }
+
+            if (errors != null)
+            {
+                throw new ColumnMappingException("error", errors);
             }
 
             return dictionary;
