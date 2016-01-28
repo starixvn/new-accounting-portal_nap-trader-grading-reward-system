@@ -21,11 +21,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Core.Helpers;
     using Criteria.SpreadManagement;
     using Fanex.NAP.Core.Web;
+    using Fanex.NAP.TGRS.Core.Configurations;
     using Models.SpreadManagement;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using Fanex.NAP.TGRS.Core.Configurations;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -132,14 +132,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        private static IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
-        {
-            var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
-            return correctSpreadsCache;
-        }
+        }      
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
@@ -182,6 +175,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult GetHostPermission()
         {
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
+        }
+
+        private IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
+        {
+            var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
+            return correctSpreadsCache;
         }
 
         private string CreateXmlParamForInsertingSpreadInfo(IEnumerable<SpreadChecker> spreads)
@@ -241,6 +241,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return false;
-        }   
+        }
     }
 }
