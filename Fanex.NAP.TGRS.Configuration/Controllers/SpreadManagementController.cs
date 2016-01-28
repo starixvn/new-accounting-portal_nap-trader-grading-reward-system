@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    
+
     public class SpreadManagementController : TGRSBaseController
     {
         private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
@@ -41,7 +41,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             _spreadManagementService = spreadManagementService ?? new SpreadManagementService();
             _excelReader = excelMapper ?? new HttpExcelMapper();
-            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.SpreadManagement, Constant.Policy.Host);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
@@ -82,14 +81,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
         {
             var total = 0;
-
             var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
             var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
             foreach (var spreadInfo in spreads)
             {
                 total++;
-                
+
                 if (IsValidSpread(spreadInfo))
                 {
                     if (BinarySearch(bettypeIds, int.Parse(spreadInfo.BetTypeId)) && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId)))
@@ -114,6 +112,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetAllSpread(GetAllSpreadCriteria criteria)
         {
+            if (criteria.LeagueName != null)
+            {
+                criteria.LeagueName = criteria.LeagueName.Trim();
+            }
+
             var spreadList = _spreadManagementService.GetAllSpread(criteria);
 
             return Json(spreadList, JsonRequestBehavior.AllowGet);

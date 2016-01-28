@@ -26,7 +26,7 @@
                 <div class="edit-field col_12">
                     <div class="clearable-field">
                         <input type="text" name="fileName" id="fileName" class="clearable-input" disabled
-                               style="width: 300px;" />
+                            style="width: 300px;" />
                     </div>
                 </div>
                 <div class="col_4">
@@ -60,10 +60,10 @@
         </div>
     </div>
 </div>
-
 <div id="resultContainer" class="content-grid" style="display: none;">
     <div id="divLeaguePerformanceGrid-grid-title" class="grid-title">
-        <div class="grid-title-label" id="reporttile"></div>
+        <div class="grid-title-label" id="reporttile">
+        </div>
         <div class="grid-toolbox">
             <input type="button" id="excelBtn" class="btnExcel" title="Export to Excel">
         </div>
@@ -71,23 +71,16 @@
     <div id="divSpreadGrid" class="freegrid">
     </div>
 </div>
-
 <div>
     @Html.HiddenFor(s => s.PageSize)
     @Html.HiddenFor(s => s.PageIndex)
     @Html.HiddenFor(s => s.PageCount)
 </div>
-
-@if (ViewBag.HasEditRight)
-{
-    <div id="divHiddenForm" class="display-none">
-        @Html.Partial("UploadResult")
-    </div>
-}
-
+<div id="divHiddenForm" class="display-none">
+    @Html.Partial("UploadResult")
+</div>
 @section Foot{
     @Scripts.Render("~/scripts/spreadManagement")
-    
     <script type="text/javascript">
         var messages = {
             UpdateSpreadConfirmMessage: '@Messages.UpdateSpreadConfirmMessage',
