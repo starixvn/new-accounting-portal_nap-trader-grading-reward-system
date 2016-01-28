@@ -26,22 +26,5 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
         public string BetTypeName { get; set; }
 
         public string Spread { get; set; }
-
-        public static explicit operator SpreadInfo(SpreadChecker checker)
-        {
-            try
-            {
-                return new SpreadInfo
-                {                    
-                    LeagueId = int.Parse(checker.LeagueId),                    
-                    BetTypeId = int.Parse(checker.BetTypeId),                    
-                    Spread = int.Parse(checker.Spread)
-                };
-            }
-            catch
-            {
-                return null;
-            }
-        }
     }
 }

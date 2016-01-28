@@ -59,7 +59,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
             var spreads = _excelReader.Read<SpreadChecker>(file);
-            var correctSpreads = new Queue<SpreadInfo>();
+            var correctSpreads = new Queue<SpreadChecker>();
             var errorSpreads = new Queue<SpreadChecker>();
 
             var totalSpreads = ValidateSpreads(spreads, correctSpreads, errorSpreads);
@@ -70,16 +70,16 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return Json(spreadValidation, JsonRequestBehavior.AllowGet);
         }
 
-        private static void CacheCorrectSpreads(Queue<SpreadInfo> correctSpreads)
+        private static void CacheCorrectSpreads(Queue<SpreadChecker> correctSpreads)
         {
             if (correctSpreads.Count > 0)
             {
                 var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-                CacheManager.Set<IEnumerable<SpreadInfo>>(currentUser.ToString() + "_Spreads", correctSpreads);
+                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads", correctSpreads);
             }
         }
 
-        private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadInfo> correctSpreads, Queue<SpreadChecker> errorSpreads)
+        private int ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
         {
             var total = 0;
 
@@ -89,22 +89,21 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             foreach (var spreadInfo in spreads)
             {
                 total++;
-                var spread = (SpreadInfo)spreadInfo;
-
-                if (spread == null)
+                
+                if (IsValidSpread(spreadInfo))
                 {
-                    errorSpreads.Enqueue(spreadInfo);
-                }
-                else
-                {
-                    if (BinarySearch(bettypeIds, spread.BetTypeId) && BinarySearch(leagueIds, spread.LeagueId))
+                    if (BinarySearch(bettypeIds, int.Parse(spreadInfo.BetTypeId)) && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId)))
                     {
-                        correctSpreads.Enqueue(spread);
+                        correctSpreads.Enqueue(spreadInfo);
                     }
                     else
                     {
                         errorSpreads.Enqueue(spreadInfo);
                     }
+                }
+                else
+                {
+                    errorSpreads.Enqueue(spreadInfo);
                 }
             }
 
@@ -125,7 +124,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
             var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadInfo>>(currentUser.ToString() + "_Spreads");
+            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
 
             criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
             criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSpreadInfo(correctSpreadsCache) : string.Empty;
@@ -178,7 +177,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
 
-        private string CreateXmlParamForInsertingSpreadInfo(IEnumerable<SpreadInfo> spreads)
+        private string CreateXmlParamForInsertingSpreadInfo(IEnumerable<SpreadChecker> spreads)
         {
             var builder = new StringBuilder();
             builder.Append("<Root>");
@@ -200,6 +199,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private string GetElement(string tagName, object value)
         {
             return string.Format("<{0}>{1}</{0}>", tagName, value);
+        }
+
+        private bool IsValidSpread(SpreadChecker spread)
+        {
+            int outBettypeId;
+            int outLeagueId;
+            int outSpread;
+
+            return int.TryParse(spread.BetTypeId, out outBettypeId) &&
+                    int.TryParse(spread.LeagueId, out outLeagueId) &&
+                    int.TryParse(spread.Spread, out outSpread);
         }
 
         private bool BinarySearch(IList<int> list, int criteria)
