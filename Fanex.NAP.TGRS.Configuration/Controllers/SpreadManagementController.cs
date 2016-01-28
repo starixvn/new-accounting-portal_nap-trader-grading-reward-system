@@ -52,6 +52,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
             try

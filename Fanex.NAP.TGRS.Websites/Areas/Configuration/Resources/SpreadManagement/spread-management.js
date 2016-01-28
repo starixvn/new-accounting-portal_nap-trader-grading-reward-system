@@ -57,6 +57,10 @@ var spreadManagementService = (function ($) {
 
     spreadManagementFactory.getHostPermission().success(function (result) {
         spreadManagementService.hasHostPermission = result;
+
+        if (spreadManagementService.hasHostPermission) {
+            $("#divUploadSpreadFromExcel").css("display", "block");
+        }
     });
 
     spreadManagementService.Search = function () {
@@ -133,8 +137,6 @@ var spreadManagementService = (function ($) {
         $("#divSpreadGrid").fanexGrid(spreadManagementService.gridOptions);
 
         handleGridEvents();
-
-        $("#resultContainer").css("display: inline-block;");
     }
 
     function createSpreadTable(spreads) {

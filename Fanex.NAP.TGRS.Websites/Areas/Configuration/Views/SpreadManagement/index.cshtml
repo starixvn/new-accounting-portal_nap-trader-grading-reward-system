@@ -17,7 +17,7 @@
 <div id="uploader" class="row content">
     <div class="filter-bar">
         <div class="filter-form">
-            <div class="filter-row">
+            <div class="filter-row" id="divUploadSpreadFromExcel" style="display: none">
                 <div class="lbl-field col_5">
                     <label class="control-label" for="FileName">
                         Add/Edit
@@ -38,9 +38,9 @@
                 <button id="uploadBtn" class="blue-button" type="button">
                     Upload
                 </button>
-            </div>
-            <div class="filter-row">
-                <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
+                <div class="filter-row">
+                    <a href="@Url.Action("DownloadTemplate")" style="margin-left:135px;">Download Template</a>
+                </div>
             </div>
             <div class="filter-row">
                 <div class="lbl-field col_5">
@@ -62,7 +62,7 @@
         </div>
     </div>
 </div>
-<div id="resultContainer" class="content-grid" style="display: none;">
+<div id="resultContainer" class="content-grid display-none">
     <div id="divLeaguePerformanceGrid-grid-title" class="grid-title">
         <div class="grid-title-label" id="reporttile">
         </div>
