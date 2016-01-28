@@ -49,6 +49,8 @@ var spreadManagementService = (function ($) {
 
     spreadManagementService.hasHostPermission = false;
 
+    spreadManagementService.IsShowUpdateSpreadInProgress = false;
+
     spreadManagementService.filter = {
         pageIndex: 0,
         pageSize: 50,
@@ -188,12 +190,15 @@ var spreadManagementService = (function ($) {
     // Display new team form.
     spreadManagementService.showPopupResult = function (result) {
         var form = $('#divUploadResultForm');
-        var option = {};
-        common.Popup('Upload Result', form, option);
+        common.Popup('Upload Result', form);
 
         spreadPopupResult.renderGrid(result.ErrorSpreads);
         $('#divErrorCount').text(result.ErrorSpreads.length);
         $('#divTotalSpreads').text(result.TotalSpreads);
+
+        if (result.TotalSpreads > 2000) {
+            spreadManagementService.IsShowUpdateSpreadInProgress = true;            
+        }
     };
 
     var handleGridEvents = function () {

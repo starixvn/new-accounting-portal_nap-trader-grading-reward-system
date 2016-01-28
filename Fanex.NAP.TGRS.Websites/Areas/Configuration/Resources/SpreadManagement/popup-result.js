@@ -7,19 +7,19 @@ var spreadPopupResult = (function ($) {
 
     var spreadPopupResult = {};
 
-    var urls = {
-        PopupResult: common.ResolveRootUrl('SpreadManagement/PopupResult'),
-        UpdateSpreads: common.ResolveRootUrl('SpreadManagement/UpdateSpreads')
-    };
-
-    spreadPopupResult.save = function () {
+    spreadPopupResult.save = function () {        
         $.ajax({
-            url: urls.PopupResult,
+            url: common.ResolveRootUrl('SpreadManagement/UpdateSpread'),
             type: "POST",
             processData: false,
             contentType: false,
             beforeSend: function () {
-                alert(messages.UpdateSpreadInProgress);
+                if (spreadManagementService.IsShowUpdateSpreadInProgress) {
+                    alert(messages.UpdateSpreadInProgress);
+                }
+                else {
+                    common.DisableInput();
+                }
             },
             success: function (result) {
                 alert(messages.UpdateSpreadCompleted);
@@ -28,7 +28,10 @@ var spreadPopupResult = (function ($) {
                     common.ClosePopup();
                 }
                 catch (err) { }
-            }
+            },
+            complete: function () {
+                common.EnableInput();
+            },
         });
     };
 
