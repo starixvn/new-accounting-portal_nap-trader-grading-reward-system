@@ -107,7 +107,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions.DefaultImplementati
                 }
                 catch (KeyNotFoundException)
                 {
-                    throw new KeyNotFoundException("invalid column " + mapping.Key);
+                    throw new KeyNotFoundException(mapping.Key);
                 }
             }
 
