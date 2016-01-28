@@ -63,7 +63,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var spreads = _excelReader.Read<SpreadChecker>(file);
             var correctSpreads = new Queue<SpreadChecker>();
             var errorSpreads = new Queue<SpreadChecker>();
-            
+
             ValidateSpreads(spreads, correctSpreads, errorSpreads);
 
             CacheCorrectSpreads(correctSpreads);
@@ -82,17 +82,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         }
 
         private void ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
-        {            
+        {
             var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
             var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
             foreach (var spreadInfo in spreads)
-            {                                
+            {
                 if (IsValidSpread(spreadInfo)
                     && IsValidBettypeAndLeague(bettypeIds, leagueIds, spreadInfo))
                 {
                     correctSpreads.Enqueue(spreadInfo);
-                }                                
+                }
                 else
                 {
                     errorSpreads.Enqueue(spreadInfo);
@@ -132,7 +132,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }      
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
@@ -222,7 +222,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private bool IsValidBettypeAndLeague(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
         {
             return BinarySearch(bettypeIds, int.Parse(spreadInfo.BetTypeId))
-                && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId));            
+                && BinarySearch(leagueIds, int.Parse(spreadInfo.LeagueId));
         }
 
         private bool BinarySearch(IList<int> list, int criteria)

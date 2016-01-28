@@ -1,4 +1,8 @@
-﻿var spreadPopupResult = (function ($) {
+﻿/* File Created: Jan 22, 2016 */
+/*jshint strict: false, camelcase: false*/
+/* global common, messages */
+
+var spreadPopupResult = (function ($) {
     "use strict";
 
     var spreadPopupResult = {};
@@ -10,19 +14,20 @@
 
     spreadPopupResult.save = function () {
         $.ajax({
-            url: "SpreadManagement/UpdateSpread",
+            url: urls.PopupResult,
             type: "POST",
             processData: false,
             contentType: false,
             beforeSend: function () {
-                alert('This process may take a while...');
+                alert(messages.UpdateSpreadInProgress);
             },
             success: function (result) {
-                alert('The update of Spread setting has been completed.');
-                try{
+                alert(messages.UpdateSpreadCompleted);
+
+                try {
                     common.ClosePopup();
                 }
-                catch(err) { }
+                catch (err) { }
             }
         });
     };

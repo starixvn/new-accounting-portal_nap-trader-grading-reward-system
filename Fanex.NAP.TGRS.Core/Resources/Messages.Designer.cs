@@ -214,6 +214,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose an excel file..
+        /// </summary>
+        public static string MissingExcelFile {
+            get {
+                return ResourceManager.GetString("MissingExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New password cannot be empty..
         /// </summary>
         public static string NewPasswordCannotEmpty {
@@ -322,11 +331,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The update of Spread setting has been completed!.
+        /// </summary>
+        public static string UpdateSpreadCompleted {
+            get {
+                return ResourceManager.GetString("UpdateSpreadCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure to update this spread?.
         /// </summary>
         public static string UpdateSpreadConfirmMessage {
             get {
                 return ResourceManager.GetString("UpdateSpreadConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This process may take a while....
+        /// </summary>
+        public static string UpdateSpreadInProgress {
+            get {
+                return ResourceManager.GetString("UpdateSpreadInProgress", resourceCulture);
             }
         }
         

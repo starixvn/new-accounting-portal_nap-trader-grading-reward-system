@@ -219,4 +219,13 @@
   <data name="DeleteSpreadSuccessfully" xml:space="preserve">
     <value>The spread has been removed successfully!</value>
   </data>
+  <data name="MissingExcelFile" xml:space="preserve">
+    <value>Please choose an excel file.</value>
+  </data>
+  <data name="UpdateSpreadCompleted" xml:space="preserve">
+    <value>The update of Spread setting has been completed!</value>
+  </data>
+  <data name="UpdateSpreadInProgress" xml:space="preserve">
+    <value>This process may take a while...</value>
+  </data>
 </root>

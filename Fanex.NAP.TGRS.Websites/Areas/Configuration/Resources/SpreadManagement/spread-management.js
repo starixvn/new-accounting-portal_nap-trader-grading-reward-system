@@ -140,9 +140,7 @@ var spreadManagementService = (function ($) {
     function createSpreadTable(spreads) {
         var spreadFormat = '<span class="spread-link link" data-league-id="{0}" data-bettype-id="{1}" >{2}</span>' +
                               '<input type="text" maxlength="2" class="spread hide" />';
-
         var spreadFormatNoHost = '<span data-league-id="{0}" data-bettype-id="{1}" >{2}</span>';
-
         var deleteButtonFormat = '<span class="spread-delete-button" data-league-id="{0}" data-bettype-id="{1}" ></span>';
 
         var rows = [];
@@ -320,12 +318,12 @@ $(document).ready(function () {
         var file = document.getElementById("file").files[0];
         data.append("file", file);
         if (file == undefined) {
-            alert('Please choose an excel file');
+            alert(messages.MissingExcelFile);
         }
         else {
             common.DisableInput();
             $.ajax({
-                url: "SpreadManagement/PopupResult",
+                url: common.ResolveRootUrl("SpreadManagement/PopupResult"),
                 type: "POST",
                 data: data,
                 processData: false,
