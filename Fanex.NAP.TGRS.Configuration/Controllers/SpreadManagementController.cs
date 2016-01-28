@@ -67,18 +67,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
                 return Json(spreadValidation, JsonRequestBehavior.AllowGet);
             }
-            catch (ColumnMappingException ex)
+            catch (ColumnMappingException)
             {
-                var str = new StringBuilder();
-
-                foreach (var error in ex.ErrorColumns)
-                {
-                    str.Append(error);
-                    str.Append(", ");
-                }
-
-                str.Remove(str.Length - 2, 1);
-                return Json(str.ToString());
+                return Json("The selected Excel file is not in the correct format!");
             }
             catch (System.Exception)
             {
