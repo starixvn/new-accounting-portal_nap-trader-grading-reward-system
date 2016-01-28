@@ -52,6 +52,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             this._sheetName = sheetName;
             this._templateSheet = template.GetSheetAt(0);
             this._sheet = template.CreateSheet(this._sheetName);
+            this._sheet.Workbook.RemoveSheetAt(0);
         }
 
         #endregion Constructors
@@ -68,12 +69,23 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
 
         #endregion Properties
 
+        public void CreateNewSheet(string sheetName)
+        {
+            this._sheetName = sheetName;
+            this._sheet = _sheet.Workbook.CreateSheet(this._sheetName);
+            this._rowId = 0;
+        }
+
+        public void RemoveSheet(int sheetIndex)
+        {
+            _sheet.Workbook.RemoveSheetAt(sheetIndex);
+        }
+
         /// <summary>
         /// Renders Excel file to stream.
         /// </summary>
         public void Render()
         {
-            this._sheet.Workbook.RemoveSheetAt(0);
             this._sheet.Workbook.ToReponseStream(this._fileName);
         }
 

@@ -29,6 +29,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     {
         private const int PointInPixel = 225;
 
+        private const int SpreadPerSheet = 65000;
+
         private readonly ISpreadManagementDataAccess _spreadManagementDataAccess;
 
         public SpreadManagementService()
@@ -74,24 +76,35 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         {
             var result = this.GetData<League>(new GetLeagueIdsCriteria());
             return result;
-        }        
+        }
 
         #region Utilities
         public void ExportSpreadList(GetAllSpreadCriteria criteria, string templatePath)
         {
             var spreadList = GetAllSpread(criteria).SpreadInfoItems;
-
             var reportName = string.Format(
                                 ViewLang.SpreadListFileName,
                                 DateTime.Today.ToShortFormatedDateForFileName());
-
             var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.SpreadManagement);
-            writer.CopyRows(0, 1);
-            FilterBlock(criteria, ref writer);
-            FillHeader(ref writer);
-            writer.FreezeRow(0, 3);
-            FillRowData(spreadList, ref writer);
-            writer.SyncColumnsWidth(10);
+            var smallSpreadLists = spreadList.Batch(SpreadPerSheet);
+            var sheetNumber = 1;
+
+            writer.RemoveSheet(0);
+
+            foreach (var smallSpread in smallSpreadLists)
+            {
+                var sheetIndex = sheetNumber > 1 ? sheetNumber.ToString() : string.Empty;
+                writer.CreateNewSheet(ViewLang.SpreadManagement + " " + sheetIndex);
+
+                writer.CopyRows(0, 1);
+                FilterBlock(criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 3);
+                FillRowData(smallSpread, ref writer);
+                writer.SyncColumnsWidth(10);
+                sheetNumber++;
+            }
+
             writer.Render();
         }
 
@@ -152,7 +165,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
 
                 var record = new object[]
                 {
-                    i + 1,
+                    item.Row,
                     item.LeagueId,
                     item.LeagueName,
                     item.BetTypeId,

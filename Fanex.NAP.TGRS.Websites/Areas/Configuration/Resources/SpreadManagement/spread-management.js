@@ -84,7 +84,10 @@ var spreadManagementService = (function ($) {
     spreadManagementService.ExportExcel = function () {
         spreadManagementService.filter.leagueName = $('#LeagueName').val();
 
-        spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName);
+        //common.DisableInput();
+        spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName).success(function () {
+            //common.EnableInput();
+        });
     };
 
     spreadManagementService.Update = function (leagueId, betTypeId, newSpread) {
@@ -197,7 +200,7 @@ var spreadManagementService = (function ($) {
         $('#divTotalSpreads').text(result.TotalSpreads);
 
         if (result.TotalSpreads > 2000) {
-            spreadManagementService.IsShowUpdateSpreadInProgress = true;            
+            spreadManagementService.IsShowUpdateSpreadInProgress = true;
         }
     };
 
@@ -328,7 +331,7 @@ $(document).ready(function () {
             alert(messages.MissingExcelFile);
         }
         else {
-            common.DisableInput();
+            common.DisableInput();  
             $.ajax({
                 url: common.ResolveRootUrl("SpreadManagement/PopupResult"),
                 type: "POST",
