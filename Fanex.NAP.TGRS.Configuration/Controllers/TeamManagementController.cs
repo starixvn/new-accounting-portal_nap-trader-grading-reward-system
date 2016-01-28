@@ -31,6 +31,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         #region Constructors
 
+        [Simplect.Attribute.InjectObject]
         public TeamManagementController()
             : this(null)
         {

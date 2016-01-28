@@ -22,6 +22,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     {
         private readonly IMaintenanceService _maintenanceService;
 
+        [Simplect.Attribute.InjectObject]
         public CommonController()
             : this(null)
         {

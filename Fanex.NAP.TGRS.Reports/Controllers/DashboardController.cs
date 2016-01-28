@@ -28,6 +28,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     {
         private readonly IDashboardService _dashboardService;
 
+        [Simplect.Attribute.InjectObject]
         public DashboardController()
             : this(null)
         {

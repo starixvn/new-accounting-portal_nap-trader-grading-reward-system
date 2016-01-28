@@ -40,6 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         private readonly int[] _forecastBetType = { 1, 3, 7, 8 };
 
+        [Simplect.Attribute.InjectObject]
         public PerformanceDetailController()
             : this(null)
         {

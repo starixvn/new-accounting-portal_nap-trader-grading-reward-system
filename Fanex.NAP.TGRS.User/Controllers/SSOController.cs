@@ -42,6 +42,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         #region ctors
 
+        [Simplect.Attribute.InjectObject]
         public SSOController()
             : this(null, null, null)
         {

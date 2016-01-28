@@ -33,6 +33,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private readonly IUserService _userService;
         private HashAlgorithm _hashAlgorithm;
 
+        [Simplect.Attribute.InjectObject]
         public UserInfoController()
             : this(null)
         {

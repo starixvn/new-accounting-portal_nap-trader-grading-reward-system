@@ -9,6 +9,10 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
+    using Fanex.Data.Configuration;
+    using Fanex.Logging;
+    using Infrastructure;
+    using Simplect;
     using System;
     using System.Data.SqlClient;
     using System.Web;
@@ -16,8 +20,6 @@ namespace Fanex.NAP.TGRS.Websites
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.Data.Configuration;
-    using Fanex.Logging;
 
     /// <summary>
     /// MVC application configuration.
@@ -32,6 +34,9 @@ namespace Fanex.NAP.TGRS.Websites
         {
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();
+
+            InjectorFactory.CurrentInjector.Bind<IControllerActivator>().Using<ControllerActivator>();
+            ControllerBuilder.Current.SetControllerFactory(InjectorFactory.CurrentInjector.Resolve<DefaultControllerFactory>());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

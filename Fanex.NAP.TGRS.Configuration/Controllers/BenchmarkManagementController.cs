@@ -28,6 +28,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     {
         private IBenchmarkManagementService _benchmarkService;
 
+        [Simplect.Attribute.InjectObject]
         public BenchmarkManagementController()
             : this(null)
         {

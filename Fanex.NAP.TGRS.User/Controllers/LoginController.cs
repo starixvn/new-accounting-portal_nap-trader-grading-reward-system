@@ -53,6 +53,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         #region Constructors
 
+        [Simplect.Attribute.InjectObject]
         public LoginController()
             : this(null, null, null, null, null, null, null)
         {

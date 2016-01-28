@@ -9,6 +9,12 @@
 
 namespace Fanex.NAP.TGRS.Configuration
 {
+    using Configuration.Services.SpreadManagement;
+    using Core.ExcelUtility.ExcelIOExtensions;
+    using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
+    using Simplect;
+    using Simplect.BindingSyntax;
+    using System.Web;
     using System.Web.Mvc;
 
     /// <summary>
@@ -16,6 +22,8 @@ namespace Fanex.NAP.TGRS.Configuration
     /// </summary>
     public class ConfigurationAreaRegistration : AreaRegistration
     {
+        private static object _scopeObj = new object();
+
         public override string AreaName
         {
             get
@@ -34,6 +42,15 @@ namespace Fanex.NAP.TGRS.Configuration
                 "Configuration_default",
                 "Configuration/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
+
+            Registerdependency();
+        }
+
+        private void Registerdependency()
+        {
+            InjectorFactory.CurrentInjector.Bind<ISpreadManagementService>().Using<SpreadManagementService>();
+            InjectorFactory.CurrentInjector.Bind<FileObjectMapper<HttpPostedFileBase>>()
+                .Using<HttpExcelMapper>().WithBinding(b => b.InScope(() => _scopeObj));
         }
     }
 }

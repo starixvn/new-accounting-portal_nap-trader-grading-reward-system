@@ -35,15 +35,10 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         private readonly FileObjectMapper<HttpPostedFileBase> _excelReader;
 
-        public SpreadManagementController()
-            : this(null, null)
-        {
-        }
-
         public SpreadManagementController(ISpreadManagementService spreadManagementService, FileObjectMapper<HttpPostedFileBase> excelMapper)
         {
-            _spreadManagementService = spreadManagementService ?? new SpreadManagementService();
-            _excelReader = excelMapper ?? new HttpExcelMapper();
+            _spreadManagementService = spreadManagementService;
+            _excelReader = excelMapper;
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]

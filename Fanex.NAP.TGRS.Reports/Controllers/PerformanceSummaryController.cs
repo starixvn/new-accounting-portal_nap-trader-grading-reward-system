@@ -29,6 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     {
         private readonly ISummaryReportService _summaryReportService;
 
+        [Simplect.Attribute.InjectObject]
         public PerformanceSummaryController()
             : this(null)
         {
