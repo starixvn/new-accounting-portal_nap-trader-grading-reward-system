@@ -10,8 +10,8 @@
 namespace Fanex.NAP.TGRS.Configuration.CommonService
 {
     using System.Collections.Generic;
-    using Fanex.NAP.TGRS.Configuration.Criteria.Common;
-    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Core.BaseClasses;
+    using Criteria.Common;
 
     /// <summary>
     /// Common service.
@@ -19,9 +19,9 @@ namespace Fanex.NAP.TGRS.Configuration.CommonService
     public class CommonService : TGRSBaseService
     {
         /// <summary>
-        /// Gets the list of bettypes Id.
+        /// Gets the list of bet types Id.
         /// </summary>
-        /// <returns>List of bettypes Id.</returns>
+        /// <returns>List of bet types Id.</returns>
         public IEnumerable<int> GetBettypeIdsList()
         {
             IEnumerable<int> result = this.GetData<int>(new GetBetTypeIdsCriteria());

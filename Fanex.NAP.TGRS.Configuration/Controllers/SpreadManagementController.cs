@@ -15,8 +15,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using System.Web;
     using System.Web.Mvc;
     using Core.BaseClasses;
-    using Core.ExcelUtility;
-    using Core.ExcelUtility.DefaultImplementation;
+    using Core.ExcelUtility.ExcelIOExtensions;
+    using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
     using Core.Helpers;
     using Criteria.SpreadManagement;
     using Models.SpreadManagement;
@@ -224,8 +224,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 var mid = (start + end) / 2;
                 var midElement = list[mid];
                 return midElement < criteria ? BinarySearchHelper(list, mid + 1, end, criteria) :
-                       midElement > criteria ? BinarySearchHelper(list, start, mid - 1, criteria) :
-                       true;
+                       midElement <= criteria || BinarySearchHelper(list, start, mid - 1, criteria);
             }
 
             return false;

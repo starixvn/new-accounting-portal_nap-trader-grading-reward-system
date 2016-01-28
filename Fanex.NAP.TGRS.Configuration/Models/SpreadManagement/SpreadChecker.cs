@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
 {
-    using TGRS.Core.ExcelUtility;
+    using Core.ExcelUtility.ExcelIOExtensions;
 
     public class SpreadChecker
     {

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ExcelTemplateWriter.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="Column.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -7,7 +7,7 @@
 //   <change who="Simon.Huynh" date="2015.1.25">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Core.ExcelUtility
+namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions
 {
     using System;
 

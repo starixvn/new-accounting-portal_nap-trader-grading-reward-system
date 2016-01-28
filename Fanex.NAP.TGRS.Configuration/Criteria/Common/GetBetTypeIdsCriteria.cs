@@ -12,7 +12,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.Common
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that are used to get bettype Ids.
+    /// The criteria that are used to get bet type Ids.
     /// </summary>
     public class GetBetTypeIdsCriteria : CriteriaBase
     {        

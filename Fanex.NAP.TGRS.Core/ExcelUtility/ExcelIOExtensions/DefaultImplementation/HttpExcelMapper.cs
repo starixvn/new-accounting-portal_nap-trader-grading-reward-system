@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ExcelTemplateWriter.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="HttpExcelMapper.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -7,16 +7,15 @@
 //   <change who="Simon.Huynh" date="2015.1.25">Created</change>
 // </history>
 
-namespace Fanex.NAP.TGRS.Core.ExcelUtility.DefaultImplementation
+namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation
 {
-    using ExcelUtility;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Web;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
 
     public class HttpExcelMapper : FileObjectMapper<HttpPostedFileBase>
     {

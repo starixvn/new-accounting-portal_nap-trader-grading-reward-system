@@ -15,10 +15,10 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     using Core.ExcelUtility;
     using Core.ExcelUtility.RichTextExtensions;
     using Core.Resources;
+    using Criteria.Common;
     using Criteria.SpreadManagement;
     using DataAccess.Implement;
     using DataAccess.Interface;
-    using Fanex.NAP.TGRS.Configuration.Criteria.Common;
     using Framework.Command;
     using Models.SpreadManagement;
     using NAP.Core.Web;
@@ -57,12 +57,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         }
 
         /// <summary>
-        /// Gets the list of bettypes Id.
+        /// Gets the list of bet types Id.
         /// </summary>
-        /// <returns>List of bettypes Id.</returns>
+        /// <returns>List of bet types Id.</returns>
         public IEnumerable<Bettype> GetBettypeIdsList()
         {
-            IEnumerable<Bettype> result = this.GetData<Bettype>(new GetBetTypeIdsCriteria());
+            var result = this.GetData<Bettype>(new GetBetTypeIdsCriteria());
             return result;
         }
 
@@ -72,7 +72,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
         /// <returns>List of leagues Id.</returns>
         public IEnumerable<League> GetLeagueIdsList()
         {
-            IEnumerable<League> result = this.GetData<League>(new GetLeagueIdsCriteria());
+            var result = this.GetData<League>(new GetLeagueIdsCriteria());
             return result;
         }        
 
