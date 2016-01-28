@@ -330,7 +330,7 @@ $(document).ready(function () {
                 contentType: false,
                 success: function (result) {
                     if (typeof result == "string") {
-                        common.ShowErrorMessage(result + " is not a valid column");
+                        common.ShowErrorMessage(result);
                         return;
                     }
                     spreadManagementService.showPopupResult(result);
