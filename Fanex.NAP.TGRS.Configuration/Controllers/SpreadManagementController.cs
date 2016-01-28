@@ -26,6 +26,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
+    using System.Web.UI;
+    using System.Threading;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -55,16 +57,27 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [HttpPost]
         public ActionResult PopupResult(HttpPostedFileBase file)
         {
-            var spreads = _excelReader.Read<SpreadChecker>(file);
-            var correctSpreads = new Queue<SpreadChecker>();
-            var errorSpreads = new Queue<SpreadChecker>();
+            try
+            {
+                var spreads = _excelReader.Read<SpreadChecker>(file);
+                var correctSpreads = new Queue<SpreadChecker>();
+                var errorSpreads = new Queue<SpreadChecker>();
 
-            ValidateSpreads(spreads, correctSpreads, errorSpreads);
+                ValidateSpreads(spreads, correctSpreads, errorSpreads);
 
-            CacheCorrectSpreads(correctSpreads);
+                CacheCorrectSpreads(correctSpreads);
 
-            var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
-            return Json(spreadValidation, JsonRequestBehavior.AllowGet);
+                var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
+                return Json(spreadValidation, JsonRequestBehavior.AllowGet);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return Json(ex.Message);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private static void CacheCorrectSpreads(Queue<SpreadChecker> correctSpreads)

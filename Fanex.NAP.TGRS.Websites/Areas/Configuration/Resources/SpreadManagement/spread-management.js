@@ -329,6 +329,10 @@ $(document).ready(function () {
                 processData: false,
                 contentType: false,
                 success: function (result) {
+                    if (typeof result == "string") {
+                        common.ShowErrorMessage(result + " is not a valid column");
+                        return;
+                    }
                     spreadManagementService.showPopupResult(result);
                 },
                 complete: function () {

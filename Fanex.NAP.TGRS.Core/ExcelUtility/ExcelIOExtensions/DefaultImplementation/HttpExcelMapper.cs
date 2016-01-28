@@ -101,7 +101,14 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.ExcelIOExtensions.DefaultImplementati
 
             foreach (var mapping in columnMapping)
             {
-                dictionary.Add(mapping.Value, setterMapping[mapping.Key]);
+                try
+                {
+                    dictionary.Add(mapping.Value, setterMapping[mapping.Key]);
+                }
+                catch (KeyNotFoundException)
+                {
+                    throw new KeyNotFoundException("invalid column " + mapping.Key);
+                }
             }
 
             return dictionary;
