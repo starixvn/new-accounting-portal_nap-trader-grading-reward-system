@@ -310,7 +310,7 @@ $(document).ready(function () {
     });
 
     $("#file").change(function () {
-        $("#fileName").val($("#file").val());
+        $("#fileName").val(document.getElementById("file").files[0].name);
     });
 
     $("#uploadBtn").click(function () {
