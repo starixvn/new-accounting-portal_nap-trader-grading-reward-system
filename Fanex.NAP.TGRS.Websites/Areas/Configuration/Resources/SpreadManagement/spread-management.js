@@ -333,6 +333,9 @@ $(document).ready(function () {
                 },
                 complete: function () {
                     common.EnableInput();
+                },
+                error: function () {
+                    common.ShowErrorMessage(file.name + " is not an excel file");
                 }
             });
         }
