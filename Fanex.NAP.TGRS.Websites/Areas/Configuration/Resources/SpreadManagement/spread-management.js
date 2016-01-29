@@ -323,15 +323,20 @@ $(document).ready(function () {
         $("#fileName").val(document.getElementById("file").files[0].name);
     });
 
-    $("#uploadBtn").click(function () {
-        var data = new FormData();
+    $("#uploadBtn").click(function (event) {
+        event.preventDefault();
+
+        var data = new window.FormData();
         var file = document.getElementById("file").files[0];
         data.append("file", file);
         if (file == undefined) {
-            alert(messages.MissingExcelFile);
+            common.ShowErrorMessage(messages.MissingExcelFile);
+        }
+        else if (file.name.indexOf('.xls') < 0 && file.name.indexOf('.xlsx') < 0) {
+            common.ShowErrorMessage(file.name + " is not an excel file");
         }
         else {
-            common.DisableInput();  
+            common.DisableInput();
             $.ajax({
                 url: common.ResolveRootUrl("SpreadManagement/PopupResult"),
                 type: "POST",
@@ -349,7 +354,7 @@ $(document).ready(function () {
                     common.EnableInput();
                 },
                 error: function () {
-                    common.ShowErrorMessage(file.name + " is not an excel file");
+                    common.ShowErrorMessage("There is an error! Please try again.");
                 }
             });
         }

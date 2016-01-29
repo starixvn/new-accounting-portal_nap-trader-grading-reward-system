@@ -105,7 +105,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, criteria.LeagueName, normalFont, "\n");
 
             var contentRichTextString = contentRender.Render();
-            var contentRichTextArray = new String[1];
+            var contentRichTextArray = new string[1];
             contentRichTextArray[0] = contentRichTextString.String;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
