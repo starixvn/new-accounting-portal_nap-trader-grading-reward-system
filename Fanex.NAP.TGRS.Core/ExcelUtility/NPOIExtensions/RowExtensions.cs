@@ -14,7 +14,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
     /// <summary>
     /// Row Extensions.
     /// </summary>
-    public static class HSSFRowExtensions
+    public static class RowExtensions
     {
         /// <summary>
         /// Creates cell at a specific column.

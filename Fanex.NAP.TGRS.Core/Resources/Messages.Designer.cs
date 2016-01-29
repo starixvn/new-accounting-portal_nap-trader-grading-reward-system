@@ -392,5 +392,14 @@ namespace Fanex.NAP.TGRS.Core.Resources {
                 return ResourceManager.GetString("WelcomeMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected Excel file is not in the correct format!.
+        /// </summary>
+        public static string WrongFormatSpreadTemplate {
+            get {
+                return ResourceManager.GetString("WrongFormatSpreadTemplate", resourceCulture);
+            }
+        }
     }
 }

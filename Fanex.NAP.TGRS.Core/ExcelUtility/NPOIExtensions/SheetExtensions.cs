@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
     /// <summary>
     /// Sheet Extensions.
     /// </summary>
-    public static class HSSFSheetExtensions
+    public static class SheetExtensions
     {
         /// <summary>
         /// Copies a number of rows from another sheet.

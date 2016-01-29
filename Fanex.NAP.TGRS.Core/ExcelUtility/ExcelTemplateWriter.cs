@@ -13,10 +13,11 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
-    using Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NPOI.XSSF.UserModel;
+    using NPOIExtensions;
 
     /// <summary>
     /// Excel Template Writer.
@@ -29,30 +30,38 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
         private string _sheetName;
         private ISheet _templateSheet;
         private ISheet _sheet;
-        private int _rowId = 0;
+        private int _rowId;
+        private bool _isXlsx;
 
         #endregion Attributes
 
         #region Constructors
 
         public ExcelTemplateWriter(string filePath, string excelFileName = "Report.xls", string sheetName = "Result")
-            : this(new FileStream(filePath, FileMode.Open, FileAccess.Read), excelFileName, sheetName)
         {
-        }
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            this._isXlsx = Path.GetExtension(fileStream.Name).Contains("xlsx");
 
-        public ExcelTemplateWriter(FileStream fs, string excelFileName = "Report.xls", string sheetName = "Result")
-            : this(new HSSFWorkbook(fs), excelFileName, sheetName)
-        {
-            fs.Close();
-        }
+            if (_isXlsx)
+            {
+                var template = new XSSFWorkbook(fileStream);
+                this._fileName = excelFileName;
+                this._sheetName = sheetName;
+                this._templateSheet = template.GetSheetAt(0);
+                this._sheet = template.CreateSheet(this._sheetName);
+                this._sheet.Workbook.RemoveSheetAt(0);
+            }
+            else
+            {
+                var template = new HSSFWorkbook(fileStream);
+                this._fileName = excelFileName;
+                this._sheetName = sheetName;
+                this._templateSheet = template.GetSheetAt(0);
+                this._sheet = template.CreateSheet(this._sheetName);
+                this._sheet.Workbook.RemoveSheetAt(0);
+            }
 
-        public ExcelTemplateWriter(HSSFWorkbook template, string excelFileName, string sheetName)
-        {
-            this._fileName = excelFileName;
-            this._sheetName = sheetName;
-            this._templateSheet = template.GetSheetAt(0);
-            this._sheet = template.CreateSheet(this._sheetName);
-            this._sheet.Workbook.RemoveSheetAt(0);
+            fileStream.Close();
         }
 
         #endregion Constructors
@@ -69,24 +78,12 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
 
         #endregion Properties
 
-        public void CreateNewSheet(string sheetName)
-        {
-            this._sheetName = sheetName;
-            this._sheet = _sheet.Workbook.CreateSheet(this._sheetName);
-            this._rowId = 0;
-        }
-
-        public void RemoveSheet(int sheetIndex)
-        {
-            _sheet.Workbook.RemoveSheetAt(sheetIndex);
-        }
-
         /// <summary>
         /// Renders Excel file to stream.
         /// </summary>
         public void Render()
         {
-            this._sheet.Workbook.ToReponseStream(this._fileName);
+            this._sheet.Workbook.ToReponseStream(this._fileName, _isXlsx);
         }
 
         /// <summary>

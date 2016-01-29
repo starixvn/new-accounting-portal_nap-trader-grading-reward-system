@@ -18,19 +18,20 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using System.Web;
     using System.Web.Mvc;
     using Core.BaseClasses;
+    using Core.Configurations;
     using Core.ExcelUtility.ExcelIOExtensions;
     using Core.Helpers;
+    using Core.Resources;
     using Criteria.SpreadManagement;
-    using Fanex.NAP.Core.Web;
-    using Fanex.NAP.TGRS.Core.Configurations;
     using Models.SpreadManagement;
     using NAP.Core.Business;
+    using NAP.Core.Web;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
 
     public class SpreadManagementController : TGRSBaseController
     {
-        private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xls";
+        private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xlsx";
 
         private readonly ISpreadManagementService _spreadManagementService;
 
@@ -67,7 +68,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
                 CacheCorrectSpreads(correctSpreads);
 
-                var spreadValidation = new SpreadValidation() 
+                var spreadValidation = new SpreadValidation
                 { 
                     ErrorSpreads = errorSpreads, 
                     TotalSpreads = correctSpreads.Count + errorSpreads.Count,
@@ -78,11 +79,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
             catch (ColumnMappingException)
             {
-                return Json("The selected Excel file is not in the correct format!");
-            }
-            catch (System.Exception)
-            {
-                throw;
+                return Json(Messages.WrongFormatSpreadTemplate);
             }
         }
 
@@ -91,7 +88,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             if (correctSpreads.Count > 0)
             {
                 var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads", correctSpreads);
+                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser + "_Spreads", correctSpreads);
             }
         }
 
@@ -135,10 +132,10 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var creatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
 
             Func<IEnumerable<SpreadChecker>, bool> functionUpdateSpread =
-             (spreads) =>
+             spreads =>
              {
-                 var correctSpreads = IEnumerableExtensions.Batch<SpreadChecker>(spreads, AppSettings.BatchSizeForUpdateSpread);
-                 bool resultUpdate = true;
+                 var correctSpreads = spreads.Batch(AppSettings.BatchSizeForUpdateSpread);
+                 var resultUpdate = true;
 
                  foreach (var spread in correctSpreads)
                  {
@@ -214,7 +211,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
         {
             var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser.ToString() + "_Spreads");
+            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser + "_Spreads");
             return correctSpreadsCache;
         }
 
@@ -275,6 +272,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return false;
-        }       
+        }
     }
 }

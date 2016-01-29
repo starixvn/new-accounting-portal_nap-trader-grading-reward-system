@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
     /// <summary>
     /// Cell Extensions.
     /// </summary>
-    public static class HSSFCellExtensions
+    public static class CellExtensions
     {
         /// <summary>
         /// Set cell value.

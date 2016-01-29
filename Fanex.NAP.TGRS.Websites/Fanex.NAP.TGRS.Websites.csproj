@@ -424,6 +424,7 @@
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.less" />
     <Content Include="Areas\Configuration\Views\SpreadManagement\UploadResult.cshtml" />
     <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
+    <Content Include="Areas\Configuration\ExcelTemplates\SpreadManagement.xlsx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

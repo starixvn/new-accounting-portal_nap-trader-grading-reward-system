@@ -126,11 +126,11 @@
     <Compile Include="ExcelUtility\ExcelIOExtensions\FileObjectMapper.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\Ignore.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\Mapper.cs" />
-    <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellExtensions.cs" />
-    <Compile Include="ExcelUtility\NPOIExtensions\HSSFCellRangeAddressExtensions.cs" />
-    <Compile Include="ExcelUtility\NPOIExtensions\HSSFRowExtensions.cs" />
-    <Compile Include="ExcelUtility\NPOIExtensions\HSSFSheetExtensions.cs" />
-    <Compile Include="ExcelUtility\NPOIExtensions\HSSFWorkbookExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\CellExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\CellRangeAddressExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\RowExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\SheetExtensions.cs" />
+    <Compile Include="ExcelUtility\NPOIExtensions\WorkbookExtensions.cs" />
     <Compile Include="ExcelUtility\RichTextExtensions\RichTextRender.cs" />
     <Compile Include="ExcelUtility\RichTextExtensions\TextBlock.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

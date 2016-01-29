@@ -84,10 +84,7 @@ var spreadManagementService = (function ($) {
     spreadManagementService.ExportExcel = function () {
         spreadManagementService.filter.leagueName = $('#LeagueName').val();
 
-        //common.DisableInput();
-        spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName).success(function () {
-            //common.EnableInput();
-        });
+        spreadManagementFactory.exportSpreadList(spreadManagementService.filter.leagueName);
     };
 
     spreadManagementService.Update = function (leagueId, betTypeId, newSpread) {

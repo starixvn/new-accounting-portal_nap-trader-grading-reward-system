@@ -29,8 +29,6 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
     {
         private const int PointInPixel = 225;
 
-        private const int SpreadPerSheet = 65000;
-
         private readonly ISpreadManagementDataAccess _spreadManagementDataAccess;
 
         public SpreadManagementService()
@@ -86,24 +84,13 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
                                 ViewLang.SpreadListFileName,
                                 DateTime.Today.ToShortFormatedDateForFileName());
             var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.SpreadManagement);
-            var smallSpreadLists = spreadList.Batch(SpreadPerSheet);
-            var sheetNumber = 1;
 
-            writer.RemoveSheet(0);
-
-            foreach (var smallSpread in smallSpreadLists)
-            {
-                var sheetIndex = sheetNumber > 1 ? sheetNumber.ToString() : string.Empty;
-                writer.CreateNewSheet(ViewLang.SpreadManagement + " " + sheetIndex);
-
-                writer.CopyRows(0, 1);
-                FilterBlock(criteria, ref writer);
-                FillHeader(ref writer);
-                writer.FreezeRow(0, 3);
-                FillRowData(smallSpread, ref writer);
-                writer.SyncColumnsWidth(10);
-                sheetNumber++;
-            }
+            writer.CopyRows(0, 1);
+            FilterBlock(criteria, ref writer);
+            FillHeader(ref writer);
+            writer.FreezeRow(0, 3);
+            FillRowData(spreadList, ref writer);
+            writer.SyncColumnsWidth(10);
 
             writer.Render();
         }
@@ -118,8 +105,8 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SpreadManagement
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, criteria.LeagueName, normalFont, "\n");
 
             var contentRichTextString = contentRender.Render();
-            var contentRichTextArray = new IRichTextString[1];
-            contentRichTextArray[0] = contentRichTextString;
+            var contentRichTextArray = new String[1];
+            contentRichTextArray[0] = contentRichTextString.String;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }

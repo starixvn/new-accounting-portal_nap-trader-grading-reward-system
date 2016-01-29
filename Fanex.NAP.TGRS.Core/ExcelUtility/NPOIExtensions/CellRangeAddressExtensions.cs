@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
     /// <summary>
     /// Cell Range Address Extensions.
     /// </summary>
-    public static class HSSFCellRangeAddressExtensions
+    public static class CellRangeAddressExtensions
     {
         /// <summary>
         /// Clones cell range address.
