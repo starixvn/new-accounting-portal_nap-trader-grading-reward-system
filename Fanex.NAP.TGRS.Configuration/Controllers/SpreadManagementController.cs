@@ -85,16 +85,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
             catch (Exception ex)
             {
-                var path = HttpContext.Server.MapPath("~/App_Data/" + Guid.NewGuid().ToString() + ".dat");
-                using (var errorFile = System.IO.File.Create(path))
-                {
-                    var binarySerializer = new BinaryFormatter();
-                    binarySerializer.Serialize(errorFile, ex);
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-                }
-
-                throw;
+                return Json(ex.Message + ", stacktrace: " + ex.StackTrace + ", source:" + ex.Source);
             }
         }
 
