@@ -70,7 +70,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
                 CacheCorrectSpreads(correctSpreads);
 
-                var spreadValidation = new SpreadValidation() 
+                var spreadValidation = new SpreadValidation()
                 {
                     ErrorSpreads = errorSpreads,
                     TotalSpreads = correctSpreads.Count + errorSpreads.Count,
@@ -90,6 +90,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 {
                     var binarySerializer = new BinaryFormatter();
                     binarySerializer.Serialize(errorFile, ex);
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
                 }
 
                 throw;
