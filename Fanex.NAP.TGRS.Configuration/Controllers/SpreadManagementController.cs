@@ -251,7 +251,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             return int.TryParse(spread.BetTypeId, out outBettypeId) &&
                     int.TryParse(spread.LeagueId, out outLeagueId) &&
-                    int.TryParse(spread.Spread, out outSpread);
+                    int.TryParse(spread.Spread, out outSpread) &&
+                    outSpread > AppSettings.SpreadMinValue && outSpread <= AppSettings.SpreadMaxValue;
         }
 
         private bool IsValidBettypeAndLeague(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)

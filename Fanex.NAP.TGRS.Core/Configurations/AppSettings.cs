@@ -24,7 +24,9 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceDefaultDayRange;
         private static DateTime? availableDate;
         private static int batchSizeForUpdateSpread;
-        private static int totalRowsForShowUpdateSpreadInProgress;        
+        private static int totalRowsForShowUpdateSpreadInProgress;
+        private static int spreadMinValue;
+        private static int spreadMaxValue;        
 
         public static string ServerTimezone
         {
@@ -114,6 +116,32 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return totalRowsForShowUpdateSpreadInProgress;
+            }
+        }
+
+        public static int SpreadMinValue
+        {
+            get
+            {
+                if (spreadMinValue == 0)
+                {
+                    spreadMinValue = Converter.ToInt(GetValue("SpreadMinValue"));
+                }
+
+                return spreadMinValue;
+            }
+        }
+
+        public static int SpreadMaxValue
+        {
+            get
+            {
+                if (spreadMaxValue == 0)
+                {
+                    spreadMaxValue = Converter.ToInt(GetValue("SpreadMaxValue"));
+                }
+
+                return spreadMaxValue;
             }
         }
 
