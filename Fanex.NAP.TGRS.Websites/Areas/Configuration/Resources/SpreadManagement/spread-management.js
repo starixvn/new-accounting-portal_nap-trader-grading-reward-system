@@ -316,6 +316,7 @@ $(document).ready(function () {
     });
 
     $("#browseBtn").click(function () {
+        $("#fileName").val(null);
         $("#file").click();
     });
 
