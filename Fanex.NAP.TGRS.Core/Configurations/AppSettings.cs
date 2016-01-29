@@ -24,6 +24,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceDefaultDayRange;
         private static DateTime? availableDate;
         private static int batchSizeForUpdateSpread;
+        private static int totalRowsForShowUpdateSpreadInProgress;        
 
         public static string ServerTimezone
         {
@@ -100,6 +101,19 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return batchSizeForUpdateSpread;
+            }
+        }
+
+        public static int TotalRowsForShowUpdateSpreadInProgress
+        {
+            get
+            {
+                if (totalRowsForShowUpdateSpreadInProgress == 0)
+                {
+                    totalRowsForShowUpdateSpreadInProgress = Converter.ToInt(GetValue("TotalRowsForShowUpdateSpreadInProgress"));
+                }
+
+                return totalRowsForShowUpdateSpreadInProgress;
             }
         }
 

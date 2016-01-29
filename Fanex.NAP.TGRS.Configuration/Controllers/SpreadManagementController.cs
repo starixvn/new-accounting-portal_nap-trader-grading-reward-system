@@ -10,9 +10,11 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using Core.BaseClasses;
@@ -65,7 +67,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
                 CacheCorrectSpreads(correctSpreads);
 
-                var spreadValidation = new SpreadValidation() { ErrorSpreads = errorSpreads, TotalSpreads = correctSpreads.Count + errorSpreads.Count };
+                var spreadValidation = new SpreadValidation() 
+                { 
+                    ErrorSpreads = errorSpreads, 
+                    TotalSpreads = correctSpreads.Count + errorSpreads.Count,
+                    IsShowUpdateSpreadInProgress = correctSpreads.Count + errorSpreads.Count > AppSettings.TotalRowsForShowUpdateSpreadInProgress
+                };
+
                 return Json(spreadValidation, JsonRequestBehavior.AllowGet);
             }
             catch (ColumnMappingException)
@@ -124,20 +132,40 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
+            var creatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+
+            Func<IEnumerable<SpreadChecker>, bool> functionUpdateSpread =
+             (spreads) =>
+             {
+                 var correctSpreads = IEnumerableExtensions.Batch<SpreadChecker>(spreads, AppSettings.BatchSizeForUpdateSpread);
+                 bool resultUpdate = true;
+
+                 foreach (var spread in correctSpreads)
+                 {
+                     criteria.CreatorId = creatorId;
+                     criteria.SpreadDoc = CreateXmlParamForInsertingSpreadInfo(spread);
+
+                     resultUpdate = resultUpdate && _spreadManagementService.UpdateSpread(criteria).IsSuccessful;
+                 }
+
+                 return resultUpdate;
+             };
+
             var correctSpreadsCache = GetCorrectSpreadsCache();
 
-            var correctSpreads = IEnumerableExtensions.Batch<SpreadChecker>(correctSpreadsCache, AppSettings.BatchSizeForUpdateSpread);
-            bool result = true;
-
-            foreach (var spread in correctSpreads)
+            if (correctSpreadsCache != null)
             {
-                criteria.CreatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-                criteria.SpreadDoc = correctSpreadsCache != null ? CreateXmlParamForInsertingSpreadInfo(spread) : string.Empty;
-
-                result = result && _spreadManagementService.UpdateSpread(criteria).IsSuccessful;
+                if (correctSpreadsCache.Count() > AppSettings.TotalRowsForShowUpdateSpreadInProgress)
+                {
+                    Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache));
+                }
+                else
+                {
+                    Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache)).Wait();
+                }
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(string.Empty, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -247,6 +275,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return false;
-        }
+        }       
     }
 }

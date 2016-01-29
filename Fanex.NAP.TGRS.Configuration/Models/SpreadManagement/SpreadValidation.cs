@@ -16,5 +16,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
         public IEnumerable<SpreadChecker> ErrorSpreads { get; set; }
 
         public int TotalSpreads { get; set; }
+
+        public bool IsShowUpdateSpreadInProgress { get; set; }
     }
 }

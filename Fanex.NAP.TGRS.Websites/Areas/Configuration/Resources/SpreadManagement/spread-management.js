@@ -199,8 +199,11 @@ var spreadManagementService = (function ($) {
         $('#divErrorCount').text(result.ErrorSpreads.length);
         $('#divTotalSpreads').text(result.TotalSpreads);
 
-        if (result.TotalSpreads > 2000) {
+        if (result.IsShowUpdateSpreadInProgress) {
             spreadManagementService.IsShowUpdateSpreadInProgress = true;
+        }
+        else {
+            spreadManagementService.IsShowUpdateSpreadInProgress = false;
         }
     };
 

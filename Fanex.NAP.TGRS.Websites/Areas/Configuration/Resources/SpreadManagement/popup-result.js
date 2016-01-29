@@ -22,7 +22,9 @@ var spreadPopupResult = (function ($) {
                 }
             },
             success: function (result) {
-                alert(messages.UpdateSpreadCompleted);
+                if (!spreadManagementService.IsShowUpdateSpreadInProgress) {
+                    alert(messages.UpdateSpreadCompleted);
+                }
 
                 try {
                     common.ClosePopup();
@@ -31,7 +33,7 @@ var spreadPopupResult = (function ($) {
             },
             complete: function () {
                 common.EnableInput();
-            },
+            }
         });
     };
 
