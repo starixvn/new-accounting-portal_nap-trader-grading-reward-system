@@ -10,13 +10,6 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.Configurations;
     using Core.ExcelUtility.ExcelIOExtensions;
@@ -28,8 +21,13 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Web;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.IO;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -83,9 +81,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             {
                 return Json(Messages.WrongFormatSpreadTemplate);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Json(ex.Message + ", stacktrace: " + ex.StackTrace + ", source:" + ex.Source);
+                throw;
             }
         }
 
