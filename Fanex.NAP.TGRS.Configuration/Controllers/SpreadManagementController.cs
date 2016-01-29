@@ -28,6 +28,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Web;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.IO;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -68,9 +70,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
                 CacheCorrectSpreads(correctSpreads);
 
-                var spreadValidation = new SpreadValidation
-                { 
-                    ErrorSpreads = errorSpreads, 
+                var spreadValidation = new SpreadValidation() 
+                {
+                    ErrorSpreads = errorSpreads,
                     TotalSpreads = correctSpreads.Count + errorSpreads.Count,
                     IsShowUpdateSpreadInProgress = correctSpreads.Count + errorSpreads.Count > AppSettings.TotalRowsForShowUpdateSpreadInProgress
                 };
@@ -80,6 +82,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             catch (ColumnMappingException)
             {
                 return Json(Messages.WrongFormatSpreadTemplate);
+            }
+            catch (Exception ex)
+            {
+                var path = HttpContext.Server.MapPath("~/App_Data/" + Guid.NewGuid().ToString() + ".dat");
+                using (var errorFile = System.IO.File.Create(path))
+                {
+                    var binarySerializer = new BinaryFormatter();
+                    binarySerializer.Serialize(errorFile, ex);
+                }
+
+                throw;
             }
         }
 
