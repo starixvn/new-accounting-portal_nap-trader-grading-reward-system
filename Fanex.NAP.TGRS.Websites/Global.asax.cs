@@ -9,10 +9,6 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
-    using Fanex.Data.Configuration;
-    using Fanex.Logging;
-    using Infrastructure;
-    using Simplect;
     using System;
     using System.Data.SqlClient;
     using System.Web;
@@ -20,6 +16,10 @@ namespace Fanex.NAP.TGRS.Websites
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using Fanex.Data.Configuration;
+    using Fanex.Logging;
+    using Infrastructure;
+    using Simplect;
 
     /// <summary>
     /// MVC application configuration.

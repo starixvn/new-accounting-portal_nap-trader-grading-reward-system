@@ -10,6 +10,11 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.ExcelUtility.ExcelIOExtensions;
     using Core.Helpers;
@@ -20,11 +25,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -166,7 +166,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var templatePath = Server.MapPath(SpreadManagementExcelPath);
             var criteria = new GetAllSpreadCriteria
             {
-                LeagueName = leagueName,
+                LeagueName = leagueName ?? string.Empty,
                 PageIndex = 1,
                 PageSize = int.MaxValue
             };

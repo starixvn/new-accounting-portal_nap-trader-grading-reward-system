@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using Simplect;
-
-namespace Fanex.NAP.TGRS.Websites.Infrastructure
+﻿namespace Fanex.NAP.TGRS.Websites.Infrastructure
 {
+    using System;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using Simplect;
+
     public class ControllerActivator : IControllerActivator
     {
-        private IInjector _injector;
+        private readonly IInjector _injector;
 
         public ControllerActivator(IInjector injector)
         {
