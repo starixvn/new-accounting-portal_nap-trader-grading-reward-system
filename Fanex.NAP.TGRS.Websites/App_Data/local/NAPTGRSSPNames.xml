@@ -32,10 +32,10 @@
     <Setting Key="TGRS_BenchmarkBetType_ProfitMargin" SpName="TGRS_BenchmarkBetType_ProfitMargin_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="SpreadManagement">
-    <Setting Key="TGRS_Spread_SelectAll" SpName="TGRS_Spread_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Spread_SelectAll" SpName="TGRS_Spread_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Spread_Update" SpName="TGRS_Spread_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_Spread_UpdateSingle" SpName="TGRS_Spread_UpdateSingle_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_Spread_Delete" SpName="TGRS_Spread_Delete_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Spread_UpdateSingle" SpName="TGRS_Spread_UpdateSingle" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Spread_Delete" SpName="TGRS_Spread_Delete" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_League_SelectList" SpName="TGRS_League_SelectList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Bettype_SelectList" SpName="TGRS_Bettype_SelectList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
