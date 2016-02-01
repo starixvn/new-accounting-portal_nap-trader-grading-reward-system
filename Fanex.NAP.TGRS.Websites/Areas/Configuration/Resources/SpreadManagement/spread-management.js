@@ -182,9 +182,11 @@ var spreadManagementService = (function ($) {
 
     // Display new team form.
     spreadManagementService.showPopupResult = function (result) {
-        $("#btnSave").removeAttr('disabled');
-        $("#btnCancel").removeAttr('disabled');
-        
+        if (spreadPopupResult.IsUploading == false) {
+            $("#btnSave").removeAttr('disabled');
+            $("#btnCancel").removeAttr('disabled');
+        }
+
         var form = $('#divUploadResultForm');
         common.Popup('Upload Result', form);
 

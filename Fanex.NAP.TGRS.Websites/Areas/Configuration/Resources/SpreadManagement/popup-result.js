@@ -6,7 +6,9 @@ var spreadPopupResult = (function ($) {
     "use strict";
 
     var spreadPopupResult = {};
-        
+
+    spreadPopupResult.IsUploading = false;
+
     spreadPopupResult.updateMonitor = function (status) {
         $("#monitors").html(status);
     };
@@ -21,16 +23,18 @@ var spreadPopupResult = (function ($) {
             processData: false,
             contentType: false,
             beforeSend: function () {
+                spreadPopupResult.IsUploading = true;
             },
-            success: function (taskId) {                
+            success: function (taskId) {
                 spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " 0%");
 
                 // Periodically update monitors
                 var intervalId = setInterval(function () {
-                    $.post("SpreadManagement/Progress", { id: taskId }, function (percent) {
+                    $.post(common.ResolveRootUrl('SpreadManagement/Progress'), { id: taskId }, function (percent) {
                         if (percent >= 100) {
                             clearInterval(intervalId);
                             spreadPopupResult.updateMonitor(messages.UploadingIsCompleted);
+                            spreadPopupResult.IsUploading = false;
                         } else {
                             spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " " + percent + "%");
                         }
