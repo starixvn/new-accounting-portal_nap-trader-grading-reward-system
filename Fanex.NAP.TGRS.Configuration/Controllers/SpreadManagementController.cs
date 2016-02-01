@@ -72,7 +72,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 {
                     ErrorSpreads = errorSpreads,
                     TotalSpreads = correctSpreads.Count + errorSpreads.Count,
-                    IsShowUpdateSpreadInProgress = correctSpreads.Count + errorSpreads.Count > AppSettings.TotalRowsForShowUpdateSpreadInProgress
+                    IsShowUpdateSpreadInProgress = correctSpreads.Count + errorSpreads.Count > AppSettings.ChunkToShowUpdateSpreadInProgress
                 };
 
                 return Json(spreadValidation, JsonRequestBehavior.AllowGet);
@@ -156,7 +156,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             if (correctSpreadsCache != null)
             {
-                if (correctSpreadsCache.Count() > AppSettings.TotalRowsForShowUpdateSpreadInProgress)
+                if (correctSpreadsCache.Count() > AppSettings.ChunkToShowUpdateSpreadInProgress)
                 {
                     Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache));
                 }

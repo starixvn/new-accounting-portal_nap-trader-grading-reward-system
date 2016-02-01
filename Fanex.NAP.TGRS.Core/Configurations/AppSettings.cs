@@ -106,13 +106,13 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             }
         }
 
-        public static int TotalRowsForShowUpdateSpreadInProgress
+        public static int ChunkToShowUpdateSpreadInProgress
         {
             get
             {
                 if (totalRowsForShowUpdateSpreadInProgress == 0)
                 {
-                    totalRowsForShowUpdateSpreadInProgress = Converter.ToInt(GetValue("TotalRowsForShowUpdateSpreadInProgress"));
+                    totalRowsForShowUpdateSpreadInProgress = Converter.ToInt(GetValue("ChunkToShowUpdateSpreadInProgress"));
                 }
 
                 return totalRowsForShowUpdateSpreadInProgress;

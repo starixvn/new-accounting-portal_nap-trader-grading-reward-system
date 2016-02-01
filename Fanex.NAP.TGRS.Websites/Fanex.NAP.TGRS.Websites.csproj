@@ -428,7 +428,9 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.ConnectionString.config">
       <SubType>Designer</SubType>
     </Content>
@@ -453,7 +455,9 @@
     <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
-    <Content Include="Web.local.config" />
+    <Content Include="Web.local.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
