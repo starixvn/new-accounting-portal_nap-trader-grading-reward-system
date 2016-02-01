@@ -6,7 +6,7 @@ var spreadPopupResult = (function ($) {
     "use strict";
 
     var spreadPopupResult = {};
-
+        
     spreadPopupResult.updateMonitor = function (status) {
         $("#monitors").html(status);
     };
@@ -22,7 +22,7 @@ var spreadPopupResult = (function ($) {
             contentType: false,
             beforeSend: function () {
             },
-            success: function (taskId) {
+            success: function (taskId) {                
                 spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " 0%");
 
                 // Periodically update monitors
@@ -31,9 +31,6 @@ var spreadPopupResult = (function ($) {
                         if (percent >= 100) {
                             clearInterval(intervalId);
                             spreadPopupResult.updateMonitor(messages.UploadingIsCompleted);
-
-                            $("#btnSave").removeAttr('disabled');
-                            $("#btnCancel").removeAttr('disabled');
                         } else {
                             spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " " + percent + "%");
                         }

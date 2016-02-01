@@ -182,13 +182,17 @@ var spreadManagementService = (function ($) {
 
     // Display new team form.
     spreadManagementService.showPopupResult = function (result) {
+        $("#btnSave").removeAttr('disabled');
+        $("#btnCancel").removeAttr('disabled');
+        
         var form = $('#divUploadResultForm');
         common.Popup('Upload Result', form);
 
         spreadPopupResult.renderGrid(result.ErrorSpreads);
+
         $('#divErrorCount').text(result.ErrorSpreads.length);
         $('#divTotalSpreads').text(result.TotalSpreads);
-        $("#monitors").html("");        
+        $("#monitors").html("");
     };
 
     var handleGridEvents = function () {
