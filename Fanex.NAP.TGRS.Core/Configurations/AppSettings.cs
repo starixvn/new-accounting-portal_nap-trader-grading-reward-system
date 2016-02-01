@@ -23,8 +23,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceAllowYearRange;
         private static int performanceDefaultDayRange;
         private static DateTime? availableDate;
-        private static int batchSizeForUpdateSpread;
-        private static int totalRowsForShowUpdateSpreadInProgress;
+        private static int batchSizeForUpdateSpread;        
         private static int spreadMinValue;
         private static int spreadMaxValue;        
 
@@ -105,20 +104,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 return batchSizeForUpdateSpread;
             }
         }
-
-        public static int ChunkToShowUpdateSpreadInProgress
-        {
-            get
-            {
-                if (totalRowsForShowUpdateSpreadInProgress == 0)
-                {
-                    totalRowsForShowUpdateSpreadInProgress = Converter.ToInt(GetValue("ChunkToShowUpdateSpreadInProgress"));
-                }
-
-                return totalRowsForShowUpdateSpreadInProgress;
-            }
-        }
-
+      
         public static int SpreadMinValue
         {
             get

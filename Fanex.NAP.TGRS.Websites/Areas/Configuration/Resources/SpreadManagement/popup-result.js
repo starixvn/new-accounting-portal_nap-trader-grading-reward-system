@@ -7,32 +7,40 @@ var spreadPopupResult = (function ($) {
 
     var spreadPopupResult = {};
 
-    spreadPopupResult.save = function () {        
+    spreadPopupResult.updateMonitor = function (status) {
+        $("#monitors").html(status);
+    };
+
+    spreadPopupResult.save = function () {
+        $("#btnSave").prop("disabled", true);
+        $("#btnCancel").prop("disabled", true);
+
         $.ajax({
             url: common.ResolveRootUrl('SpreadManagement/UpdateSpread'),
             type: "POST",
             processData: false,
             contentType: false,
             beforeSend: function () {
-                if (spreadManagementService.IsShowUpdateSpreadInProgress) {
-                    alert(messages.UpdateSpreadInProgress);
-                }
-                else {
-                    common.DisableInput();
-                }
             },
-            success: function (result) {
-                if (!spreadManagementService.IsShowUpdateSpreadInProgress) {
-                    alert(messages.UpdateSpreadCompleted);
-                }
+            success: function (taskId) {
+                spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " 0%");
 
-                try {
-                    common.ClosePopup();
-                }
-                catch (err) { }
+                // Periodically update monitors
+                var intervalId = setInterval(function () {
+                    $.post("SpreadManagement/Progress", { id: taskId }, function (percent) {
+                        if (percent >= 100) {
+                            clearInterval(intervalId);
+                            spreadPopupResult.updateMonitor(messages.UploadingIsCompleted);
+
+                            $("#btnSave").removeAttr('disabled');
+                            $("#btnCancel").removeAttr('disabled');
+                        } else {
+                            spreadPopupResult.updateMonitor(messages.UploadingIsInProgress + " " + percent + "%");
+                        }
+                    });
+                }, 2000);
             },
             complete: function () {
-                common.EnableInput();
             }
         });
     };

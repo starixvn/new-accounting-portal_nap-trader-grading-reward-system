@@ -27,14 +27,7 @@ var spreadManagementFactory = (function ($) {
         },
 
         exportSpreadList: function (leagueName) {
-            var downloadUrl = common.ResolveRootUrl('SpreadManagement/ExportSpreadList') + "?leagueName=" + leagueName;
-            var iframe = $('body iframe');
-            if (iframe.length === 0) {
-                iframe = $('<iframe width="0" height="0" class="display-none"></iframe>');
-                iframe.appendTo('body');
-            }
-
-            iframe.attr('src', downloadUrl);
+            common.DownloadFile(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), leagueName);
         }
     };
 
@@ -195,13 +188,7 @@ var spreadManagementService = (function ($) {
         spreadPopupResult.renderGrid(result.ErrorSpreads);
         $('#divErrorCount').text(result.ErrorSpreads.length);
         $('#divTotalSpreads').text(result.TotalSpreads);
-
-        if (result.IsShowUpdateSpreadInProgress) {
-            spreadManagementService.IsShowUpdateSpreadInProgress = true;
-        }
-        else {
-            spreadManagementService.IsShowUpdateSpreadInProgress = false;
-        }
+        $("#monitors").html("");        
     };
 
     var handleGridEvents = function () {

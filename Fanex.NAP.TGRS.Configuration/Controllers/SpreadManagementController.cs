@@ -37,6 +37,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         private readonly FileObjectMapper<HttpPostedFileBase> _excelReader;
 
+        private static IDictionary<Guid, int> uploadTasks = new Dictionary<Guid, int>();                     
+
         public SpreadManagementController(ISpreadManagementService spreadManagementService, FileObjectMapper<HttpPostedFileBase> excelMapper)
         {
             _spreadManagementService = spreadManagementService;
@@ -71,8 +73,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                 var spreadValidation = new SpreadValidation()
                 {
                     ErrorSpreads = errorSpreads,
-                    TotalSpreads = correctSpreads.Count + errorSpreads.Count,
-                    IsShowUpdateSpreadInProgress = correctSpreads.Count + errorSpreads.Count > AppSettings.ChunkToShowUpdateSpreadInProgress
+                    TotalSpreads = correctSpreads.Count + errorSpreads.Count                    
                 };
 
                 return Json(spreadValidation, JsonRequestBehavior.AllowGet);
@@ -133,6 +134,9 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
+            var taskId = Guid.NewGuid();
+            uploadTasks.Add(taskId, 0);
+            
             var creatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
 
             Func<IEnumerable<SpreadChecker>, bool> functionUpdateSpread =
@@ -140,13 +144,17 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
              {
                  var correctSpreads = spreads.Batch(AppSettings.BatchSizeForUpdateSpread);
                  var resultUpdate = true;
-
+                 int correctSpreadsCount = correctSpreads.Count();
+                 int i = 1;
+                 
                  foreach (var spread in correctSpreads)
                  {
                      criteria.CreatorId = creatorId;
                      criteria.SpreadDoc = CreateXmlParamForInsertingSpreadInfo(spread);
 
-                     resultUpdate = resultUpdate && _spreadManagementService.UpdateSpread(criteria).IsSuccessful;
+                     uploadTasks[taskId] = Convert.ToInt16(100 * (((i++) * 1.0 ) / correctSpreadsCount));  // update task progress                     
+
+                     resultUpdate = _spreadManagementService.UpdateSpread(criteria).IsSuccessful && resultUpdate;
                  }
 
                  return resultUpdate;
@@ -156,17 +164,15 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             if (correctSpreadsCache != null)
             {
-                if (correctSpreadsCache.Count() > AppSettings.ChunkToShowUpdateSpreadInProgress)
-                {
-                    Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache));
-                }
-                else
-                {
-                    Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache)).Wait();
-                }
+                Task.Factory.StartNew(() => functionUpdateSpread(correctSpreadsCache));
             }
 
-            return Json(string.Empty, JsonRequestBehavior.AllowGet);
+            return Json(taskId, JsonRequestBehavior.AllowGet);            
+        }
+
+        public ActionResult Progress(Guid id)
+        {
+            return Json(uploadTasks.Keys.Contains(id) ? uploadTasks[id] : 100);
         }
 
         [HttpPost]
@@ -277,6 +283,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             }
 
             return false;
-        }
+        }        
     }
 }
