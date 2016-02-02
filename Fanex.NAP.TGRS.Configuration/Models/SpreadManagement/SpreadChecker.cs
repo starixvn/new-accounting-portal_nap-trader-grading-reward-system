@@ -26,5 +26,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.SpreadManagement
         public string BetTypeName { get; set; }
 
         public string Spread { get; set; }
+
+        public string Remark { get; set; }
     }
 }

@@ -54,8 +54,9 @@ var spreadPopupResult = (function ($) {
                 { HeaderText: "League Id", Width: 70, Name: "LeagueId", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "League Name", Width: 258, Name: "LeagueName", HeaderAlign: "center", CellAlign: "left" },
                 { HeaderText: "Bet Type Id", Width: 70, Name: "BetTypeId", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Bet Type Name", Width: 250, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: "Bet Type Name", Width: 200, Name: "BetTypeName", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Spread", Width: 50, Name: "Spread", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Remark", Width: 240, Name: "Remark", HeaderAlign: "center", CellAlign: "center" }
             ],
             showNumberColumn: true,
             gridExpandHeight: 350
@@ -72,7 +73,8 @@ var spreadPopupResult = (function ($) {
                             { Name: 'LeagueName', Value: item.LeagueName },
                             { Name: 'BetTypeId', Value: item.BetTypeId },
                             { Name: 'BetTypeName', Value: item.BetTypeName },
-                            { Name: 'Spread', Value: item.Spread}]
+                            { Name: 'Spread', Value: item.Spread},
+                            { Name: 'Remark', Value: item.Remark}]
                 };
                 bodyData.push(row);
             });
