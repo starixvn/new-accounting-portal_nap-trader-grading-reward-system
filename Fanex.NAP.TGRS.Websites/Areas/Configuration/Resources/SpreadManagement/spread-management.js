@@ -27,7 +27,10 @@ var spreadManagementFactory = (function ($) {
         },
 
         exportSpreadList: function (leagueName) {
-            common.DownloadFile(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), leagueName);
+            var criteria = {
+                leagueName: leagueName
+            };
+            common.DownloadFile(common.ResolveRootUrl('SpreadManagement/ExportSpreadList'), criteria);
         }
     };
 

@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Core.Configurations;
     using Core.Helpers;
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Configuration;
@@ -250,22 +251,27 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 return this.Json("-1");
             }
 
-            // check if not nap hub
-            if (this.SiteId != 0)
+            if (!AppSettings.IsLocalTest)
             {
-                var siteStatus = this._siteService.GetStatusById(this.SiteId);
-
-                if (!siteStatus)
+                // check if not nap hub
+                if (this.SiteId != 0)
                 {
-                    return this.Json("1");
+                    var siteStatus = this._siteService.GetStatusById(this.SiteId);
+
+                    if (!siteStatus)
+                    {
+                        return this.Json("1");
+                    }
                 }
+
+                var criteria = new UserReCheckInUserCriteria();
+                criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
+                this._userService.ReUserCheckIn(ref criteria);
+
+                return this.Json(criteria.IsKickedOut ? "1" : "0");
             }
 
-            UserReCheckInUserCriteria criteria = new UserReCheckInUserCriteria();
-            criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
-            this._userService.ReUserCheckIn(ref criteria);
-
-            return this.Json(criteria.IsKickedOut ? "1" : "0");
+            return this.Json("0");
         }
 
         #endregion Other Actions

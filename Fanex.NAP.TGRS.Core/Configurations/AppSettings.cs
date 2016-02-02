@@ -23,9 +23,9 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int performanceAllowYearRange;
         private static int performanceDefaultDayRange;
         private static DateTime? availableDate;
-        private static int batchSizeForUpdateSpread;        
+        private static int batchSizeForUpdateSpread;
         private static int spreadMinValue;
-        private static int spreadMaxValue;        
+        private static int spreadMaxValue;
 
         public static string ServerTimezone
         {
@@ -104,7 +104,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 return batchSizeForUpdateSpread;
             }
         }
-      
+
         public static int SpreadMinValue
         {
             get
@@ -128,6 +128,14 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return spreadMaxValue;
+            }
+        }
+
+        public static bool IsLocalTest
+        {
+            get
+            {
+                return Converter.ToInt(GetValue("IsLocalTest")) > 0;
             }
         }
 
