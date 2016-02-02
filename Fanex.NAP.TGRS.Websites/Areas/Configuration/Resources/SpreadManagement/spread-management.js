@@ -231,23 +231,21 @@ var spreadManagementService = (function ($) {
             var newSpread = $input.val();
 
             if (event.keyCode === 13 && validateSpread($input)) {
-                common.ShowConfirmMessage(messages.UpdateSpreadConfirmMessage, function () {
-                    var leagueId = $link.attr('data-league-id');
-                    var betTypeId = $link.attr('data-bettype-id');
+                var leagueId = $link.attr('data-league-id');
+                var betTypeId = $link.attr('data-bettype-id');
 
-                    spreadManagementService.Update(leagueId, betTypeId, newSpread).then(function () {
-                        if (spreadManagementService.result.IsSuccessful) {
+                spreadManagementService.Update(leagueId, betTypeId, newSpread).then(function () {
+                    if (spreadManagementService.result.IsSuccessful) {
 
-                            common.ShowInfoMessage(messages.UpdateSpreadSuccessfully);
+                        common.ShowInfoMessage(messages.UpdateSpreadSuccessfully);
 
-                            $link.text(newSpread);
-                            $input.addClass('hide');
-                            $link.removeClass('hide');
-                            $input.tipsy('hide');
-                        } else {
-                            common.ShowErrorMessage(spreadManagementService.result.Message);
-                        }
-                    });
+                        $link.text(newSpread);
+                        $input.addClass('hide');
+                        $link.removeClass('hide');
+                        $input.tipsy('hide');
+                    } else {
+                        common.ShowErrorMessage(spreadManagementService.result.Message);
+                    }
                 });
             } else if (event.keyCode === 27) {
                 $input.addClass('hide');

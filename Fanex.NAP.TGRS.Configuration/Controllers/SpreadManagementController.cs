@@ -234,7 +234,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var templatePath = Server.MapPath(SpreadManagementExcelPath);
             var criteria = new GetAllSpreadCriteria
             {
-                LeagueName = leagueName ?? string.Empty,
+                LeagueName = leagueName.TrimStart().TrimEnd() ?? string.Empty,
                 PageIndex = 1,
                 PageSize = int.MaxValue
             };
