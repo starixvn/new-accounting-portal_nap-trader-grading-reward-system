@@ -226,7 +226,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     // Render trader performance of a specific league grid.
     var renderTraderPerformanceGrid = function (data) {
         var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}">{2}</span>';
-        var noOfMatchesFormat = '<span class="match-link link" title="{0}">{1}</span>';
+        var noOfMatchesFormat = '<span title="{0}">{1}</span>';
         var gradeFormat = '<span class="grade">{0}</span>';
         var teamFormat = '<span class="team">{0}</span>';
         var detailIcon = '<span class="detail-icon {0}" title="{1}"></span>';
@@ -370,14 +370,14 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             });
         });
 
-        domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
-            var $link = $(this);
-            var $trader = $link.closest('tr').find('span.trader');
-            var traderId = $trader.attr('data-cust-id');
-            var traderName = $trader.text();
+        //domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
+        //    var $link = $(this);
+        //    var $trader = $link.closest('tr').find('span.trader');
+        //    var traderId = $trader.attr('data-cust-id');
+        //    var traderName = $trader.text();
 
-            getMatchPerformanceReport(traderId, traderName);
-        });
+        //    getMatchPerformanceReport(traderId, traderName);
+        //});
     };
 
     // Show trader performance report and hide other reports.
