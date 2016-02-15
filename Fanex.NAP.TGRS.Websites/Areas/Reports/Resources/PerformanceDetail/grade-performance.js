@@ -219,7 +219,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
     // Render grade performance of a specific league grid.
     var renderGradePerformanceGrid = function (data) {
-        var noOfTradersFormat = '<span class="trader-link link" data-grade="{0}" title="{1}">{2}</span>';
+        // var noOfTradersFormat = '<span class="trader-link link" data-grade="{0}" title="{1}">{2}</span>';
+        var noOfTradersFormat = '<span data-grade="{0}" title="{1}">{2}</span>';
         var noOfTradersCol = '';
 
         var gridOptions = {
