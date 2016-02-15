@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BenchmarkManagementController.cs" />
+    <Compile Include="Controllers\TargetedMarginController.cs" />
     <Compile Include="Controllers\SpreadManagementController.cs" />
     <Compile Include="Controllers\SystemConfigurationController.cs" />
     <Compile Include="Controllers\TraderManagementController.cs" />
@@ -131,11 +132,13 @@
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
     <Compile Include="Services\Implement\CommonService.cs" />
+    <Compile Include="Services\Implement\MockProfitService.cs" />
     <Compile Include="Services\Implement\SpreadManagementService.cs" />
     <Compile Include="Services\Implement\SystemConfigurationService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
+    <Compile Include="Services\Interface\IProfitMarginService.cs" />
     <Compile Include="Services\Interface\ISpreadManagementService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -151,6 +154,7 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
+    <Compile Include="ViewModel\ProfitMargin\ProfitMargin.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TeamHistoryItem.cs" />

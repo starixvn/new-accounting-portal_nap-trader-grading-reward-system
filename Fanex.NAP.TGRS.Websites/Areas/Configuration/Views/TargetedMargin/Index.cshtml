@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Targeted Margin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+<div id="normalMargin" class="content-grid">
+    <div id="marginGrid" class="freegrid"></div>
+</div>
+
+@section Foot{
+    @Scripts.Render("~/Scripts/TargetedMargin")
+}

@@ -16,6 +16,8 @@ namespace Fanex.NAP.TGRS.Configuration
     using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
     using Simplect;
     using Simplect.BindingSyntax;
+    using Services.Interface;
+    using Services.Implement;
 
     /// <summary>
     /// Registers Config area.
@@ -51,6 +53,9 @@ namespace Fanex.NAP.TGRS.Configuration
             InjectorFactory.CurrentInjector.Bind<ISpreadManagementService>().Using<SpreadManagementService>();
             InjectorFactory.CurrentInjector.Bind<FileObjectMapper<HttpPostedFileBase>>()
                 .Using<HttpExcelMapper>().WithBinding(b => b.InScope(() => _scopeObj));
+            InjectorFactory.CurrentInjector
+                .Bind<IProfitMarginService>()
+                .Using<MockProfitService>();
         }
     }
 }

@@ -102,19 +102,38 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
             var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
-            foreach (var spreadInfo in spreads)
+            //foreach (var spreadInfo in spreads)
+            //{
+            //    AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
+
+            //    if (string.IsNullOrEmpty(spreadInfo.Remark))
+            //    {
+            //        correctSpreads.Enqueue(spreadInfo);
+            //    }
+            //    else
+            //    {
+            //        errorSpreads.Enqueue(spreadInfo);
+            //    }
+            //}
+
+            Parallel.ForEach(spreads, spreadInfo =>
             {
                 AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
-
                 if (string.IsNullOrEmpty(spreadInfo.Remark))
                 {
-                    correctSpreads.Enqueue(spreadInfo);
+                    lock (correctSpreads)
+                    {
+                        correctSpreads.Enqueue(spreadInfo);
+                    }
                 }
                 else
                 {
-                    errorSpreads.Enqueue(spreadInfo);
-                }                
-            }
+                    lock (errorSpreads)
+                    {
+                        errorSpreads.Enqueue(spreadInfo);
+                    }
+                }
+            });
         }
 
         private void AnalyzeInvalidCases(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
@@ -283,15 +302,15 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         }
 
         private bool IsValidSpread(SpreadChecker spread)
-        {            
+        {
             int outSpread;
 
-            return  int.TryParse(spread.Spread, out outSpread) &&
+            return int.TryParse(spread.Spread, out outSpread) &&
                     outSpread > AppSettings.SpreadMinValue && outSpread <= AppSettings.SpreadMaxValue;
         }
 
         private bool IsValidLeague(int[] leagueIds, SpreadChecker spread)
-        {            
+        {
             int outLeagueId;
 
             return int.TryParse(spread.LeagueId, out outLeagueId) && BinarySearch(leagueIds, outLeagueId);
@@ -301,7 +320,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             int outBettypeId;
 
-            return int.TryParse(spread.BetTypeId, out outBettypeId) && BinarySearch(bettypeIds, outBettypeId);   
+            return int.TryParse(spread.BetTypeId, out outBettypeId) && BinarySearch(bettypeIds, outBettypeId);
         }
 
         private bool BinarySearch(IList<int> list, int criteria)

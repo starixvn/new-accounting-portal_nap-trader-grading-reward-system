@@ -115,6 +115,8 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/SpreadManagement/spread-management.js",
                 "~/Areas/Configuration/Resources/SpreadManagement/popup-result.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/TargetedMargin").Include("~/Areas/Configuration/Resources/TargetedMargin/TargetedMargin.js"));
+
             bundles.AddAndInclude(
                 "~/styles/traderManagement",
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.less");
