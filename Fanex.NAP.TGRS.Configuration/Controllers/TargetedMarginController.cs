@@ -2,7 +2,7 @@
 {
     using Core.Helpers;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.TGRS.Configuration.Model.TargetedMargin;
+    using Fanex.NAP.TGRS.Configuration.Models.TargetedMargin;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using System.Web.Mvc;

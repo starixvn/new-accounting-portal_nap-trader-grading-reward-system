@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Configuration.Model.TargetedMargin
+﻿namespace Fanex.NAP.TGRS.Configuration.Models.TargetedMargin
 {
     public class TargetedMargin
     {

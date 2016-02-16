@@ -1,11 +1,11 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.TargetedMargin
 {
     using Fanex.NAP.Framework.Data;
-    using NAP.TGRS.Configuration.Model.TargetedMargin;
+    using NAP.TGRS.Configuration.Models.TargetedMargin;
 
-    public class TargetedMarginCriteria : CriteriaBase
+    public class UpdateTargetedMarginCriteria : CriteriaBase
     {
-        public TargetedMarginCriteria(int creatorId, TargetedMargin viewModel)
+        public UpdateTargetedMarginCriteria(int creatorId, TargetedMargin viewModel)
         {
             CreatorId = creatorId;
             TargetedMarginId = viewModel.TargetedMarginId;
