@@ -29,7 +29,7 @@
 
         public override bool IsValid()
         {
-            return true;
+            return 0 < Rate && Rate < 100;
         }
     }
 }

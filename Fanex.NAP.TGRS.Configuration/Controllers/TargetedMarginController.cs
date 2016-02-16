@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     using Core.Helpers;
+    using Criteria.TargetedMargin;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Configuration.Models.TargetedMargin;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
@@ -35,7 +36,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TargetedMargin, Policy = NAP.Core.Business.Constant.Policy.Host)]
         public ActionResult UpdateMargin(TargetedMargin modifiedMargin)
         {
-            var result = _service.UpdateMargin(modifiedMargin);
+            var creatorId = AppSession.CurrentUser == null ? AppSession.CurrentUser.Id : 0;
+            var marginCriteria = new UpdateTargetedMarginCriteria(creatorId, modifiedMargin);
+            var result = _service.UpdateTargetedMargin(marginCriteria);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

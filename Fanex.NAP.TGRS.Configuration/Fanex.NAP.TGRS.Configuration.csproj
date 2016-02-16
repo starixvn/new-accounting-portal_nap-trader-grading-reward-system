@@ -96,7 +96,8 @@
     <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateDefaultBettypeCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateScoreCalculationPeriodCriteria.cs" />
-    <Compile Include="Criteria\TargetedMargin\EmptyCriteria.cs" />
+    <Compile Include="Criteria\TargetedMargin\GetAllTargetedMarginCriteria.cs" />
+    <Compile Include="Criteria\TargetedMargin\UpdateTargetedMaringCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
-    <Compile Include="Criteria\TargetedMargin\MarginDataCriteria.cs" />
     <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />

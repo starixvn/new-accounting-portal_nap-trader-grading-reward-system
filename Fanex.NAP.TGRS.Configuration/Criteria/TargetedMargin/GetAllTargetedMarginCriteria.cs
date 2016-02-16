@@ -2,7 +2,7 @@
 {
     using Framework.Data;
 
-    public class SelectAllTargetedMarginCriteria : CriteriaBase
+    public class GetAllTargetedMarginCriteria : CriteriaBase
     {
         public override bool IsValid()
         {

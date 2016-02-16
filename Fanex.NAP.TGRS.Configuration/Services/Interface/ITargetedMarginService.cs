@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Services.Interface
 {
+    using Criteria.TargetedMargin;
     using Framework.Command;
     using Models.TargetedMargin;
     using System.Collections.Generic;
@@ -8,6 +9,6 @@
     {
         IEnumerable<TargetedMargin> GetMargin();
 
-        ICommandResult UpdateMargin(TargetedMargin margin);
+        ICommandResult UpdateTargetedMargin(UpdateTargetedMarginCriteria criteria);
     }
 }
