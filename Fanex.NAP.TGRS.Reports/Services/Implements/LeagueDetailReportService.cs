@@ -277,7 +277,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.WinLoss,
                     item.BetCount,
                     (object)item.Margin ?? ViewLang.NA,
-                    item.LeagueBM
                 };
                 writer.WriteRow(styleIndex, record);
             }
@@ -396,38 +395,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
             //// League
             string leagueString = (criteria.LeagueName != null) ? string.Format("contains '{0}'", criteria.LeagueName) : string.Empty;
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, leagueString, normalFont, "\n");
-
-            //// LeagueBM
-            var leagueBMFromString = MinPercentString;
-            var leagueBMToString = MaxPercentString;
-            if (criteria.LeagueBMFrom != null)
-            {
-                leagueBMFromString = criteria.LeagueBMFrom.ToString();
-            }
-
-            if (criteria.LeagueBMTo != null)
-            {
-                leagueBMToString = criteria.LeagueBMTo.ToString();
-            }
-
-            if (criteria.LeagueBMFrom != null || criteria.LeagueBMTo != null)
-            {
-                string marginString;
-                if (criteria.LeagueBMFrom == null)
-                {
-                    marginString = string.Format("≤ {0}", criteria.LeagueBMTo);
-                }
-                else if (criteria.LeagueBMTo == null)
-                {
-                    marginString = string.Format("≥ {0}", criteria.LeagueBMFrom);
-                }
-                else
-                {
-                    marginString = string.Format("from {0} to {1}", leagueBMFromString, leagueBMToString);
-                }
-
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueBM, boldFont, marginString, normalFont, "\n");
-            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];

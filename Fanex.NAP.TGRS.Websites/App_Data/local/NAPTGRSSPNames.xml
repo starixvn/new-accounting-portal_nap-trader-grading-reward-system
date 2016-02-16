@@ -55,7 +55,7 @@
   </Function>
   <Function Name="DetailReports">
     <Setting Key="TGRS_Bettype_SelList" SpName="TGRS_Bettype_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
-    <Setting Key="TGRS_Rpt_DetailLeaguePerformance" SpName="TGRS_Rpt_DetailLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_DetailLeaguePerformance" SpName="TGRS_Rpt_PerformanceDetail_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
     <Setting Key="TGRS_Rpt_DetailLeague_Trader" SpName="TGRS_Rpt_DetailLeague_Trader_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
