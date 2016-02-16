@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.Configuration.ViewModel.ProfitMargin
+﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.TargetedMargin
 {
-    public class MarginDataModel : CriteriaBase
+    using Fanex.NAP.Framework.Data;
+    using NAP.TGRS.Configuration.ViewModel.TargetedMargin;
+
+    public class TargetedMarginCriteria : CriteriaBase
     {
-        public MarginDataModel(int creatorId, TargetedMargin viewModel)
+        public TargetedMarginCriteria(int creatorId, TargetedMargin viewModel)
         {
             CreatorId = creatorId;
             TargetedMarginId = viewModel.TargetedMarginId;

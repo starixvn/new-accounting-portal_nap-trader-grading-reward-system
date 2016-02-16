@@ -96,6 +96,7 @@
     <Compile Include="Criteria\SystemConfiguration\ScoreCalculationPeriodCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateDefaultBettypeCriteria.cs" />
     <Compile Include="Criteria\SystemConfiguration\UpdateScoreCalculationPeriodCriteria.cs" />
+    <Compile Include="Criteria\TargetedMargin\EmptyCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
@@ -132,13 +133,13 @@
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
     <Compile Include="Services\Implement\CommonService.cs" />
-    <Compile Include="Services\Implement\MockProfitService.cs" />
+    <Compile Include="Services\Implement\TargetedMarginService.cs" />
     <Compile Include="Services\Implement\SpreadManagementService.cs" />
     <Compile Include="Services\Implement\SystemConfigurationService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
-    <Compile Include="Services\Interface\IProfitMarginService.cs" />
+    <Compile Include="Services\Interface\ITargetedMarginService.cs" />
     <Compile Include="Services\Interface\ISpreadManagementService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -154,8 +155,8 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
-    <Compile Include="ViewModel\ProfitMargin\MarginModel.cs" />
-    <Compile Include="ViewModel\ProfitMargin\TargetedMargin.cs" />
+    <Compile Include="Criteria\TargetedMargin\MarginDataCriteria.cs" />
+    <Compile Include="ViewModel\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TeamHistoryItem.cs" />
@@ -176,9 +177,7 @@
       <Name>Fanex.NAP.TGRS.Reports</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\SpreadManagement\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

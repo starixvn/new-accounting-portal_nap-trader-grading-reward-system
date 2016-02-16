@@ -54,8 +54,8 @@ namespace Fanex.NAP.TGRS.Configuration
             InjectorFactory.CurrentInjector.Bind<FileObjectMapper<HttpPostedFileBase>>()
                 .Using<HttpExcelMapper>().WithBinding(b => b.InScope(() => _scopeObj));
             InjectorFactory.CurrentInjector
-                .Bind<IMarginService>()
-                .Using<MarginService>();
+                .Bind<ITargetedMarginService>()
+                .Using<TargetedMarginService>();
         }
     }
 }

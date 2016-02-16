@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Fanex.NAP.TGRS.Configuration.ViewModel.ProfitMargin
+﻿namespace Fanex.NAP.TGRS.Configuration.ViewModel.TargetedMargin
 {
     public class TargetedMargin
     {
