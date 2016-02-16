@@ -316,39 +316,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 }
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
-            }
-
-            //// BetTypeBM
-            var betTypeBMFromString = MinPercentString;
-            var betTypeBMToString = MaxPercentString;
-            if (criteria.BetTypeBMFrom != null)
-            {
-                betTypeBMFromString = criteria.BetTypeBMFrom.ToString();
-            }
-
-            if (criteria.BetTypeBMTo != null)
-            {
-                betTypeBMToString = criteria.BetTypeBMTo.ToString();
-            }
-
-            if (criteria.BetTypeBMFrom != null || criteria.BetTypeBMTo != null)
-            {
-                string marginString;
-                if (criteria.BetTypeBMFrom == null)
-                {
-                    marginString = string.Format("≤ {0}", criteria.BetTypeBMTo);
-                }
-                else if (criteria.BetTypeBMTo == null)
-                {
-                    marginString = string.Format("≥ {0}", criteria.BetTypeBMFrom);
-                }
-                else
-                {
-                    marginString = string.Format("from {0} to {1}", betTypeBMFromString, betTypeBMToString);
-                }
-
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetTypeBM, boldFont, marginString, normalFont, "\n");
-            }
+            }            
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];

@@ -26,9 +26,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         divDateRange: null,
         ddlBetType: null,
         txtMarginFrom: null,
-        txtMarginTo: null,
-        txtBetTypeBMFrom: null,
-        txtBetTypeBMTo: null,
+        txtMarginTo: null,        
         txtMinTurnover: null,
         txtMinWinLoss: null,
         btnGenerate: null,
@@ -69,9 +67,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divDateRange = domElements.divBetTypePerformanceFilter.find('#divDateRange');
         domElements.ddlBetType = domElements.divBetTypePerformanceFilter.find('#ddlBetType');
         domElements.txtMarginFrom = domElements.divBetTypePerformanceFilter.find('#txtMarginFrom');
-        domElements.txtMarginTo = domElements.divBetTypePerformanceFilter.find('#txtMarginTo');
-        domElements.txtBetTypeBMFrom = domElements.divBetTypePerformanceFilter.find('#txtBetTypeBMFrom');
-        domElements.txtBetTypeBMTo = domElements.divBetTypePerformanceFilter.find('#txtBetTypeBMTo');
+        domElements.txtMarginTo = domElements.divBetTypePerformanceFilter.find('#txtMarginTo');        
         domElements.txtMinTurnover = domElements.divBetTypePerformanceFilter.find('#txtMinTurnover');
         domElements.txtMinWinLoss = domElements.divBetTypePerformanceFilter.find('#txtMinWinLoss');
         domElements.btnGenerate = domElements.divBetTypePerformanceFilter.find('#btnGenerate');
@@ -121,21 +117,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
             domElements.txtMarginTo.val(value);
             validator.ClearError(domElements.txtMarginTo);
-        });
-
-        domElements.txtBetTypeBMFrom.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtBetTypeBMFrom.val());
-
-            domElements.txtBetTypeBMFrom.val(value);
-            validator.ClearError(domElements.txtBetTypeBMFrom);
-        });
-
-        domElements.txtBetTypeBMTo.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtBetTypeBMTo.val());
-
-            domElements.txtBetTypeBMTo.val(value);
-            validator.ClearError(domElements.txtBetTypeBMTo);
-        });
+        });        
 
         domElements.txtMinTurnover.numberField(2, true, null).focusout(function () {
             var value = $.trim(domElements.txtMinTurnover.val());
@@ -158,9 +140,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
-                parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');
-                parameters.BetTypeBMFrom = domElements.txtBetTypeBMFrom.val().replace(/,/g, '');
-                parameters.BetTypeBMTo = domElements.txtBetTypeBMTo.val().replace(/,/g, '');
+                parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');                
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
@@ -182,8 +162,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateValueRange(domElements.txtBetTypeBMFrom, domElements.txtBetTypeBMTo) &&
+        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&               
                validateBetType();
     };
 
@@ -244,8 +223,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     // Render bet type performance grid.
     var renderBetTypePerformanceGrid = function (data) {
         var betTypeFormat = '<span class="bettype" data-bettype="{0}">{1}</span>';
-        var noOfTradersFormat = '<span class="trader-link link" title="{0}">{1}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" title="{0}">{1}</span>';
+        var noOfTradersFormat = '<span title="{0}">{1}</span>';
+        var noOfLeaguesFormat = '<span title="{0}">{1}</span>';
         var betTypeCol = '';
         var noOfTradersCol = '';
         var noOfLeaguesCol = '';

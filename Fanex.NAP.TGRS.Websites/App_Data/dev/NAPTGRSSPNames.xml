@@ -98,6 +98,9 @@
     <Setting Key="TGRS_Rpt_DetailBetTypePerformance" SpName="TGRS_Rpt_DetailBetTypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_BetType" SpName="TGRS_Rpt_PerformanceDetail_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    </Setting>
     <Setting Key="TGRS_Rpt_DetailBetType_Match" SpName="TGRS_Rpt_DetailBetType_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
