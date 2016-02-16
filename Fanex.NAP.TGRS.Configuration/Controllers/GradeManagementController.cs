@@ -8,8 +8,6 @@
 // </history>
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
@@ -17,6 +15,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using Fanex.NAP.TGRS.Configuration.Services.GradeManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.GradeManagement;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Grade controller.

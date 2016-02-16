@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using Fanex.NAP.TGRS.Configuration.Services.Interface;
 using Fanex.NAP.TGRS.Core.BaseClasses;
-using Fanex.NAP.TGRS.Configuration.Services.Interface;
+using System.Web.Mvc;
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
     public class TargetedMarginController : TGRSBaseController
     {
-        IProfitMarginService _service;
+        private IProfitMarginService _service;
 
         public TargetedMarginController(IProfitMarginService service)
         {

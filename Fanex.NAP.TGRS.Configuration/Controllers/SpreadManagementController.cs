@@ -33,11 +33,11 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     {
         private const string SpreadManagementExcelPath = @"~\Areas\Configuration\ExcelTemplates\SpreadManagement.xlsx";
 
+        private static IDictionary<Guid, int> _uploadTasks = new Dictionary<Guid, int>();
+
         private readonly ISpreadManagementService _spreadManagementService;
 
         private readonly FileObjectMapper<HttpPostedFileBase> _excelReader;
-
-        private static IDictionary<Guid, int> uploadTasks = new Dictionary<Guid, int>();
 
         public SpreadManagementController(ISpreadManagementService spreadManagementService, FileObjectMapper<HttpPostedFileBase> excelMapper)
         {
@@ -102,38 +102,19 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
             var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
 
-            //foreach (var spreadInfo in spreads)
-            //{
-            //    AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
-
-            //    if (string.IsNullOrEmpty(spreadInfo.Remark))
-            //    {
-            //        correctSpreads.Enqueue(spreadInfo);
-            //    }
-            //    else
-            //    {
-            //        errorSpreads.Enqueue(spreadInfo);
-            //    }
-            //}
-
-            Parallel.ForEach(spreads, spreadInfo =>
+            foreach (var spreadInfo in spreads)
             {
                 AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
+
                 if (string.IsNullOrEmpty(spreadInfo.Remark))
                 {
-                    lock (correctSpreads)
-                    {
-                        correctSpreads.Enqueue(spreadInfo);
-                    }
+                    correctSpreads.Enqueue(spreadInfo);
                 }
                 else
                 {
-                    lock (errorSpreads)
-                    {
-                        errorSpreads.Enqueue(spreadInfo);
-                    }
+                    errorSpreads.Enqueue(spreadInfo);
                 }
-            });
+            }
         }
 
         private void AnalyzeInvalidCases(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
@@ -187,7 +168,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public ActionResult UpdateSpread(UpdateSpreadCriteria criteria)
         {
             var taskId = Guid.NewGuid();
-            uploadTasks.Add(taskId, 0);
+            _uploadTasks.Add(taskId, 0);
 
             var creatorId = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
 
@@ -204,7 +185,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
                      criteria.CreatorId = creatorId;
                      criteria.SpreadDoc = CreateXmlParamForInsertingSpreadInfo(spread);
 
-                     uploadTasks[taskId] = Convert.ToInt16(100 * (((i++) * 1.0) / correctSpreadsCount));  // update task progress                     
+                     _uploadTasks[taskId] = Convert.ToInt16(100 * (((i++) * 1.0) / correctSpreadsCount));  // update task progress
 
                      resultUpdate = _spreadManagementService.UpdateSpread(criteria).IsSuccessful && resultUpdate;
                  }
@@ -224,7 +205,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
         public ActionResult Progress(Guid id)
         {
-            return Json(uploadTasks.Keys.Contains(id) ? uploadTasks[id] : 100);
+            return Json(_uploadTasks.Keys.Contains(id) ? _uploadTasks[id] : 100);
         }
 
         [HttpPost]
