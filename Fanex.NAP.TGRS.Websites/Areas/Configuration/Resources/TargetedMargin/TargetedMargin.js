@@ -1,4 +1,4 @@
-﻿var profitMarginFactory = (function ($) {
+﻿var targetedMarginFactory = (function ($) {
     "use strict";
 
     return {
@@ -7,6 +7,9 @@
         },
         updateMargin: function (modifiedMargin) {
             return $.post(common.ResolveRootUrl('TargetedMargin/UpdateMargin'), modifiedMargin);
+        },
+        getHostPermission: function () {
+            return $.get(common.ResolveRootUrl('TargetedMargin/GetHostPermission'));
         }
     }
 })(jQuery);
@@ -27,7 +30,7 @@ var gridState = {
     }
 };
 
-var profitMarginService = (function ($) {
+var targetedMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
@@ -73,7 +76,7 @@ var profitMarginService = (function ($) {
                 return;
             }
 
-            profitMarginFactory.updateMargin({
+            targetedMarginFactory.updateMargin({
                 TargetedMarginId: span.attr("data-id"),
                 Rate: changedVal
             }).success(function (data) {
@@ -88,10 +91,6 @@ var profitMarginService = (function ($) {
                 input.attr("value", changedVal);
                 gridState.resetFocus();
             });
-        }).on('keyup', function (event) {
-            if (event.keyCode == 13) {
-
-            }
         });
 
         $('body').on('keyup', function (event) {
@@ -115,13 +114,18 @@ var profitMarginService = (function ($) {
 
             $("#marginGrid").fanexGrid(gridOptions);
 
-            registerEvent();
+            targetedMarginFactory.getHostPermission().success(function (result) {
+                if (result) {
+                    registerEvent();
+                }
+            })
+
         }
     }
 })(jQuery);
 
 $(function () {
-    profitMarginFactory.getMargin().success(function (marginList) {
-        profitMarginService.renderTable(marginList);
+    targetedMarginFactory.getMargin().success(function (marginList) {
+        targetedMarginService.renderTable(marginList);
     })
 })

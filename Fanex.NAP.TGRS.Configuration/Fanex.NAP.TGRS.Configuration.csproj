@@ -156,7 +156,7 @@
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
     <Compile Include="Criteria\TargetedMargin\MarginDataCriteria.cs" />
-    <Compile Include="ViewModel\TargetedMargin\TargetedMargin.cs" />
+    <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TeamHistoryItem.cs" />

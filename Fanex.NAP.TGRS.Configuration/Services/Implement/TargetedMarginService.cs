@@ -4,8 +4,8 @@
     using Core.Helpers;
     using Criteria.TargetedMargin;
     using Framework.Command;
+    using Model.TargetedMargin;
     using System.Collections.Generic;
-    using ViewModel.TargetedMargin;
 
     public class TargetedMarginService : TGRSBaseService, Interface.ITargetedMarginService
     {

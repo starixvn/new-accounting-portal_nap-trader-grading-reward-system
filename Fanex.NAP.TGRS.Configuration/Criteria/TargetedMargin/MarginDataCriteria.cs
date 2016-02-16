@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.TargetedMargin
 {
     using Fanex.NAP.Framework.Data;
-    using NAP.TGRS.Configuration.ViewModel.TargetedMargin;
+    using NAP.TGRS.Configuration.Model.TargetedMargin;
 
     public class TargetedMarginCriteria : CriteriaBase
     {

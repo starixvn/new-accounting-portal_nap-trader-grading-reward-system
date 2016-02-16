@@ -1,10 +1,11 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using Core.Helpers;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Configuration.Model.TargetedMargin;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using System.Web.Mvc;
-    using Fanex.NAP.TGRS.Configuration.ViewModel.TargetedMargin;
-    using Fanex.NAP.Core.Web.Attribute;
 
     public class TargetedMarginController : TGRSBaseController
     {
@@ -23,6 +24,11 @@
         public ActionResult GetAllMargin()
         {
             return Json(_service.GetMargin(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetHostPermission()
+        {
+            return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
