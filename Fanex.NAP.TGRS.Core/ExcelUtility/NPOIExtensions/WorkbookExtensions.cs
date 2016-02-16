@@ -30,7 +30,8 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
 
             response.Clear();
             response.ContentType = "application/vnd.ms-excel";
-            response.AddHeader("Content-Disposition", isXlsx ? string.Format("attachment; filename={0}.xlsx", fileName) : string.Format("attachment; filename={0}.xls", fileName));
+            response.AddHeader(
+                "Content-Disposition", isXlsx ? string.Format("attachment; filename={0}.xlsx", fileName) : string.Format("attachment; filename={0}.xls", fileName));
 
             workbook.Write(response.OutputStream);
         }
