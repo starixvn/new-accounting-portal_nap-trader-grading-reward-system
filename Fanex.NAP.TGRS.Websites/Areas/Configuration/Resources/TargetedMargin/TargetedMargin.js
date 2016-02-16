@@ -4,6 +4,9 @@
     return {
         getMargin: function () {
             return $.get(common.ResolveRootUrl('TargetedMargin/GetAllMargin'));
+        },
+        updateMargin: function (modifiedMargin) {
+            return $.post(common.ResolveRootUrl('TargetedMargin/UpdateMargin'), modifiedMargin);
         }
     }
 })(jQuery);
@@ -28,7 +31,7 @@ var profitMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
-        var rateFormat = "<span data-id={0}>{0}</span><input min=1 max=99 style='width: 100px' class='hide' type='number' value={1}>"
+        var rateFormat = "<span data-id={0}>{1}</span><input min=1 max=99 style='width: 100px' class='hide' type='number' value={1}>"
 
         var rows = [];
 
@@ -39,8 +42,8 @@ var profitMarginService = (function ($) {
             rows.push({
                 Columns: [
                         { Name: "Row", Value: rowNum },
-                        { Name: "BetType", Value: margin.BetType },
-                        { Name: "Rate", Value: rateFormat.format(rowNum, margin.Rate) },
+                        { Name: "BetType", Value: margin.TypeName },
+                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, margin.Rate == null ? 'N/A' : margin.Rate) },
                 ]
             });
         }
@@ -58,6 +61,44 @@ var profitMarginService = (function ($) {
 
             gridState.setFocus(span);
         });
+
+        $('input').on('change', function () {
+            var input = $(this);
+            var span = $(this).prev();
+            var original = parseInt(span.html());
+            var changedVal = parseInt(input.val());
+
+            if (changedVal <= 0 || changedVal >= 100) {
+                input.val(original);
+                return;
+            }
+
+            profitMarginFactory.updateMargin({
+                TargetedMarginId: span.attr("data-id"),
+                Rate: changedVal
+            }).success(function (data) {
+                if (data.Code != 0) {
+                    common.ShowErrorMessage(data.Message);
+                    input.val(original);
+                    return;
+                }
+
+                common.ShowInfoMessage(data.Message);
+                span.html(changedVal);
+                input.attr("value", changedVal);
+                gridState.resetFocus();
+            });
+        }).on('keyup', function (event) {
+            if (event.keyCode == 13) {
+
+            }
+        });
+
+        $('body').on('keyup', function (event) {
+            if (event.keyCode == 27) {
+                gridState.resetFocus();
+            }
+        })
     }
 
     return {
@@ -65,7 +106,7 @@ var profitMarginService = (function ($) {
             var gridOptions = {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Bet Type", Width: 200, Name: "BetType", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Bet Type", Width: 200, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
                     { HeaderText: "Rate (%)", Width: 100, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
                 ],
                 bodyRows: createSpreadTable(marginList),

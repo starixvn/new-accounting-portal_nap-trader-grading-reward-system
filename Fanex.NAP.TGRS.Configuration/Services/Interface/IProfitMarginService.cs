@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Fanex.NAP.Framework.Command;
 using Fanex.NAP.TGRS.Configuration.ViewModel.ProfitMargin;
+using System.Collections.Generic;
 
 namespace Fanex.NAP.TGRS.Configuration.Services.Interface
 {
-    public interface IProfitMarginService
+    public interface IMarginService
     {
-        IEnumerable<ProfitMargin> GetMargin();
+        IEnumerable<TargetedMargin> GetMargin();
 
-        void UpdateMargin(ProfitMargin margin);
+        ICommandResult UpdateMargin(TargetedMargin margin);
     }
 }

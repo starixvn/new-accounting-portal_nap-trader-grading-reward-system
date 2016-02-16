@@ -5,10 +5,12 @@ using System.Text;
 
 namespace Fanex.NAP.TGRS.Configuration.ViewModel.ProfitMargin
 {
-    public class ProfitMargin
+    public class TargetedMargin
     {
-        public string BetType { get; set; }
+        public int TargetedMarginId { get; set; }
 
-        public int Rate { get; set; }
+        public string TypeName { get; set; }
+
+        public int? Rate { get; set; }
     }
 }
