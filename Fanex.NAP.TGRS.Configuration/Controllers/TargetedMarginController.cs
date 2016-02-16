@@ -1,12 +1,12 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System.Web.Mvc;
     using Core.Helpers;
     using Criteria.TargetedMargin;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Configuration.Models.TargetedMargin;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
     using Fanex.NAP.TGRS.Core.BaseClasses;
-    using System.Web.Mvc;
 
     public class TargetedMarginController : TGRSBaseController
     {

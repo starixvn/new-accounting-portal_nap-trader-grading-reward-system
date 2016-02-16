@@ -10,6 +10,13 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using Core.BaseClasses;
     using Core.Configurations;
     using Core.ExcelUtility.ExcelIOExtensions;
@@ -21,13 +28,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using NAP.Core.Web;
     using NAP.Core.Web.Attribute;
     using Services.SpreadManagement;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class SpreadManagementController : TGRSBaseController
     {
@@ -85,67 +85,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             catch (Exception)
             {
                 throw;
-            }
-        }
-
-        private static void CacheCorrectSpreads(Queue<SpreadChecker> correctSpreads)
-        {
-            if (correctSpreads.Count > 0)
-            {
-                var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser + "_Spreads", correctSpreads);
-            }
-        }
-
-        private void ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
-        {
-            var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
-            var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
-
-            foreach (var spreadInfo in spreads)
-            {
-                AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
-
-                if (string.IsNullOrEmpty(spreadInfo.Remark))
-                {
-                    correctSpreads.Enqueue(spreadInfo);
-                }
-                else
-                {
-                    errorSpreads.Enqueue(spreadInfo);
-                }
-            }
-        }
-
-        private void AnalyzeInvalidCases(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
-        {
-            if (!IsValidLeague(leagueIds, spreadInfo))
-            {
-                spreadInfo.Remark += "Invalid league ID";
-            }
-
-            if (!IsValidBettype(bettypeIds, spreadInfo))
-            {
-                if (!string.IsNullOrEmpty(spreadInfo.Remark))
-                {
-                    spreadInfo.Remark += ", bettype ID";
-                }
-                else
-                {
-                    spreadInfo.Remark += "Invalid bettype ID";
-                }
-            }
-
-            if (!IsValidSpread(spreadInfo))
-            {
-                if (!string.IsNullOrEmpty(spreadInfo.Remark))
-                {
-                    spreadInfo.Remark += ", spread";
-                }
-                else
-                {
-                    spreadInfo.Remark += "Invalid spread";
-                }
             }
         }
 
@@ -251,6 +190,68 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
         }
 
+        #region Utilities
+        private static void CacheCorrectSpreads(Queue<SpreadChecker> correctSpreads)
+        {
+            if (correctSpreads.Count > 0)
+            {
+                var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
+                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser + "_Spreads", correctSpreads);
+            }
+        }
+
+        private void ValidateSpreads(IEnumerable<SpreadChecker> spreads, Queue<SpreadChecker> correctSpreads, Queue<SpreadChecker> errorSpreads)
+        {
+            var bettypeIds = _spreadManagementService.GetBettypeIdsList().Select(b => b.BetType).ToArray();
+            var leagueIds = _spreadManagementService.GetLeagueIdsList().Select(b => b.LeagueId).ToArray();
+
+            foreach (var spreadInfo in spreads)
+            {
+                AnalyzeInvalidCases(bettypeIds, leagueIds, spreadInfo);
+
+                if (string.IsNullOrEmpty(spreadInfo.Remark))
+                {
+                    correctSpreads.Enqueue(spreadInfo);
+                }
+                else
+                {
+                    errorSpreads.Enqueue(spreadInfo);
+                }
+            }
+        }
+
+        private void AnalyzeInvalidCases(int[] bettypeIds, int[] leagueIds, SpreadChecker spreadInfo)
+        {
+            if (!IsValidLeague(leagueIds, spreadInfo))
+            {
+                spreadInfo.Remark += "Invalid league ID";
+            }
+
+            if (!IsValidBettype(bettypeIds, spreadInfo))
+            {
+                if (!string.IsNullOrEmpty(spreadInfo.Remark))
+                {
+                    spreadInfo.Remark += ", bettype ID";
+                }
+                else
+                {
+                    spreadInfo.Remark += "Invalid bettype ID";
+                }
+            }
+
+            if (!IsValidSpread(spreadInfo))
+            {
+                if (!string.IsNullOrEmpty(spreadInfo.Remark))
+                {
+                    spreadInfo.Remark += ", spread";
+                }
+                else
+                {
+                    spreadInfo.Remark += "Invalid spread";
+                }
+            }
+        }
+
         private IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
         {
             var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
@@ -321,5 +322,6 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
 
             return false;
         }
+        #endregion
     }
 }

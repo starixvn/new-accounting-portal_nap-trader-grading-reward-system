@@ -20,8 +20,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         ddlBetType: null,
         txtMarginFrom: null,
         txtMarginTo: null,
-        txtTeamBMFrom: null,
-        txtTeamBMTo: null,
         txtMinTurnover: null,
         txtMinWinLoss: null,
         btnGenerate: null,
@@ -49,9 +47,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         MarginFrom: null,
         MarginTo: null,
         Turnover: null,
-        WinLost: null,
-        TeamBMFrom: null,
-        TeamBMTo: null
+        WinLost: null
     };
     var cachedData = {
         MatchPerformance: null,
@@ -71,8 +67,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.ddlBetType = domElements.divTeamPerformanceFilter.find('#ddlBetType');
         domElements.txtMarginFrom = domElements.divTeamPerformanceFilter.find('#txtMarginFrom');
         domElements.txtMarginTo = domElements.divTeamPerformanceFilter.find('#txtMarginTo');
-        domElements.txtTeamBMFrom = domElements.divTeamPerformanceFilter.find('#txtTeamBMFrom');
-        domElements.txtTeamBMTo = domElements.divTeamPerformanceFilter.find('#txtTeamBMTo');
         domElements.txtMinTurnover = domElements.divTeamPerformanceFilter.find('#txtMinTurnover');
         domElements.txtMinWinLoss = domElements.divTeamPerformanceFilter.find('#txtMinWinLoss');
         domElements.btnGenerate = domElements.divTeamPerformanceFilter.find('#btnGenerate');
@@ -136,20 +130,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             validator.ClearError(domElements.txtMarginTo);
         });
 
-        domElements.txtTeamBMFrom.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtTeamBMFrom.val());
-
-            domElements.txtTeamBMFrom.val(value);
-            validator.ClearError(domElements.txtTeamBMFrom);
-        });
-
-        domElements.txtTeamBMTo.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtTeamBMTo.val());
-
-            domElements.txtTeamBMTo.val(value);
-            validator.ClearError(domElements.txtTeamBMTo);
-        });
-
         domElements.txtMinTurnover.numberField(2, true, null).focusout(function () {
             var value = $.trim(domElements.txtMinTurnover.val());
 
@@ -174,8 +154,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.TeamIds = selectedTeams.length === teamOptions.length ? '0' : selectedTeams.join(',');
-                parameters.TeamBMFrom = domElements.txtTeamBMFrom.val().replace(/,/g, '');
-                parameters.TeamBMTo = domElements.txtTeamBMTo.val().replace(/,/g, '');
                 parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
@@ -199,7 +177,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     // Validate filter form.
     var validateFilterForm = function () {
         return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateValueRange(domElements.txtTeamBMFrom, domElements.txtTeamBMTo) &&
                validateDropdownFields();
     };
 
@@ -289,9 +266,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       { HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
-                      { HeaderText: labels.TeamBM, Width: 100, Name: 'ColTeamBM', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
-                      },
                       { HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       }],
@@ -326,14 +300,13 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTeam', Value: item.TeamName, CssClass: 'team-name' },
-                              { Name: 'ColNoOfTraders', Value: noOfTradersCol },
+                              { Name: 'ColNoOfTraders', Value: item.NoOfTraders },
                               { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
                               { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColTeamBM', Value: item.TeamBM },
                               { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA)}]
                 };
 
@@ -349,7 +322,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
-                          { Name: 'ColTeamBM', Value: '' },
                           { Name: 'ColScore', Value: ''}]
             };
             footerData.push(row);

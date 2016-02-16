@@ -9,6 +9,8 @@
 
 namespace Fanex.NAP.TGRS.Configuration
 {
+    using System.Web;
+    using System.Web.Mvc;
     using Configuration.Services.SpreadManagement;
     using Core.ExcelUtility.ExcelIOExtensions;
     using Core.ExcelUtility.ExcelIOExtensions.DefaultImplementation;
@@ -16,8 +18,6 @@ namespace Fanex.NAP.TGRS.Configuration
     using Services.Interface;
     using Simplect;
     using Simplect.BindingSyntax;
-    using System.Web;
-    using System.Web.Mvc;
 
     /// <summary>
     /// Registers Config area.
