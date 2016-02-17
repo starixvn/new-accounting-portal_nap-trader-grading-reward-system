@@ -352,13 +352,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
             List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
-            string winlostString = (criteria.WinLost != null) ? criteria.WinLost.Format(2) : string.Empty;
+            string winlossString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlossString, normalFont, "\n");
 
             //// Margin
             string marginFromString = MinPercentString;

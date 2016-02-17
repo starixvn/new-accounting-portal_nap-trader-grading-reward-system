@@ -34,7 +34,7 @@ var targetedMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
-        var rateFormat = "<span data-id={0}>{1}</span><input  style='width: 90px' class='hide'  value={1}>"
+        var rateFormat = "<span data-id={0}>{1}</span><input maxlength=5  style='width: 50px; height: 12px' class='hide'  value={1}>"
 
         var rows = [];
 
@@ -46,7 +46,7 @@ var targetedMarginService = (function ($) {
                 Columns: [
                         { Name: "Row", Value: rowNum },
                         { Name: "BetType", Value: margin.TypeName },
-                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, margin.Rate == 0 ? 'N/A' : margin.Rate) },
+                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, (margin.Rate * 100).toFixed(2)) },
                 ]
             });
         }
@@ -72,14 +72,14 @@ var targetedMarginService = (function ($) {
             var changedVal = input.val();
 
             if (isNaN(changedVal)) {
-                input.val(isNaN(original) ? "N/A" : original);
+                input.val(original);
                 common.ShowErrorMessage(messages.notANumber);
                 return;
             }
 
-            changedVal = parseFloat(changedVal);
+            changedVal = parseFloat(changedVal).toFixed(2);
             if (changedVal <= 0 || changedVal >= 100) {
-                input.val(isNaN(original) ? "N/A" : original);
+                input.val(original);
                 common.ShowErrorMessage(messages.rateRange)
                 return;
             }
@@ -114,10 +114,10 @@ var targetedMarginService = (function ($) {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
-                    { HeaderText: "Rate (%)", Width: 100, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Rate (%)", Width: 60, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
                 ],
                 bodyRows: createSpreadTable(marginList),
-                gridExpandHeight: 80,
+                gridExpandHeight: 100,
             };
 
             $("#marginGrid").fanexGrid(gridOptions);
@@ -128,7 +128,6 @@ var targetedMarginService = (function ($) {
                     registerEvent();
                 }
             })
-
         }
     }
 })(jQuery);

@@ -9,7 +9,7 @@
         {
             CreatorId = creatorId;
             TargetedMarginId = viewModel.TargetedMarginId;
-            Rate = viewModel.Rate;
+            Rate = viewModel.Rate * 0.01;
         }
 
         public int TargetedMarginId { get; set; }
