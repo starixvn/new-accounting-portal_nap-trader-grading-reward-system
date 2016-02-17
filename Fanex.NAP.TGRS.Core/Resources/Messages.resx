@@ -237,4 +237,13 @@
   <data name="UploadingIsInProgress" xml:space="preserve">
     <value>Uploading is in progress</value>
   </data>
+  <data name="NotANumberError" xml:space="preserve">
+    <value>Please enter a number</value>
+  </data>
+  <data name="RateRange" xml:space="preserve">
+    <value>Rate must lie between 0 and 100</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Successfully updated</value>
+  </data>
 </root>

@@ -34,7 +34,7 @@ var targetedMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
-        var rateFormat = "<span data-id={0}>{1}</span><input  style='width: 100px' class='hide'  value={1}>"
+        var rateFormat = "<span data-id={0}>{1}</span><input  style='width: 90px' class='hide'  value={1}>"
 
         var rows = [];
 
@@ -55,8 +55,8 @@ var targetedMarginService = (function ($) {
     }
 
     function registerEvent() {
-        $('.table-cell:has(span[data-id])').on('click', function () {
-            var span = $(this).children().first();
+        $('.free-grid-td-2:has(span[data-id])').on('click', function () {
+            var span = $(this).find('span[data-id]');
 
             if (gridState.focusedGrid != null && gridState.focusedGrid.attr('data-id') != span.attr('data-id')) {
                 gridState.resetFocus();
@@ -73,14 +73,14 @@ var targetedMarginService = (function ($) {
 
             if (isNaN(changedVal)) {
                 input.val(isNaN(original) ? "N/A" : original);
-                common.ShowErrorMessage("please enter a number");
+                common.ShowErrorMessage(messages.notANumber);
                 return;
             }
 
             changedVal = parseFloat(changedVal);
             if (changedVal <= 0 || changedVal >= 100) {
                 input.val(isNaN(original) ? "N/A" : original);
-                common.ShowErrorMessage("rate must lie between 0 and 100")
+                common.ShowErrorMessage(messages.rateRange)
                 return;
             }
 
@@ -94,7 +94,7 @@ var targetedMarginService = (function ($) {
                     return;
                 }
 
-                common.ShowInfoMessage("successfully updated");
+                common.ShowInfoMessage(messages.success);
                 span.html(changedVal);
                 input.attr("value", changedVal);
                 gridState.resetFocus();
@@ -113,7 +113,7 @@ var targetedMarginService = (function ($) {
             var gridOptions = {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Bet Type", Width: 200, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
+                    { HeaderText: "Bet Type", Width: 250, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
                     { HeaderText: "Rate (%)", Width: 100, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
                 ],
                 bodyRows: createSpreadTable(marginList),
