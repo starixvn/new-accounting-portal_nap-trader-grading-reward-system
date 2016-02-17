@@ -149,6 +149,7 @@
     <Compile Include="Services\Interface\ITraderManagementService.cs" />
     <Compile Include="Services\Interface\IGradeManagementService.cs" />
     <Compile Include="Services\Interface\ITeamManagementService.cs" />
+    <Compile Include="Services\Utility\SessionUtility.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\BetTypeBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\CountryItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\LeagueBenchmarkItem.cs" />

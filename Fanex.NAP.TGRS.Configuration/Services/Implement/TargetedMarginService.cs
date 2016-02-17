@@ -5,14 +5,13 @@
     using Criteria.TargetedMargin;
     using Framework.Command;
     using Models.TargetedMargin;
+    using Framework.Data;
 
     public class TargetedMarginService : TGRSBaseService, Interface.ITargetedMarginService
     {
-        private static GetAllTargetedMarginCriteria _emptyCrit;
-
-        public IEnumerable<TargetedMargin> GetMargin()
+        public IEnumerable<TargetedMargin> GetMargin(ICriteria criteria)
         {
-            return GetData<TargetedMargin>(_emptyCrit = _emptyCrit ?? new GetAllTargetedMarginCriteria());
+            return GetData<TargetedMargin>(criteria);
         }
 
         public ICommandResult UpdateTargetedMargin(UpdateTargetedMarginCriteria criteria)

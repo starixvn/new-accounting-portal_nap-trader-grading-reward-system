@@ -34,7 +34,7 @@ var targetedMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
-        var rateFormat = "<span data-id={0}>{1}</span><input min=1 max=99 style='width: 100px' class='hide' type='number' value={1}>"
+        var rateFormat = "<span data-id={0}>{1}</span><input  style='width: 100px' class='hide'  value={1}>"
 
         var rows = [];
 
@@ -68,11 +68,18 @@ var targetedMarginService = (function ($) {
         $('input').on('change', function () {
             var input = $(this);
             var span = $(this).prev();
-            var original = parseInt(span.html());
-            var changedVal = parseInt(input.val());
+            var original = span.html();
+            var changedVal = input.val();
 
+            if (isNaN(changedVal)) {
+                input.val(isNaN(original) ? "N/A" : original);
+                common.ShowErrorMessage("please enter a number");
+                return;
+            }
+
+            changedVal = parseFloat(changedVal);
             if (changedVal <= 0 || changedVal >= 100) {
-                input.val(original);
+                input.val(isNaN(original) ? "N/A" : original);
                 common.ShowErrorMessage("rate must lie between 0 and 100")
                 return;
             }
