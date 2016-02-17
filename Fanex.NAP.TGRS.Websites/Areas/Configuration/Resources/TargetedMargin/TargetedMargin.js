@@ -117,7 +117,7 @@ var targetedMarginService = (function ($) {
                     { HeaderText: "Rate (%)", Width: 100, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
                 ],
                 bodyRows: createSpreadTable(marginList),
-                gridExpandHeight: 250,
+                gridExpandHeight: 80,
             };
 
             $("#marginGrid").fanexGrid(gridOptions);
