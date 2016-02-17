@@ -113,7 +113,7 @@ var targetedMarginService = (function ($) {
             var gridOptions = {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Bet Type", Width: 250, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
+                    { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
                     { HeaderText: "Rate (%)", Width: 100, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
                 ],
                 bodyRows: createSpreadTable(marginList),

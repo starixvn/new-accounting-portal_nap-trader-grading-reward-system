@@ -211,7 +211,7 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
-    <Content Include="Areas\Configuration\Resources\TargetedMargin\TargetedMargin.js" />
+    <Content Include="Areas\Configuration\Resources\TargetedMargin\targeted-margin.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\delete.png" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\popup-result.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\spread-management.js" />
