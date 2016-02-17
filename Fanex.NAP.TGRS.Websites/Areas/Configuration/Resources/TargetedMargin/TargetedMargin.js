@@ -124,6 +124,7 @@ var targetedMarginService = (function ($) {
 
             targetedMarginFactory.getHostPermission().success(function (result) {
                 if (result) {
+                    $("span[data-id]").addClass("link");
                     registerEvent();
                 }
             })

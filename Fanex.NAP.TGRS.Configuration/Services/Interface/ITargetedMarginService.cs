@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Criteria.TargetedMargin;
     using Framework.Command;
-    using Models.TargetedMargin;
     using Framework.Data;
+    using Models.TargetedMargin;
 
     public interface ITargetedMarginService
     {
