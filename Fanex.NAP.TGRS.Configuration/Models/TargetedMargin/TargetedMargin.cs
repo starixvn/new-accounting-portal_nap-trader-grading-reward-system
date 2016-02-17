@@ -6,6 +6,6 @@
 
         public string TypeName { get; set; }
 
-        public int? Rate { get; set; }
+        public double Rate { get; set; }
     }
 }

@@ -200,7 +200,8 @@
     <Content Include="App_Data\local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </Content>
     <Content Include="App_Data\master\NAPCommonSpNames.xml" />
     <Content Include="App_Data\master\NAPTGRSSPNames.xml" />

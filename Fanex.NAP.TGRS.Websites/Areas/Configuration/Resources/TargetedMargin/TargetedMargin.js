@@ -46,7 +46,7 @@ var targetedMarginService = (function ($) {
                 Columns: [
                         { Name: "Row", Value: rowNum },
                         { Name: "BetType", Value: margin.TypeName },
-                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, margin.Rate == null ? 'N/A' : margin.Rate) },
+                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, margin.Rate == 0 ? 'N/A' : margin.Rate) },
                 ]
             });
         }
@@ -73,6 +73,7 @@ var targetedMarginService = (function ($) {
 
             if (changedVal <= 0 || changedVal >= 100) {
                 input.val(original);
+                common.ShowErrorMessage("rate must lie between 0 and 100")
                 return;
             }
 
@@ -86,7 +87,7 @@ var targetedMarginService = (function ($) {
                     return;
                 }
 
-                common.ShowInfoMessage(data.Message);
+                common.ShowInfoMessage("successfully updated");
                 span.html(changedVal);
                 input.attr("value", changedVal);
                 gridState.resetFocus();

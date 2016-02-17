@@ -9,12 +9,12 @@
         {
             CreatorId = creatorId;
             TargetedMarginId = viewModel.TargetedMarginId;
-            Rate = viewModel.Rate ?? 0;
+            Rate = viewModel.Rate;
         }
 
         public int TargetedMarginId { get; set; }
 
-        public int Rate { get; set; }
+        public double Rate { get; set; }
 
         public int CreatorId { get; set; }
 
