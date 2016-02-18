@@ -330,39 +330,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             List<TeamItem> teams = this.GetTeams().ToList();
             string teamString = MakeTeamSelectString(teams, criteria.TeamIds);
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Team, boldFont, teamString, normalFont, "\n");
-
-            //// teamBM
-            var teamBMFromString = MinPercentString;
-            var teamBMToString = MaxPercentString;
-            if (criteria.TeamBMFrom != null)
-            {
-                teamBMFromString = criteria.TeamBMFrom.ToString();
-            }
-
-            if (criteria.TeamBMTo != null)
-            {
-                teamBMToString = criteria.TeamBMTo.ToString();
-            }
-
-            if (criteria.TeamBMFrom != null || criteria.TeamBMTo != null)
-            {
-                string marginString;
-                if (criteria.TeamBMFrom == null)
-                {
-                    marginString = string.Format("≤ {0}", criteria.TeamBMTo);
-                }
-                else if (criteria.TeamBMTo == null)
-                {
-                    marginString = string.Format("≥ {0}", criteria.TeamBMFrom);
-                }
-                else
-                {
-                    marginString = string.Format("from {0} to {1}", teamBMFromString, teamBMToString);
-                }
-
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.TeamBM, boldFont, marginString, normalFont, "\n");
-            }
-
+            
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
