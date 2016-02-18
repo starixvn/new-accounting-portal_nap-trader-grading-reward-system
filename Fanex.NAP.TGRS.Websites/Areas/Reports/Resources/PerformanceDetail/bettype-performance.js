@@ -144,7 +144,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
-                parameters.WinLost = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
 
                 hideAllReports();
                 getBetTypePerformanceReport();
