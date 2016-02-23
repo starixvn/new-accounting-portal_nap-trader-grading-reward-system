@@ -37,7 +37,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailGradePerformance";
+            return "TGRS_Rpt_PerformanceDetail_Grade";
         }
 
         /// <summary>
