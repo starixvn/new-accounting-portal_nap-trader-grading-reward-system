@@ -446,7 +446,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             string templatePath = Server.MapPath(TeamPerformanceDetail);
 
-            this._detailReportService.ExportTeamPerformance(criteria, templatePath);
+            _detailReportService.ExportTeamPerformance(criteria, templatePath);
 
             return new EmptyResult();
         }
