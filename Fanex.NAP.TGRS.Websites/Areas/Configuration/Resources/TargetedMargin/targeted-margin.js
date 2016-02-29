@@ -11,7 +11,7 @@
         getHostPermission: function () {
             return $.get(common.ResolveRootUrl('TargetedMargin/GetHostPermission'));
         }
-    }
+    };
 })(jQuery);
 
 var gridState = {
@@ -34,8 +34,7 @@ var targetedMarginService = (function ($) {
     "use strict";
 
     function createSpreadTable(margins) {
-        var rateFormat = "<span data-id={0}>{1}</span><input maxlength=5  style='width: 50px; height: 12px' class='hide'  value={1}>"
-
+        var rateFormat = "<span data-id={0}>{1}</span><input maxlength=5  style='width: 50px; height: 12px' class='hide'  value={1}>";
         var rows = [];
 
         for (var index = 0; index < margins.length; index++) {
@@ -45,8 +44,10 @@ var targetedMarginService = (function ($) {
             rows.push({
                 Columns: [
                         { Name: "Row", Value: rowNum },
-                        { Name: "BetType", Value: margin.TypeName },
-                        { Name: "Rate", Value: rateFormat.format(margin.TargetedMarginId, (margin.Rate * 100).toFixed(2)) },
+                        { Name: "BetType", Value: margin[0].BetType },
+                        { Name: "AfternoonRate", Value: rateFormat.format(margin[0].TargetedMarginId, (margin[0].Rate * 100).toFixed(2)) },
+                        { Name: "NightRate", Value: rateFormat.format(margin[1].TargetedMarginId, (margin[1].Rate * 100).toFixed(2)) },
+                        { Name: "MidnightRate", Value: rateFormat.format(margin[2].TargetedMarginId, (margin[2].Rate * 100).toFixed(2)) }
                 ]
             });
         }
@@ -55,7 +56,8 @@ var targetedMarginService = (function ($) {
     }
 
     function registerEvent() {
-        $('.free-grid-td-2:has(span[data-id])').on('click', function () {
+        $('.free-grid-td-2:has(span[data-id]), .free-grid-td-3:has(span[data-id]), .free-grid-td-4:has(span[data-id])').on('click', function () {
+            gridState.resetFocus();
             var span = $(this).find('span[data-id]');
 
             if (gridState.focusedGrid != null && gridState.focusedGrid.attr('data-id') != span.attr('data-id')) {
@@ -80,7 +82,7 @@ var targetedMarginService = (function ($) {
             changedVal = parseFloat(changedVal).toFixed(2);
             if (changedVal <= 0 || changedVal >= 100) {
                 input.val(original);
-                common.ShowErrorMessage(messages.rateRange)
+                common.ShowErrorMessage(messages.rateRange);
                 return;
             }
 
@@ -105,7 +107,7 @@ var targetedMarginService = (function ($) {
             if (event.keyCode == 27) {
                 gridState.resetFocus();
             }
-        })
+        });
     }
 
     return {
@@ -114,7 +116,9 @@ var targetedMarginService = (function ($) {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
-                    { HeaderText: "Rate (%)", Width: 60, Name: "Rate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Afternoon (%)", Width: 80, Name: "AfternoonRate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Night (%)", Width: 80, Name: "NightRate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Midnight (%)", Width: 80, Name: "MidnightRate", HeaderAlign: "center", CellAlign: "center" }
                 ],
                 bodyRows: createSpreadTable(marginList),
                 gridExpandHeight: 100,
@@ -127,13 +131,13 @@ var targetedMarginService = (function ($) {
                     $("span[data-id]").addClass("link");
                     registerEvent();
                 }
-            })
+            });
         }
-    }
+    };
 })(jQuery);
 
 $(function () {
     targetedMarginFactory.getMargin().success(function (marginList) {
         targetedMarginService.renderTable(marginList);
-    })
-})
+    });
+});

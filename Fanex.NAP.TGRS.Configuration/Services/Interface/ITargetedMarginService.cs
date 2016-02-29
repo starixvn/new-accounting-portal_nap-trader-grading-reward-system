@@ -1,4 +1,6 @@
-﻿namespace Fanex.NAP.TGRS.Configuration.Services.Interface
+﻿using System.Linq;
+
+namespace Fanex.NAP.TGRS.Configuration.Services.Interface
 {
     using System.Collections.Generic;
     using Criteria.TargetedMargin;
@@ -8,7 +10,7 @@
 
     public interface ITargetedMarginService
     {
-        IEnumerable<TargetedMargin> GetMargin(ICriteria criteria);
+        IEnumerable<IGrouping<string, TargetedMargin>> GetMargin(ICriteria criteria);
 
         ICommandResult UpdateTargetedMargin(UpdateTargetedMarginCriteria criteria);
     }

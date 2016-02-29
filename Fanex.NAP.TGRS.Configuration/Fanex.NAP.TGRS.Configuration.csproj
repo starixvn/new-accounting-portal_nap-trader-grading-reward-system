@@ -125,6 +125,7 @@
     <Compile Include="Models\SpreadManagement\SpreadInfoModel.cs" />
     <Compile Include="Models\SpreadManagement\SpreadInfo.cs" />
     <Compile Include="Models\SystemConfiguration\ScoreCalculationPeriod.cs" />
+    <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
     <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
@@ -157,7 +158,6 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
-    <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
     <Compile Include="ViewModel\TraderManagement\TeamHistoryItem.cs" />

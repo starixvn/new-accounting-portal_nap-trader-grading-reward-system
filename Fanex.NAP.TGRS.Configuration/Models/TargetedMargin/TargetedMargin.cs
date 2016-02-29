@@ -4,7 +4,7 @@
     {
         public int TargetedMarginId { get; set; }
 
-        public string TypeName { get; set; }
+        public string BetType { get; set; }
 
         public double Rate { get; set; }
     }
