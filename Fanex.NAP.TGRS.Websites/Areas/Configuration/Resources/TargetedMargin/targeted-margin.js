@@ -44,10 +44,14 @@ var targetedMarginService = (function ($) {
             rows.push({
                 Columns: [
                         { Name: "Row", Value: rowNum },
-                        { Name: "BetType", Value: margin[0].BetType },
-                        { Name: "AfternoonRate", Value: rateFormat.format(margin[0].TargetedMarginId, (margin[0].Rate * 100).toFixed(2)) },
-                        { Name: "NightRate", Value: rateFormat.format(margin[1].TargetedMarginId, (margin[1].Rate * 100).toFixed(2)) },
-                        { Name: "MidnightRate", Value: rateFormat.format(margin[2].TargetedMarginId, (margin[2].Rate * 100).toFixed(2)) }
+                        { Name: "BetType", Value: margin.BetType },
+                        {
+                            Name: "AfternoonRate", Value: rateFormat.format(margin.AfternoonMargin.TargetedMarginId, (margin.AfternoonMargin.Rate * 100).toFixed(2))
+                        },
+                        {
+                            Name: "NightRate", Value: rateFormat.format(margin.NightMargin.TargetedMarginId, (margin.NightMargin.Rate * 100).toFixed(2))
+                        },
+                        { Name: "MidnightRate", Value: rateFormat.format(margin.MidnightMargin.TargetedMarginId, (margin.MidnightMargin.Rate * 100).toFixed(2)) }
                 ]
             });
         }

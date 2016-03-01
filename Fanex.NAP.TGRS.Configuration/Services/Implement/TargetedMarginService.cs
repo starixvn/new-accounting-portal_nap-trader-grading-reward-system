@@ -11,9 +11,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement
 
     public class TargetedMarginService : TGRSBaseService, Interface.ITargetedMarginService
     {
-        public IEnumerable<IGrouping<string, TargetedMargin>> GetMargin(ICriteria criteria)
+        public IEnumerable<IGrouping<string, TargetedMarginWithShift>> GetMargin(ICriteria criteria)
         {
-            return GetData<TargetedMargin>(criteria).GroupBy(m => m.BetType);
+            return GetData<TargetedMarginWithShift>(criteria).GroupBy(m => m.BetType);
         }
 
         public ICommandResult UpdateTargetedMargin(UpdateTargetedMarginCriteria criteria)

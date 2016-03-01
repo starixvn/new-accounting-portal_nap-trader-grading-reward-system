@@ -10,7 +10,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Interface
 
     public interface ITargetedMarginService
     {
-        IEnumerable<IGrouping<string, TargetedMargin>> GetMargin(ICriteria criteria);
+        IEnumerable<IGrouping<string, TargetedMarginWithShift>> GetMargin(ICriteria criteria);
 
         ICommandResult UpdateTargetedMargin(UpdateTargetedMarginCriteria criteria);
     }
