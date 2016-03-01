@@ -60,12 +60,8 @@
   <Function Name="DetailReports">
     <Setting Key="TGRS_Bettype_SelList" SpName="TGRS_Bettype_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_PerformanceDetail_League" SpName="TGRS_Rpt_PerformanceDetail_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_DetailLeague_Trader" SpName="TGRS_Rpt_DetailLeague_Trader_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
-    </Setting>
-    <Setting Key="TGRS_Rpt_DetailLeague_Match" SpName="TGRS_Rpt_DetailLeague_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
-    </Setting>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>

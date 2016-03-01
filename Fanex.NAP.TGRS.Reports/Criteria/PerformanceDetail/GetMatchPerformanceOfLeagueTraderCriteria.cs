@@ -33,7 +33,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailLeague_Match";
+            return "TGRS_Rpt_PerformanceDetail_League_Trader_Match";
         }
 
         /// <summary>
