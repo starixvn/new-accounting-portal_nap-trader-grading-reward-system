@@ -169,26 +169,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         return validateBetType();
     };
 
-    // Validate From/To values.
-    var validateValueRange = function ($from, $to) {
-        var fromValue = $from.val();
-        var toValue = $to.val();
-        var isValid = true;
-
-        if (fromValue !== '' && toValue !== '') {
-            fromValue = fromValue.replace(/,/g, '');
-            toValue = toValue.replace(/,/g, '');
-
-            isValid = $.isNumeric(fromValue) && $.isNumeric(toValue) && parseFloat(fromValue) <= parseFloat(toValue);
-        }
-
-        if (!isValid) {
-            validator.ShowError($to, messages.InvalidValue, 'w');
-        }
-
-        return isValid;
-    };
-
     // Validate Bet Type field.
     var validateBetType = function () {
         var selectedBetTypes = domElements.ddlBetType.val();
@@ -226,6 +206,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Render league performance grid.
     var renderLeaguePerformanceGrid = function (data) {
         var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}" title="{1}">{2}</span>';
+        var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}">{2}</span>';
         var noOfTradersCol = '';
 
         var gridOptions = {
@@ -290,12 +271,13 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                     item.LeagueId,
                                     labels.TraderPerformance,
                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+                var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, item.NoOfMatches);
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-                              { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                              { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
@@ -779,10 +761,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 //    HeaderText: labels.Benchmark, Width: 110, Name: 'ColBMByPeriod', HeaderAlign: 'center', CellAlign: 'right',
                 //    FormatNumber: common.Formats.DecimalFormat
                 //},
-                //{
-                //    HeaderText: labels.Score, Width: 110, Name: 'ColScoreByPeriod', HeaderAlign: 'center', CellAlign: 'right',
-                //    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                //},
+                {
+                    HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
                 //{ HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             gridExpandHeight: 260,
@@ -839,8 +821,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                         { Name: 'ColTurnover', Value: item.Turnover },
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
-                                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }
-                                        //{ Name: 'ColBetTypeBM', Value: item.Benchmark },
+                                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                                        { Name: 'ColScore', Value: item.Score }
                                         //{ Name: 'ColScoreByLatestBM', Value: common.GetNumWithLabel(item.Score, labels.NA) },
                                         //{ Name: 'ColBMByPeriod', Value: item.ScoreByPeriod[0].Benchmark },
                                         //{ Name: 'ColScoreByPeriod', Value: common.GetNumWithLabel(item.ScoreByPeriod[0].Score, labels.NA) },
@@ -868,7 +850,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           //{ Name: 'ColBetTypeBM', Value: '' },
                           //{ Name: 'ColScoreByLatestBM', Value: '' },
                           //{ Name: 'ColBMByPeriod', Value: '' },
-                          //{ Name: 'ColScoreByPeriod', Value: '' },
+                          //{ Name: 'ColScore', Value: item.Score },
                           //{ Name: 'ColForecast', Value: '' }
                 ]
             };
@@ -888,6 +870,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     var canForecast = function (bettype) {
         return (forecastBettype.indexOf(bettype) > -1);
     };
+
     var shortenName = function (prefixLength, name) {
         var titleLength = prefixLength + name.length;
         if (titleLength > maximumMatchNameLength) {
