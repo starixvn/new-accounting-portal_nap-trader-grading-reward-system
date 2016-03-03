@@ -206,7 +206,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Render league performance grid.
     var renderLeaguePerformanceGrid = function (data) {
         var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}" title="{1}">{2}</span>';
-        var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}">{2}</span>';
+        var noOfMatchsFormat = '<span class="match-link" data-league-id="{0}" data-league-name="{1}">{2}</span>';
         var noOfTradersCol = '';
 
         var gridOptions = {
