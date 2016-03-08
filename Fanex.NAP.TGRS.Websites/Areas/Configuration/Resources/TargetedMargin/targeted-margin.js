@@ -120,9 +120,9 @@ var targetedMarginService = (function ($) {
                 columns: [
                     { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
                     { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
-                    { HeaderText: "Afternoon (%)", Width: 80, Name: "AfternoonRate", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Night (%)", Width: 80, Name: "NightRate", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Midnight (%)", Width: 80, Name: "MidnightRate", HeaderAlign: "center", CellAlign: "center" }
+                    { HeaderText: "Afternoon (%)", Width: 100, Name: "AfternoonRate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Night (%)", Width: 100, Name: "NightRate", HeaderAlign: "center", CellAlign: "center" },
+                    { HeaderText: "Midnight (%)", Width: 100, Name: "MidnightRate", HeaderAlign: "center", CellAlign: "center" }
                 ],
                 bodyRows: createSpreadTable(marginList),
                 gridExpandHeight: 100,
