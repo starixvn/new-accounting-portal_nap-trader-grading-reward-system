@@ -822,7 +822,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                        { Name: 'ColScore', Value: item.Score }
+                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }
                                         //{ Name: 'ColScoreByLatestBM', Value: common.GetNumWithLabel(item.Score, labels.NA) },
                                         //{ Name: 'ColBMByPeriod', Value: item.ScoreByPeriod[0].Benchmark },
                                         //{ Name: 'ColScoreByPeriod', Value: common.GetNumWithLabel(item.ScoreByPeriod[0].Score, labels.NA) },
