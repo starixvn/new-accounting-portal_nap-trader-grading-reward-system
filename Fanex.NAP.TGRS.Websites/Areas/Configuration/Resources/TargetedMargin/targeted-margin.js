@@ -33,7 +33,25 @@ var gridState = {
 var targetedMarginService = (function ($) {
     "use strict";
 
-    function createSpreadTable(margins) {
+    var targetedMarginService = {};
+
+    targetedMarginService.hasHostPermission = false;
+
+    targetedMarginService.Search = function () {
+        common.DisableInput();
+
+        targetedMarginFactory.getHostPermission().success(function (result) {
+            targetedMarginService.hasHostPermission = result;
+
+            targetedMarginFactory.getMargin().success(function (marginList) {
+                renderTable(marginList);
+
+                common.EnableInput();
+            });
+        });
+    };
+
+    function createTargetedMarginTable(margins) {
         var rateFormat = "<span data-id={0}>{1}</span><input maxlength=5  style='width: 50px; height: 12px' class='hide'  value={1}>";
         var rows = [];
 
@@ -114,34 +132,30 @@ var targetedMarginService = (function ($) {
         });
     }
 
-    return {
-        renderTable: function (marginList) {
-            var gridOptions = {
-                columns: [
-                    { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
-                    { HeaderText: "Afternoon (%)", Width: 100, Name: "AfternoonRate", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Night (%)", Width: 100, Name: "NightRate", HeaderAlign: "center", CellAlign: "center" },
-                    { HeaderText: "Midnight (%)", Width: 100, Name: "MidnightRate", HeaderAlign: "center", CellAlign: "center" }
-                ],
-                bodyRows: createSpreadTable(marginList),
-                gridExpandHeight: 100,
-            };
+    function renderTable(marginList) {
+        var gridOptions = {
+            columns: [
+                { HeaderText: "#", Width: 100, Name: "Row", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Bet Type", Width: 300, Name: "BetType", HeaderAlign: "center", CellAlign: "left" },
+                { HeaderText: "Afternoon (%)", Width: 100, Name: "AfternoonRate", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Night (%)", Width: 100, Name: "NightRate", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: "Midnight (%)", Width: 100, Name: "MidnightRate", HeaderAlign: "center", CellAlign: "center" }
+            ],
+            bodyRows: createTargetedMarginTable(marginList),
+            gridExpandHeight: 100,
+        };
 
-            $("#marginGrid").fanexGrid(gridOptions);
+        $("#marginGrid").fanexGrid(gridOptions);
 
-            targetedMarginFactory.getHostPermission().success(function (result) {
-                if (result) {
-                    $("span[data-id]").addClass("link");
-                    registerEvent();
-                }
-            });
+        if (targetedMarginService.hasHostPermission) {
+            $("span[data-id]").addClass("link");
+            registerEvent();
         }
     };
+
+    return targetedMarginService;
 })(jQuery);
 
 $(function () {
-    targetedMarginFactory.getMargin().success(function (marginList) {
-        targetedMarginService.renderTable(marginList);
-    });
+    targetedMarginService.Search();
 });
