@@ -1,4 +1,8 @@
-﻿var targetedMarginFactory = (function ($) {
+﻿/* File Created: Jan 22, 2016 */
+/*jshint strict: false, camelcase: false*/
+/* global common, validator, messages */
+
+var targetedMarginFactory = (function ($) {
     "use strict";
 
     return {
@@ -37,6 +41,8 @@ var targetedMarginService = (function ($) {
 
     targetedMarginService.hasHostPermission = false;
 
+    targetedMarginService.result = null;
+
     targetedMarginService.Search = function () {
         common.DisableInput();
 
@@ -51,8 +57,22 @@ var targetedMarginService = (function ($) {
         });
     };
 
+    targetedMarginService.Update = function (targetedMarginId, newTargetedMargin) {
+        var criteria = {
+            TargetedMarginId: targetedMarginId,
+            Rate: (newTargetedMargin * 1).toFixed(2)
+        };
+
+        return targetedMarginFactory.updateMargin(criteria).success(function (result) {
+            targetedMarginService.result = result;
+        });
+    };
+
     function createTargetedMarginTable(margins) {
-        var rateFormat = "<span data-id={0}>{1}</span><input maxlength=5  style='width: 50px; height: 12px' class='hide'  value={1}>";
+        var targetedMarginFormat = '<span class="targeted-margin-link link" data-targeted-margin-id="{0}">{1}</span>' +
+                              '<input type="text" maxlength="5" class="targeted-margin hide" style="width: 94px !important;height: 15px;"/>';
+        var targetedMarginFormatNoHost = '<span class="targeted-margin-link link" data-targeted-margin-id="{0}">{1}</span>';
+
         var rows = [];
 
         for (var index = 0; index < margins.length; index++) {
@@ -64,72 +84,25 @@ var targetedMarginService = (function ($) {
                         { Name: "Row", Value: rowNum },
                         { Name: "BetType", Value: margin.BetType },
                         {
-                            Name: "AfternoonRate", Value: rateFormat.format(margin.AfternoonMargin.TargetedMarginId, (margin.AfternoonMargin.Rate * 100).toFixed(2))
+                            Name: "AfternoonRate", Value: targetedMarginService.hasHostPermission ?
+                                targetedMarginFormat.format(margin.AfternoonMargin.TargetedMarginId, (margin.AfternoonMargin.Rate * 100).toFixed(2)) :
+                                targetedMarginFormatNoHost.format(margin.AfternoonMargin.TargetedMarginId, (margin.AfternoonMargin.Rate * 100).toFixed(2))
                         },
                         {
-                            Name: "NightRate", Value: rateFormat.format(margin.NightMargin.TargetedMarginId, (margin.NightMargin.Rate * 100).toFixed(2))
+                            Name: "NightRate", Value: targetedMarginService.hasHostPermission ?
+                                targetedMarginFormat.format(margin.NightMargin.TargetedMarginId, (margin.NightMargin.Rate * 100).toFixed(2)) :
+                                targetedMarginFormatNoHost.format(margin.NightMargin.TargetedMarginId, (margin.NightMargin.Rate * 100).toFixed(2))
                         },
-                        { Name: "MidnightRate", Value: rateFormat.format(margin.MidnightMargin.TargetedMarginId, (margin.MidnightMargin.Rate * 100).toFixed(2)) }
+                        {
+                            Name: "MidnightRate", Value: targetedMarginService.hasHostPermission ?
+                                targetedMarginFormat.format(margin.MidnightMargin.TargetedMarginId, (margin.MidnightMargin.Rate * 100).toFixed(2)) :
+                                targetedMarginFormatNoHost.format(margin.MidnightMargin.TargetedMarginId, (margin.MidnightMargin.Rate * 100).toFixed(2))
+                        }
                 ]
             });
         }
 
         return rows;
-    }
-
-    function registerEvent() {
-        $('.free-grid-td-2:has(span[data-id]), .free-grid-td-3:has(span[data-id]), .free-grid-td-4:has(span[data-id])').on('click', function () {
-            gridState.resetFocus();
-            var span = $(this).find('span[data-id]');
-
-            if (gridState.focusedGrid != null && gridState.focusedGrid.attr('data-id') != span.attr('data-id')) {
-                gridState.resetFocus();
-            }
-
-            gridState.setFocus(span);
-        });
-
-        $('input').on('change', function () {
-            var input = $(this);
-            var span = $(this).prev();
-            var original = span.html();
-            var changedVal = input.val();
-
-            if (isNaN(changedVal)) {
-                input.val(original);
-                common.ShowErrorMessage(messages.notANumber);
-                return;
-            }
-
-            changedVal = parseFloat(changedVal).toFixed(2);
-            if (changedVal <= 0 || changedVal >= 100) {
-                input.val(original);
-                common.ShowErrorMessage(messages.rateRange);
-                return;
-            }
-
-            targetedMarginFactory.updateMargin({
-                TargetedMarginId: span.attr("data-id"),
-                Rate: changedVal
-            }).success(function (data) {
-                if (data.Code != 0) {
-                    common.ShowErrorMessage(data.Message);
-                    input.val(original);
-                    return;
-                }
-
-                common.ShowInfoMessage(messages.success);
-                span.html(changedVal);
-                input.attr("value", changedVal);
-                gridState.resetFocus();
-            });
-        });
-
-        $('body').on('keyup', function (event) {
-            if (event.keyCode == 27) {
-                gridState.resetFocus();
-            }
-        });
     }
 
     function renderTable(marginList) {
@@ -145,12 +118,83 @@ var targetedMarginService = (function ($) {
             gridExpandHeight: 100,
         };
 
-        $("#marginGrid").fanexGrid(gridOptions);
+        $("#divTargetedMarginGrid").fanexGrid(gridOptions);
 
         if (targetedMarginService.hasHostPermission) {
-            $("span[data-id]").addClass("link");
-            registerEvent();
+            handleGridEvents();
         }
+    };
+
+    var handleGridEvents = function () {
+        var targetedMarginLinks = $('#divTargetedMarginGrid').find('span.targeted-margin-link');
+        var targetedMarginInputs = $('#divTargetedMarginGrid').find('input.targeted-margin');
+
+        // Format the benchmark value which is input into the text box.
+        targetedMarginInputs.numberField(5, false);
+
+        var oldTargetedMargin = 0;
+
+        // When user clicks on benchmark link.
+        targetedMarginLinks.on('click', function () {
+            var $link = $(this);
+            var $input = $link.next();
+            var targetedMargin = $link.text();
+            oldTargetedMargin = parseFloat(targetedMargin).toFixed(2);
+
+            // Disable other active fields.
+            $.each(targetedMarginLinks, function (index, link) {
+                $(link).removeClass('hide').next().addClass('hide').tipsy('hide');
+            });
+
+            // Fill current value into text box.
+            $link.addClass('hide');
+            $input.val(targetedMargin).removeClass('hide').focus().select();
+        });
+        
+        // Handle key up event.
+        targetedMarginInputs.on('keyup', function (event) {
+            var $input = $(this);
+            var $link = $input.prev();
+            var newTargetedMargin = parseFloat($input.val()).toFixed(2);
+
+            if (event.keyCode === 13 && validateTargetedMargin($input) && oldTargetedMargin !== newTargetedMargin) {
+                var targetedMarginId = $link.attr('data-targeted-margin-id');
+
+                targetedMarginService.Update(targetedMarginId, newTargetedMargin).then(function () {
+                    if (targetedMarginService.result.IsSuccessful) {
+
+                        common.ShowInfoMessage(messages.success);
+
+                        $link.text((newTargetedMargin * 1).toFixed(2));
+                        $input.addClass('hide');
+                        $link.removeClass('hide');
+                        $input.tipsy('hide');
+                    } else {
+                        common.ShowErrorMessage(targetedMarginService.result.Message);
+                    }
+                });
+            } else if (event.keyCode === 27) {
+                $input.addClass('hide');
+                $link.removeClass('hide');
+                $input.tipsy('hide');
+            }
+        });
+    }
+
+    var validateTargetedMargin = function ($input) {
+        var value = $input.val().replace(/,/g, '');
+        var isValid = $.isNumeric(value);
+
+        if (isValid) {
+            value = parseFloat(value);
+            isValid = 0 < value && value <= 100;
+        }
+
+        if (!isValid) {
+            validator.ShowError($input, 'The value is between 0.xx and 99.xx', 'e');
+        }
+
+        return isValid;
     };
 
     return targetedMarginService;
