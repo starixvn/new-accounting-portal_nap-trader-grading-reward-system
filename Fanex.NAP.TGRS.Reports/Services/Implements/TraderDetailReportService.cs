@@ -106,21 +106,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 MatchId = criteria.MatchId,
             };
 
-            IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
-            List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
+            var bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
+            var bettypeDetail = new List<BetTypeDetailItem>();
 
             if (bettypeData != null && bettypeData.Any())
             {
                 foreach (var item in bettypeData)
                 {
                     var bettypeItem = new BetTypeDetailItem(item);
-                    bettypeItem.ScoreByPeriod = new List<ScoreByPeriodItem>();
-                    scoreByPeriodCriteria.Bettypes = item.BetType.ToString();
-                    IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
-                    foreach (var scoreByPeriodInfo in scoreByPeriodData)
-                    {
-                        bettypeItem.ScoreByPeriod.Add(new ScoreByPeriodItem(scoreByPeriodInfo));
-                    }
 
                     bettypeDetail.Add(bettypeItem);
                 }
