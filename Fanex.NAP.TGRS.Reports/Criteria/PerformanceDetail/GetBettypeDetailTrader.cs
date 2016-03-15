@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailTrader_Bettype";
+            return "TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype";
         }
 
         public override bool IsValid()
