@@ -66,8 +66,7 @@
     <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-    </Setting>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Grade" SpName="TGRS_Rpt_PerformanceDetail_Grade" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
