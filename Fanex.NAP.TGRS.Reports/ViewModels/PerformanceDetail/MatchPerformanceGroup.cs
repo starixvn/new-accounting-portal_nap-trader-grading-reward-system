@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public MatchPerformanceGroup()
         {
-            this.ItemList = new List<MatchPerformanceItem>();
+            this.ItemList = new LinkedList<MatchPerformanceItem>();
             this.Total = new MatchPerformanceItem();
         }
 
@@ -39,7 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public string LeagueName { get; set; }
 
-        public List<MatchPerformanceItem> ItemList { get; set; }
+        public ICollection<MatchPerformanceItem> ItemList { get; set; }
 
         public MatchPerformanceItem Total { get; set; }
 

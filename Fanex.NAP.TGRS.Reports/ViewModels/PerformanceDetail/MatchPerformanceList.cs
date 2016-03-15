@@ -20,13 +20,13 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public MatchPerformanceList()
         {
-            this.GroupList = new List<MatchPerformanceGroup>();
+            this.GroupList = new LinkedList<MatchPerformanceGroup>();
             this.GrandTotal = new MatchPerformanceItem();
         }
 
         public int TotalItems { get; set; }
 
-        public List<MatchPerformanceGroup> GroupList { get; set; }
+        public ICollection<MatchPerformanceGroup> GroupList { get; set; }
 
         public MatchPerformanceItem GrandTotal { get; set; }
 

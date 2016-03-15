@@ -65,32 +65,29 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
             MatchPerformanceList matchPerformance = new MatchPerformanceList();
 
-            if (matchData != null && matchData.Any())
+            IEnumerable<IGrouping<int?, MatchPerformanceInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
+            MatchPerformanceGroup leagueGroup = null;
+
+            foreach (IGrouping<int?, MatchPerformanceInfo> group in leagueGroups)
             {
-                IEnumerable<IGrouping<int?, MatchPerformanceInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
-                MatchPerformanceGroup leagueGroup = null;
-
-                foreach (IGrouping<int?, MatchPerformanceInfo> group in leagueGroups)
+                if (group.Key.HasValue)
                 {
-                    if (group.Key.HasValue)
+                    leagueGroup = new MatchPerformanceGroup(group.Key);
+
+                    foreach (MatchPerformanceInfo match in group)
                     {
-                        leagueGroup = new MatchPerformanceGroup(group.Key);
-
-                        foreach (MatchPerformanceInfo match in group)
-                        {
-                            leagueGroup.AddItem(new MatchPerformanceItem(match));
-                        }
-
-                        leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
-                        matchPerformance.AddItem(leagueGroup);
+                        leagueGroup.AddItem(new MatchPerformanceItem(match));
                     }
+
+                    leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
+                    matchPerformance.AddItem(leagueGroup);
                 }
 
-                matchPerformance.GroupList = matchPerformance.GroupList.OrderBy(obj => obj.LeagueName).ToList();
-                matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
-                matchPerformance.TotalItems = matchData.Count();
             }
 
+            matchPerformance.GroupList = matchPerformance.GroupList.OrderBy(obj => obj.LeagueName).ToList();
+            matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
+            matchPerformance.TotalItems = matchData.Count();
             return matchPerformance;
         }
 
