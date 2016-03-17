@@ -23,17 +23,13 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime ToDate { get; set; }
 
-        public decimal? BetTypeBMFrom { get; set; }
-
-        public decimal? BetTypeBMTo { get; set; }
-
         /// <summary>
         /// Gets Setting Key.
         /// </summary>
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailBetType_League";
+            return "TGRS_Rpt_PerformanceDetail_Bettype_League";
         }
 
         /// <summary>
