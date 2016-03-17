@@ -63,12 +63,10 @@
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">      
     </Setting>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade" SpName="TGRS_Rpt_PerformanceDetail_Grade_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade" SpName="TGRS_Rpt_PerformanceDetail_Grade_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">      
     </Setting>
     <Setting Key="TGRS_Rpt_DetailGrade_Trader" SpName="TGRS_Rpt_DetailGrade_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
@@ -76,8 +74,7 @@
     <Setting Key="TGRS_Rpt_DetailGrade_Match" SpName="TGRS_Rpt_DetailGrade_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team" SpName="TGRS_Rpt_PerformanceDetail_Team_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team" SpName="TGRS_Rpt_PerformanceDetail_Team_xpre" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">      
     </Setting>
     <Setting Key="TGRS_Rpt_DetailTeam_Trader" SpName="TGRS_Rpt_DetailTeam_Trader_Xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
