@@ -236,7 +236,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                 row = {
                     Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColWinLoss', Value: item.Winloss },
                               { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
@@ -272,7 +272,7 @@ Fanex.TGRS.PerformanceSummary.PerformanceSummary = function () {
                 row = {
                     Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColWinLoss', Value: item.Winloss },
                               { Name: 'ColMargin', Value: item.Margin}]
                 };
                 bodyData.push(row);
