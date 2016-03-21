@@ -82,7 +82,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                     matchPerformance.AddItem(leagueGroup);
                 }
-
             }
 
             matchPerformance.GroupList = matchPerformance.GroupList.OrderBy(obj => obj.LeagueName).ToList();

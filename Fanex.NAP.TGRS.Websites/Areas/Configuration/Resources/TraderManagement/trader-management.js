@@ -593,9 +593,6 @@ Fanex.TGRS.TraderManagement = function () {
             //get teamId and grade by name
             var teamId = cacheTeamDataId[teamName];
             makeUpdateTraderForm(custId, username, employeeId, teamId, grade, teamEffectiveDate, gradeEffectiveDate);
-            $(".ui-multiselect-menu.ui-dialog.ui-front.ui-widget.ui-widget-content.ui-corner-all.ui-multiselect-single").css("z-index", function() {
-                return $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable").css("z-index") + 1000;
-            });
         });
 
         //event: click on team name
@@ -692,12 +689,6 @@ Fanex.TGRS.TraderManagement = function () {
         cachePopupElements();
         updatePopupDropdown(popupType.insert, defaultSelectVal, defaultSelectVal);
         bindNewTraderPopupEvent();
-        $(".ui-multiselect-menu.ui-dialog.ui-front.ui-widget.ui-widget-content.ui-corner-all.ui-multiselect-single").css("z-index", function () {
-            return $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable").css("z-index") + 1000;
-        });
-        $(".ui-widget-overlay").css("z-index", function() {
-            return $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable").css("z-index") - 1;
-        });
     };
 
     // Display update Trader form.
