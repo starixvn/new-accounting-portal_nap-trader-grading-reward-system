@@ -781,19 +781,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}" title="{1}">{2}</span>';
         var noOfTradersCol = '';
 
-        var gridOptions = {
-            customizeHeader: true,
-            groupHeaderRows: [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.Turnover, Name: "ColTurnover", MergeRowNumber: 2 },
-                    { HeaderText: labels.WinLoss, Name: "ColWinLoss", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: labels.Margin, Name: "ColMargin", MergeRowNumber: 2 }]
-            }],
+        var gridOptions = {            
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
