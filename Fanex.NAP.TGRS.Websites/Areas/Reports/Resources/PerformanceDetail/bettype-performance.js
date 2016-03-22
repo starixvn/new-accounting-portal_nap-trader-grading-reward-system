@@ -48,7 +48,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         BetTypeBMFrom: null,
         BetTypeBMTo: null,
         Turnover: null,
-        WinLost: null
+        WinLoss: null
     };
     var cachedData = {
         MatchPerformance: null,

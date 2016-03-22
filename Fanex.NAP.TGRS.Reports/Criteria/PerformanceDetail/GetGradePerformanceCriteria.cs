@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public decimal? Turnover { get; set; }
 
-        public decimal? WinLost { get; set; }
+        public decimal? WinLoss { get; set; }
 
         public decimal? MarginFrom { get; set; }
 

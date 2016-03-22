@@ -45,7 +45,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         MarginFrom: null,
         MarginTo: null,
         Turnover: null,
-        WinLost: null
+        WinLoss: null
     };
     var cachedData = {
         MatchPerformance: null,
@@ -141,7 +141,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
-                parameters.WinLost = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
 
                 hideAllReports();
                 getGradePerformanceReport();
@@ -824,7 +824,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var row;
         var total = {
             Turnover: 0,
-            WinLost: 0,
+            WinLoss: 0,
             BetCount: 0,
             Margin: null
         };
@@ -842,7 +842,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 currentRowData.push({ Name: 'ColNo', Value: index + 1 },
                                         { Name: 'ColBettype', Value: item.TypeName },
                                         { Name: 'ColTurnover', Value: item.Turnover },
-                                        { Name: 'ColWinLoss', Value: item.WinLost },
+                                        { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
                                         { Name: 'ColBetTypeBM', Value: item.Benchmark },
@@ -856,17 +856,17 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 bodyData.push(row);
 
                 total.Turnover += item.Turnover;
-                total.WinLost += item.WinLost;
+                total.WinLoss += item.WinLoss;
                 total.BetCount += item.BetCount;
             });
 
             if (total.Turnover !== 0) {
-                total.Margin = total.WinLost / total.Turnover * 100;
+                total.Margin = total.WinLoss / total.Turnover * 100;
             }
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
                           { Name: 'ColTurnover', Value: total.Turnover },
-                          { Name: 'ColWinLoss', Value: total.WinLost },
+                          { Name: 'ColWinLoss', Value: total.WinLoss },
                           { Name: 'ColBetCount', Value: total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) },
                           { Name: 'ColBetTypeBM', Value: '' },
