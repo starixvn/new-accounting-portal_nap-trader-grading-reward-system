@@ -729,16 +729,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
 
-        domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
-        if (!canForecast(betTypeId)) {
-            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [7]);
-        }
+        domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);       
 
         handleMatchPerformanceOfTraderGridEvents();
-    };
-
-    var canForecast = function (bettype) {
-        return (forecastBettype.indexOf(bettype) > -1);
     };
 
     // Handle match performance grid's events.
@@ -1206,7 +1199,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
@@ -1221,9 +1214,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
-        if (!canForecast(betTypeId)) {
-            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [6]);
-        }
+        
         handleMatchPerformanceOfLeagueTraderGridEvents();
     };
 
