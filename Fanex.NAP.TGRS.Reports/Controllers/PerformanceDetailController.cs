@@ -182,6 +182,36 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return jsonResult;
         }
 
+        /// <summary>
+        /// Gets the match performance of league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of league data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
+        {
+            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeague(criteria);
+            JsonResult jsonResult = Json(matchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
+        /// <summary>
+        /// Gets the bettype performance of pair a of league and match.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of league data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
+        {
+            IEnumerable<BetTypeDetailItem> bettypePerformance = this._detailReportService.GetBettypePerformanceOfLeagueMatch(criteria);
+            JsonResult jsonResult = Json(bettypePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+        
         #endregion League Performance
 
         #region Trader Performance

@@ -107,6 +107,9 @@
     <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
+
   </Function>
   <Function Name="SystemConfiguration">
     <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>

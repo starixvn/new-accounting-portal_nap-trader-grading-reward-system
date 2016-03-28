@@ -80,6 +80,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTeam.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailGrade.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailLeague.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBetTypePerformanceOfLeagueMatchCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetTypesCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetGradePerformanceCriteria.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfGradeTraderCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfLeagueCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTeamTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTraderCriteria.cs" />

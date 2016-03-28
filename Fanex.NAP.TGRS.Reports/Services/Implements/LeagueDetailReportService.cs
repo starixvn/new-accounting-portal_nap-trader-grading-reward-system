@@ -178,6 +178,50 @@ namespace Fanex.NAP.TGRS.Reports.Services
         }
 
         /// <summary>
+        /// Gets the match performance of league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        public MatchPerformanceGroup GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
+        {
+            IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
+            MatchPerformanceGroup matchPerformance = new MatchPerformanceGroup();
+
+            if (matchData != null && matchData.Any())
+            {
+                foreach (MatchPerformanceInfo item in matchData)
+                {
+                    matchPerformance.AddItem(new MatchPerformanceItem(item));
+                }
+
+                matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
+            }
+
+            return matchPerformance;
+        }
+
+        /// <summary>
+        /// Gets the bettype performance of pair a of league and match.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        public IEnumerable<BetTypeDetailItem> GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
+        {
+            IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
+            List<BetTypeDetailItem> bettypePerformance = new List<BetTypeDetailItem>();            
+
+            if (bettypeData != null && bettypeData.Any())
+            {
+                foreach (BetTypeDetailInfo item in bettypeData)
+                {
+                    bettypePerformance.Add(new BetTypeDetailItem(item));
+                }
+            }
+
+            return bettypePerformance;
+        }
+
+        /// <summary>
         /// Export League Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>

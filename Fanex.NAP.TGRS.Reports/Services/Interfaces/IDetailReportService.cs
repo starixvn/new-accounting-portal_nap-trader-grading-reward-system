@@ -58,6 +58,20 @@ namespace Fanex.NAP.TGRS.Reports.Services
         IEnumerable<BetTypeDetailItem> GetBettypeDetailLeague(GetBettypeDetailLeague criteria);
 
         /// <summary>
+        /// Gets the match performance of league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        MatchPerformanceGroup GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria);
+
+        /// <summary>
+        /// Gets the bettype performance of a pair of league and match.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>MatchPerformanceGroup object.</returns>
+        IEnumerable<BetTypeDetailItem> GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria);
+
+        /// <summary>
         /// Export League Performance to excel.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
