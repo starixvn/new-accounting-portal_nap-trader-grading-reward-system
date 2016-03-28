@@ -100,6 +100,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeLeagueCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceOfGradeCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfGradeByLeagueCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfGradeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfLeagueCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfTeamCriteria.cs" />

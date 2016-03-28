@@ -134,6 +134,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>TraderPerformanceList object.</returns>
         TraderPerformanceList GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria);
 
+        TraderPerformanceList GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria);
+
         /// <summary>
         /// Gets the match performance of a pair of grade and trader.
         /// </summary>

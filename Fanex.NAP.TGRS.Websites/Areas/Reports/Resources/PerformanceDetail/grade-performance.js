@@ -26,6 +26,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         divGradePerformanceGrid: null,
         divTraderPerformanceContainer: null,
         divTraderPerformanceGrid: null,
+        divTraderPerformanceByLeagueContainer: null,
+        divTraderPerformanceByLeagueGrid: null,
         divLeaguePerformanceContainer: null,
         divLeaguePerformanceGrid: null,
         divMatchPerformanceContainer: null,
@@ -37,6 +39,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         GetGradePerformance: common.ResolveRootUrl('PerformanceDetail/GetGradePerformance'),
         ExportGradePerformance: common.ResolveRootUrl('PerformanceDetail/ExportGradePerformance'),
         GetTraderPerformanceOfGrade: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfGrade'),
+        GetTraderPerformanceOfGradeByLeague: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfGradeByLeague'),
         GetLeaguePerformanceOfGrade: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformanceOfGrade'),
         GetMatchPerformanceOfGradeTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfGradeTrader'),
         GetBettypeDetail: common.ResolveRootUrl('PerformanceDetail/GetBettypeDetailGrade')
@@ -75,6 +78,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divGradePerformanceGrid = $('#divGradePerformanceGrid');
         domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
+        domElements.divTraderPerformanceByLeagueContainer = $('#divTraderPerformanceContainer');
+        domElements.divTraderPerformanceByLeagueGrid = $('#divTraderPerformanceGrid');
         domElements.divLeaguePerformanceContainer = $('#divLeaguePerformanceContainer');
         domElements.divLeaguePerformanceGrid = $('#divLeaguePerformanceGrid');
         domElements.divMatchPerformanceContainer = $('#divMatchPerformanceContainer');
@@ -499,8 +504,156 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
             leagueName = leagueName || $leagueName.text();
 
-            getTraderPerformanceReport(grade, leagueId, leagueName);
+            getTraderPerformanceReportByLeague(grade, leagueId, leagueName);
         });
+    };
+
+    // Get trader performance on a specific grade.
+    var getTraderPerformanceReportByLeague = function (grade, leagueId, leagueName) {
+        var traderPerformance = {
+            Grade: grade,
+            LeagueId: leagueId,
+            BetTypes: parameters.BetTypes,
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetTraderPerformanceOfGradeByLeague,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(traderPerformance),
+            success: function (result) {
+                renderTraderPerformanceByLeagueGrid(result, grade, leagueName);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+
+    // Render trader performance of a specific league grid.
+    var renderTraderPerformanceByLeagueGrid = function (data, grade, leagueName) {
+        var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
+                          '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
+                          '<span title="{3}"> >> {4}</span>';
+        var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}">{2}</span>';
+        var noOfMatchesFormat = '<span class="match-link link" title="{0}">{1}</span>';
+        var gradeFormat = '<span class="grade">{0}</span>';
+        var teamFormat = '<span class="team">{0}</span>';
+        var detailIcon = '<span class="detail-icon {0}" title="{1}"></span>';
+        var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
+
+        var traderCol = '';
+        var gradeCol = '';
+        var teamCol = '';
+        var noOfMatchesCol = '';
+
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
+                      {
+                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      }],
+            gridExpandHeight: 260,
+            showNumberColumn: true,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, leagueName, trimLeagueName)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    //handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
+
+                    return rows;
+                }
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    //handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+        var bodyData = [];
+        var footerData = [];
+        var row;
+
+        if (data && data.ItemList.length > 0) {
+            $.each(data.ItemList, function (index, item) {
+                traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
+                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+                gradeCol = gradeFormat.format(item.Grade);
+                gradeCol += item.HasGradeHistory ? detailIcon.format('grade-column', labels.GradeHistoryDetail) : '';
+                teamCol = teamFormat.format(item.TeamName);
+                teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
+
+                row = {
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
+                              { Name: 'ColTrader', Value: traderCol },
+                              { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
+                              { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
+                              { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
+                              { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.WinLoss },
+                              { Name: 'ColBetCount', Value: item.BetCount },
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                };
+
+                bodyData.push(row);
+            });
+
+            row = {
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
+                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+                          { Name: 'ColTurnover', Value: data.Total.Turnover },
+                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+                          { Name: 'ColBetCount', Value: data.Total.BetCount },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+                          { Name: 'ColScore', Value: '' }]
+            };
+            footerData.push(row);
+        }
+
+        // Hide previous report.
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+        domElements.divTraderPerformanceByLeagueGrid.fanexGrid(gridOptions);
+        //handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
     };
 
     // Get trader performance on a specific grade.

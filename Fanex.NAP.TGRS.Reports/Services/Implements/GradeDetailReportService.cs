@@ -77,6 +77,24 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return traderPerformance;
         }
 
+        public TraderPerformanceList GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
+        {
+            IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
+            TraderPerformanceList traderPerformance = new TraderPerformanceList();
+
+            if (traderData != null && traderData.Any())
+            {
+                foreach (TraderPerformanceInfo item in traderData)
+                {
+                    traderPerformance.AddItem(new TraderPerformanceItem(item));
+                }
+
+                traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
+            }
+
+            return traderPerformance;
+        }
+
         public LeaguePerformanceList GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);

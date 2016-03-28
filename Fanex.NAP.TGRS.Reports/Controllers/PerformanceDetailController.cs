@@ -343,6 +343,16 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
+        {
+            TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfGradeByLeague(criteria);
+            JsonResult jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfGrade(criteria);
