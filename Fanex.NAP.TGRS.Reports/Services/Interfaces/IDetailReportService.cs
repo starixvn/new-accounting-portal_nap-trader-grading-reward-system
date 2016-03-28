@@ -210,6 +210,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         LeaguePerformanceList GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria);
 
+        LeaguePerformanceList GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria);
+
         /// <summary>
         /// Gets the trader performance of a bet type, league.
         /// </summary>

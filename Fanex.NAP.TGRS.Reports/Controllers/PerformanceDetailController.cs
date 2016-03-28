@@ -341,6 +341,16 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return jsonResult;
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
+        {
+            LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfGrade(criteria);
+            JsonResult jsonResult = Json(leaguePerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+        }
+
         /// <summary>
         /// Gets the match performance of a pair of grade and trader.
         /// </summary>

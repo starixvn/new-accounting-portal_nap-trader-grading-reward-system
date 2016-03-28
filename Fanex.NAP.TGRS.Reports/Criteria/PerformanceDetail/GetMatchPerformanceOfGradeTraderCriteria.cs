@@ -21,8 +21,6 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime ToDate { get; set; }
 
-        public byte Grade { get; set; }
-
         public int CustId { get; set; }
 
         public string BetTypes { get; set; }
@@ -33,7 +31,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailGrade_Match";
+            return "TGRS_Rpt_PerformanceDetail_Grade_Trader_Match";
         }
 
         /// <summary>
