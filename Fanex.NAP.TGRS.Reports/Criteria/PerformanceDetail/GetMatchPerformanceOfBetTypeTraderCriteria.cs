@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Jason.Ly" date="2014.6.18">Created</change>
+//   <change who="Thai.Tran" date="2016.3.29">Update sp name</change>
 // </history>
 
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
@@ -25,17 +26,13 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime ToDate { get; set; }
 
-        public decimal? BetTypeBMFrom { get; set; }
-
-        public decimal? BetTypeBMTo { get; set; }
-
         /// <summary>
         /// Gets the setting key.
         /// </summary>
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailBetType_Match";
+            return "TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match";
         }
 
         /// <summary>

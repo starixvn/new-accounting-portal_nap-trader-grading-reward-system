@@ -218,7 +218,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Render league performance grid.
     var renderLeaguePerformanceGrid = function (data) {
         var noOfTradersFormat = '<span class="trader-link link" data-league-id="{0}" title="{1}">{2}</span>';
-        var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}">{2}</span>';
+        var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}" title="{2}">{3}</span>';
         var noOfTradersCol = '';
 
         var gridOptions = {
@@ -283,7 +283,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                     item.LeagueId,
                                     labels.TraderPerformance,
                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
-                var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, item.NoOfMatches);
+                var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, labels.MatchPerformance, item.NoOfMatches);
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
