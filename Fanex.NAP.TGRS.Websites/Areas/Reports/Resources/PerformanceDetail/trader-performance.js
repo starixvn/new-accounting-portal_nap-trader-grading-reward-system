@@ -341,6 +341,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
+        }
+
         handleTraderPerformanceGridEvents();
     };
 
@@ -735,6 +740,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
 
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
+
         handleBettypeDetailGridEvents();
     };
 

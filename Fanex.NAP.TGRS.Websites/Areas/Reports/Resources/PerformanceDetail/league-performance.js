@@ -349,7 +349,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
         domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
-        domElements.divBettypePerformanceOfLeagueMatchContainer.addClass('display-none');        
+        domElements.divBettypePerformanceOfLeagueMatchContainer.addClass('display-none');
     };
 
     // Export league performance to excel.
@@ -497,6 +497,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+        }
+
         handleTraderPerformanceGridEvents(leagueId, leagueName);
     };
 
@@ -671,7 +676,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceGridEvents(leagueId, leagueName, traderId, traderName);
     };
-    
+
     // Handle match performance grid's events.
     var handleMatchPerformanceGridEvents = function (leagueId, leagueName, traderId, traderName) {
         domElements.divMatchPerformanceContainer.find('#spanLeagueLink').click(function () {
@@ -893,6 +898,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
 
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
+
         handleBettypeDetailGridEvents();
     };
 
@@ -901,7 +911,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Get match performance by league.
     var getMatchPerformanceOfLeagueReport = function (leagueId, leagueName) {
         var matchPerformanceParamrters = {
-            LeagueId: leagueId,            
+            LeagueId: leagueId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate
@@ -928,7 +938,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Render match performance of a specific league grid.
     var renderMatchPerformanceOfLeagueGrid = function (data, leagueId, leagueName) {
-        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +                          
+        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +
                           '<span> >> {1}</span>';
         var matchDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-match-id="{1}">{2}</span>';
         var matchDetailCol = '';
@@ -1011,12 +1021,12 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     };
 
     // Handle match performance of league grid's events.
-    var handleMatchPerformanceOfLeagueGridEvents = function (leagueId, leagueName) {        
-   
+    var handleMatchPerformanceOfLeagueGridEvents = function (leagueId, leagueName) {
+
         domElements.divMatchPerformanceOfLeagueContainer.find('#spanLeagueLink').click(function () {
             showLeaguePerformanceReport();
         });
-        
+
         domElements.divMatchPerformanceOfLeagueContainer.find('.bettype-detail-link').click(function () {
             var $link = $(this);
             var matchId = $link.attr('data-match-id');
@@ -1024,12 +1034,12 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             getBettypeOfLeagueMatchDetailReport(leagueId, leagueName, matchId, matchName);
         });
 
-    };   
-    
+    };
+
     //Bettype Detail (of league and match)
     var getBettypeOfLeagueMatchDetailReport = function (leagueId, leagueName, matchId, matchName) {
         var bettypeDetailParameters = {
-            LeagueId: leagueId,            
+            LeagueId: leagueId,
             MatchId: matchId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
@@ -1055,8 +1065,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     };
 
     // Render bettype performance (of league and match) grid.
-    var renderBettypeOfLeagueMatchDetailGrid = function (data, matchId, matchName, leagueId, leagueName) {                
-        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +                          
+    var renderBettypeOfLeagueMatchDetailGrid = function (data, matchId, matchName, leagueId, leagueName) {
+        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {1}</span>' +
                           '<span title="{2}"> >> {3}</span>';
         //length of >>: 12
@@ -1098,7 +1108,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat,
                     FormatNegative: '$'
-                },               
+                },
                 {
                     HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
@@ -1144,7 +1154,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                
+
                 var currentRowData = [];
                 currentRowData = [];
                 currentRowData.push({ Name: 'ColNo', Value: index + 1 },
@@ -1153,7 +1163,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }                                        
+                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }
                                         );
                 row = {
                     Columns: currentRowData
@@ -1173,7 +1183,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           { Name: 'ColTurnover', Value: total.Turnover },
                           { Name: 'ColWinLoss', Value: total.WinLoss },
                           { Name: 'ColBetCount', Value: total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) }                          
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) }
                 ]
             };
             footerData.push(row);
@@ -1186,15 +1196,20 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
 
         domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
+
         handleBettypeOfLeagueMatchDetailGridEvents();
     };
- 
+
     // Handle bettype of League and Match grid's events.
-    var handleBettypeOfLeagueMatchDetailGridEvents = function () {        
+    var handleBettypeOfLeagueMatchDetailGridEvents = function () {
 
         domElements.divBettypePerformanceOfLeagueMatchContainer.find('#spanLeagueLink').click(function () {
             showLeaguePerformanceReport();
-        });        
+        });
 
         domElements.divBettypePerformanceOfLeagueMatchContainer.find('#spanMatchLink').click(function () {
             showMatchPerformanceOfLeagueReport();
@@ -1203,7 +1218,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     };
 
     // Show match performance of league report and hide other reports.
-    var showMatchPerformanceOfLeagueReport = function () {        
+    var showMatchPerformanceOfLeagueReport = function () {
         domElements.divMatchPerformanceOfLeagueContainer.removeClass('display-none');
         domElements.divBettypePerformanceOfLeagueMatchContainer.addClass('display-none');
     };

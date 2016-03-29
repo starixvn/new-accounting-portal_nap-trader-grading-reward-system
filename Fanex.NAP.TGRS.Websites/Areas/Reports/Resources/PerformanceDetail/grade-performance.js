@@ -334,6 +334,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divGradePerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divGradePerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+        }
+
         handleGradePerformanceGridEvents();
     };
 
@@ -661,6 +666,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceByLeagueGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [9]);
+        }
+
         handleTraderPerformanceByLeagueGridEvents(grade, leagueId, leagueName);
     };
 
@@ -830,6 +840,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+        }
+
         handleTraderPerformanceGridEvents(grade);
     };
 
@@ -1201,6 +1216,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
 
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
+
         handleBettypeDetailGridEvents();
     };
 
@@ -1547,6 +1567,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
 
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [6]);
+        }
+
         handleBettypeDetailOfGradeLeagueGridEvents();
     };
 

@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 1/20/2016 4:37:21 PM
+// Lasted generated date: 3/29/2016 4:04:28 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -34,8 +34,6 @@ public static class TGRSFunctionKeys
 
     public const string Configuration = "Configuration";
 
-    public const string GradeManagement = "GradeManagement";
-
     public const string ManageFunction = "ManageFunction";
 
     public const string ManageGroup = "ManageGroup";
@@ -50,15 +48,19 @@ public static class TGRSFunctionKeys
 
     public const string Reports = "Reports";
 
+    public const string ScoreViewing = "ScoreViewing";
+
     public const string SpreadManagement = "SpreadManagement";
 
     public const string SystemConfiguration = "SystemConfiguration";
 
     public const string SystemSetting = "SystemSetting";
 
+    public const string TargetedMargin = "TargetedMargin";
+
     public const string TeamManagement = "TeamManagement";
 
     public const string TraderManagement = "TraderManagement";
 
-    public const string TargetedMargin = "TargetedMargin";
+    public const string GradeManagement = "GradeManagement";
 }

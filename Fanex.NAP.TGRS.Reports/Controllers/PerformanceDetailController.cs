@@ -10,18 +10,19 @@
 
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Services;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.TGRS.Core.BaseClasses;
-    using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.Services;
-    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
 
     /// <summary>
     /// Performance detail report controller.
@@ -635,5 +636,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         }
 
         #endregion Bet Type Performance
+
+        public ActionResult GetViewScorePermission()
+        {
+            return Json(PermissionService.HasReadPermission(TGRSFunctionKeys.ScoreViewing), JsonRequestBehavior.AllowGet);
+        }
     }
 }

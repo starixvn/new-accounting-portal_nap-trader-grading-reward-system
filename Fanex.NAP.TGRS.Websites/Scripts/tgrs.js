@@ -6,6 +6,9 @@
 Namespace.Register("Fanex.TGRS.Common");
 Fanex.TGRS.Common = function () {
     var $this = this;
+
+    $this.HasViewScorePermission = false;
+
     var messages = {
         NotFoundError: null,
         InternalError: null,
@@ -223,6 +226,10 @@ Fanex.TGRS.Common = function () {
 
         $('input[type=text]').each(function () {
             $(this).clearField();
+        });
+
+        $.get($this.ResolveRootUrl('PerformanceDetail/GetViewScorePermission'), function (result) {
+            $this.HasViewScorePermission = result;
         });
     };
 };
