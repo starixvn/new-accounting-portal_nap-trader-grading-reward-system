@@ -896,7 +896,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         handleBettypeDetailGridEvents();
     };
 
-    //LEAGUE SECTION.
+    //LEAGUE - MATCH SECTION.
 
     // Get match performance by league.
     var getMatchPerformanceOfLeagueReport = function (leagueId, leagueName) {
@@ -1013,6 +1013,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Handle match performance of league grid's events.
     var handleMatchPerformanceOfLeagueGridEvents = function (leagueId, leagueName) {        
    
+        domElements.divMatchPerformanceOfLeagueContainer.find('#spanLeagueLink').click(function () {
+            showLeaguePerformanceReport();
+        });
+        
         domElements.divMatchPerformanceOfLeagueContainer.find('.bettype-detail-link').click(function () {
             var $link = $(this);
             var matchId = $link.attr('data-match-id');
@@ -1051,9 +1055,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     };
 
     // Render bettype performance (of league and match) grid.
-    var renderBettypeOfLeagueMatchDetailGrid = function (data, matchId, matchName, leagueId, leagueName) {
-        var forecastFormat = '<span class="forecast-icon" data-match-id="{0}" data-bettype="{1}" title="{2}"></span>';
-        var forecastCol = '';
+    var renderBettypeOfLeagueMatchDetailGrid = function (data, matchId, matchName, leagueId, leagueName) {                
         var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +                          
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {1}</span>' +
                           '<span title="{2}"> >> {3}</span>';
@@ -1109,7 +1111,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    handleBettypeDetailGridEvents();
+                    handleBettypeOfLeagueMatchDetailGridEvents();
 
                     return rows;
                 }
@@ -1123,7 +1125,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
                 afterPagedFunction: function (rows) {
-                    handleBettypeDetailGridEvents();
+                    handleBettypeOfLeagueMatchDetailGridEvents();
 
                     return rows;
                 }
@@ -1142,13 +1144,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                if (canForecast(item.BetType)) {
-                    forecastCol = forecastFormat.format(matchId, item.BetType, labels.Forecast);
-                }
-                else {
-                    forecastCol = 'N/A';
-                }
-
+                
                 var currentRowData = [];
                 currentRowData = [];
                 currentRowData.push({ Name: 'ColNo', Value: index + 1 },
@@ -1190,10 +1186,29 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
 
         domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid(gridOptions);
-        handleBettypeDetailGridEvents();
+        handleBettypeOfLeagueMatchDetailGridEvents();
+    };
+ 
+    // Handle bettype of League and Match grid's events.
+    var handleBettypeOfLeagueMatchDetailGridEvents = function () {        
+
+        domElements.divBettypePerformanceOfLeagueMatchContainer.find('#spanLeagueLink').click(function () {
+            showLeaguePerformanceReport();
+        });        
+
+        domElements.divBettypePerformanceOfLeagueMatchContainer.find('#spanMatchLink').click(function () {
+            showMatchPerformanceOfLeagueReport();
+        });
+
     };
 
-    //END LEAGUE SECTION.
+    // Show match performance of league report and hide other reports.
+    var showMatchPerformanceOfLeagueReport = function () {        
+        domElements.divMatchPerformanceOfLeagueContainer.removeClass('display-none');
+        domElements.divBettypePerformanceOfLeagueMatchContainer.addClass('display-none');
+    };
+
+    //END LEAGUE - MATCH SECTION.
 
     var canForecast = function (bettype) {
         return (forecastBettype.indexOf(bettype) > -1);
