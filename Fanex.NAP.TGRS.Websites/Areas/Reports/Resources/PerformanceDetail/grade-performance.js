@@ -570,7 +570,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                      //{ HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
                       {
@@ -635,7 +635,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
-                              { Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
+                              //{ Name: 'ColGrade', Value: gradeCol, CssClass: 'history' },
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
@@ -649,7 +649,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
@@ -668,7 +668,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divTraderPerformanceByLeagueGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [8]);
         }
 
         handleTraderPerformanceByLeagueGridEvents(grade, leagueId, leagueName);
