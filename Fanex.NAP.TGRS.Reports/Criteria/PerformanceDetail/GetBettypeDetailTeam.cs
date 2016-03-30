@@ -21,8 +21,6 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime ToDate { get; set; }
 
-        public short TeamId { get; set; }
-
         public int CustId { get; set; }
 
         public int MatchId { get; set; }
@@ -31,7 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_DetailTeam_Bettype";
+            return "TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_Bettype";
         }
 
         public override bool IsValid()

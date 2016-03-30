@@ -8,6 +8,8 @@
 //   <change who="Ken.Nguyen" date="2014.6.12">Add Excel export</change>
 // </history>
 
+using Fanex.NAP.Framework.Data;
+
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System;
@@ -75,7 +77,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>LeaguePerformanceList object.</returns>
-        public LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        public LeaguePerformanceList GetLeaguePerformance(ICriteria criteria)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
             LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();

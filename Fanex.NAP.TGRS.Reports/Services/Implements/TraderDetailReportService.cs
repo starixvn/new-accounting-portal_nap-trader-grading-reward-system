@@ -8,6 +8,8 @@
 //   <change who="Ken.Nguyen" date="2014.6.13">Add Excel export</change>
 // </history>
 
+using Fanex.NAP.Framework.Data;
+
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
@@ -36,7 +38,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>TraderPerformanceList object.</returns>
-        public TraderPerformanceList GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        public TraderPerformanceList GetTraderPerformance(ICriteria criteria)
         {
             IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
             TraderPerformanceList traderPerformance = new TraderPerformanceList();
@@ -60,7 +62,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceList object.</returns>
-        public MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
+        public MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria)
         {
             IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
             MatchPerformanceList matchPerformance = new MatchPerformanceList();

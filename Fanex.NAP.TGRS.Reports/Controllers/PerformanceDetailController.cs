@@ -212,7 +212,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
         }
-        
+
         #endregion League Performance
 
         #region Trader Performance
@@ -512,6 +512,26 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return new EmptyResult();
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult GetLeagueDetailTeam(GetLeagueDetailTeamCriteria criteria)
+        {
+            return Json(_detailReportService.GetLeaguePerformance(criteria), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult GetTraderPerformanceOfLeagueTeam(GetTraderPerformanceOfLeagueTeam criteria)
+        {
+            return Json(_detailReportService.GetTraderPerformance(criteria), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeam criteria)
+        {
+            return Json(_detailReportService.GetMatchPerformanceOfTrader(criteria), JsonRequestBehavior.AllowGet);
+        }
         #endregion Team Performance
 
         #region Bet Type Performance
