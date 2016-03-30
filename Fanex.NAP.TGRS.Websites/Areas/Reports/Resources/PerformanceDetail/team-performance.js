@@ -206,6 +206,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
+        domElements.divLeagueDetailContainer.addClass('display-none');
     };
 
     // Validate filter form.
