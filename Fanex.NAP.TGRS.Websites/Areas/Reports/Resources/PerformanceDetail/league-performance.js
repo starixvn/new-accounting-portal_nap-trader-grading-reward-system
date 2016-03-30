@@ -1108,11 +1108,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat,
                     FormatNegative: '$'
-                },
-                {
-                    HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                }
+                }                
             ],
             gridExpandHeight: 260,
             showTitle: true,
@@ -1162,8 +1158,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                         { Name: 'ColTurnover', Value: item.Turnover },
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
-                                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }
+                                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }                                        
                                         );
                 row = {
                     Columns: currentRowData
