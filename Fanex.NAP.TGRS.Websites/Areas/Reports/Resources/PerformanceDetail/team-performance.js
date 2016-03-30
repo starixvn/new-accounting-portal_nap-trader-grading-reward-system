@@ -398,7 +398,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             TeamId: teamId,
             Bettypes: parameters.BetTypes
         };
-
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetLeagueDetail,
@@ -504,7 +504,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             TeamId: teamId,
             LeagueId: leagueId
         };
-
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetTraderPerformanceOfLeague,
@@ -639,6 +639,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             TeamId:teamId,
             LeagueId:leagueId
         };
+        common.DisableInput();
         $.ajax({
             type: 'POST',
             url: urls.GetMatchTraderLeagueTeam,
@@ -734,7 +735,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             CustId: traderId,
             MatchId:matchId
         };
-
+        common.DisableInput();
         $.ajax({
             type:'POST',
             url:urls.GetBettypeDetail,

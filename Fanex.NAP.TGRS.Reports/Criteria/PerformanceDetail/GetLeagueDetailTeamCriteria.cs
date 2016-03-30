@@ -16,7 +16,6 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string Bettypes { get; set; }
 
-
         public override bool IsValid()
         {
             return true;

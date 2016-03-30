@@ -22,3 +22,5 @@
 /StyleCop.Cache
 Fanex.NAP.TGRS.v12.suo
 *.suo
+.idea
+*.dll

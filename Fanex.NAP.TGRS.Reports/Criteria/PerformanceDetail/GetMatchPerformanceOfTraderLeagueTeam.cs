@@ -6,7 +6,7 @@ using Fanex.NAP.Framework.Data;
 
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
-    public class GetMatchPerformanceOfTraderLeagueTeam:CriteriaBase
+    public class GetMatchPerformanceOfTraderLeagueTeam : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 
