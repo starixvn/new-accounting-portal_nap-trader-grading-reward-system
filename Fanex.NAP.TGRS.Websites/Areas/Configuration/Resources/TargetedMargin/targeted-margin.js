@@ -71,7 +71,7 @@ var targetedMarginService = (function ($) {
     function createTargetedMarginTable(margins) {
         var targetedMarginFormat = '<span class="targeted-margin-link link" data-targeted-margin-id="{0}">{1}</span>' +
                               '<input type="text" maxlength="5" class="targeted-margin hide" style="width: 94px !important;height: 15px;"/>';
-        var targetedMarginFormatNoHost = '<span class="targeted-margin-link link" data-targeted-margin-id="{0}">{1}</span>';
+        var targetedMarginFormatNoHost = '<span data-targeted-margin-id="{0}">{1}</span>';
 
         var rows = [];
 

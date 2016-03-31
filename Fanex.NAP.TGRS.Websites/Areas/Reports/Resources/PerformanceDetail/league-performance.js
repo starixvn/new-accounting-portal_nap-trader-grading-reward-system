@@ -783,23 +783,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat,
                     FormatNegative: '$'
                 },
-                //{
-                //    HeaderText: labels.Benchmark, Width: 110, Name: 'ColBetTypeBM', HeaderAlign: 'center', CellAlign: 'right',
-                //    FormatNumber: common.Formats.DecimalFormat
-                //},
-                //{
-                //    HeaderText: labels.Score, Width: 110, Name: 'ColScoreByLatestBM', HeaderAlign: 'center', CellAlign: 'right',
-                //    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                //},
-                //{
-                //    HeaderText: labels.Benchmark, Width: 110, Name: 'ColBMByPeriod', HeaderAlign: 'center', CellAlign: 'right',
-                //    FormatNumber: common.Formats.DecimalFormat
-                //},
                 {
                     HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                },
-                //{ HeaderText: labels.Forecast, Width: 100, Name: 'ColForecast', HeaderAlign: 'center', CellAlign: 'center' }
+                }
             ],
             gridExpandHeight: 260,
             showTitle: true,
