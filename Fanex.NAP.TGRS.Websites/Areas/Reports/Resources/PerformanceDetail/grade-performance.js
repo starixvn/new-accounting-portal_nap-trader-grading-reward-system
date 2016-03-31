@@ -311,7 +311,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -642,7 +642,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -815,7 +815,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -1184,7 +1184,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) });
+                                        { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) });
                 row = {
                     Columns: currentRowData
                 };
@@ -1535,8 +1535,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                                         { Name: 'ColWinLoss', Value: item.WinLoss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }
-                                        );
+                                        { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) });
                 row = {
                     Columns: currentRowData
                 };
