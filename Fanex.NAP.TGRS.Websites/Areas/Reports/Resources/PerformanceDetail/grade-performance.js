@@ -572,7 +572,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
                       //{ HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
+                      {
+                          HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat
+                      },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -747,7 +750,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
-                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
+                      {
+                          HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat
+                      },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -1109,8 +1115,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {3}</span>' +
                           '<span title="{4}"> >> {5}</span>';
         //length of >>: 14
-        var titleLength = 12 + labels.GradePerformance.length + labels.Grade.length + traderName.length;
-
+        var titleLength = 14 + labels.GradePerformance.length + labels.Grade.length + traderName.length + grade.toString().length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1139,7 +1144,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, traderName, matchName, shortenName(titleLength, matchName))
+                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, traderName, matchName, shortenName(common.HasViewScorePermission ? 119 : 99, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1222,16 +1227,6 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         }
 
         handleBettypeDetailGridEvents();
-    };
-
-    var shortenName = function (prefixLength, name) {
-        var titleLength = prefixLength + name.length;
-        if (titleLength > maximumMatchNameLength) {
-            return name.substring(0, maximumMatchNameLength - prefixLength) + '...';
-        }
-        else {
-            return name;
-        }
     };
 
     // Handle grid's events.
@@ -1441,9 +1436,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                             '<span id="spanMatchLink"  class="breadcrumb-link"> >> {5}</span>' +
                             '<span title="{6}"> >> {7}</span>';
 
-        //length of >>: 12
-        var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
-        var titleLength = 12 + labels.LeaguePerformance.length + leagueName.length + traderName.length;
+        //length of >>: 14
+        var trimLeagueName = leagueName.length > 40 ? leagueName.substring(0, 41) : leagueName;
+        var titleLength = 14 + labels.GradePerformance.length + trimLeagueName.length + traderName.length + grade.toString().length + labels.Grade.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1490,7 +1485,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, leagueName, trimLeagueName, traderName, matchName, shortenName(titleLength, matchName))
+                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade,
+                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 109 : 89, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1594,6 +1590,16 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             domElements.divBettypeDetailContainer.addClass('display-none');
             domElements.divMatchPerformanceContainer.removeClass('display-none');
         });
+    };
+
+    var shortenName = function (maximumTitleLength, prefixLength, name) {
+        var titleLength = prefixLength + name.length;
+
+        if (titleLength > maximumTitleLength) {
+            name = name.substring(0, maximumTitleLength - prefixLength - 3) + '...';
+        }
+
+        return name;
     };
 
     $this.InitPage = function () {

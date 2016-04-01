@@ -245,7 +245,10 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                           HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
-                      { HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right' },
+                      {
+                          HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat
+                      },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
@@ -634,7 +637,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                           '<span title="{2}"> >> {3}</span>';
         //length of >>: 8
         var titleLength = 8 + labels.TraderPerformance.length + traderName.length;
-
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -663,7 +665,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.TraderPerformance, traderName, matchName, shortenName(titleLength, matchName))
+                text: titleFormat.format(labels.TraderPerformance, traderName, matchName, shortenName(common.HasViewScorePermission ? 120 : 100, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -748,17 +750,14 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         handleBettypeDetailGridEvents();
     };
 
-    var canForecast = function (bettype) {
-        return (forecastBettype.indexOf(bettype) > -1);
-    };
-    var shortenName = function (prefixLength, name) {
+    var shortenName = function (maximumTitleLength, prefixLength, name) {
         var titleLength = prefixLength + name.length;
-        if (titleLength > maximumMatchNameLength) {
-            return name.substring(0, maximumMatchNameLength - prefixLength) + '...';
+
+        if (titleLength > maximumTitleLength) {
+            name = name.substring(0, maximumTitleLength - prefixLength - 3) + '...';
         }
-        else {
-            return name;
-        }
+
+        return name;
     };
 
     // Handle grid's events.

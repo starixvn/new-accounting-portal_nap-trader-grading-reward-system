@@ -533,7 +533,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left'
             },
             {
-                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right'
+                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat
             },
             {
                 HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
@@ -738,7 +739,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     };
 
     var get_Bettype_Match_Trader_League = function (teamId, leagueId, traderId, matchId, title, matchName) {
-        var newTitle = title.replace('|a|', 'breadcrumb-link') + '<span> >> {0} <span>'.format(matchName);
+        var plainText = getPlainText(title);
+        var newTitle = title.replace('|a|', 'breadcrumb-link') +
+             '<span title="{0}"> >> {1} <span>'.format(matchName, shortenName(common.HasViewScorePermission ? 114 : 95, plainText.length + 4, matchName));
 
         var criteria = {
             FromDate: parameters.FromDate,
@@ -916,7 +919,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 FormatNumber: common.Formats.IntegerFormat
             },
             {
-                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right'
+                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
             },
             {
                 HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
@@ -1361,7 +1365,6 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           '<span title="{3}"> >> {4}</span>';
         //length of >>: 12
         var titleLength = 12 + labels.TeamPerformance.length + teamName.length + traderName.length;
-
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
             {
@@ -1390,7 +1393,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.TeamPerformance, teamName, traderName, matchName, shortenName(titleLength, matchName))
+                text: titleFormat.format(labels.TeamPerformance, teamName, traderName, matchName, shortenName(common.HasViewScorePermission ? 117 : 97, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1497,14 +1500,22 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         handleBettypeDetailGridEvents();
     };
 
-    var shortenName = function (prefixLength, name) {
+    var shortenName = function (maximumTitleLength, prefixLength, name) {
         var titleLength = prefixLength + name.length;
-        if (titleLength > maximumMatchNameLength) {
-            return name.substring(0, maximumMatchNameLength - prefixLength) + '...';
+
+        if (titleLength > maximumTitleLength) {
+            name = name.substring(0, maximumTitleLength - prefixLength - 3) + '...';
         }
-        else {
-            return name;
-        }
+
+        return name;
+    };
+
+    var getPlainText = function (html) {
+        var regex = /(<\?[a-z]*(\s[^>]*)?\?(>|$)|<!\[[a-z]*\[|\]\]>|<!DOCTYPE[^>]*?(>|$)|<!--[\s\S]*?(-->|$)|<[a-z?!\/]([a-z0-9_:.])*(\s[^>]*)?(>|$))/gi;
+
+        var plainText = html.replace(regex, '');
+
+        return plainText;
     };
 
     // Handle grid's events.
