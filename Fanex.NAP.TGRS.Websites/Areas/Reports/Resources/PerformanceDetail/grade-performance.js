@@ -439,7 +439,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    handleTraderPerformanceGridEvents(grade);
+                    handleLeaguePerformanceGridEvents(grade);
 
                     return rows;
                 }
@@ -631,9 +631,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
                 noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
                 gradeCol = gradeFormat.format(item.Grade);
-                gradeCol += item.HasGradeHistory ? detailIcon.format('grade-column', labels.GradeHistoryDetail) : '';
                 teamCol = teamFormat.format(item.TeamName);
-                teamCol += item.HasTeamHistory ? detailIcon.format('team-column', labels.TeamHistoryDetail) : '';
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
