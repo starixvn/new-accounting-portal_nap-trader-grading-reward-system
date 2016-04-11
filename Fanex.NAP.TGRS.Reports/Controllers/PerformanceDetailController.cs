@@ -659,7 +659,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         public ActionResult GetViewScorePermission()
         {
-            return Json(PermissionService.HasReadPermission(TGRSFunctionKeys.ScoreViewing), JsonRequestBehavior.AllowGet);
+            var result = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
