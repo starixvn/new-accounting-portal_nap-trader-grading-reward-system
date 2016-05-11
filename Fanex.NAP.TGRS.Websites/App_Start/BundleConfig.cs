@@ -206,6 +206,16 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
                 "~/Areas/Reports/Resources/Dashboard/dashboard-chart.js",
                 "~/Areas/Reports/Resources/Dashboard/dashboard.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/trader",
+                "~/Content/ToggleSwitch/toggle-switch.css",
+                "~/Areas/Reports/Resources/Trader/trader.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/trader").Include(
+                "~/Scripts/Libraries/jQuery/jquery.cookie.js",
+                "~/Scripts/Libraries/Highcharts/highcharts.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js"));
         }
     }
 }

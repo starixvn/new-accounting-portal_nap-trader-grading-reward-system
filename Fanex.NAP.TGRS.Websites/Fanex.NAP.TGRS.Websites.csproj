@@ -429,6 +429,8 @@
     <Content Include="Areas\Configuration\Views\SpreadManagement\index.cshtml" />
     <Content Include="Areas\Configuration\ExcelTemplates\SpreadManagement.xlsx" />
     <Content Include="Areas\Configuration\Views\TargetedMargin\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\Trader\Index.cshtml" />
+    <Content Include="Areas\Reports\Resources\Trader\trader.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

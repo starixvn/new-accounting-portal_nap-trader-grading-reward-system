@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/styles/trader")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">Trader Report
+            <div class="switch-toggle switch-ios flat-switch">
+                <input id="chkMonth" name="chartType" type="radio" checked="">
+                <label for="chkMonth">Month</label>
+
+                <input id="chkDay" name="chartType" type="radio">
+                <label for="chkDay">Day</label>
+
+                <a id="toggleA"></a>
+            </div>
+        </div>
+    </div>
+    <div id="divTabSummaryContent" class="tab-content">
+        <div class="main-col">
+            <div id="divGeneralInfo" class="general-info">
+                <div class="info-cell-1-left">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Turnover</label>
+                        <label class="number" id="lblTurnOver">
+                            123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.WinLoss</label>
+                        <label class="number" id="lblWinLoss">
+                            123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Margin</label>
+                        <label class="number" id="lblMargin">
+                            123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">
+                            @ViewLang.MatchCount
+                        </label>
+                        <label class="number" id="lblMatches">
+                            123,456,789.00
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="divTurnover" class="info-cell-2-left">
+                <div class="info-cell2-content">
+                    <div id="monthMarginContainer" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/trader")
+}
