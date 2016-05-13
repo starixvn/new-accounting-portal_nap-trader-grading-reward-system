@@ -231,6 +231,7 @@
     <Content Include="Areas\Reports\Resources\PerformanceDetail\grade-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\league-performance.js" />
+    <Content Include="Areas\Reports\Resources\Trader\trader-report.js" />
     <Content Include="Areas\User\Resources\Login\img\logo-login.png" />
     <Content Include="Areas\User\Resources\Login\login.js" />
     <Content Include="Areas\User\Resources\Login\reCheckIn.js" />

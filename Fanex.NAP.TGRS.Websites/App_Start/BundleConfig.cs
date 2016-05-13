@@ -215,7 +215,8 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.Add(new ScriptBundle("~/scripts/trader").Include(
                 "~/Scripts/Libraries/jQuery/jquery.cookie.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
-                "~/Scripts/Libraries/Highcharts/highcharts-3d.js"));
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
+                "~/Areas/Reports/Resources/Trader/trader-report.js"));
         }
     }
 }
