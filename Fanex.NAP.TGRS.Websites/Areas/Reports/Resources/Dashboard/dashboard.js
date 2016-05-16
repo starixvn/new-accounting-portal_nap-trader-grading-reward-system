@@ -270,7 +270,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
             name: 'Turnover',
             zIndex: 1,
             data: []
-        }, {
+        },
+        {
             type: 'spline',
             name: 'Win loss',
             yAxis: 1,

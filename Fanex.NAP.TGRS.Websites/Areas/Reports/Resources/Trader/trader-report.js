@@ -1,22 +1,30 @@
 ﻿$(document).ready(function () {
-    var TraderReport = new Fanex.TGRS.TraderReport.TraderReport();
+    var TraderReport = new Fanex.TGRS.Reports.Trader();
     TraderReport.Initialize();
 });
 
-Namespace.Register("Fanex.TGRS.TraderReport");
-Fanex.TGRS.TraderReport.TraderReport = function () {
+Namespace.Register("Fanex.TGRS.Reports.Trader");
+Fanex.TGRS.Reports.Trader = function () {
     var $this = this;
     var domElements = {
         divDateRange: null,
         btnSearch: null,
         divGeneralInfo: null,
         divTopTrader: null,
-        divBottomTrader: null
+        divBottomTrader: null,
+        teamWinlossContainer: null
     };
+
     var filterParameters = {
         ReportType: null,
         FromDate: null,
         ToDate: null
+    };
+
+    var ChartOptions = null;
+    var ChartType = {
+        _2D: 2,
+        _3D: 3
     };
 
     // Cache DOM Elements.
@@ -32,11 +40,13 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
         domElements.btnSearch = $('#btnSearch');
         domElements.ddlPeriodType = $('#ddlPeriodType');
         domElements.divGeneralInfo = $('#divGeneralInfo');
+        domElements.teamWinlossContainer = $('#teamWinlossContainer');
 
         domElements.lblWinLoss = $("#lblWinLoss", domElements.divGeneralInfo);
         domElements.lblMargin = $("#lblMargin", domElements.divGeneralInfo);
         domElements.lblTurnOver = $("#lblTurnOver", domElements.divGeneralInfo);
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
+        domElements.BetTypePerformanceGrid = $('#divTraderGrid')
         //domElements.divTopTrader = $('#divTopTrader');
         //domElements.divBottomTrader = $('#divBottomTrader');
         //domElements.divTeamGrid = $('#divTeamGrid');
@@ -66,24 +76,26 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
 
     function getReports() {
         common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: "",
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(filterParameters),
-            success: function (result) {
-                if (result) {
-                    renderReports(result);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
+        renderReports(data);
+        common.EnableInput();
+        //$.ajax({
+        //    type: 'POST',
+        //    url: "",
+        //    contentType: 'application/json; charset=utf-8',
+        //    dataType: 'json',
+        //    data: JSON.stringify(filterParameters),
+        //    success: function (result) {
+        //        if (result) {
+        //            renderReports(result);
+        //        }
+        //    },
+        //    error: function (xhr) {
+        //        common.HandleAjaxError(xhr);
+        //    },
+        //    complete: function () {
+        //        common.EnableInput();
+        //    }
+        //});
     }
 
 
@@ -104,7 +116,8 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
         renderGeneralInfo(data.GeneralInfo);
         renderChart(data.WLTOByMonth);
         renderBetTypePerformance(data.BetTypePerformance);
-        renderLeaguesPerformance(data.LeaguesPerformance);
+        //renderLeaguesPerformance(data.LeaguesPerformance);
+        common.EnableInput();
     };
 
     var renderGeneralInfo = function (data) {
@@ -122,7 +135,7 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
 
     var renderBetTypePerformance = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: 'Bet Type', Width: 350, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       {
                           HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
@@ -138,7 +151,7 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
-                text: labels.Top5WinningLeagues
+                text: 'Bet Type Performance'
             }
         };
         var bodyData = [];
@@ -146,7 +159,7 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
+                    Columns: [{ Name: 'ColBetType', Value: item.BetType },
                               { Name: 'ColTurnOver', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.Winloss },
                               { Name: 'ColMargin', Value: item.Margin }]
@@ -155,15 +168,30 @@ Fanex.TGRS.TraderReport.TraderReport = function () {
             });
         }
         gridOptions.bodyRows = bodyData;
-        domElements.divTopWinLeagueGrid.fanexGrid(gridOptions);
+        domElements.BetTypePerformanceGrid.fanexGrid(gridOptions);
     };
 
-    var renderBetTypePerformance = function (data) {
+    var renderLeaguesPerformance = function (data) {
         //code here
     }
 
     $this.Initialize = function () {
         cacheDOMElements();
+        ChartOptions = new Fanex.TGRS.TraderChart();
         initPageFields();
     };
+
+    function renderChart() {
+        // team turnover&winloss chart
+        var mixChartOption = ChartOptions.MixChartOption();
+        mixChartOption.xAxis.categories = data.Categories;
+        mixChartOption.title.text = 'WinLoss/Turnover';
+        mixChartOption.series = data.TeamMixData;
+        mixChartOption.chart.options3d.enabled = false;
+        if (data.MixDataMin < 0) {
+            mixChartOption.yAxis[0].min = data.MixDataMin;
+            mixChartOption.yAxis[1].min = data.MixDataMin;
+        }
+        domElements.teamWinlossContainer.highcharts(mixChartOption);
+    }
 }
