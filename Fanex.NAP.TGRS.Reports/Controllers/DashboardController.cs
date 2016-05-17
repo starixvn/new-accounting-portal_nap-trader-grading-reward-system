@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DashboardController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Ken.Nguyen" date="2014.12.08">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.Reports.Controllers
+﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using System;
     using System.Collections.Generic;

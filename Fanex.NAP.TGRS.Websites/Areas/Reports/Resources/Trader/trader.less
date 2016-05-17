@@ -1,29 +1,36 @@
 ﻿.ui-dialog-content {
     min-height: 30px !important;
 }
+
 .min-width-team-history {
-     min-width: 965px;
+    min-width: 965px;
 }
+
 .min-width-grade-history {
-     min-width: 895px;
+    min-width: 895px;
 }
+
 .width-team-icon {
     display: inline-block;
     width: 162px;
 }
+
 .width-grade-icon {
     display: inline-block;
     width: 80px;
 }
+
 .grade-column {
     display: table !important;
 }
+
 .grade-column-text {
     margin-left: 15px;
     width: 70px;
     display: table-cell;
     float: left;
 }
+
 .grade-column-icon {
     display: block;
     margin-left: 80px;
@@ -45,59 +52,88 @@
         cursor: auto;
         width: 169px;
     }
+
     label.title {
         font-weight: normal;
     }
+
     label.number {
         font-weight: bold;
     }
 }
 
-.info-cell-2 {
+.info-cell-container {
+    .absolute-padding;
     display: inline-block;
-    text-align: center;
-    text-transform: uppercase;
-    width: 370px;
-    padding: 10px 10px 10px 10px;
-    border: solid 1px #c5c5c5;
-    cursor: pointer;
+    float: left;
+}
 
-    label {
-        display: inline-block;
-        float: left;
-    }
-    label.image {
-        background: url("Images/sprites.png") no-repeat -132px -25px;
-        display: inline-block;
-        height: 15px;
-        width: 15px;
-    }
-    label.title {
-        width: 100%;
-        color: #4f82c6;
-        font-weight: normal;
-        
-    }
-    label.number {
-        margin-top: 11px;
-        font-weight: bold;
-    }
-    label.number.min {
-        color: #e85f27;
-        margin-right: 4px;
-    }
-    label.number.max {
-        color: #48cad8;
-        margin-left: 4px;
-    }
-    .number-row {
-        margin-top: 11px;
-        display: inline-block;
-        float: center;
-        text-align: center;
-    }
+.absolute-padding {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+.info-cell-2 {
+    .info-cell-container;
+    text-align: center;
+    width: 63%;
+    height: 46%;
+    padding: 0 8px 8px 0;
+}
+
+.info-cell-2-left {
+    .info-cell-2;
+    padding: 0 8px 8px 8px;
 }
 
 .content-general-info {
     margin-left: 10px;
+}
+
+.switch-ios.switch-toggle {
+    float: right;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #3cb54e;
+    box-shadow: none;
+}
+
+.switch-ios.switch-toggle a {
+    outline: none;
+    border-radius: 2px;
+    background-color: #3cb54e;
+}
+
+.switch-ios.switch-toggle a:focus, a:active {
+    outline: none;
+}
+
+.switch-toggle input + label {
+    font-size: 13px;
+}
+
+.switch-toggle {
+    height: 18px;
+    min-height: 0px;
+}
+
+.switch-ios.switch-toggle label {
+    color: #aed8b4;
+}
+
+.switch-ios input:checked + label {
+    color: #fff;
+}
+
+/* for IE8*/
+.switch-toggle {
+    .type3D {
+        left: 50%;
+    }
+}
+
+.chart-container {
+    float: left;
+    width: 75%;
 }

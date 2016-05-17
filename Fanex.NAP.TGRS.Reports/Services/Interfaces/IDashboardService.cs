@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="IDashboardService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-// <history>
-//   <change who="Ken.Nguyen" date="2014.5.26">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.Reports.Services
+﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

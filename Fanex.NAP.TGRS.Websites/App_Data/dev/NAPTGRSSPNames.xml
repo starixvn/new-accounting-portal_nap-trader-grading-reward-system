@@ -93,4 +93,10 @@
         <Setting Key="TGRS_Setting_ScorePeriodSel" SpName="TGRS_Setting_ScorePeriodSel" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
         <Setting Key="TGRS_Setting_ScorePeriodUpd" SpName="TGRS_Setting_ScorePeriodUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
     </Function>
+  <Function Name="TraderReport">
+    <Setting Key="TGRS_Rpt_TraderWinlossTurnover" SpName="TGRS_Rpt_TraderWinlossTurnover" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderGeneralInfo" SpName="TGRS_Rpt_TraderGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>

@@ -47,11 +47,17 @@
             </label>
         </div>
     </div>
-    @*display-none*@
-    <div id="divTraderPerformance" class="content-general-info">
-        <div id="divTopTrader" class="">
-            <div id="teamWinlossContainer" class="chart-container">
-            </div>
+    <div id="divTopTrader" class="info-cell-2-left display-none">
+        <div id="teamWinlossContainer" class="chart-container">
+        </div>
+        <div class="switch-toggle switch-ios flat-switch">
+            <input id="chkMonth" name="chartType" type="radio" checked="">
+            <label for="chkMonth">Month</label>
+
+            <input id="chkDay" name="chartType" type="radio">
+            <label for="chkDay">Day</label>
+
+            <a id="toggleA"></a>
         </div>
     </div>
     <div class="content-grid display-none">
