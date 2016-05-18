@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports
 {
     using System.Web.Mvc;
-
+    using Simplect;
     /// <summary>
     /// Registers Reports area.
     /// </summary>
@@ -34,6 +34,8 @@ namespace Fanex.NAP.TGRS.Reports
                 "Reports_default",
                 "Reports/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
+
+
         }
     }
 }

@@ -1,9 +1,20 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.Trader
 {
+    using System;
     public class TraderWinlossTurnover
     {
+        public DateTime WLDate { get; set; }
+
         public decimal Turnover { get; set; }
 
-        public decimal Winloss { get; set; }
+        public decimal Winlost { get; set; }
+
+        public string DisplayDate 
+        {
+            get
+            {
+                return WLDate.ToString("dd/MM/yy");
+            }
+        }
     }
 }

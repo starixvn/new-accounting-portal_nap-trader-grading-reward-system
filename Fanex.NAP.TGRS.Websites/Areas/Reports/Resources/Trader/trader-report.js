@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var TraderReport = new Fanex.TGRS.Reports.Trader();
     TraderReport.Initialize();
+    $('#switchChart').hide();
 });
 
 Namespace.Register("Fanex.TGRS.Reports.Trader");
@@ -16,11 +17,13 @@ Fanex.TGRS.Reports.Trader = function () {
     };
 
     var filterParameters = {
+        Trader: null,
         ReportType: null,
         FromDate: null,
         ToDate: null
     };
 
+    var currentChartType = null;
     var ChartOptions = null;
     var ChartType = {
         _2D: 2,
@@ -29,7 +32,6 @@ Fanex.TGRS.Reports.Trader = function () {
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
-        // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divDateRange = $('#divDateRange');
         domElements.divDatePair = $('#divDatePair');
         domElements.divFromMonthContainer = $('#divFromMonthContainer');
@@ -46,20 +48,18 @@ Fanex.TGRS.Reports.Trader = function () {
         domElements.lblMargin = $("#lblMargin", domElements.divGeneralInfo);
         domElements.lblTurnOver = $("#lblTurnOver", domElements.divGeneralInfo);
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
-        domElements.BetTypePerformanceGrid = $('#divTraderGrid')
-        //domElements.divTopTrader = $('#divTopTrader');
-        //domElements.divBottomTrader = $('#divBottomTrader');
-        //domElements.divTeamGrid = $('#divTeamGrid');
-        //domElements.divTraderPerformance = $('#divTraderPerformance');
-        //domElements.divTopWinLeagueGrid = $('#divTopWinLeagueGrid');
-        //domElements.divTopLoseLeagueGrid = $('#divTopLoseLeagueGrid');
-        //domElements.divBetTypeGrid = $('#divBetTypeGrid');
+        domElements.BetTypePerformanceGrid = $('#divBettypePerformanceGrid');
+        domElements.LeaguesPerformanceGrid = $('#divLeaguesPerformanceGrid');
 
-        //domElements.top10MinMargin = $("#top10MinMargin", domElements.divTraderPerformance);
-        //domElements.top10MaxMargin = $("#top10MaxMargin", domElements.divTraderPerformance);
-        //domElements.bottom10MinMargin = $("#bottom10MinMargin", domElements.divTraderPerformance);
-        //domElements.bottom10MaxMargin = $("#bottom10MaxMargin", domElements.divTraderPerformance);
+        domElements.divTrader = $('#txtUserName');
     };
+
+    $('#chkMonth').on('change', function () {
+        currentChartType = 2;
+    });
+    $('#chkDay').on('change', function () {
+        currentChartType = 1;
+    });
 
     var initDatePicker = function () {
         //Period date range control
@@ -76,26 +76,28 @@ Fanex.TGRS.Reports.Trader = function () {
 
     function getReports() {
         common.DisableInput();
-        renderReports(data);
-        common.EnableInput();
-        //$.ajax({
-        //    type: 'POST',
-        //    url: "",
-        //    contentType: 'application/json; charset=utf-8',
-        //    dataType: 'json',
-        //    data: JSON.stringify(filterParameters),
-        //    success: function (result) {
-        //        if (result) {
-        //            renderReports(result);
-        //        }
-        //    },
-        //    error: function (xhr) {
-        //        common.HandleAjaxError(xhr);
-        //    },
-        //    complete: function () {
-        //        common.EnableInput();
-        //    }
-        //});
+        //renderReports(data);
+        //common.EnableInput();
+
+        $.ajax({
+            type: 'POST',
+            url: common.ResolveRootUrl('Reports/Trader/GetReports'),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(filterParameters),
+            success: function (result) {
+                if (result) {
+                    renderReports(result);
+                    $('#switchChart').show();
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
     }
 
 
@@ -105,18 +107,20 @@ Fanex.TGRS.Reports.Trader = function () {
         initDatePicker();
         //btnSearch
         domElements.btnSearch.on('click', function () {
+            currentChartType = domElements.divDateRange.getPeriodType();
+            filterParameters.Trader = domElements.divTrader.val();
             filterParameters.FromDate = domElements.divDateRange.getFrom();
             filterParameters.ToDate = domElements.divDateRange.getTo();
-            filterParameters.ReportType = domElements.divDateRange.getPeriodType();
+            filterParameters.ReportType = currentChartType;
             getReports();
         });
     };
 
     var renderReports = function (data) {
         renderGeneralInfo(data.GeneralInfo);
-        renderChart(data.WLTOByMonth);
-        renderBetTypePerformance(data.BetTypePerformance);
-        //renderLeaguesPerformance(data.LeaguesPerformance);
+        renderChart(data.WinlossTurnover);
+        renderBetTypePerformance(data.BetTypePerformances);
+        renderLeaguesPerformance(data.LeaguesPerformance);
         common.EnableInput();
     };
 
@@ -151,7 +155,7 @@ Fanex.TGRS.Reports.Trader = function () {
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
-                text: 'Bet Type Performance'
+                text: labels.BetTypePerformance
             }
         };
         var bodyData = [];
@@ -159,9 +163,9 @@ Fanex.TGRS.Reports.Trader = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColBetType', Value: item.BetType },
+                    Columns: [{ Name: 'ColBetType', Value: item.TypeName },
                               { Name: 'ColTurnOver', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.Winloss },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
                               { Name: 'ColMargin', Value: item.Margin }]
                 };
                 bodyData.push(row);
@@ -172,7 +176,41 @@ Fanex.TGRS.Reports.Trader = function () {
     };
 
     var renderLeaguesPerformance = function (data) {
-        //code here
+        var gridOptions = {
+            columns: [{ HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+                      {
+                          HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      }],
+            gridExpandHeight: 50,
+            showTitle: true,
+            titleInfo: {
+                text: labels.LeaguesPerformance
+            }
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
+                              { Name: 'ColTurnOver', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.Winlost },
+                              { Name: 'ColMargin', Value: item.Margin }]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        domElements.LeaguesPerformanceGrid.fanexGrid(gridOptions);
     }
 
     $this.Initialize = function () {
@@ -181,12 +219,56 @@ Fanex.TGRS.Reports.Trader = function () {
         initPageFields();
     };
 
-    function renderChart() {
-        // team turnover&winloss chart
+    function renderChart(data) {
+        chartData = {
+            MixData: [],
+            Categories: [],
+            MonthCategories: [],
+            MixDataMin: 0
+        };
+
+        chartData.MixData = [{
+            type: 'column',
+            yAxis: 0,
+            name: 'Turnover',
+            zIndex: 1,
+            data: []
+        },
+        {
+            type: 'spline',
+            name: 'Win loss',
+            yAxis: 1,
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                //lineColor: '#7cb5ec'
+                fillColor: 'white',
+                width: 7,
+                height: 7
+            },
+            zIndex: 2,
+            data: []
+        }];
+        if (currentChartType === 1) {
+            $.each(data, function (index, item) {
+                chartData.Categories.push(moment(item.WLDate).format('DD MMM'));
+                chartData.MixData[0].data.push(item.Turnover);
+                chartData.MixData[1].data.push(item.Winlost);
+            });
+        }
+        else {
+            $.each(data, function (index, item) {
+                chartData.Categories.push(moment(item.WLDate).format('MMM'));
+                chartData.MixData[0].data.push(item.Turnover);
+                chartData.MixData[1].data.push(item.Winlost);
+            });
+        }
+
+        // turnover&winloss chart
         var mixChartOption = ChartOptions.MixChartOption();
-        mixChartOption.xAxis.categories = data.Categories;
+        mixChartOption.xAxis.categories = chartData.Categories;
         mixChartOption.title.text = 'WinLoss/Turnover';
-        mixChartOption.series = data.TeamMixData;
+        mixChartOption.series = chartData.MixData;
         mixChartOption.chart.options3d.enabled = false;
         if (data.MixDataMin < 0) {
             mixChartOption.yAxis[0].min = data.MixDataMin;

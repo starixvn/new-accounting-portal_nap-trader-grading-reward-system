@@ -14,6 +14,12 @@
 <div class="filter-bar">
     <div id="divReportFilterForm" class="filter-form">
         <div class="filter-row ">
+            <div class="lbl-field col_3">
+                <label for="txtUserName">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_5">
+                <input type="text" id="txtUserName" class="width-150" maxlength="50" />
+            </div>
             <div id="divDateRange">
             </div>
             <div class="submit col_4">
@@ -50,7 +56,7 @@
     <div id="divTopTrader" class="info-cell-2-left display-none">
         <div id="teamWinlossContainer" class="chart-container">
         </div>
-        <div class="switch-toggle switch-ios flat-switch">
+        <div id="switchChart" class="switch-toggle switch-ios flat-switch">
             <input id="chkMonth" name="chartType" type="radio" checked="">
             <label for="chkMonth">Month</label>
 
@@ -61,23 +67,11 @@
         </div>
     </div>
     <div class="content-grid display-none">
-        <div id="divTraderGrid" class="freegrid display-none">
-        </div>
-    </div>
-    <div class="content-grid display-none">
-        <div id="divTeamGrid" class="freegrid display-none">
-        </div>
-    </div>
-    <div class="content-grid display-none">
-        <div id="divTopWinLeagueGrid" class="freegrid display-none">
-        </div>
-    </div>
-    <div class="content-grid display-none">
-        <div id="divTopLoseLeagueGrid" class="freegrid display-none">
+        <div id="divBettypePerformanceGrid" class="freegrid display-none">
         </div>
     </div>
     <div class="content-grid margin-bottom display-none">
-        <div id="divBetTypeGrid" class="freegrid display-none">
+        <div id="divLeaguesPerformanceGrid" class="freegrid display-none">
         </div>
     </div>
 </div>
@@ -95,11 +89,9 @@
             MinMargin: '@ViewLang.MinMargin',
             MaxMargin: '@ViewLang.MaxMargin',
             BetType: '@ViewLang.BetType',
-            Bottom10ByMargin: '@ViewLang.Bottom10ByMargin',
-            TraderPerformance: '@ViewLang.TraderPerformance',
-            TeamPerformance: '@ViewLang.TeamPerformance',
             BetTypePerformance: '@ViewLang.BetTypePerformance',
-            NA: '@ViewLang.NA'
+            NA: '@ViewLang.NA',
+            LeaguesPerformance: '@ViewLang.LeaguePerformance'
         };
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',

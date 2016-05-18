@@ -114,6 +114,7 @@
     <Compile Include="Criteria\Trader\GetTraderBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
+    <Compile Include="ITraderManagementService.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
+    <Compile Include="ViewModels\Trader\TraderReports.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

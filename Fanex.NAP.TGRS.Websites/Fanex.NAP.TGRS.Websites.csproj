@@ -505,7 +505,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Configuration\Fanex.NAP.TGRS.Configuration.csproj">
-      <Project>{95C663C3-7E03-4BB3-BA8F-970FDEA09EB3}</Project>
+      <Project>{95c663c3-7e03-4bb3-ba8f-970fdea09eb3}</Project>
       <Name>Fanex.NAP.TGRS.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

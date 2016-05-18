@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ITraderManagementService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-// <history>
-//   <change who="Ken.Nguyen" date="2014.5.14">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.Configuration.Services.TraderManagement
+﻿namespace Fanex.NAP.TGRS.Configuration.Services.TraderManagement
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
