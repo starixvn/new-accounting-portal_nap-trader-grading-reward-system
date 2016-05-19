@@ -48,6 +48,10 @@ public static class TGRSFunctionKeys
 
     public const string Reports = "Reports";
 
+    public const string TraderReport = "TraderReport";
+
+    public const string TraderReportAdmin = "TraderReportAdmin";
+
     public const string ScoreViewing = "ScoreViewing";
 
     public const string SpreadManagement = "SpreadManagement";

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Helpers;
@@ -35,6 +37,7 @@
             this.traderMgnt = traderMgnt ?? new TraderManagementService();
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReport, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
@@ -47,6 +50,7 @@
             return View();
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReportAdmin, Policy = Constant.Policy.Read)]
         public ActionResult Admin()
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
