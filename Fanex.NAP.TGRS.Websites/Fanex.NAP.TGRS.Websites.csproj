@@ -434,6 +434,7 @@
     <Content Include="Areas\Configuration\Views\TargetedMargin\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Trader\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Trader\trader.less" />
+    <Content Include="Areas\Reports\Views\Trader\Admin.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

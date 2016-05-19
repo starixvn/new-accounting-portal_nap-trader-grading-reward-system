@@ -47,6 +47,18 @@
             return View();
         }
 
+        public ActionResult Admin()
+        {
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GetReports(ReportFilter filter)
         {
@@ -133,15 +145,30 @@
         [HttpPost]
         public JsonResult ReloadChart(ReportFilter filter)
         {
-            GetTraderWinLossTurnoverCriteria criteria = new GetTraderWinLossTurnoverCriteria()
+            var traderId = AppSession.CurrentUser.Id;
+
+            if (filter.Trader != null)
             {
-                TraderId = 2439,
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
+
+            GetTraderWinLossTurnoverCriteria criteriaWLTO = new GetTraderWinLossTurnoverCriteria()
+            {
+                TraderId = traderId,
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate
             };
 
-            return Json(traderReportService.GetTraderWinlossTurnover(criteria).ToList());
+            return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
         }
     }
 }

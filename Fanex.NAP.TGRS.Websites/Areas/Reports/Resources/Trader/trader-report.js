@@ -2,6 +2,11 @@
     var TraderReport = new Fanex.TGRS.Reports.Trader();
     TraderReport.Initialize();
     $('#switchChart').hide();
+    $("#txtUserName").keyup(function (e) {
+        if (e.keyCode == 13) {
+            $('#btnSearch').trigger("click");
+        }
+    });
 });
 
 Namespace.Register("Fanex.TGRS.Reports.Trader");
