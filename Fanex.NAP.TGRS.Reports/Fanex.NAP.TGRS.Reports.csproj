@@ -110,6 +110,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfTeamCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\Trader\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceCriteria.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Models\PerformanceSummary\League.cs" />
     <Compile Include="Models\PerformanceSummary\GeneralInfo.cs" />
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
+    <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\Trader\LeaguePerformance.cs" />
     <Compile Include="Models\Trader\TraderWinlossTurnover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -153,10 +155,12 @@
     <Compile Include="Services\Implements\SummaryReportService.cs" />
     <Compile Include="Services\Implements\TeamDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderDetailReportService.cs" />
+    <Compile Include="Services\Implements\TraderManagementService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />
     <Compile Include="Services\Interfaces\IDashboardService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />
+    <Compile Include="Services\Interfaces\ITraderManagementService.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />
@@ -180,6 +184,8 @@
     <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
+    <Compile Include="ViewModels\TraderManagement\TraderInfoItem.cs" />
+    <Compile Include="ViewModels\TraderManagement\TraderInfoList.cs" />
     <Compile Include="ViewModels\Trader\TraderReports.cs" />
   </ItemGroup>
   <ItemGroup>

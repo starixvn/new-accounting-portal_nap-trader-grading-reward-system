@@ -4,24 +4,24 @@
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.Trader;
+    using Fanex.NAP.TGRS.Reports.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.Trader;
     using Fanex.NAP.TGRS.Reports.Services.Implements;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
+    using Fanex.NAP.TGRS.Reports.Services.TraderManagement;
+    using Fanex.NAP.TGRS.Reports.ViewModel.TraderManagement;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.ViewModels.Trader;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.NAP.TGRS.Reports.ViewModels.Trader;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Model;
 
     public class TraderController : TGRSBaseController
     {
         private readonly ITraderReportService traderReportService;
-        private readonly IUserService userService;
+        private readonly ITraderManagementService traderMgnt;
 
         [Simplect.Attribute.InjectObject]
         public TraderController()
@@ -29,10 +29,10 @@
         {
         }
 
-        public TraderController(ITraderReportService traderReportService, IUserService userService)
+        public TraderController(ITraderReportService traderReportService, ITraderManagementService traderMgnt)
         {
             this.traderReportService = traderReportService ?? new TraderReportService();
-            this.userService = userService ?? new UserService();
+            this.traderMgnt = traderMgnt ?? new TraderManagementService();
         }
 
         public ActionResult Index()
@@ -47,18 +47,23 @@
             return View();
         }
 
+        [HttpPost]
         public JsonResult GetReports(ReportFilter filter)
         {
-            //var traderId = AppSession.CurrentUser.Id;
-            //if (filter.Trader != null)
-            //{
-            //    var trader = userService.GetByUsername(filter.Trader.Trim()) as User;
-            //    if (trader != null)
-            //    {
-            //        traderId = trader.Id;
-            //    }
-            //}
-            var traderId = 2439;
+            var traderId = AppSession.CurrentUser.Id;
+
+            if (filter.Trader != null)
+            {
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
 
             var generalInfo = GetGeneralInfo(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
             var traderWinlossTurnover = GetTraderWinlossTurnover(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
@@ -123,6 +128,20 @@
             };
 
             return traderReportService.GetTraderLeaguePerformance(criteria).ToList();
+        }
+
+        [HttpPost]
+        public JsonResult ReloadChart(ReportFilter filter)
+        {
+            GetTraderWinLossTurnoverCriteria criteria = new GetTraderWinLossTurnoverCriteria()
+            {
+                TraderId = 2439,
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate
+            };
+
+            return Json(traderReportService.GetTraderWinlossTurnover(criteria).ToList());
         }
     }
 }

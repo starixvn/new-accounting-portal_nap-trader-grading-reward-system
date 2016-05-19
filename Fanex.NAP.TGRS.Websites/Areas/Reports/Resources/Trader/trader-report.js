@@ -23,7 +23,6 @@ Fanex.TGRS.Reports.Trader = function () {
         ToDate: null
     };
 
-    var currentChartType = null;
     var ChartOptions = null;
     var ChartType = {
         _2D: 2,
@@ -55,10 +54,12 @@ Fanex.TGRS.Reports.Trader = function () {
     };
 
     $('#chkMonth').on('change', function () {
-        currentChartType = 2;
+        var monthType = 2;
+        getChartData(monthType);
     });
     $('#chkDay').on('change', function () {
-        currentChartType = 1;
+        var dayType = 1;
+        getChartData(dayType);
     });
 
     var initDatePicker = function () {
@@ -74,10 +75,22 @@ Fanex.TGRS.Reports.Trader = function () {
         });
     };
 
+    var initPageFields = function () {
+        //Date picker
+        domElements.ddlPeriodType.val(1);
+        initDatePicker();
+        //btnSearch
+        domElements.btnSearch.on('click', function () {
+            filterParameters.Trader = domElements.divTrader.val();
+            filterParameters.FromDate = domElements.divDateRange.getFrom();
+            filterParameters.ToDate = domElements.divDateRange.getTo();
+            filterParameters.ReportType = domElements.divDateRange.getPeriodType();
+            getReports();
+        });
+    };
+
     function getReports() {
         common.DisableInput();
-        //renderReports(data);
-        //common.EnableInput();
 
         $.ajax({
             type: 'POST',
@@ -87,7 +100,14 @@ Fanex.TGRS.Reports.Trader = function () {
             data: JSON.stringify(filterParameters),
             success: function (result) {
                 if (result) {
-                    renderReports(result);
+                    renderReports(result, filterParameters.ReportType);
+                    if (filterParameters.ReportType === 1) {
+                        $('input:radio[id=chkDay]').prop('checked', true)
+                    }
+                    else
+                    {
+                        $('input:radio[id=chkMonth]').prop('checked', true)
+                    }
                     $('#switchChart').show();
                 }
             },
@@ -100,25 +120,31 @@ Fanex.TGRS.Reports.Trader = function () {
         });
     }
 
-
-    var initPageFields = function () {
-        //Date picker
-        domElements.ddlPeriodType.val(1);
-        initDatePicker();
-        //btnSearch
-        domElements.btnSearch.on('click', function () {
-            currentChartType = domElements.divDateRange.getPeriodType();
-            filterParameters.Trader = domElements.divTrader.val();
-            filterParameters.FromDate = domElements.divDateRange.getFrom();
-            filterParameters.ToDate = domElements.divDateRange.getTo();
-            filterParameters.ReportType = currentChartType;
-            getReports();
+    function getChartData(type) {
+        filterParameters.ReportType = type;
+        $.ajax({
+            type: 'POST',
+            url: common.ResolveRootUrl('Reports/Trader/ReloadChart'),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(filterParameters),
+            success: function (result) {
+                if (result) {
+                    renderChart(result, type);
+                }
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
         });
-    };
+    }
 
-    var renderReports = function (data) {
+    var renderReports = function (data, type) {
         renderGeneralInfo(data.GeneralInfo);
-        renderChart(data.WinlossTurnover);
+        renderChart(data.WinlossTurnover, type);
         renderBetTypePerformance(data.BetTypePerformances);
         renderLeaguesPerformance(data.LeaguesPerformance);
         common.EnableInput();
@@ -219,61 +245,62 @@ Fanex.TGRS.Reports.Trader = function () {
         initPageFields();
     };
 
-    function renderChart(data) {
-        chartData = {
-            MixData: [],
-            Categories: [],
-            MonthCategories: [],
-            MixDataMin: 0
-        };
+    function renderChart(data, type) {
+        if (data) {
+            chartData = {
+                MixData: [],
+                Categories: [],
+                MonthCategories: [],
+                MixDataMin: 0
+            };
 
-        chartData.MixData = [{
-            type: 'column',
-            yAxis: 0,
-            name: 'Turnover',
-            zIndex: 1,
-            data: []
-        },
-        {
-            type: 'spline',
-            name: 'Win loss',
-            yAxis: 1,
-            marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[3],
-                //lineColor: '#7cb5ec'
-                fillColor: 'white',
-                width: 7,
-                height: 7
+            chartData.MixData = [{
+                type: 'column',
+                yAxis: 0,
+                name: 'Turnover',
+                zIndex: 1,
+                data: []
             },
-            zIndex: 2,
-            data: []
-        }];
-        if (currentChartType === 1) {
-            $.each(data, function (index, item) {
-                chartData.Categories.push(moment(item.WLDate).format('DD MMM'));
-                chartData.MixData[0].data.push(item.Turnover);
-                chartData.MixData[1].data.push(item.Winlost);
-            });
-        }
-        else {
-            $.each(data, function (index, item) {
-                chartData.Categories.push(moment(item.WLDate).format('MMM'));
-                chartData.MixData[0].data.push(item.Turnover);
-                chartData.MixData[1].data.push(item.Winlost);
-            });
-        }
+            {
+                type: 'spline',
+                name: 'Win loss',
+                yAxis: 1,
+                marker: {
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[3],
+                    fillColor: 'white',
+                    width: 7,
+                    height: 7
+                },
+                zIndex: 2,
+                data: []
+            }];
+            if (type === 1) {
+                $.each(data, function (index, item) {
+                    chartData.Categories.push(moment(item.WLDate).format('DD MMM'));
+                    chartData.MixData[0].data.push(item.Turnover);
+                    chartData.MixData[1].data.push(item.Winlost);
+                });
+            }
+            else {
+                $.each(data, function (index, item) {
+                    chartData.Categories.push(moment(item.WLDate).format('MMM'));
+                    chartData.MixData[0].data.push(item.Turnover);
+                    chartData.MixData[1].data.push(item.Winlost);
+                });
+            }
 
-        // turnover&winloss chart
-        var mixChartOption = ChartOptions.MixChartOption();
-        mixChartOption.xAxis.categories = chartData.Categories;
-        mixChartOption.title.text = 'WinLoss/Turnover';
-        mixChartOption.series = chartData.MixData;
-        mixChartOption.chart.options3d.enabled = false;
-        if (data.MixDataMin < 0) {
-            mixChartOption.yAxis[0].min = data.MixDataMin;
-            mixChartOption.yAxis[1].min = data.MixDataMin;
+            // turnover&winloss chart
+            var mixChartOption = ChartOptions.MixChartOption();
+            mixChartOption.xAxis.categories = chartData.Categories;
+            mixChartOption.title.text = 'WinLoss/Turnover';
+            mixChartOption.series = chartData.MixData;
+            mixChartOption.chart.options3d.enabled = false;
+            //if (cachedChartData.MixDataMin < 0) {
+            //    mixChartOption.yAxis[0].min = cachedChartData.MixDataMin;
+            //    mixChartOption.yAxis[1].min = cachedChartData.MixDataMin;
+            //}
+            domElements.teamWinlossContainer.highcharts(mixChartOption);
         }
-        domElements.teamWinlossContainer.highcharts(mixChartOption);
     }
 }
