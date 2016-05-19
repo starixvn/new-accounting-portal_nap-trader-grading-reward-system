@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary
 {
     using System;
+
     public class ReportFilter
     {
         public string Trader { get; set; }

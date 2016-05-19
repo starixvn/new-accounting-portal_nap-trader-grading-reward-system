@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.Trader
 {
     using System;
+
     public class TraderWinlossTurnover
     {
         public DateTime WLDate { get; set; }
