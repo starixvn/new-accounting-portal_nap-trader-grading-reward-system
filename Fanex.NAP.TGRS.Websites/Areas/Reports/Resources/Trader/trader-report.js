@@ -187,6 +187,15 @@ Fanex.TGRS.Reports.Trader = function () {
             showTitle: true,
             titleInfo: {
                 text: labels.BetTypePerformance
+            },
+            showPager: true,
+            pagerOption: {
+                itemsPerPage: 5,
+                maxItemsPerPage: 50,
+                currentPage: 0,
+                totalItem: 50,
+                startPerPage: 5,
+                pageStep: 5
             }
         };
         var bodyData = [];
@@ -225,6 +234,15 @@ Fanex.TGRS.Reports.Trader = function () {
             showTitle: true,
             titleInfo: {
                 text: labels.LeaguesPerformance
+            },
+            showPager: true,
+            pagerOption: {
+                itemsPerPage: 20,
+                maxItemsPerPage: 100,
+                currentPage: 0,
+                totalItem: 100,
+                startPerPage: 10,
+                pageStep: 10
             }
         };
         var bodyData = [];
