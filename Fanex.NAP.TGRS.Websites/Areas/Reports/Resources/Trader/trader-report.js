@@ -339,6 +339,9 @@ Fanex.TGRS.Reports.Trader = function () {
                 mixChartOption.yAxis[1].min = chartData.MixDataMin;
             }
             domElements.teamWinlossContainer.highcharts(mixChartOption);
+            if (chartData.Categories.length > 21) {
+                $('.highcharts-xaxis-labels tspan').text('');
+            }
         }
     }
 }
