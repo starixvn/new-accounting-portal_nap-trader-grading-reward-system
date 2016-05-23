@@ -96,6 +96,35 @@
             return Json(reports);
         }
 
+        [HttpPost]
+        public JsonResult ReloadChart(ReportFilter filter)
+        {
+            var traderId = AppSession.CurrentUser.Id;
+
+            if (filter.Trader != null)
+            {
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
+
+            GetTraderWinLossTurnoverCriteria criteriaWLTO = new GetTraderWinLossTurnoverCriteria()
+            {
+                TraderId = traderId,
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate
+            };
+
+            return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
+        }
+
         private GeneralInfo GetGeneralInfo(int traderId, DateTime fromtDate, DateTime toDate, int reportType)
         {
             GetGeneralInfoCriteria criteria = new GetGeneralInfoCriteria()
@@ -144,35 +173,6 @@
             };
 
             return traderReportService.GetTraderLeaguePerformance(criteria).ToList();
-        }
-
-        [HttpPost]
-        public JsonResult ReloadChart(ReportFilter filter)
-        {
-            var traderId = AppSession.CurrentUser.Id;
-
-            if (filter.Trader != null)
-            {
-                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
-                {
-                    UserName = filter.Trader
-                };
-                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
-                if (trader != null)
-                {
-                    traderId = trader.CustId;
-                }
-            }
-
-            GetTraderWinLossTurnoverCriteria criteriaWLTO = new GetTraderWinLossTurnoverCriteria()
-            {
-                TraderId = traderId,
-                ReportType = filter.ReportType,
-                FromDate = filter.FromDate,
-                ToDate = filter.ToDate
-            };
-
-            return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
         }
     }
 }

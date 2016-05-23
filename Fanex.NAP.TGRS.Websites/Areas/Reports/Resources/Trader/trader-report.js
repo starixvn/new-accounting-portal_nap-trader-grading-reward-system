@@ -7,6 +7,9 @@
             $('#btnSearch').trigger("click");
         }
     });
+
+    //Load report for first time
+    $('#btnSearch').trigger("click");
 });
 
 Namespace.Register("Fanex.TGRS.Reports.Trader");
@@ -303,6 +306,12 @@ Fanex.TGRS.Reports.Trader = function () {
                     chartData.Categories.push(moment(item.WLDate).format('DD MMM'));
                     chartData.MixData[0].data.push(item.Turnover);
                     chartData.MixData[1].data.push(item.Winlost);
+                    if (item.Turnover < chartData.MixDataMin) {
+                        chartData.MixDataMin = item.Turnover;
+                    }
+                    if (item.Winlost < chartData.MixDataMin) {
+                        chartData.MixDataMin = item.Winlost;
+                    }
                 });
             }
             else {
@@ -310,6 +319,12 @@ Fanex.TGRS.Reports.Trader = function () {
                     chartData.Categories.push(moment(item.WLDate).format('MMM'));
                     chartData.MixData[0].data.push(item.Turnover);
                     chartData.MixData[1].data.push(item.Winlost);
+                    if (item.Turnover < chartData.MixDataMin) {
+                        chartData.MixDataMin = item.Turnover;
+                    }
+                    if (item.Winlost < chartData.MixDataMin) {
+                        chartData.MixDataMin = item.Winlost;
+                    }
                 });
             }
 
@@ -319,10 +334,10 @@ Fanex.TGRS.Reports.Trader = function () {
             mixChartOption.title.text = 'WinLoss/Turnover';
             mixChartOption.series = chartData.MixData;
             mixChartOption.chart.options3d.enabled = false;
-            //if (cachedChartData.MixDataMin < 0) {
-            //    mixChartOption.yAxis[0].min = cachedChartData.MixDataMin;
-            //    mixChartOption.yAxis[1].min = cachedChartData.MixDataMin;
-            //}
+            if (chartData.MixDataMin < 0) {
+                mixChartOption.yAxis[0].min = chartData.MixDataMin;
+                mixChartOption.yAxis[1].min = chartData.MixDataMin;
+            }
             domElements.teamWinlossContainer.highcharts(mixChartOption);
         }
     }
