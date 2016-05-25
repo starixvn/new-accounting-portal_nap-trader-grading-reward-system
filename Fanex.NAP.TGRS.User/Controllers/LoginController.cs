@@ -179,7 +179,15 @@ namespace Fanex.NAP.TGRS.User.Controllers
                                 // checks if logging-in user is active on this site
                                 if (siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any())
                                 {
-                                    return Redirect(FormsAuthentication.DefaultUrl);
+                                    var roleAccess = AppSession.RoleAccess;
+                                    if (roleAccess.Where(x => x.Key == "TraderReport").Any() && !roleAccess.Where(x => x.Key == "PerformanceSummary").Any())
+                                    {
+                                        return Redirect("/Reports/Trader");
+                                    }
+                                    else
+                                    {
+                                        return Redirect(FormsAuthentication.DefaultUrl);
+                                    }
                                 }
 
                                 DoSignOut();
