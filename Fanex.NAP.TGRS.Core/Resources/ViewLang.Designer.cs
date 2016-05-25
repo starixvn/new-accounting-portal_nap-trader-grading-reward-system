@@ -1213,7 +1213,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TraderReport.
+        ///   Looks up a localized string similar to Trader&apos;s Report.
         /// </summary>
         public static string TraderReport {
             get {
