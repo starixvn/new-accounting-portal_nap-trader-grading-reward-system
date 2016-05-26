@@ -180,9 +180,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
                                 if (siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any())
                                 {
                                     var roleAccess = AppSession.RoleAccess;
-                                    if (roleAccess.Where(x => x.Key == "TraderReport").Any() && !roleAccess.Where(x => x.Key == "PerformanceSummary").Any())
+                                    if (roleAccess.Where(x => x.Key == TGRSFunctionKeys.TraderReport).Any() && !roleAccess.Where(x => x.Key == TGRSFunctionKeys.PerformanceSummary).Any())
                                     {
-                                        return Redirect("/Reports/Trader");
+                                        return RedirectToAction("Index", "Trader", new { area = "Reports" });
                                     }
                                     else
                                     {
