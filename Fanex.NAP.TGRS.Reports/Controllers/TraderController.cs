@@ -66,7 +66,7 @@
         [HttpPost]
         public JsonResult GetReports(ReportFilter filter)
         {
-            var traderId = AppSession.CurrentUser.Id;
+            var traderId = this.CurrentSession.UserId;
 
             if (filter.Trader != null)
             {
