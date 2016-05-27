@@ -99,7 +99,7 @@
         [HttpPost]
         public JsonResult ReloadChart(ReportFilter filter)
         {
-            var traderId = AppSession.CurrentUser.Id;
+            var traderId = this.CurrentSession.UserId;
 
             if (filter.Trader != null)
             {
