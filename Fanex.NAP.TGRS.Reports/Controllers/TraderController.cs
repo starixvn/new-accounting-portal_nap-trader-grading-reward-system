@@ -125,6 +125,58 @@
             return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
         }
 
+        public JsonResult GetMatchOfLeague(ReportFilter filter)
+        {
+            var traderId = this.CurrentSession.UserId;
+
+            if (filter.Trader != null)
+            {
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
+
+            GetTraderLeaguePerformanceDetailCriteria detailCriteria = new GetTraderLeaguePerformanceDetailCriteria()
+            {
+                TraderId = traderId,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                LeagueId = filter.LeagueId
+            };
+            return Json(traderReportService.GetMatchPerformanceOfLeague(detailCriteria).ToList());
+        }
+
+        public JsonResult GetBettypeOfMatch(ReportFilter filter)
+        {
+            var traderId = this.CurrentSession.UserId;
+
+            if (filter.Trader != null)
+            {
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
+
+            GetTraderLeaguePerformanceMatchDetailCriteria bettypeCriteria = new GetTraderLeaguePerformanceMatchDetailCriteria() 
+            {
+                TraderId = traderId,
+                //EventDate =
+            };
+            return Json(traderReportService.GetBetTypeOfMatch(bettypeCriteria).ToList());
+        }
+
         private GeneralInfo GetGeneralInfo(int traderId, DateTime fromtDate, DateTime toDate, int reportType)
         {
             GetGeneralInfoCriteria criteria = new GetGeneralInfoCriteria()

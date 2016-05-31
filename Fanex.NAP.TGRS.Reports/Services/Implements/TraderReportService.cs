@@ -6,6 +6,7 @@
     using Models.PerformanceSummary;
     using Models.Trader;
     using System.Collections.Generic;
+    using ViewModels.Trader;
 
     public class TraderReportService : TGRSBaseService, ITraderReportService
     {
@@ -27,6 +28,17 @@
         public IEnumerable<LeaguePerformance> GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria)
         {
             return GetData<LeaguePerformance>(criteria);
+        }
+
+
+        public IEnumerable<MatchPerformance> GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria)
+        {
+            return GetData<MatchPerformance>(criteria);
+        }
+
+        public IEnumerable<BettypeOfMatch> GetBetTypeOfMatch(GetTraderLeaguePerformanceMatchDetailCriteria criteria)
+        {
+            return GetData<BettypeOfMatch>(criteria);
         }
     }
 }

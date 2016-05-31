@@ -11,5 +11,9 @@
         public decimal Winlost { get; set; }
 
         public decimal Margin { get; set; }
+
+        public int BetCount { get; set; }
+
+        public int MatchCount { get; set; }
     }
 }

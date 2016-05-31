@@ -114,6 +114,8 @@
     <Compile Include="Criteria\Trader\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceCriteria.cs" />
+    <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceDetailCriteria.cs" />
+    <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="ITraderManagementService.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
@@ -186,6 +188,8 @@
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoList.cs" />
+    <Compile Include="ViewModels\Trader\BettypeOfMatch.cs" />
+    <Compile Include="ViewModels\Trader\MatchPerformance.cs" />
     <Compile Include="ViewModels\Trader\TraderReports.cs" />
   </ItemGroup>
   <ItemGroup>
