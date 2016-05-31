@@ -290,7 +290,7 @@ Fanex.TGRS.Reports.Trader = function () {
             {
                 type: 'spline',
                 name: 'Win loss',
-                yAxis: 1,
+                yAxis: 0,
                 marker: {
                     lineWidth: 2,
                     lineColor: Highcharts.getOptions().colors[3],
