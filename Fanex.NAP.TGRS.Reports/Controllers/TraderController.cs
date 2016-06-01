@@ -13,6 +13,7 @@
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
     using Fanex.NAP.TGRS.Reports.Services.TraderManagement;
     using Fanex.NAP.TGRS.Reports.ViewModel.TraderManagement;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.ViewModels.Trader;
     using System;
@@ -220,7 +221,7 @@
             return traderReportService.GetTraderBettypePerformance(criteria).ToList();
         }
 
-        private List<LeaguePerformance> GetTraderLeaguePerformance(int traderId, DateTime fromtDate, DateTime toDate)
+        private LeaguePerformanceList GetTraderLeaguePerformance(int traderId, DateTime fromtDate, DateTime toDate)
         {
             GetTraderLeaguePerformanceCriteria criteria = new GetTraderLeaguePerformanceCriteria()
             {
@@ -229,7 +230,7 @@
                 ToDate = toDate
             };
 
-            return traderReportService.GetTraderLeaguePerformance(criteria).ToList();
+            return traderReportService.GetTraderLeaguePerformance(criteria);
         }
     }
 }

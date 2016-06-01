@@ -15,7 +15,7 @@
 
         IEnumerable<BetTypePerformance> GetTraderBettypePerformance(GetTraderBetTypePerformanceCriteria criteria);
 
-        IEnumerable<LeaguePerformance> GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria);
+        LeaguePerformanceList GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria);
 
         MatchPerformanceGroup GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria);
 

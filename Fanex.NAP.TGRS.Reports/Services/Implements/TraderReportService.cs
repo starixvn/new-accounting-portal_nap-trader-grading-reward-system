@@ -28,9 +28,22 @@
             return GetData<BetTypePerformance>(criteria);
         }
 
-        public IEnumerable<LeaguePerformance> GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria)
+        public LeaguePerformanceList GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria)
         {
-            return GetData<LeaguePerformance>(criteria);
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+
+            if (leagueData != null && leagueData.Any())
+            {
+                foreach (LeaguePerformanceInfo item in leagueData)
+                {
+                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
+                }
+
+                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+            }
+
+            return leaguePerformance;
         }
 
         public MatchPerformanceGroup GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria)

@@ -70,15 +70,15 @@
         <div id="divBettypePerformanceGrid" class="freegrid display-none">
         </div>
     </div>
-    <div class="content-grid margin-bottom display-none">
+    <div id="LeaguesPerformanceContainer" class="content-grid margin-bottom display-none">
         <div id="divLeaguesPerformanceGrid" class="freegrid display-none">
         </div>
     </div>
-    <div class="content-grid margin-bottom display-none">
+    <div id="MatchesPerformanceContainer" class="content-grid margin-bottom display-none">
         <div id="divMatchesPerformanceGrid" class="freegrid display-none">
         </div>
     </div>
-    <div class="content-grid margin-bottom display-none">
+    <div id="BettypesPerformanceContainer" class="content-grid margin-bottom display-none">
         <div id="divBettypesPerformanceGrid" class="freegrid display-none">
         </div>
     </div>
@@ -103,7 +103,8 @@
             BetCount: '@ViewLang.BetCount',
             No: '#',
             NoOfMatches: '@ViewLang.NoOfMatches',
-            MatchPerformance: '@ViewLang.MatchPerformance'
+            MatchPerformance: '@ViewLang.MatchPerformance',
+            GrandTotal: '@ViewLang.GrandTotal'
         };
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
