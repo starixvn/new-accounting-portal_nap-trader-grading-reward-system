@@ -13,10 +13,6 @@
 
         public DateTime ToDate { get; set; }
 
-        public int PageSize { get; set; }
-
-        public int PageIndex { get; set; }
-
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_TraderLeaguePerformance_Detail";

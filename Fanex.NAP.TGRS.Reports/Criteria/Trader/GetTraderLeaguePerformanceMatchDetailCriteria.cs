@@ -2,9 +2,6 @@
 {
     using Fanex.NAP.Framework.Data;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     public class GetTraderLeaguePerformanceMatchDetailCriteria : CriteriaBase
     {
@@ -13,10 +10,6 @@
         public int MatchId { get; set; }
 
         public DateTime EventDate { get; set; }
-
-        public int PageSize { get; set; }
-
-        public int PageIndex { get; set; }
 
         public override string GetSettingKey()
         {

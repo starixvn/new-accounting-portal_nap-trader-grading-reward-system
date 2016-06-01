@@ -125,6 +125,7 @@
             return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
         }
 
+        [HttpPost]
         public JsonResult GetMatchOfLeague(ReportFilter filter)
         {
             var traderId = this.CurrentSession.UserId;
@@ -147,11 +148,13 @@
                 TraderId = traderId,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
-                LeagueId = filter.LeagueId
+                LeagueId = filter.LeagueId,
             };
-            return Json(traderReportService.GetMatchPerformanceOfLeague(detailCriteria).ToList());
+            var result = traderReportService.GetMatchPerformanceOfLeague(detailCriteria);
+            return Json(result);
         }
 
+        [HttpPost]
         public JsonResult GetBettypeOfMatch(ReportFilter filter)
         {
             var traderId = this.CurrentSession.UserId;
@@ -172,9 +175,11 @@
             GetTraderLeaguePerformanceMatchDetailCriteria bettypeCriteria = new GetTraderLeaguePerformanceMatchDetailCriteria() 
             {
                 TraderId = traderId,
-                //EventDate =
+                EventDate = filter.EventDate,
+                MatchId = filter.MatchId
             };
-            return Json(traderReportService.GetBetTypeOfMatch(bettypeCriteria).ToList());
+            var result = traderReportService.GetBetTypeOfMatch(bettypeCriteria).ToList();
+            return Json(result);
         }
 
         private GeneralInfo GetGeneralInfo(int traderId, DateTime fromtDate, DateTime toDate, int reportType)

@@ -13,5 +13,9 @@
         public DateTime ToDate { get; set; }
 
         public int LeagueId { get; set; }
+
+        public DateTime EventDate { get; set; }
+
+        public int MatchId { get; set; }
     }
 }

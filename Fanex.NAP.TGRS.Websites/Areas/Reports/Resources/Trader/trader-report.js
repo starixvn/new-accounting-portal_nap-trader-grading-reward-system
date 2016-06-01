@@ -57,7 +57,9 @@ Fanex.TGRS.Reports.Trader = function () {
         domElements.lblMatches = $("#lblMatches", domElements.divGeneralInfo);
         domElements.BetTypePerformanceGrid = $('#divBettypePerformanceGrid');
         domElements.LeaguesPerformanceGrid = $('#divLeaguesPerformanceGrid');
-
+        domElements.MatchesPerformanceGrid = $('#divMatchesPerformanceGrid');
+        domElements.BettypesPerformanceGrid = $('#divBettypesPerformanceGrid');
+        
         domElements.divTrader = $('#txtUserName');
     };
 
@@ -392,7 +394,7 @@ Fanex.TGRS.Reports.Trader = function () {
     // Get match performance by league.
     var getMatchPerformanceOfLeagueReport = function (leagueId, leagueName) {
         var matchPerformanceParamrters = {
-            TraderId: filterParameters.Trader,
+            Trader: filterParameters.Trader,
             LeagueId: leagueId,
             FromDate: filterParameters.FromDate,
             ToDate: filterParameters.ToDate
@@ -401,7 +403,7 @@ Fanex.TGRS.Reports.Trader = function () {
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetMatchPerformanceOfLeague,
+            url: common.ResolveRootUrl('Reports/Trader/GetMatchOfLeague'),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(matchPerformanceParamrters),
@@ -421,7 +423,7 @@ Fanex.TGRS.Reports.Trader = function () {
     var renderMatchPerformanceOfLeagueGrid = function (data, leagueId, leagueName) {
         var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span>' +
                           '<span> >> {1}</span>';
-        var matchDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-match-id="{1}">{2}</span>';
+        var matchDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-match-id="{1}" data-event-date="{2}">{3}</span>';
         var matchDetailCol = '';
 
         var gridOptions = {
@@ -448,7 +450,7 @@ Fanex.TGRS.Reports.Trader = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName)
+                text: titleFormat.format(labels.LeaguesPerformance, leagueName)
             },
             showPager: true,
             pagerOption: {
@@ -468,7 +470,7 @@ Fanex.TGRS.Reports.Trader = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.MatchName);
+                matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.EventDate, item.MatchName);
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColMatch', Value: matchDetailCol },
@@ -493,43 +495,42 @@ Fanex.TGRS.Reports.Trader = function () {
         }
 
         // Hide previous report.
-        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.LeaguesPerformanceGrid.addClass('display-none');
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
-        domElements.divMatchPerformanceOfLeagueGrid.fanexGrid(gridOptions);
+        domElements.MatchesPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceOfLeagueGridEvents(leagueId, leagueName);
     };
 
     // Handle match performance of league grid's events.
     var handleMatchPerformanceOfLeagueGridEvents = function (leagueId, leagueName) {
 
-        domElements.divMatchPerformanceOfLeagueContainer.find('#spanLeagueLink').click(function () {
-            showLeaguePerformanceReport();
-        });
+        //domElements.MatchesPerformanceGrid.find('#spanLeagueLink').click(function () {
+        //    showLeaguePerformanceReport();
+        //});
 
-        domElements.divMatchPerformanceOfLeagueContainer.find('.bettype-detail-link').click(function () {
+        domElements.MatchesPerformanceGrid.find('.bettype-detail-link').click(function () {
             var $link = $(this);
             var matchId = $link.attr('data-match-id');
             var matchName = $link.text();
-            getBettypeOfLeagueMatchDetailReport(leagueId, leagueName, matchId, matchName);
+            var eventDate = $link.attr('data-event-date');
+            getBettypeOfLeagueMatchDetailReport(matchId, matchName, eventDate, leagueId, leagueName);
         });
 
     };
 
     //Bettype Detail (of league and match)
-    var getBettypeOfLeagueMatchDetailReport = function (leagueId, leagueName, matchId, matchName) {
+    var getBettypeOfLeagueMatchDetailReport = function (matchId, matchName, eventDate, leagueId, leagueName) {
         var bettypeDetailParameters = {
-            LeagueId: leagueId,
+            Trader: filterParameters.Trader,
             MatchId: matchId,
-            BetTypes: parameters.BetTypes,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            EventDate: eventDate
         };
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetBettypePerformanceOfLeagueMatch,
+            url: common.ResolveRootUrl('Reports/Trader/GetBettypeOfMatch'),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
@@ -551,7 +552,7 @@ Fanex.TGRS.Reports.Trader = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {1}</span>' +
                           '<span title="{2}"> >> {3}</span>';
         //length of >>: 8
-        var titleLength = 8 + labels.LeaguePerformance.length + leagueName.length;
+        var titleLength = 8 + labels.LeaguesPerformance.length + leagueName.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -594,7 +595,7 @@ Fanex.TGRS.Reports.Trader = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName, matchName, shortenName(98, titleLength, matchName))
+                text: titleFormat.format(labels.LeaguesPerformance, leagueName, matchName, shortenName(98, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -637,7 +638,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 currentRowData.push({ Name: 'ColNo', Value: index + 1 },
                                         { Name: 'ColBettype', Value: item.TypeName },
                                         { Name: 'ColTurnover', Value: item.Turnover },
-                                        { Name: 'ColWinLoss', Value: item.WinLoss },
+                                        { Name: 'ColWinLoss', Value: item.Winloss },
                                         { Name: 'ColBetCount', Value: item.BetCount },
                                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }
                                         );
@@ -647,7 +648,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 bodyData.push(row);
 
                 total.Turnover += item.Turnover;
-                total.WinLoss += item.WinLoss;
+                total.WinLoss += item.Winloss;
                 total.BetCount += item.BetCount;
             });
 
@@ -669,11 +670,11 @@ Fanex.TGRS.Reports.Trader = function () {
         gridOptions.footerRows = footerData;
 
         // Hide previous report.
-        domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
+        //domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
 
-        domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid(gridOptions);
+        domElements.BettypesPerformanceGrid.fanexGrid(gridOptions);
 
-        handleBettypeOfLeagueMatchDetailGridEvents();
+        //handleBettypeOfLeagueMatchDetailGridEvents();
     };
 
     // Handle bettype of League and Match grid's events.
@@ -696,4 +697,14 @@ Fanex.TGRS.Reports.Trader = function () {
     };
 
     //END LEAGUE - MATCH SECTION.
+
+    var shortenName = function (maximumTitleLength, prefixLength, name) {
+        var titleLength = prefixLength + name.length;
+
+        if (titleLength > maximumTitleLength) {
+            name = name.substring(0, maximumTitleLength - prefixLength - 3) + '...';
+        }
+
+        return name;
+    };
 }

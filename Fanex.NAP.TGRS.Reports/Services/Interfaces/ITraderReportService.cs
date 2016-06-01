@@ -3,6 +3,7 @@
     using Fanex.NAP.TGRS.Reports.Criteria.Trader;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.Trader;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.Trader;
     using System.Collections.Generic;
 
@@ -16,7 +17,7 @@
 
         IEnumerable<LeaguePerformance> GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria);
 
-        IEnumerable<MatchPerformance> GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria);
+        MatchPerformanceGroup GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria);
 
         IEnumerable<BettypeOfMatch> GetBetTypeOfMatch(GetTraderLeaguePerformanceMatchDetailCriteria criteria);
     }
