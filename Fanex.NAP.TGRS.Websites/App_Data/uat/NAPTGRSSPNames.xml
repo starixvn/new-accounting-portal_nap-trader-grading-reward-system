@@ -95,9 +95,9 @@
   </Function>
   <Function Name="TraderReport">
     <Setting Key="TGRS_Rpt_TraderWinlossTurnover" SpName="TGRS_Rpt_TraderWinlossTurnover" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_TraderGeneralInfo" SpName="TGRS_Rpt_TraderGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
     <Setting Key="TGRS_Rpt_TraderLeaguePerformance_Detail" SpName="TGRS_Rpt_TraderLeaguePerformance_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
