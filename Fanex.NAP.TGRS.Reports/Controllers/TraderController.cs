@@ -4,7 +4,6 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.Trader;
     using Fanex.NAP.TGRS.Reports.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;

@@ -345,6 +345,7 @@ Fanex.TGRS.Reports.Trader = function () {
 
             getMatchPerformanceOfLeagueReport(leagueId, leagueName);
         });
+        $('body').scrollTop(domElements.LeaguesPerformanceContainer.height());
     };
 
     $this.Initialize = function () {
@@ -566,6 +567,8 @@ Fanex.TGRS.Reports.Trader = function () {
             getBettypeOfLeagueMatchDetailReport(matchId, matchName, eventDate, leagueId, leagueName);
         });
 
+        $('body').scrollTop(domElements.MatchesPerformanceContainer.height());
+
     };
 
     //Bettype Detail (of league and match)
@@ -735,6 +738,8 @@ Fanex.TGRS.Reports.Trader = function () {
         domElements.BettypesPerformanceContainer.find('#spanMatchLink').click(function () {
             showMatchPerformanceOfLeagueReport();
         });
+
+        $('body').scrollTop(domElements.BettypesPerformanceContainer.height());
     };
 
     // Show match performance of league report and hide other reports.

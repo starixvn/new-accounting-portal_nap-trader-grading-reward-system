@@ -193,20 +193,29 @@
     <Content Include="App_Data\MNL\NAPCommonSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\MNL\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\MNL\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\dev\NAPTGRSSPNames.xml" />
-    <Content Include="App_Data\local\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\dev\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\local\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPTGRSSPNames.xml">
-      <SubType>
-      </SubType>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\master\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\master\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\uat\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\uat\NAPTGRSSPNames.xml" />
+    <Content Include="App_Data\uat\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
