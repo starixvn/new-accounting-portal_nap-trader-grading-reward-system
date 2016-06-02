@@ -1,15 +1,6 @@
 ﻿$(document).ready(function () {
     var TraderReport = new Fanex.TGRS.Reports.Trader();
     TraderReport.Initialize();
-    $('#switchChart').hide();
-    $("#txtUserName").keyup(function (e) {
-        if (e.keyCode == 13) {
-            $('#btnSearch').trigger("click");
-        }
-    });
-
-    //Load report for first time
-    $('#btnSearch').trigger("click");
 });
 
 Namespace.Register("Fanex.TGRS.Reports.Trader");
@@ -97,6 +88,9 @@ Fanex.TGRS.Reports.Trader = function () {
             filterParameters.ToDate = domElements.divDateRange.getTo();
             filterParameters.ReportType = domElements.divDateRange.getPeriodType();
             getReports();
+
+            domElements.MatchesPerformanceContainer.addClass('display-none');
+            domElements.BettypesPerformanceContainer.addClass('display-none');
         });
     };
 
@@ -188,11 +182,11 @@ Fanex.TGRS.Reports.Trader = function () {
                           FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.BetCount, Width: 150, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       {
-                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 50,
@@ -357,6 +351,16 @@ Fanex.TGRS.Reports.Trader = function () {
         cacheDOMElements();
         ChartOptions = new Fanex.TGRS.TraderChart();
         initPageFields();
+
+        $('#switchChart').hide();
+        $("#txtUserName").keyup(function (e) {
+            if (e.keyCode == 13) {
+                $('#btnSearch').trigger("click");
+            }
+        });
+
+        //Load report for first time
+        $('#btnSearch').trigger("click");
     };
 
     function renderChart(data, type) {
@@ -472,22 +476,22 @@ Fanex.TGRS.Reports.Trader = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Match, Width: 390, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: "Event Date", Width: 70, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
                       {
-                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       {
-                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.BetCount, Width: 90, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       {
-                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Margin, Width: 90, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
@@ -600,10 +604,10 @@ Fanex.TGRS.Reports.Trader = function () {
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: labels.BetType, Width: 180, Name: 'ColBettype', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: labels.BetType, Width: 250, Name: 'ColBettype', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 {
                     HeaderText: labels.Turnover,
-                    Width: 100,
+                    Width: 150,
                     Name: 'ColTurnover',
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -611,7 +615,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 },
                 {
                     HeaderText: labels.WinLoss,
-                    Width: 100,
+                    Width: 150,
                     Name: 'ColWinLoss',
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -620,7 +624,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 },
                 {
                     HeaderText: labels.BetCount,
-                    Width: 80,
+                    Width: 150,
                     Name: 'ColBetCount',
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -628,7 +632,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 },
                 {
                     HeaderText: labels.Margin,
-                    Width: 90,
+                    Width: 150,
                     Name: 'ColMargin',
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -737,12 +741,16 @@ Fanex.TGRS.Reports.Trader = function () {
     var showMatchPerformanceOfLeagueReport = function () {
         domElements.MatchesPerformanceContainer.removeClass('display-none');
         domElements.BettypesPerformanceContainer.addClass('display-none');
+
+        $('body').scrollTop(domElements.MatchesPerformanceContainer.height());
     };
 
     var showLeaguePerformanceReport = function () {
         domElements.LeaguesPerformanceContainer.removeClass('display-none');
         domElements.BettypesPerformanceContainer.addClass('display-none');
         domElements.MatchesPerformanceContainer.addClass('display-none');
+
+        $('body').scrollTop(domElements.LeaguesPerformanceContainer.height());
     };
 
     //END LEAGUE - MATCH SECTION.
