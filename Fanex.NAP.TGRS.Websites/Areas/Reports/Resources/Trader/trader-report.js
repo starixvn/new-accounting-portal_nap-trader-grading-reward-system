@@ -293,6 +293,7 @@ Fanex.TGRS.Reports.Trader = function () {
                 pageStep: 10,
                 afterPagedFunction: function (rows) {
                     handleLeaguePerformanceGridEvents();
+                    $('body').scrollTop(domElements.LeaguesPerformanceContainer.height());
                     return rows;
                 }
             },
@@ -345,7 +346,6 @@ Fanex.TGRS.Reports.Trader = function () {
 
             getMatchPerformanceOfLeagueReport(leagueId, leagueName);
         });
-        $('body').scrollTop(domElements.LeaguesPerformanceContainer.height());
     };
 
     $this.Initialize = function () {
@@ -383,7 +383,7 @@ Fanex.TGRS.Reports.Trader = function () {
             {
                 type: 'spline',
                 name: 'Win loss',
-                yAxis: 0,
+                yAxis: 1,
                 marker: {
                     lineWidth: 2,
                     lineColor: Highcharts.getOptions().colors[3],
