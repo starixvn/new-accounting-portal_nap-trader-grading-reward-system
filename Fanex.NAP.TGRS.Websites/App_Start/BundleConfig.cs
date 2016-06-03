@@ -216,8 +216,18 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Scripts/Libraries/jQuery/jquery.cookie.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
-                "~/Areas/Reports/Resources/Trader/trader-report.js",
                 "~/Areas/Reports/Resources/Trader/trader-chart.js",
+                "~/Areas/Reports/Resources/Trader/report.js",
+                "~/Areas/Reports/Resources/Trader/trader-report.js",
+                "~/Areas/Reports/Resources/Trader/sampleData.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/traderadmin").Include(
+                "~/Scripts/Libraries/jQuery/jquery.cookie.js",
+                "~/Scripts/Libraries/Highcharts/highcharts.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
+                "~/Areas/Reports/Resources/Trader/trader-chart.js",
+                "~/Areas/Reports/Resources/Trader/report.js",
+                "~/Areas/Reports/Resources/Trader/trader-report-admin.js",
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
         }
     }

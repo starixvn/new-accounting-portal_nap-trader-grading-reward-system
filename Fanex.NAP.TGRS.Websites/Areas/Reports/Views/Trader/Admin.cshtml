@@ -85,7 +85,7 @@
 </div>
 @section Foot
 {
-    @Scripts.Render("~/scripts/trader")
+    @Scripts.Render("~/scripts/traderadmin")
     <script type="text/javascript">
         var labels = {
             Date: '@ViewLang.Date',
@@ -106,6 +106,7 @@
             MatchPerformance: '@ViewLang.MatchPerformance',
             GrandTotal: '@ViewLang.GrandTotal'
         };
+
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
             DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',

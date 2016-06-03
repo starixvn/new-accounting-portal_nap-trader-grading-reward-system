@@ -64,36 +64,17 @@
         }
 
         [HttpPost]
-        public JsonResult GetReports(ReportFilter filter)
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReport, Policy = Constant.Policy.Read)]
+        public JsonResult GetReportsForTrader(ReportFilter filter)
         {
-            var traderId = this.CurrentSession.UserId;
+            return GetReports(filter);
+        }
 
-            if (filter.Trader != null)
-            {
-                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
-                {
-                    UserName = filter.Trader
-                };
-                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
-                if (trader != null)
-                {
-                    traderId = trader.CustId;
-                }
-            }
-
-            var generalInfo = GetGeneralInfo(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
-            var traderWinlossTurnover = GetTraderWinlossTurnover(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
-            var traderBettypePerformance = GetTraderBettypePerformance(traderId, filter.FromDate, filter.ToDate);
-            var traderLeaguePerformance = GetTraderLeaguePerformance(traderId, filter.FromDate, filter.ToDate);
-
-            TraderReports reports = new TraderReports()
-            {
-                GeneralInfo = generalInfo,
-                BetTypePerformances = traderBettypePerformance,
-                WinlossTurnover = traderWinlossTurnover,
-                LeaguesPerformance = traderLeaguePerformance
-            };
-            return Json(reports);
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReportAdmin, Policy = Constant.Policy.Read)]
+        public JsonResult GetReportsForAdminTrader(ReportFilter filter)
+        {
+            return GetReports(filter);
         }
 
         [HttpPost]
@@ -180,6 +161,38 @@
             };
             var result = traderReportService.GetBetTypeOfMatch(bettypeCriteria).ToList();
             return Json(result);
+        }
+
+        private JsonResult GetReports(ReportFilter filter)
+        {
+            var traderId = this.CurrentSession.UserId;
+
+            if (filter.Trader != null)
+            {
+                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                {
+                    UserName = filter.Trader
+                };
+                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+                if (trader != null)
+                {
+                    traderId = trader.CustId;
+                }
+            }
+
+            var generalInfo = GetGeneralInfo(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
+            var traderWinlossTurnover = GetTraderWinlossTurnover(traderId, filter.FromDate, filter.ToDate, filter.ReportType);
+            var traderBettypePerformance = GetTraderBettypePerformance(traderId, filter.FromDate, filter.ToDate);
+            var traderLeaguePerformance = GetTraderLeaguePerformance(traderId, filter.FromDate, filter.ToDate);
+
+            TraderReports reports = new TraderReports()
+            {
+                GeneralInfo = generalInfo,
+                BetTypePerformances = traderBettypePerformance,
+                WinlossTurnover = traderWinlossTurnover,
+                LeaguesPerformance = traderLeaguePerformance
+            };
+            return Json(reports);
         }
 
         private GeneralInfo GetGeneralInfo(int traderId, DateTime fromtDate, DateTime toDate, int reportType)
