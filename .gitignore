@@ -1,5 +1,7 @@
 /Fanex.NAP.TGRS.Configuration/obj
 /Fanex.NAP.TGRS.Configuration/bin
+/Fanex.NAP.TGRS.OSConfiguration/obj
+/Fanex.NAP.TGRS.OSConfiguration/bin
 /Fanex.NAP.TGRS.Configuration/StyleCop.Cache
 /Fanex.NAP.TGRS.Core/bin
 /Fanex.NAP.TGRS.Core/obj
@@ -7,6 +9,8 @@
 /Fanex.NAP.TGRS.Core/StyleCop.Cache
 /Fanex.NAP.TGRS.Reports/obj
 /Fanex.NAP.TGRS.Reports/bin
+/Fanex.NAP.TGRS.OSReports/obj
+/Fanex.NAP.TGRS.OSReports/bin
 /Fanex.NAP.TGRS.Reports/StyleCop.Cache
 /Fanex.NAP.TGRS.User/bin
 /Fanex.NAP.TGRS.User/obj

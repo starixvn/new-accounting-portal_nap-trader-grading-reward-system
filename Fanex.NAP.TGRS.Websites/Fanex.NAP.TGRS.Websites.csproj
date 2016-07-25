@@ -388,7 +388,12 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\OSConfiguration\Resources\" />
+    <Folder Include="Areas\OSConfiguration\Views\" />
+    <Folder Include="Areas\OSReports\Resources\" />
+    <Folder Include="Areas\OSReports\Views\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
