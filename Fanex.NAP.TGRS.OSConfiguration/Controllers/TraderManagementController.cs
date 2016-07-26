@@ -4,10 +4,10 @@
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Simplect.Attribute;
 
-    public class TraderManagementController : TGRSBaseController
+    public class OSTraderManagementController : TGRSBaseController
     {
         [InjectObject]
-        public TraderManagementController()
+        public OSTraderManagementController()
         {
         }
 

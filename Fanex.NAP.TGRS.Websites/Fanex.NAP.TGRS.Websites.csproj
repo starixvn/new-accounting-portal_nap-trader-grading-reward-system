@@ -450,7 +450,7 @@
     <Content Include="Areas\Reports\Views\Trader\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Trader\trader.less" />
     <Content Include="Areas\Reports\Views\Trader\Admin.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\TraderManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
