@@ -108,6 +108,11 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.Add(new ScriptBundle("~/scripts/gradeManagement").Include(
                 "~/Areas/Configuration/Resources/GradeManagement/grade-management.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/OS-gradeManagement").Include(
+                "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management.js",
+                 "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management-factory.js",
+                  "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management-service.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/traderManagement").Include(
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
 

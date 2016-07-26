@@ -117,7 +117,6 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
-    <Compile Include="ITraderManagementService.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
