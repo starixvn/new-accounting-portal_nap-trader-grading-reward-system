@@ -390,7 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\OSConfiguration\Resources\" />
-    <Folder Include="Areas\OSConfiguration\Views\" />
     <Folder Include="Areas\OSReports\Resources\" />
     <Folder Include="Areas\OSReports\Views\" />
   </ItemGroup>
@@ -451,6 +450,8 @@
     <Content Include="Areas\Reports\Views\Trader\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Trader\trader.less" />
     <Content Include="Areas\Reports\Views\Trader\Admin.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\TraderManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -528,6 +529,14 @@
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
       <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
       <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.OSConfiguration\Fanex.NAP.TGRS.OSConfiguration.csproj">
+      <Project>{aeeee031-6e19-407d-a7de-bb0bf418df29}</Project>
+      <Name>Fanex.NAP.TGRS.OSConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.OSReports\Fanex.NAP.TGRS.OSReports.csproj">
+      <Project>{e855d7a7-c02e-40bd-b88b-a05c4d0b0936}</Project>
+      <Name>Fanex.NAP.TGRS.OSReports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Reports\Fanex.NAP.TGRS.Reports.csproj">
       <Project>{F1E9E8DE-FFE3-4040-8532-21ABE82DC2E5}</Project>

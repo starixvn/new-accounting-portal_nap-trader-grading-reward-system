@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration
 {
-    using System.Web;
     using System.Web.Mvc;
 
     /// <summary>
@@ -8,8 +7,6 @@
     /// </summary>
     public class OSConfigurationAreaRegistration : AreaRegistration
     {
-        private static object _scopeObj = new object();
-
         public override string AreaName
         {
             get
@@ -27,7 +24,7 @@
             context.MapRoute(
                 "OSConfiguration_default",
                 "OSConfiguration/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional });
+                new { action = "Index", id = UrlParameter.Optional }, new[] { "Fanex.NAP.TGRS.OSConfiguration.Controllers" });
 
             //Registerdependency();
         }

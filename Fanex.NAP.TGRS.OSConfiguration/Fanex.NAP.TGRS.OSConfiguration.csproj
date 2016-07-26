@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fanex.NAP.TGRS.OSConfiguration</RootNamespace>
     <AssemblyName>Fanex.NAP.TGRS.OSConfiguration</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\TraderManagementController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +61,12 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\..\customer-management\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Simplect">
+      <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplect.Core">
+      <HintPath>..\Dependencies\DependencyInjector\Simplect.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
@@ -75,7 +83,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Criteria\" />
     <Folder Include="DataAccess\" />
     <Folder Include="Models\" />
