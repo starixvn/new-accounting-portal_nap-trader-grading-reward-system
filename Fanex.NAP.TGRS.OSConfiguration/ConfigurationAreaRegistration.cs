@@ -24,7 +24,7 @@
             context.MapRoute(
                 "OSConfiguration_default",
                 "OSConfiguration/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }, new[] { "Fanex.NAP.TGRS.OSConfiguration.Controllers" });
+                new { action = "Index", id = UrlParameter.Optional });
 
             //Registerdependency();
         }

@@ -1,22 +1,18 @@
 ﻿/* File Created: May 12, 2014 */
 /*jshint strict: false*/
-/* global Namespace, common, labels, hasEditRight, validator, messages */
+/* global Namespace, common, labels, hasEditRight, validator, messages, gradeManagementService */
 ////'use strict';
 
 $(document).ready(function () {
-    var gradeManagement = new Fanex.TGRS.GradeManagement();
     gradeManagement.Initialize();
 });
 
-Namespace.Register("Fanex.TGRS.GradeManagement");
-Fanex.TGRS.GradeManagement = function () {
-    var $this = this;
+var gradeManagement = (function ($) {
+    var gradeManagement = {};
+    gradeManagement.Grades = gradeManagementService.Grades;
+    gradeManagement.Result = gradeManagementService.Result;
+
     var timeout = null;
-    var urls = {
-        GetAllGrade: common.ResolveRootUrl('GradeManagement/GetAllGrade'),
-        InsertGrade: common.ResolveRootUrl('GradeManagement/InsertGrade'),
-        UpdateGrade: common.ResolveRootUrl('GradeManagement/UpdateGrade')
-    };
     var domElements = {
         divGradesGrid: null,
         lnkAddNewGrade: null,
@@ -24,6 +20,7 @@ Fanex.TGRS.GradeManagement = function () {
         divUpdateGradeForm: null,
         divPopup: null
     };
+
     var popupElements = {
         divInsertGradeForm: null,
         divUpdateGradeForm: null,
@@ -36,9 +33,7 @@ Fanex.TGRS.GradeManagement = function () {
         divErrorSuccessMsg: null
     };
 
-    // Cache DOM Elements.
     var cacheDOMElements = function () {
-        // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divGradesGrid = $('#divGradesGrid');
         domElements.lnkAddNewGrade = $('#lnkAddNewGrade');
         domElements.divInsertGradeForm = $('#divInsertGradeForm').clone();
@@ -48,7 +43,6 @@ Fanex.TGRS.GradeManagement = function () {
         $('#divHiddenForm').empty();
     };
 
-    // Cache current active popup elements
     var cachePopupElements = function () {
         popupElements.divInsertGradeForm = $("#divInsertGradeForm", domElements.divPopup);
         popupElements.divUpdateGradeForm = $("#divUpdateGradeForm", domElements.divPopup);
@@ -60,14 +54,43 @@ Fanex.TGRS.GradeManagement = function () {
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
     };
 
-    // Bind event handlers to elements on the insert grade popup.
-    var bindNewGradePopupEvent = function () {
+    gradeManagement.GetAllGrade = function () {
+        gradeManagementService.GetAllGrade().then(function () {
+            gradeManagement.Grades = gradeManagementService.Grades;
+
+            renderGrid(gradeManagement.Grades.GradeInfoItems);
+        });
+    };
+
+    gradeManagement.OpenPopupAddNewGrade = function () {
+        var form = domElements.divInsertGradeForm.clone();
+
+        refreshPopup();
+        common.Modal(labels.NewGrade, form);
+        cachePopupElements();
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
-                var gradeName = $.trim(popupElements.txtGradeName.val());
-                var gradeDes = $.trim(popupElements.txtGradeDes.val());
+                var grade = {
+                    GradeName: $.trim(popupElements.txtGradeName.val()),
+                    Description: $.trim(popupElements.txtGradeDes.val())
+                };
 
-                insertGrade(gradeName, gradeDes);
+                gradeManagementService.InsertGrade(grade).then(function () {
+                    gradeManagement.Result = gradeManagementService.Result;
+
+                    if (gradeManagement.Result.ErrorCode === 0) {
+                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddGradeSuccessfully, false, function () {
+                            timeout = setTimeout(common.ClosePopup, 3000);
+                        });
+
+                        disablePopup();
+                        reloadPage(gradeManagement.Result.UpdatedItems.GradeInfoItems);
+                    } else {
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.ErrorMessage);
+                        return false;
+                    }
+                });
             }
         });
 
@@ -75,14 +98,40 @@ Fanex.TGRS.GradeManagement = function () {
             common.ClosePopup();
         });
     };
-    var bindUpdateGradePopupEvent = function () {
+
+    gradeManagement.OpenPopupUpdateGrade = function (gradeId, gradeName, gradeDes) {
+        var form = domElements.divUpdateGradeForm.clone();
+
+        refreshPopup();
+        common.Modal(labels.EditGrade, form);
+        cachePopupElements();
+
+        popupElements.txtGradeName.val(gradeName);
+        popupElements.txtGradeDes.val(gradeDes);
+        popupElements.txtGradeId.val(gradeId);
+
         popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(popupElements.divUpdateGradeForm, 'w')) {
-                var txtGradeId = $.trim(popupElements.txtGradeId.val());
-                var gradeName = $.trim(popupElements.txtGradeName.val());
-                var gradeDes = $.trim(popupElements.txtGradeDes.val());
+            if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
+                var grade = {
+                    GradeId: $.trim(popupElements.txtGradeId.val()),
+                    GradeName: $.trim(popupElements.txtGradeName.val()),
+                    Description: $.trim(popupElements.txtGradeDes.val())
+                };
 
-                updateGrade(txtGradeId, gradeName, gradeDes);
+                gradeManagementService.UpdateGrade(grade).then(function () {
+                    gradeManagement.Result = gradeManagementService.Result;
+
+                    if (gradeManagement.Result.ErrorCode === 0) {
+                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateGradeSuccessfully, false, function () {
+                            timeout = setTimeout(common.ClosePopup, 3000);
+                        });
+                        disablePopup();
+                        reloadPage(gradeManagement.Result.UpdatedItems.GradeInfoItems);
+                    } else {
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.ErrorMessage);
+                        return false;
+                    }
+                });
             }
         });
 
@@ -91,99 +140,12 @@ Fanex.TGRS.GradeManagement = function () {
         });
     };
 
-    //Get all grades
-    var getAllGrades = function () {
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.GetAllGrade,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                if (result) {
-                    renderGrid(result.GradeInfoItems);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
+    gradeManagement.Initialize = function () {
+        cacheDOMElements();
+        handlePageEvents();
+        gradeManagement.GetAllGrade();
     };
 
-    //Insert new grade
-    var insertGrade = function (gradeName, description) {
-        var insertParameters = {
-            GradeName: gradeName,
-            Description: description
-        };
-
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.InsertGrade,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(insertParameters),
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddGradeSuccessfully, false, function () {
-                        timeout = setTimeout(common.ClosePopup, 3000);
-                    });
-                    disablePopup();
-                    reloadPage(result.UpdatedItems.GradeInfoItems);
-                } else {
-                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
-                    return false;
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-    //insert grade
-    var updateGrade = function (gradeId, gradeName, gradeDes) {
-        var updateParameters = {
-            GradeId: gradeId,
-            GradeName: gradeName,
-            Description: gradeDes
-        };
-
-        common.DisableInput();
-        $.ajax({
-            type: 'POST',
-            url: urls.UpdateGrade,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(updateParameters),
-            success: function (result) {
-                if (result.ErrorCode === 0) {
-                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateGradeSuccessfully, false, function () {
-                        timeout = setTimeout(common.ClosePopup, 3000);
-                    });
-                    disablePopup();
-                    reloadPage(result.UpdatedItems.GradeInfoItems);
-                } else {
-                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
-                    return false;
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-            },
-            complete: function () {
-                common.EnableInput();
-            }
-        });
-    };
-
-    // Render grid.
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-grade-link link" data-grade-id="{0}" data-grade-name="{1}">{1}</span>';
         var descColFormat = '<span class="wordwrap-span" id="gradeDesc_{0}">{1}</span>';
@@ -193,7 +155,7 @@ Fanex.TGRS.GradeManagement = function () {
                       { HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left'}],
+                      { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
             showNumberColumn: true,
             gridExpandHeight: 100
         };
@@ -214,7 +176,7 @@ Fanex.TGRS.GradeManagement = function () {
                               { Name: 'ColDes', Value: gradeDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
-                              { Name: 'ColCreatedBy', Value: item.CreatedUsername}]
+                              { Name: 'ColCreatedBy', Value: item.CreatedUsername }]
                 };
                 bodyData.push(row);
             });
@@ -222,11 +184,11 @@ Fanex.TGRS.GradeManagement = function () {
         gridOptions.bodyRows = bodyData;
         domElements.divGradesGrid.fanexGrid(gridOptions);
     };
+
     var reloadPage = function (data) {
         renderGrid(data);
     };
 
-    // Disable pop up form.
     var disablePopup = function () {
         popupElements.txtGradeName.prop('disabled', true);
         popupElements.txtGradeDes.prop('disabled', true);
@@ -234,61 +196,27 @@ Fanex.TGRS.GradeManagement = function () {
         popupElements.btnCancel.prop('disabled', true);
     };
 
-    // Handle page's events.
     var handlePageEvents = function () {
-        //Title button
-        //event: click on new grade button.
+        domElements.lnkAddNewGrade.off('click');
         domElements.lnkAddNewGrade.on('click', function () {
-            makeInsertGradeForm();
+            gradeManagement.OpenPopupAddNewGrade();
         });
 
-        //Grid's event
-        //event: click on grade name
-        domElements.divGradesGrid.on('click','span.edit-grade-link', function () {
+        domElements.divGradesGrid.off('click');
+        domElements.divGradesGrid.on('click', 'span.edit-grade-link', function () {
             var $obj = $(this);
             var gradeId = $obj.attr('data-grade-id');
             var gradeName = $obj.attr('data-grade-name');
-            var gradeDes = $("#gradeDesc_"+gradeId).text();
+            var gradeDes = $("#gradeDesc_" + gradeId).text();
 
-            makeUpdateGradeForm(gradeId, gradeName, gradeDes);
+            gradeManagement.OpenPopupUpdateGrade(gradeId, gradeName, gradeDes);
         });
     };
 
-    // Display new grade form.
-    var makeInsertGradeForm = function () {
-        var form = domElements.divInsertGradeForm.clone();
-
-        refreshPopup();
-        common.Modal(labels.NewGrade, form);
-
-        //prepare event, data
-        cachePopupElements();
-        bindNewGradePopupEvent();
-    };
-    // Display update grade form.
-    var makeUpdateGradeForm = function (gradeId, gradeName, gradeDes) {
-        var form = domElements.divUpdateGradeForm.clone();
-
-        refreshPopup();
-        common.Modal(labels.EditGrade, form);
-
-        //prepare event, data
-        cachePopupElements();
-        bindUpdateGradePopupEvent();
-        popupElements.txtGradeName.val(gradeName);
-        popupElements.txtGradeDes.val(gradeDes);
-        popupElements.txtGradeId.val(gradeId);
-    };
-
-    var refreshPopup = function()
-    {
+    var refreshPopup = function () {
         clearTimeout(timeout);
         common.CloseMsgBox();
     };
 
-    $this.Initialize = function () {
-        cacheDOMElements();
-        handlePageEvents();
-        getAllGrades();
-    };
-};
+    return gradeManagement;
+})(jQuery);

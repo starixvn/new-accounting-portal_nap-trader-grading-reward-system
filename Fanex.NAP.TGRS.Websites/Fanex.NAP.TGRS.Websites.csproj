@@ -456,7 +456,6 @@
     <Content Include="Areas\Reports\Resources\Trader\trader.less" />
     <Content Include="Areas\Reports\Views\Trader\Admin.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\TraderManagement\Index.cshtml" />
-    <Content Include="Areas\OSConfiguration\Web.config" />
     <Content Include="Areas\OSConfiguration\Views\GradeManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\GradeManagement\InsertGradeForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\GradeManagement\UpdateGradeForm.cshtml" />
