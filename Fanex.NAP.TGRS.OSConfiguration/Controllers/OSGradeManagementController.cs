@@ -11,7 +11,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using System.Web.Mvc;
 
-    public class GradeManagementController : TGRSBaseController
+    public class OSGradeManagementController : TGRSBaseController
     {
         public ActionResult Index()
         {

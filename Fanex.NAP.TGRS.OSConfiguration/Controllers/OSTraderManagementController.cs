@@ -2,11 +2,18 @@
 {
     using System.Web.Mvc;
     using Core.BaseClasses;
+    using Simplect.Attribute;
 
-    public class TeamManagementController : TGRSBaseController
+    public class OSTraderManagementController : TGRSBaseController
     {
+        [InjectObject]
+        public OSTraderManagementController()
+        {
+        }
+
         public ActionResult Index()
         {
+
             return View();
         }
     }

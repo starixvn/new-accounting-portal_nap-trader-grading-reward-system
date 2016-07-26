@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Team Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HasEditRight = true;
 }
 
 @section Headline{
@@ -18,6 +19,31 @@
     </div>
 }
 
+<div id="resultContainer" class="content-grid">
+    <div id="divTeamsGrid" class="freegrid">
+    </div>
+</div>
+
+@if (ViewBag.HasEditRight)
+{
+    <div id="divHiddenForm" class="display-none">
+        @Html.Partial("InsertTeamForm")
+        @Html.Partial("UpdateTeamForm")
+    </div>
+}
+
 @section Foot{
-    @Scripts.Render("~/scripts/os/teamManagementService")
+    @Scripts.Render("~/scripts/os-team-management")
+    <script>
+        var labels = {
+            TeamName: '@ViewLang.TeamName',
+            Description: '@ViewLang.Description',
+            TraderCount: '@ViewLang.TraderCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewTeam: '@ViewLang.NewTeam',
+            EditTeam: '@ViewLang.EditTeam',
+            AvgGrade: '@ViewLang.AvgGrade'
+        };
+    </script>
 }

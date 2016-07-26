@@ -228,12 +228,12 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
-    <Content Include="Areas\OSConfiguration\Resources\GradeManagement\grade-management-service.js" />
-    <Content Include="Areas\OSConfiguration\Resources\GradeManagement\grade-management-factory.js" />
-    <Content Include="Areas\OSConfiguration\Resources\GradeManagement\grade-management.js" />
-    <Content Include="Areas\OSConfiguration\Resources\TeamManagement\team-management-factory.js" />
-    <Content Include="Areas\OSConfiguration\Resources\TeamManagement\team-management-service.js" />
-    <Content Include="Areas\OSConfiguration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
@@ -409,7 +409,7 @@
     <Content Include="Areas\User\Views\Login\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\Web.config" />
     <Content Include="Areas\Configuration\Views\TeamManagement\Index.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\TeamManagement\InsertTeamForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTeamManagement\InsertTeamForm.cshtml" />
     <Content Include="Areas\Configuration\Views\TeamManagement\UpdateTeamForm.cshtml" />
     <Content Include="Areas\Configuration\Views\BenchmarkManagement\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\GradeManagement\Index.cshtml" />
@@ -455,14 +455,14 @@
     <Content Include="Areas\Reports\Views\Trader\Index.cshtml" />
     <Content Include="Areas\Reports\Resources\Trader\trader.less" />
     <Content Include="Areas\Reports\Views\Trader\Admin.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\TraderManagement\Index.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\GradeManagement\Index.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\GradeManagement\InsertGradeForm.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\GradeManagement\UpdateGradeForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSGradeManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSGradeManagement\InsertGradeForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSGradeManagement\UpdateGradeForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\Web.config" />
-    <Content Include="Areas\OSConfiguration\Views\TeamManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTeamManagement\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\TeamManagement\InsertTeamForm.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\TeamManagement\UpdateTeamForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTeamManagement\UpdateTeamForm.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

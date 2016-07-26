@@ -110,9 +110,9 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Configuration/Resources/GradeManagement/grade-management.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/OS-gradeManagement").Include(
-                  "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management-factory.js",
-                  "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management-service.js",
-                  "~/Areas/OSConfiguration/Resources/GradeManagement/grade-management.js"));
+                  "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-factory.js",
+                  "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-service.js",
+                  "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/traderManagement").Include(
                 "~/Areas/Configuration/Resources/TraderManagement/trader-management.js"));
@@ -241,9 +241,9 @@ namespace Fanex.NAP.TGRS.Websites
         {
             bundles.Add(
                 new ScriptBundle("~/scripts/os-team-management")
-                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management.js")
-                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management-service.js")
-                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management-factory.js"));
+                .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management-service.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management-factory.js"));
         }
     }
 }
