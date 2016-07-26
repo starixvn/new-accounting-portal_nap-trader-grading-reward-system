@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\TeamManagementController.cs" />
     <Compile Include="Controllers\TraderManagementController.cs" />
     <Compile Include="Controllers\GradeManagementController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

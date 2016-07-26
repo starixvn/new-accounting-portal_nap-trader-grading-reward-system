@@ -27,6 +27,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterCommonBundles(bundles);
             RegisterConfigurationBundles(bundles);
             RegisterReportsBundles(bundles);
+            RegisterOSConfigurationBundles(bundles);
         }
 
         /// <summary>
@@ -234,6 +235,15 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/Trader/report.js",
                 "~/Areas/Reports/Resources/Trader/trader-report-admin.js",
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
+        }
+
+        public static void RegisterOSConfigurationBundles(BundleCollection bundles)
+        {
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-team-management")
+                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management.js")
+                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management-service.js")
+                .Include("~/Areas/OSConfiguration/Resources/TeamManagement/team-management-factory.js"));
         }
     }
 }

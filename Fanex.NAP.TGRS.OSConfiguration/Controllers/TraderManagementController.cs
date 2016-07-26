@@ -1,13 +1,13 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Core.BaseClasses;
     using Simplect.Attribute;
 
-    public class OSTraderManagementController : TGRSBaseController
+    public class TraderManagementController : TGRSBaseController
     {
         [InjectObject]
-        public OSTraderManagementController()
+        public TraderManagementController()
         {
         }
 

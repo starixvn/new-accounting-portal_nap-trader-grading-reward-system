@@ -13,9 +13,9 @@ Fanex.TGRS.TeamManagement = function () {
     var $this = this;
     var timeout = null;
     var urls = {
-        GetAllTeam: common.ResolveRootUrl('TeamManagement/GetAllTeam'),
-        InsertTeam: common.ResolveRootUrl('TeamManagement/InsertTeam'),
-        UpdateTeam: common.ResolveRootUrl('TeamManagement/UpdateTeam')
+        GetAllTeam: common.ResolveRootUrl('Configuration/TeamManagement/GetAllTeam'),
+        InsertTeam: common.ResolveRootUrl('Configuration/TeamManagement/InsertTeam'),
+        UpdateTeam: common.ResolveRootUrl('Configuration/TeamManagement/UpdateTeam')
     };
     var domElements = {
         divTeamsGrid: null,
