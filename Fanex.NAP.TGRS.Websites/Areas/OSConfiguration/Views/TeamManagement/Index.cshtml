@@ -34,4 +34,16 @@
 
 @section Foot{
     @Scripts.Render("~/scripts/os-team-management")
+    <script>
+        var labels = {
+            TeamName: '@ViewLang.TeamName',
+            Description: '@ViewLang.Description',
+            TraderCount: '@ViewLang.TraderCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewTeam: '@ViewLang.NewTeam',
+            EditTeam: '@ViewLang.EditTeam',
+            AvgGrade: '@ViewLang.AvgGrade'
+        };
+    </script>
 }

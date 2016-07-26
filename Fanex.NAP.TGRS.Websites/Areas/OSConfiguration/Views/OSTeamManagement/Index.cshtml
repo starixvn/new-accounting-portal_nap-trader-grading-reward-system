@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Trader Management";
+    ViewBag.Title = "Team Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,8 +13,11 @@
     <div class="header-button">
         <a href="#" id="lnkAddNewTeam" class="green-button change-list">
             <span class="add-icon">
-            </span>@ViewLang.NewTrader
+            </span>@ViewLang.NewTeam
         </a>
     </div>
+}
 
+@section Foot{
+    @Scripts.Render("~/scripts/os/teamManagementService")
 }
