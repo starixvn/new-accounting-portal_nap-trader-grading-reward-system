@@ -40,6 +40,26 @@
     <Compile Include="Controllers\OSTeamManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
+    <Compile Include="Criteria\GradeManagement\InsertGradeCriteria.cs" />
+    <Compile Include="Criteria\GradeManagement\UpdateGradeCriteria.cs" />
+    <Compile Include="Criteria\GradeManagement\GetGradeCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\GetTeamCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\InsertErrorCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetEPADeductionCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetErrorCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetGradeLogCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetLogCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetTeamLogCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
+    <Compile Include="Models\GradeManagement\Grade.cs" />
+    <Compile Include="Models\TeamManagement\Team.cs" />
+    <Compile Include="Models\TraderManagement\Error.cs" />
+    <Compile Include="Models\TraderManagement\Log.cs" />
+    <Compile Include="Models\TraderManagement\Trader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Criteria\" />
     <Folder Include="DataAccess\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
