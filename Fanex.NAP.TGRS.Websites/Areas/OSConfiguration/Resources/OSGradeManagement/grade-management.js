@@ -1,4 +1,4 @@
-﻿/* File Created: May 12, 2014 */
+﻿/* File Created: Jul 26, 2016 */
 /*jshint strict: false*/
 /* global Namespace, common, labels, hasEditRight, validator, messages, gradeManagementService */
 ////'use strict';
@@ -31,27 +31,6 @@ var gradeManagement = (function ($) {
         btnCancel: null,
         popupType: 0,
         divErrorSuccessMsg: null
-    };
-
-    var cacheDOMElements = function () {
-        domElements.divGradesGrid = $('#divGradesGrid');
-        domElements.lnkAddNewGrade = $('#lnkAddNewGrade');
-        domElements.divInsertGradeForm = $('#divInsertGradeForm').clone();
-        domElements.divUpdateGradeForm = $('#divUpdateGradeForm').clone();
-        domElements.divPopup = $('#divPopup');
-
-        $('#divHiddenForm').empty();
-    };
-
-    var cachePopupElements = function () {
-        popupElements.divInsertGradeForm = $("#divInsertGradeForm", domElements.divPopup);
-        popupElements.divUpdateGradeForm = $("#divUpdateGradeForm", domElements.divPopup);
-        popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
-        popupElements.txtGradeName = $('#txtGradeName', domElements.divPopup);
-        popupElements.txtGradeDes = $('#txtGradeDes', domElements.divPopup);
-        popupElements.txtGradeId = $('#txtGradeId', domElements.divPopup);
-        popupElements.btnSave = $('#btnSave', domElements.divPopup);
-        popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
     };
 
     gradeManagement.GetAllGrade = function () {
@@ -144,6 +123,27 @@ var gradeManagement = (function ($) {
         cacheDOMElements();
         handlePageEvents();
         gradeManagement.GetAllGrade();
+    };
+
+    var cacheDOMElements = function () {
+        domElements.divGradesGrid = $('#divGradesGrid');
+        domElements.lnkAddNewGrade = $('#lnkAddNewGrade');
+        domElements.divInsertGradeForm = $('#divInsertGradeForm').clone();
+        domElements.divUpdateGradeForm = $('#divUpdateGradeForm').clone();
+        domElements.divPopup = $('#divPopup');
+
+        $('#divHiddenForm').empty();
+    };
+
+    var cachePopupElements = function () {
+        popupElements.divInsertGradeForm = $("#divInsertGradeForm", domElements.divPopup);
+        popupElements.divUpdateGradeForm = $("#divUpdateGradeForm", domElements.divPopup);
+        popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
+        popupElements.txtGradeName = $('#txtGradeName', domElements.divPopup);
+        popupElements.txtGradeDes = $('#txtGradeDes', domElements.divPopup);
+        popupElements.txtGradeId = $('#txtGradeId', domElements.divPopup);
+        popupElements.btnSave = $('#btnSave', domElements.divPopup);
+        popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
     };
 
     var renderGrid = function (data) {
