@@ -394,6 +394,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Working Date.
+        /// </summary>
+        public static string FirstWorkingDate {
+            get {
+                return ResourceManager.GetString("FirstWorkingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forecast.
         /// </summary>
         public static string Forecast {

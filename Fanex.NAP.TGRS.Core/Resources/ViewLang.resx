@@ -525,4 +525,7 @@
   <data name="TraderReport" xml:space="preserve">
     <value>Trader's Report</value>
   </data>
+  <data name="FirstWorkingDate" xml:space="preserve">
+    <value>First Working Date</value>
+  </data>
 </root>

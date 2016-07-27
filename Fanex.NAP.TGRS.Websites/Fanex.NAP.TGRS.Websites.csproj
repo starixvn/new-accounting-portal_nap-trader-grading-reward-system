@@ -476,6 +476,7 @@
     <Content Include="Areas\Configuration\Views\TeamManagement\InsertTeamForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTeamManagement\UpdateTeamForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\IndexFilter.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertTraderForm.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
