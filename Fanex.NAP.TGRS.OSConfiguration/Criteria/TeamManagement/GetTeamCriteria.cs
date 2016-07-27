@@ -1,7 +1,7 @@
-﻿using Fanex.Data.Repository;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
 {
+    using Fanex.Data.Repository;
+
     public class GetTeamCriteria : CriteriaBase
     {
         public override string GetSettingKey()

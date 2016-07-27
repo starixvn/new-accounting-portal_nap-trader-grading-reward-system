@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.DataAccess.TeamManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Models.GradeManagement
 {
-    public class Team
+    using System;
+
+    public class Grade
     {
         public int Id { get; set; }
 
