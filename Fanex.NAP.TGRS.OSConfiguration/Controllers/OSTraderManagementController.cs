@@ -1,20 +1,28 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
-    using System.Web.Mvc;
     using Core.BaseClasses;
-    using Simplect.Attribute;
+    using System.Web.Mvc;
 
     public class OSTraderManagementController : TGRSBaseController
     {
-        [InjectObject]
-        public OSTraderManagementController()
-        {
-        }
-
         public ActionResult Index()
         {
-
             return View();
+        }
+
+        public JsonResult GetTeamList()
+        {
+            return null;
+        }
+
+        public JsonResult AddNewTeam(string newTeam)
+        {
+            return null;
+        }
+
+        public JsonResult EditTeam(int teamId, string newName)
+        {
+            return null;
         }
     }
 }
