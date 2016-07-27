@@ -5,6 +5,8 @@
 
     public class UpdateTraderCriteria : CriteriaBase
     {
+        public int TraderId { get; set; }
+
         public string Username { get; set; }
 
         public int EmployeeId { get; set; }
