@@ -1,8 +1,8 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement
 {
     using Fanex.Data.Repository;
 
-    public class AddTeamCriteria : CriteriaBase
+    public class InsertGradeCriteria : CriteriaBase
     {
         public string Name { get; set; }
 

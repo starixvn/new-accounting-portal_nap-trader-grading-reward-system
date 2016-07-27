@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using System;
 
-    internal class AddErrorCriteria : CriteriaBase
+    internal class InsertErrorCriteria : CriteriaBase
     {
         public int TraderId { get; set; }
 

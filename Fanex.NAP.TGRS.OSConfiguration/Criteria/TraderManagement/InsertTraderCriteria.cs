@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class AddTraderCriteria : CriteriaBase
+    public class InsertTraderCriteria : CriteriaBase
     {
         public string Username { get; set; }
 
