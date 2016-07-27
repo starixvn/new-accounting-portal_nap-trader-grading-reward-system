@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Trader Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,18 +17,10 @@
         </a>
     </div>
 }
+<div style="margin-bottom: 20px"></div>
+@Html.Partial("IndexFilter")
 
 <div id="resultContainer" class="content-grid">
     <div id="divGradesGrid" class="freegrid">
     </div>
 </div>
-
-<div id="divHiddenForm" class="display-none">
-    @Html.Partial("InsertTeamForm")
-    @Html.Partial("UpdateTeamForm")
-</div>
-
-@section Foot
-{
-    @Scripts.Render("~/scripts/os-team-management")
-}
