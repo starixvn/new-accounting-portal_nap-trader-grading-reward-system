@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement
 {
     using Fanex.Data.Repository;
 
-    public class EditTeamCriteria : CriteriaBase
+    public class UpdateGradeCriteria : CriteriaBase
     {
-        public int TeamId { get; set; }
+        public int GradeId { get; set; }
 
         public string NewName { get; set; }
 
