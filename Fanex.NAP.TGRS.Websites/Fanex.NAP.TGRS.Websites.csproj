@@ -234,6 +234,9 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />

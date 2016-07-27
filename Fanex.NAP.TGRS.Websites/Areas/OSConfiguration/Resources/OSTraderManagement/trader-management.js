@@ -129,10 +129,6 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTeamHistory = function () {
-
-    };
-
     traderManagement.OpenPopupTraderTeamHistory = function () {
 
     };
