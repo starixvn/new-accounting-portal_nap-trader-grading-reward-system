@@ -22,7 +22,8 @@ var traderManagement = (function ($) {
         lnkAddNewTrader: null,
         divInsertTraderForm: null,
         divUpdateTraderForm: null,
-        divPopup: null
+        divPopup: null,
+        divPopupGrid: null
     };
 
     var popupElements = {
@@ -88,7 +89,7 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupUpdateTrader = function (traderId, traderName, traderDes) {
+    traderManagement.OpenPopupUpdateTrader = function (traderId, traderName) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
@@ -129,24 +130,49 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderTeamHistory = function () {
-
+    traderManagement.OpenPopupTraderTeamHistory = function (traderId) {
+        refreshPopup();
+        common.Modal(labels.TeamHistory, domElements.divPopupGrid);
+        traderManagementService.GetTraderTeamHistory(traderId).then(function () {
+            traderManagement.TraderTeamHistory = traderManagementService.TraderTeamHistory;
+            renderHistoryGrid("Team", traderManagement.TraderTeamHistory);
+        });
     };
 
-    traderManagement.OpenPopupTraderGradeHistory = function () {
+    traderManagement.OpenPopupTraderGradeHistory = function (traderId) {
+        refreshPopup();
 
+        common.Modal(labels.GradeHistory, domElements.divPopupGrid);
+
+        traderManagementService.GetTraderGradeHistory(traderId).then(function () {
+            traderManagement.TraderGradeHistory = traderManagementService.TraderGradeHistory;
+            renderHistoryGrid("Grade", traderManagement.TraderGradeHistory);
+        });
     };
 
-    traderManagement.OpenPopupTraderEPADeduction = function () {
+    traderManagement.OpenPopupTraderEPADeduction = function (traderId) {
+        refreshPopup();
 
+        common.Modal(labels.EPADeduction, domElements.divPopupGrid);
+
+        traderManagementService.GetTraderEPADeduction(traderId).then(function () {
+            traderManagement.TraderEPADeduction = traderManagementService.TraderEPADeduction;
+            renderErrorGrid(traderManagement.TraderEPADeduction);
+        });
     };
 
-    traderManagement.OpenPopupTraderError = function () {
+    traderManagement.OpenPopupTraderError = function (traderId) {
+        refreshPopup();
 
+        common.Modal(labels.Error, domElements.divPopupGrid);
+
+        traderManagementService.GetTraderError(traderId).then(function () {
+            traderManagement.TraderError = traderManagementService.TraderError;
+            renderErrorGrid(traderManagement.TraderError);
+        });
     };
 
     traderManagement.OpenPopupAddNewTraderError = function () {
-
     };
 
     traderManagement.Initialize = function () {
@@ -161,7 +187,7 @@ var traderManagement = (function ($) {
         domElements.divInsertTraderForm = $('#divInsertTraderForm').clone();
         domElements.divUpdateTraderForm = $('#divUpdateTraderForm').clone();
         domElements.divPopup = $('#divPopup');
-
+        domElements.divPopupGrid = $("#popupGrid");
         $('#divHiddenForm').empty();
     };
 
@@ -178,14 +204,20 @@ var traderManagement = (function ($) {
 
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}" data-trader-name="{1}">{1}</span>';
+        var linkFormat = '<span class="{0} link" data-trader-id="{1}">{2}</span>';
         var descColFormat = '<span class="wordwrap-span" id="traderDesc_{0}">{1}</span>';
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.TraderName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
+            columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Employee ID", Width: 100, Name: 'ColId', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Team, Width: 80, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Grade, Width: 80, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "EPA P.Deduction", Width: 200, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Error", Width: 40, Name: 'ColError', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "First Working Date", Width: 180, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedDate, Width: 80, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Error", Width: 80, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }, ],
             showNumberColumn: true,
             gridExpandHeight: 100
         };
@@ -197,16 +229,21 @@ var traderManagement = (function ($) {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.TraderId, item.TraderName);
+                editableTraderNameCol = nameColFormat.format(item.TraderId, item.Username);
                 traderNameCol = item.TraderName;
                 traderDescCol = descColFormat.format(item.TraderId, item.Description);
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTraderNameCol : traderNameCol },
-                              { Name: 'ColDes', Value: traderDescCol },
-                              { Name: 'ColTraderCount', Value: item.TraderCount },
+                              { Name: 'ColId', Value: item.EmployeeId },
+                              { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.Team) },
+                              { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.Grade) },
+                              { Name: 'ColEPA', Value: linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction) },
+                              { Name: 'ColError', Value: linkFormat.format("get-error-link", item.TraderId, item.Error) },
+                              { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
-                              { Name: 'ColCreatedBy', Value: item.CreatedUsername }]
+                              { Name: 'ColCreatedBy', Value: item.Creator },
+                              { Name: 'ColErrorInsert', Value: "" }]
                 };
                 bodyData.push(row);
             });
@@ -214,6 +251,60 @@ var traderManagement = (function ($) {
         gridOptions.bodyRows = bodyData;
         domElements.divTradersGrid.fanexGrid(gridOptions);
     };
+
+    var renderHistoryGrid = function (type, data) {
+        var mapper = function (item, idx) {
+            return {
+                Columns: [{ Name: 'colNum', Value: idx + 1 },
+                    { Name: 'colTime', Value: item.UpdatedTime },
+                    { Name: 'colOld', Value: item.Old },
+                    { Name: 'colNew', Value: item.New },
+                    { Name: 'colUpdator', Value: item.Updator }
+                ]
+            }
+        }
+
+        var options = {
+            columns: [
+                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Updated Time', Width: 80, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Old ' + type, Width: 80, Name: 'colOld', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'New ' + type, Width: 80, Name: 'colNew', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Updated By', Width: 80, Name: 'colUpdator', HeaderAlign: 'center', CellAlign: 'center' }
+            ],
+            showNumberColumn: true,
+            bodyRows: data.map(mapper)
+        };
+
+        domElements.divPopupGrid.fanexGrid(options);
+    }
+
+    var renderErrorGrid = function (data) {
+        var mapper = function (item, idx) {
+            return {
+                Columns: [{ Name: 'colNum', Value: idx + 1 },
+                    { Name: 'colTime', Value: item.Date },
+                    { Name: 'colValue', Value: item.Value },
+                    { Name: 'colReason', Value: item.Reason },
+                    { Name: 'colCreator', Value: item.Creator }
+                ]
+            }
+        }
+
+        var options = {
+            columns: [
+                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Date Time', Width: 80, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Value ', Width: 80, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Reason ', Width: 80, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
+            ],
+            showNumberColumn: true,
+            bodyRows: data.map(mapper)
+        };
+
+        domElements.divPopupGrid.fanexGrid(options);
+    }
 
     var reloadPage = function (data) {
         renderGrid(data);
@@ -237,9 +328,36 @@ var traderManagement = (function ($) {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
             var traderName = $obj.attr('data-trader-name');
-            var traderDes = $("#traderDesc_" + traderId).text();
 
-            traderManagement.OpenPopupUpdateTrader(traderId, traderName, traderDes);
+            traderManagement.OpenPopupUpdateTrader(traderId, traderName);
+        });
+
+        domElements.divTradersGrid.on('click', 'span.get-team-link', function () {
+            var $obj = $(this);
+            var traderId = $obj.attr('data-trader-id');
+
+            traderManagement.OpenPopupTraderTeamHistory(traderId);
+        });
+
+        domElements.divTradersGrid.on('click', 'span.get-grade-link', function () {
+            var $obj = $(this);
+            var traderId = $obj.attr('data-trader-id');
+
+            traderManagement.OpenPopupTraderGradeHistory(traderId);
+        });
+
+        domElements.divTradersGrid.on('click', 'span.get-epa-link', function () {
+            var $obj = $(this);
+            var traderId = $obj.attr('data-trader-id');
+
+            traderManagement.OpenPopupTraderEPADeduction(traderId);
+        });
+
+        domElements.divTradersGrid.on('click', 'span.get-error-link', function () {
+            var $obj = $(this);
+            var traderId = $obj.attr('data-trader-id');
+
+            traderManagement.OpenPopupTraderError(traderId);
         });
     };
 

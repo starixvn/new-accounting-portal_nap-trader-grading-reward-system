@@ -52,15 +52,15 @@
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetEPADeductionCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetErrorCriteria.cs" />
-    <Compile Include="Criteria\TraderManagement\GetGradeLogCriteria.cs" />
-    <Compile Include="Criteria\TraderManagement\GetLogCriteria.cs" />
-    <Compile Include="Criteria\TraderManagement\GetTeamLogCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
     <Compile Include="Models\GradeManagement\Grade.cs" />
     <Compile Include="Models\TeamManagement\Team.cs" />
     <Compile Include="Models\TraderManagement\Error.cs" />
-    <Compile Include="Models\TraderManagement\Log.cs" />
+    <Compile Include="Models\TraderManagement\History.cs" />
     <Compile Include="Models\TraderManagement\Trader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

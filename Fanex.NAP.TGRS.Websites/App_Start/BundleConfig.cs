@@ -244,6 +244,12 @@ namespace Fanex.NAP.TGRS.Websites
                 .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management.js")
                 .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management-service.js")
                 .Include("~/Areas/OSConfiguration/Resources/OSTeamManagement/team-management-factory.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-trader-management")
+                .Include("~/Areas/OSConfiguration/Resources/OSTraderManagement/trader-management-factory.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSTraderManagement/trader-management-service.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSTraderManagement/trader-management.js"));
         }
     }
 }

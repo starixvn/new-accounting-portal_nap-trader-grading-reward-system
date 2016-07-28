@@ -28,19 +28,19 @@ var traderManagementFactory = (function ($) {
         },
 
         GetTraderTeamHistory: function (traderId) {
-            return $get(urls.GetTraderTeamHistory, traderId);
+            return $.get(urls.GetTraderTeamHistory, traderId);
         },
 
         GetTraderGradeHistory: function (traderId) {
-            return $get(urls.GetTraderGradeHistory, traderId);
+            return $.get(urls.GetTraderGradeHistory, traderId);
         },
 
         GetTraderEPADeduction: function (traderId) {
-            return $get(urls.GetTraderEPADeduction, traderId);
+            return $.get(urls.GetTraderEPADeduction, traderId);
         },
 
         GetTraderError: function (traderId) {
-            return $get(urls.GetTraderError, traderId);
+            return $.get(urls.GetTraderError, traderId);
         },
 
         InsertTraderError: function (traderError) {

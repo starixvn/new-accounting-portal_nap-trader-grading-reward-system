@@ -1,10 +1,19 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
 {
-    using System;
-
     public class Trader
     {
-        public int UserId { get; set; }
+        public Trader()
+        {
+            Username = "adfadf";
+            Team = "adfadf";
+            FirstWorkingDate = "adfadf";
+            CreatedDate = "adfadf";
+            Creator = "adfadf";
+        }
+
+        public int TraderId { get; set; }
+
+        public string Username { get; set; }
 
         public int EmployeeId { get; set; }
 
@@ -16,9 +25,9 @@
 
         public int Error { get; set; }
 
-        public DateTime FirstWorkingDate { get; set; }
+        public string FirstWorkingDate { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public string Creator { get; set; }
     }

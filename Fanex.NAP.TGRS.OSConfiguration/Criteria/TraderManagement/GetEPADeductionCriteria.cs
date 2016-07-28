@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
-    internal class GetEPADeductionCriteria : GetLogCriteria
+    public class GetEPADeductionCriteria : GetHistoryCriteria
     {
         public override string GetSettingKey()
         {

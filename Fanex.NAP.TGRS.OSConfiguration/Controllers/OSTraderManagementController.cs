@@ -1,7 +1,10 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
+﻿using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
+
+namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
-    using Core.BaseClasses;
     using System.Web.Mvc;
+    using Core.BaseClasses;
 
     public class OSTraderManagementController : TGRSBaseController
     {
@@ -10,19 +13,56 @@
             return View();
         }
 
-        public JsonResult GetTeamList()
+        public JsonResult GetTraders(GetTraderCriteria criteria)
         {
-            return null;
+            var test = new[]
+            {
+                new Trader(),
+                new Trader()
+            };
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddNewTeam(string newTeam)
+        public JsonResult GetTraderTeamHistory(GetTeamHistoryCriteria criteria)
         {
-            return null;
+            var test = new[]
+            {
+                new History(),
+                new History(),
+            };
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult EditTeam(int teamId, string newName)
+        public JsonResult GetTraderGradeHistory(GetGradeHistoryCriteria criteria)
         {
-            return null;
+            var test = new[]
+            {
+                new History(),
+                new History(),
+            };
+            return Json(test, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTraderEPADeduction(GetEPADeductionCriteria criteria)
+        {
+            var test = new[]
+            {
+                new Error(),
+                new Error(),
+            };
+
+            return Json(test, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTraderError(GetErrorCriteria criteria)
+        {
+            var test = new[]
+            {
+                new Error(),
+                new Error(),
+            };
+
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
     }
 }

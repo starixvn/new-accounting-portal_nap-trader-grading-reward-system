@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement
 {
-    using Fanex.Data.Repository;
+    using Fanex.NAP.Framework.Data;
 
     public class GetGradeCriteria : CriteriaBase
     {

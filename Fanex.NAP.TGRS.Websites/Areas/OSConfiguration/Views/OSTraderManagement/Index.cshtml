@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Trader Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HasEditRight = true;
 }
 
 @section Headline{
@@ -11,21 +12,60 @@
     </div>
 
     <div class="header-button">
-        <a href="#" id="lnkAddNewTeam" class="green-button change-list">
+        <a href="#" id="lnkAddNewTrader" class="green-button change-list">
             <span class="add-icon">
             </span>@ViewLang.NewTrader
         </a>
     </div>
 }
+
 <div style="margin-bottom: 20px"></div>
 @Html.Partial("IndexFilter")
 
-<div class="display-none">
-    @Html.Partial("InsertTraderForm")
-    @Html.Partial("UpdateTraderForm")
-</div>
+@if (ViewBag.HasEditRight)
+{
+    <div class="display-none">
+        @Html.Partial("InsertTraderForm")
+        @Html.Partial("UpdateTraderForm")
+        <div id="popupGrid" class="freegrid"></div>
+    </div>
+}
 
 <div id="resultContainer" class="content-grid">
-    <div id="divGradesGrid" class="freegrid">
+    <div id="divTradersGrid" class="freegrid">
     </div>
 </div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-trader-management")
+    <script type="text/javascript">
+        var labels = {
+            UserName: '@ViewLang.Username',
+            EmployeeId: '@ViewLang.EmployeeId',
+            Team: '@ViewLang.Team',
+            Grade: '@ViewLang.Grade',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewTrader: '@ViewLang.NewTrader',
+            EditTrader: '@ViewLang.EditTrader',
+            AllTeams: '@ViewLang.AllTeams',
+            AllGrades: '@ViewLang.AllGrades',
+            SelectATeam: '@ViewLang.SelectATeam',
+            SelectAGrade: '@ViewLang.SelectAGrade',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            TeamEffectiveDate: '@ViewLang.TeamEffectiveDate',
+            GradeEffectiveDate: '@ViewLang.GradeEffectiveDate',
+            GradeHistory: '@ViewLang.GradeHistory',
+            TeamHistory: '@ViewLang.TeamHistory',
+            EPADeduction: '@ViewLang.EPADeduction',
+            Error: '@ViewLang.Error'
+        };
+        var messages = {
+            UpdateGradeSuccessfully: '@Messages.UpdateGradeSuccessfully',
+            AddGradeSuccessfully: '@Messages.AddGradeSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

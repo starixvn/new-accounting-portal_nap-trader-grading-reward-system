@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
-    internal class GetGradeLogCriteria : GetLogCriteria
+    public class GetTeamHistoryCriteria : GetHistoryCriteria
     {
         public override string GetSettingKey()
         {

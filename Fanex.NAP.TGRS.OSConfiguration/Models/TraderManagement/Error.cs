@@ -1,10 +1,15 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
 {
-    using System;
-
     public class Error
     {
-        public DateTime Date { get; set; }
+        public Error()
+        {
+            Date = "adfadfadf";
+            Reason = "adfadfadf";
+            Creator = "adfadfadf";
+        }
+
+        public string Date { get; set; }
 
         public int Value { get; set; }
 

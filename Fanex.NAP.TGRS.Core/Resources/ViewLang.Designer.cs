@@ -385,6 +385,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EPA P.Deduction.
+        /// </summary>
+        public static string EPADeduction {
+            get {
+                return ResourceManager.GetString("EPADeduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Date.
         /// </summary>
         public static string EventDate {
