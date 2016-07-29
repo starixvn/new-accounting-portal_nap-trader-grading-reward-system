@@ -534,4 +534,13 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="IssueReason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="IssueType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="IssueValue" xml:space="preserve">
+    <value>Value</value>
+  </data>
 </root>

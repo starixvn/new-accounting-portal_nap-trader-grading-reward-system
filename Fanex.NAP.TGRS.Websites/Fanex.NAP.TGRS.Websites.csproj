@@ -347,6 +347,7 @@
     <Content Include="Content\MsgBox\images\info.png" />
     <Content Include="Content\MsgBox\images\question.png" />
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
+    <Content Include="Content\Themes\Images\add-icon.ico" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />
     <Content Include="Content\Themes\Images\delete-icon.png" />
@@ -478,6 +479,7 @@
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\IndexFilter.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertTraderForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\UpdateTraderForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertNewIssueForm.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

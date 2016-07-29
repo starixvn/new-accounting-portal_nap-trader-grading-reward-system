@@ -10,7 +10,7 @@ var traderManagementFactory = (function ($) {
         GetTraderEPADeduction: common.ResolveRootUrl('OSTraderManagement/GetTraderEPADeduction'),
         GetTraderError: common.ResolveRootUrl('OSTraderManagement/GetTraderError'),
         InsertTrader: common.ResolveRootUrl('OSTraderManagement/InsertTrader'),
-        InsertTraderError: common.ResolveRootUrl('OSTraderManagement/InsertTraderError'),
+        InsertTraderIssue: common.ResolveRootUrl('OSTraderManagement/InsertTraderIssue'),
         UpdateTrader: common.ResolveRootUrl('OSTraderManagement/UpdateTrader')
     };
 
@@ -43,8 +43,8 @@ var traderManagementFactory = (function ($) {
             return $.get(urls.GetTraderError, traderId);
         },
 
-        InsertTraderError: function (traderError) {
-            return $.post(urls.InsertTraderError, traderError);
+        InsertTraderIssue: function (traderError) {
+            return $.post(urls.InsertTraderIssue, traderError);
         }
     }
 })(jQuery);

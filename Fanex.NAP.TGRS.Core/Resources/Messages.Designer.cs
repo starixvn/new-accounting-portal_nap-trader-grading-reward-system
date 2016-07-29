@@ -88,6 +88,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new issue has been added successfully.
+        /// </summary>
+        public static string AddIssueSuccesfully {
+            get {
+                return ResourceManager.GetString("AddIssueSuccesfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The new team has been added successfully!.
         /// </summary>
         public static string AddTeamSuccessfully {

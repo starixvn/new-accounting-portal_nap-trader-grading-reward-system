@@ -95,9 +95,9 @@ var traderManagementService = (function ($) {
             });
     };
 
-    traderManagementService.InsertTraderError = function (traderError) {
+    traderManagementService.InsertTraderIssue = function (traderError) {
         common.DisableInput();
-        return traderManagementFactory.InsertTraderError(traderError)
+        return traderManagementFactory.InsertTraderIssue(traderError)
             .success(function (result) {
                 traderManagementService.Result = result;
             })

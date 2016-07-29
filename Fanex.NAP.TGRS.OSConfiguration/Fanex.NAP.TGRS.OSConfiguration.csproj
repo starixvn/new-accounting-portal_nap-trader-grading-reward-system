@@ -48,7 +48,7 @@
     <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
-    <Compile Include="Criteria\TraderManagement\InsertErrorCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\InsertIssueCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetEPADeductionCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetErrorCriteria.cs" />

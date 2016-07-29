@@ -246,4 +246,7 @@
   <data name="UpdatedSuccessfully" xml:space="preserve">
     <value>Successfully updated</value>
   </data>
+  <data name="AddIssueSuccesfully" xml:space="preserve">
+    <value>The new issue has been added successfully</value>
+  </data>
 </root>

@@ -1,0 +1,42 @@
+﻿<div id="divInsertIssueForm" class="form-bar width-400">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message">
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.IssueType</label>
+            </div>
+            <div class="edit-field">
+                <select id="issueType" style="width: 206px">
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div id="dpkIssue" style="display: none"></div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.IssueValue</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtIssueValue" class="width-200 clearable-input" data-val-required="@Messages.RequiredFieldError"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.IssueReason</label>
+            </div>
+            <div class="edit-field">
+                <textarea id="txtIssueReason" data-val-required="@Messages.RequiredFieldError" rows="4" class="width-200"></textarea>
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field width-80">
+            </div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

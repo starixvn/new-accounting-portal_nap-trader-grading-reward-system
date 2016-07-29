@@ -23,7 +23,8 @@ var traderManagement = (function ($) {
         divInsertTraderForm: null,
         divUpdateTraderForm: null,
         divPopup: null,
-        divPopupGrid: null
+        divPopupGrid: null,
+        divInsertIssueForm: null
     };
 
     var popupElements = {
@@ -35,7 +36,8 @@ var traderManagement = (function ($) {
         btnSave: null,
         btnCancel: null,
         popupType: 0,
-        divErrorSuccessMsg: null
+        divErrorSuccessMsg: null,
+        divFirstWorkingDate: null,
     };
 
     traderManagement.GetTraders = function (traderName, teamId, gradeId) {
@@ -97,8 +99,23 @@ var traderManagement = (function ($) {
         cachePopupElements();
 
         popupElements.txtTraderName.val(traderName);
-        popupElements.txtTraderDes.val(traderDes);
         popupElements.txtTraderId.val(traderId);
+
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setYear(maxDate.getFullYear() + 1);
+        var minDate = new Date(datepickerSetting.Today);
+        minDate.setYear(minDate.getFullYear() - 5);
+
+        layout.CreateDatepicker($("#dpkGradeEffectiveDate", domElements.divPopup), 'gradeEffectiveDate', '', '',
+           datepickerSetting.Today, minDate, maxDate);
+        layout.CreateDatepicker($("#dpkTeamEffectiveDate", domElements.divPopup), 'teamEffectiveDate', '', '',
+         datepickerSetting.Today, minDate, maxDate);
+
+        popupElements.GradeEffectiveDate = $("#gradeEffectiveDate", domElements.divPopup).css("width", "99px");
+        popupElements.TeamEffectiveDate = $("#teamEffectiveDate", domElements.divPopup).css("width", "99px");
+
+        $("#dpkGradeEffectiveDate", domElements.divPopup).next().remove();
+        $("#dpkTeamEffectiveDate", domElements.divPopup).next().remove();
 
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
@@ -172,7 +189,46 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupAddNewTraderError = function () {
+    traderManagement.OpenPopupAddNewTraderError = function (traderId) {
+        refreshPopup();
+
+        common.Modal(labels.Error, domElements.divInsertIssueForm.clone());
+
+        cachePopupElements();
+
+        var issuePopup = getErrorPopupElements();
+
+        popupElements.btnSave.click(function () {
+            if (validator.ValidateForm(issuePopup.issueForm, 'w')) {
+                var issue = {
+                    TraderId: traderId,
+                    IssueId: issuePopup.IssueType.val(),
+                    IssueDate: issuePopup.issueDate.val(),
+                    Value: issuePopup.issueValue.val(),
+                    Reason: issuePopup.issueReason.val()
+                };
+
+                traderManagementService.InsertTraderIssue(issue).then(function () {
+                    var xhrResult = traderManagementService.Result;
+
+                    if (xhrResult.ErrorCode == 0) {
+                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddIssueSuccessfully, false, function () {
+                            timeout = setTimeout(common.ClosePopup, 3000);
+                        });
+
+                        disablePopup();
+                        reloadPage(xhrResult.UpdatedItems.TraderInfoItems);
+                    } else {
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, xhrResult.ErrorMessage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        popupElements.btnCancel.click(function () {
+            common.ClosePopup();
+        });
     };
 
     traderManagement.Initialize = function () {
@@ -188,6 +244,7 @@ var traderManagement = (function ($) {
         domElements.divUpdateTraderForm = $('#divUpdateTraderForm').clone();
         domElements.divPopup = $('#divPopup');
         domElements.divPopupGrid = $("#popupGrid");
+        domElements.divInsertIssueForm = $("#divInsertIssueForm");
         $('#divHiddenForm').empty();
     };
 
@@ -200,12 +257,40 @@ var traderManagement = (function ($) {
         popupElements.txtTraderId = $('#txtTraderId', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
+
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setYear(maxDate.getFullYear() + 1);
+        var minDate = new Date(datepickerSetting.Today);
+        minDate.setYear(minDate.getFullYear() - 5);
+        layout.CreateDatepicker($("#dpkFirstWorkingDate", domElements.divPopup), 'firstWorkingDate', labels.FirstWorkingDate, 'lbl-field width-120',
+           datepickerSetting.Today, minDate, maxDate);
+        popupElements.divFirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200");
     };
+
+    var getErrorPopupElements = function () {
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setYear(maxDate.getFullYear() + 1);
+
+        var minDate = new Date(datepickerSetting.Today);
+        minDate.setYear(minDate.getFullYear() - 5);
+
+        layout.CreateDatepicker($("#dpkIssue", domElements.divPopup), 'issueDate', labels.Date, 'lbl-field width-80',
+            datepickerSetting.Today, minDate, maxDate);
+
+        return {
+            IssueType: $("#issueType", domElements.divPopup),
+            issueDate: $("#issueDate", domElements.divPopup).addClass("width-200"),
+            issueValue: $("#txtIssueValue", domElements.divPopup),
+            issueReason: $("#txtIssueReason", domElements.divPopup),
+            issueForm: $("#divInsertIssueForm", domElements.divPopup),
+        };
+    }
 
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}" data-trader-name="{1}">{1}</span>';
         var linkFormat = '<span class="{0} link" data-trader-id="{1}">{2}</span>';
         var descColFormat = '<span class="wordwrap-span" id="traderDesc_{0}">{1}</span>';
+        var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'center' },
@@ -217,7 +302,7 @@ var traderManagement = (function ($) {
                       { HeaderText: "First Working Date", Width: 180, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedDate, Width: 80, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "Error", Width: 80, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }, ],
+                      { HeaderText: "Issue", Width: 80, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }, ],
             showNumberColumn: true,
             gridExpandHeight: 100
         };
@@ -243,7 +328,7 @@ var traderManagement = (function ($) {
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.Creator },
-                              { Name: 'ColErrorInsert', Value: "" }]
+                              { Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId) }]
                 };
                 bodyData.push(row);
             });
@@ -359,6 +444,13 @@ var traderManagement = (function ($) {
 
             traderManagement.OpenPopupTraderError(traderId);
         });
+
+        domElements.divTradersGrid.on('click', 'a.add-issue-link', function () {
+            var $obj = $(this);
+            var traderId = $obj.attr('data-trader-id');
+
+            traderManagement.OpenPopupAddNewTraderError(traderId);
+        })
     };
 
     var refreshPopup = function () {

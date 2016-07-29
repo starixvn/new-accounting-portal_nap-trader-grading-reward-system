@@ -19,6 +19,12 @@
     </div>
 }
 
+@*<div>
+        <a href="#">
+            <img src="../../../../Content/Themes/Images/Add.ico" style="width: 30px;height: 30px">
+        </a>
+    </div>*@
+
 <div style="margin-bottom: 20px"></div>
 @Html.Partial("IndexFilter")
 
@@ -27,6 +33,7 @@
     <div class="display-none">
         @Html.Partial("InsertTraderForm")
         @Html.Partial("UpdateTraderForm")
+        @Html.Partial("InsertNewIssueForm")
         <div id="popupGrid" class="freegrid"></div>
     </div>
 }
@@ -59,13 +66,19 @@
             GradeHistory: '@ViewLang.GradeHistory',
             TeamHistory: '@ViewLang.TeamHistory',
             EPADeduction: '@ViewLang.EPADeduction',
-            Error: '@ViewLang.Error'
+            Error: '@ViewLang.Error',
+            Date: '@ViewLang.Date',
+            FirstWorkingDate: '@ViewLang.FirstWorkingDate'
         };
         var messages = {
             UpdateGradeSuccessfully: '@Messages.UpdateGradeSuccessfully',
             AddGradeSuccessfully: '@Messages.AddGradeSuccessfully',
-            InvalidValueError: '@Messages.InvalidValueError'
+            InvalidValueError: '@Messages.InvalidValueError',
+            AddIssueSuccessfully: '@Messages.AddIssueSuccesfully'
         };
         var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+        var datepickerSetting = {
+            Today: '@DateTime.Today.ToShortFormatedDate()'
+        };
     </script>
 }

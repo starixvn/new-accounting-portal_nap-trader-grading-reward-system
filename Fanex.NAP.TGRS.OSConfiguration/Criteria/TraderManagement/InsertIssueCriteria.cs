@@ -2,14 +2,15 @@
 {
     using Fanex.NAP.Framework.Data;
     using System;
+    using Fanex.NAP.Framework.Data;
 
-    internal class InsertErrorCriteria : CriteriaBase
+    public class InsertIssueCriteria : CriteriaBase
     {
         public int TraderId { get; set; }
 
-        public int ErrorId { get; set; }
+        public int IssueId { get; set; }
 
-        public DateTime ErrorDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         public int Value { get; set; }
 

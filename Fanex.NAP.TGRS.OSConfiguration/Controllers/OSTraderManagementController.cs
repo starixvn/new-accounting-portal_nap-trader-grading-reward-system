@@ -64,5 +64,24 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
             return Json(test, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult InsertTraderIssue(InsertIssueCriteria criteria)
+        {
+            var test = new[]
+{
+                new Trader(),
+                new Trader()
+            };
+
+            return Json(
+                new
+                {
+                    UpdatedItems = new { TraderInfoItems = test },
+                    ErrorCode = -1,
+                    ErrorMessage = "adfad"
+                },
+                JsonRequestBehavior.AllowGet);
+        }
     }
 }
