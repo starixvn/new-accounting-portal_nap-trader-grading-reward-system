@@ -1,29 +1,25 @@
-﻿@{
-    ViewBag.Title = "Team Management";
+﻿@using Fanex.NAP.TGRS.Core.Resources
+@{
+    ViewBag.Title = ViewLang.TeamManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.HasEditRight = true;
 }
-
-@section Headline{
+@section Headline {
     <div class="title">
         <div>
             <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
-
-    <div class="header-button">
-        <a href="#" id="lnkAddNewTeam" class="green-button change-list">
-            <span class="add-icon">
-            </span>@ViewLang.NewTeam
-        </a>
-    </div>
+    @if (ViewBag.HasEditRight)
+    {
+        <div class="header-button">
+            <a href="#" id="lnkAddNewTeam" class="green-button change-list"><span class="add-icon"></span>@ViewLang.NewTeam</a>
+        </div>
+    }
 }
-
 <div id="resultContainer" class="content-grid">
     <div id="divTeamsGrid" class="freegrid">
     </div>
 </div>
-
 @if (ViewBag.HasEditRight)
 {
     <div id="divHiddenForm" class="display-none">
@@ -32,9 +28,10 @@
     </div>
 }
 
-@section Foot{
+@section Foot
+{
     @Scripts.Render("~/scripts/os-team-management")
-    <script>
+    <script type="text/javascript">
         var labels = {
             TeamName: '@ViewLang.TeamName',
             Description: '@ViewLang.Description',
@@ -43,7 +40,12 @@
             CreatedBy: '@ViewLang.CreatedBy',
             NewTeam: '@ViewLang.NewTeam',
             EditTeam: '@ViewLang.EditTeam',
-            AvgGrade: '@ViewLang.AvgGrade'
         };
+        var messages = {
+            UpdateTeamSuccessfully: '@Messages.UpdateTeamSuccessfully',
+            AddTeamSuccessfully: '@Messages.AddTeamSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
     </script>
 }

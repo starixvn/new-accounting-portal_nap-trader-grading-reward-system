@@ -13,7 +13,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Models.GradeManagement;
-    using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
     using System.Collections.Generic;
     using System.Linq;
 

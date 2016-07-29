@@ -1,8 +1,12 @@
-﻿var teamManagementFactory = (function ($) {
+﻿/* File Created: Jul 29, 2016 */
+/*jshint strict: false*/
+/* global  common */
+
+var teamManagementFactory = (function ($) {
     var urls = {
-        GetAllTeam: common.ResolveRootUrl('OSConfiguration/TeamManagement/GetAllTeam'),
-        InsertTeam: common.ResolveRootUrl('OSConfiguration/TeamManagement/InsertTeam'),
-        UpdateTeam: common.ResolveRootUrl('OSConfiguration/TeamManagement/UpdateTeam')
+        GetAllTeam: common.ResolveRootUrl('OSTeamManagement/GetAllTeam'),
+        InsertTeam: common.ResolveRootUrl('OSTeamManagement/InsertTeam'),
+        UpdateTeam: common.ResolveRootUrl('OSTeamManagement/UpdateTeam')
     };
 
     return {

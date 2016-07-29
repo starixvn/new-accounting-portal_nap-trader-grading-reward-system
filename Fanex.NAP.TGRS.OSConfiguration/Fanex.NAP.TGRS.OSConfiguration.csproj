@@ -47,7 +47,7 @@
     <Compile Include="Criteria\GradeManagement\GetAllGradesCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
-    <Compile Include="Criteria\TeamManagement\GetTeamCriteria.cs" />
+    <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertErrorCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetEPADeductionCriteria.cs" />
@@ -58,12 +58,14 @@
     <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
-    <Compile Include="Models\TeamManagement\Team.cs" />
+    <Compile Include="Models\TeamManagement\TeamInfo.cs" />
     <Compile Include="Models\TraderManagement\Error.cs" />
     <Compile Include="Models\TraderManagement\History.cs" />
     <Compile Include="Models\TraderManagement\Trader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implement\TeamManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
+    <Compile Include="Services\Interface\ITeamManagementService.cs" />
     <Compile Include="Services\Interface\IGradeManagementService.cs" />
     <Compile Include="Services\Utility\SessionUtility.cs" />
   </ItemGroup>

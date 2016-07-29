@@ -5,6 +5,11 @@
     <Setting Key="TGRS_OS_GradeInsert" SpName="TGRS_OS_GradeInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_GradeUpdate" SpName="TGRS_OS_GradeUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="OSTeamManagement">
+    <Setting Key="TGRS_OS_TeamGetAll" SpName="TGRS_OS_TeamGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TeamInsert" SpName="TGRS_OS_TeamInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TeamUpdate" SpName="TGRS_OS_TeamUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="GradeManagement">
     <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
