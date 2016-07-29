@@ -22,6 +22,9 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement
             {
                 return SessionUtility.GetCreatorId();
             }
+            set
+            {
+            }
         }
 
         public int ErrCode { get; set; }

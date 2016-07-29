@@ -4,9 +4,9 @@
 
 var gradeManagementFactory = (function ($) {
     var urls = {
-        GetAllGrade: common.ResolveRootUrl('GradeManagement/GetAllGrade'),
-        InsertGrade: common.ResolveRootUrl('GradeManagement/InsertGrade'),
-        UpdateGrade: common.ResolveRootUrl('GradeManagement/UpdateGrade')
+        GetAllGrade: common.ResolveRootUrl('OSGradeManagement/GetAllGrade'),
+        InsertGrade: common.ResolveRootUrl('OSGradeManagement/InsertGrade'),
+        UpdateGrade: common.ResolveRootUrl('OSGradeManagement/UpdateGrade')
     };
 
     return {

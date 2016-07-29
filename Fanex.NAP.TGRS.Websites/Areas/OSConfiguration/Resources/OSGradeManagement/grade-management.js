@@ -37,7 +37,7 @@ var gradeManagement = (function ($) {
         gradeManagementService.GetAllGrade().then(function () {
             gradeManagement.Grades = gradeManagementService.Grades;
 
-            renderGrid(gradeManagement.Grades.GradeInfoItems);
+            renderGrid(gradeManagement.Grades);
         });
     };
 
@@ -51,22 +51,22 @@ var gradeManagement = (function ($) {
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
                 var grade = {
-                    GradeName: $.trim(popupElements.txtGradeName.val()),
-                    Description: $.trim(popupElements.txtGradeDes.val())
+                    Description: $.trim(popupElements.txtGradeDes.val()),
+                    GradeName: $.trim(popupElements.txtGradeName.val())
                 };
 
                 gradeManagementService.InsertGrade(grade).then(function () {
                     gradeManagement.Result = gradeManagementService.Result;
 
-                    if (gradeManagement.Result.ErrorCode === 0) {
+                    if (gradeManagement.Result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddGradeSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
 
                         disablePopup();
-                        reloadPage(gradeManagement.Result.UpdatedItems.GradeInfoItems);
+                        reloadPage();
                     } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.ErrorMessage);
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.Message);
                         return false;
                     }
                 });
@@ -93,21 +93,20 @@ var gradeManagement = (function ($) {
             if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
                 var grade = {
                     GradeId: $.trim(popupElements.txtGradeId.val()),
-                    GradeName: $.trim(popupElements.txtGradeName.val()),
-                    Description: $.trim(popupElements.txtGradeDes.val())
+                    Description: $.trim(popupElements.txtGradeDes.val()),
+                    GradeName: $.trim(popupElements.txtGradeName.val())
                 };
 
                 gradeManagementService.UpdateGrade(grade).then(function () {
                     gradeManagement.Result = gradeManagementService.Result;
-
-                    if (gradeManagement.Result.ErrorCode === 0) {
+                    if (gradeManagement.Result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.UpdateGradeSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
                         disablePopup();
-                        reloadPage(gradeManagement.Result.UpdatedItems.GradeInfoItems);
+                        reloadPage();
                     } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.ErrorMessage);
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, gradeManagement.Result.Message);
                         return false;
                     }
                 });
@@ -152,7 +151,7 @@ var gradeManagement = (function ($) {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.GradeName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
+                      //{ HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
@@ -160,7 +159,7 @@ var gradeManagement = (function ($) {
             gridExpandHeight: 100
         };
         var editableGradeNameCol = "";
-        var gradeDescCol = "";
+        //var gradeDescCol = "";
         var gradeNameCol = "";
         var bodyData = [];
         var row;
@@ -169,14 +168,14 @@ var gradeManagement = (function ($) {
             $.each(data, function (index, item) {
                 editableGradeNameCol = nameColFormat.format(item.GradeId, item.GradeName);
                 gradeNameCol = item.GradeName;
-                gradeDescCol = descColFormat.format(item.GradeId, item.Description);
+                //gradeDescCol = descColFormat.format(item.GradeId, item.Description);
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableGradeNameCol : gradeNameCol },
-                              { Name: 'ColDes', Value: gradeDescCol },
+                              //{ Name: 'ColDes', Value: gradeDescCol },
                               { Name: 'ColTraderCount', Value: item.TraderCount },
-                              { Name: 'ColCreatedDate', Value: item.CreatedDate },
-                              { Name: 'ColCreatedBy', Value: item.CreatedUsername }]
+                              { Name: 'ColCreatedDate', Value: item.CreatedDateFormatted },
+                              { Name: 'ColCreatedBy', Value: item.CreatedBy }]
                 };
                 bodyData.push(row);
             });
@@ -185,8 +184,8 @@ var gradeManagement = (function ($) {
         domElements.divGradesGrid.fanexGrid(gridOptions);
     };
 
-    var reloadPage = function (data) {
-        renderGrid(data);
+    var reloadPage = function () {
+        gradeManagement.GetAllGrade();
     };
 
     var disablePopup = function () {
