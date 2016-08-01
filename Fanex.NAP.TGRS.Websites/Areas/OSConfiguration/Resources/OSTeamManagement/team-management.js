@@ -48,6 +48,15 @@ var teamManagement = (function ($) {
         common.Modal(labels.NewTeam, form);
         cachePopupElements();
 
+        $('input[type=text]').off('keydown');
+        $('input[type=text]').on('keydown', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                popupElements.btnSave.trigger('click');
+            }
+        });
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTeamForm, 'w')) {
                 var team = {
@@ -89,8 +98,17 @@ var teamManagement = (function ($) {
         popupElements.txtTeamDes.val(teamDes);
         popupElements.txtTeamId.val(teamId);
 
+        $('input[type=text]').off('keydown');
+        $('input[type=text]').on('keydown', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                popupElements.btnSave.trigger('click');
+            }
+        });
+
         popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(popupElements.divInsertTeamForm, 'w')) {
+            if (validator.ValidateForm(popupElements.divUpdateTeamForm, 'w')) {
                 var team = {
                     TeamId: $.trim(popupElements.txtTeamId.val()),
                     Description: $.trim(popupElements.txtTeamDes.val()),

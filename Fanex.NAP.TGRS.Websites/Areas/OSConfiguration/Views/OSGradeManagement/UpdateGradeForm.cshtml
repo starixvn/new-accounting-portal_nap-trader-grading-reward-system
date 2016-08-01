@@ -6,7 +6,10 @@
                 <label>@ViewLang.GradeName</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtGradeName" class="width-200" data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50"/>
+                <input type="text" id="txtGradeName" class="width-200"
+                       data-val-required="@Messages.RequiredFieldError" data-max-length="50"
+                       data-val-length="@Messages.FieldMaxLengthError50"
+                       data-val-not-html="@Messages.HtmlInputError" />
                 <input type="hidden" id="txtGradeId" />
             </div>
         </div>

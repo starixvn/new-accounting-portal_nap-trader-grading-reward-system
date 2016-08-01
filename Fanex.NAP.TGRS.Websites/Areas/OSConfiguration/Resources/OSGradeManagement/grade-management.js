@@ -48,6 +48,15 @@ var gradeManagement = (function ($) {
         common.Modal(labels.NewGrade, form);
         cachePopupElements();
 
+        $('input[type=text]').off('keydown');
+        $('input[type=text]').on('keydown', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                popupElements.btnSave.trigger('click');
+            }
+        });
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
                 var grade = {
@@ -89,8 +98,17 @@ var gradeManagement = (function ($) {
         popupElements.txtGradeDes.val(gradeDes);
         popupElements.txtGradeId.val(gradeId);
 
+        $('input[type=text]').off('keydown');
+        $('input[type=text]').on('keydown', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                popupElements.btnSave.trigger('click');
+            }
+        });
+
         popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(popupElements.divInsertGradeForm, 'w')) {
+            if (validator.ValidateForm(popupElements.divUpdateGradeForm, 'w')) {
                 var grade = {
                     GradeId: $.trim(popupElements.txtGradeId.val()),
                     Description: $.trim(popupElements.txtGradeDes.val()),

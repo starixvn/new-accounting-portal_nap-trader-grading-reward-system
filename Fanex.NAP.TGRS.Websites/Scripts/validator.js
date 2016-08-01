@@ -162,6 +162,29 @@ Fanex.TGRS.Validator = function () {
         return true;
     };
 
+    $this.ValidateInputNotHtmlField = function ($obj, gravity) {
+        if (!$obj.attr('original-title')) {
+            var $ele = $obj;
+            var errMsg = $obj.attr('data-val-not-html');
+            var pattern = new RegExp('<(.|\n)*?>');
+            var value;
+
+            if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                $ele = $obj.find('input:first');
+            }
+
+            value = $ele.val();
+
+            if (errMsg && !$ele.prop('disabled') && pattern.test(value)) {
+                $this.ShowError($obj, errMsg, gravity);
+
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     $this.ValidateIPField = function ($obj, gravity) {
         if (!$obj.attr('original-title')) {
             var $ele = $obj;
@@ -226,6 +249,12 @@ Fanex.TGRS.Validator = function () {
 
         $('[data-val-regex]', $form).each(function () {
             if (!$this.ValidateRegexField($(this), gravity)) {
+                errorCounter++;
+            }
+        });
+
+        $('[data-val-not-html]', $form).each(function () {
+            if (!$this.ValidateInputNotHtmlField($(this), gravity)) {
                 errorCounter++;
             }
         });

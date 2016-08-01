@@ -6,7 +6,13 @@
                 <label>@ViewLang.TeamName</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtTeamName" class="width-200" data-val-required="@Messages.RequiredFieldError" data-max-length="50" data-val-length="@Messages.FieldMaxLengthError50" />
+                <input type="text"
+                       id="txtTeamName"
+                       class="width-200"
+                       data-val-required="@Messages.RequiredFieldError"
+                       data-max-length="50"
+                       data-val-length="@Messages.FieldMaxLengthError50"
+                       data-val-not-html="@Messages.HtmlInputError" />
                 <input type="hidden" id="txtTeamId" />
             </div>
         </div>

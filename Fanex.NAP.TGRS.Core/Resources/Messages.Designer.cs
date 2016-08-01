@@ -187,6 +187,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The input should not include a html tag..
+        /// </summary>
+        public static string HtmlInputError {
+            get {
+                return ResourceManager.GetString("HtmlInputError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal error!.
         /// </summary>
         public static string InternalError {
