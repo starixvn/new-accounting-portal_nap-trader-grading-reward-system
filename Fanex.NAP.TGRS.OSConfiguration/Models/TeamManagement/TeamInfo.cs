@@ -27,7 +27,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Models.TeamManagement
         {
             get
             {
-                return CreatedDate.ToString("dd-MM-yyyy hh:mm:ss");
+                return CreatedDate.ToString("MM/dd/yyyy hh:mm:ss");
             }
         }
     }
