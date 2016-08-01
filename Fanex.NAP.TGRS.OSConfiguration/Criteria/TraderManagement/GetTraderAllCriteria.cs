@@ -2,11 +2,16 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class GetTraderCriteria : CriteriaBase
+    public class GetTraderAllCriteria : CriteriaBase
     {
+        public override bool IsValid()
+        {
+            return true;
+        }
+
         public override string GetSettingKey()
         {
-            return base.GetSettingKey();
+            return "TGRS_OS_TraderGetAll";
         }
     }
 }

@@ -2,40 +2,12 @@
 {
     public class History
     {
-        public string UpdatedTime
-        {
-            get
-            {
-                return "adfadfadf";
-            }
-            set { UpdatedTime = value; }
-        }
+        public string UpdatedDate { get; set; }
 
-        public string Updator
-        {
-            get
-            {
-                return "adfadfadf";
-            }
-            set { Updator = value; }
-        }
+        public string UpdatedBy { get; set; }
 
-        public string Old
-        {
-            get
-            {
-                return "adfadfadf";
-            }
-            set { Old = value; }
-        }
+        public string Old { get; set; }
 
-        public string New
-        {
-            get
-            {
-                return "adfadfadf";
-            }
-            set { New = value; }
-        }
+        public string New { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     {
         public override string GetSettingKey()
         {
-            return base.GetSettingKey();
+            return "TGRS_OS_TraderTeamHistoryGet";
         }
     }
 }

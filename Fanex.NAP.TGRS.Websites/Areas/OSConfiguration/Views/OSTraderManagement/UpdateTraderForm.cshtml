@@ -7,7 +7,7 @@
                 <label>@ViewLang.Username</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError" />
+                <input type="text" id="txtTraderName" class="width-200 " data-val-required="@Messages.RequiredFieldError" />
                 <input type="hidden" id="txtCustId" />
             </div>
         </div>
@@ -24,7 +24,9 @@
                 <label>@ViewLang.Team</label>
             </div>
             <div class="edit-field">
-                <select id="ddlTeamPopup" style="width: 95px"></select>
+                <select id="ddlTeamPopup" style="width: 95px">
+                    <option team-id="-1"></option>
+                </select>
             </div>
             <div id="dpkTeamEffectiveDate">
             </div>
@@ -34,7 +36,9 @@
                 <label>@ViewLang.Grade</label>
             </div>
             <div class="edit-field">
-                <select id="ddlGradePopup" style="width: 95px"></select>
+                <select id="ddlGradePopup" style="width: 95px">
+                    <option grade-id="-1"></option>
+                </select>
             </div>
             <div id="dpkGradeEffectiveDate">
             </div>

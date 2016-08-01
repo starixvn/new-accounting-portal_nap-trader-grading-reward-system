@@ -7,7 +7,7 @@
                 <label>@ViewLang.Username</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError" maxlength="30" />
+                <input type="text" id="txtTraderName" class="width-200 " data-val-required="@Messages.RequiredFieldError" maxlength="30" />
             </div>
         </div>
         <div class="form-row">
@@ -23,7 +23,9 @@
                 <label>@ViewLang.Team</label>
             </div>
             <div class="edit-field">
-                <select id="ddlTeamPopup" data-val-required="@Messages.RequiredFieldError" style="width: 206px"></select>
+                <select id="ddlTeamPopup" data-val-required="@Messages.RequiredFieldError" style="width: 206px">
+                    <option team-id="-1"></option>
+                </select>
             </div>
         </div>
         <div class="form-row">
@@ -31,7 +33,9 @@
                 <label>@ViewLang.Grade</label>
             </div>
             <div class="edit-field">
-                <select id="ddlGradePopup" data-val-required="@Messages.RequiredFieldError" style="width: 206px"></select>
+                <select id="ddlGradePopup" data-val-required="@Messages.RequiredFieldError" style="width: 206px">
+                    <option grade-id="-1"></option>
+                </select>
             </div>
         </div>
         <div class="form-row">

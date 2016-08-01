@@ -8,12 +8,19 @@
     {
         public int TraderId { get; set; }
 
-        public int IssueId { get; set; }
+        public int IssueTypeId { get; set; }
 
-        public DateTime IssueDate { get; set; }
+        public DateTime IssuedDate { get; set; }
 
         public int Value { get; set; }
 
         public string Reason { get; set; }
+
+        public int CreatorId { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "TGRS_OS_TraderIssueInsert";
+        }
     }
 }

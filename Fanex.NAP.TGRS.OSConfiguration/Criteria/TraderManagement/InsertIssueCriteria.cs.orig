@@ -1,0 +1,22 @@
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
+{
+<<<<<<< HEAD:Fanex.NAP.TGRS.OSConfiguration/Criteria/TraderManagement/InsertErrorCriteria.cs
+    using Fanex.NAP.Framework.Data;
+=======
+>>>>>>> #641466 - finish popup:Fanex.NAP.TGRS.OSConfiguration/Criteria/TraderManagement/InsertIssueCriteria.cs
+    using System;
+    using Fanex.NAP.Framework.Data;
+
+    public class InsertIssueCriteria : CriteriaBase
+    {
+        public int TraderId { get; set; }
+
+        public int IssueId { get; set; }
+
+        public DateTime IssueDate { get; set; }
+
+        public int Value { get; set; }
+
+        public string Reason { get; set; }
+    }
+}

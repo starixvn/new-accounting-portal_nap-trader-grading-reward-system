@@ -1,6 +1,12 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration
+﻿using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
+using Fanex.NAP.TGRS.OSConfiguration.Services.Implement;
+using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
+using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
+
+namespace Fanex.NAP.TGRS.OSConfiguration
 {
     using System.Web.Mvc;
+    using Simplect;
 
     /// <summary>
     /// Registers Config area.
@@ -26,7 +32,15 @@
                 "OSConfiguration/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
 
-            //Registerdependency();
+            Registerdependency();
+        }
+
+        private void Registerdependency()
+        {
+            InjectorFactory.CurrentInjector.Bind<ITraderManagementService>().Using<TraderManagementService>();
+            InjectorFactory.CurrentInjector.Bind<ITeamManagementService>().Using<TeamManagementService>();
+            InjectorFactory.CurrentInjector.Bind<IGradeManagementService>().Using<GradeManagementService>();
+            InjectorFactory.CurrentInjector.Bind<IIssueService>().Using<IssueService>();
         }
     }
 }

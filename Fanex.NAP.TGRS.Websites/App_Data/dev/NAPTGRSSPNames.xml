@@ -10,6 +10,16 @@
     <Setting Key="TGRS_OS_TeamInsert" SpName="TGRS_OS_TeamInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TeamUpdate" SpName="TGRS_OS_TeamUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="OSTraderManagement">
+    <Setting Key="TGRS_OS_TraderGetAll" SpName="TGRS_OS_TraderGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderInsert" SpName="TGRS_OS_TraderInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderUpdate" SpName="TGRS_OS_TraderUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderIssueGet" SpName="TGRS_OS_TraderIssueGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderTeamHistoryGet" SpName="TGRS_OS_TraderTeamHistoryGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderGradeHistoryGet" SpName="TGRS_OS_TraderGradeHistoryGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_IssueTypeGet" SpName="TGRS_OS_IssueTypeGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderIssueInsert" SpName="TGRS_OS_TraderIssueInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="GradeManagement">
     <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

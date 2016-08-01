@@ -11,7 +11,9 @@ var traderManagementFactory = (function ($) {
         GetTraderError: common.ResolveRootUrl('OSTraderManagement/GetTraderError'),
         InsertTrader: common.ResolveRootUrl('OSTraderManagement/InsertTrader'),
         InsertTraderIssue: common.ResolveRootUrl('OSTraderManagement/InsertTraderIssue'),
-        UpdateTrader: common.ResolveRootUrl('OSTraderManagement/UpdateTrader')
+        UpdateTrader: common.ResolveRootUrl('OSTraderManagement/UpdateTrader'),
+        GetTeam: common.ResolveRootUrl("OSTraderManagement/GetTeamName"),
+        GetGrade: common.ResolveRootUrl("OSTraderManagement/GetGradeName")
     };
 
     return {

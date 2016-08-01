@@ -1,13 +1,13 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
-    using Fanex.NAP.Framework.Data;
     using System;
+    using Fanex.NAP.Framework.Data;
 
     public class InsertTraderCriteria : CriteriaBase
     {
-        public string Username { get; set; }
+        public string TraderName { get; set; }
 
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         public int TeamId { get; set; }
 
@@ -15,9 +15,16 @@
 
         public DateTime FirstWorkingDate { get; set; }
 
+        public int CreatorId { get; set; }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
+
         public override string GetSettingKey()
         {
-            return base.GetSettingKey();
+            return "TGRS_OS_TraderInsert";
         }
     }
 }

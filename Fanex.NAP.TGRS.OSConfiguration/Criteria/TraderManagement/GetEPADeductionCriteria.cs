@@ -2,9 +2,14 @@
 {
     public class GetEPADeductionCriteria : GetHistoryCriteria
     {
+        public int IssueTypeId
+        {
+            get { return 1; }
+        }
+
         public override string GetSettingKey()
         {
-            return base.GetSettingKey();
+            return "TGRS_OS_TraderIssueGet";
         }
     }
 }
