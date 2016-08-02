@@ -82,14 +82,20 @@ var traderManagement = (function ($) {
     };
 
     traderManagement.GetTradersAll = function () {
-        traderManagement.GetTeam(function() {
-            traderManagement.AddTeams(teams,domElements.teamSelector);
-        });
+        common.DisableInput();
 
-        traderManagement.GetGrade(function() {
-            traderManagement.AddGrades(grades,domElements.gradeSelector);
-        });
-       
+        if (teams == null) {
+            traderManagement.GetTeam(function () {
+                traderManagement.AddTeams(teams, domElements.teamSelector);
+            });
+        }
+
+        if (grades == null) {
+            traderManagement.GetGrade(function () {
+                traderManagement.AddGrades(grades, domElements.gradeSelector);
+            });
+        }
+      
         traderManagementService.GetTraders().then(function () {
             traderManagement.Traders = traderManagementService.Traders;
 
@@ -99,7 +105,7 @@ var traderManagement = (function ($) {
 
     traderManagement.getTraderByNameTeamGrade = function (traderName, team, grade) {
         var criteria = {
-            TraderName: traderName,
+            TraderName: $.trim(traderName),
             TeamId: team,
             GradeId: grade
         };
@@ -129,6 +135,14 @@ var traderManagement = (function ($) {
         common.Modal(labels.NewTrader, form);
         cachePopupElements();
 
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setYear(maxDate.getFullYear() + 1);
+        var minDate = new Date(datepickerSetting.Today);
+        minDate.setYear(minDate.getFullYear() - 5);
+        layout.CreateDatepicker($("#dpkFirstWorkingDate", domElements.divPopup), 'firstWorkingDate', labels.FirstWorkingDate, 'lbl-field width-120',
+           datepickerSetting.Today, minDate, maxDate);
+        popupElements.FirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200");
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
                 var teamId = teamSelector.find(":selected").attr("team-id");
@@ -143,9 +157,9 @@ var traderManagement = (function ($) {
                 };
 
                 traderManagementService.InsertTrader(trader).then(function () {
-                    traderManagement.Result = traderManagementService.Result;
+                    var result = traderManagementService.Result;
 
-                    if (traderManagement.Result.Code === 0) {
+                    if (result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddTraderSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
@@ -153,7 +167,7 @@ var traderManagement = (function ($) {
                         disablePopup();
                         traderManagement.GetTradersAll();
                     } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
                         return false;
                     }
                 });
@@ -165,12 +179,20 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupUpdateTrader = function (traderId, traderName, traderEmpId, team, grade) {
+    traderManagement.OpenPopupUpdateTrader = function (traderId, traderName, traderEmpId, team, grade,workingDate,teamDate,gradeDate) {
         var form = domElements.divUpdateTraderForm.clone();
 
         refreshPopup();
         common.Modal(labels.EditTrader, form);
         cachePopupElements();
+
+        var maxDate = new Date(datepickerSetting.Today);
+        maxDate.setYear(maxDate.getFullYear() + 1);
+        var minDate = new Date(datepickerSetting.Today);
+        minDate.setYear(minDate.getFullYear() - 5);
+        layout.CreateDatepicker($("#dpkFirstWorkingDate", domElements.divPopup), 'firstWorkingDate', labels.FirstWorkingDate, 'lbl-field width-120',
+           workingDate, minDate, maxDate);
+        popupElements.FirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200");
 
         var teamSelector = $("#ddlTeamPopup", form);
         var gradeSelector = $("#ddlGradePopup", form);
@@ -200,9 +222,9 @@ var traderManagement = (function ($) {
         minDate.setYear(minDate.getFullYear() - 5);
 
         layout.CreateDatepicker($("#dpkGradeEffectiveDate", domElements.divPopup), 'gradeEffectiveDate', '', '',
-           datepickerSetting.Today, minDate, maxDate);
+           gradeDate, minDate, maxDate);
         layout.CreateDatepicker($("#dpkTeamEffectiveDate", domElements.divPopup), 'teamEffectiveDate', '', '',
-         datepickerSetting.Today, minDate, maxDate);
+         teamDate, minDate, maxDate);
 
         popupElements.GradeEffectiveDate = $("#gradeEffectiveDate", domElements.divPopup).css("width", "99px");
         popupElements.TeamEffectiveDate = $("#teamEffectiveDate", domElements.divPopup).css("width", "99px");
@@ -217,13 +239,11 @@ var traderManagement = (function ($) {
 
                 var trader = {
                     TraderId: traderId,
-                    TraderName: $.trim(popupElements.txtTraderName.val()),
-                    EmployeeId: $.trim(popupElements.txtEmployeeId.val()),
-                    TeamId: teamId,
-                    GradeId: gradeId,
-                    FirstWorkingDate: popupElements.FirstWorkingDate.val(),
-                    GradeEffectiveDate: popupElements.GradeEffectiveDate.val(),
-                    TeamEffectiveDate: popupElements.TeamEffectiveDate.val()
+                    NewTeamId: teamId,
+                    NewGradeId: gradeId,
+                    NewFirstWorkingDate: popupElements.FirstWorkingDate.val(),
+                    NewGradeEffectiveDate: popupElements.GradeEffectiveDate.val(),
+                    NewTeamEffectiveDate: popupElements.TeamEffectiveDate.val()
                 };
 
                 traderManagementService.UpdateTrader(trader).then(function () {
@@ -423,14 +443,7 @@ var traderManagement = (function ($) {
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
-       
-        var maxDate = new Date(datepickerSetting.Today);
-        maxDate.setYear(maxDate.getFullYear() + 1);
-        var minDate = new Date(datepickerSetting.Today);
-        minDate.setYear(minDate.getFullYear() - 5);
-        layout.CreateDatepicker($("#dpkFirstWorkingDate", domElements.divPopup), 'firstWorkingDate', labels.FirstWorkingDate, 'lbl-field width-120',
-           datepickerSetting.Today, minDate, maxDate);
-        popupElements.FirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200");
+      
     };
 
     var getErrorPopupElements = function () {
@@ -453,7 +466,8 @@ var traderManagement = (function ($) {
     }
 
     var renderGrid = function (data) {
-        var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"  data-trader-empId="{1}" data-trader-name="{2}" data-team-name="{3}" data-grade-name = "{4}">{2}</span>';
+        var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"  data-trader-empId="{1}" data-trader-name="{2}" data-team-name="{3}" data-grade-name = "{4}" ' +
+            'data-working-date="{5}" data-team-date="{6}" data-grade-date="{7}">{2}</span>';
         var linkFormat = '<span class="{0} link" data-trader-id="{1}">{2}</span>';
         var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
         var gridOptions = {
@@ -484,7 +498,7 @@ var traderManagement = (function ($) {
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
-                editableTraderNameCol = nameColFormat.format(item.TraderId, item.EmployeeId, item.TraderName, item.TeamName, item.GradeName);
+                editableTraderNameCol = nameColFormat.format(item.TraderId, item.EmployeeId, item.TraderName, item.TeamName, item.GradeName,item.FirstWorkingDate,item.TeamModifiedDate,item.GradeModifiedDate);
                 traderNameCol = item.TraderName;
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
@@ -576,13 +590,16 @@ var traderManagement = (function ($) {
         domElements.divTradersGrid.off('click');
         domElements.divTradersGrid.on('click', 'span.edit-trader-link', function () {
             var $obj = $(this);
-            var traderId = $obj.attr('data-trader-id');
+            var traderId = $obj.attr('data-trader-id')
             var traderName = $obj.attr('data-trader-name');
             var traderEmpId = $obj.attr("data-trader-empId");
             var team = $obj.attr("data-team-name");
             var grade = $obj.attr("data-grade-name");
+            var workingDate = $obj.attr("data-working-date");
+            var teamDate = $obj.attr("data-team-date");
+            var gradeDate = $obj.attr("data-grade-date");
 
-            traderManagement.OpenPopupUpdateTrader(traderId, traderName, traderEmpId, team, grade);
+            traderManagement.OpenPopupUpdateTrader(traderId, traderName, traderEmpId, team, grade,workingDate,teamDate,gradeDate);
         });
 
         domElements.divTradersGrid.on('click', 'span.get-team-link', function () {
