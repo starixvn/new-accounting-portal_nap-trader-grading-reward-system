@@ -10,6 +10,16 @@
     <Setting Key="TGRS_OS_TeamInsert" SpName="TGRS_OS_TeamInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TeamUpdate" SpName="TGRS_OS_TeamUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="OSTraderManagement">
+    <Setting Key="TGRS_OS_TraderGet" SpName="TGRS_OS_TraderGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderInsert" SpName="TGRS_OS_TraderInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderUpdate" SpName="TGRS_OS_TraderUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderIssueGet" SpName="TGRS_OS_TraderIssueGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderTeamHistoryGet" SpName="TGRS_OS_TraderTeamHistoryGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderGradeHistoryGet" SpName="TGRS_OS_TraderGradeHistoryGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_IssueTypeGet" SpName="TGRS_OS_IssueTypeGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderIssueInsert" SpName="TGRS_OS_TraderIssueInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="GradeManagement">
     <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
@@ -105,9 +115,9 @@
   </Function>
   <Function Name="TraderReport">
     <Setting Key="TGRS_Rpt_TraderWinlossTurnover" SpName="TGRS_Rpt_TraderWinlossTurnover" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_TraderGeneralInfo" SpName="TGRS_Rpt_TraderGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
     <Setting Key="TGRS_Rpt_TraderLeaguePerformance_Detail" SpName="TGRS_Rpt_TraderLeaguePerformance_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
@@ -118,4 +128,3 @@
     </Setting>
   </Function>
 </Functions>
-
