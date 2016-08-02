@@ -1,6 +1,4 @@
-﻿using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
@@ -13,7 +11,12 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
     {
         public IEnumerable<TraderInfo> GetAllTrader()
         {
-            var criteria = new GetTraderAllCriteria();
+            var criteria = new GetTraderCriteria()
+            {
+                GradeId = -1,
+                TeamId = -1,
+                TraderName = ""
+            };
 
             return GetData<TraderInfo>(criteria);
         }
@@ -46,6 +49,13 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
         public IEnumerable<Issue> GetTraderEPADeductions(GetEPADeductionCriteria criteria)
         {
             return GetData<Issue>(criteria);
+        }
+
+        public IEnumerable<TraderInfo> GetTraderByNameTeamGrade(GetTraderCriteria criteria)
+        {
+            criteria.TraderName = criteria.TraderName ?? string.Empty;
+
+            return GetData<TraderInfo>(criteria);
         }
     }
 }

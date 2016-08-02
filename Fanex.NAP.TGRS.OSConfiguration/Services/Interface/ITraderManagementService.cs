@@ -24,5 +24,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement
         IEnumerable<Issue> GetTraderErrors(GetErrorCriteria criteria);
 
         IEnumerable<Issue> GetTraderEPADeductions(GetEPADeductionCriteria criteria);
+
+        IEnumerable<TraderInfo> GetTraderByNameTeamGrade(GetTraderCriteria criteria);
     }
 }

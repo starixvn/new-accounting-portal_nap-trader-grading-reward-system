@@ -531,8 +531,8 @@
   <data name="EPADeduction" xml:space="preserve">
     <value>EPA P.Deduction</value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
+  <data name="Issue" xml:space="preserve">
+    <value>Issue</value>
   </data>
   <data name="IssueReason" xml:space="preserve">
     <value>Reason</value>

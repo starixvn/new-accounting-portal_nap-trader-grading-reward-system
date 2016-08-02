@@ -2,8 +2,14 @@
 {
     using Fanex.NAP.Framework.Data;
 
-    public class GetTraderAllCriteria : CriteriaBase
+    public class GetTraderCriteria : CriteriaBase
     {
+        public string TraderName { get; set; }
+
+        public int TeamId { get; set; }
+
+        public int GradeId { get; set; }
+
         public override bool IsValid()
         {
             return true;
@@ -11,7 +17,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_TraderGetAll";
+            return "TGRS_OS_TraderGet";
         }
     }
 }

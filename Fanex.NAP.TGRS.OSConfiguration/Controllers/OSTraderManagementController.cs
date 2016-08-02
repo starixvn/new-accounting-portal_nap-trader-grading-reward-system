@@ -73,6 +73,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(_traderService.UpdateTrader(criteria), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult GetTraderByNameTeamGrade(GetTraderCriteria criteria)
+        {
+            var result = _traderService.GetTraderByNameTeamGrade(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetTraderTeamHistory(GetTeamHistoryCriteria criteria)
         {
             var result = _traderService.GetTraderTeamHistories(criteria);

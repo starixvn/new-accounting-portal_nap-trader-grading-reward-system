@@ -56,7 +56,7 @@
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
-    <Compile Include="Criteria\TraderManagement\GetTraderAllCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />

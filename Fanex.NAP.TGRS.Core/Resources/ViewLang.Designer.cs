@@ -394,15 +394,6 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        public static string Error {
-            get {
-                return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Event Date.
         /// </summary>
         public static string EventDate {
@@ -534,6 +525,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string GrandTotal {
             get {
                 return ResourceManager.GetString("GrandTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Issue.
+        /// </summary>
+        public static string Issue {
+            get {
+                return ResourceManager.GetString("Issue", resourceCulture);
             }
         }
         
