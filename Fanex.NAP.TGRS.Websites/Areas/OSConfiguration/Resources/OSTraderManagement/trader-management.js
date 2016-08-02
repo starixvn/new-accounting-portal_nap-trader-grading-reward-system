@@ -348,22 +348,26 @@ var traderManagement = (function ($) {
                     Reason: issuePopup.issueReason.val()
                 };
 
-                traderManagementService.InsertTraderIssue(issue).then(function () {
-                    var result = traderManagementService.Result;
+                if (issue.Value == parseInt(issue.Value)) {
+                    traderManagementService.InsertTraderIssue(issue).then(function() {
+                        var result = traderManagementService.Result;
 
-                    if (result.Code == 0) {
-                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddIssueSuccessfully, false, function () {
-                            timeout = setTimeout(common.ClosePopup, 1000);
-                        });
+                        if (result.Code == 0) {
+                            common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddIssueSuccessfully, false, function() {
+                                timeout = setTimeout(common.ClosePopup, 1000);
+                            });
 
-                        disablePopup();
+                            disablePopup();
 
-                        traderManagement.GetTradersAll();
-                    } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
-                        return false;
-                    }
-                });
+                            traderManagement.GetTradersAll();
+                        } else {
+                            common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
+                            return false;
+                        }
+                    });
+                } else {
+                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, "Value field must be an integer");
+                }
             }
         });
 
