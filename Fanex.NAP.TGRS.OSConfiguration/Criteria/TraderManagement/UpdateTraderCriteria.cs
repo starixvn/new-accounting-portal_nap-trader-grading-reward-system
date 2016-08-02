@@ -7,10 +7,6 @@
     {
         public int TraderId { get; set; }
 
-        public string TraderName { get; set; }
-
-        public string EmployeeId { get; set; }
-
         public int TeamId { get; set; }
 
         public DateTime TeamEffectiveDate { get; set; }
