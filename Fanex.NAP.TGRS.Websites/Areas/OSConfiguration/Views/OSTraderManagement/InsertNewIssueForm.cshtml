@@ -19,7 +19,7 @@
                 <label>@ViewLang.IssueValue</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtIssueValue" class="width-200 clearable-input" data-val-required="@Messages.RequiredFieldError"/>
+                <input type="text" id="txtIssueValue" class="width-200 clearable-input" data-val-required="@Messages.RequiredFieldError" data-val-number="@Messages.NotANumberError"/>
             </div>
         </div>
         <div class="form-row">
@@ -27,7 +27,7 @@
                 <label>@ViewLang.IssueReason</label>
             </div>
             <div class="edit-field">
-                <textarea id="txtIssueReason" data-val-required="@Messages.RequiredFieldError" rows="4" class="width-200"></textarea>
+                <textarea id="txtIssueReason" data-val-required="@Messages.RequiredFieldError" rows="4" class="width-200" data-val-not-html="@Messages.HtmlInputError"></textarea>
             </div>
         </div>
         <div class="form-row button-row">

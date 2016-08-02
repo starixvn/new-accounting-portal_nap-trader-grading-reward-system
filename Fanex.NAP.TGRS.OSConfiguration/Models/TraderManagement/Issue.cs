@@ -1,12 +1,16 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
+﻿using System;
+
+namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
 {
     public class Issue
     {
-        public Issue()
-        {
-        }
+        private DateTime _updatedDate;
 
-        public string CreatedDate { get; set; }
+        public string CreatedDate
+        {
+            get { return _updatedDate.ToString("MM/dd/yyyy HH:mm:ss"); }
+            set { _updatedDate = DateTime.Parse(value); }
+        }
 
         public int Value { get; set; }
 

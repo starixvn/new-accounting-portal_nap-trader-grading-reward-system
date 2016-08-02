@@ -9,6 +9,8 @@
 
         public int NewTeamId { get; set; }
 
+        public string NewEmployeeId { get; set; }
+
         public DateTime NewTeamEffectiveDate { get; set; }
 
         public int NewGradeId { get; set; }
