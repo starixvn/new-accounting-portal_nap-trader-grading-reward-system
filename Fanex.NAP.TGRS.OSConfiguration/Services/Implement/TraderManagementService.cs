@@ -15,7 +15,7 @@
             {
                 GradeId = -1,
                 TeamId = -1,
-                TraderName = ""
+                TraderName = string.Empty
             };
 
             return GetData<TraderInfo>(criteria);

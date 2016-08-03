@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
-    using Fanex.NAP.Framework.Data;
     using System;
     using Fanex.NAP.Framework.Data;
 

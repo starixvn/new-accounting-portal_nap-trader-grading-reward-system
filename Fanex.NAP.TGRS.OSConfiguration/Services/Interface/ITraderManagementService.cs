@@ -1,13 +1,9 @@
-﻿using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
-using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement
 {
-    using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
-    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement;
-    using Fanex.NAP.TGRS.OSConfiguration.Models.TeamManagement;
     using System.Collections.Generic;
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
 
     public interface ITraderManagementService
     {

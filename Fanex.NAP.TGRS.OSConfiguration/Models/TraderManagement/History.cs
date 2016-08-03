@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement
 {
+    using System;
+
     public class History
     {
         private DateTime _updatedDate;

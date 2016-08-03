@@ -1,15 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
-using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
-using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
-using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
-using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Core.BaseClasses;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
 
     public class OSTraderManagementController : TGRSBaseController
     {
@@ -21,7 +19,11 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
         private IIssueService _issueService;
 
-        public OSTraderManagementController(ITraderManagementService service, ITeamManagementService teamService, IGradeManagementService gradeService, IIssueService issueService)
+        public OSTraderManagementController(
+            ITraderManagementService service,
+            ITeamManagementService teamService,
+            IGradeManagementService gradeService,
+            IIssueService issueService)
         {
             _traderService = service;
             _teamService = teamService;
@@ -40,19 +42,19 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetTeamName()
+        public JsonResult GetTeamName()
         {
             var team = _teamService.GetAllTeam().Select(t => new { TeamName = t.TeamName, TeamId = t.TeamId });
             return Json(team, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetGradeName()
+        public JsonResult GetGradeName()
         {
             var grade = _gradeService.GetAllGrade().Select(g => new { GradeName = g.GradeName, GradeId = g.GradeId });
             return Json(grade, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetIssueType()
+        public JsonResult GetIssueType()
         {
             var result = _issueService.GetIssueInfos();
 
@@ -81,6 +83,15 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult InsertTraderIssue(InsertIssueCriteria criteria)
+        {
+            criteria.CreatorId = SessionUtility.GetCreatorId();
+            var result = _issueService.InsertNewIssue(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetTraderTeamHistory(GetTeamHistoryCriteria criteria)
         {
             var result = _traderService.GetTraderTeamHistories(criteria);
@@ -105,15 +116,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult GetTraderError(GetErrorCriteria criteria)
         {
             var result = _traderService.GetTraderErrors(criteria);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult InsertTraderIssue(InsertIssueCriteria criteria)
-        {
-            criteria.CreatorId = SessionUtility.GetCreatorId();
-            var result = _issueService.InsertNewIssue(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

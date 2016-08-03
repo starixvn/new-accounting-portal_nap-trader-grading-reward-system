@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
+    using Fanex.NAP.Framework.Data;
+
     public class GetAllIssueCriteria : CriteriaBase
     {
         public override bool IsValid()
