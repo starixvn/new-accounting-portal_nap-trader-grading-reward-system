@@ -179,7 +179,7 @@ var traderManagement = (function ($) {
         minDate.setYear(minDate.getFullYear() - 5);
         layout.CreateDatepicker($("#dpkFirstWorkingDate", domElements.divPopup), 'firstWorkingDate', labels.FirstWorkingDate, 'lbl-field width-120',
            workingDate, minDate, maxDate);
-        popupElements.FirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200");
+        popupElements.FirstWorkingDate = $('#firstWorkingDate', domElements.divPopup).addClass("width-200").css("background", "url('../Content/DatePicker/images/icon-calendar.png') no-repeat scroll 98.5% 50% white");
 
         var teamSelector = $("#ddlTeamPopup", form);
         var gradeSelector = $("#ddlGradePopup", form);
@@ -230,7 +230,8 @@ var traderManagement = (function ($) {
                     NewGradeId: gradeId,
                     NewFirstWorkingDate: popupElements.FirstWorkingDate.val(),
                     NewGradeEffectiveDate: popupElements.GradeEffectiveDate.val(),
-                    NewTeamEffectiveDate: popupElements.TeamEffectiveDate.val()
+                    NewTeamEffectiveDate: popupElements.TeamEffectiveDate.val(),
+                    NewEmployeeId: popupElements.txtEmployeeId.val()
                 };
 
                 traderManagementService.UpdateTrader(trader).then(function () {
@@ -499,11 +500,11 @@ var traderManagement = (function ($) {
                               { Name: 'ColId', Value: item.EmployeeId.length == 0 ? "-" : item.EmployeeId },
                               { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.TeamName) },
                               { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.GradeName) },
-                              { Name: 'ColEPA', Value: linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction) },
-                              { Name: 'ColError', Value: linkFormat.format("get-error-link", item.TraderId, item.Error) },
+                              { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction) },
+                              { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error) },
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
-                              { Name: 'ColCreatedBy', Value: item.CreatedBy },
+                              { Name: 'ColCreatedBy', Value: item.CreatedBy }
                     ]
                 };
 
