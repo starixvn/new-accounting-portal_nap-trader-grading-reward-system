@@ -9,6 +9,8 @@
 
 namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
@@ -29,14 +31,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             this._gradeService = gradeService ?? new GradeManagementService();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.HasEditRight = true;//this.HasRight(TGRSFunctionKeys.OSGradeManagement, Constant.Policy.Host);
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSGradeManagement, Constant.Policy.Host);
             return View();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetAllGrade()
         {
@@ -45,7 +47,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
         public JsonResult InsertGrade(InsertGradeCriteria criteria)
         {
@@ -57,7 +59,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         public JsonResult UpdateGrade(UpdateGradeCriteria criteria)
         {
             criteria.GradeName = criteria.GradeName ?? string.Empty;

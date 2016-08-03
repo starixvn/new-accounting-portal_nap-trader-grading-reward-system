@@ -9,6 +9,8 @@
 
 namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
@@ -29,14 +31,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             this._teamService = teamService ?? new TeamManagementService();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.HasEditRight = true;//this.HasRight(TGRSFunctionKeys.OSTeamManagement, Constant.Policy.Host);
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSTeamManagement, Constant.Policy.Host);
             return View();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.TeamManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetAllTeam()
         {
@@ -45,7 +47,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
         public JsonResult InsertTeam(InsertTeamCriteria criteria)
         {
@@ -57,7 +59,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTeamManagement, Policy = Constant.Policy.Host)]
         public JsonResult UpdateTeam(UpdateTeamCriteria criteria)
         {
             criteria.TeamName = criteria.TeamName ?? string.Empty;
