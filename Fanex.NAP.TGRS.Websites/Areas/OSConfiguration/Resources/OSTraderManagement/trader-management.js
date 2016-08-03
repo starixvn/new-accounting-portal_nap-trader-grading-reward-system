@@ -48,37 +48,22 @@ var traderManagement = (function ($) {
     var grades;
 
     traderManagement.GetTeam = function (callback) {
-        $.get(common.ResolveRootUrl("OSTraderManagement/GetTeamName"))
-            .success(function (result) {
-                teams = result;
-
-                if (callback != null) {
-                    callback();
-                }
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
+        traderManagementService.GetTeam(function(result) {
+            teams = result;
+            if (callback != null) {
+                callback();
+            }
+        });
     };
 
     traderManagement.GetGrade = function (callback) {
-        $.get(common.ResolveRootUrl("OSTraderManagement/GetGradeName"))
-            .success(function (result) {
-                grades = result;
+        traderManagementService.GetGrade(function(result) {
+            grades = result;
 
-                if (callback != null) {
-                    callback();
-                }
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
+            if (callback != null) {
+                callback();
+            }
+        });
     };
 
     traderManagement.GetTradersAll = function () {
@@ -400,19 +385,12 @@ var traderManagement = (function ($) {
     }
 
     traderManagement.AddIssueType = function (selector) {
-        $.get(common.ResolveRootUrl("OSTraderManagement/GetIssueType"))
-           .success(function (result) {
-               for (var i = 0; i < result.length; i++) {
-                   var option = $("<option></option>").attr("issue-id", result[i].IssueId).text(result[i].IssueName);
-                   selector.append(option);
-               }
-           })
-           .error(function (xhr) {
-               common.HandleAjaxError(xhr);
-           })
-           .complete(function () {
-               common.EnableInput();
-           });
+        traderManagementService.GetIssueType(function(result) {
+            for (var i = 0; i < result.length; i++) {
+                var option = $("<option></option>").attr("issue-id", result[i].IssueId).text(result[i].IssueName);
+                selector.append(option);
+            }
+        });
     }
 
     traderManagement.Initialize = function () {
@@ -474,16 +452,15 @@ var traderManagement = (function ($) {
         var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: "Employee ID", Width: 100, Name: 'ColId', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Team, Width: 80, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Grade, Width: 80, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "EPA P.Deduction", Width: 200, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Grade, Width: 150, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "EPA P.Deduction", Width: 100, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Error", Width: 40, Name: 'ColError', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "First Working Date", Width: 180, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "Issue", Width: 80, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }, ],
+                      { HeaderText: "First Working Date", Width: 100, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedDate, Width: 100, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
             showNumberColumn: true,
             gridExpandHeight: 100,
             showPager: true,
@@ -493,6 +470,11 @@ var traderManagement = (function ($) {
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
+
+        if (hasEditRight) {
+            gridOptions.columns.push({ HeaderText: "Issue", Width: 50, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' });
+        }
+
         var editableTraderNameCol = "";
         var traderNameCol = "";
         var bodyData = [];
@@ -505,7 +487,7 @@ var traderManagement = (function ($) {
                 row = {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTraderNameCol : traderNameCol },
-                              { Name: 'ColId', Value: item.EmployeeId },
+                              { Name: 'ColId', Value: item.EmployeeId.length == 0 ? "-" : item.EmployeeId },
                               { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.TeamName) },
                               { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.GradeName) },
                               { Name: 'ColEPA', Value: linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction) },
@@ -513,8 +495,13 @@ var traderManagement = (function ($) {
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedBy },
-                              { Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId) }]
+                             ]
                 };
+
+                if (hasEditRight) {
+                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId) });
+                }
+
                 bodyData.push(row);
             });
         }

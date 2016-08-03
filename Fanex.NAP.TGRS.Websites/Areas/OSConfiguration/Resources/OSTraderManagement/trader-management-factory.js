@@ -13,7 +13,8 @@ var traderManagementFactory = (function ($) {
         InsertTraderIssue: common.ResolveRootUrl('OSTraderManagement/InsertTraderIssue'),
         UpdateTrader: common.ResolveRootUrl('OSTraderManagement/UpdateTrader'),
         GetTeam: common.ResolveRootUrl("OSTraderManagement/GetTeamName"),
-        GetGrade: common.ResolveRootUrl("OSTraderManagement/GetGradeName")
+        GetGrade: common.ResolveRootUrl("OSTraderManagement/GetGradeName"),
+        GetIssueType: common.ResolveRootUrl("OSTraderManagement/GetIssueType")
     };
 
     return {
@@ -47,6 +48,18 @@ var traderManagementFactory = (function ($) {
 
         InsertTraderIssue: function (traderError) {
             return $.post(urls.InsertTraderIssue, traderError);
+        },
+
+        GetTeam: function() {
+            return $.get(urls.GetTeam);
+        },
+
+        GetGrade: function () {
+            return $.get(urls.GetGrade);
+        },
+
+        GetIssueType: function() {
+            return $.get(urls.GetIssueType);
         }
     }
 })(jQuery);

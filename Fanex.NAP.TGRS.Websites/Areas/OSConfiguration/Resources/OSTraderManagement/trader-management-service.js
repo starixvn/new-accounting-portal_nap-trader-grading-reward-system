@@ -123,5 +123,44 @@ var traderManagementService = (function ($) {
             });
     };
 
+    traderManagementService.GetTeam = function (callback) {
+        return traderManagementFactory.GetTeam()
+            .success(function (result) {
+                callback(result);
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    }
+
+    traderManagementService.GetGrade = function (callback) {
+        return traderManagementFactory.GetGrade()
+            .success(function (result) {
+                callback(result);
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    }
+
+    traderManagementService.GetIssueType = function(callback) {
+        return traderManagementFactory.GetIssueType()
+            .success(function (result) {
+                callback(result);
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    }
+
     return traderManagementService;
 })(jQuery);
