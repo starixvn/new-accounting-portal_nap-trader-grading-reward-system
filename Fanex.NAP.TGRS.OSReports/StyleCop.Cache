@@ -7,7 +7,7 @@
     <timestamps>
       <styleCop>2016/02/16 11:27:06.144</styleCop>
       <settingsFile>2016/02/16 11:29:02.814</settingsFile>
-      <sourceFile>2016/07/25 15:50:17.371</sourceFile>
+      <sourceFile>2016/08/03 10:12:52.307</sourceFile>
       <parser>2016/02/16 11:27:06.144</parser>
       <StyleCop.CSharp.DocumentationRules>2016/02/16 11:27:06.144</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>-1724234938</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -26,19 +26,7 @@
       <StyleCop.CSharp.Nexcel.NexcelCustomRules>2016/02/16 11:27:06.144</StyleCop.CSharp.Nexcel.NexcelCustomRules>
       <StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>0</StyleCop.CSharp.Nexcel.NexcelCustomRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
-        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
-        <line>32</line>
-        <index>1015</index>
-        <endIndex>1037</endIndex>
-        <startLine>32</startLine>
-        <startColumn>13</startColumn>
-        <endLine>32</endLine>
-        <endColumn>35</endColumn>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
   <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>

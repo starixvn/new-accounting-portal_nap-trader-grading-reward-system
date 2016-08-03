@@ -28,8 +28,6 @@
                 "OSReports_default",
                 "OSReports/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
-
-            //Registerdependency();
         }
     }
 }

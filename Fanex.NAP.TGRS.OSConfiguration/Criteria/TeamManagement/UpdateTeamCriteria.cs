@@ -24,6 +24,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
             {
                 return SessionUtility.GetCreatorId();
             }
+
             set
             {
             }
