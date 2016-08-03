@@ -48,7 +48,7 @@ var traderManagement = (function ($) {
     var grades;
 
     traderManagement.GetTeam = function (callback) {
-        traderManagementService.GetTeam(function(result) {
+        traderManagementService.GetTeam(function (result) {
             teams = result;
             if (callback != null) {
                 callback();
@@ -57,7 +57,7 @@ var traderManagement = (function ($) {
     };
 
     traderManagement.GetGrade = function (callback) {
-        traderManagementService.GetGrade(function(result) {
+        traderManagementService.GetGrade(function (result) {
             grades = result;
 
             if (callback != null) {
@@ -257,7 +257,10 @@ var traderManagement = (function ($) {
 
     traderManagement.OpenPopupTraderTeamHistory = function (traderId) {
         refreshPopup();
-        common.Modal(labels.TeamHistory, domElements.divPopupGrid);
+
+        var grid = domElements.divPopupGrid.clone();
+
+        common.Modal(labels.TeamHistory, grid);
 
         var criteria = {
             TraderId: traderId
@@ -265,14 +268,16 @@ var traderManagement = (function ($) {
 
         traderManagementService.GetTraderTeamHistory(criteria).then(function () {
             traderManagement.TraderTeamHistory = traderManagementService.TraderTeamHistory;
-            renderHistoryGrid("Team", traderManagement.TraderTeamHistory);
+            renderHistoryGrid("Team", traderManagement.TraderTeamHistory, grid);
         });
     };
 
     traderManagement.OpenPopupTraderGradeHistory = function (traderId) {
         refreshPopup();
 
-        common.Modal(labels.GradeHistory, domElements.divPopupGrid);
+        var grid = domElements.divPopupGrid.clone();
+
+        common.Modal(labels.GradeHistory, grid);
 
         var criteria = {
             TraderId: traderId
@@ -280,14 +285,16 @@ var traderManagement = (function ($) {
 
         traderManagementService.GetTraderGradeHistory(criteria).then(function () {
             traderManagement.TraderGradeHistory = traderManagementService.TraderGradeHistory;
-            renderHistoryGrid("Grade", traderManagement.TraderGradeHistory);
+            renderHistoryGrid("Grade", traderManagement.TraderGradeHistory, grid);
         });
     };
 
     traderManagement.OpenPopupTraderEPADeduction = function (traderId) {
         refreshPopup();
 
-        common.Modal(labels.EPADeduction, domElements.divPopupGrid);
+        var grid = domElements.divPopupGrid.clone();
+
+        common.Modal(labels.EPADeduction, grid);
 
         var criteria = {
             TraderId: traderId
@@ -295,14 +302,16 @@ var traderManagement = (function ($) {
 
         traderManagementService.GetTraderEPADeduction(criteria).then(function () {
             traderManagement.TraderEPADeduction = traderManagementService.TraderEPADeduction;
-            renderErrorGrid(traderManagement.TraderEPADeduction);
+            renderErrorGrid(traderManagement.TraderEPADeduction, grid);
         });
     };
 
     traderManagement.OpenPopupTraderError = function (traderId) {
         refreshPopup();
 
-        common.Modal(labels.Error, domElements.divPopupGrid);
+        var grid = domElements.divPopupGrid.clone();
+
+        common.Modal(labels.Error, grid);
 
         var criteria = {
             TraderId: traderId
@@ -310,7 +319,7 @@ var traderManagement = (function ($) {
 
         traderManagementService.GetTraderError(criteria).then(function () {
             traderManagement.TraderError = traderManagementService.TraderError;
-            renderErrorGrid(traderManagement.TraderError);
+            renderErrorGrid(traderManagement.TraderError, grid);
         });
     };
 
@@ -385,7 +394,7 @@ var traderManagement = (function ($) {
     }
 
     traderManagement.AddIssueType = function (selector) {
-        traderManagementService.GetIssueType(function(result) {
+        traderManagementService.GetIssueType(function (result) {
             for (var i = 0; i < result.length; i++) {
                 var option = $("<option></option>").attr("issue-id", result[i].IssueId).text(result[i].IssueName);
                 selector.append(option);
@@ -495,7 +504,7 @@ var traderManagement = (function ($) {
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedBy },
-                             ]
+                    ]
                 };
 
                 if (hasEditRight) {
@@ -509,13 +518,13 @@ var traderManagement = (function ($) {
         domElements.divTradersGrid.fanexGrid(gridOptions);
     };
 
-    var renderHistoryGrid = function (type, data) {
+    var renderHistoryGrid = function (type, data, grid) {
         var mapper = function (item, idx) {
             return {
                 Columns: [{ Name: 'colNum', Value: idx + 1 },
                     { Name: 'colTime', Value: item.UpdatedDate },
-                    { Name: 'colOld', Value: item.Old },
-                    { Name: 'colNew', Value: item.New },
+                    { Name: 'colOld', Value: item.Old == null ? "-" : item.Old },
+                    { Name: 'colNew', Value: item.New == null ? "-" : item.New },
                     { Name: 'colUpdator', Value: item.UpdatedBy }
                 ]
             }
@@ -524,19 +533,19 @@ var traderManagement = (function ($) {
         var options = {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Updated Date', Width: 180, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Old ' + type, Width: 80, Name: 'colOld', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'New ' + type, Width: 80, Name: 'colNew', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Updated Date', Width: 120, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Old ' + type, Width: 150, Name: 'colOld', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'New ' + type, Width: 150, Name: 'colNew', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Updated By', Width: 80, Name: 'colUpdator', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper)
         };
 
-        domElements.divPopupGrid.fanexGrid(options);
+        grid.fanexGrid(options);
     }
 
-    var renderErrorGrid = function (data) {
+    var renderErrorGrid = function (data, div) {
         var mapper = function (item, idx) {
             return {
                 Columns: [{ Name: 'colNum', Value: idx + 1 },
@@ -551,16 +560,16 @@ var traderManagement = (function ($) {
         var options = {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Date Time', Width: 180, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Value ', Width: 80, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Reason ', Width: 80, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Date Time', Width: 120, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Value ', Width: 40, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Reason ', Width: 200, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper)
         };
 
-        domElements.divPopupGrid.fanexGrid(options);
+        div.fanexGrid(options);
     }
 
     var disablePopup = function () {

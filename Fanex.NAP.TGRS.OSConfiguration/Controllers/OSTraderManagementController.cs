@@ -86,7 +86,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderByNameTeamGrade(GetTraderCriteria criteria)
         {
             var result = _traderService.GetTraderByNameTeamGrade(criteria);
