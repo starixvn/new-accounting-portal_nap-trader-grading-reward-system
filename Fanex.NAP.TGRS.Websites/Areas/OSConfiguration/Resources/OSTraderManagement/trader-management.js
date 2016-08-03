@@ -220,7 +220,7 @@ var traderManagement = (function ($) {
         $("#dpkTeamEffectiveDate", domElements.divPopup).next().remove();
 
         popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(popupElements.divInsertTraderForm, 'w')) {
+            if (validator.ValidateForm(popupElements.divUpdateTraderForm, 'w')) {
                 var teamId = teamSelector.find(":selected").attr("team-id");
                 var gradeId = gradeSelector.find(":selected").attr("grade-id");
 
@@ -263,6 +263,8 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.TeamHistory, grid);
 
+        $(".ui-dialog").css("left", "32%");
+
         var criteria = {
             TraderId: traderId
         };
@@ -279,6 +281,8 @@ var traderManagement = (function ($) {
         var grid = domElements.divPopupGrid.clone();
 
         common.Modal(labels.GradeHistory, grid);
+
+        $(".ui-dialog").css("left", "32%");
 
         var criteria = {
             TraderId: traderId
@@ -297,6 +301,8 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.EPADeduction, grid);
 
+        $(".ui-dialog").css("left", "32%");
+
         var criteria = {
             TraderId: traderId
         };
@@ -313,6 +319,8 @@ var traderManagement = (function ($) {
         var grid = domElements.divPopupGrid.clone();
 
         common.Modal(labels.Error, grid);
+
+        $(".ui-dialog").css("left", "32%");
 
         var criteria = {
             TraderId: traderId
@@ -469,7 +477,7 @@ var traderManagement = (function ($) {
                       { HeaderText: "EPA P.Deduction", Width: 100, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Error", Width: 40, Name: 'ColError', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "First Working Date", Width: 100, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedDate, Width: 100, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedDate, Width: 200, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
             showNumberColumn: true,
             gridExpandHeight: 100,
@@ -524,7 +532,6 @@ var traderManagement = (function ($) {
             return {
                 Columns: [{ Name: 'colNum', Value: idx + 1 },
                     { Name: 'colTime', Value: item.UpdatedDate },
-                    { Name: 'colOld', Value: item.Old == null ? "-" : item.Old },
                     { Name: 'colNew', Value: item.New == null ? "-" : item.New },
                     { Name: 'colUpdator', Value: item.UpdatedBy }
                 ]
@@ -535,7 +542,6 @@ var traderManagement = (function ($) {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Updated Date', Width: 120, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Old ' + type, Width: 150, Name: 'colOld', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'New ' + type, Width: 150, Name: 'colNew', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Updated By', Width: 80, Name: 'colUpdator', HeaderAlign: 'center', CellAlign: 'center' }
             ],

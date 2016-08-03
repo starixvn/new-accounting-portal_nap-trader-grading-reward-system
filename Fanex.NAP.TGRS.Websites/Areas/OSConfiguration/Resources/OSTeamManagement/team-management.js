@@ -167,7 +167,7 @@ var teamManagement = (function ($) {
         var nameColFormat = '<span class="edit-team-link link" data-team-id="{0}" data-team-name="{1}">{1}</span>';
         var descColFormat = '<span class="wordwrap-span" id="teamDesc_{0}">{1}</span>';
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TeamName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       //{ HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },

@@ -167,7 +167,7 @@ var gradeManagement = (function ($) {
         var nameColFormat = '<span class="edit-grade-link link" data-grade-id="{0}" data-grade-name="{1}">{1}</span>';
         var descColFormat = '<span class="wordwrap-span" id="gradeDesc_{0}">{1}</span>';
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 80, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.GradeName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       //{ HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.TraderCount, Width: 80, Name: 'ColTraderCount', HeaderAlign: 'center', CellAlign: 'center' },

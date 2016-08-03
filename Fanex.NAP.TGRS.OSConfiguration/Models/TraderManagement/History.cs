@@ -14,8 +14,6 @@
 
         public string UpdatedBy { get; set; }
 
-        public string Old { get; set; }
-
         public string New { get; set; }
     }
 }
