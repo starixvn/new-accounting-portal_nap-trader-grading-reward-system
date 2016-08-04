@@ -252,4 +252,7 @@
   <data name="HtmlInputError" xml:space="preserve">
     <value>The input should not include a html tag.</value>
   </data>
+  <data name="FieldMaxLengthError3" xml:space="preserve">
+    <value>This field can have maximum 3 characters</value>
+  </data>
 </root>

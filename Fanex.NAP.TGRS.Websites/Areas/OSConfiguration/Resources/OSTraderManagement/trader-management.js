@@ -327,7 +327,7 @@ var traderManagement = (function ($) {
     traderManagement.OpenPopupAddNewTraderError = function (traderId) {
         refreshPopup();
 
-        common.Modal(labels.Error, domElements.divInsertIssueForm.clone());
+        common.Modal(labels.NewIssue, domElements.divInsertIssueForm.clone());
 
         cachePopupElements();
 
@@ -474,7 +474,9 @@ var traderManagement = (function ($) {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            }
+            },
+            gridHeight: 600,
+            fullHeight: false
         };
 
         if (hasEditRight) {
@@ -520,7 +522,7 @@ var traderManagement = (function ($) {
             return {
                 Columns: [{ Name: 'colNum', Value: idx + 1 },
                     { Name: 'colTime', Value: item.UpdatedDate },
-                    { Name: 'colNew', Value: item["New" + type]  == null ? "-" : item["New" + type] },
+                    { Name: 'colNew', Value: item["New" + type] == null ? "-" : item["New" + type] },
                     { Name: 'colUpdator', Value: item.UpdatedBy }
                 ]
             }
@@ -632,11 +634,17 @@ var traderManagement = (function ($) {
         });
 
         domElements.traderFilterForm.on('click', "#btnSearch", function () {
-            var traderName = $("#txtUserName", domElements.traderFilterForm).val();
-            var teamId = $("#ddlTeam", domElements.traderFilterForm).find(":selected").attr("team-id");
-            var gradeId = $("#ddlGrade", domElements.traderFilterForm).find(":selected").attr("grade-id");
+            if (validator.ValidateForm(domElements.traderFilterForm, 'w')) {
+                var traderName = $("#txtUserName", domElements.traderFilterForm).val();
+                var teamId = $("#ddlTeam", domElements.traderFilterForm).find(":selected").attr("team-id");
+                var gradeId = $("#ddlGrade", domElements.traderFilterForm).find(":selected").attr("grade-id");
 
-            traderManagement.getTraderByNameTeamGrade(traderName, teamId, gradeId);
+                traderManagement.getTraderByNameTeamGrade(traderName, teamId, gradeId);
+            }
+
+            setTimeout(function () {
+                validator.ClearErrors(domElements.traderFilterForm);
+            }, 3000);
         });
     };
 

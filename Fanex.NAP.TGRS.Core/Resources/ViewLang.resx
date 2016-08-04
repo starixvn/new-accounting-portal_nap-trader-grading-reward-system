@@ -543,4 +543,7 @@
   <data name="IssueValue" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="NewIssue" xml:space="preserve">
+    <value>New Issue</value>
+  </data>
 </root>

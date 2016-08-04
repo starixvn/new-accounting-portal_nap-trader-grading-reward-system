@@ -8,7 +8,7 @@
 
         public string UpdatedDate
         {
-            get { return _updatedDate.ToString("MM/dd/yyyy HH:mm:ss"); }
+            get { return _updatedDate.ToString("MM/dd/yyyy"); }
             set { _updatedDate = DateTime.Parse(value); }
         }
 

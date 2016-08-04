@@ -763,6 +763,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Issue.
+        /// </summary>
+        public static string NewIssue {
+            get {
+                return ResourceManager.GetString("NewIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Team.
         /// </summary>
         public static string NewTeam {

@@ -178,6 +178,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This field can have maximum 3 characters.
+        /// </summary>
+        public static string FieldMaxLengthError3 {
+            get {
+                return ResourceManager.GetString("FieldMaxLengthError3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This field can have maximum 50 characters..
         /// </summary>
         public static string FieldMaxLengthError50 {
