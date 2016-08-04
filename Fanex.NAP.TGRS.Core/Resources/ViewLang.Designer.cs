@@ -529,7 +529,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Issue.
+        ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Issue {
             get {

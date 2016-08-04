@@ -557,7 +557,7 @@ var traderManagement = (function ($) {
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Date Time', Width: 150, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Value ', Width: 40, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Reason ', Width: 300, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Reason ', Width: 300, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
@@ -642,6 +642,22 @@ var traderManagement = (function ($) {
             setTimeout(function () {
                 validator.ClearErrors(domElements.traderFilterForm);
             }, 3000);
+        });
+
+        domElements.traderFilterForm.on('keyup', "#txtUserName", function (e) {
+            if (e.keyCode == 13) {
+                if (validator.ValidateForm(domElements.traderFilterForm, 'w')) {
+                    var traderName = $("#txtUserName", domElements.traderFilterForm).val();
+                    var teamId = $("#ddlTeam", domElements.traderFilterForm).find(":selected").attr("team-id");
+                    var gradeId = $("#ddlGrade", domElements.traderFilterForm).find(":selected").attr("grade-id");
+
+                    traderManagement.getTraderByNameTeamGrade(traderName, teamId, gradeId);
+                }
+
+                setTimeout(function () {
+                    validator.ClearErrors(domElements.traderFilterForm);
+                }, 3000);
+            }
         });
     };
 
