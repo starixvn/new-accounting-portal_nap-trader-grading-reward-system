@@ -13,9 +13,9 @@
 
         ICommandResult UpdateTrader(UpdateTraderCriteria criteria);
 
-        IEnumerable<History> GetTraderTeamHistories(GetTeamHistoryCriteria criteria);
+        IEnumerable<TeamHistory> GetTraderTeamHistories(GetTeamHistoryCriteria criteria);
 
-        IEnumerable<History> GetTraderGradeHistories(GetGradeHistoryCriteria criteria);
+        IEnumerable<GradeHistory> GetTraderGradeHistories(GetGradeHistoryCriteria criteria);
 
         IEnumerable<Issue> GetTraderErrors(GetErrorCriteria criteria);
 

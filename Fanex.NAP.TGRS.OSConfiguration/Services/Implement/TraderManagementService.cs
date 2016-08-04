@@ -31,14 +31,14 @@
             return this.UpdateData(criteria);
         }
 
-        public IEnumerable<History> GetTraderTeamHistories(GetTeamHistoryCriteria criteria)
+        public IEnumerable<TeamHistory> GetTraderTeamHistories(GetTeamHistoryCriteria criteria)
         {
-            return GetData<History>(criteria);
+            return GetData<TeamHistory>(criteria);
         }
 
-        public IEnumerable<History> GetTraderGradeHistories(GetGradeHistoryCriteria criteria)
+        public IEnumerable<GradeHistory> GetTraderGradeHistories(GetGradeHistoryCriteria criteria)
         {
-            return GetData<History>(criteria);
+            return GetData<GradeHistory>(criteria);
         }
 
         public IEnumerable<Issue> GetTraderErrors(GetErrorCriteria criteria)

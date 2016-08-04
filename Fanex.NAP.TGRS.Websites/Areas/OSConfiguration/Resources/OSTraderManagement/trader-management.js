@@ -263,8 +263,6 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.TeamHistory, grid);
 
-        
-
         var criteria = {
             TraderId: traderId
         };
@@ -281,8 +279,6 @@ var traderManagement = (function ($) {
         var grid = domElements.divPopupGrid.clone();
 
         common.Modal(labels.GradeHistory, grid);
-
-        
 
         var criteria = {
             TraderId: traderId
@@ -301,8 +297,6 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.EPADeduction, grid);
 
-        
-
         var criteria = {
             TraderId: traderId
         };
@@ -319,8 +313,6 @@ var traderManagement = (function ($) {
         var grid = domElements.divPopupGrid.clone();
 
         common.Modal(labels.Error, grid);
-
-        
 
         var criteria = {
             TraderId: traderId
@@ -386,11 +378,9 @@ var traderManagement = (function ($) {
         if (callback != null) {
             callback(selector);
         }
-
     }
 
     traderManagement.AddGrades = function (data, selector, callback) {
-
         for (var i = 0; i < data.length; i++) {
             var option = $("<option></option>").attr("grade-id", data[i].GradeId).text(data[i].GradeName);
             selector.append(option);
@@ -399,7 +389,6 @@ var traderManagement = (function ($) {
         if (callback != null) {
             callback(selector);
         }
-
     }
 
     traderManagement.AddIssueType = function (selector) {
@@ -441,7 +430,6 @@ var traderManagement = (function ($) {
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
-
     };
 
     var getErrorPopupElements = function () {
@@ -532,7 +520,7 @@ var traderManagement = (function ($) {
             return {
                 Columns: [{ Name: 'colNum', Value: idx + 1 },
                     { Name: 'colTime', Value: item.UpdatedDate },
-                    { Name: 'colNew', Value: item.New == null ? "-" : item.New },
+                    { Name: 'colNew', Value: item["New" + type]  == null ? "-" : item["New" + type] },
                     { Name: 'colUpdator', Value: item.UpdatedBy }
                 ]
             }
@@ -569,11 +557,12 @@ var traderManagement = (function ($) {
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Date Time', Width: 120, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Value ', Width: 40, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Reason ', Width: 200, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Reason ', Width: 200, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
                 { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            bodyRows: data.map(mapper)
+            bodyRows: data.map(mapper),
+            allowTruncate: true
         };
 
         div.fanexGrid(options);

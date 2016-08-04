@@ -60,9 +60,11 @@
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />
+    <Compile Include="Models\TraderManagement\GradeHistory.cs" />
     <Compile Include="Models\TraderManagement\Issue.cs" />
     <Compile Include="Models\TraderManagement\History.cs" />
     <Compile Include="Models\TraderManagement\IssueInfo.cs" />
+    <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\IssueService.cs" />
