@@ -468,15 +468,13 @@ var traderManagement = (function ($) {
                       { HeaderText: labels.CreatedDate, Width: 200, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
             showNumberColumn: true,
-            gridExpandHeight: 100,
+            gridExpandHeight: 180,
             showPager: true,
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            },
-            gridHeight: 600,
-            fullHeight: false
+            }
         };
 
         if (hasEditRight) {
