@@ -263,7 +263,7 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.TeamHistory, grid);
 
-        $(".ui-dialog").css("left", "32%");
+        
 
         var criteria = {
             TraderId: traderId
@@ -282,7 +282,7 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.GradeHistory, grid);
 
-        $(".ui-dialog").css("left", "32%");
+        
 
         var criteria = {
             TraderId: traderId
@@ -301,7 +301,7 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.EPADeduction, grid);
 
-        $(".ui-dialog").css("left", "32%");
+        
 
         var criteria = {
             TraderId: traderId
@@ -320,7 +320,7 @@ var traderManagement = (function ($) {
 
         common.Modal(labels.Error, grid);
 
-        $(".ui-dialog").css("left", "32%");
+        
 
         var criteria = {
             TraderId: traderId
