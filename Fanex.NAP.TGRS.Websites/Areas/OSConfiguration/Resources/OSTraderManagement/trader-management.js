@@ -557,14 +557,13 @@ var traderManagement = (function ($) {
         var options = {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Date Time', Width: 120, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Date Time', Width: 150, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Value ', Width: 40, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Reason ', Width: 200, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
+                { HeaderText: 'Reason ', Width: 300, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            bodyRows: data.map(mapper),
-            allowTruncate: true
+            bodyRows: data.map(mapper)
         };
 
         div.fanexGrid(options);
