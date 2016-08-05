@@ -246,7 +246,7 @@ var traderManagement = (function ($) {
                             timeout = setTimeout(common.ClosePopup, 1000);
                         });
                         disablePopup();
-                        traderManagement.GetTradersAll();
+                        $("#btnSearch", traderManagement.traderFilterForm).click();
                     } else {
                         common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
                         return false;
