@@ -34,6 +34,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             _issueService = issueService;
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSTraderManagement, Constant.Policy.Host);
