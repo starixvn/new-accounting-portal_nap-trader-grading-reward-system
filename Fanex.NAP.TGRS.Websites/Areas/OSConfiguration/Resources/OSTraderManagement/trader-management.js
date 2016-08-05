@@ -169,8 +169,12 @@ var traderManagement = (function ($) {
     traderManagement.OpenPopupUpdateTrader = function (traderId, traderName, traderEmpId, team, grade, workingDate, teamDate, gradeDate) {
         var form = domElements.divUpdateTraderForm.clone();
 
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.EditTrader);
+
         refreshPopup();
-        common.Modal(labels.EditTrader, form);
+        common.Modal(title, form);
         cachePopupElements();
 
         var maxDate = new Date(datepickerSetting.Today);
@@ -256,12 +260,16 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderTeamHistory = function (traderId) {
+    traderManagement.OpenPopupTraderTeamHistory = function (traderId, traderName) {
         refreshPopup();
 
-        var grid = domElements.divPopupGrid.clone();
+        var grid = domElements.divPopupHistory.clone();
 
-        common.Modal(labels.TeamHistory, grid);
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.TeamHistory);
+
+        common.Modal(title, grid);
 
         var criteria = {
             TraderId: traderId
@@ -273,12 +281,16 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderGradeHistory = function (traderId) {
+    traderManagement.OpenPopupTraderGradeHistory = function (traderId, traderName) {
         refreshPopup();
 
-        var grid = domElements.divPopupGrid.clone();
+        var grid = domElements.divPopupHistory.clone();
 
-        common.Modal(labels.GradeHistory, grid);
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.GradeHistory);
+
+        common.Modal(title, grid);
 
         var criteria = {
             TraderId: traderId
@@ -290,12 +302,16 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderEPADeduction = function (traderId) {
+    traderManagement.OpenPopupTraderEPADeduction = function (traderId, traderName) {
         refreshPopup();
 
-        var grid = domElements.divPopupGrid.clone();
+        var grid = domElements.divPopupIssue.clone();
 
-        common.Modal(labels.EPADeduction, grid);
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.EPADeduction);
+
+        common.Modal(title, grid);
 
         var criteria = {
             TraderId: traderId
@@ -307,12 +323,16 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderError = function (traderId) {
+    traderManagement.OpenPopupTraderError = function (traderId, traderName) {
         refreshPopup();
 
-        var grid = domElements.divPopupGrid.clone();
+        var grid = domElements.divPopupIssue.clone();
 
-        common.Modal(labels.Error, grid);
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.Error);
+
+        common.Modal(title, grid);
 
         var criteria = {
             TraderId: traderId
@@ -324,10 +344,14 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupAddNewTraderError = function (traderId) {
+    traderManagement.OpenPopupAddNewTraderError = function (traderId, traderName) {
         refreshPopup();
 
-        common.Modal(labels.NewIssue, domElements.divInsertIssueForm.clone());
+        var titleTemplate = "{0} - {1}";
+
+        var title = titleTemplate.format(traderName, labels.NewIssue);
+
+        common.Modal(title, domElements.divInsertIssueForm.clone());
 
         cachePopupElements();
 
@@ -417,6 +441,8 @@ var traderManagement = (function ($) {
         domElements.teamSelector = $("#ddlTeam");
         domElements.gradeSelector = $("#ddlGrade");
         domElements.traderFilterForm = $("#divTraderFilterForm");
+        domElements.divPopupHistory = $("#popupGridHistory");
+        domElements.divPopupIssue = $("#popupGridIssue");
         $('#divHiddenForm').empty();
     };
 
@@ -454,8 +480,8 @@ var traderManagement = (function ($) {
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"  data-trader-empId="{1}" data-trader-name="{2}" data-team-name="{3}" data-grade-name = "{4}" ' +
             'data-working-date="{5}" data-team-date="{6}" data-grade-date="{7}">{2}</span>';
-        var linkFormat = '<span class="{0} link" data-trader-id="{1}">{2}</span>';
-        var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
+        var linkFormat = '<span class="{0} link" data-trader-id="{1}" data-trader-name="{3}">{2}</span>';
+        var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#" data-trader-name="{1}"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -494,10 +520,10 @@ var traderManagement = (function ($) {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTraderNameCol : traderNameCol },
                               { Name: 'ColId', Value: item.EmployeeId.length == 0 ? "-" : item.EmployeeId },
-                              { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.TeamName) },
-                              { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.GradeName) },
-                              { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction) },
-                              { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error) },
+                              { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.TeamName, item.TraderName) },
+                              { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.GradeName, item.TraderName) },
+                              { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction, item.TraderName) },
+                              { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error, item.TraderName) },
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedBy }
@@ -505,7 +531,7 @@ var traderManagement = (function ($) {
                 };
 
                 if (hasEditRight) {
-                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId) });
+                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId, item.TraderName) });
                 }
 
                 bodyData.push(row);
@@ -598,36 +624,40 @@ var traderManagement = (function ($) {
         domElements.divTradersGrid.on('click', 'span.get-team-link', function () {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
+            var traderName = $obj.attr('data-trader-name');
 
-            traderManagement.OpenPopupTraderTeamHistory(traderId);
+            traderManagement.OpenPopupTraderTeamHistory(traderId, traderName);
         });
 
         domElements.divTradersGrid.on('click', 'span.get-grade-link', function () {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
-
-            traderManagement.OpenPopupTraderGradeHistory(traderId);
+            var traderName = $obj.attr('data-trader-name');
+            traderManagement.OpenPopupTraderGradeHistory(traderId, traderName);
         });
 
         domElements.divTradersGrid.on('click', 'span.get-epa-link', function () {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
+            var traderName = $obj.attr('data-trader-name');
 
-            traderManagement.OpenPopupTraderEPADeduction(traderId);
+            traderManagement.OpenPopupTraderEPADeduction(traderId, traderName);
         });
 
         domElements.divTradersGrid.on('click', 'span.get-error-link', function () {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
+            var traderName = $obj.attr('data-trader-name');
 
-            traderManagement.OpenPopupTraderError(traderId);
+            traderManagement.OpenPopupTraderError(traderId, traderName);
         });
 
         domElements.divTradersGrid.on('click', 'a.add-issue-link', function () {
             var $obj = $(this);
             var traderId = $obj.attr('data-trader-id');
+            var traderName = $obj.attr('data-trader-name');
 
-            traderManagement.OpenPopupAddNewTraderError(traderId);
+            traderManagement.OpenPopupAddNewTraderError(traderId, traderName);
         });
 
         domElements.traderFilterForm.on('click', "#btnSearch", function () {

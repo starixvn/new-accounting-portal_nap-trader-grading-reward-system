@@ -5,7 +5,7 @@
 ////'use strict';
 
 Namespace.Register("Fanex.TGRS.PerformanceSummary.TeamHistory");
-Fanex.TGRS.PerformanceSummary.TeamHistory = function () {
+Fanex.TGRS.PerformanceSummary.EditTraderTeamHistory = function () {
     var $this = this;
     var urls = {
         GetTeamHistory: common.ResolveRootUrl('Reports/PerformanceSummary/GetTeamHistory')
