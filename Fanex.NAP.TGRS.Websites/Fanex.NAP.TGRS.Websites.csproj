@@ -481,6 +481,8 @@
     <Content Include="Areas\OSReports\Views\OSTraderReport\IndexFilter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\Web.config" />
+    <Content Include="Areas\OSConfiguration\Views\OSSetting\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSSetting\Target.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

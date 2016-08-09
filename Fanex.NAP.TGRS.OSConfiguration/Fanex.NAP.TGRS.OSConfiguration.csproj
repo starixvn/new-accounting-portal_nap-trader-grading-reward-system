@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\OSSettingController.cs" />
     <Compile Include="Controllers\OSTeamManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
