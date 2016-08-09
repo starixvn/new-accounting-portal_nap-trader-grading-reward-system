@@ -28,6 +28,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterConfigurationBundles(bundles);
             RegisterReportsBundles(bundles);
             RegisterOSConfigurationBundles(bundles);
+            RegisterOSReportBundles(bundles);
         }
 
         /// <summary>
@@ -250,6 +251,13 @@ namespace Fanex.NAP.TGRS.Websites
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-factory.js",
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-service.js",
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management.js"));
+        }
+
+        public static void RegisterOSReportBundles(BundleCollection bundles)
+        {
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-trader-report")
+                .Include("~/Areas/OSReports/Resources/OSTraderReport/trader-report.js"));
         }
     }
 }

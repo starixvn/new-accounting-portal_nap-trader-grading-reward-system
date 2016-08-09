@@ -244,6 +244,7 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderReport\trader-report.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
@@ -405,10 +406,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\OSReports\Resources\" />
-    <Folder Include="Areas\OSReports\Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -480,6 +478,9 @@
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertTraderForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\UpdateTraderForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertNewIssueForm.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderReport\IndexFilter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
+    <Content Include="Areas\OSReports\Views\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

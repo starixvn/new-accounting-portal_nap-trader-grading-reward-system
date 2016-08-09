@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +138,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Criteria\" />
     <Folder Include="DataAccess\" />
     <Folder Include="Models\" />

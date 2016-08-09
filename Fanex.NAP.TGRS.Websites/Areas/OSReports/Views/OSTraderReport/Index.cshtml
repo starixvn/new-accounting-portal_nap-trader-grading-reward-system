@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Trader Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@*<div>
+        <a href="#">
+            <img src="../../../../Content/Themes/Images/Add.ico" style="width: 30px;height: 30px">
+        </a>
+    </div>*@
+
+<div style="margin-bottom: 20px"></div>
+@Html.Partial("IndexFilter")
+
+<div id="resultContainer" class="content-grid">
+    <div id="divTradersGrid" class="freegrid">
+    </div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-trader-report")
+
+    <script type="text/javascript">
+        var labels = {
+            UserName: '@ViewLang.Username',
+            EmployeeId: '@ViewLang.EmployeeId',
+            Team: '@ViewLang.Team',
+            Grade: '@ViewLang.Grade',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewTrader: '@ViewLang.NewTrader',
+            EditTrader: '@ViewLang.EditTrader',
+            AllTeams: '@ViewLang.AllTeams',
+            AllGrades: '@ViewLang.AllGrades',
+            SelectATeam: '@ViewLang.SelectATeam',
+            SelectAGrade: '@ViewLang.SelectAGrade',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            TeamEffectiveDate: '@ViewLang.TeamEffectiveDate',
+            GradeEffectiveDate: '@ViewLang.GradeEffectiveDate',
+            GradeHistory: '@ViewLang.GradeHistory',
+            TeamHistory: '@ViewLang.TeamHistory',
+            EPADeduction: '@ViewLang.EPADeduction',
+            Error: '@ViewLang.Issue',
+            Date: '@ViewLang.Date',
+            FirstWorkingDate: '@ViewLang.FirstWorkingDate',
+            NewIssue: '@ViewLang.NewIssue'
+        };
+        var messages = {
+            UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',
+            AddTraderSuccessfully: '@Messages.AddTraderSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError',
+            AddIssueSuccessfully: '@Messages.AddIssueSuccesfully',
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+    </script>
+}
