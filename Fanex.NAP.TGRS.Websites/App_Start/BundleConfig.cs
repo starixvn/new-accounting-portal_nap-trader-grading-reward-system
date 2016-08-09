@@ -251,6 +251,12 @@ namespace Fanex.NAP.TGRS.Websites
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-factory.js",
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management-service.js",
                   "~/Areas/OSConfiguration/Resources/OSGradeManagement/grade-management.js"));
+
+            bundles.Add(new StyleBundle("~/styles/bootstrap").Include(
+                "~/Content/Bootstrap/Css/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/styles/normal").Include(
+                "~/Areas/OSConfiguration/Resources/OSSetting/os-setting.css"));
         }
 
         public static void RegisterOSReportBundles(BundleCollection bundles)

@@ -3,14 +3,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+@Styles.Render("~/styles/bootstrap")
+@Styles.Render("~/styles/common")
+@Styles.Render("~/styles/normal")
 
 @section Headline {
-    <div class="title">
+    <div class="title" style="margin-left: 25px">
         <div>
-            <span class="curr">@ViewBag.Title</span>
+            <span>@ViewBag.Title</span>
         </div>
     </div>
 }
 
-@Html.Partial("Target")
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        @Html.Partial("Target")
+        @Html.Partial("Parameter")
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
