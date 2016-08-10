@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 8/3/2016 10:06:11 AM
+// Lasted generated date: 8/10/2016 5:06:36 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -46,7 +46,9 @@ public static class TGRSFunctionKeys
 
         public const string OSGradeManagement = "OSGradeManagement";
 
-        public const string GradeManagement = "GradeManagement";
+        public const string OSReports = "OSReports";
+
+        public const string OSSportPerformance = "OSSportPerformance";
 
         public const string OSTeamManagement = "OSTeamManagement";
 
@@ -75,6 +77,8 @@ public static class TGRSFunctionKeys
         public const string TraderReport = "TraderReport";
 
         public const string TraderReportAdmin = "TraderReportAdmin";
+
+        public const string GradeManagement = "GradeManagement";
 
     }
  

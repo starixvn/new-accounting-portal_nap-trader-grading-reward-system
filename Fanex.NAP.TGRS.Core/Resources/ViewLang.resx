@@ -546,4 +546,10 @@
   <data name="NewIssue" xml:space="preserve">
     <value>New Issue</value>
   </data>
+  <data name="SportPerformanceReport" xml:space="preserve">
+    <value>Sport Performance Report</value>
+  </data>
+  <data name="AllSports" xml:space="preserve">
+    <value>All Sports</value>
+  </data>
 </root>

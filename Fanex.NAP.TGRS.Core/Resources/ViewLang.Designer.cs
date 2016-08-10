@@ -133,6 +133,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Sports.
+        /// </summary>
+        public static string AllSports {
+            get {
+                return ResourceManager.GetString("AllSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Teams.
         /// </summary>
         public static string AllTeams {
@@ -1020,6 +1029,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Sport {
             get {
                 return ResourceManager.GetString("Sport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Performance Report.
+        /// </summary>
+        public static string SportPerformanceReport {
+            get {
+                return ResourceManager.GetString("SportPerformanceReport", resourceCulture);
             }
         }
         
