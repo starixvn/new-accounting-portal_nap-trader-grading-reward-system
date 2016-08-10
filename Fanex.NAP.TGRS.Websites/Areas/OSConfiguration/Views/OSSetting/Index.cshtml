@@ -1,4 +1,5 @@
-﻿@{
+﻿@using dotless.Core.Parser.Tree
+@{
     ViewBag.Title = "Settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -23,4 +24,16 @@
     </div>
     <div class="col-md-1"></div>
 </div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-setting")
+
+    <script>
+        var messages = {
+            NotANumber: '@Messages.NotANumberError',
+            InvalidValue: '@Messages.InvalidValueError'
+        }
+    </script>
+}
 

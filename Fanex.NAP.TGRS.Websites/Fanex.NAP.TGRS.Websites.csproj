@@ -238,7 +238,11 @@
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSSetting\delete.png" />
+    <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting.css" />
+    <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management.js" />
