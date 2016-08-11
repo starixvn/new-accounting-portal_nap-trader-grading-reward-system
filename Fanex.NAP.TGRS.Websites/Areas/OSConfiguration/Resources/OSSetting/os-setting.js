@@ -13,9 +13,9 @@
         domElements.TargetGrid = $("#targetGrid");
     }
 
-    var sportData = [];
+    var sportData = {};
 
-    var leagueData = [];
+    var leagueData = {};
 
     function updateGlobalTargetResult(result) {
         if (result.Code == 0) {
@@ -36,7 +36,10 @@
                 };
 
                 OSSettingService.SuggestSport(criteria, function (data) {
-                    sportData = data;
+                    data.forEach(function (e) {
+                        sportData[e.SportName] = e.SportId;
+                    });
+
                     resp(data.map(function (e) {
                         return e.SportName;
                     }));
@@ -53,9 +56,7 @@
 
         txtLeague.autocomplete({
             source: function (req, resp) {
-                var sport = sportData.find(function (e) {
-                    return e.SportName == txtSport.val();
-                });
+                var sport = sportData[txtSport.val()];
 
                 if (sport == null) {
                     resp([]);
@@ -83,7 +84,41 @@
 
             var value = $this.text();
 
-            $("#txtGlobalTarget", domElements.globalTargetForm).css('visibility', 'visible').val(value).focus()
+            $this.next().css('visibility', 'visible').val(value).focus()
+                .keyup(function (e) {
+                    var $input = $(this);
+                    if (e.keyCode == 13) {
+                        if (validator.ValidateForm(domElements.globalTargetForm, 'w')) {
+                            var criteria = {
+                                GlobalTarget: parseFloat($input.val())
+                            };
+
+                            if (criteria.GlobalTarget < 0 || criteria.GlobalTarget > 100) {
+                                common.ShowErrorMessage(messages.InvalidValue);
+                                $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+                            } else {
+                                OSSettingService.UpdateGlobalTarget(criteria, updateGlobalTargetResult);
+                            }
+                        } else {
+                            $(".error-tipsy.error-tipsy-w", domElements.globalTargetForm).css("margin-left", "20px");
+                            setTimeout(function () {
+                                validator.ClearErrors(domElements.globalTargetForm);
+                            }, 1000);
+                        }
+                    }
+                    else if (e.keyCode == 27) {
+                        $input.css("visibility", "hidden");
+                        $this.removeClass("hidden");
+                    }
+                });
+        });
+
+        $("#incrementTimes,#incrementValue,#floorMark").click(function () {
+            var $this = $(this).addClass('hidden');
+
+            var value = $this.text();
+
+            $this.next().css('visibility', 'visible').val(value).focus()
                 .keyup(function (e) {
                     var $input = $(this);
                     if (e.keyCode == 13) {
@@ -148,6 +183,18 @@
                 $("a", "#msgbox2").css("width", "17px").css("height", "18px");
             });
         });
+
+        domElements.TargetGrid.on('click', '.target-delete-button', function () {
+            var $this = $(this);
+
+            if (common.ShowConfirmMessage("Are you sure you want to delete this setting ?")) {
+                var criteria = {
+                    SportId: parseInt($this.attr("data-sport-id")),
+                    LeagueId: parseInt($this.attr("data-league-id")),
+                    BettypeId: parseInt($this.attr("data-bettype-id"))
+                };
+            }
+        });
     }
 
     function renderGrid(data) {
@@ -194,11 +241,11 @@
     setting.Initialize = function () {
         cacheDome();
 
+        handlePageEvents();
+
         handleSuggestSport();
 
         handleSuggestLeague();
-
-        handlePageEvents();
 
         getTarget();
     }
