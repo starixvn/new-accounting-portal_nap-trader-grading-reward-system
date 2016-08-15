@@ -23,6 +23,19 @@
     <Setting Key="TGRS_OS_IssueTypeGet" SpName="TGRS_OS_IssueTypeGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TraderIssueInsert" SpName="TGRS_OS_TraderIssueInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="OSSetting">
+    <Setting Key="TGRS_OS_ParameterGetAll" SpName="TGRS_OS_ParameterGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_ParameterUpdate" SpName="TGRS_OS_ParameterUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_ParameterGetGlobalTarget" SpName="TGRS_OS_ParameterGetGlobalTarget" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_SpecialTargetGetAll" SpName="TGRS_OS_SpecialTargetGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_SpecialTargetInsert" SpName="TGRS_OS_SpecialTargetInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_SpecialTargetUpdate" SpName="TGRS_OS_SpecialTargetUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_SpecialTargetDelete" SpName="TGRS_OS_SpecialTargetDelete" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_LeagueGetBySportId" SpName="TGRS_OS_LeagueGetBySportId" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_SportGetAll" SpName="TGRS_OS_SportGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_ParameterGetGlobalTarget" SpName="TGRS_OS_ParameterGetGlobalTarget" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_BettypeGetAll" SpName="TGRS_OS_BettypeGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="GradeManagement">
     <Setting Key="TGRS_Grade_SelectAll" SpName="TGRS_Grade_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Grade_Insert" SpName="TGRS_Grade_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

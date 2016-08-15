@@ -2,18 +2,21 @@
     <div class="panel-heading" style="background-color: #5a7dc1; color: white">Parameter</div>
     <div class="panel-body">
         Increment Times
-        <a id="incrementTimes" style="margin-left: 14px">20</a>
+        <a id="IncrementTimes" style="margin-left: 14px;cursor: pointer" class="parameter"></a>
         <input id="txtincrementTimes"
-               style="width: 40px; visibility: hidden; margin-left: 10px" />
+               style="width: 40px; visibility: hidden; margin-left: 10px"
+               data-val-number="@Messages.NotANumberError" />
         <br />
         Increment Value
-        <a id="incrementValue" style="margin-left: 17px">20</a>
+        <a id="IncrementValue" style="margin-left: 17px;cursor: pointer" class="parameter"></a>
         <input id="txtincrementValue"
-               style="width: 40px;visibility: hidden; margin-left: 13px" />
+               style="width: 40px; visibility: hidden; margin-left: 13px"
+               data-val-number="@Messages.NotANumberError" />
         <br />
         Floor Mark
-        <a id="floorMark" style="margin-left: 50px">20</a>
+        <a id="FloorMark" style="margin-left: 50px;cursor: pointer" class="parameter"></a>
         <input id="txtfloorMark"
-               style="width: 40px;visibility: hidden; margin-left: 47px" />
+               style="width: 40px; visibility: hidden; margin-left: 47px"
+               data-val-number="@Messages.NotANumberError" />
     </div>
 </div>

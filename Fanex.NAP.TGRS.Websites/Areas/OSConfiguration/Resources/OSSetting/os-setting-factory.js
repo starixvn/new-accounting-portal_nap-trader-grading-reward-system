@@ -1,27 +1,57 @@
 ﻿var OSSettingFactory = (function ($) {
     var urls = {
-        UpdateGlobalTarget: common.ResolveRootUrl("OSSetting/UpdateGlobalTarget"),
-        AddNewTarget: common.ResolveRootUrl("OSSetting/AddNewTarget"),
-        SportSuggestion: common.ResolveRootUrl("OSSetting/SuggestSport"),
-        LeagueSuggestion: common.ResolveRootUrl("OSSetting/SuggestLeague"),
-        GetTarget: common.ResolveRootUrl("OSSetting/GetTarget")
+        GetSettings: common.ResolveRootUrl("OSSetting/GetSettings"),
+        UpdateTarget: common.ResolveRootUrl("OSSetting/UpdateTarget"),
+        AddSetting: common.ResolveRootUrl("OSSetting/AddSetting"),
+        UpdateSetting: common.ResolveRootUrl("OSSetting/UpdateSetting"),
+        DeleteSetting: common.ResolveRootUrl("OSSetting/DeleteSetting"),
+        GetSports: common.ResolveRootUrl("OSSetting/GetSports"),
+        GetLeagues: common.ResolveRootUrl("OSSetting/GetLeagues"),
+        GetBettypes: common.ResolveRootUrl("OSSetting/GetBettypes"),
+        GetParameters: common.ResolveRootUrl("OSSetting/GetParameters"),
+        UpdateParameters: common.ResolveRootUrl("OSSetting/UpdateParameters")
     }
 
     return {
-        UpdateGlobalTarget: function (criteria) {
-            return $.post(urls.UpdateGlobalTarget, criteria);
+        GetSettings: function () {
+            return $.get(urls.GetSettings);
         },
-        AddNewTarget: function (criteria) {
-            return $.post(urls.AddNewTarget, criteria);
+
+        UpdateTarget: function (criteria) {
+            return $.post(urls.UpdateTarget, criteria);
         },
-        SuggestSport: function (criteria) {
-            return $.get(urls.SportSuggestion, criteria);
+
+
+        AddSetting: function (criteria) {
+            return $.post(urls.AddSetting, criteria);
         },
-        SuggestLeague: function (criteria) {
-            return $.get(urls.LeagueSuggestion, criteria);
+
+        UpdateSetting: function (criteria) {
+            return $.post(urls.UpdateSetting, criteria);
         },
-        GetTarget: function () {
-            return $.get(urls.GetTarget);
+
+        DeleteSetting: function (criteria) {
+            return $.post(urls.DeleteSetting, criteria);
+        },
+
+        GetSports: function () {
+            return $.get(urls.GetSports);
+        },
+
+        GetLeagues: function (criteria) {
+            return $.get(urls.GetLeagues, criteria);
+        },
+
+        GetBettypes: function () {
+            return $.get(urls.GetBettypes);
+        },
+
+        GetParameters: function () {
+            return $.get(urls.GetParameters);
+        },
+
+        UpdateParameters: function (criteria) {
+            return $.post(urls.UpdateParameters, criteria);
         }
     }
 })(jQuery);

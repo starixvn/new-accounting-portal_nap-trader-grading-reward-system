@@ -52,7 +52,7 @@ var sportPerformance = (function ($) {
 
             domElements.ddlSport.multiselect({
                 selectedList: 1,
-                minWidth: 263,
+                minWidth: 250,
                 height: 200,
                 multiple: false
             }).multiselectfilter({ width: 200 });

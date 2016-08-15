@@ -1,59 +1,89 @@
-﻿using Microsoft.Practices.ObjectBuilder2;
+﻿using System.Threading.Tasks;
+using Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement;
+using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
+using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
 
 namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
     using System.Web.Mvc;
     using Core.BaseClasses;
-    using Fanex.NAP.Core.Business;
 
     public class OSSettingController : TGRSBaseController
     {
+        private ISettingService _service;
+
+        public OSSettingController(ISettingService service1)
+        {
+            _service = service1;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
+        public async Task<JsonResult> GetSettings()
+        {
+            var data = await Task.Run(() => _service.GetSettings());
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public JsonResult UpdateGlobalTarget(double globalTarget)
+        public JsonResult UpdateTarget(UpdateTargetCriteria criteria)
         {
-            return Json(new { Code = 5, Message = "fack" }, JsonRequestBehavior.AllowGet);
+            criteria.UserId = SessionUtility.GetCreatorId();
+            return Json(_service.UpdateTarget(criteria), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTarget()
+        [HttpPost]
+        public JsonResult AddSetting(AddSettingCriteria criteria)
         {
-            var tmp = new
-            {
-                SportId = 1,
-                SportName = "adfadf",
-                LeagueId = 8,
-                LeagueName = "adfad",
-                BettypeId = 7,
-                BetTypeName = "adfadf",
-                Target = 5.7
-            };
-            return Json(new[] { tmp }, JsonRequestBehavior.AllowGet);
+            criteria.UserId = SessionUtility.GetCreatorId();
+            return Json(_service.AddSetting(criteria), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SuggestSport(string sportName)
+        [HttpPost]
+        public JsonResult DeleteSetting(DeleteSettingCriteria criteria)
         {
-            var tmp = new[]
-            {
-                new {SportId = 0, SportName = "abcdef"},
-                new {SportId = 1, SportName = "badafsdfs"}
-            };
-
-            return Json(tmp, JsonRequestBehavior.AllowGet);
+            criteria.UserId = SessionUtility.GetCreatorId();
+            return Json(_service.DeleteSetting(criteria), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SuggestLeague(string sportId, string leagueName)
+        public async Task<JsonResult> GetSports()
         {
-            var tmp = new[]
-            {
-                new {LeagueId = 0, LeagueName = "abcdef"},
-                new {LeagueId = 1, LeagueName = "badafsdfs"}
-            };
+            var data = await Task.Run(() => _service.GetSports());
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
-            return Json(tmp, JsonRequestBehavior.AllowGet);
+        public JsonResult GetLeagues(GetLeagueCriteria criteria)
+        {
+            return Json(_service.GetLeagues(criteria), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> GetBettypes()
+        {
+            var result = await Task.Run(() => _service.GetBettypes());
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> GetParameters()
+        {
+            var result = await Task.Run(() => new
+            {
+                Global = _service.GetGlobalParameter(),
+                Other = _service.GetParameters()
+            });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateParameters(UpdateParameterCriteria criteria)
+        {
+            criteria.UserId = SessionUtility.GetCreatorId();
+            return Json(_service.UpdateParamters(criteria), JsonRequestBehavior.AllowGet);
         }
     }
 }
