@@ -457,6 +457,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Global Target value will be applied to all sports/leagues/bettypes by default..
+        /// </summary>
+        public static string GlobalTarget {
+            get {
+                return ResourceManager.GetString("GlobalTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GMT-4.
         /// </summary>
         public static string GMTMinus4 {

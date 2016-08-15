@@ -18,6 +18,8 @@
     }
 
     function handlePageEvents() {
+        $('[data-toggle="tooltip"]').tooltip();
+
         $(".parameter").click(function () {
             $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
 
@@ -30,12 +32,14 @@
                     var $input = $(this);
                     if (e.keyCode == 13) {
                         if (validator.ValidateForm($this.parent(), 'w')) {
+                            var value = $input.attr("data-integer") != null ? parseInt($input.val()) : parseFloat($input.val());
+
                             var criteria = {
                                 ParamId: parseInt($input.attr("data-param-id")),
-                                ParamValue: parseFloat($input.val())
+                                ParamValue: value
                             };
 
-                            if (criteria.ParamValue < 0 || criteria.ParamValue > 100) {
+                            if (criteria.ParamValue < 0 || criteria.ParamValue > 100 || value != $input.val()) {
                                 common.ShowErrorMessage(messages.InvalidValue);
                             } else {
                                 OSSettingService.UpdateParameters(criteria, function (result) {
@@ -177,11 +181,11 @@
 
         var options = {
             columns: [
-                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
+                { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
+                { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
+                { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
+                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
                 { HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,

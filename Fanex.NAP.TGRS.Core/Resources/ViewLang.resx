@@ -552,4 +552,7 @@
   <data name="AllSports" xml:space="preserve">
     <value>All Sports</value>
   </data>
+  <data name="GlobalTarget" xml:space="preserve">
+    <value>The Global Target value will be applied to all sports/leagues/bettypes by default.</value>
+  </data>
 </root>
