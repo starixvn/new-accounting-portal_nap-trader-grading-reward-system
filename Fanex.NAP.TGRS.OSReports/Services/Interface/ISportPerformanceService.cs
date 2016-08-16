@@ -16,5 +16,11 @@ namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
     public interface ISportPerformanceService
     {
         List<Sport> GetAllSport();
+
+        List<SportPerformanceItem> GetSportPerformance(GetSportPerformanceCriteria criteria);
+
+        List<LeaguePerformanceItem> GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
+
+        List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria);
     }
 }

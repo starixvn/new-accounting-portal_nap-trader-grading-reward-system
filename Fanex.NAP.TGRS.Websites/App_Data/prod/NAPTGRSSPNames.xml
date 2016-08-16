@@ -2,6 +2,9 @@
 <Functions>
   <Function Name="OSSportPerformance">
     <Setting Key="TGRS_OS_SportGetAll" SpName="TGRS_OS_SportGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SportPerformance" SpName="TGRS_OS_Rpt_SportPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_LeaguePerformance" SpName="TGRS_OS_Rpt_LeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_BettypePerformance" SpName="TGRS_OS_Rpt_BettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSGradeManagement">
     <Setting Key="TGRS_OS_GradeGetAll" SpName="TGRS_OS_GradeGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

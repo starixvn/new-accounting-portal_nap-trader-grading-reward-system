@@ -826,6 +826,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Of Bet Type.
+        /// </summary>
+        public static string NoOfBetTypes {
+            get {
+                return ResourceManager.GetString("NoOfBetTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No. Of Leagues.
         /// </summary>
         public static string NoOfLeagues {
@@ -903,6 +912,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string PeriodType {
             get {
                 return ResourceManager.GetString("PeriodType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point Margin.
+        /// </summary>
+        public static string PointMargin {
+            get {
+                return ResourceManager.GetString("PointMargin", resourceCulture);
             }
         }
         
@@ -1038,6 +1056,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Sport {
             get {
                 return ResourceManager.GetString("Sport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Performance.
+        /// </summary>
+        public static string SportPerformance {
+            get {
+                return ResourceManager.GetString("SportPerformance", resourceCulture);
             }
         }
         

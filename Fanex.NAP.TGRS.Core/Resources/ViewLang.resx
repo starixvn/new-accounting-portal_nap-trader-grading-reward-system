@@ -555,4 +555,13 @@
   <data name="GlobalTarget" xml:space="preserve">
     <value>The Global Target value will be applied to all sports/leagues/bettypes by default.</value>
   </data>
+  <data name="SportPerformance" xml:space="preserve">
+    <value>Sport Performance</value>
+  </data>
+  <data name="NoOfBetTypes" xml:space="preserve">
+    <value>No. Of Bet Type</value>
+  </data>
+  <data name="PointMargin" xml:space="preserve">
+    <value>Point Margin</value>
+  </data>
 </root>

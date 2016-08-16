@@ -13,6 +13,7 @@ namespace Fanex.NAP.TGRS.OSReports.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Services.SportPerformance;
     using System;
     using System.Web.Mvc;
@@ -46,6 +47,33 @@ namespace Fanex.NAP.TGRS.OSReports.Controllers
             var sports = _sportPerformanceService.GetAllSport();
 
             return Json(sports, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSportPerformance, Policy = Constant.Policy.Read)]
+        [HttpGet]
+        public ActionResult GetSportPerformance(GetSportPerformanceCriteria criteria)
+        {
+            var sportPerformance = _sportPerformanceService.GetSportPerformance(criteria);
+
+            return Json(sportPerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSportPerformance, Policy = Constant.Policy.Read)]
+        [HttpGet]
+        public ActionResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _sportPerformanceService.GetLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSportPerformance, Policy = Constant.Policy.Read)]
+        [HttpGet]
+        public ActionResult GetBettypePerformance(GetBettypePerformanceCriteria criteria)
+        {
+            var bettypePerformance = _sportPerformanceService.GetBettypePerformance(criteria);
+
+            return Json(bettypePerformance, JsonRequestBehavior.AllowGet);
         }
     }
 }

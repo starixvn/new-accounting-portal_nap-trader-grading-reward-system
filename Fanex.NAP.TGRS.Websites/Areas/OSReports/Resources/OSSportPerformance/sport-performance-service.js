@@ -5,6 +5,8 @@
 var sportPerformanceService = (function ($) {
     var sportPerformanceService = {};
     sportPerformanceService.SportPerformance = [];
+    sportPerformanceService.LeaguePerformance = [];
+    sportPerformanceService.BettypePerformance = [];
     sportPerformanceService.Sports = [];
 
     sportPerformanceService.GetSportPerformance = function (criteria) {
@@ -12,6 +14,34 @@ var sportPerformanceService = (function ($) {
         return sportPerformanceFactory.GetSportPerformance(criteria)
             .success(function (result) {
                 sportPerformanceService.SportPerformance = result;
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    };
+
+    sportPerformanceService.GetLeaguePerformance = function (criteria) {
+        common.DisableInput();
+        return sportPerformanceFactory.GetLeaguePerformance(criteria)
+            .success(function (result) {
+                sportPerformanceService.LeaguePerformance = result;
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    };
+
+    sportPerformanceService.GetBettypePerformance = function (criteria) {
+        common.DisableInput();
+        return sportPerformanceFactory.GetBettypePerformance(criteria)
+            .success(function (result) {
+                sportPerformanceService.BettypePerformance = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -36,12 +66,11 @@ var sportPerformanceService = (function ($) {
     };
 
     sportPerformanceService.updateSportDropdown = function (data, ddlDiv, defaultLabel, selectVal) {
-        debugger;
         ddlDiv.html('');
         var isAutoSelect = false;
 
         if (defaultLabel != null) {
-            ddlDiv.append($('<option></option>').attr('value', 0).text(defaultLabel));
+            ddlDiv.append($('<option></option>').attr('value', -1).text(defaultLabel));
             isAutoSelect = true;
         }
 
@@ -51,7 +80,7 @@ var sportPerformanceService = (function ($) {
             });
         }
 
-        if (isAutoSelect || selectVal !== 0) {
+        if (isAutoSelect || selectVal !== -1) {
             ddlDiv.val(selectVal);
         }
         else {

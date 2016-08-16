@@ -22,11 +22,11 @@
             <div class="lbl-field col_5">
                 <label for="ddlSport">@ViewLang.Sport</label>
             </div>
-            <div class="edit-field col_8">
+            <div class="edit-field col_5">
                 <select id="ddlSport"></select>
             </div>
-            <div class="lbl-field col_3 league-bm"></div>
-            <div class="submit col_4">
+            <div class="lbl-field col_1 sport-bm"></div>
+            <div class="submit col_1">
                 <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
         </div>
@@ -38,8 +38,8 @@
 <div id="divLeaguePerformanceContainer" class="content-grid display-none">
     <div id="divLeaguePerformanceGrid" class="freegrid"></div>
 </div>
-<div id="divBettypeDetailContainer" class="content-grid display-none">
-    <div id="divBettypeDetailGrid" class="freegrid"></div>
+<div id="divBettypePerformanceContainer" class="content-grid display-none">
+    <div id="divBettypePerformanceGrid" class="freegrid"></div>
 </div>
 @section Foot
 {
@@ -53,26 +53,20 @@
         };
         var labels = {
             No: '#',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
+            NoOfBettypes: '@ViewLang.NoOfBetTypes',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
+            SportPerformance: '@ViewLang.SportPerformance',
+            BetTypePerformance: '@ViewLang.BetTypePerformance',
+            Sport: '@ViewLang.Sport',
             League: '@ViewLang.League',
-            NoOfTraders: '@ViewLang.NoOfTraders',
-            NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
-            BetCount: '@ViewLang.BetCount',
             Margin: '@ViewLang.Margin',
-            LeagueBM: '@ViewLang.LeagueBM',
-            BetTypeBM: '@ViewLang.BetTypeBM',
-            BetType: '@ViewLang.BetType',
-            BetTypeDetail: '@ViewLang.BetTypeDetail',
             Trader: '@ViewLang.Trader',
-            Grade: '@ViewLang.Grade',
-            Team: '@ViewLang.Team',
-            Match: '@ViewLang.Match',
-            Total: '@ViewLang.Total',
             GrandTotal: '@ViewLang.GrandTotal',
             AllSports: '@ViewLang.AllSports',
-            NA: '@ViewLang.NA',
-            Score: '@ViewLang.Score'
+            NA: '@ViewLang.NA'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',

@@ -23,5 +23,26 @@ namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
 
             return result != null ? result.ToList() : new List<Sport>();
         }
+
+        public List<SportPerformanceItem> GetSportPerformance(GetSportPerformanceCriteria criteria)
+        {
+            var result = this.GetData<SportPerformanceItem>(criteria);
+
+            return result != null ? result.ToList() : new List<SportPerformanceItem>();
+        }
+
+        public List<LeaguePerformanceItem> GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            var result = this.GetData<LeaguePerformanceItem>(criteria);
+
+            return result != null ? result.ToList() : new List<LeaguePerformanceItem>();
+        }
+
+        public List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria)
+        {
+            var result = this.GetData<BettypePerformanceItem>(criteria);
+
+            return result != null ? result.ToList() : new List<BettypePerformanceItem>();
+        }
     }
 }
