@@ -14,7 +14,7 @@ namespace Fanex.NAP.TGRS.OSReports.Services.Implement
     {
         public IEnumerable<TraderPerformance> GetTraderPerformances(GetTraderPerformanceCriteria criteria)
         {
-            return new[] { new TraderPerformance(), new TraderPerformance(), };
+            return GetData<TraderPerformance>(criteria);
         }
 
         public IEnumerable<Models.TraderPerformance.SportPerformance> GetSportPerformances(GetSportByTraderCriteria criteria)

@@ -24,3 +24,12 @@ fieldset {
     width: 14px;
     cursor: pointer;
 }
+
+.freegrid .highlight-row {
+    height: 25px;
+}
+
+#msgbox2 a {
+    width: 17px;
+    height: 18px;
+}

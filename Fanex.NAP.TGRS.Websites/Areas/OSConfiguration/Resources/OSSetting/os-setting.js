@@ -48,14 +48,12 @@
                                         $this.text(criteria.ParamValue);
                                         $input.css("visibility", "hidden");
                                         $this.removeClass("hidden");
-                                        $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+
                                     } else {
                                         common.ShowErrorMessage(result.Message);
                                     }
                                 });
                             }
-
-                            $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                         } else {
                             $(".error-tipsy.error-tipsy-w", $this.parent()).css("margin-left", "20px");
                             setTimeout(function () {
@@ -80,16 +78,13 @@
 
                 if (criteria.Target < 0 || criteria.Target > 100) {
                     common.ShowErrorMessage(messages.InvalidValue);
-                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                 } else {
                     OSSettingService.AddSetting(criteria, function (result) {
                         if (result.Code == 0) {
                             common.ShowInfoMessage("successfully add new setting");
-                            $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                             getSettings();
                         } else {
                             common.ShowErrorMessage(result.Message);
-                            $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                         }
                     });
                 }
@@ -162,7 +157,7 @@
     function renderGrid(data) {
         var targetLink = '<span class="target-link link">{0}</span>' +
             '<input data-target-id="{1}"' +
-            'type="text" maxlength="5" class="hide" style="width: 80px !important;height: 15px;"/>';
+            'type="text" maxlength="5" class="hide" style="height: 17px;width: 100%"/>';
 
         var deleteButton = '<span class="target-delete-button" ' +
             'data-target-id="{0}" ></span>';
@@ -191,7 +186,14 @@
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
-            gridExpandHeight: 100
+            fullHeight: false,
+            gridHeight: 400,
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges
+            }
         };
 
         domElements.TargetGrid.fanexGrid(options);
