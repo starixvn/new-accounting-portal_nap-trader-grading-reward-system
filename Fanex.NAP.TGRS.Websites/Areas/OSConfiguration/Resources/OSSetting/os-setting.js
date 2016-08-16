@@ -44,7 +44,7 @@
                             } else {
                                 OSSettingService.UpdateParameters(criteria, function (result) {
                                     if (result.Code == 0) {
-                                        common.ShowInfoMessage("successfully update parameter");
+                                        common.ShowInfoMessage("Successfully update parameter");
                                         $this.text(criteria.ParamValue);
                                         $input.css("visibility", "hidden");
                                         $this.removeClass("hidden");
@@ -81,7 +81,7 @@
                 } else {
                     OSSettingService.AddSetting(criteria, function (result) {
                         if (result.Code == 0) {
-                            common.ShowInfoMessage("successfully add new setting");
+                            common.ShowInfoMessage("Successfully add new setting");
                             getSettings();
                         } else {
                             common.ShowErrorMessage(result.Message);
@@ -119,7 +119,7 @@
 
                         OSSettingService.UpdateTarget(criteria, function (result) {
                             if (result.Code == 0) {
-                                common.ShowInfoMessage("successfully update setting");
+                                common.ShowInfoMessage("Successfully update setting");
                                 $this.text(criteria.ParamValue);
                                 input.addClass("hide");
                                 $this.removeClass("hide").text(criteria.NewTarget);
@@ -143,7 +143,7 @@
 
                 OSSettingService.DeleteSetting(criteria, function (result) {
                     if (result.Code == 0) {
-                        common.ShowInfoMessage("successfully delete setting");
+                        common.ShowInfoMessage("Successfully delete setting");
                         getSettings();
                     } else {
                         common.ShowErrorMessage(result.Message);
@@ -181,7 +181,7 @@
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
-                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
+                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center', Sort: true, CustomSortFunction: comparer },
                 { HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
@@ -269,6 +269,17 @@
                 height: 200,
             }).multiselectfilter({ width: 100 });
         });
+    }
+
+    function comparer(val1, val2, sortDirection) {
+        var tmp1 = parseFloat($(val1).text());
+        var tmp2 = parseFloat($(val2).text());
+        if (sortDirection === 'asc') {
+            return tmp1 > tmp2 ? 1 : -1;
+        }
+        else {
+            return tmp1 < tmp2 ? 1 : -1;
+        }
     }
 
     setting.Initialize = function () {

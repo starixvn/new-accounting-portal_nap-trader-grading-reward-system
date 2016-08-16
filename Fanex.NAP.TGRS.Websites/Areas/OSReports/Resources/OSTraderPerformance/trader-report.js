@@ -102,13 +102,13 @@ var traderReports = (function ($) {
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Sports', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Sports', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -146,11 +146,11 @@ var traderReports = (function ($) {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -182,7 +182,7 @@ var traderReports = (function ($) {
         //});
 
         //Load report for first time
-        //$('#btnSearch').trigger("click");
+        $('#btnSearch').click();
     };
 
     return traderReports;

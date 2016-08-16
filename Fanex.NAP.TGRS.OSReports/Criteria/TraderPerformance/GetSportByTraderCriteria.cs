@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance
 
         public override string GetSettingKey()
         {
-            return base.GetSettingKey();
+            return "TGRS_OS_Rpt_SportPerformanceGetByTraderId";
         }
     }
 }
