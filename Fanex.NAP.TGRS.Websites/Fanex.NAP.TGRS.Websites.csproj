@@ -252,7 +252,9 @@
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-service.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.js" />
-    <Content Include="Areas\OSReports\Resources\OSTraderReport\trader-report.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-factory.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-service.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
@@ -507,8 +509,8 @@
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertTraderForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\UpdateTraderForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSTraderManagement\InsertNewIssueForm.cshtml" />
-    <Content Include="Areas\OSReports\Views\OSTraderReport\IndexFilter.cshtml" />
-    <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderPerformance\IndexFilter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\Web.config" />
     <Content Include="Areas\OSConfiguration\Views\OSSetting\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSSetting\Target.cshtml" />

@@ -44,7 +44,7 @@
                             } else {
                                 OSSettingService.UpdateParameters(criteria, function (result) {
                                     if (result.Code == 0) {
-                                        common.ShowInfoMessage("target's updated successfully");
+                                        common.ShowInfoMessage("successfully update parameter");
                                         $this.text(criteria.ParamValue);
                                         $input.css("visibility", "hidden");
                                         $this.removeClass("hidden");
@@ -80,18 +80,19 @@
 
                 if (criteria.Target < 0 || criteria.Target > 100) {
                     common.ShowErrorMessage(messages.InvalidValue);
+                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                 } else {
                     OSSettingService.AddSetting(criteria, function (result) {
                         if (result.Code == 0) {
-                            common.ShowInfoMessage("Global target updated successfully");
+                            common.ShowInfoMessage("successfully add new setting");
+                            $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                             getSettings();
                         } else {
                             common.ShowErrorMessage(result.Message);
+                            $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                         }
                     });
-                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                 }
-                $("a", "#msgbox2").css("width", "17px").css("height", "18px");
             } else {
                 setTimeout(function () {
                     validator.ClearErrors(domElements.addSettingForm);
@@ -123,7 +124,7 @@
 
                         OSSettingService.UpdateTarget(criteria, function (result) {
                             if (result.Code == 0) {
-                                common.ShowInfoMessage("setting's updated successfully");
+                                common.ShowInfoMessage("successfully update setting");
                                 $this.text(criteria.ParamValue);
                                 input.addClass("hide");
                                 $this.removeClass("hide").text(criteria.NewTarget);
@@ -147,7 +148,7 @@
 
                 OSSettingService.DeleteSetting(criteria, function (result) {
                     if (result.Code == 0) {
-                        common.ShowInfoMessage("setting's deleted successfully");
+                        common.ShowInfoMessage("successfully delete setting");
                         getSettings();
                     } else {
                         common.ShowErrorMessage(result.Message);

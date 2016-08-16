@@ -94,6 +94,12 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Simplect">
+      <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplect.Core">
+      <HintPath>..\Dependencies\DependencyInjector\Simplect.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -129,12 +135,18 @@
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
-    <Compile Include="Controllers\OSTraderReportController.cs" />
+    <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Criteria\SportPerformance\GetAllSportsCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformance\GetSportByTraderCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Models\SportPerformance\Sport.cs" />
+    <Compile Include="Models\TraderPerformance\SportPerformance.cs" />
+    <Compile Include="Models\TraderPerformance\TraderPerformance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
+    <Compile Include="Services\Implement\TraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
+    <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

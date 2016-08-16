@@ -1,4 +1,8 @@
-﻿namespace Fanex.NAP.TGRS.OSReports
+﻿using Fanex.NAP.TGRS.OSReports.Services.Implement;
+using Fanex.NAP.TGRS.OSReports.Services.Interface;
+using Simplect;
+
+namespace Fanex.NAP.TGRS.OSReports
 {
     using System.Web;
     using System.Web.Mvc;
@@ -8,8 +12,6 @@
     /// </summary>
     public class OSReportsAreaRegistration : AreaRegistration
     {
-        private static object _scopeObj = new object();
-
         public override string AreaName
         {
             get
@@ -28,6 +30,13 @@
                 "OSReports_default",
                 "OSReports/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional });
+
+            RegisterDependency();
+        }
+
+        static void RegisterDependency()
+        {
+            InjectorFactory.CurrentInjector.Bind<ITraderPerformanceService>().Using<TraderPerformanceService>();
         }
     }
 }
