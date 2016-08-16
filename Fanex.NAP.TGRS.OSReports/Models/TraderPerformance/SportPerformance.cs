@@ -8,16 +8,16 @@ namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
 {
     public class SportPerformance
     {
-        public string SportName { get; set; } = "adfadfadf";
+        public string SportName { get; set; }
 
-        public double TotalPoint { get; set; } = 8;
+        public double TotalPoint { get; set; }
 
-        public double Margin { get; set; } = 8;
+        public double Margin { get; set; }
 
-        public double Turnover { get; set; } = 8;
+        public double Turnover { get; set; }
 
-        public double WinLoss { get; set; } = 8;
+        public double WinLoss { get; set; }
 
-        public int EventProductCount { get; set; } = 8;
+        public int EventProductCount { get; set; }
     }
 }
