@@ -121,7 +121,7 @@ var traderReports = (function ($) {
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
-
+        domElements.divGrid.removeClass("hide");
         $(".freegrid", domElements.divGrid).fanexGrid(options);
     }
 
@@ -146,10 +146,10 @@ var traderReports = (function ($) {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
             ],
             showNumberColumn: true,

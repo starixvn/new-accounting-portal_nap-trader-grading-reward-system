@@ -77,7 +77,7 @@
                 }
 
                 if (criteria.LeagueId == -1 && criteria.BettypeId != -1) {
-                    common.ShowErrorMessage(messages.InvalidValue);
+                    common.ShowErrorMessage("Please choose a league");
                     return;
                 }
 
