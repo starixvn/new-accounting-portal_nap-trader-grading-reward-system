@@ -39,7 +39,7 @@
                                 ParamValue: value
                             };
 
-                            if (criteria.ParamValue < 0 || criteria.ParamValue > 100 || value != $input.val()) {
+                            if (criteria.ParamValue <= 0 || criteria.ParamValue > 100 || value != $input.val()) {
                                 common.ShowErrorMessage(messages.InvalidValue);
                             } else {
                                 OSSettingService.UpdateParameters(criteria, function (result) {
