@@ -116,7 +116,7 @@
 
                     if (input.val() != val) {
                         common.ShowErrorMessage(messages.NotANumber);
-                    } else if (val > 100 || val < 0) {
+                    } else if (val > 100 || val <= 0) {
                         common.ShowErrorMessage(messages.InvalidValue);
                     } else {
                         var criteria = {
