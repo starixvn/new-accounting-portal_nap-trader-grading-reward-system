@@ -82,10 +82,10 @@ var sportPerformance = (function ($) {
 
             domElements.ddlSport.multiselect({
                 selectedList: 1,
-                minWidth: 120,
+                minWidth: 263,
                 height: 200,
                 multiple: false
-            }).multiselectfilter({ width: 92 });
+            }).multiselectfilter({ width: 198 });
         });
     };
 
