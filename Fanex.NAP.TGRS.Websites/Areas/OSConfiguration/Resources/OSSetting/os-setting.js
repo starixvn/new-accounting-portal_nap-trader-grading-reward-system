@@ -226,7 +226,7 @@
                 selectedList: 1,
                 multiple: false,
                 minWidth: 262,
-                height: 200,
+                height: 200
             }).multiselectfilter({ width: 100 });
 
             sportSelector.change(function () {
@@ -265,9 +265,11 @@
             selector.multiselect({
                 selectedList: 1,
                 multiple: false,
-                minWidth: 194,
-                height: 200,
+                minWidth: 262,
+                height: 200
             }).multiselectfilter({ width: 100 });
+
+            selector.next().css("width", "268px");
         });
     }
 
