@@ -361,7 +361,7 @@ var sportPerformance = (function ($) {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.PointMargin, Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       }],
             gridExpandHeight: 260,
