@@ -65,6 +65,8 @@
                         $this.removeClass("hidden");
                     }
                 });
+        }).next().focusout(function () {
+            $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
         });
 
         $("#btnAdd", domElements.addSettingForm).click(function () {
@@ -139,6 +141,9 @@
             });
         });
 
+        domElements.TargetGrid.on('focusout', 'input', function () {
+            $(".target-link.link", domElements.TargetGrid).removeClass('hide').next().addClass('hide');
+        });
         domElements.TargetGrid.on('click', '.target-delete-button', function () {
             var $this = $(this);
             common.ShowConfirmMessage("Are you sure you want to delete this setting ?", function () {
@@ -186,7 +191,7 @@
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
-                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center', Sort: true, CustomSortFunction: comparer },
+                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'right', Sort: true, CustomSortFunction: comparer },
                 { HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
