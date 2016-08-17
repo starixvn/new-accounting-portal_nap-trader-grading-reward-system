@@ -32,7 +32,7 @@ namespace Fanex.NAP.TGRS.OSReports.Controllers
 
         public ActionResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            criteria.TraderName = String.Empty;
+            criteria.TraderName = criteria.TraderName ?? String.Empty;
             return Json(_service.GetTraderPerformances(criteria), JsonRequestBehavior.AllowGet);
         }
 

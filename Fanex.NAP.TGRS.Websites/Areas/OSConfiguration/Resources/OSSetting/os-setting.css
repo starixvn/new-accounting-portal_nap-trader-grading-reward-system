@@ -33,3 +33,13 @@ fieldset {
     width: 17px;
     height: 18px;
 }
+
+label {
+    font-weight: normal;
+}
+
+button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

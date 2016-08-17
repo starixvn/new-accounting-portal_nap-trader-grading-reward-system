@@ -48,11 +48,11 @@ var traderReports = (function ($) {
         //btnSearch
         domElements.btnSearch.click(function () {
             var criteria = {
-                TraderName: domElements.txtTraderName.val(),
+                TraderName: domElements.txtTraderName.val().trim(),
                 Fromdate: domElements.divDateRange.getFrom(),
                 ToDate: domElements.divDateRange.getTo()
             };
-
+            common.DisableInput();
             TraderReportService.GetTraderPerformance(criteria, function (data) {
                 cachedData = data;
                 renderTraderGrid(data);
@@ -103,10 +103,10 @@ var traderReports = (function ($) {
                 { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right' },
-                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'V. Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: 'V. Winloss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat },
                 { HeaderText: 'Sports', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'right' },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
             ],
@@ -174,15 +174,6 @@ var traderReports = (function ($) {
         cacheDOMElements();
 
         initPageFields();
-
-        //$("#txtUserName").keyup(function (e) {
-        //    if (e.keyCode == 13) {
-        //        $('#btnSearch').trigger("click");
-        //    }
-        //});
-
-        //Load report for first time
-        $('#btnSearch').click();
     };
 
     return traderReports;

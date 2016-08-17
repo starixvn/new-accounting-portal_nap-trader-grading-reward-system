@@ -44,7 +44,7 @@
                             } else {
                                 OSSettingService.UpdateParameters(criteria, function (result) {
                                     if (result.Code == 0) {
-                                        common.ShowInfoMessage("Successfully update parameter");
+                                        common.ShowInfoMessage("Updated successfully");
                                         $this.text(criteria.ParamValue);
                                         $input.css("visibility", "hidden");
                                         $this.removeClass("hidden");
@@ -76,12 +76,17 @@
                     Target: $("#targetValue").val()
                 }
 
+                if (criteria.LeagueId == -1 && criteria.BettypeId != -1) {
+                    common.ShowErrorMessage(messages.InvalidValue);
+                    return;
+                }
+
                 if (criteria.Target < 0 || criteria.Target > 100) {
                     common.ShowErrorMessage(messages.InvalidValue);
                 } else {
                     OSSettingService.AddSetting(criteria, function (result) {
                         if (result.Code == 0) {
-                            common.ShowInfoMessage("Successfully add new setting");
+                            common.ShowInfoMessage("Added successfully");
                             getSettings();
                         } else {
                             common.ShowErrorMessage(result.Message);
@@ -119,7 +124,7 @@
 
                         OSSettingService.UpdateTarget(criteria, function (result) {
                             if (result.Code == 0) {
-                                common.ShowInfoMessage("Successfully update setting");
+                                common.ShowInfoMessage("Updated successfully");
                                 $this.text(criteria.ParamValue);
                                 input.addClass("hide");
                                 $this.removeClass("hide").text(criteria.NewTarget);
@@ -143,7 +148,7 @@
 
                 OSSettingService.DeleteSetting(criteria, function (result) {
                     if (result.Code == 0) {
-                        common.ShowInfoMessage("Successfully delete setting");
+                        common.ShowInfoMessage("Deleted Successfully");
                         getSettings();
                     } else {
                         common.ShowErrorMessage(result.Message);
@@ -180,7 +185,7 @@
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
-                { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
+                { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'center', Sort: true, CustomSortFunction: comparer },
                 { HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' }
             ],
@@ -241,12 +246,15 @@
                         leagueSelector.append($("<option></option>").attr("value", e.LeagueId).text(e.LeagueName));
                     });
 
-                    leagueSelector.css("visibility", "visible").multiselect({
-                        selectedList: 1,
-                        multiple: false,
-                        minWidth: 262,
-                        height: 200,
-                    }).multiselectfilter({ width: 200 });
+                    leagueSelector
+                        .css("visibility", "visible")
+                        .multiselect({
+                            selectedList: 1,
+                            multiple: false,
+                            height: 200,
+                        })
+                        .multiselectfilter({ width: 200 }).next()
+                        .css("width", "392px");
                 });
             });
 
