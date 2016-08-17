@@ -255,10 +255,11 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.Add(new StyleBundle("~/styles/bootstrap").Include(
                 "~/Content/Bootstrap/Css/bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/styles/normal").Include(
-                "~/Areas/OSConfiguration/Resources/OSSetting/os-setting.css"));
+            bundles.AddAndInclude(
+                 "~/styles/normal",
+                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting.css");
 
-            bundles.Add(new StyleBundle("~/scripts/os-setting").Include(
+            bundles.Add(new ScriptBundle("~/scripts/os-setting").Include(
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting-factory.js",
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting-service.js",
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting.js"));
