@@ -37,7 +37,7 @@ var traderReports = (function ($) {
             defaultToDate: datepickerSetting.DefaultToDate,
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
-            labelCss: 'col_3'
+            labelCss: 'col_5'
         });
     };
 
@@ -81,6 +81,18 @@ var traderReports = (function ($) {
         });
     };
 
+    function customSort(val1, val2, direction) {
+        var parsedCol1Value = val1.toLowerCase();
+        var parsedCol2Value = val2.toLowerCase();
+
+        if (direction === 'asc') {
+            return parsedCol1Value > parsedCol2Value ? 1 : -1;
+        }
+        else {
+            return parsedCol1Value < parsedCol2Value ? 1 : -1;
+        }
+    }
+
     function renderTraderGrid(data) {
         var sportLink = "<span class='sport-link link' data-trader-id='{1}' data-trader-name='{2}'>{0}</span>";
 
@@ -104,7 +116,7 @@ var traderReports = (function ($) {
         var options = {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
-                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'asc' },
+                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'desc', CustomSortFunction: customSort },
                 { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
