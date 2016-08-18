@@ -1,6 +1,8 @@
 ﻿var OSSetting = (function ($) {
     var setting = {};
 
+    var cachedBettype = null;
+
     var domElements = {
         globalTargetForm: null,
         addSettingForm: null,
@@ -222,6 +224,23 @@
         });
     }
 
+    function resetBettype() {
+        var selector = $("#optBettype");
+
+        selector.children("option").remove();
+        selector.append($("<option></option>").attr("value", "-1").text("All Bettypes"));
+        cachedBettype.forEach(function (e) {
+            selector.append($("<option></option>").attr("value", e.BettypeId).text(e.BettypeName));
+        });
+
+        selector.multiselect({
+            selectedList: 1,
+            multiple: false,
+            minWidth: 262,
+            height: 200
+        }).multiselectfilter({ width: 100 });
+    }
+
     function getSports() {
         OSSettingService.GetSports(function (data) {
             var sportSelector = $("#sport");;
@@ -245,6 +264,9 @@
                     SportId: parseInt(sportSelector.find(":selected").val())
                 }
 
+                if (cachedBettype != null) {
+                    resetBettype();
+                }
                 OSSettingService.GetLeagues(criteria, function (data1) {
                     leagueSelector.children("option").remove();
                     leagueSelector.append($("<option></option>").attr("value", "-1").text("All Leagues"));
@@ -272,6 +294,9 @@
         OSSettingService.GetBettypes(function (data) {
             var selector = $("#optBettype");
 
+            selector.append($("<option></option>").attr("value", "-1").text("All Bettypes"));
+
+            cachedBettype = data;
             data.forEach(function (e) {
                 selector.append($("<option></option>").attr("value", e.BettypeId).text(e.BettypeName));
             });
@@ -301,13 +326,13 @@
     setting.Initialize = function () {
         cacheDome();
 
+        getBettypes();
+
         getSettings();
 
         getParameters();
 
         getSports();
-
-        getBettypes();
 
         handlePageEvents();
     }
