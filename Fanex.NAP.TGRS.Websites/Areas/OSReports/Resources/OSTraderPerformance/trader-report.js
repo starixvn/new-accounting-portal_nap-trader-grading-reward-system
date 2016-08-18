@@ -69,6 +69,8 @@ var traderReports = (function ($) {
                 ToDate: domElements.divDateRange.getTo()
             }
 
+            common.DisableInput();
+
             TraderReportService.GetSportsPerformance(criteria, function (data) {
                 renderSportsGrid($this.attr("data-trader-name"), data);
             });
