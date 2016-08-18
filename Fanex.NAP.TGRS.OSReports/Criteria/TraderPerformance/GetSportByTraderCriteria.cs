@@ -11,6 +11,10 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance
     {
         public int TraderId { get; set; }
 
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
+
         public override bool IsValid()
         {
             return true;

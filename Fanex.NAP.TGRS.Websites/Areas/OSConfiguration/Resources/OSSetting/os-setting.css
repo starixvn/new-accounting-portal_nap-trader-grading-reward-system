@@ -14,7 +14,7 @@ fieldset {
 }
 
 .server-time {
-    margin-right: 30px;
+    margin-right: 15px;
 }
 
 .target-delete-button {
@@ -42,4 +42,8 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.row {
+    margin-right: 0;
 }

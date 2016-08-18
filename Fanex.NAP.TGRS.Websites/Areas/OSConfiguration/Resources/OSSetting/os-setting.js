@@ -239,6 +239,7 @@
                 height: 200
             }).multiselectfilter({ width: 100 });
 
+
             sportSelector.change(function () {
                 var criteria = {
                     SportId: parseInt(sportSelector.find(":selected").val())

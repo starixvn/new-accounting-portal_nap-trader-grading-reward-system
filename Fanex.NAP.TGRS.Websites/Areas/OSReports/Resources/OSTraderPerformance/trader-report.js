@@ -64,7 +64,9 @@ var traderReports = (function ($) {
             var $this = $(this);
 
             var criteria = {
-                TraderId: $this.attr("data-trader-id")
+                TraderId: $this.attr("data-trader-id"),
+                FromDate: domElements.divDateRange.getFrom(),
+                ToDate: domElements.divDateRange.getTo()
             }
 
             TraderReportService.GetSportsPerformance(criteria, function (data) {
