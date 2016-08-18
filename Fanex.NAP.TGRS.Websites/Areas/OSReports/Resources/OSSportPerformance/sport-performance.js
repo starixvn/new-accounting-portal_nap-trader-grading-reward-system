@@ -127,7 +127,7 @@ var sportPerformance = (function ($) {
         var noOfLeaguesFormat = '<span class="league-link link" data-sport-id="{0}" title="{1}">{2}</span>';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Sport, Width: 200, Name: 'ColSport', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right' },
                       {
@@ -233,7 +233,7 @@ var sportPerformance = (function ($) {
         var noOfBettypesFormat = '<span class="bettype-link link" data-league-id="{0}" title="{1}">{2}</span>';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfBettypes, Width: 100, Name: 'ColNoOfBettypes', HeaderAlign: 'center', CellAlign: 'right' },
                       {
@@ -329,7 +329,6 @@ var sportPerformance = (function ($) {
 
             leagueName = leagueName || $leagueName.text();
 
-            debugger;
             sportPerformance.GetBettypePerformance(sportId, sportName, leagueId, leagueName);
         });
     };
@@ -342,7 +341,7 @@ var sportPerformance = (function ($) {
         var titleLength = 8 + labels.SportPerformance.length + leagueName.length + sportName.length;
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: 'Product', Width: 100, Name: 'ColBettype', HeaderAlign: 'center', CellAlign: 'left' },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
