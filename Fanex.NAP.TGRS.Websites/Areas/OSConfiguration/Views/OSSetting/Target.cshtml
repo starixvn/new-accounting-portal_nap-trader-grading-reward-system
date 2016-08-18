@@ -23,17 +23,16 @@
                         </div>
 
                         <div class="edit-field col_8">
-                            <select id="league"
-                                    style="height: 25px; visibility: hidden">
-                                <option value="-1">All league</option>
-                            </select>
+                            <input id="league"
+                                   style="height: 25px; width: 268px; overflow: hidden; text-overflow: ellipsis;" placeholder="All Leagues"
+                                   data-val-not-html="@Messages.HtmlInputError"
+                                   data-league-id="-1">
                         </div>
                     </div>
 
                     <div class="filter-row">
                         <div class="edit-field col_12">
-                            <select id="optBettype">
-                            </select>
+                            <select id="optBettype"></select>
                         </div>
 
                         <div class="edit-field col_12">

@@ -1,6 +1,8 @@
 ﻿var OSSetting = (function ($) {
     var setting = {};
 
+    var cachedLeagues = null;
+
     var cachedBettype = null;
 
     var domElements = {
@@ -17,6 +19,12 @@
 
     function stringDefault(str) {
         return str == null ? '-' : str;
+    }
+
+    function getLeague(str) {
+        return cachedLeagues.find(function (e) {
+            return e.value.toLowerCase() == str.toLowerCase();
+        });
     }
 
     function handlePageEvents() {
@@ -73,14 +81,23 @@
 
         $("#btnAdd", domElements.addSettingForm).click(function () {
             if (validator.ValidateForm(domElements.addSettingForm, 'w')) {
+                var txtLeague = $("#league");
+
+                var league = getLeague(txtLeague.val().length == 0 ? "All Leagues" : txtLeague.val());
+
+                if (league == null) {
+                    common.ShowErrorMessage("Please choose a valid league");
+                    return;
+                }
+
                 var criteria = {
                     SportId: parseInt($("#sport").find(":selected").val()),
-                    LeagueId: parseInt($("#league").find(":selected").val()),
+                    LeagueId: league.id,
                     BettypeId: parseInt($("#optBettype").find(":selected").val()),
                     Target: $("#targetValue").val()
                 }
 
-                if (criteria.LeagueId == -1 && criteria.BettypeId != -1) {
+                if (criteria.LeagueId == -1 && (criteria.BettypeId != -1)) {
                     common.ShowErrorMessage("Please choose a league");
                     return;
                 }
@@ -233,12 +250,7 @@
             selector.append($("<option></option>").attr("value", e.BettypeId).text(e.BettypeName));
         });
 
-        selector.multiselect({
-            selectedList: 1,
-            multiple: false,
-            minWidth: 262,
-            height: 200
-        }).multiselectfilter({ width: 100 });
+        selector.multiselect('refresh');
     }
 
     function getSports() {
@@ -258,31 +270,36 @@
                 height: 200
             }).multiselectfilter({ width: 100 });
 
-
             sportSelector.change(function () {
                 var criteria = {
                     SportId: parseInt(sportSelector.find(":selected").val())
                 }
 
+                leagueSelector.val("");
+
                 if (cachedBettype != null) {
                     resetBettype();
                 }
                 OSSettingService.GetLeagues(criteria, function (data1) {
-                    leagueSelector.children("option").remove();
-                    leagueSelector.append($("<option></option>").attr("value", "-1").text("All Leagues"));
-                    data1.forEach(function (e) {
-                        leagueSelector.append($("<option></option>").attr("value", e.LeagueId).text(e.LeagueName));
+
+                    cachedLeagues = data1.map(function (e) {
+                        return { value: e.LeagueName, id: e.LeagueId }
                     });
 
-                    leagueSelector
-                        .css("visibility", "visible")
-                        .multiselect({
-                            selectedList: 1,
-                            multiple: false,
-                            height: 200,
-                        })
-                        .multiselectfilter({ width: 200 }).next()
-                        .css("width", "392px");
+                    cachedLeagues.unshift({ value: "All Leagues", id: -1 });
+
+                    leagueSelector.autocomplete({
+                        minLength: 2,
+                        source: function (req, resp) {
+                            var results = cachedLeagues.filter(function (e) {
+                                return e.value.toLowerCase().includes(req.term.toLowerCase());
+                            }).slice(0, 10);
+                            resp(results);
+                        },
+                        select: function (e, ui) {
+                            leagueSelector.attr("data-league-id", ui.item.id);
+                        }
+                    });
                 });
             });
 
