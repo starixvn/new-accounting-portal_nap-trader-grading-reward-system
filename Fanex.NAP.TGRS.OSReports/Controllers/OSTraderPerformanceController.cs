@@ -1,22 +1,24 @@
-﻿using System;
-using System.Web.Mvc;
-using Fanex.NAP.TGRS.Core.BaseClasses;
-using Fanex.NAP.TGRS.Core.Configurations;
-using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
-using Fanex.NAP.TGRS.OSReports.Services.Interface;
-
-namespace Fanex.NAP.TGRS.OSReports.Controllers
+﻿namespace Fanex.NAP.TGRS.OSReports.Controllers
 {
+    using System;
+    using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
+    using Fanex.NAP.TGRS.OSReports.Services.Interface;
+
     public class OSTraderPerformanceController : TGRSBaseController
     {
-        ITraderPerformanceService _service;
+        private ITraderPerformanceService _service;
 
         public OSTraderPerformanceController(ITraderPerformanceService service)
         {
             _service = service;
         }
 
-
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
@@ -30,12 +32,14 @@ namespace Fanex.NAP.TGRS.OSReports.Controllers
             return View();
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
             criteria.TraderName = criteria.TraderName ?? String.Empty;
             return Json(_service.GetTraderPerformances(criteria), JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetSportsPerformanceByTrader(GetSportByTraderCriteria criteria)
         {
             return Json(_service.GetSportPerformances(criteria), JsonRequestBehavior.AllowGet);

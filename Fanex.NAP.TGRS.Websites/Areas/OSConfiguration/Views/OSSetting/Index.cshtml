@@ -17,13 +17,10 @@
 }
 
 
-
 <div style="margin-left: 25px;margin-right: 15px">
     @Html.Partial("Target")
     @Html.Partial("Parameter")
 </div>
-
-
 
 
 @section Foot
@@ -35,6 +32,8 @@
             NotANumber: '@Messages.NotANumberError',
             InvalidValue: '@Messages.InvalidValueError'
         }
+
+        var editRight = @ViewBag.HasEditRight;
     </script>
 }
 

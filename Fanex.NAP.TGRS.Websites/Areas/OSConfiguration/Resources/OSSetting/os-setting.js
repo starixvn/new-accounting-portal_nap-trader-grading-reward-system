@@ -83,7 +83,7 @@
                     return;
                 }
 
-                if (criteria.Target < 0 || criteria.Target > 100) {
+                if (criteria.Target <= 0 || criteria.Target > 100) {
                     common.ShowErrorMessage(messages.InvalidValue);
                 } else {
                     OSSettingService.AddSetting(criteria, function (result) {
