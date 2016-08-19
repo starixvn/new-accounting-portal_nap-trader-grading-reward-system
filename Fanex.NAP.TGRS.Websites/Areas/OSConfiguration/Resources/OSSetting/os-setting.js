@@ -255,8 +255,7 @@
 
     function getSports() {
         OSSettingService.GetSports(function (data) {
-            var sportSelector = $("#sport");;
-
+            var sportSelector = $("#sport");
             var leagueSelector = $("#league");
 
             data.forEach(function (e) {
@@ -305,6 +304,7 @@
 
             sportSelector.change();
         });
+
     }
 
     function getBettypes() {
@@ -324,8 +324,6 @@
                 minWidth: 262,
                 height: 200
             }).multiselectfilter({ width: 100 });
-
-            selector.next().css("width", "268px");
         });
     }
 
@@ -343,13 +341,13 @@
     setting.Initialize = function () {
         cacheDome();
 
-        getBettypes();
-
         getSettings();
 
         getParameters();
 
         getSports();
+
+        getBettypes();
 
         handlePageEvents();
     }

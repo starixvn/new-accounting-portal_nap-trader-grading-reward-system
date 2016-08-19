@@ -38,12 +38,10 @@ label {
     font-weight: normal;
 }
 
-button {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .row {
     margin-right: 0;
+}
+
+button.ui-multiselect.ui-widget.ui-state-default {
+    width: 268px !important;
 }
