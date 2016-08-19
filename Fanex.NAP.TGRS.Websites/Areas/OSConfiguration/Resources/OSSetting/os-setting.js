@@ -292,7 +292,7 @@
                         source: function (req, resp) {
                             var results = cachedLeagues.filter(function (e) {
                                 return e.value.toLowerCase().includes(req.term.toLowerCase());
-                            }).slice(0, 10);
+                            }).sort(strComparer).slice(0, 10);
                             resp(results);
                         },
                         select: function (e, ui) {
@@ -336,6 +336,13 @@
         else {
             return tmp1 < tmp2 ? 1 : -1;
         }
+    }
+
+    function strComparer(val1, val2) {
+        var tmp1 = val1.value.toLowerCase();
+        var tmp2 = val2.value.toLowerCase();
+
+        return tmp1.localeCompare(tmp2);
     }
 
     setting.Initialize = function () {
