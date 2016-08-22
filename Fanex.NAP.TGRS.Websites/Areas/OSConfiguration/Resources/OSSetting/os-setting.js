@@ -194,16 +194,22 @@
             'data-target-id="{0}" ></span>';
 
         var mapper = function (item, idx) {
-            return {
-                Columns: [
-                    { Name: 'colNum', Value: idx + 1 },
-                    { Name: 'colSport', Value: item.SportName },
-                    { Name: 'colLeague', Value: stringDefault(item.LeagueName) },
-                    { Name: 'colBettype', Value: stringDefault(item.BettypeName) },
-                    { Name: 'colTarget', Value: targetLink.format(item.Target, item.SpecialTargetId) },
-                    { Name: 'colDelete', Value: deleteButton.format(item.SpecialTargetId) }
-                ]
-            };
+            var tmp =
+             {
+                 Columns: [
+                     { Name: 'colNum', Value: idx + 1 },
+                     { Name: 'colSport', Value: item.SportName },
+                     { Name: 'colLeague', Value: stringDefault(item.LeagueName) },
+                     { Name: 'colBettype', Value: stringDefault(item.BettypeName) },
+                     { Name: 'colTarget', Value: targetLink.format(item.Target, item.SpecialTargetId) }
+                 ]
+             };
+
+            if (hasEditRight) {
+                tmp.push({ Name: 'colDelete', Value: deleteButton.format(item.SpecialTargetId) });
+            }
+
+            return tmp;
         }
 
         var options = {
