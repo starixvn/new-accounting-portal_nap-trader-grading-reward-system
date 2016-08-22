@@ -290,9 +290,21 @@
                     leagueSelector.autocomplete({
                         minLength: 2,
                         source: function (req, resp) {
+                            var tmp = req.term.toLowerCase().trim();
+
                             var results = cachedLeagues.filter(function (e) {
-                                return e.value.toLowerCase().includes(req.term.toLowerCase());
-                            }).sort(strComparer).slice(0, 10);
+                                return e.value.toLowerCase().includes(tmp);
+                            }).map(function (e) {
+                                try {
+                                    e.similarity = e.value.toLowerCase().search(tmp);
+                                } catch (a) {
+                                    e.similarity = e.value.toLowerCase().search(tmp.slice(1, tmp.length - 1));
+                                }
+                                return e;
+                            }).sort(function (e1, e2) {
+                                return e1.similarity - e2.similarity;
+                            }).slice(0, 20);
+
                             resp(results);
                         },
                         select: function (e, ui) {
@@ -304,7 +316,6 @@
 
             sportSelector.change();
         });
-
     }
 
     function getBettypes() {
@@ -336,13 +347,6 @@
         else {
             return tmp1 < tmp2 ? 1 : -1;
         }
-    }
-
-    function strComparer(val1, val2) {
-        var tmp1 = val1.value.toLowerCase();
-        var tmp2 = val2.value.toLowerCase();
-
-        return tmp1.localeCompare(tmp2);
     }
 
     setting.Initialize = function () {
