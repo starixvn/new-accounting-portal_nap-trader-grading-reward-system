@@ -33,7 +33,7 @@
             InvalidValue: '@Messages.InvalidValueError'
         }
 
-        var hasEditRight = @ViewBag.HasEditRight? true:false;
+        var hasEditRight = @(ViewBag.HasEditRight? "true":"false");
     </script>
 }
 
