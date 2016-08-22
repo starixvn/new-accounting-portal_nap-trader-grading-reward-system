@@ -365,7 +365,6 @@
             getSports();
 
             getBettypes();
-
         }
 
         handlePageEvents();
