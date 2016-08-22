@@ -18,17 +18,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
 
         public string TeamName { get; set; }
 
-        public int UserId
-        {
-            get
-            {
-                return SessionUtility.GetCreatorId();
-            }
-
-            set
-            {
-            }
-        }
+        public int UserId { get; set; }
 
         public int ErrCode { get; set; }
 

@@ -52,6 +52,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult InsertTeam(InsertTeamCriteria criteria)
         {
             criteria.TeamName = criteria.TeamName ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
 
             var result = this._teamService.InsertTeam(criteria);
 
@@ -63,6 +64,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult UpdateTeam(UpdateTeamCriteria criteria)
         {
             criteria.TeamName = criteria.TeamName ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
 
             var result = this._teamService.UpdateTeam(criteria);
 

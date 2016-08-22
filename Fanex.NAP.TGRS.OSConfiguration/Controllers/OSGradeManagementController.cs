@@ -52,6 +52,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult InsertGrade(InsertGradeCriteria criteria)
         {
             criteria.GradeName = criteria.GradeName ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
 
             var result = this._gradeService.InsertGrade(criteria);
 
@@ -63,6 +64,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult UpdateGrade(UpdateGradeCriteria criteria)
         {
             criteria.GradeName = criteria.GradeName ?? string.Empty;
+            criteria.UserId = this.CurrentSession.UserId;
 
             var result = this._gradeService.UpdateGrade(criteria);
 
