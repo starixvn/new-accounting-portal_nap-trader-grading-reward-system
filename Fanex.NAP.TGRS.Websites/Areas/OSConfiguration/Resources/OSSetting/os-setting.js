@@ -30,157 +30,159 @@
     function handlePageEvents() {
         $('[data-toggle="tooltip"]').tooltip();
 
-        $(".parameter").click(function () {
-            $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
+        if (hasEditRight) {
+            $(".parameter").click(function () {
+                $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
 
-            var $this = $(this).addClass('hidden');
+                var $this = $(this).addClass('hidden');
 
-            var value = $this.text();
+                var value = $this.text();
 
-            $this.next().css('visibility', 'visible').val(value).focus()
-                .keyup(function (e) {
-                    var $input = $(this);
-                    if (e.keyCode == 13) {
-                        if (validator.ValidateForm($this.parent(), 'w')) {
-                            var value = $input.attr("data-integer") != null ? parseInt($input.val()) : parseFloat($input.val());
+                $this.next().css('visibility', 'visible').val(value).focus()
+                    .keyup(function (e) {
+                        var $input = $(this);
+                        if (e.keyCode == 13) {
+                            if (validator.ValidateForm($this.parent(), 'w')) {
+                                var value = $input.attr("data-integer") != null ? parseInt($input.val()) : parseFloat($input.val());
 
-                            var criteria = {
-                                ParamId: parseInt($input.attr("data-param-id")),
-                                ParamValue: value
-                            };
+                                var criteria = {
+                                    ParamId: parseInt($input.attr("data-param-id")),
+                                    ParamValue: value
+                                };
 
-                            if (criteria.ParamValue <= 0 || criteria.ParamValue > 100 || value != $input.val()) {
-                                common.ShowErrorMessage(messages.InvalidValue);
+                                if (criteria.ParamValue <= 0 || criteria.ParamValue > 100 || value != $input.val()) {
+                                    common.ShowErrorMessage(messages.InvalidValue);
+                                } else {
+                                    OSSettingService.UpdateParameters(criteria, function (result) {
+                                        if (result.Code == 0) {
+                                            common.ShowInfoMessage("Updated successfully");
+                                            $this.text(criteria.ParamValue);
+                                            $input.css("visibility", "hidden");
+                                            $this.removeClass("hidden");
+
+                                        } else {
+                                            common.ShowErrorMessage(result.Message);
+                                        }
+                                    });
+                                }
                             } else {
-                                OSSettingService.UpdateParameters(criteria, function (result) {
-                                    if (result.Code == 0) {
-                                        common.ShowInfoMessage("Updated successfully");
-                                        $this.text(criteria.ParamValue);
-                                        $input.css("visibility", "hidden");
-                                        $this.removeClass("hidden");
-
-                                    } else {
-                                        common.ShowErrorMessage(result.Message);
-                                    }
-                                });
+                                $(".error-tipsy.error-tipsy-w", $this.parent()).css("margin-left", "20px");
+                                setTimeout(function () {
+                                    validator.ClearErrors(domElements.globalTargetForm);
+                                }, 1000);
                             }
-                        } else {
-                            $(".error-tipsy.error-tipsy-w", $this.parent()).css("margin-left", "20px");
-                            setTimeout(function () {
-                                validator.ClearErrors(domElements.globalTargetForm);
-                            }, 1000);
-                        }
-                    } else if (e.keyCode == 27) {
-                        $input.css("visibility", "hidden");
-                        $this.removeClass("hidden");
-                    }
-                });
-        }).next().focusout(function () {
-            $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
-        });
-
-        $("#btnAdd", domElements.addSettingForm).click(function () {
-            if (validator.ValidateForm(domElements.addSettingForm, 'w')) {
-                var txtLeague = $("#league");
-
-                var league = getLeague(txtLeague.val().length == 0 ? "All Leagues" : txtLeague.val());
-
-                if (league == null) {
-                    common.ShowErrorMessage("Please choose a valid league");
-                    return;
-                }
-
-                var criteria = {
-                    SportId: parseInt($("#sport").find(":selected").val()),
-                    LeagueId: league.id,
-                    BettypeId: parseInt($("#optBettype").find(":selected").val()),
-                    Target: $("#targetValue").val()
-                }
-
-                if (criteria.LeagueId == -1 && (criteria.BettypeId != -1)) {
-                    common.ShowErrorMessage("Please choose a league");
-                    return;
-                }
-
-                if (criteria.Target <= 0 || criteria.Target > 100) {
-                    common.ShowErrorMessage(messages.InvalidValue);
-                } else {
-                    OSSettingService.AddSetting(criteria, function (result) {
-                        if (result.Code == 0) {
-                            common.ShowInfoMessage("Added successfully");
-                            getSettings();
-                        } else {
-                            common.ShowErrorMessage(result.Message);
+                        } else if (e.keyCode == 27) {
+                            $input.css("visibility", "hidden");
+                            $this.removeClass("hidden");
                         }
                     });
-                }
-            } else {
-                setTimeout(function () {
-                    validator.ClearErrors(domElements.addSettingForm);
-                }, 1000);
-            }
-        });
+            }).next().focusout(function () {
+                $(".parameter").removeClass("hidden").next().css("visibility", "hidden");
+            });
 
-        domElements.TargetGrid.on('click', '.target-link.link', function () {
-            $(".target-link.link", domElements.TargetGrid).removeClass('hide').next().addClass('hide');
+            $("#btnAdd", domElements.addSettingForm).click(function () {
+                if (validator.ValidateForm(domElements.addSettingForm, 'w')) {
+                    var txtLeague = $("#league");
 
-            var $this = $(this).addClass("hide");
+                    var league = getLeague(txtLeague.val().length == 0 ? "All Leagues" : txtLeague.val());
 
-            var input = $this.next();
-            input.val($this.text());
+                    if (league == null) {
+                        common.ShowErrorMessage("Please choose a valid league");
+                        return;
+                    }
 
-            input.removeClass("hide").focus().keyup(function (e) {
-                if (e.keyCode == 13) {
-                    var val = parseFloat(input.val());
+                    var criteria = {
+                        SportId: parseInt($("#sport").find(":selected").val()),
+                        LeagueId: league.id,
+                        BettypeId: parseInt($("#optBettype").find(":selected").val()),
+                        Target: $("#targetValue").val()
+                    }
 
-                    if (input.val() != val) {
-                        common.ShowErrorMessage(messages.NotANumber);
-                    } else if (val > 100 || val <= 0) {
+                    if (criteria.LeagueId == -1 && (criteria.BettypeId != -1)) {
+                        common.ShowErrorMessage("Please choose a league");
+                        return;
+                    }
+
+                    if (criteria.Target <= 0 || criteria.Target > 100) {
                         common.ShowErrorMessage(messages.InvalidValue);
                     } else {
-                        var criteria = {
-                            SpecialTargetId: input.attr("data-target-id"),
-                            NewTarget: input.val()
-                        }
-
-                        OSSettingService.UpdateTarget(criteria, function (result) {
+                        OSSettingService.AddSetting(criteria, function (result) {
                             if (result.Code == 0) {
-                                common.ShowInfoMessage("Updated successfully");
-                                $this.text(criteria.ParamValue);
-                                input.addClass("hide");
-                                $this.removeClass("hide").text(criteria.NewTarget);
-                                $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+                                common.ShowInfoMessage("Added successfully");
+                                getSettings();
                             } else {
                                 common.ShowErrorMessage(result.Message);
                             }
                         });
                     }
-                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+                } else {
+                    setTimeout(function () {
+                        validator.ClearErrors(domElements.addSettingForm);
+                    }, 1000);
                 }
             });
-        });
 
-        domElements.TargetGrid.on('focusout', 'input', function () {
-            $(".target-link.link", domElements.TargetGrid).removeClass('hide').next().addClass('hide');
-        });
-        domElements.TargetGrid.on('click', '.target-delete-button', function () {
-            var $this = $(this);
-            common.ShowConfirmMessage("Are you sure you want to delete this setting ?", function () {
-                var criteria = {
-                    SpecialTargetId: $this.attr("data-target-id")
-                };
+            domElements.TargetGrid.on('click', '.target-link.link', function () {
+                $(".target-link.link", domElements.TargetGrid).removeClass('hide').next().addClass('hide');
 
-                OSSettingService.DeleteSetting(criteria, function (result) {
-                    if (result.Code == 0) {
-                        common.ShowInfoMessage("Deleted Successfully");
-                        getSettings();
-                    } else {
-                        common.ShowErrorMessage(result.Message);
+                var $this = $(this).addClass("hide");
+
+                var input = $this.next();
+                input.val($this.text());
+
+                input.removeClass("hide").focus().keyup(function (e) {
+                    if (e.keyCode == 13) {
+                        var val = parseFloat(input.val());
+
+                        if (input.val() != val) {
+                            common.ShowErrorMessage(messages.NotANumber);
+                        } else if (val > 100 || val <= 0) {
+                            common.ShowErrorMessage(messages.InvalidValue);
+                        } else {
+                            var criteria = {
+                                SpecialTargetId: input.attr("data-target-id"),
+                                NewTarget: input.val()
+                            }
+
+                            OSSettingService.UpdateTarget(criteria, function (result) {
+                                if (result.Code == 0) {
+                                    common.ShowInfoMessage("Updated successfully");
+                                    $this.text(criteria.ParamValue);
+                                    input.addClass("hide");
+                                    $this.removeClass("hide").text(criteria.NewTarget);
+                                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+                                } else {
+                                    common.ShowErrorMessage(result.Message);
+                                }
+                            });
+                        }
+                        $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                     }
-                    $("a", "#msgbox2").css("width", "17px").css("height", "18px");
                 });
             });
-        });
+
+            domElements.TargetGrid.on('focusout', 'input', function () {
+                $(".target-link.link", domElements.TargetGrid).removeClass('hide').next().addClass('hide');
+            });
+            domElements.TargetGrid.on('click', '.target-delete-button', function () {
+                var $this = $(this);
+                common.ShowConfirmMessage("Are you sure you want to delete this setting ?", function () {
+                    var criteria = {
+                        SpecialTargetId: $this.attr("data-target-id")
+                    };
+
+                    OSSettingService.DeleteSetting(criteria, function (result) {
+                        if (result.Code == 0) {
+                            common.ShowInfoMessage("Deleted Successfully");
+                            getSettings();
+                        } else {
+                            common.ShowErrorMessage(result.Message);
+                        }
+                        $("a", "#msgbox2").css("width", "17px").css("height", "18px");
+                    });
+                });
+            });
+        }
     }
 
     function renderGrid(data) {
@@ -210,8 +212,7 @@
                 { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'League ', Width: 600, Name: 'colLeague', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Bet Type', Width: 200, Name: 'colBettype', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
-                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'right', Sort: true, CustomSortFunction: comparer },
-                { HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' }
+                { HeaderText: 'Target', Width: 80, Name: 'colTarget', HeaderAlign: 'center', CellAlign: 'right', Sort: true, CustomSortFunction: comparer }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -224,6 +225,10 @@
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
+
+        if (hasEditRight) {
+            options.columns.push({ HeaderText: '', Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' });
+        }
 
         domElements.TargetGrid.fanexGrid(options);
     }
@@ -356,9 +361,12 @@
 
         getParameters();
 
-        getSports();
+        if (hasEditRight) {
+            getSports();
 
-        getBettypes();
+            getBettypes();
+
+        }
 
         handlePageEvents();
     }

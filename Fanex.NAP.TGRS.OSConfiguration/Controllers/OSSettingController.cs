@@ -19,13 +19,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             _service = service1;
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSSetting, Constant.Policy.Host);
             return View();
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Read)]
         public async Task<JsonResult> GetSettings()
         {
             var data = await Task.Run(() => _service.GetSettings());
@@ -78,7 +79,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSetting, Policy = Constant.Policy.Read)]
         public async Task<JsonResult> GetParameters()
         {
             var result = await Task.Run(() => new

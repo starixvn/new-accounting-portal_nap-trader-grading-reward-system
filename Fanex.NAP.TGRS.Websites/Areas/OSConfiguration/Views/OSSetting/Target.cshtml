@@ -13,48 +13,51 @@
         </div>
 
         <fieldset>
-            <legend>Add special target</legend>
-            <div class="filter-bar" style="background-color: white; border: none !important;">
-                <div id="addSettingForm" class="filter-form">
-                    <div class="filter-row">
-                        <div class="edit-field col_12">
-                            <select id="sport"
-                                    style="height: 25px"></select>
+            @if (ViewBag.HasEditRight)
+            {
+                <legend>Add special target</legend>
+                <div class="filter-bar" style="background-color: white; border: none !important;">
+                    <div id="addSettingForm" class="filter-form">
+                        <div class="filter-row">
+                            <div class="edit-field col_12">
+                                <select id="sport"
+                                        style="height: 25px"></select>
+                            </div>
+
+                            <div class="edit-field col_8">
+                                <input id="league"
+                                       style="height: 25px; width: 268px; overflow: hidden; text-overflow: ellipsis;" placeholder="All Leagues"
+                                       data-val-not-html="@Messages.HtmlInputError"
+                                       data-league-id="-1"
+                                       type="text">
+                            </div>
                         </div>
 
-                        <div class="edit-field col_8">
-                            <input id="league"
-                                   style="height: 25px; width: 268px; overflow: hidden; text-overflow: ellipsis;" placeholder="All Leagues"
-                                   data-val-not-html="@Messages.HtmlInputError"
-                                   data-league-id="-1"
-                                   type="text">
-                        </div>
-                    </div>
+                        <div class="filter-row">
+                            <div class="edit-field col_12">
+                                <select id="optBettype"></select>
+                            </div>
 
-                    <div class="filter-row">
-                        <div class="edit-field col_12">
-                            <select id="optBettype"></select>
-                        </div>
+                            <div class="edit-field col_12">
+                                <input id="targetValue"
+                                       type="text"
+                                       maxlength="50"
+                                       data-val-required="@Messages.RequiredFieldError"
+                                       data-val-number="@Messages.NotANumberError"
+                                       style="height: 25px; width: 268px"
+                                       placeholder="Input the target value (%) ..." />
+                            </div>
 
-                        <div class="edit-field col_12">
-                            <input id="targetValue"
-                                   type="text"
-                                   maxlength="50"
-                                   data-val-required="@Messages.RequiredFieldError"
-                                   data-val-number="@Messages.NotANumberError"
-                                   style="height: 25px; width: 268px"
-                                   placeholder="Input the target value (%) ..." />
-                        </div>
-
-                        <div class="col_8">
-                            <button id="btnAdd" class="green-button">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Add
-                            </button>
+                            <div class="col_8">
+                                <button id="btnAdd" class="green-button">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Add
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
 
             <div class="content-grid">
                 <div id="targetGrid" class="freegrid">
