@@ -206,7 +206,7 @@
              };
 
             if (hasEditRight) {
-                tmp.push({ Name: 'colDelete', Value: deleteButton.format(item.SpecialTargetId) });
+                tmp.Columns.push({ Name: 'colDelete', Value: deleteButton.format(item.SpecialTargetId) });
             }
 
             return tmp;
