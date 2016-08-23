@@ -170,7 +170,7 @@ var traderReports = (function ($) {
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
-            gridExpandHeight: 100,
+            gridExpandHeight: 220,
             showTitle: true,
             titleInfo: {
                 text: fallbackLink.format(labels.TraderPerformance, traderName)
