@@ -47,6 +47,10 @@ var traderManagement = (function ($) {
 
     var grades;
 
+    function normalizeString(str) {
+        return str == null ? "-" : str;
+    }
+
     traderManagement.GetTeam = function (callback) {
         traderManagementService.GetTeam(function (result) {
             teams = result;
@@ -520,8 +524,8 @@ var traderManagement = (function ($) {
                     Columns: [{ Name: 'ColNum', Value: index + 1 },
                               { Name: 'ColName', Value: hasEditRight ? editableTraderNameCol : traderNameCol },
                               { Name: 'ColId', Value: item.EmployeeId.length == 0 ? "-" : item.EmployeeId },
-                              { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, item.TeamName, item.TraderName) },
-                              { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, item.GradeName, item.TraderName) },
+                              { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, normalizeString(item.TeamName), item.TraderName) },
+                              { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, normalizeString(item.GradeName), item.TraderName) },
                               { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction, item.TraderName) },
                               { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error, item.TraderName) },
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
