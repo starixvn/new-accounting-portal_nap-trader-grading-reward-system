@@ -1,17 +1,19 @@
-﻿legend {
-    display: block;
-    width: auto;
-    padding: 0 5px;
-    margin-bottom: 0;
-    font-size: inherit;
-    line-height: inherit;
-    border-bottom: none;
-}
-
-fieldset {
+﻿
+.normalField {
     border: 2px groove threedface;
     padding: 5px;
 }
+
+    .normalField legend {
+        display: block;
+        width: auto;
+        padding: 0 5px;
+        margin-bottom: 0;
+        font-size: inherit;
+        line-height: inherit;
+        border-bottom: none;
+    }
+
 
 .server-time {
     margin-right: 15px;
@@ -45,3 +47,19 @@ label {
 button.ui-multiselect.ui-widget.ui-state-default {
     width: 268px !important;
 }
+
+.param-link {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.param-unLink {
+    cursor: default;
+    color: black;
+}
+
+    .param-unLink:hover {
+        cursor: default;
+        text-decoration: none;
+        color: black;
+    }

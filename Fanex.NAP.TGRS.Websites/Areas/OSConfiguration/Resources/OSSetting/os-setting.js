@@ -190,6 +190,10 @@
             '<input data-target-id="{1}"' +
             'type="text" maxlength="5" class="hide" style="height: 17px;width: 100%"/>';
 
+        if (!hasEditRight) {
+            targetLink = targetLink.replace(" link", " ");
+        }
+
         var deleteButton = '<span class="target-delete-button" ' +
             'data-target-id="{0}" ></span>';
 

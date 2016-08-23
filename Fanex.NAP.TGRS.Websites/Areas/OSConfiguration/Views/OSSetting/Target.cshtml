@@ -3,7 +3,7 @@
     <div class="panel-body">
         <div id="globalTargetForm" style="margin-bottom: 20px; height: 30px">
             <span>Global Target (%)</span>
-            <a id="globalTarget" style="margin-left: 17px;; cursor: pointer;text-decoration: underline" class="parameter"></a>
+            <a id="globalTarget" style="margin-left: 17px;" class="parameter @(ViewBag.HasEditRight? "paramLink": "param-unLink")"></a>
             <input id="txtGlobalTarget"
                    style="width: 40px; margin-left: 10px; visibility: hidden"
                    data-val-number="@Messages.NotANumberError"
@@ -12,7 +12,7 @@
                   style="float: left; left: 180px; top: 4px"></span>
         </div>
 
-        <fieldset>
+        <fieldset class="@(ViewBag.HasEditRight ? "normalField":"")">
             @if (ViewBag.HasEditRight)
             {
                 <legend>Add special target</legend>
@@ -61,7 +61,6 @@
 
             <div class="content-grid">
                 <div id="targetGrid" class="freegrid">
-
                 </div>
             </div>
         </fieldset>
