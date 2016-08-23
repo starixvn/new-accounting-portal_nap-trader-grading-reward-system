@@ -485,7 +485,7 @@ var traderManagement = (function ($) {
         var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"  data-trader-empId="{1}" data-trader-name="{2}" data-team-name="{3}" data-grade-name = "{4}" ' +
             'data-working-date="{5}" data-team-date="{6}" data-grade-date="{7}">{2}</span>';
         var linkFormat = '<span class="{0} link" data-trader-id="{1}" data-trader-name="{3}">{2}</span>';
-        var addIssueFormat = '<div><a class="add-issue-link" data-trader-id="{0}" href="#" data-trader-name="{1}"><img src="../../../../Content/Themes/Images/add-icon.ico" style="width: 15px;height: 15px" ></a></div>';
+        var addIssueFormat = '<div class="add-issue-link" data-trader-id="{0}" href="#" data-trader-name="{1}"></div>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
@@ -535,7 +535,7 @@ var traderManagement = (function ($) {
                 };
 
                 if (hasEditRight) {
-                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId, item.TraderName) });
+                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId, item.TraderName), CssClass: 'add-issue' });
                 }
 
                 bodyData.push(row);
@@ -656,8 +656,8 @@ var traderManagement = (function ($) {
             traderManagement.OpenPopupTraderError(traderId, traderName);
         });
 
-        domElements.divTradersGrid.on('click', 'a.add-issue-link', function () {
-            var $obj = $(this);
+        domElements.divTradersGrid.on('click', 'div.add-issue', function () {
+            var $obj = $(this).find('div.add-issue-link');
             var traderId = $obj.attr('data-trader-id');
             var traderName = $obj.attr('data-trader-name');
 
