@@ -271,6 +271,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/styles/sport-performance",
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance.less");
 
+            bundles.AddAndInclude(
+                "~/styles/trader-performance",
+                "~/Areas/OSReports/Resources/OSTraderPerformance/trader-performance.less");
+
             bundles.Add(new ScriptBundle("~/scripts/sport-performance").Include(
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-factory.js",
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-service.js",

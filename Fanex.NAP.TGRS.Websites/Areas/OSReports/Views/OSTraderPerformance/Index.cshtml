@@ -3,6 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Head
+{
+    @Styles.Render("~/styles/trader-performance")
+}
+
 @section Headline{
     <div class="title">
         <div>
@@ -11,11 +16,6 @@
     </div>
 }
 
-@*<div>
-        <a href="#">
-            <img src="../../../../Content/Themes/Images/Add.ico" style="width: 30px;height: 30px">
-        </a>
-    </div>*@
 @Html.Partial("IndexFilter")
 
 <div id="resultContainer" class="content-grid hide">

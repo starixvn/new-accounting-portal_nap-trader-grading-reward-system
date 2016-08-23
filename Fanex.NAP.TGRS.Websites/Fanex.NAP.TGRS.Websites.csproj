@@ -397,6 +397,7 @@
     <Content Include="Areas\OSConfiguration\Views\OSSetting\Parameter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSSportPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.less" />
+    <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-performance.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
