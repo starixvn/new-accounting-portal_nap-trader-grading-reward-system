@@ -83,19 +83,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\OSScoreHistoryController.cs" />
+    <Compile Include="Criteria\ScoreHistory\DeleteScoreHistoryCriteria.cs" />
+    <Compile Include="Criteria\ScoreHistory\GetAllScoreHistoryCriteria.cs" />
+    <Compile Include="Criteria\ScoreHistory\GetScoreHistoryDetailByPeriodCriteria.cs" />
+    <Compile Include="Models\ScoreHistory\ScoreHistoryInfo.cs" />
+    <Compile Include="Models\ScoreHistory\TraderScoreInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implement\ScoreHistoryService.cs" />
+    <Compile Include="Services\Interface\IScoreHistoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Criteria\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\Implement\" />
-    <Folder Include="Services\Interface\" />
     <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
+      <Project>{c4051c15-1655-42e1-a071-a943bc29b37c}</Project>
+      <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

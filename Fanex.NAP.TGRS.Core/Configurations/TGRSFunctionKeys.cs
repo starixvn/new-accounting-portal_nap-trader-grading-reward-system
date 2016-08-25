@@ -83,4 +83,6 @@ public static class TGRSFunctionKeys
     public const string TraderReportAdmin = "TraderReportAdmin";
 
     public const string GradeManagement = "GradeManagement";
+
+    public const string OSScoreHistory = "OSScoreHistory";
 }
