@@ -30,3 +30,5 @@ Fanex.NAP.TGRS.v12.suo
 *.dll
 Fanex.NAP.TGRS.Websites/.idea/workspace.xml
 packages
+*/obj/*
+*/bin/*
