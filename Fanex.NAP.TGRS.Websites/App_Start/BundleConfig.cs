@@ -29,6 +29,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterReportsBundles(bundles);
             RegisterOSConfigurationBundles(bundles);
             RegisterOSReportBundles(bundles);
+            RegisterOSAdministrationBundles(bundles);
         }
 
         /// <summary>
@@ -286,6 +287,23 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-factory.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-service.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-score-confirmation")
+                .Include(
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-factory.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-service.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation.js"));
+        }
+
+        public static void RegisterOSAdministrationBundles(BundleCollection bundles)
+        {
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-score-confirmation")
+                .Include(
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-factory.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-service.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation.js"));
         }
     }
 }

@@ -237,6 +237,9 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-factory.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-service.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management.js" />
@@ -403,6 +406,8 @@
     <Content Include="Areas\OSReports\Views\OSSportPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.less" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-performance.less" />
+    <Content Include="Areas\OSAdministration\Views\Web.config" />
+    <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -443,7 +448,10 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\OSAdministration\Resources\OSScoreHistory\" />
+    <Folder Include="Areas\OSAdministration\Views\OSScoreHistory\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

@@ -85,4 +85,6 @@ public static class TGRSFunctionKeys
     public const string GradeManagement = "GradeManagement";
 
     public const string OSScoreHistory = "OSScoreHistory";
+
+    public const string OSScoreConfirmation = "OSScoreConfirmation";
 }
