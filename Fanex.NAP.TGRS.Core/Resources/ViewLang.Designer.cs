@@ -925,6 +925,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Period Name.
+        /// </summary>
+        public static string PeriodName {
+            get {
+                return ResourceManager.GetString("PeriodName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Period Type.
         /// </summary>
         public static string PeriodType {
@@ -975,6 +984,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ProfitMargin_4Years {
             get {
                 return ResourceManager.GetString("ProfitMargin_4Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

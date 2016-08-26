@@ -19,7 +19,7 @@ var scoreHistoryFactory = (function ($) {
         },
 
         GetScoreHistoryByPeriod: function (criteria) {
-            return $.post(urls.GetScoreHistoryByPeriod, criteria);
+            return $.get(urls.GetScoreHistoryByPeriod, criteria);
         }
     }
 })(jQuery);

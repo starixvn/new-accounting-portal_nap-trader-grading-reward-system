@@ -16,9 +16,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreHistory
     {
         public int UserId { get; set; }
 
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
+        public int ScoreHistoryId { get; set; }
 
         public override string GetSettingKey()
         {

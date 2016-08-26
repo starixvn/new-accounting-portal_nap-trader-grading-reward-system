@@ -27,8 +27,6 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
 
         public double WinLoss { get; set; }
 
-        public int SportCount { get; set; }
-
-        public int EventProductCount { get; set; }
+        public int PointDeduction { get; set; }
     }
 }

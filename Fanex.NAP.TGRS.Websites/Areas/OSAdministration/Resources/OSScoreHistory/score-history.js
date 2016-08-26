@@ -34,6 +34,7 @@ var scoreHistory = (function ($) {
     };
 
     scoreHistory.DeleteScoreHistory = function (scoreHistoryId) {
+        debugger;
         var criteria = {
             ScoreHistoryId: scoreHistoryId
         };
@@ -66,24 +67,13 @@ var scoreHistory = (function ($) {
         domElements.divScoreHistoryDetailGrid = $('#divScoreHistoryDetailGrid');
     };
 
-    var cachePopupElements = function () {
-        popupElements.divInsertGradeForm = $("#divInsertGradeForm", domElements.divPopup);
-        popupElements.divUpdateGradeForm = $("#divUpdateGradeForm", domElements.divPopup);
-        popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
-        popupElements.txtGradeName = $('#txtGradeName', domElements.divPopup);
-        popupElements.txtGradeDes = $('#txtGradeDes', domElements.divPopup);
-        popupElements.txtGradeId = $('#txtGradeId', domElements.divPopup);
-        popupElements.btnSave = $('#btnSave', domElements.divPopup);
-        popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
-    };
-
     var renderScoreHistoryGrid = function (data) {
         var nameColFormatTemplate = '<span class="history-name-link link" data-score-history-id="{0}" data-score-history-header="{1}">{2}</span>';
         var removeColFormatTemplate = '<span class="remove-history-link link delete-button" data-score-history-id="{0}"></span>';
 
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: 'History Name', Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.PeriodName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.FromDate, Width: 100, Name: 'ColFromDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.ToDate, Width: 100, Name: 'ColToDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.ConfirmedBy, Width: 100, Name: 'ColConfirmedBy', HeaderAlign: 'center', CellAlign: 'left' },
@@ -121,17 +111,17 @@ var scoreHistory = (function ($) {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       {
-                          HeaderText: 'Trader', Width: 200, Name: 'ColTraderName', HeaderAlign: 'center', CellAlign: 'left',
+                          HeaderText: 'Trader', Width: 100, Name: 'ColTraderName', HeaderAlign: 'center', CellAlign: 'left',
                           Sort: true, SortDirection: 'desc'
                       },
-                      { HeaderText: 'Team', Width: 100, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'right' },
-                      { HeaderText: 'Grade', Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: 'Team', Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: 'Grade', Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                       {
                           HeaderText: 'V.Total Point', Width: 120, Name: 'ColTotalPoint', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       {
-                          HeaderText: 'EPA.Deduction', Width: 120, Name: 'ColDeduction', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: 'Point Deduction', Width: 120, Name: 'ColDeduction', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       {
@@ -170,10 +160,10 @@ var scoreHistory = (function ($) {
                               { Name: 'ColTeam', Value: item.TeamName },
                               { Name: 'ColGrade', Value: item.GradeName },
                               { Name: 'ColTotalPoint', Value: item.TotalPoint },
-                              { Name: 'ColDeduction', Value: common.GetNumWithLabel(item.EPADeduction, labels.NA) },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
-                              { Name: 'ColTurnover', Value: common.GetNumWithLabel(item.VTurnover, labels.NA) },
-                              { Name: 'ColWinLoss', Value: common.GetNumWithLabel(item.VWinLoss, labels.NA) }]
+                              { Name: 'ColDeduction', Value: common.GetNumWithLabel(item.PointDeduction, labels.NA) },
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
+                              { Name: 'ColWinLoss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -194,10 +184,10 @@ var scoreHistory = (function ($) {
         });
 
         domElements.divScoreHistoryGrid.on('click', 'span.remove-history-link', function () {
-            common.ShowConfirmMessage(messages.DeleteScoreHistoryConfirmMessage, function () {
-                var $obj = $(this);
-                var scoreHistoryId = $obj.attr('data-score-history-id');
+            var $obj = $(this);
+            var scoreHistoryId = $obj.attr('data-score-history-id');
 
+            common.ShowConfirmMessage(messages.DeleteScoreHistoryConfirmMessage, function () {
                 scoreHistory.DeleteScoreHistory(scoreHistoryId);
             });
         });

@@ -26,14 +26,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             this._scoreHistoryService = scoreHistoryService ?? new ScoreHistoryService();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSScoreHistory, Constant.Policy.Host);
             return View();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetAllScoreHistory()
         {
@@ -42,7 +42,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Host)]
         [HttpPost]
         public JsonResult DeleteScoreHistory(DeleteScoreHistoryCriteria criteria)
         {
@@ -53,8 +53,8 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
+        [HttpGet]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreHistory, Policy = Constant.Policy.Read)]
         public JsonResult GetScoreHistoryByPeriod(GetScoreHistoryDetailByPeriodCriteria criteria)
         {
             var result = this._scoreHistoryService.GetScoreHistoryDetailByPeriod(criteria);

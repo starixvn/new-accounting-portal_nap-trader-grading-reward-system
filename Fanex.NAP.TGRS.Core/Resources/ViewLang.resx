@@ -576,4 +576,10 @@
   <data name="ScoreHistoryName" xml:space="preserve">
     <value>Score History Name</value>
   </data>
+  <data name="PeriodName" xml:space="preserve">
+    <value>Period Name</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
 </root>
