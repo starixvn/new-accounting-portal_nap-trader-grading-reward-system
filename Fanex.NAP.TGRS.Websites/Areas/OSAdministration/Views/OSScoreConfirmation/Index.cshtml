@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Fanex.NAP.TGRS.OSAdministration.Models.ScoreConfirmation.LastestScoreHistoryInfo
+@{
     ViewBag.Title = "Score Confirmation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,11 +21,15 @@
     <div id="divReportFilterForm" class="filter-form">
         <div class="filter-row ">
             <div class="date-range"><div id="divDateRange"></div></div>
-            <div class="lbl-field col_3 trader-bm"></div>
             <div class="submit col_4">
                 <input id="btnSearch" type="button" class="blue-button" value="@ViewLang.Generate" />
-                <input id="btnConfirm" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
+            @if (ViewBag.HasEditRight)
+            {
+                <div class="submit col_4">
+                    <input id="btnConfirm" type="button" class="blue-button" value="@ViewLang.Confirm" />
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -34,17 +39,24 @@
     </div>
 </div>
 
+@if (ViewBag.HasEditRight)
+{
+    <div id="divHiddenForm" class="display-none">
+        @Html.Partial("InsertPeriodNameForm")
+    </div>
+}
+
 @section Foot
 {
     @Scripts.Render("~/scripts/os-score-confirmation")
 
     <script type="text/javascript">
         var labels = {
-            TraderPerformance: '@ViewLang.TraderPerformance'
         };
+
         var messages = {
-            StoreTraderScoreSuccessfully: '@Messages.UpdateTraderSuccessfully',
-            PeriodExistedError: '@Messages.InvalidValueError',
+            StoreTraderScoreSuccessfully: '@Messages.StoreTraderScoreSuccessfully',
+            PeriodExistedError: '@Messages.PeriodExistedError',
 
         };
         var hasEditRight = '@ViewBag.HasEditRight' === 'True';

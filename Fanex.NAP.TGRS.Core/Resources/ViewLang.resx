@@ -579,7 +579,13 @@
   <data name="PeriodName" xml:space="preserve">
     <value>Period Name</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="Remove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Remove</value>    
+  </data>
+  <data name="PeriodName" xml:space="preserve">
+    <value>Period Name</value>
   </data>
 </root>

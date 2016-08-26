@@ -10,7 +10,7 @@
         },
 
         StoreTraderConfirmedScores: function (criteria) {
-            return $.get(urls.StoreTraderConfirmedScores, criteria);
+            return $.post(urls.StoreTraderConfirmedScores, criteria);
         }
     }
 })(jQuery);

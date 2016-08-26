@@ -28,6 +28,7 @@
         private void Registerdependency()
         {
             InjectorFactory.CurrentInjector.Bind<IScoreHistoryService>().Using<ScoreHistoryService>();
+            InjectorFactory.CurrentInjector.Bind<IScoreConfirmationService>().Using<ScoreConfirmationService>();
         }
     }
 }

@@ -331,6 +331,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Scores for this period had been existed. Do you want to overwrite?.
+        /// </summary>
+        public static string PeriodExistedError {
+            get {
+                return ResourceManager.GetString("PeriodExistedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate must lie between 0 and 100.
         /// </summary>
         public static string RateRange {
@@ -345,6 +354,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string RequiredFieldError {
             get {
                 return ResourceManager.GetString("RequiredFieldError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trader&apos;s Confirmed Scores has been successfully stored!.
+        /// </summary>
+        public static string StoreTraderScoreSuccessfully {
+            get {
+                return ResourceManager.GetString("StoreTraderScoreSuccessfully", resourceCulture);
             }
         }
         

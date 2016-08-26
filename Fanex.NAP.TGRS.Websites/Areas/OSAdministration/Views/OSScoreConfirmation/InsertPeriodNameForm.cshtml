@@ -1,0 +1,26 @@
+﻿<div id="divInsertPeriodNameForm" class="form-bar width-400">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.PeriodName</label>
+            </div>
+            <div class="edit-field">
+                <input type="text"
+                       id="txtPeriodName"
+                       class="width-200 "
+                       data-val-required="@Messages.RequiredFieldError"
+                       data-max-length="50"
+                       data-val-length="@Messages.FieldMaxLengthError50"
+                       data-val-not-html="@Messages.HtmlInputError" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field width-80"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -39,17 +39,17 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
             ViewBag.MinDate = minDate;
             ViewBag.DefaultFromDate = lastestScoreHistory.ToDate.AddDays(1);
-            ViewBag.DefaultToDate = lastestScoreHistory.ToDate.AddDays(90);
+            ViewBag.DefaultToDate = new DateTime(Math.Min(lastestScoreHistory.ToDate.AddDays(90).Ticks, DateTime.Today.Ticks));
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
 
-            return View();
+            return View(lastestScoreHistory);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreConfirmation, Policy = Constant.Policy.Read)]
         [HttpGet]
-        public JsonResult GetTraderScores()
+        public JsonResult GetTraderScores(GetAllTraderScoreCriteria criteria)
         {
-            var result = _scoreConfirmationService.GetTraderScores(new GetAllTraderScoreCriteria());
+            var result = _scoreConfirmationService.GetTraderScores(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -60,9 +60,9 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         {
             criteria.UserId = this.CurrentSession.UserId;
 
-            var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
+            //var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

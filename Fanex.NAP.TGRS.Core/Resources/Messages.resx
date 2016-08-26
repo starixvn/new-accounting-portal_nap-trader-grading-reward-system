@@ -261,4 +261,10 @@
   <data name="DeleteScoreHistorySuccessfully" xml:space="preserve">
     <value>Deleted Score History successfully!</value>
   </data>
+  <data name="PeriodExistedError" xml:space="preserve">
+    <value>The Scores for this period had been existed. Do you want to overwrite?</value>
+  </data>
+  <data name="StoreTraderScoreSuccessfully" xml:space="preserve">
+    <value>Trader's Confirmed Scores has been successfully stored!</value>
+  </data>
 </root>

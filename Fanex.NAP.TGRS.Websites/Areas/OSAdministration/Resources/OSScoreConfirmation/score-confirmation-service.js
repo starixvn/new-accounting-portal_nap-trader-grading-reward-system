@@ -1,25 +1,32 @@
 ﻿var ScoreConfirmationService = (function ($) {
-    return {
-        GetTraderScores: function (criteria, callback) {
-            ScoreConfirmationFactory.GetTraderScores(criteria)
-            .success(callback)
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-        },
+    var ScoreConfirmationService = {};
+    ScoreConfirmationService.Result = [];
 
-        StoreTraderConfirmedScores: function (criteria, callback) {
-            ScoreConfirmationFactory.StoreTraderConfirmedScores(criteria)
-            .success(callback)
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-        }
+    GetTraderScores = function (criteria, callback) {
+        common.DisableInput();
+
+        return ScoreConfirmationFactory.GetTraderScores(criteria)
+        .success(callback)
+        .error(function (xhr) {
+            common.HandleAjaxError(xhr);
+        })
+        .complete(function () {
+            common.EnableInput();
+        });
+    };
+
+    StoreTraderConfirmedScores = function (criteria) {
+        common.DisableInput();
+
+        return ScoreConfirmationFactory.StoreTraderConfirmedScores(criteria)
+        .success(function (result) {
+            ScoreConfirmationService.Result = result;
+        })
+        .error(function (xhr) {
+            common.HandleAjaxError(xhr);
+        })
+        .complete(function () {
+            common.EnableInput();
+        });
     }
 })(jQuery)

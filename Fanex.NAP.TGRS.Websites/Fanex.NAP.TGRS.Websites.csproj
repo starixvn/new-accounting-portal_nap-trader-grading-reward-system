@@ -412,6 +412,7 @@
     <Content Include="Areas\OSAdministration\Views\Web.config" />
     <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\Index.cshtml" />
     <Content Include="Areas\OSAdministration\Views\OSScoreHistory\Index.cshtml" />
+    <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\InsertPeriodNameForm.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -452,10 +453,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\OSAdministration\Resources\OSScoreHistory\" />
-    <Folder Include="Areas\OSAdministration\Views\OSScoreHistory\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
