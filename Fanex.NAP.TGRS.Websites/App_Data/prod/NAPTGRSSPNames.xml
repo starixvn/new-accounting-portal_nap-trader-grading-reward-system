@@ -7,6 +7,7 @@
   </Function>
   <Function Name="OSScoreConfirmation">
     <Setting Key="TGRS_OS_LastestScoreHistoryGet" SpName="TGRS_OS_LastestScoreHistoryGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderConfirmedScoresInsert" SpName="TGRS_OS_TraderConfirmedScoresInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSSportPerformance">
     <Setting Key="TGRS_OS_SportGetAll" SpName="TGRS_OS_SportGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

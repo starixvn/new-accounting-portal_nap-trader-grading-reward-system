@@ -24,11 +24,11 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation
 
         public DateTime ToDate { get; set; }
 
-        public List<TraderScoreInfo> ScoreDetails { get; set; }
+        public bool IsOverwrite { get; set; }
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_ScoreHistoryGetAll";
+            return "TGRS_OS_TraderConfirmedScoresInsert";
         }
 
         public override bool IsValid()

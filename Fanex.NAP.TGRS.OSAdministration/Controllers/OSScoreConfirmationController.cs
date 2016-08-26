@@ -59,10 +59,9 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult StoreTraderConfirmedScores(StoreTraderConfirmedScoreCriteria criteria)
         {
             criteria.UserId = this.CurrentSession.UserId;
+            var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
 
-            //var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
-
-            return Json(null, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

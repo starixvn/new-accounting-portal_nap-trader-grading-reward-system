@@ -1,6 +1,6 @@
 ﻿/* File Created: Jul 27, 2016 */
 /*jshint strict: false*/
-/* global Namespace, common, labels, hasEditRight, validator, messages, traderManagementService */
+/* global Namespace, common, labels, hasEditRight, validator, messages */
 ////'use strict';
 
 $(function () {
@@ -8,9 +8,9 @@ $(function () {
 });
 
 var scoreConfirmation = (function ($) {
-    var scoreConfirmation = {}
-    scoreConfirmation.Result = ScoreConfirmationService.Result;
+    var scoreConfirmation = {};
 
+    //scoreConfirmation.Result = ScoreConfirmationService.Result;
     var timeout = null;
     var domElements = {
         divDateRange: null,
@@ -81,9 +81,9 @@ var scoreConfirmation = (function ($) {
                 ToDate: domElements.divDateRange.getTo()
             };
             common.DisableInput();
-            ScoreConfirmationService.GetTraderScores(criteria, function (data) {
-                cachedData = data;
-                renderTraderGrid(data);
+            ScoreConfirmationService.GetTraderScores(criteria).then(function () {
+                cachedData = ScoreConfirmationService.TraderScores;
+                renderTraderGrid(cachedData);
             });
         });
 
@@ -150,19 +150,18 @@ var scoreConfirmation = (function ($) {
                 popupElements.btnSave.trigger('click');
             }
         });
-
+        
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertPeriodNameForm, 'w')) {
                 var confirmedScore = {
                     PeriodName: $.trim(popupElements.txtPeriodName.val()),
                     FromDate: domElements.divDateRange.getFrom(),
-                    ToDate: domElements.divDateRange.getTo(),
-                    ScoreDetails: cachedData
+                    ToDate: domElements.divDateRange.getTo()
                 };
 
-                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {
+                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {                    
                     scoreConfirmation.Result = ScoreConfirmationService.Result;
-                    if (scoreConfirmation.Result.Code === 0) {
+                    if (StoreScoreResult.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
@@ -170,7 +169,7 @@ var scoreConfirmation = (function ($) {
                         disablePopup();
                         reloadPage();
                     } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.Message);
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, StoreScoreResult.Message);
                         return false;
                     }
                 });
@@ -181,15 +180,15 @@ var scoreConfirmation = (function ($) {
             common.ClosePopup();
         });
     };
+    
+    var refreshPopup = function () {
+        clearTimeout(timeout);
+        common.CloseMsgBox();
+    };
 
     scoreConfirmation.Initialize = function () {
         cacheDOMElements();
         initPageFields();
-    };
-
-    var refreshPopup = function () {
-        clearTimeout(timeout);
-        common.CloseMsgBox();
     };
 
     return scoreConfirmation;

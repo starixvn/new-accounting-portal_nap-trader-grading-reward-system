@@ -1,23 +1,22 @@
 ﻿var ScoreConfirmationService = (function ($) {
     var ScoreConfirmationService = {};
+    ScoreConfirmationService.TraderScores = [];
     ScoreConfirmationService.Result = [];
 
-    GetTraderScores = function (criteria, callback) {
-        common.DisableInput();
-
+    ScoreConfirmationService.GetTraderScores = function (criteria) {
         return ScoreConfirmationFactory.GetTraderScores(criteria)
-        .success(callback)
+        .success(function (result) {
+            ScoreConfirmationService.TraderScores = result;
+        })
         .error(function (xhr) {
             common.HandleAjaxError(xhr);
         })
         .complete(function () {
             common.EnableInput();
         });
-    };
+    }
 
-    StoreTraderConfirmedScores = function (criteria) {
-        common.DisableInput();
-
+    ScoreConfirmationService.StoreTraderConfirmedScores = function (criteria) {
         return ScoreConfirmationFactory.StoreTraderConfirmedScores(criteria)
         .success(function (result) {
             ScoreConfirmationService.Result = result;
@@ -29,4 +28,6 @@
             common.EnableInput();
         });
     }
+
+    return ScoreConfirmationService;
 })(jQuery)
