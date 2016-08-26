@@ -295,6 +295,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirmed By.
+        /// </summary>
+        public static string ConfirmedBy {
+            get {
+                return ResourceManager.GetString("ConfirmedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmed Date.
+        /// </summary>
+        public static string ConfirmedDate {
+            get {
+                return ResourceManager.GetString("ConfirmedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {
@@ -1002,6 +1020,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ScoreCalculationPeriod {
             get {
                 return ResourceManager.GetString("ScoreCalculationPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score Confirmation History.
+        /// </summary>
+        public static string ScoreHistory {
+            get {
+                return ResourceManager.GetString("ScoreHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Score History Name.
+        /// </summary>
+        public static string ScoreHistoryName {
+            get {
+                return ResourceManager.GetString("ScoreHistoryName", resourceCulture);
             }
         }
         

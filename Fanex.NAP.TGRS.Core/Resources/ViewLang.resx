@@ -564,4 +564,16 @@
   <data name="PointMargin" xml:space="preserve">
     <value>Point Margin</value>
   </data>
+  <data name="ScoreHistory" xml:space="preserve">
+    <value>Score Confirmation History</value>
+  </data>
+  <data name="ConfirmedBy" xml:space="preserve">
+    <value>Confirmed By</value>
+  </data>
+  <data name="ConfirmedDate" xml:space="preserve">
+    <value>Confirmed Date</value>
+  </data>
+  <data name="ScoreHistoryName" xml:space="preserve">
+    <value>Score History Name</value>
+  </data>
 </root>

@@ -1,5 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration
 {
+    using Fanex.NAP.TGRS.OSAdministration.Services.Implement;
+    using Fanex.NAP.TGRS.OSAdministration.Services.Interface;
+    using Simplect;
     using System.Web.Mvc;
 
     public class OSAdministrationAreaRegistration : AreaRegistration
@@ -24,6 +27,7 @@
 
         private void Registerdependency()
         {
+            InjectorFactory.CurrentInjector.Bind<IScoreHistoryService>().Using<ScoreHistoryService>();
         }
     }
 }

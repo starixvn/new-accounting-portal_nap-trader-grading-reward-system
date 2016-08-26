@@ -14,13 +14,11 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreHistory
 
     public class GetScoreHistoryDetailByPeriodCriteria : CriteriaBase
     {
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
+        public int ScoreHistoryId { get; set; }
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_ScoreHistoryGetByPeriod";
+            return "TGRS_OS_ScoreHistoryDetailGetAll";
         }
 
         public override bool IsValid()

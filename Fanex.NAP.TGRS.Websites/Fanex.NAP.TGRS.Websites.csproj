@@ -240,6 +240,9 @@
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-factory.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-service.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-factory.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-service.js" />
+    <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management.js" />
@@ -408,6 +411,7 @@
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-performance.less" />
     <Content Include="Areas\OSAdministration\Views\Web.config" />
     <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\Index.cshtml" />
+    <Content Include="Areas\OSAdministration\Views\OSScoreHistory\Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -606,6 +610,10 @@
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
       <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
       <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.OSAdministration\Fanex.NAP.TGRS.OSAdministration.csproj">
+      <Project>{317f1c96-9e2e-49e4-a141-413907d30e52}</Project>
+      <Name>Fanex.NAP.TGRS.OSAdministration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.TGRS.OSConfiguration\Fanex.NAP.TGRS.OSConfiguration.csproj">
       <Project>{aeeee031-6e19-407d-a7de-bb0bf418df29}</Project>

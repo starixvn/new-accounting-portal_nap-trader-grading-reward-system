@@ -142,6 +142,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this score history?.
+        /// </summary>
+        public static string DeleteScoreHistoryConfirmMessage {
+            get {
+                return ResourceManager.GetString("DeleteScoreHistoryConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted Score History successfully!.
+        /// </summary>
+        public static string DeleteScoreHistorySuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteScoreHistorySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure to remove this spread?.
         /// </summary>
         public static string DeleteSpreadConfirmMessage {

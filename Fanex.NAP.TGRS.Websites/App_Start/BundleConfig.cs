@@ -287,13 +287,6 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-factory.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-service.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report.js"));
-
-            bundles.Add(
-                new ScriptBundle("~/scripts/os-score-confirmation")
-                .Include(
-                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-factory.js",
-                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-service.js",
-                    "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation.js"));
         }
 
         public static void RegisterOSAdministrationBundles(BundleCollection bundles)
@@ -304,6 +297,13 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-factory.js",
                     "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation-service.js",
                     "~/Areas/OSAdministration/Resources/OSScoreConfirmation/score-confirmation.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-score-history")
+                .Include(
+                    "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-factory.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-service.js",
+                    "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history.js"));
         }
     }
 }

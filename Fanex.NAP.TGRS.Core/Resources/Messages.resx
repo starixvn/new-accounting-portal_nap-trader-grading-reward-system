@@ -255,4 +255,10 @@
   <data name="FieldMaxLengthError3" xml:space="preserve">
     <value>This field can have maximum 3 characters</value>
   </data>
+  <data name="DeleteScoreHistoryConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this score history?</value>
+  </data>
+  <data name="DeleteScoreHistorySuccessfully" xml:space="preserve">
+    <value>Deleted Score History successfully!</value>
+  </data>
 </root>
