@@ -18,7 +18,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreHistory
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_ScoreHistoryDetailGetAll";
+            return "TGRS_OS_ScoreHistoryDetailsGetAll";
         }
 
         public override bool IsValid()
