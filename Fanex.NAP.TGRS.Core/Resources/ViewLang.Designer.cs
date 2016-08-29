@@ -1429,6 +1429,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TraderScores.
+        /// </summary>
+        public static string TraderScoreFileName {
+            get {
+                return ResourceManager.GetString("TraderScoreFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Turnover.
         /// </summary>
         public static string Turnover {

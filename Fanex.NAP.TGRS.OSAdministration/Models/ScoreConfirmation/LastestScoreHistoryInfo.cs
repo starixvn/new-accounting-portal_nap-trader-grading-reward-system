@@ -13,10 +13,28 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreConfirmation
 
     public class LastestScoreHistoryInfo
     {
+        public string Creator { get; set; }
+
         public string PeriodName { get; set; }
 
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
+
+        public string FormattedFromDate
+        {
+            get
+            {
+                return FromDate.ToString("MM/dd/yyyy");
+            }
+        }
+
+        public string FormattedToDate
+        {
+            get
+            {
+                return ToDate.ToString("MM/dd/yyyy");
+            }
+        }
     }
 }

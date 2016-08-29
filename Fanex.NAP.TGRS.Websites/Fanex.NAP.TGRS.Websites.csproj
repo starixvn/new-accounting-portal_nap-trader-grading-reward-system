@@ -237,6 +237,8 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
+    <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xls" />
+    <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xlsx" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-factory.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-service.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation.js" />
@@ -387,6 +389,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Themes\Images\sprites.png" />
+    <Content Include="Content\Themes\Images\star.png" />
     <Content Include="Content\Themes\Images\tgrs.ico" />
     <Content Include="Content\Themes\Images\icon-error-message.png" />
     <Content Include="Content\Themes\Images\icon-question.png" />

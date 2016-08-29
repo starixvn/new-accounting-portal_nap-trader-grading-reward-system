@@ -10,7 +10,7 @@ $(function () {
 var scoreConfirmation = (function ($) {
     var scoreConfirmation = {};
 
-    //scoreConfirmation.Result = ScoreConfirmationService.Result;
+    var ExportTraderScoresUrl = common.ResolveRootUrl("OSScoreConfirmation/ExportTraderScores");
     var timeout = null;
     var domElements = {
         divDateRange: null,
@@ -19,7 +19,8 @@ var scoreConfirmation = (function ($) {
         btnConfirm: null,
         divGrid: null,
         divInsertPeriodNameForm: null,
-        divPopup: null
+        divPopup: null,
+        isOverwrite: false
     };
 
     var popupElements = {
@@ -129,10 +130,25 @@ var scoreConfirmation = (function ($) {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
+            },
+            titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportTraderScores();
+                }
             }
         };
         domElements.divGrid.removeClass("hide");
         $(".freegrid", domElements.divGrid).fanexGrid(options);
+    };
+
+    // Export bet type performance to excel.
+    var exportTraderScores = function () {
+        var parameters = {
+            Fromdate: domElements.divDateRange.getFrom(),
+            ToDate: domElements.divDateRange.getTo()
+        };
+        common.DownloadFile(ExportTraderScoresUrl, parameters);
     };
 
     scoreConfirmation.OpenPopupInsertPeriodName = function () {
@@ -156,12 +172,13 @@ var scoreConfirmation = (function ($) {
                 var confirmedScore = {
                     PeriodName: $.trim(popupElements.txtPeriodName.val()),
                     FromDate: domElements.divDateRange.getFrom(),
-                    ToDate: domElements.divDateRange.getTo()
+                    ToDate: domElements.divDateRange.getTo(),
+                    IsOverwrite: domElements.isOverwrite
                 };
 
                 ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {                    
                     scoreConfirmation.Result = ScoreConfirmationService.Result;
-                    if (StoreScoreResult.Code === 0) {
+                    if (scoreConfirmation.Result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
@@ -169,7 +186,12 @@ var scoreConfirmation = (function ($) {
                         disablePopup();
                         reloadPage();
                     } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, StoreScoreResult.Message);
+                        if (scoreConfirmation.Result.Code == 4101)
+                        {
+                            domElements.isOverwrite = true;
+                        }
+
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.Message);
                         return false;
                     }
                 });
@@ -177,12 +199,14 @@ var scoreConfirmation = (function ($) {
         });
 
         popupElements.btnCancel.click(function () {
+            domElements.isOverwrite = false;
             common.ClosePopup();
         });
     };
     
     var refreshPopup = function () {
         clearTimeout(timeout);
+        domElements.isOverwrite = false;
         common.CloseMsgBox();
     };
 

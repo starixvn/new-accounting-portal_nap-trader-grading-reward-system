@@ -21,6 +21,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
     public class OSScoreConfirmationController : TGRSBaseController
     {
+        private const string TraderScoresExcelPath = @"~\Areas\OSAdministration\ExcelTemplates\TraderScores.xlsx";
         private readonly IScoreConfirmationService _scoreConfirmationService;
 
         public OSScoreConfirmationController(IScoreConfirmationService scoreConfirmationService)
@@ -62,6 +63,16 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreConfirmation, Policy = Constant.Policy.Read)]
+        public ActionResult ExportTraderScores(GetAllTraderScoreCriteria criteria)
+        {
+            var templatePath = Server.MapPath(TraderScoresExcelPath);
+
+            _scoreConfirmationService.ExportTraderScores(criteria, templatePath);
+
+            return new EmptyResult();
         }
     }
 }

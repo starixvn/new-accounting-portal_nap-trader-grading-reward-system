@@ -585,8 +585,14 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="PeriodName" xml:space="preserve">
+    <value>Period Name</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="TraderScoreFileName" xml:space="preserve">
+    <value>TraderScores</value>
   </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>IsEnabled</value>

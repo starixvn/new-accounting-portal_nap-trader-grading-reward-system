@@ -22,5 +22,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Interface
         IEnumerable<TraderScoreInfo> GetTraderScores(GetAllTraderScoreCriteria criteria);
 
         ICommandResult StoreTraderConfirmedScores(StoreTraderConfirmedScoreCriteria criteria);
+
+        void ExportTraderScores(GetAllTraderScoreCriteria criteria, string templatePath);
     }
 }

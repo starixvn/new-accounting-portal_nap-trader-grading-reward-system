@@ -21,6 +21,7 @@
     <div id="divReportFilterForm" class="filter-form">
         <div class="filter-row ">
             <div class="date-range"><div id="divDateRange"></div></div>
+            <div class="lbl-field col_1" style="margin-left: -8px !important;"></div>
             <div class="submit col_4">
                 <input id="btnSearch" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
@@ -30,6 +31,12 @@
                     <input id="btnConfirm" type="button" class="blue-button" value="@ViewLang.Confirm" />
                 </div>
             }
+        </div>
+        <div class="filter-row" style="display: inline-flex !important; margin-top: 5px;">
+            <div class="star-history"></div>
+            <div style="text-shadow: 0 0.023em 0 #000000; margin-left: 5px;">
+                Last Confirmation: <b>@Model.PeriodName</b>, <b>@Model.FormattedFromDate</b> - <b>@Model.FormattedToDate</b>, by <b>@Model.Creator</b>
+            </div> 
         </div>
     </div>
 </div>

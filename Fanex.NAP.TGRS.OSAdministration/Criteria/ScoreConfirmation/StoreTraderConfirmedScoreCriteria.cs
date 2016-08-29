@@ -26,6 +26,10 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation
 
         public bool IsOverwrite { get; set; }
 
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_OS_TraderConfirmedScoresInsert";
