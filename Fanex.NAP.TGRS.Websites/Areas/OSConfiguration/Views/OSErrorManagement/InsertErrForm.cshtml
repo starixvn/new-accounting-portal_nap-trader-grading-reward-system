@@ -1,0 +1,55 @@
+﻿<div id="insertErrForm" class="form-bar width-400">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.Error</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="errorName" class="width-200 "
+                       data-val-required="@Messages.RequiredFieldError" data-max-length="50"
+                       data-val-length="@Messages.FieldMaxLengthError50"
+                       data-val-not-html="@Messages.HtmlInputError" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.Value</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="errorVal" class="width-200 "
+                       data-val-required="@Messages.RequiredFieldError"
+                       data-max-length="5"
+                       data-val-length="@Messages.FieldMaxLengthError50"
+                       data-val-number="@Messages.NotANumberError" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.IsEnabled</label>
+            </div>
+            <div class="edit-field" style="margin-top: 3px">
+                <input type="checkbox" id="isEnabled" checked="checked" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.Description</label>
+            </div>
+            <div class="edit-field">
+                <textarea rows="3"
+                          id="errorDes"
+                          class="width-200"
+                          data-max-length="200"
+                          data-val-length="@Messages.FieldMaxLengthError200"></textarea>
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field width-80"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

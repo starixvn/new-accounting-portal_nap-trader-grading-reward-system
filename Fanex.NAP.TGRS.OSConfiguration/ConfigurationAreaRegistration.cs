@@ -42,6 +42,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration
             InjectorFactory.CurrentInjector.Bind<IGradeManagementService>().Using<GradeManagementService>();
             InjectorFactory.CurrentInjector.Bind<IIssueService>().Using<IssueService>();
             InjectorFactory.CurrentInjector.Bind<ISettingService>().Using<SettingService>();
+            InjectorFactory.CurrentInjector.Bind<IErrorService>().Using<ErrorService>();
         }
     }
 }

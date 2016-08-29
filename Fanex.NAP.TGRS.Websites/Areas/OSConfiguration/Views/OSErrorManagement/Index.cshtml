@@ -1,0 +1,56 @@
+﻿@using Fanex.NAP.TGRS.Core.Resources
+@{
+    ViewBag.Title = ViewLang.ErrorManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HasEditRight = true;
+}
+
+@Styles.Render("~/styles/error-management")
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    @if (ViewBag.HasEditRight)
+    {
+        <div class="header-button">
+            <a href="#" id="newErrLink" class="green-button change-list"><span class="add-icon"></span>New Error</a>
+        </div>
+    }
+}
+<div id="resultContainer" class="content-grid">
+    <div id="divErrGrid" class="freegrid">
+    </div>
+</div>
+
+@if (ViewBag.HasEditRight)
+{
+    <div style="display: none">
+        @Html.Partial("InsertErrForm")
+        @Html.Partial("UpdateErrForm")
+    </div>
+}
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-error-management")
+    <script type="text/javascript">
+        var labels = {
+            ErrorName: 'Error Name',
+            Description: '@ViewLang.Description',
+            TraderCount: '@ViewLang.TraderCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewError: 'New Error',
+            EditError: 'Edit Error',
+        };
+        var messages = {
+            UpdateErrorSuccessfully: '@Messages.UpdateGradeSuccessfully',
+            AddErrorSuccessfully: 'The new error has been added successfully!',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

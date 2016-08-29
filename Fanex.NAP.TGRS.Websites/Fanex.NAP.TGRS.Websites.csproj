@@ -243,6 +243,11 @@
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-factory.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-service.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\delete.png" />
+    <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management.css" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSGradeManagement\grade-management.js" />
@@ -413,6 +418,9 @@
     <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\Index.cshtml" />
     <Content Include="Areas\OSAdministration\Views\OSScoreHistory\Index.cshtml" />
     <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\InsertPeriodNameForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\InsertErrForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\UpdateErrForm.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

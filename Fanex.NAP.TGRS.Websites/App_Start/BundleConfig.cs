@@ -264,6 +264,16 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting-factory.js",
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting-service.js",
                 "~/Areas/OSConfiguration/Resources/OSSetting/os-setting.js"));
+
+
+            bundles.Add(new ScriptBundle("~/scripts/os-error-management").Include(
+                "~/Areas/OSConfiguration/Resources/OSErrorManagement/error-management-factory.js",
+                "~/Areas/OSConfiguration/Resources/OSErrorManagement/error-management-service.js",
+                "~/Areas/OSConfiguration/Resources/OSErrorManagement/error-management.js"));
+
+            bundles.AddAndInclude(
+                 "~/styles/error-management",
+                 "~/Areas/OSConfiguration/Resources/OSErrorManagement/error-management.css");
         }
 
         public static void RegisterOSReportBundles(BundleCollection bundles)

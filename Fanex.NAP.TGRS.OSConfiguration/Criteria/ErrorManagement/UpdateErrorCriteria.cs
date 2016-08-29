@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Fanex.NAP.Framework.Data;
+
+namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
+{
+    public class UpdateErrorCriteria : CriteriaBase
+    {
+        public int UserId { get; set; }
+
+        public int ErrorId { get; set; }
+
+        public string NewErrorName { get; set; }
+
+        public string NewErrorDesc { get; set; }
+
+        public int NewValue { get; set; }
+
+        public bool NewDisabled { get; set; }
+
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "TGRS_OS_ErrorUpdate";
+        }
+    }
+}
