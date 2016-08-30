@@ -229,7 +229,7 @@ var errorManagement = (function ($) {
 
             errorManagementService.UpdateErrorStatus(criteria, function (result) {
                 if (result.Code == 0) {
-                    common.ShowInfoMessage(criteria.Disabled ? "Error has been activated" : "Error has been deactivated");
+                    common.ShowInfoMessage(criteria.Disabled ? "Error has been deactivated" : "Error has been activated");
                 } else {
                     common.ShowErrorMessage(result.Message);
                 }

@@ -22,7 +22,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Models.ErrorManagement
 
         public string CreatedDateFormatted
         {
-            get { return CreatedDate.ToString("MM/dd/yyyy"); }
+            get { return CreatedDate.ToString("MM/dd/yyyy HH:mm:ss"); }
         }
 
         public string CreatedBy { get; set; }
