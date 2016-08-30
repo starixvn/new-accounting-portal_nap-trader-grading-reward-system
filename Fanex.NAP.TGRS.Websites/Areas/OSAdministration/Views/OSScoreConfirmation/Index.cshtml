@@ -35,7 +35,7 @@
         <div class="filter-row" style="display: inline-flex !important; margin-top: 5px;">
             <div class="star-history"></div>
             <div style="text-shadow: 0 0.023em 0 #000000; margin-left: 5px;">
-                Last Confirmation: <b>@Model.PeriodName</b>, <b>@Model.FormattedFromDate</b> - <b>@Model.FormattedToDate</b>, by <b>@Model.Creator</b>
+                Last Confirmation: <b><label id="latestConfirm-periodname">@Model.PeriodName</label></b> (<b><label id="latestConfirm-from">@Model.FormattedFromDate</label></b> - <b><label id="latestConfirm-to">@Model.FormattedToDate</label></b>) by <b><label id="latestConfirm-creator">@Model.Creator</label></b>
             </div> 
         </div>
     </div>

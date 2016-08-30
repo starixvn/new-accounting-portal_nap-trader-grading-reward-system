@@ -113,13 +113,13 @@ var scoreConfirmation = (function ($) {
         var options = {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
-                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true }
+                { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'},
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -178,20 +178,21 @@ var scoreConfirmation = (function ($) {
 
                 ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {                    
                     scoreConfirmation.Result = ScoreConfirmationService.Result;
-                    if (scoreConfirmation.Result.Code === 0) {
+                    if (scoreConfirmation.Result.result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
                             timeout = setTimeout(common.ClosePopup, 3000);
                         });
 
-                        disablePopup();
+                        updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
+                        //disablePopup();
                         reloadPage();
                     } else {
-                        if (scoreConfirmation.Result.Code == 4101)
+                        if (scoreConfirmation.Result.result.Code == 4101)
                         {
                             domElements.isOverwrite = true;
                         }
 
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.Message);
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.result.Message);
                         return false;
                     }
                 });
@@ -208,6 +209,13 @@ var scoreConfirmation = (function ($) {
         clearTimeout(timeout);
         domElements.isOverwrite = false;
         common.CloseMsgBox();
+    };
+
+    var updateLastestInfo = function (info) {
+        $('#latestConfirm-periodname').text(info.PeriodName);
+        $('#latestConfirm-from').text(info.FormattedFromDate);
+        $('#latestConfirm-to').text(info.FormattedToDate);
+        $('#latestConfirm-creator').text(info.Creator);
     };
 
     scoreConfirmation.Initialize = function () {

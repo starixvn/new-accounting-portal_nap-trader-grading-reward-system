@@ -61,8 +61,9 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         {
             criteria.UserId = this.CurrentSession.UserId;
             var result = this._scoreConfirmationService.StoreTraderConfirmedScores(criteria);
+            var lastestScoreHistory = _scoreConfirmationService.GetLastestScoreHistoryInfo(new GetLastedScoreHistoryInfoCriteria());
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result, lastestScoreHistory }, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreConfirmation, Policy = Constant.Policy.Read)]
