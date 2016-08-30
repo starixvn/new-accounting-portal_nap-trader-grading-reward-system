@@ -585,9 +585,6 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
-  <data name="PeriodName" xml:space="preserve">
-    <value>Period Name</value>
-  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -601,6 +598,6 @@
     <value>Value</value>
   </data>
   <data name="ErrorManagement" xml:space="preserve">
-    <value>ErrorManagement</value>
+    <value>Error Management</value>
   </data>
 </root>

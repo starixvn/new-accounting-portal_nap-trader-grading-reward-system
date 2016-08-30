@@ -439,7 +439,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ErrorManagement.
+        ///   Looks up a localized string similar to Error Management.
         /// </summary>
         public static string ErrorManagement {
             get {

@@ -111,7 +111,7 @@ var errorManagement = (function ($) {
                     NewDisabled: !$("#isEnabled", form).is(":checked")
                 };
 
-                if (parseInt(error.NewValue) == error.NewValue && error.Value > 0 && error.Value < 100) {
+                if (parseInt(error.NewValue) == error.NewValue && error.NewValue > 0 && error.NewValue < 100) {
                     errorManagementService.UpdateError(error).then(function () {
                         errorManagement.Result = errorManagementService.Result;
 
@@ -166,7 +166,7 @@ var errorManagement = (function ($) {
                       { HeaderText: "Value", Width: 40, Name: 'ColVal', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: "Is Enabled", Width: 80, Name: 'ColEnable', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Active", Width: 80, Name: 'ColEnable', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "", Width: 80, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
@@ -229,7 +229,7 @@ var errorManagement = (function ($) {
 
             errorManagementService.UpdateErrorStatus(criteria, function (result) {
                 if (result.Code == 0) {
-                    common.ShowInfoMessage(criteria.Disabled ? "Error has been disabled" : "Error has been enabled");
+                    common.ShowInfoMessage(criteria.Disabled ? "Error has been activated" : "Error has been deactivated");
                 } else {
                     common.ShowErrorMessage(result.Message);
                 }
