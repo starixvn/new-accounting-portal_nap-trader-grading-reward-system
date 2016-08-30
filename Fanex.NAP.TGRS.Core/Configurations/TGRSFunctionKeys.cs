@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 8/18/2016 11:05:45
+// Lasted generated date: 8/30/2016 09:26:15
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -17,74 +17,78 @@ using System.Diagnostics.CodeAnalysis;
 /// Function keys.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("T4", "1.0.0.0")]
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")]
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")]
-[SuppressMessage("Microsoft.StyleCop.CSharp.LayoutRules", "SA1508:ClosingCurlyBracketsMustNotBePrecededByBlankLine", Justification = "Generated code")]
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
+[SuppressMessage("Microsoft.StyleCop.CSharp.LayoutRules", "SA1508:ClosingCurlyBracketsMustNotBePrecededByBlankLine", Justification = "Generated code")] 
 public static class TGRSFunctionKeys
 {
     public const string Administration = "Administration";
 
-    public const string AssignFunctionToGroup = "AssignFunctionToGroup";
+        public const string AssignFunctionToGroup = "AssignFunctionToGroup";
 
-    public const string AssignFunctionToUser = "AssignFunctionToUser";
+        public const string AssignFunctionToUser = "AssignFunctionToUser";
 
-    public const string AssignSiteToUser = "AssignSiteToUser";
+        public const string AssignSiteToUser = "AssignSiteToUser";
 
-    public const string BenchmarkManagement = "BenchmarkManagement";
+        public const string BenchmarkManagement = "BenchmarkManagement";
 
-    public const string Configuration = "Configuration";
+        public const string Configuration = "Configuration";
 
-    public const string ManageFunction = "ManageFunction";
+        public const string ManageFunction = "ManageFunction";
 
-    public const string ManageGroup = "ManageGroup";
+        public const string ManageGroup = "ManageGroup";
 
-    public const string ManageMenu = "ManageMenu";
+        public const string ManageMenu = "ManageMenu";
 
-    public const string ManageUser = "ManageUser";
+        public const string ManageUser = "ManageUser";
 
-    public const string OSConfiguration = "OSConfiguration";
+        public const string OSAdministration = "OSAdministration";
 
-    public const string OSGradeManagement = "OSGradeManagement";
+        public const string OSConfiguration = "OSConfiguration";
 
-    public const string OSReports = "OSReports";
+        public const string OSGradeManagement = "OSGradeManagement";
 
-    public const string OSSetting = "OSSetting";
+        public const string OSReports = "OSReports";
 
-    public const string OSSportPerformance = "OSSportPerformance";
+        public const string OSScoreConfirmation = "OSScoreConfirmation";
 
-    public const string OSTeamManagement = "OSTeamManagement";
+        public const string OSScoreHistory = "OSScoreHistory";
 
-    public const string OSTraderManagement = "OSTraderManagement";
+        public const string OSSetting = "OSSetting";
 
-    public const string OSTraderPerformance = "OSTraderPerformance";
+        public const string OSSportPerformance = "OSSportPerformance";
 
-    public const string PerformanceDetail = "PerformanceDetail";
+        public const string OSTeamManagement = "OSTeamManagement";
 
-    public const string PerformanceSummary = "PerformanceSummary";
+        public const string OSTraderManagement = "OSTraderManagement";
 
-    public const string Reports = "Reports";
+        public const string OSTraderPerformance = "OSTraderPerformance";
 
-    public const string ScoreViewing = "ScoreViewing";
+        public const string PerformanceDetail = "PerformanceDetail";
 
-    public const string SpreadManagement = "SpreadManagement";
+        public const string PerformanceSummary = "PerformanceSummary";
 
-    public const string SystemConfiguration = "SystemConfiguration";
+        public const string Reports = "Reports";
 
-    public const string SystemSetting = "SystemSetting";
+        public const string ScoreViewing = "ScoreViewing";
 
-    public const string TargetedMargin = "TargetedMargin";
+        public const string SpreadManagement = "SpreadManagement";
 
-    public const string TeamManagement = "TeamManagement";
+        public const string SystemConfiguration = "SystemConfiguration";
 
-    public const string TraderManagement = "TraderManagement";
+        public const string SystemSetting = "SystemSetting";
 
-    public const string TraderReport = "TraderReport";
+        public const string TargetedMargin = "TargetedMargin";
 
-    public const string TraderReportAdmin = "TraderReportAdmin";
+        public const string TeamManagement = "TeamManagement";
+
+        public const string TraderManagement = "TraderManagement";
+
+        public const string TraderReport = "TraderReport";
+
+        public const string TraderReportAdmin = "TraderReportAdmin";
 
     public const string GradeManagement = "GradeManagement";
 
-    public const string OSScoreHistory = "OSScoreHistory";
-
-    public const string OSScoreConfirmation = "OSScoreConfirmation";
 }
+ 

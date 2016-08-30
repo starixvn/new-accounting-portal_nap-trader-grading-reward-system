@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 using Fanex.NAP.TGRS.Core.BaseClasses;
 using Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement;
 using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
@@ -15,12 +17,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             _service = service;
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSGradeManagement, Constant.Policy.Host);
             return View();
         }
 
-
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetAllErrors()
         {
             var result = _service.GetAllErrors();
@@ -29,6 +33,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         public JsonResult InsertError(InsertErrorCriteria criteria)
         {
             criteria.UserId = SessionUtility.GetCreatorId();
@@ -38,6 +43,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         public JsonResult UpdateError(UpdateErrorCriteria criteria)
         {
             criteria.UserId = SessionUtility.GetCreatorId();
@@ -47,6 +53,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         public JsonResult UpdateErrorStatus(UpdateErrStatusCriteria criteria)
         {
             criteria.UserId = SessionUtility.GetCreatorId();
@@ -56,6 +63,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSGradeManagement, Policy = Constant.Policy.Host)]
         public JsonResult DeleteError(DeleteErrorCriteria criteria)
         {
             criteria.UserId = SessionUtility.GetCreatorId();
