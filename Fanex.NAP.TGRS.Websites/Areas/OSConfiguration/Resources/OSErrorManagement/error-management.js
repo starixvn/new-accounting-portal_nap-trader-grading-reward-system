@@ -187,10 +187,14 @@ var errorManagement = (function ($) {
                               { Name: 'ColVal', Value: item.Value },
                               { Name: 'ColCreatedDate', Value: item.CreatedDateFormatted },
                               { Name: 'ColCreatedBy', Value: item.CreatedBy },
-                              { Name: 'ColEnable', Value: checkBox.format(item.ErrorId, item.Disabled ? "" : "checked") },
-                              { Name: 'ColDelete', Value: deleteBtn.format(item.ErrorId) }
                     ]
                 };
+
+                if (hasEditRight) {
+                    row.Columns.push({ Name: 'ColEnable', Value: checkBox.format(item.ErrorId, item.Disabled ? "" : "checked") });
+                    row.Columns.push({ Name: 'ColDelete', Value: deleteBtn.format(item.ErrorId) });
+                }
+
                 bodyData.push(row);
             });
         }
