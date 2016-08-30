@@ -68,7 +68,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
             var normalFont = writer.GetFont(10, 0);
             var lineCount = 0;
             var periodRange = "from " + criteria.FromDate.ToString("MM/dd/yyyy") + " to " + criteria.ToDate.ToString("MM/dd/yyyy");
-            AppendBlockContent(ref contentRender, ref lineCount, "Period: ", boldFont, periodRange, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, "Period", boldFont, periodRange, normalFont, "\n");
             
             var contentRichTextString = contentRender.Render();
             var contentRichTextArray = new string[1];
@@ -106,7 +106,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
 
         private void FillHeader(ref ExcelTemplateWriter writer)
         {
-            writer.CopyRows(4, 1);
+            writer.CopyRows(3, 1);
         }
 
         private void FillRowData(IEnumerable<TraderScoreInfo> traderScores, ref ExcelTemplateWriter writer)
