@@ -116,7 +116,7 @@ var errorManagement = (function ($) {
                         errorManagement.Result = errorManagementService.Result;
 
                         if (errorManagement.Result.Code === 0) {
-                            common.ShowInlineSuccessMsg($("#divErrorSuccessMsg", form), messages.AddErrorSuccessfully, false, function () {
+                            common.ShowInlineSuccessMsg($("#divErrorSuccessMsg", form), messages.UpdateErrorSuccessfully, false, function () {
                                 timeout = setTimeout(common.ClosePopup, 3000);
                             });
 
