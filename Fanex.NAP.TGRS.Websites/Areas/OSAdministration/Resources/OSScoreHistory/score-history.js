@@ -81,7 +81,9 @@ var scoreHistory = (function ($) {
                       { HeaderText: labels.ConfirmedDate, Width: 100, Name: 'ColConfirmedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Remove, Width: 60, Name: 'ColRemove', HeaderAlign: 'center', CellAlign: 'center' }],
             showNumberColumn: true,
-            gridExpandHeight: 220
+            gridExpandHeight: 220,
+            enableHiddenColumns: false,
+            hiddenColumns: hasEditRight ? [] : [6],
         };
 
         var bodyData = [];
@@ -103,6 +105,7 @@ var scoreHistory = (function ($) {
                 bodyData.push(row);
             });
         }
+
         gridOptions.bodyRows = bodyData;
         domElements.divScoreHistoryGrid.fanexGrid(gridOptions);
         domElements.divScoreHistoryDetailContainer.css({"display": "none"});
@@ -180,7 +183,7 @@ var scoreHistory = (function ($) {
         domElements.divScoreHistoryGrid.on('click', 'span.history-name-link', function () {
             var $obj = $(this);
             var scoreHistoryId = $obj.attr('data-score-history-id');
-            var headerName = $obj.attr('data-score-history-header');
+            var headerName = $obj.attr('data-score-history-header').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
             scoreHistory.GetScoreHistoryByPeriod(scoreHistoryId, headerName);
         });
@@ -193,6 +196,11 @@ var scoreHistory = (function ($) {
                 scoreHistory.DeleteScoreHistory(scoreHistoryId);
             });
         });
+    };
+
+    String.prototype.replaceAll = function (find, replace) {
+        var str = this;
+        return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
     };
 
     return scoreHistory;
