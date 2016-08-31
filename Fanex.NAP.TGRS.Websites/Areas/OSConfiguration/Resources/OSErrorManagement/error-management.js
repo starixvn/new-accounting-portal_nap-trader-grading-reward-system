@@ -165,15 +165,18 @@ var errorManagement = (function ($) {
                       { HeaderText: labels.Description, Width: 300, Name: 'ColDes', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: "Value", Width: 40, Name: 'ColVal', HeaderAlign: 'center', CellAlign: 'right' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: "Active", Width: 80, Name: 'ColEnable', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "", Width: 80, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' }
+                      { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }
             ],
             showNumberColumn: true,
             gridExpandHeight: 100,
         };
         var bodyData = [];
         var row;
+
+        if (hasEditRight) {
+            gridOptions.columns.push({ HeaderText: "Active", Width: 80, Name: 'ColEnable', HeaderAlign: 'center', CellAlign: 'center' });
+            gridOptions.columns.push({ HeaderText: "", Width: 80, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' });
+        }
 
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
