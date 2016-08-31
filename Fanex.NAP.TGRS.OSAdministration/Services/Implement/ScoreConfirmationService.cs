@@ -127,10 +127,10 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
                     item.TraderName,
                     item.TeamName,
                     item.GradeName,
-                    item.TotalPoint.Format(2),
-                    item.Margin.Format(2),
-                    item.Turnover.Format(2),
-                    item.WinLoss.Format(2)
+                    item.TotalPoint,//.Format(2),
+                    item.Margin,//.Format(2),
+                    item.Turnover,//.Format(2),
+                    item.WinLoss//.Format(2)
                 };
                 writer.WriteRow(styleIndex, record);
             }

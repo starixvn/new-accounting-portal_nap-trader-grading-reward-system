@@ -19,13 +19,13 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
 
         public string GradeName { get; set; }
 
-        public double TotalPoint { get; set; }
+        public decimal TotalPoint { get; set; }
 
-        public double Margin { get; set; }
+        public decimal Margin { get; set; }
 
-        public double Turnover { get; set; }
+        public decimal Turnover { get; set; }
 
-        public double WinLoss { get; set; }
+        public decimal WinLoss { get; set; }
 
         public int PointDeduction { get; set; }
     }
