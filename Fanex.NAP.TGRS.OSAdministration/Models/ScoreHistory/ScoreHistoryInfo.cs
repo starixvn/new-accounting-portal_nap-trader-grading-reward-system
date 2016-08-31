@@ -53,7 +53,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
         {
             get
             {
-                return PeriodName + " (" + FromDateFormatted + "-" + ToDateFormatted + ")";
+                return PeriodName + " (" + FromDateFormatted + " - " + ToDateFormatted + ")";
             }
         }
     }

@@ -34,7 +34,6 @@ var scoreHistory = (function ($) {
     };
 
     scoreHistory.DeleteScoreHistory = function (scoreHistoryId) {
-        debugger;
         var criteria = {
             ScoreHistoryId: scoreHistoryId
         };
@@ -59,12 +58,14 @@ var scoreHistory = (function ($) {
 
     var domElements = {
         divScoreHistoryGrid: null,
-        divScoreHistoryDetailGrid: null
+        divScoreHistoryDetailGrid: null,
+        divScoreHistoryDetailContainer: null
     };
 
     var cacheDOMElements = function () {
         domElements.divScoreHistoryGrid = $('#divScoreHistoryGrid');
         domElements.divScoreHistoryDetailGrid = $('#divScoreHistoryDetailGrid');
+        domElements.divScoreHistoryDetailContainer = $('#scoreHistoryDetailContainer');
     };
 
     var renderScoreHistoryGrid = function (data) {
@@ -104,6 +105,7 @@ var scoreHistory = (function ($) {
         }
         gridOptions.bodyRows = bodyData;
         domElements.divScoreHistoryGrid.fanexGrid(gridOptions);
+        domElements.divScoreHistoryDetailContainer.css({"display": "none"});
         handlePageEvents();
     };
 
@@ -118,11 +120,11 @@ var scoreHistory = (function ($) {
                       { HeaderText: 'Grade', Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                       {
                           HeaderText: 'V.Total Point', Width: 120, Name: 'ColTotalPoint', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: 'Point Deduction', Width: 120, Name: 'ColDeduction', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: 'V.Margin', Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
