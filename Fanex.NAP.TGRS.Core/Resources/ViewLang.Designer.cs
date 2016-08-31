@@ -1429,7 +1429,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TraderScores.
+        ///   Looks up a localized string similar to TraderScores_{0}_{1}.
         /// </summary>
         public static string TraderScoreFileName {
             get {

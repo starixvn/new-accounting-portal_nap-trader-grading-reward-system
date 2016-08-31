@@ -84,6 +84,15 @@ var scoreConfirmation = (function ($) {
             common.DisableInput();
             ScoreConfirmationService.GetTraderScores(criteria).then(function () {
                 cachedData = ScoreConfirmationService.TraderScores;
+                if (cachedData.length > 0)
+                {
+                    $("#btnConfirm").show();
+                }
+                else
+                {
+                    $("#btnConfirm").hide();
+                }
+
                 renderTraderGrid(cachedData);
             });
         });
@@ -184,7 +193,6 @@ var scoreConfirmation = (function ($) {
                         });
 
                         updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
-                        //disablePopup();
                         reloadPage();
                     } else {
                         if (scoreConfirmation.Result.result.Code == 4101)
@@ -221,6 +229,7 @@ var scoreConfirmation = (function ($) {
     scoreConfirmation.Initialize = function () {
         cacheDOMElements();
         initPageFields();
+        $("#btnConfirm").hide();
     };
 
     return scoreConfirmation;

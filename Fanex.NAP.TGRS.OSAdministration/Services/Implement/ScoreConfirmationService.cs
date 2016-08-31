@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
     using Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory;
     using Fanex.NAP.TGRS.OSAdministration.Services.Interface;
     using NPOI.SS.UserModel;
+    using Fanex.NAP.Core.Web;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,6 +27,8 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
     public class ScoreConfirmationService : TGRSBaseService, IScoreConfirmationService
     {
         private const int PointInPixel = 225;
+        private const string DecimalFormat = "0.00";
+        private const string ShortDateFormatForFileName = "yyyyMMdd";
 
         public LastestScoreHistoryInfo GetLastestScoreHistoryInfo(GetLastedScoreHistoryInfoCriteria criteria)
         {
@@ -48,9 +51,10 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
             var traderScores = GetTraderScores(criteria);
             var reportName = string.Format(
                                 ViewLang.TraderScoreFileName,
-                                DateTime.Today.ToString("yyyyMMdd"));
-            var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderScoreFileName);
+                                criteria.FromDate.ToString(ShortDateFormatForFileName),
+                                criteria.ToDate.ToString(ShortDateFormatForFileName));
 
+            var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderScoreFileName);
             writer.CopyRows(0, 1);
             FilterBlock(criteria, ref writer);
             FillHeader(ref writer);
@@ -67,8 +71,9 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
             var boldFont = writer.GetFont(9, 0);
             var normalFont = writer.GetFont(10, 0);
             var lineCount = 0;
-            var periodRange = "from " + criteria.FromDate.ToString("MM/dd/yyyy") + " to " + criteria.ToDate.ToString("MM/dd/yyyy");
-            AppendBlockContent(ref contentRender, ref lineCount, "Period", boldFont, periodRange, normalFont, "\n");
+
+            AppendBlockContent(ref contentRender, ref lineCount, "From Date", boldFont, criteria.FromDate.ToString("MM/dd/yyyy"), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, "To Date", boldFont, criteria.ToDate.ToString("MM/dd/yyyy"), normalFont, "\n");
             
             var contentRichTextString = contentRender.Render();
             var contentRichTextArray = new string[1];
@@ -118,14 +123,14 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
 
                 var record = new object[]
                 {
-                    i+1,
+                    i + 1,
                     item.TraderName,
                     item.TeamName,
                     item.GradeName,
-                    item.TotalPoint,
-                    item.Margin,
-                    item.Turnover,
-                    item.WinLoss
+                    item.TotalPoint.Format(2),
+                    item.Margin.Format(2),
+                    item.Turnover.Format(2),
+                    item.WinLoss.Format(2)
                 };
                 writer.WriteRow(styleIndex, record);
             }

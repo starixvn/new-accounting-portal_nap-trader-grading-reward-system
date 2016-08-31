@@ -589,7 +589,7 @@
     <value>Error</value>
   </data>
   <data name="TraderScoreFileName" xml:space="preserve">
-    <value>TraderScores</value>
+    <value>TraderScores_{0}_{1}</value>
   </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>IsEnabled</value>
