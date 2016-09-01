@@ -1078,7 +1078,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Score Confirmation History.
+        ///   Looks up a localized string similar to Score History.
         /// </summary>
         public static string ScoreHistory {
             get {
