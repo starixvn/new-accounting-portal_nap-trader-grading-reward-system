@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\EPADeductionManagement.cs" />
     <Compile Include="Controllers\OSErrorManagementController.cs" />
     <Compile Include="Controllers\OSSettingController.cs" />
     <Compile Include="Controllers\OSTeamManagementController.cs" />

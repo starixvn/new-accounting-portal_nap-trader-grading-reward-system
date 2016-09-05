@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "EPA Deduction Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+<div id="resultContainer" class="content-grid" hidden>
+    <div id="divEPAGrid" class="freegrid">
+    </div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-epa-deduction-management")
+}
