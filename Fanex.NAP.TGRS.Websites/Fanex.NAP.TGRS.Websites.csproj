@@ -428,7 +428,7 @@
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\InsertErrForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\UpdateErrForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\EPADeductionManagement\Index.cshtml" />
-    <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\InsertPeriodNameForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\EPADeductionManagement\IndexFilter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

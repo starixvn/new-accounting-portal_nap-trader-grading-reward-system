@@ -10,13 +10,12 @@ $(document).ready(function () {
 var epaManagement = (function ($) {
     var epaManagement = {};
 
-    var timeout = null;
     var domElements = {
         EPAGrid: null,
-        lnkAddNewError: null,
-        divInsertErrorForm: null,
-        divUpdateErrorForm: null,
-        divPopup: null
+        divDateRange: null,
+        traderName: null,
+        btnSearch: null,
+        hiddenGrid: null
     };
 
     function normalizeString(str) {
@@ -31,20 +30,30 @@ var epaManagement = (function ($) {
         cacheDOMElements();
         handlePageEvents();
         epaManagement.GetAllEPAs();
+
+        domElements.divDateRange = domElements.divDateRange.timeRange({
+            minDate: datepickerSetting.MinDate,
+            maxDate: datepickerSetting.DefaultToDate,
+            defaultFromDate: datepickerSetting.DefaultFromDate,
+            defaultToDate: datepickerSetting.DefaultToDate,
+            allowYearRange: datepickerSetting.AllowYearRange,
+            yearRanges: null,
+            labelCss: 'col_5'
+        });
     };
 
     var cacheDOMElements = function () {
         domElements.EPAGrid = $('#divEPAGrid');
-        domElements.lnkAddNewError = $('#newErrLink');
-        domElements.divInsertErrorForm = $('#divInsertErrorForm').clone();
-        domElements.divUpdateErrorForm = $('#divUpdateErrorForm').clone();
-
-        $('#divHiddenForm').empty();
+        domElements.divDateRange = $('#divDateRange');
+        domElements.traderName = $("#txtTraderName");
+        domElements.btnSearch = $("#btnSearch");
+        domElements.hiddenGrid = $("#popupGrid");
     };
 
     function renderGrid(data) {
         var addIssueFormat = '<div class="add-issue-link" data-trader-id="{0}" href="#" data-trader-name="{1}"></div>';
         var linkFormat = '<span class="{0} link" data-trader-id="{1}" data-trader-name="{3}">{2}</span>';
+
         var mapper = function (item, idx) {
             return {
                 Columns: [{ Name: 'ColNum', Value: idx + 1 },
@@ -84,11 +93,6 @@ var epaManagement = (function ($) {
 
             addIssue(traderId);
         });
-    };
-
-    var refreshPopup = function () {
-        clearTimeout(timeout);
-        common.CloseMsgBox();
     };
 
     return epaManagement;

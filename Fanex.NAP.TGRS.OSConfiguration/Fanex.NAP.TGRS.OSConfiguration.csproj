@@ -213,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
+    <Folder Include="Models\EPADeductionManagement\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>

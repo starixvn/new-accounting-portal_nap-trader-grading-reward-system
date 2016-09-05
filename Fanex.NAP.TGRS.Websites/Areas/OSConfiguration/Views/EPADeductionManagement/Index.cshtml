@@ -11,6 +11,8 @@
     </div>
 }
 
+@Html.Partial("IndexFilter")
+
 <div id="resultContainer" class="content-grid" hidden>
     <div id="divEPAGrid" class="freegrid">
     </div>
@@ -18,9 +20,20 @@
 
 <div id="divHiddenForm" class="display-none">
     @Html.Partial("InsertTraderIssue")
+<div id="popupGrid" class="freegrid hidden"></div>
+
 </div>
 
 @section Foot
 {
     @Scripts.Render("~/scripts/os-epa-deduction-management")
+
+    <script>
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+    </script>
 }
