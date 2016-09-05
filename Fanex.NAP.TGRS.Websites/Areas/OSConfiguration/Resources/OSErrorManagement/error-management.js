@@ -175,7 +175,7 @@ var errorManagement = (function ($) {
 
         if (hasEditRight) {
             gridOptions.columns.push({ HeaderText: "Active", Width: 80, Name: 'ColEnable', HeaderAlign: 'center', CellAlign: 'center' });
-            gridOptions.columns.push({ HeaderText: "", Width: 80, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' });
+            //gridOptions.columns.push({ HeaderText: "", Width: 80, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' });
         }
 
         if (data && data.length > 0) {
@@ -195,7 +195,7 @@ var errorManagement = (function ($) {
 
                 if (hasEditRight) {
                     row.Columns.push({ Name: 'ColEnable', Value: checkBox.format(item.ErrorId, item.Disabled ? "" : "checked") });
-                    row.Columns.push({ Name: 'ColDelete', Value: deleteBtn.format(item.ErrorId) });
+                    //row.Columns.push({ Name: 'ColDelete', Value: deleteBtn.format(item.ErrorId) });
                 }
 
                 bodyData.push(row);
