@@ -112,6 +112,7 @@ var scoreConfirmation = (function ($) {
                     { Name: 'colTeam', Value: item.TeamName },
                     { Name: 'colGrade', Value: item.GradeName },
                     { Name: 'colPoint', Value: item.TotalPoint },
+                    { Name: 'colEPADeduction', Value: item.TotalPoint },
                     { Name: 'colMargin', Value: item.Margin },
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss }
@@ -126,6 +127,7 @@ var scoreConfirmation = (function ($) {
                 { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'},
                 { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
