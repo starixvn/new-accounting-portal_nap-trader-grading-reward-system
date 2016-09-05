@@ -1,0 +1,66 @@
+﻿<div id="divInsertTraderIssueForm" class="form-bar width-400">
+    <div class="form expand-form">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>Type</label>
+            </div>
+            <div class="edit-field">
+                <input type='radio' name='issue-type' value='1' />&nbsp;Error
+                <input type='radio' name='issue-type' value='2' />&nbsp;E.Leave
+                <input type='radio' name='issue-type' value='3' />&nbsp;-Point
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>Date</label>
+            </div>
+            <div class="edit-field">
+            </div>
+        </div>
+
+        <div class="form-row issue-error">
+            <div class="lbl-field width-80">
+                <label>Error</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlErrorType">
+                    <option>error 1</option>
+                    <option>error 2</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row issue-deduction">
+            <div class="lbl-field width-80">
+                <label>Point</label>
+            </div>
+            <div class="edit-field">
+                <input id="tbPointDeduction" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>Reason</label>
+            </div>
+            <div class="edit-field">
+                <textarea rows="3"
+                          id="errorDes"
+                          class="width-200"
+                          data-max-length="200"
+                          data-val-length="@Messages.FieldMaxLengthError200"
+                          data-val-not-html="@Messages.HtmlInputError"></textarea>
+            </div>
+        </div>
+
+        <div class="form-row button-row">
+            <div class="lbl-field width-80"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Submit" />
+                <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>
