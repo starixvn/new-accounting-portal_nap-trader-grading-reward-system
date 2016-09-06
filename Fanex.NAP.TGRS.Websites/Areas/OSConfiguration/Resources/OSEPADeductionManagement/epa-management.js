@@ -46,8 +46,9 @@ var epaManagement = (function ($) {
 
         epaManagementService.GetEPADeductionReport(criteria).then(function () {
             renderGrid(epaManagementService.EPADeductionList);
-            });
-            
+        });
+    }
+
     epaManagement.GetErrorTypes = function (callback) {
         epaManagementService.GetErrorTypes(function (result) {
             errorTypes = result;
@@ -215,6 +216,7 @@ var epaManagement = (function ($) {
                     common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
+
                     reloadPage();
                 } else {
                     common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
@@ -227,6 +229,7 @@ var epaManagement = (function ($) {
             domElements.isOverwrite = false;
             common.ClosePopup();
         });
+
     };
 
     epaManagement.BindErrorTypes = function (data, selector, callback) {

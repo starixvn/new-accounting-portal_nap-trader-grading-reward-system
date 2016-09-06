@@ -12,12 +12,12 @@
 
     public class OSEPADeductionManagementController : TGRSBaseController
     {
-        private IEPADeductionManagementService _epaDeductionService;
+        private IEPADeductionManagementService _epaDeductionManagementService;
 
         public OSEPADeductionManagementController(
             IEPADeductionManagementService epaDeductionService)
         {
-            _epaDeductionService = epaDeductionService;
+            _epaDeductionManagementService = epaDeductionService;
         }
 
         public ActionResult Index()
@@ -89,7 +89,7 @@
         [HttpGet]
         public JsonResult GetErrorTypes()
         {
-            var errorTypes = _epaDeductionService.GetErrorTypes(new GetAllIssueCriteria());
+            var errorTypes = _epaDeductionManagementService.GetErrorTypes(new GetAllIssueCriteria());
 
             return Json(errorTypes, JsonRequestBehavior.AllowGet);
         }
