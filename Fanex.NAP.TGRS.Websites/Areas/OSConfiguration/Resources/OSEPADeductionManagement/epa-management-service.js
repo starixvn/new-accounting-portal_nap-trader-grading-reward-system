@@ -39,7 +39,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.DeleteEPADeductionHistory = function (error) {
         common.DisableInput();
-        return errorManagementFactory.DeleteEPADeductionHistory(error)
+        return epaManagementFactory.DeleteEPADeductionHistory(error)
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -67,7 +67,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.DeleteErrorHistory = function (error) {
         common.DisableInput();
-        return errorManagementFactory.DeleteErrorHistory(error)
+        return epaManagementFactory.DeleteErrorHistory(error)
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -95,7 +95,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.DeleteLeaveHistory = function (error) {
         common.DisableInput();
-        return errorManagementFactory.DeleteLeaveHistory(error)
+        return epaManagementFactory.DeleteLeaveHistory(error)
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -123,7 +123,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.InsertEPADeduction = function (deduction, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertEPADeduction(deduction)
+        return epaManagementFactory.InsertEPADeduction(deduction)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -135,7 +135,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.InsertError = function (error, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertError(error)
+        return epaManagementFactory.InsertError(error)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -147,7 +147,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.InsertLeave = function (leave, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertLeave(leave)
+        return epaManagementFactory.InsertLeave(leave)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
