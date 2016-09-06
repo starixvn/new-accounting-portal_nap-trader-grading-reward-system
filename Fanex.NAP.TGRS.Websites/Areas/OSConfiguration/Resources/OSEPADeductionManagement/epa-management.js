@@ -9,6 +9,10 @@ $(document).ready(function () {
 
 var epaManagement = (function ($) {
     var epaManagement = {};
+    epaManagement.GetLeaveHistoryCriteria = [];
+    epaManagement.GetErrorHistoryCriteria = [];
+    epaManagement.GetEPADeductionHistoryCriteria = [];
+
     var timeout = null;
     var errorTypes;
     var insertResult = null;
@@ -48,7 +52,7 @@ var epaManagement = (function ($) {
 
     epaManagement.GetEPADeductionReport = function () {
         var criteria = {
-            TraderName: '',
+            TraderName: domElements.traderName.val(),
             FromDate: domElements.divDateRange.getFrom(),
             ToDate: domElements.divDateRange.getTo(),
         };
@@ -56,7 +60,25 @@ var epaManagement = (function ($) {
         epaManagementService.GetEPADeductionReport(criteria).then(function () {
             renderGrid(epaManagementService.EPADeductionList);
         });
-    }
+    };
+
+    epaManagement.RenderPopupEPADeductionHistory = function () {
+        epaManagementService.GetEPADeductionHistory(epaManagement.GetEPADeductionHistoryCriteria).then(function () {
+            makeEPADeductionHistoryForm(epaManagement.GetEPADeductionHistoryCriteria, epaManagementService.EPADeductionHistoryList);
+        });
+    };
+
+    epaManagement.RenderPopupErrorHistory = function () {
+        epaManagementService.GetErrorHistory(epaManagement.GetErrorHistoryCriteria).then(function () {
+            makeErrorHistoryForm(epaManagement.GetErrorHistoryCriteria, epaManagementService.ErrorHistoryList);
+        });
+    };
+
+    epaManagement.RenderPopupLeaveHistory = function () {
+        epaManagementService.GetLeaveHistory(epaManagement.GetLeaveHistoryCriteria).then(function () {
+            makeLeaveHistoryForm(epaManagement.GetLeaveHistoryCriteria, epaManagementService.LeaveHistoryList);
+        });
+    };
 
     epaManagement.GetErrorTypes = function (callback) {
         epaManagementService.GetErrorTypes(function (result) {
@@ -103,7 +125,6 @@ var epaManagement = (function ($) {
         $('#divHiddenTraderIssueForm').empty();
     };
 
-    // Cache POPUP Elements.
     var cachePopupElements = function () {
         popupElements.divInsertTraderIssueForm = $("#divInsertTraderIssueForm", domElements.divPopup);
         popupElements.rdoIssueType = $('#rdoIssueType', domElements.divPopup);
@@ -161,6 +182,11 @@ var epaManagement = (function ($) {
     }
 
     var handlePageEvents = function () {
+
+        domElements.btnSearch.on("click", function () {
+            epaManagement.GetEPADeductionReport();
+        });
+
         domElements.EPAGrid.on("click", "div.add-issue", function () {
             var $this = $(this).children().first();
             var traderId = $this.attr("data-trader-id");
@@ -178,9 +204,9 @@ var epaManagement = (function ($) {
                 ToDate: domElements.divDateRange.getTo(),
             };
 
-            epaManagementService.GetEPADeductionHistory(criteria).then(function () {
-                makeEPADeductionHistoryForm(criteria, epaManagementService.EPADeductionHistoryList);
-            });
+            epaManagement.GetEPADeductionHistoryCriteria = criteria;
+
+            epaManagement.RenderPopupEPADeductionHistory();
         });
 
         domElements.EPAGrid.on("click", "span.get-error-link", function () {
@@ -193,9 +219,9 @@ var epaManagement = (function ($) {
                 ToDate: domElements.divDateRange.getTo(),
             };
 
-            epaManagementService.GetErrorHistory(criteria).then(function () {
-                makeErrorHistoryForm(criteria, epaManagementService.ErrorHistoryList);
-            });
+            epaManagement.GetErrorHistoryCriteria = criteria;
+
+            epaManagement.RenderPopupErrorHistory();
         });
 
         domElements.EPAGrid.on("click", "span.get-leave-link", function () {
@@ -208,9 +234,9 @@ var epaManagement = (function ($) {
                 ToDate: domElements.divDateRange.getTo(),
             };
 
-            epaManagementService.GetLeaveHistory(criteria).then(function () {
-                makeLeaveHistoryForm(criteria, epaManagementService.LeaveHistoryList);
-            });
+            epaManagement.GetLeaveHistoryCriteria = criteria;
+
+            epaManagement.RenderPopupLeaveHistory();
         });
     };
 
@@ -402,13 +428,16 @@ var epaManagement = (function ($) {
     };
 
     var renderEPADeductionHistoryGrid = function (data) {
+        var removeColFormatTemplate = '<span class="remove-epa-history-link link delete-button" data-point-history-id="{0}"></span>';
+
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Value', Width: 50, Name: 'DeductionValue', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Deduction Date', Width: 100, Name: 'DeductionDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
+                        { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
             gridExpandHeight: 150
@@ -417,13 +446,15 @@ var epaManagement = (function ($) {
         var row;
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
+                var removeColFormat = removeColFormatTemplate.format(item.DeductionId);
                 row = {
                     Columns: [{ Name: '#', Value: index + 1 },
                                 { Name: 'DeductionValue', Value: item.DeductionValue },
                                 { Name: 'DeductionDate', Value: item.DeductionDateFormatted },
                                 { Name: 'Reason', Value: item.Reason },
                                 { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
-                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                                { Name: 'CreatedBy', Value: item.CreatedBy },
+                                { Name: 'Remove', Value: removeColFormat }
                     ]
                 };
                 bodyData.push(row);
@@ -431,17 +462,21 @@ var epaManagement = (function ($) {
         }
         gridOptions.bodyRows = bodyData;
         popupElements.divEPADeductionHistoryGrid.fanexGrid(gridOptions);
+        handleEPAHistoryEvents();
     };
 
     var renderErrorHistoryGrid = function (data) {
+        var removeColFormatTemplate = '<span class="remove-error-history-link link delete-button" data-trader-error-id="{0}"></span>';
+
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Error Name', Width: 70, Name: 'ErrorName', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Value', Width: 50, Name: 'Value', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Error Date', Width: 100, Name: 'ErrorDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
+                        { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
             gridExpandHeight: 150
@@ -450,6 +485,8 @@ var epaManagement = (function ($) {
         var row;
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
+                var removeColFormat = removeColFormatTemplate.format(item.TraderErrorId);
+
                 row = {
                     Columns: [{ Name: '#', Value: index + 1 },
                                 { Name: 'ErrorName', Value: item.ErrorName },
@@ -457,7 +494,8 @@ var epaManagement = (function ($) {
                                 { Name: 'ErrorDate', Value: item.ErrorDateFormatted },
                                 { Name: 'Reason', Value: item.Reason },
                                 { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
-                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                                { Name: 'CreatedBy', Value: item.CreatedBy },
+                                { Name: 'Remove', Value: removeColFormat }
                     ]
                 };
                 bodyData.push(row);
@@ -465,15 +503,19 @@ var epaManagement = (function ($) {
         }
         gridOptions.bodyRows = bodyData;
         popupElements.divErrorHistoryGrid.fanexGrid(gridOptions);
+        handleErrorHistoryEvents();
     };
 
     var renderLeaveHistoryGrid = function (data) {
+        var removeColFormatTemplate = '<span class="remove-leave-history-link link delete-button" data-trader-leave-id="{0}"></span>';
+
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Leave Date', Width: 100, Name: 'LeaveDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
+                        { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
             gridExpandHeight: 150
@@ -482,12 +524,15 @@ var epaManagement = (function ($) {
         var row;
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
+                var removeColFormat = removeColFormatTemplate.format(item.LeaveId);
+
                 row = {
                     Columns: [{ Name: '#', Value: index + 1 },
                                 { Name: 'LeaveDate', Value: item.LeaveDateFormatted },
                                 { Name: 'Reason', Value: item.Reason },
                                 { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
-                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                                { Name: 'CreatedBy', Value: item.CreatedBy },
+                                { Name: 'Remove', Value: removeColFormat }
                     ]
                 };
                 bodyData.push(row);
@@ -495,6 +540,61 @@ var epaManagement = (function ($) {
         }
         gridOptions.bodyRows = bodyData;
         popupElements.divLeaveHistoryGrid.fanexGrid(gridOptions);
+        handleLeaveHistoryEvents();
+    };
+
+    var handleEPAHistoryEvents = function () {
+        popupElements.divEPADeductionHistoryGrid.on('click', 'span.remove-epa-history-link', function () {
+            var $obj = $(this);
+            var historyId = $obj.attr('data-point-history-id');
+
+            var criteria = {
+                DeductionId: historyId
+            };
+
+            common.ShowConfirmMessage("Are you sure you want to delete this history?", function () {
+                epaManagementService.DeleteEPADeductionHistory(criteria).then(function () {
+                    epaManagement.RenderPopupEPADeductionHistory();
+                    epaManagement.GetEPADeductionReport();
+                });
+            });
+        });
+    };
+
+    var handleLeaveHistoryEvents = function () {
+        popupElements.divLeaveHistoryGrid.on('click', 'span.remove-leave-history-link', function () {
+            var $obj = $(this);
+            var historyId = $obj.attr('data-trader-leave-id');
+
+            var criteria = {
+                LeaveId: historyId
+            };
+
+            common.ShowConfirmMessage("Are you sure you want to delete this history?", function () {
+                epaManagementService.DeleteLeaveHistory(criteria).then(function () {
+                    epaManagement.RenderPopupLeaveHistory();
+                    epaManagement.GetEPADeductionReport();
+                });
+            });
+        });
+    };
+
+    var handleErrorHistoryEvents = function () {
+        popupElements.divErrorHistoryGrid.on('click', 'span.remove-error-history-link', function () {
+            var $obj = $(this);
+            var historyId = $obj.attr('data-trader-error-id');
+
+            var criteria = {
+                TraderErrorId: historyId
+            };
+
+            common.ShowConfirmMessage("Are you sure you want to delete this history?", function () {
+                epaManagementService.DeleteErrorHistory(criteria).then(function () {
+                    epaManagement.RenderPopupErrorHistory();
+                    epaManagement.GetEPADeductionReport();
+                });
+            });
+        });
     };
 
     return epaManagement;

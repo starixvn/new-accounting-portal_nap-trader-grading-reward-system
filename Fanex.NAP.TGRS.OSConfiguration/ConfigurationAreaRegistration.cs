@@ -6,9 +6,9 @@ using Fanex.NAP.TGRS.OSConfiguration.Services.TraderManagement;
 
 namespace Fanex.NAP.TGRS.OSConfiguration
 {
-    using System.Web.Mvc;
-    using Simplect;
     using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
+    using Simplect;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Registers Config area.

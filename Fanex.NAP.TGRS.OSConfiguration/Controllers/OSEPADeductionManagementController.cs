@@ -27,7 +27,7 @@
 
             ViewBag.MinDate = minDate;
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             return View();
         }
@@ -37,6 +37,7 @@
         public JsonResult GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
         {
             criteria.TraderName = criteria.TraderName ?? string.Empty;
+            criteria.TraderName = criteria.TraderName.Trim();
 
             var result = _epaDeductionManagementService.GetEPADeductionReport(criteria);
 
@@ -54,9 +55,12 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult DeleteEPADeductionHistory()
+        public JsonResult DeleteEPADeductionHistory(DeleteEPADeductionHistoryCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var result = _epaDeductionManagementService.DeleteEPADeductionHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
@@ -70,9 +74,12 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult DeleteErrorHistory()
+        public JsonResult DeleteErrorHistory(DeleteErrorHistoryCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var result = _epaDeductionManagementService.DeleteErrorHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
@@ -86,9 +93,12 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult DeleteLeaveHistory()
+        public JsonResult DeleteLeaveHistory(DeleteLeaveHistoryCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var result = _epaDeductionManagementService.DeleteLeaveHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]

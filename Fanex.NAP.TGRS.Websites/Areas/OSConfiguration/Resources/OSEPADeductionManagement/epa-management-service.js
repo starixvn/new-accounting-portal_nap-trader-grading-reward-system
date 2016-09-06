@@ -37,11 +37,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteEPADeductionHistory = function (error) {
+    epaManagementService.DeleteEPADeductionHistory = function (epaDeductionHistory) {
         common.DisableInput();
-        return epaManagementFactory.DeleteEPADeductionHistory(error)
+        return epaManagementFactory.DeleteEPADeductionHistory(epaDeductionHistory)
             .success(function (result) {
-                errorManagementService.Result = result;
+                epaManagementService.Result = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -65,11 +65,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteErrorHistory = function (error) {
+    epaManagementService.DeleteErrorHistory = function (errorHistory) {
         common.DisableInput();
-        return epaManagementFactory.DeleteErrorHistory(error)
+        return epaManagementFactory.DeleteErrorHistory(errorHistory)
             .success(function (result) {
-                errorManagementService.Result = result;
+                epaManagementService.Result = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -93,11 +93,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteLeaveHistory = function (error) {
+    epaManagementService.DeleteLeaveHistory = function (leaveHistory) {
         common.DisableInput();
-        return epaManagementFactory.DeleteLeaveHistory(error)
+        return epaManagementFactory.DeleteLeaveHistory(leaveHistory)
             .success(function (result) {
-                errorManagementService.Result = result;
+                epaManagementService.Result = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -119,7 +119,6 @@ var epaManagementService = (function ($) {
                 common.EnableInput();
             });
     };
-
 
     epaManagementService.InsertEPADeduction = function (deduction, callback) {
         common.DisableInput();

@@ -5,12 +5,11 @@
 var epaManagementService = (function ($) {
     var epaManagementService = {};
     epaManagementService.EPADeductionList = [];
+    epaManagementService.EPADeductionHistoryList = [];
+    epaManagementService.ErrorHistoryList = [];
+    epaManagementService.LeaveHistoryList = [];
 
-<<<<<<< 11a0e8a963f067781c20a7387d81ed9eefade1c0
     epaManagementService.GetEPADeductionReport = function (criteria) {
-=======
-    epaManagementService.GetEPADeductionReport = function (callback) {
->>>>>>> #63109 - update code
         common.DisableInput();
         return epaManagementFactory.GetEPADeductionReport(criteria)
             .success(function (result) {
@@ -24,12 +23,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetEPADeductionHistory = function (callback) {
+    epaManagementService.GetEPADeductionHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetEPADeductionHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetEPADeductionHistory(criteria)
+            .success(function (result) {
+                epaManagementService.EPADeductionHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -39,9 +37,13 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteEPADeductionHistory = function (error) {
+    epaManagementService.DeleteEPADeductionHistory = function (epaDeductionHistory) {
         common.DisableInput();
-        return errorManagementFactory.DeleteEPADeductionHistory(error)
+<<<<<<< HEAD
+        return epaManagementFactory.DeleteEPADeductionHistory(error)
+=======
+        return errorManagementFactory.DeleteEPADeductionHistory(epaDeductionHistory)
+>>>>>>> #63640 - added delete history function
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -53,12 +55,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetErrorHistory = function (callback) {
+    epaManagementService.GetErrorHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetErrorHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetErrorHistory(criteria)
+            .success(function (result) {
+                epaManagementService.ErrorHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -68,9 +69,13 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteErrorHistory = function (error) {
+    epaManagementService.DeleteErrorHistory = function (errorHistory) {
         common.DisableInput();
-        return errorManagementFactory.DeleteErrorHistory(error)
+<<<<<<< HEAD
+        return epaManagementFactory.DeleteErrorHistory(error)
+=======
+        return errorManagementFactory.DeleteErrorHistory(errorHistory)
+>>>>>>> #63640 - added delete history function
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -82,12 +87,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetLeaveHistory = function (callback) {
+    epaManagementService.GetLeaveHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetLeaveHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetLeaveHistory(criteria)
+            .success(function (result) {
+                epaManagementService.LeaveHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -97,9 +101,13 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.DeleteLeaveHistory = function (error) {
+    epaManagementService.DeleteLeaveHistory = function (leaveHistory) {
         common.DisableInput();
-        return errorManagementFactory.DeleteLeaveHistory(error)
+<<<<<<< HEAD
+        return epaManagementFactory.DeleteLeaveHistory(error)
+=======
+        return errorManagementFactory.DeleteLeaveHistory(leaveHistory)
+>>>>>>> #63640 - added delete history function
             .success(function (result) {
                 errorManagementService.Result = result;
             })
@@ -124,10 +132,9 @@ var epaManagementService = (function ($) {
             });
     };
 
-
     epaManagementService.InsertEPADeduction = function (deduction, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertEPADeduction(deduction)
+        return epaManagementFactory.InsertEPADeduction(deduction)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -139,7 +146,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.InsertError = function (error, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertError(error)
+        return epaManagementFactory.InsertError(error)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -151,7 +158,7 @@ var epaManagementService = (function ($) {
 
     epaManagementService.InsertLeave = function (leave, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertLeave(leave)
+        return epaManagementFactory.InsertLeave(leave)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);

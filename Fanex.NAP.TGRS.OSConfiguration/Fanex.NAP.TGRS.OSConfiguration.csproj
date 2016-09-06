@@ -47,6 +47,9 @@
     <Compile Include="Controllers\OSTeamManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\DeleteLeaveHistoryCriteria.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\DeleteErrorHistoryCriteria.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\DeleteEPADeductionHistoryCriteria.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetEPADeductionHistoryCriteria.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetErrorHistoryCriteria.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetLeaveHistoryCriteria.cs" />

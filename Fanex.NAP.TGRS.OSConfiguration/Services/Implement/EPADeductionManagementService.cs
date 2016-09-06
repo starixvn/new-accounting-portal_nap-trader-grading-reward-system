@@ -1,28 +1,28 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
 {
-    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
-    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    using System.Collections.Generic;
 
     public class EPADeductionManagementService : TGRSBaseService, IEPADeductionManagementService
     {
-        public ICommandResult DeleteEPADeductionHistory()
+        public ICommandResult DeleteEPADeductionHistory(DeleteEPADeductionHistoryCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
-        public ICommandResult DeleteErrorHistory()
+        public ICommandResult DeleteErrorHistory(DeleteErrorHistoryCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
-        public ICommandResult DeleteLeaveHistory()
+        public ICommandResult DeleteLeaveHistory(DeleteLeaveHistoryCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
         public IEnumerable<IssueInfo> GetErrorTypes(GetAllIssueCriteria criteria)
