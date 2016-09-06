@@ -14,8 +14,22 @@ var epaManagement = (function ($) {
         EPAGrid: null,
         divDateRange: null,
         traderName: null,
+        divInsertTraderIssueForm: null,
         btnSearch: null,
         hiddenGrid: null
+    };
+
+    var popupElements = {
+        divInsertTraderIssueForm: null,
+        rdoIssueType: null,
+        dpkIssueDate: null,
+        ddlErrorType: null,
+        tbPointDeduction: null,
+        taReason: null,
+        btnSave: null,
+        btnCancel: null,
+        popupType: 0,
+        divErrorSuccessMsg: null
     };
 
     function normalizeString(str) {
@@ -45,9 +59,28 @@ var epaManagement = (function ($) {
     var cacheDOMElements = function () {
         domElements.EPAGrid = $('#divEPAGrid');
         domElements.divDateRange = $('#divDateRange');
+        domElements.lnkAddNewError = $('#newErrLink');
         domElements.traderName = $("#txtTraderName");
+        domElements.divInsertTraderIssueForm = $('#divInsertTraderIssueForm').clone();
         domElements.btnSearch = $("#btnSearch");
         domElements.hiddenGrid = $("#popupGrid");
+        domElements.divUpdateErrorForm = $('#divUpdateErrorForm').clone();
+
+        $('#divHiddenForm').empty();
+        $('#divHiddenTraderIssueForm').empty();
+    };
+
+    // Cache POPUP Elements.
+    var cachePopupElements = function () {
+        popupElements.divInsertTraderIssueForm = $("#divInsertTraderIssueForm", domElements.divPopup);
+        popupElements.rdoIssueType = $('#rdoIssueType', domElements.divPopup);
+        popupElements.dpkIssueDate = $('#dpkIssueDate', domElements.divPopup);
+        popupElements.ddlErrorType = $('#ddlErrorType', domElements.divPopup);
+        popupElements.tbPointDeduction = $('#tbPointDeduction', domElements.divPopup);
+        popupElements.taReason = $('#taReason', domElements.divPopup);
+        popupElements.btnSave = $('#btnSave', domElements.divPopup);
+        popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
+        popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
     };
 
     function renderGrid(data) {
@@ -83,7 +116,7 @@ var epaManagement = (function ($) {
     }
 
     function addIssue(traderId) {
-        alert(traderId);
+        epaManagement.OpenPopupInsertPeriodName();
     }
 
     var handlePageEvents = function () {
@@ -92,6 +125,86 @@ var epaManagement = (function ($) {
             var traderId = $this.attr("data-trader-id");
 
             addIssue(traderId);
+        });
+    };
+
+    epaManagement.OpenPopupInsertPeriodName = function () {
+        var form = domElements.divInsertTraderIssueForm.clone();
+        refreshPopup();
+        common.Modal("New Error/E.Leave/-EPA", form);
+        cachePopupElements();
+        initInsertTraderIssueForm();
+
+        var maxDate = new Date();
+        maxDate.setYear(maxDate.getFullYear() + 1);
+        var minDate = new Date();
+        minDate.setYear(minDate.getFullYear() - 1);
+        layout.CreateDatepicker($("#dpkIssueDate", domElements.divPopup), 'issueDate', "Date", 'lbl-field width-120', new Date(), minDate, maxDate);
+        popupElements.dpkIssueDate = $('#issueDate', domElements.divPopup).addClass("width-200");
+        $('input[type=text]').off('keydown');
+        $('input[type=text]').on('keydown', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+
+                popupElements.btnSave.trigger('click');
+            }
+        });
+
+        popupElements.btnSave.click(function () {
+            if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
+                /*var confirmedScore = {
+                    PeriodName: $.trim(popupElements.txtPeriodName.val()),
+                    FromDate: domElements.divDateRange.getFrom(),
+                    ToDate: domElements.divDateRange.getTo(),
+                    IsOverwrite: domElements.isOverwrite
+                };
+
+                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {
+                    scoreConfirmation.Result = ScoreConfirmationService.Result;
+                    if (scoreConfirmation.Result.result.Code === 0) {
+                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
+                            timeout = setTimeout(common.ClosePopup, 3000);
+                        });
+
+                        updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
+                        reloadPage();
+                    } else {
+                        if (scoreConfirmation.Result.result.Code == 4101) {
+                            domElements.isOverwrite = true;
+                        }
+
+                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.result.Message);
+                        return false;
+                    }
+                });*/
+            }
+        });
+
+        popupElements.btnCancel.click(function () {
+            domElements.isOverwrite = false;
+            common.ClosePopup();
+        });
+    };
+
+    var initInsertTraderIssueForm = function () {
+        $('div.issue-deduction').hide();
+
+        $('input[name=issue-type]').on('change', function () {
+            var type = $(this).val();
+            switch (type) {
+                case '1':
+                    $('div.issue-error').show();
+                    $('div.issue-deduction').hide();
+                    break;
+                case '2':
+                    $('div.issue-error').hide();
+                    $('div.issue-deduction').hide();
+                    break;
+                case '3':
+                    $('div.issue-error').hide();
+                    $('div.issue-deduction').show();
+                    break;
+            }
         });
     };
 

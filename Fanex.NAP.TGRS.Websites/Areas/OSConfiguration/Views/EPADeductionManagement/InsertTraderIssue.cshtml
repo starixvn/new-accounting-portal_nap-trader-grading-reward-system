@@ -5,19 +5,15 @@
             <div class="lbl-field width-80">
                 <label>Type</label>
             </div>
-            <div class="edit-field">
-                <input type='radio' name='issue-type' value='1' />&nbsp;Error
-                <input type='radio' name='issue-type' value='2' />&nbsp;E.Leave
+            <div class="edit-field" style="margin-top:4px;">
+                <input type='radio' name='issue-type' value='1' checked="checked" />&nbsp;Error&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type='radio' name='issue-type' value='2' />&nbsp;E.Leave&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type='radio' name='issue-type' value='3' />&nbsp;-Point
             </div>
         </div>
 
-        <div class="form-row">
-            <div class="lbl-field width-80">
-                <label>Date</label>
-            </div>
-            <div class="edit-field">
-            </div>
+        <div class="form-row" style="margin-left:-40px !important;">
+            <div id="dpkIssueDate" style="display: none"></div>
         </div>
 
         <div class="form-row issue-error">
@@ -37,7 +33,7 @@
                 <label>Point</label>
             </div>
             <div class="edit-field">
-                <input id="tbPointDeduction" />
+                <input id="tbPointDeduction" class="width-200" />
             </div>
         </div>
 
@@ -47,7 +43,7 @@
             </div>
             <div class="edit-field">
                 <textarea rows="3"
-                          id="errorDes"
+                          id="reason"
                           class="width-200"
                           data-max-length="200"
                           data-val-length="@Messages.FieldMaxLengthError200"
