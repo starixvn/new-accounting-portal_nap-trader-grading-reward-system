@@ -306,97 +306,6 @@ var traderManagement = (function ($) {
         });
     };
 
-    traderManagement.OpenPopupTraderEPADeduction = function (traderId, traderName) {
-        refreshPopup();
-
-        var grid = domElements.divPopupIssue.clone();
-
-        var titleTemplate = "{0} - {1}";
-
-        var title = titleTemplate.format(traderName, labels.EPADeduction);
-
-        common.Modal(title, grid);
-
-        var criteria = {
-            TraderId: traderId
-        };
-
-        traderManagementService.GetTraderEPADeduction(criteria).then(function () {
-            traderManagement.TraderEPADeduction = traderManagementService.TraderEPADeduction;
-            renderErrorGrid(traderManagement.TraderEPADeduction, grid);
-        });
-    };
-
-    traderManagement.OpenPopupTraderError = function (traderId, traderName) {
-        refreshPopup();
-
-        var grid = domElements.divPopupIssue.clone();
-
-        var titleTemplate = "{0} - {1}";
-
-        var title = titleTemplate.format(traderName, labels.Error);
-
-        common.Modal(title, grid);
-
-        var criteria = {
-            TraderId: traderId
-        };
-
-        traderManagementService.GetTraderError(criteria).then(function () {
-            traderManagement.TraderError = traderManagementService.TraderError;
-            renderErrorGrid(traderManagement.TraderError, grid);
-        });
-    };
-
-    traderManagement.OpenPopupAddNewTraderError = function (traderId, traderName) {
-        refreshPopup();
-
-        var titleTemplate = "{0} - {1}";
-
-        var title = titleTemplate.format(traderName, labels.NewIssue);
-
-        common.Modal(title, domElements.divInsertIssueForm.clone());
-
-        cachePopupElements();
-
-        var issuePopup = getErrorPopupElements();
-
-        traderManagement.AddIssueType(issuePopup.IssueType);
-
-        popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(issuePopup.issueForm, 'w')) {
-                var issue = {
-                    TraderId: traderId,
-                    IssueTypeId: issuePopup.IssueType.find(":selected").attr("issue-id"),
-                    IssuedDate: issuePopup.issueDate.val(),
-                    Value: issuePopup.issueValue.val(),
-                    Reason: issuePopup.issueReason.val()
-                };
-
-                traderManagementService.InsertTraderIssue(issue).then(function () {
-                    var result = traderManagementService.Result;
-
-                    if (result.Code == 0) {
-                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.AddIssueSuccessfully, false, function () {
-                            timeout = setTimeout(common.ClosePopup, 1000);
-                        });
-
-                        disablePopup();
-
-                        traderManagement.GetTradersAll();
-                    } else {
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.ErrorMessage);
-                        return false;
-                    }
-                });
-            }
-        });
-
-        popupElements.btnCancel.click(function () {
-            common.ClosePopup();
-        });
-    };
-
     traderManagement.AddTeams = function (data, selector, callback) {
         for (var i = 0; i < data.length; i++) {
             var option = $("<option></option>").attr("team-id", data[i].TeamId).text(data[i].TeamName);
@@ -406,7 +315,7 @@ var traderManagement = (function ($) {
         if (callback != null) {
             callback(selector);
         }
-    }
+    };
 
     traderManagement.AddGrades = function (data, selector, callback) {
         for (var i = 0; i < data.length; i++) {
@@ -417,16 +326,7 @@ var traderManagement = (function ($) {
         if (callback != null) {
             callback(selector);
         }
-    }
-
-    traderManagement.AddIssueType = function (selector) {
-        traderManagementService.GetIssueType(function (result) {
-            for (var i = 0; i < result.length; i++) {
-                var option = $("<option></option>").attr("issue-id", result[i].IssueId).text(result[i].IssueName);
-                selector.append(option);
-            }
-        });
-    }
+    };
 
     traderManagement.Initialize = function () {
         cacheDOMElements();
@@ -462,41 +362,19 @@ var traderManagement = (function ($) {
         popupElements.txtEmployeeId = $('#txtEmployeeId', domElements.divPopup);
     };
 
-    var getErrorPopupElements = function () {
-        var maxDate = new Date(datepickerSetting.Today);
-        maxDate.setYear(maxDate.getFullYear() + 1);
-
-        var minDate = new Date(datepickerSetting.Today);
-        minDate.setYear(minDate.getFullYear() - 5);
-
-        layout.CreateDatepicker($("#dpkIssue", domElements.divPopup), 'issueDate', labels.Date, 'lbl-field width-80',
-            datepickerSetting.Today, minDate, maxDate);
-
-        return {
-            IssueType: $("#issueType", domElements.divPopup),
-            issueDate: $("#issueDate", domElements.divPopup).addClass("width-200"),
-            issueValue: $("#txtIssueValue", domElements.divPopup),
-            issueReason: $("#txtIssueReason", domElements.divPopup),
-            issueForm: $("#divInsertIssueForm", domElements.divPopup),
-        };
-    }
-
     var renderGrid = function (data) {
         var nameColFormat = '<span class="edit-trader-link link" data-trader-id="{0}"  data-trader-empId="{1}" data-trader-name="{2}" data-team-name="{3}" data-grade-name = "{4}" ' +
             'data-working-date="{5}" data-team-date="{6}" data-grade-date="{7}">{2}</span>';
         var linkFormat = '<span class="{0} link" data-trader-id="{1}" data-trader-name="{3}">{2}</span>';
-        var addIssueFormat = '<div class="add-issue-link" data-trader-id="{0}" href="#" data-trader-name="{1}"></div>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Username", Width: 100, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: "Employee ID", Width: 100, Name: 'ColId', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Grade, Width: 150, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "EPA P.Deduction", Width: 100, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "Error", Width: 40, Name: 'ColError', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "First Working Date", Width: 100, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedDate, Width: 200, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.CreatedBy, Width: 80, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
+                      { HeaderText: "First Working Date", Width: 120, Name: 'ColWorkingDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedDate, Width: 140, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.CreatedBy, Width: 100, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
             showNumberColumn: true,
             gridExpandHeight: 180,
             showPager: true,
@@ -506,10 +384,6 @@ var traderManagement = (function ($) {
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
-
-        if (hasEditRight) {
-            gridOptions.columns.push({ HeaderText: "Issue", Width: 50, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' });
-        }
 
         var editableTraderNameCol = "";
         var traderNameCol = "";
@@ -526,17 +400,11 @@ var traderManagement = (function ($) {
                               { Name: 'ColId', Value: item.EmployeeId.length == 0 ? "-" : item.EmployeeId },
                               { Name: 'ColTeam', Value: linkFormat.format("get-team-link", item.TraderId, normalizeString(item.TeamName), item.TraderName) },
                               { Name: 'ColGrade', Value: linkFormat.format("get-grade-link", item.TraderId, normalizeString(item.GradeName), item.TraderName) },
-                              { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction, item.TraderName) },
-                              { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error, item.TraderName) },
                               { Name: 'ColWorkingDate', Value: item.FirstWorkingDate },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColCreatedBy', Value: item.CreatedBy }
                     ]
                 };
-
-                if (hasEditRight) {
-                    row.Columns.push({ Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId, item.TraderName), CssClass: 'add-issue' });
-                }
 
                 bodyData.push(row);
             });
@@ -568,34 +436,7 @@ var traderManagement = (function ($) {
         };
 
         grid.fanexGrid(options);
-    }
-
-    var renderErrorGrid = function (data, div) {
-        var mapper = function (item, idx) {
-            return {
-                Columns: [{ Name: 'colNum', Value: idx + 1 },
-                    { Name: 'colTime', Value: item.CreatedDate },
-                    { Name: 'colValue', Value: item.Value },
-                    { Name: 'colReason', Value: item.Reason },
-                    { Name: 'colCreator', Value: item.CreatedBy }
-                ]
-            }
-        }
-
-        var options = {
-            columns: [
-                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Date Time', Width: 150, Name: 'colTime', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Value ', Width: 40, Name: 'colValue', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Reason ', Width: 300, Name: 'colReason', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'Added By', Width: 80, Name: 'colCreator', HeaderAlign: 'center', CellAlign: 'center' }
-            ],
-            showNumberColumn: true,
-            bodyRows: data.map(mapper)
-        };
-
-        div.fanexGrid(options);
-    }
+    };
 
     var disablePopup = function () {
         popupElements.txtTraderName.prop('disabled', true);
@@ -638,30 +479,6 @@ var traderManagement = (function ($) {
             var traderId = $obj.attr('data-trader-id');
             var traderName = $obj.attr('data-trader-name');
             traderManagement.OpenPopupTraderGradeHistory(traderId, traderName);
-        });
-
-        domElements.divTradersGrid.on('click', 'span.get-epa-link', function () {
-            var $obj = $(this);
-            var traderId = $obj.attr('data-trader-id');
-            var traderName = $obj.attr('data-trader-name');
-
-            traderManagement.OpenPopupTraderEPADeduction(traderId, traderName);
-        });
-
-        domElements.divTradersGrid.on('click', 'span.get-error-link', function () {
-            var $obj = $(this);
-            var traderId = $obj.attr('data-trader-id');
-            var traderName = $obj.attr('data-trader-name');
-
-            traderManagement.OpenPopupTraderError(traderId, traderName);
-        });
-
-        domElements.divTradersGrid.on('click', 'div.add-issue', function () {
-            var $obj = $(this).find('div.add-issue-link');
-            var traderId = $obj.attr('data-trader-id');
-            var traderName = $obj.attr('data-trader-name');
-
-            traderManagement.OpenPopupAddNewTraderError(traderId, traderName);
         });
 
         domElements.traderFilterForm.on('click', "#btnSearch", function () {

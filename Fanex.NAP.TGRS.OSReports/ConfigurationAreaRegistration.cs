@@ -34,7 +34,7 @@ namespace Fanex.NAP.TGRS.OSReports
             RegisterDependency();
         }
 
-        static void RegisterDependency()
+        private static void RegisterDependency()
         {
             InjectorFactory.CurrentInjector.Bind<ITraderPerformanceService>().Using<TraderPerformanceService>();
         }

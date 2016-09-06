@@ -1,16 +1,14 @@
-﻿using Fanex.NAP.Core.Web.Attribute;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
     using Core.BaseClasses;
     using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
-    using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
     using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
+    using System.Linq;
+    using System.Web.Mvc;
 
     public class OSTraderManagementController : TGRSBaseController
     {
@@ -20,18 +18,14 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
         private IGradeManagementService _gradeService;
 
-        private IIssueService _issueService;
-
         public OSTraderManagementController(
             ITraderManagementService service,
             ITeamManagementService teamService,
-            IGradeManagementService gradeService,
-            IIssueService issueService)
+            IGradeManagementService gradeService)
         {
             _traderService = service;
             _teamService = teamService;
             _gradeService = gradeService;
-            _issueService = issueService;
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
@@ -62,14 +56,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(grade, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetIssueType()
-        {
-            var result = _issueService.GetIssueInfos();
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Host)]
         public JsonResult InsertTrader(InsertTraderCriteria criteria)
@@ -95,16 +81,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Host)]
-        public JsonResult InsertTraderIssue(InsertIssueCriteria criteria)
-        {
-            criteria.CreatorId = SessionUtility.GetCreatorId();
-            var result = _issueService.InsertNewIssue(criteria);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderTeamHistory(GetTeamHistoryCriteria criteria)
         {
@@ -117,22 +93,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         public JsonResult GetTraderGradeHistory(GetGradeHistoryCriteria criteria)
         {
             var result = _traderService.GetTraderGradeHistories(criteria);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderEPADeduction(GetEPADeductionCriteria criteria)
-        {
-            var result = _traderService.GetTraderEPADeductions(criteria);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderManagement, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderError(GetErrorCriteria criteria)
-        {
-            var result = _traderService.GetTraderErrors(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

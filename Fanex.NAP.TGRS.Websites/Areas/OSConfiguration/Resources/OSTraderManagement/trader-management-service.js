@@ -53,51 +53,9 @@ var traderManagementService = (function ($) {
             });
     };
 
-    traderManagementService.GetTraderEPADeduction = function (traderId) {
-        common.DisableInput();
-        return traderManagementFactory.GetTraderEPADeduction(traderId)
-            .success(function (result) {
-                traderManagementService.TraderEPADeduction = result;
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-    };
-
-    traderManagementService.GetTraderError = function (traderId) {
-        common.DisableInput();
-        return traderManagementFactory.GetTraderError(traderId)
-            .success(function (result) {
-                traderManagementService.TraderError = result;
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-    };
-
     traderManagementService.InsertTrader = function (trader) {
         common.DisableInput();
         return traderManagementFactory.InsertTrader(trader)
-            .success(function (result) {
-                traderManagementService.Result = result;
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-    };
-
-    traderManagementService.InsertTraderIssue = function (traderError) {
-        common.DisableInput();
-        return traderManagementFactory.InsertTraderIssue(traderError)
             .success(function (result) {
                 traderManagementService.Result = result;
             })
@@ -134,7 +92,7 @@ var traderManagementService = (function ($) {
             .complete(function () {
                 common.EnableInput();
             });
-    }
+    };
 
     traderManagementService.GetGrade = function (callback) {
         return traderManagementFactory.GetGrade()
@@ -147,20 +105,7 @@ var traderManagementService = (function ($) {
             .complete(function () {
                 common.EnableInput();
             });
-    }
-
-    traderManagementService.GetIssueType = function(callback) {
-        return traderManagementFactory.GetIssueType()
-            .success(function (result) {
-                callback(result);
-            })
-            .error(function (xhr) {
-                common.HandleAjaxError(xhr);
-            })
-            .complete(function () {
-                common.EnableInput();
-            });
-    }
+    };
 
     return traderManagementService;
 })(jQuery);

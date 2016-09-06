@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
 {
-    class GetGlobalParameterCriteria : CriteriaBase
+    using Fanex.NAP.Framework.Data;
+
+    public class GetGlobalParameterCriteria : CriteriaBase
     {
         public override string GetSettingKey()
         {

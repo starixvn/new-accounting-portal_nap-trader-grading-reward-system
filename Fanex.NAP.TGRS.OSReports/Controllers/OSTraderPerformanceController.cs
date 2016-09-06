@@ -35,7 +35,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            criteria.TraderName = criteria.TraderName ?? String.Empty;
+            criteria.TraderName = criteria.TraderName ?? string.Empty;
             return Json(_service.GetTraderPerformances(criteria), JsonRequestBehavior.AllowGet);
         }
 

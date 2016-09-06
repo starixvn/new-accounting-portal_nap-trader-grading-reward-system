@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
 {
+    using Fanex.NAP.Framework.Data;
+
     public class InsertErrorCriteria : CriteriaBase
     {
         public int UserId { get; set; }
@@ -22,7 +17,6 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
-
 
         public override string GetSettingKey()
         {

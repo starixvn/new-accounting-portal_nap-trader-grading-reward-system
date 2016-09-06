@@ -12,10 +12,6 @@
 
         public string GradeName { get; set; }
 
-        public int EPADeduction { get; set; }
-
-        public int Error { get; set; }
-
         public string FirstWorkingDate { get; set; }
 
         public string CreatedDate { get; set; }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
 {
-    class GetSportsCriteria : CriteriaBase
+    using Fanex.NAP.Framework.Data;
+
+    public class GetSportsCriteria : CriteriaBase
     {
         public override bool IsValid()
         {

@@ -13,7 +13,6 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation
 
     public class GetLastedScoreHistoryInfoCriteria : CriteriaBase
     {
-
         public override string GetSettingKey()
         {
             return "TGRS_OS_LastestScoreHistoryGet";
