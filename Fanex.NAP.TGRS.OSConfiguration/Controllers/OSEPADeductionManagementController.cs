@@ -85,7 +85,7 @@
             return null;
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
+        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetErrorTypes()
         {

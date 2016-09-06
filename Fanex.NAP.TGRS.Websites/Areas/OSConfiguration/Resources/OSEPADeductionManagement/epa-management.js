@@ -9,6 +9,7 @@ $(document).ready(function () {
 
 var epaManagement = (function ($) {
     var epaManagement = {};
+    var timeout = null;
     var errorTypes;
 
     var domElements = {
@@ -17,7 +18,8 @@ var epaManagement = (function ($) {
         traderName: null,
         divInsertTraderIssueForm: null,
         btnSearch: null,
-        hiddenGrid: null
+        hiddenGrid: null,
+        divPopup: null
     };
 
     var popupElements = {
@@ -30,7 +32,10 @@ var epaManagement = (function ($) {
         btnSave: null,
         btnCancel: null,
         popupType: 0,
-        divErrorSuccessMsg: null
+        divErrorSuccessMsg: null,
+        popupGridError: null,
+        popupGridLeave: null,
+        popupGridEPA: null
     };
 
     function normalizeString(str) {
@@ -73,7 +78,6 @@ var epaManagement = (function ($) {
             labelCss: 'col_5'
         });
 
-        handlePageEvents();
         epaManagement.GetEPADeductionReport();
     };
 
@@ -86,6 +90,7 @@ var epaManagement = (function ($) {
         domElements.btnSearch = $("#btnSearch");
         domElements.hiddenGrid = $("#popupGrid");
         domElements.divUpdateErrorForm = $('#divUpdateErrorForm').clone();
+        domElements.divPopup = $('#divPopup');
 
         $('#divHiddenForm').empty();
         $('#divHiddenTraderIssueForm').empty();
@@ -102,6 +107,9 @@ var epaManagement = (function ($) {
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
+        popupElements.popupGridError = $('#popupGridError', domElements.divPopup);
+        popupElements.popupGridLeave = $('#popupGridLeave', domElements.divPopup);
+        popupElements.popupGridEPA = $('#popupGridEPA', domElements.divPopup);
     };
 
     function renderGrid(data) {
@@ -137,7 +145,7 @@ var epaManagement = (function ($) {
     }
 
     function addIssue(traderId) {
-        epaManagement.OpenPopupInsertPeriodName();
+        epaManagement.OpenPopupInsertPeriodName(traderId);
     }
 
     var handlePageEvents = function () {
@@ -147,12 +155,34 @@ var epaManagement = (function ($) {
 
             addIssue(traderId);
         });
+
+        domElements.EPAGrid.on("click", "span.get-epa-link", function () {
+            var $this = $(this).children().first();
+            var traderId = $this.attr("data-trader-id");
+
+            alert('Cuong');
+        });
+
+        domElements.EPAGrid.on("click", "span.get-error-link", function () {
+            var $this = $(this).children().first();
+            var traderId = $this.attr("data-trader-id");
+
+            alert('Cuong');
+        });
+
+        domElements.EPAGrid.on("click", "span.get-leave-link", function () {
+            var $this = $(this).children().first();
+            var traderId = $this.attr("data-trader-id");
+
+            alert('Cuong');
+            //addIssue(traderId);
+        });
     };
 
-    epaManagement.OpenPopupInsertPeriodName = function () {
+    epaManagement.OpenPopupInsertPeriodName = function (OpenPopupInsertPeriodName) {
         var form = domElements.divInsertTraderIssueForm.clone();
         var errorTypesSelector = $("#ddlErrorType", form);
-        epaManagement.BindErrorTypes(teams, errorTypesSelector);
+        epaManagement.BindErrorTypes(errorTypes, errorTypesSelector);
 
         refreshPopup();
         common.Modal("New Error/E.Leave/-EPA", form);
@@ -263,6 +293,11 @@ var epaManagement = (function ($) {
                     break;
             }
         });
+    };
+
+    var refreshPopup = function () {
+        clearTimeout(timeout);
+        common.CloseMsgBox();
     };
 
     return epaManagement;
