@@ -1,14 +1,23 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 {
-    using System;
-    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
+    using System;
+    using System.Web.Mvc;
 
     public class OSEPADeductionManagementController : TGRSBaseController
     {
+        private readonly IEPADeductionManagementService _epaDeductionManagementService;
+
+        public OSEPADeductionManagementController()
+        {
+            _epaDeductionManagementService = new EPADeductionManagementService();
+        }
+
         public ActionResult Index()
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
@@ -21,11 +30,15 @@
             return View();
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
+        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
-        public JsonResult GetEPADeductionReport()
-        { 
-            return null;
+        public JsonResult GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
+        {
+            criteria.TraderName = criteria.TraderName ?? string.Empty;
+
+            var result = _epaDeductionManagementService.GetEPADeductionReport(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]

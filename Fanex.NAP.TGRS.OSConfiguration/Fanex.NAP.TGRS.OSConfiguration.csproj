@@ -47,6 +47,7 @@
     <Compile Include="Controllers\OSTeamManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\GetAllEPADeductionCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\DeleteErrorCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\GetAllErrorCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\InsertErrorCriteria.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
+    <Compile Include="Models\EPADeductionManagement\EPADeductionInfo.cs" />
     <Compile Include="Models\ErrorManagement\Error.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
     <Compile Include="Models\SettingManagement\Bettype.cs" />
@@ -216,9 +218,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Criteria\EPADeductionManagement\" />
     <Folder Include="DataAccess\" />
-    <Folder Include="Models\EPADeductionManagement\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>

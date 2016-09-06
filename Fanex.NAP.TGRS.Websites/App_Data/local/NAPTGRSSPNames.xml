@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="OSEPADeductionManagement">
+    <Setting Key="TGRS_OS_TraderEPADeductionGet" SpName="TGRS_OS_TraderEPADeductionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderPointDeductionGet" SpName="TGRS_OS_TraderPointDeductionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderPointDeductionInsert" SpName="TGRS_OS_TraderPointDeductionInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderErrorGet" SpName="TGRS_OS_TraderErrorGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderErrorInsert" SpName="TGRS_OS_TraderErrorInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderEmergencyLeaveGet" SpName="TGRS_OS_TraderEmergencyLeaveGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderEmergencyLeaveInsert" SpName="TGRS_OS_TraderEmergencyLeaveInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderPointDeductionDelete" SpName="TGRS_OS_TraderPointDeductionDelete" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderErrorDelete" SpName="TGRS_OS_TraderErrorDelete" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_TraderEmergencyLeaveDelete" SpName="TGRS_OS_TraderEmergencyLeaveDelete" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="OSErrorManagement">
     <Setting Key="TGRS_OS_ErrorGetAll" SpName="TGRS_OS_ErrorGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_ErrorInsert" SpName="TGRS_OS_ErrorInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

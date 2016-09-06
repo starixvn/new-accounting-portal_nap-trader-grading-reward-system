@@ -1,19 +1,13 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
 {
-    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Core.BaseClasses;
-    //using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
-    //using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
-    //using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+    using System.Collections.Generic;
 
     public class EPADeductionManagementService : TGRSBaseService, IEPADeductionManagementService
     {
-        public IEnumerable<object> GetEPADeductionReport()
-        {
-            return null;
-        }
-
         public IEnumerable<object> GetEPADeductionHistory()
         {
             return null;
@@ -62,6 +56,11 @@
         public ICommandResult InsertLeave()
         {
             return null;
+        }
+
+        public IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
+        {
+            return this.GetData<EPADeductionInfo>(criteria);
         }
     }
 }

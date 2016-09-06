@@ -36,14 +36,20 @@ var epaManagement = (function ($) {
         return str == null || str.length == 0 ? "-" : str;
     }
 
-    epaManagement.GetAllEPAs = function () {
-        epaManagementService.GetAllEPAs(renderGrid);
+    epaManagement.GetEPADeductionReport = function () {
+        var criteria = {
+            TraderName: '',
+            FromDate: domElements.divDateRange.getFrom(),
+            ToDate: domElements.divDateRange.getTo(),
+        };
+
+        epaManagementService.GetEPADeductionReport(criteria).then(function () {
+            renderGrid(epaManagementService.EPADeductionList);
+        });;
     };
 
     epaManagement.Initialize = function () {
         cacheDOMElements();
-        handlePageEvents();
-        epaManagement.GetAllEPAs();
 
         domElements.divDateRange = domElements.divDateRange.timeRange({
             minDate: datepickerSetting.MinDate,
@@ -54,6 +60,9 @@ var epaManagement = (function ($) {
             yearRanges: null,
             labelCss: 'col_5'
         });
+
+        handlePageEvents();
+        epaManagement.GetEPADeductionReport();
     };
 
     var cacheDOMElements = function () {
@@ -91,9 +100,9 @@ var epaManagement = (function ($) {
             return {
                 Columns: [{ Name: 'ColNum', Value: idx + 1 },
                             { Name: 'ColName', Value: item.TraderName },
-                            { Name: 'ColEPA', Value: item.EPADeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.EPADeduction, item.TraderName) },
-                            { Name: 'ColError', Value: item.Error == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.Error, item.TraderName) },
-                            { Name: 'ColLeave', Value: item.Error == 0 ? 0 : linkFormat.format("get-leave-link", item.TraderId, item.EmergencyLeave, item.TraderName) },
+                            { Name: 'ColEPA', Value: item.PointDeduction == 0 ? 0 : linkFormat.format("get-epa-link", item.TraderId, item.PointDeduction, item.TraderName) },
+                            { Name: 'ColError', Value: item.ErrorCount == 0 ? 0 : linkFormat.format("get-error-link", item.TraderId, item.ErrorCount, item.TraderName) },
+                            { Name: 'ColLeave', Value: item.LeaveCount == 0 ? 0 : linkFormat.format("get-leave-link", item.TraderId, item.LeaveCount, item.TraderName) },
                             { Name: 'ColErrorInsert', Value: addIssueFormat.format(item.TraderId, item.TraderName), CssClass: 'add-issue' }
                 ]
             }

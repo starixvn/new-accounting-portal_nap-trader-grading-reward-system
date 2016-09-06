@@ -275,9 +275,9 @@ namespace Fanex.NAP.TGRS.Websites
                  "~/Areas/OSConfiguration/Resources/OSErrorManagement/error-management.css");
 
             bundles.Add(new ScriptBundle("~/scripts/os-epa-deduction-management").Include(
-                "~/Areas/OSConfiguration/Resources/EPADeductionManagement/epa-management-factory.js",
-                "~/Areas/OSConfiguration/Resources/EPADeductionManagement/epa-management-service.js",
-                "~/Areas/OSConfiguration/Resources/EPADeductionManagement/epa-management.js"));
+                "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management-factory.js",
+                "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management-service.js",
+                "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management.js"));
         }
 
         public static void RegisterOSReportBundles(BundleCollection bundles)

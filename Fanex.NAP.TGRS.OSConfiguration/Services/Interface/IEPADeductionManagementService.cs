@@ -1,13 +1,13 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
 {
-    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
-    //using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
-    //using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+    using System.Collections.Generic;
 
     public interface IEPADeductionManagementService
     {
-        IEnumerable<object> GetEPADeductionReport();
+        IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria);
 
         IEnumerable<object> GetEPADeductionHistory();
 

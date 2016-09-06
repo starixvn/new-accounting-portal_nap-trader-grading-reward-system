@@ -4,14 +4,13 @@
 
 var epaManagementService = (function ($) {
     var epaManagementService = {};
+    epaManagementService.EPADeductionList = [];
 
-
-    epaManagementService.GetEPADeductionReport = function (callback) {
+    epaManagementService.GetEPADeductionReport = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetEPADeductionReport()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetEPADeductionReport(criteria)
+            .success(function (result) {
+                epaManagementService.EPADeductionList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -120,7 +119,7 @@ var epaManagementService = (function ($) {
                 common.EnableInput();
             });
     };
-    
+
 
     epaManagementService.InsertEPADeduction = function (error, callback) {
         common.DisableInput();

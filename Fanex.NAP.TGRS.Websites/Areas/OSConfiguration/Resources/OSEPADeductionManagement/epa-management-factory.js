@@ -18,8 +18,8 @@ var epaManagementFactory = (function ($) {
     };
 
     return {
-        GetEPADeductionReport: function () {
-            return $.get(urls.GetEPADeductionReport);
+        GetEPADeductionReport: function (criteria) {
+            return $.get(urls.GetEPADeductionReport, criteria);
         },
 
         GetEPADeductionHistory: function () {
