@@ -245,9 +245,9 @@
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-factory.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history-service.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreHistory\score-history.js" />
-    <Content Include="Areas\OSConfiguration\Resources\EPADeductionManagement\epa-management-factory.js" />
-    <Content Include="Areas\OSConfiguration\Resources\EPADeductionManagement\epa-management-service.js" />
-    <Content Include="Areas\OSConfiguration\Resources\EPADeductionManagement\epa-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSEPADeductionManagement\epa-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSEPADeductionManagement\epa-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSEPADeductionManagement\epa-management.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\delete.png" />
     <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSErrorManagement\error-management-service.js" />
@@ -267,7 +267,7 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
-    <Content Include="Areas\OSConfiguration\Views\EPADeductionManagement\InsertTraderIssue.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-service.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.js" />
@@ -427,8 +427,8 @@
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\InsertErrForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\UpdateErrForm.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\EPADeductionManagement\Index.cshtml" />
-    <Content Include="Areas\OSConfiguration\Views\EPADeductionManagement\IndexFilter.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\IndexFilter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

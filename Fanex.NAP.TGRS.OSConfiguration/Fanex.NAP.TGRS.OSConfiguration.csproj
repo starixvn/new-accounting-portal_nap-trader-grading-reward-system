@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
-    <Compile Include="Controllers\EPADeductionManagement.cs" />
+    <Compile Include="Controllers\OSEPADeductionManagementController.cs" />
     <Compile Include="Controllers\OSErrorManagementController.cs" />
     <Compile Include="Controllers\OSSettingController.cs" />
     <Compile Include="Controllers\OSTeamManagementController.cs" />
@@ -98,7 +98,11 @@
     <Compile Include="Services\Implement\SettingService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
+    <Compile Include="Services\Implement\EPADeductionManagementService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />
+    <Compile Include="Services\Interface\IEPADeductionManagementService.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\Interface\IErrorService.cs" />
     <Compile Include="Services\Interface\IIssueService.cs" />
     <Compile Include="Services\Interface\ISettingService.cs" />
@@ -212,6 +216,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Criteria\EPADeductionManagement\" />
     <Folder Include="DataAccess\" />
     <Folder Include="Models\EPADeductionManagement\" />
     <Folder Include="ViewModel\" />

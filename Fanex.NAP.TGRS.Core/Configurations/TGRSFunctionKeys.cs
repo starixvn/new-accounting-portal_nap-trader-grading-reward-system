@@ -66,6 +66,8 @@ public static class TGRSFunctionKeys
 
     public const string OSTraderPerformance = "OSTraderPerformance";
 
+    public const string OSEPADeductionManagement = "OSEPADeductionManagement";
+
     public const string PerformanceDetail = "PerformanceDetail";
 
     public const string PerformanceSummary = "PerformanceSummary";
