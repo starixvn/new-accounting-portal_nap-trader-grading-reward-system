@@ -102,23 +102,32 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult InsertEPADeduction()
+        public JsonResult InsertEPADeduction(InsertPointDeductionCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var insertResult = _epaDeductionManagementService.InsertEPADeduction(criteria);
+
+            return Json(insertResult, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult InsertError()
+        public JsonResult InsertError(InsertErrorCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var insertResult = _epaDeductionManagementService.InsertError(criteria);
+
+            return Json(insertResult, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public JsonResult InsertLeave()
+        public JsonResult InsertLeave(InsertEmergencyLeaveCriteria criteria)
         {
-            return null;
+            criteria.CreatorId = this.CurrentSession.UserId;
+            var insertResult = _epaDeductionManagementService.InsertLeave(criteria);
+
+            return Json(insertResult, JsonRequestBehavior.AllowGet);
         }
     }
 }

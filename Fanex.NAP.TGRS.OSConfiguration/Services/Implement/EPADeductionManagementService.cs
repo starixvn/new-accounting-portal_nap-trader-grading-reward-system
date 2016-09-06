@@ -30,19 +30,19 @@
             return GetData<IssueInfo>(criteria);
         }
 
-        public ICommandResult InsertEPADeduction()
+        public ICommandResult InsertEPADeduction(InsertPointDeductionCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
-        public ICommandResult InsertError()
+        public ICommandResult InsertError(InsertErrorCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
-        public ICommandResult InsertLeave()
+        public ICommandResult InsertLeave(InsertEmergencyLeaveCriteria criteria)
         {
-            return null;
+            return this.UpdateData(criteria);
         }
 
         public IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria)

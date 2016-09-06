@@ -106,10 +106,10 @@ var epaManagement = (function ($) {
     var cachePopupElements = function () {
         popupElements.divInsertTraderIssueForm = $("#divInsertTraderIssueForm", domElements.divPopup);
         popupElements.rdoIssueType = $('#rdoIssueType', domElements.divPopup);
-        popupElements.dpkIssueDate = $('#dpkIssueDate', domElements.divPopup);
+        popupElements.dpkIssueDate = $('#issueDate', domElements.divPopup);
         popupElements.ddlErrorType = $('#ddlErrorType', domElements.divPopup);
         popupElements.tbPointDeduction = $('#tbPointDeduction', domElements.divPopup);
-        popupElements.taReason = $('#taReason', domElements.divPopup);
+        popupElements.taReason = $('#reason', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
@@ -213,7 +213,7 @@ var epaManagement = (function ($) {
         });
     };
 
-    epaManagement.OpenPopupInsertPeriodName = function (OpenPopupInsertPeriodName) {
+    epaManagement.OpenPopupInsertPeriodName = function (traderId) {
         var form = domElements.divInsertTraderIssueForm.clone();
         var errorTypesSelector = $("#ddlErrorType", form);
         epaManagement.BindErrorTypes(errorTypes, errorTypesSelector);
@@ -240,50 +240,68 @@ var epaManagement = (function ($) {
 
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
-                var issueType = $('input[name=issue-type]').val();
+                var issueType = $('input[name=issue-type]:checked').val();
                 var insertResult = null;
+
+
+                var criteria = {
+                    TraderName: '',
+                    FromDate: domElements.divDateRange.getFrom(),
+                    ToDate: domElements.divDateRange.getTo(),
+                };
+
+                epaManagementService.GetEPADeductionReport(criteria).then(function () {
+                    renderGrid(epaManagementService.EPADeductionList);
+                });
 
                 switch (issueType) {
                     case '1':
                         var errorInfo = {
-                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
-                            FromDate: domElements.divDateRange.getFrom(),
-                            ToDate: domElements.divDateRange.getTo(),
-                            IsOverwrite: domElements.isOverwrite
+                            TraderId: traderId,
+                            CreateDate: popupElements.dpkIssueDate.val(),
+                            ErrorId: errorTypesSelector.find(":selected").attr("error-id"),
+                            Reason: popupElements.taReason.val()
                         };
 
-                        result = epaManagementService.InsertError(errorInfo);
+                        insertResult = epaManagementService.InsertError(errorInfo).then(function (result) {
+                            return result;
+                        });
                         break;
                     case '2':
                         var leaveInfo = {
-                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
-                            FromDate: domElements.divDateRange.getFrom(),
-                            ToDate: domElements.divDateRange.getTo(),
-                            IsOverwrite: domElements.isOverwrite
+                            TraderId: traderId,
+                            CreateDate: popupElements.dpkIssueDate.val(),
+                            Reason: popupElements.taReason.val()
                         };
 
-                        result = epaManagementService.InsertLeave(leaveInfo);
+                        insertResult = epaManagementService.InsertLeave(leaveInfo).then(function (result) {
+                            return result;
+                        });
                         break;
                     case '3':
                         var deductionInfo = {
-                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
-                            FromDate: domElements.divDateRange.getFrom(),
-                            ToDate: domElements.divDateRange.getTo(),
-                            IsOverwrite: domElements.isOverwrite
+                            TraderId: traderId,
+                            CreateDate: popupElements.dpkIssueDate.val(),
+                            Deduction: popupElements.tbPointDeduction.val(),
+                            Reason: popupElements.taReason.val()
                         };
 
-                        result = epaManagementService.InsertEPADeduction(deductionInfo);
+                        insertResult = epaManagementService.InsertEPADeduction(deductionInfo).then(function (result) {
+                            return result;
+                        });
                         break;
                 }
-
-                if (result.Code === 0) {
-                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
+            
+                if (insertResult.Code === 0) {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, 
+                        issueType == 1 ? messages.InsertErrorSuccessfully
+                            : issueType == 2 ? messages.InsertEmergencyLeaveSuccessfully : messages.InsertEPADeductionSuccessfully, false, function () {
                         timeout = setTimeout(common.ClosePopup, 3000);
                     });
 
                     reloadPage();
                 } else {
-                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, insertResult.Message);
                     return false;
                 }
             }
@@ -298,7 +316,7 @@ var epaManagement = (function ($) {
 
     epaManagement.BindErrorTypes = function (data, selector, callback) {
         for (var i = 0; i < data.length; i++) {
-            var option = $("<option></option>").attr("team-id", data[i].IssueId).text(data[i].IssueName);
+            var option = $("<option></option>").attr("error-id", data[i].IssueId).text(data[i].IssueName);
             selector.append(option);
         }
 

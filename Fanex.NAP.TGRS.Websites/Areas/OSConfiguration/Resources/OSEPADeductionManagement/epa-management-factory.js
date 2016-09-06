@@ -50,16 +50,16 @@ var epaManagementFactory = (function ($) {
             return $.get(urls.GetErrorTypes);
         },
 
-        InsertEPADeduction: function (error) {
-            return $.post(urls.InsertEPADeduction, error);
+        InsertEPADeduction: function (criteria) {
+            return $.post(urls.InsertEPADeduction, criteria);
         },
 
-        InsertError: function (error) {
-            return $.post(urls.InsertError, error);
+        InsertError: function (criteria) {
+            return $.post(urls.InsertError, criteria);
         },
 
-        InsertLeave: function (error) {
-            return $.post(urls.InsertLeave, error);
+        InsertLeave: function (criteria) {
+            return $.post(urls.InsertLeave, criteria);
         }
     }
 })(jQuery);

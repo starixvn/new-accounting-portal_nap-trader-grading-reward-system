@@ -223,6 +223,33 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Emergency-Leave has been inserted successfully!.
+        /// </summary>
+        public static string InsertEmergencyLeaveSuccessfully {
+            get {
+                return ResourceManager.GetString("InsertEmergencyLeaveSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The EPA-Deduction has been inserted successfully!.
+        /// </summary>
+        public static string InsertEPADeductionSuccessfully {
+            get {
+                return ResourceManager.GetString("InsertEPADeductionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Error has been inserted successfully!.
+        /// </summary>
+        public static string InsertErrorSuccessfully {
+            get {
+                return ResourceManager.GetString("InsertErrorSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal error!.
         /// </summary>
         public static string InternalError {

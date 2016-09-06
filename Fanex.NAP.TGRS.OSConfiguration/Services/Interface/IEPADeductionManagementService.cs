@@ -26,10 +26,10 @@
 
         IEnumerable<IssueInfo> GetErrorTypes(GetAllIssueCriteria criteria);
 
-        ICommandResult InsertEPADeduction();
+        ICommandResult InsertEPADeduction(InsertPointDeductionCriteria criteria);
 
-        ICommandResult InsertError();
+        ICommandResult InsertError(InsertErrorCriteria criteria);
 
-        ICommandResult InsertLeave();
+        ICommandResult InsertLeave(InsertEmergencyLeaveCriteria criteria);
     }
 }

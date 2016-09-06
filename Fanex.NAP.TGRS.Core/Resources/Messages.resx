@@ -267,4 +267,13 @@
   <data name="StoreTraderScoreSuccessfully" xml:space="preserve">
     <value>Trader's Confirmed Scores has been successfully stored!</value>
   </data>
+  <data name="InsertEmergencyLeaveSuccessfully" xml:space="preserve">
+    <value>The Emergency-Leave has been inserted successfully!</value>
+  </data>
+  <data name="InsertEPADeductionSuccessfully" xml:space="preserve">
+    <value>The EPA-Deduction has been inserted successfully!</value>
+  </data>
+  <data name="InsertErrorSuccessfully" xml:space="preserve">
+    <value>The Error has been inserted successfully!</value>
+  </data>
 </root>
