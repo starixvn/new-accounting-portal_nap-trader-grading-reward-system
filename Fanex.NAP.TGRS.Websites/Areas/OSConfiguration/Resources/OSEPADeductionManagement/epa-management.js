@@ -11,6 +11,7 @@ var epaManagement = (function ($) {
     var epaManagement = {};
     var timeout = null;
     var errorTypes;
+    var insertResult = null;
 
     var domElements = {
         EPAGrid: null,
@@ -241,8 +242,6 @@ var epaManagement = (function ($) {
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
                 var issueType = $('input[name=issue-type]:checked').val();
-                var insertResult = null;
-
 
                 var criteria = {
                     TraderName: '',
@@ -258,51 +257,65 @@ var epaManagement = (function ($) {
                     case '1':
                         var errorInfo = {
                             TraderId: traderId,
-                            CreateDate: popupElements.dpkIssueDate.val(),
+                            ErrorDate: popupElements.dpkIssueDate.val(),
                             ErrorId: errorTypesSelector.find(":selected").attr("error-id"),
                             Reason: popupElements.taReason.val()
                         };
 
-                        insertResult = epaManagementService.InsertError(errorInfo).then(function (result) {
-                            return result;
+                        epaManagementService.InsertError(errorInfo).then(function (result) {
+                            if (result.Code === 0) {
+                                common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertErrorSuccessfully, false, function () {
+                                            timeout = setTimeout(common.ClosePopup, 3000);
+                                        });
+
+                                epaManagement.GetEPADeductionReport();
+                            } else {
+                                common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                                return false;
+                            }
                         });
                         break;
                     case '2':
                         var leaveInfo = {
                             TraderId: traderId,
-                            CreateDate: popupElements.dpkIssueDate.val(),
+                            LeaveDate: popupElements.dpkIssueDate.val(),
                             Reason: popupElements.taReason.val()
                         };
 
-                        insertResult = epaManagementService.InsertLeave(leaveInfo).then(function (result) {
-                            return result;
+                        epaManagementService.InsertLeave(leaveInfo).then(function (result) {
+                            if (result.Code === 0) {
+                                common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertEmergencyLeaveSuccessfully, false, function () {
+                                            timeout = setTimeout(common.ClosePopup, 3000);
+                                        });
+
+                                epaManagement.GetEPADeductionReport();
+                            } else {
+                                common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                                return false;
+                            }
                         });
                         break;
                     case '3':
                         var deductionInfo = {
                             TraderId: traderId,
-                            CreateDate: popupElements.dpkIssueDate.val(),
-                            Deduction: popupElements.tbPointDeduction.val(),
+                            DeductionDate: popupElements.dpkIssueDate.val(),
+                            DeductionValue: popupElements.tbPointDeduction.val(),
                             Reason: popupElements.taReason.val()
                         };
 
-                        insertResult = epaManagementService.InsertEPADeduction(deductionInfo).then(function (result) {
-                            return result;
+                        epaManagementService.InsertEPADeduction(deductionInfo).then(function (result) {
+                            if (result.Code === 0) {
+                                common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertEPADeductionSuccessfully, false, function () {
+                                            timeout = setTimeout(common.ClosePopup, 3000);
+                                        });
+
+                                epaManagement.GetEPADeductionReport();
+                            } else {
+                                common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                                return false;
+                            }
                         });
                         break;
-                }
-            
-                if (insertResult.Code === 0) {
-                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, 
-                        issueType == 1 ? messages.InsertErrorSuccessfully
-                            : issueType == 2 ? messages.InsertEmergencyLeaveSuccessfully : messages.InsertEPADeductionSuccessfully, false, function () {
-                        timeout = setTimeout(common.ClosePopup, 3000);
-                    });
-
-                    reloadPage();
-                } else {
-                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, insertResult.Message);
-                    return false;
                 }
             }
         });
