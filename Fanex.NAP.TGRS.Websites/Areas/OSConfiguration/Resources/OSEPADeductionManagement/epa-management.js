@@ -256,14 +256,6 @@ var epaManagement = (function ($) {
         minDate.setYear(minDate.getFullYear() - 1);
         layout.CreateDatepicker($("#dpkIssueDate", domElements.divPopup), 'issueDate', "Date", 'lbl-field width-120', new Date(), minDate, maxDate);
         popupElements.dpkIssueDate = $('#issueDate', domElements.divPopup).addClass("width-200");
-        $('input[type=text]').off('keydown');
-        $('input[type=text]').on('keydown', function (e) {
-            if (e.which == 13) {
-                e.preventDefault();
-
-                popupElements.btnSave.trigger('click');
-            }
-        });
 
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
