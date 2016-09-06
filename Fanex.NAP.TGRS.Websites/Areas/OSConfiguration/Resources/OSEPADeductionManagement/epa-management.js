@@ -9,6 +9,7 @@ $(document).ready(function () {
 
 var epaManagement = (function ($) {
     var epaManagement = {};
+    var errorTypes;
 
     var domElements = {
         EPAGrid: null,
@@ -45,11 +46,21 @@ var epaManagement = (function ($) {
 
         epaManagementService.GetEPADeductionReport(criteria).then(function () {
             renderGrid(epaManagementService.EPADeductionList);
-        });;
+            });
+            
+    epaManagement.GetErrorTypes = function (callback) {
+        epaManagementService.GetErrorTypes(function (result) {
+            errorTypes = result;
+            if (callback != null) {
+                callback();
+            }
+        });
     };
 
     epaManagement.Initialize = function () {
         cacheDOMElements();
+        handlePageEvents();
+        epaManagement.GetErrorTypes();
 
         domElements.divDateRange = domElements.divDateRange.timeRange({
             minDate: datepickerSetting.MinDate,
@@ -139,6 +150,9 @@ var epaManagement = (function ($) {
 
     epaManagement.OpenPopupInsertPeriodName = function () {
         var form = domElements.divInsertTraderIssueForm.clone();
+        var errorTypesSelector = $("#ddlErrorType", form);
+        epaManagement.BindErrorTypes(teams, errorTypesSelector);
+
         refreshPopup();
         common.Modal("New Error/E.Leave/-EPA", form);
         cachePopupElements();
@@ -161,31 +175,51 @@ var epaManagement = (function ($) {
 
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
-                /*var confirmedScore = {
-                    PeriodName: $.trim(popupElements.txtPeriodName.val()),
-                    FromDate: domElements.divDateRange.getFrom(),
-                    ToDate: domElements.divDateRange.getTo(),
-                    IsOverwrite: domElements.isOverwrite
-                };
+                var issueType = $('input[name=issue-type]').val();
+                var insertResult = null;
 
-                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {
-                    scoreConfirmation.Result = ScoreConfirmationService.Result;
-                    if (scoreConfirmation.Result.result.Code === 0) {
-                        common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
-                            timeout = setTimeout(common.ClosePopup, 3000);
-                        });
+                switch (issueType) {
+                    case '1':
+                        var errorInfo = {
+                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
+                            FromDate: domElements.divDateRange.getFrom(),
+                            ToDate: domElements.divDateRange.getTo(),
+                            IsOverwrite: domElements.isOverwrite
+                        };
 
-                        updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
-                        reloadPage();
-                    } else {
-                        if (scoreConfirmation.Result.result.Code == 4101) {
-                            domElements.isOverwrite = true;
-                        }
+                        result = epaManagementService.InsertError(errorInfo);
+                        break;
+                    case '2':
+                        var leaveInfo = {
+                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
+                            FromDate: domElements.divDateRange.getFrom(),
+                            ToDate: domElements.divDateRange.getTo(),
+                            IsOverwrite: domElements.isOverwrite
+                        };
 
-                        common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, scoreConfirmation.Result.result.Message);
-                        return false;
-                    }
-                });*/
+                        result = epaManagementService.InsertLeave(leaveInfo);
+                        break;
+                    case '3':
+                        var deductionInfo = {
+                            PeriodName: $.trim(popupElements.txtPeriodName.val()),
+                            FromDate: domElements.divDateRange.getFrom(),
+                            ToDate: domElements.divDateRange.getTo(),
+                            IsOverwrite: domElements.isOverwrite
+                        };
+
+                        result = epaManagementService.InsertEPADeduction(deductionInfo);
+                        break;
+                }
+
+                if (result.Code === 0) {
+                    common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
+                        timeout = setTimeout(common.ClosePopup, 3000);
+                    });
+                    reloadPage();
+                } else {
+                    common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                    return false;
+                }
             }
         });
 
@@ -193,6 +227,17 @@ var epaManagement = (function ($) {
             domElements.isOverwrite = false;
             common.ClosePopup();
         });
+    };
+
+    epaManagement.BindErrorTypes = function (data, selector, callback) {
+        for (var i = 0; i < data.length; i++) {
+            var option = $("<option></option>").attr("team-id", data[i].IssueId).text(data[i].IssueName);
+            selector.append(option);
+        }
+
+        if (callback != null) {
+            callback(selector);
+        }
     };
 
     var initInsertTraderIssueForm = function () {

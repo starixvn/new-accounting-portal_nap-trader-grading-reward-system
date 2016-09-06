@@ -1,10 +1,12 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
 {
+    using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
-    using System.Collections.Generic;
+    using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
 
     public class EPADeductionManagementService : TGRSBaseService, IEPADeductionManagementService
     {
@@ -38,9 +40,9 @@
             return null;
         }
 
-        public IEnumerable<object> GetErrorTypes()
+        public IEnumerable<IssueInfo> GetErrorTypes(GetAllIssueCriteria criteria)
         {
-            return null;
+            return GetData<IssueInfo>(criteria);
         }
 
         public ICommandResult InsertEPADeduction()

@@ -48,6 +48,7 @@
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetAllEPADeductionCriteria.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\GetAllErrorTypeCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\DeleteErrorCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\GetAllErrorCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\InsertErrorCriteria.cs" />
@@ -219,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
+    <Folder Include="Models\EPADeductionManagement\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>

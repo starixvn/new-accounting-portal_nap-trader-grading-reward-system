@@ -1,0 +1,39 @@
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
+{
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+<<<<<<< 11a0e8a963f067781c20a7387d81ed9eefade1c0
+    using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+    using System.Collections.Generic;
+=======
+    using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    //using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+>>>>>>> #63109 - update code
+
+    public interface IEPADeductionManagementService
+    {
+        IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria);
+
+        IEnumerable<object> GetEPADeductionHistory();
+
+        ICommandResult DeleteEPADeductionHistory();
+
+
+        IEnumerable<object> GetErrorHistory();
+
+        ICommandResult DeleteErrorHistory();
+
+        IEnumerable<object> GetLeaveHistory();
+
+        ICommandResult DeleteLeaveHistory();
+
+        IEnumerable<IssueInfo> GetErrorTypes(GetAllIssueCriteria criteria);
+
+        ICommandResult InsertEPADeduction();
+
+        ICommandResult InsertError();
+
+        ICommandResult InsertLeave();
+    }
+}

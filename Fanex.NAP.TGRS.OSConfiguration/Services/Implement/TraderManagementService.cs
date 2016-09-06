@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.TraderManagement
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;

@@ -121,9 +121,9 @@ var epaManagementService = (function ($) {
     };
 
 
-    epaManagementService.InsertEPADeduction = function (error, callback) {
+    epaManagementService.InsertEPADeduction = function (deduction, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertEPADeduction(error)
+        return errorManagementFactory.InsertEPADeduction(deduction)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -145,9 +145,9 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.InsertLeave = function (error, callback) {
+    epaManagementService.InsertLeave = function (leave, callback) {
         common.DisableInput();
-        return errorManagementFactory.InsertLeave(error)
+        return errorManagementFactory.InsertLeave(leave)
             .success(callback)
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);

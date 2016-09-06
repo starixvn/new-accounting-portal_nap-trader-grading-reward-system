@@ -1,0 +1,72 @@
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement
+{
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+<<<<<<< 11a0e8a963f067781c20a7387d81ed9eefade1c0
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Models.EPADeductionManagement;
+    using System.Collections.Generic;
+=======
+    using Fanex.NAP.TGRS.OSConfiguration.Models.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+>>>>>>> #63109 - update code
+
+    public class EPADeductionManagementService : TGRSBaseService, IEPADeductionManagementService
+    {
+        public IEnumerable<object> GetEPADeductionHistory()
+        {
+            return null;
+        }
+
+        public ICommandResult DeleteEPADeductionHistory()
+        {
+            return null;
+        }
+
+        public IEnumerable<object> GetErrorHistory()
+        {
+            return null;
+        }
+
+        public ICommandResult DeleteErrorHistory()
+        {
+            return null;
+        }
+
+        public IEnumerable<object> GetLeaveHistory()
+        {
+            return null;
+        }
+
+        public ICommandResult DeleteLeaveHistory()
+        {
+            return null;
+        }
+
+        public IEnumerable<IssueInfo> GetErrorTypes(GetAllIssueCriteria criteria)
+        {
+            return GetData<IssueInfo>(criteria);
+        }
+
+        public ICommandResult InsertEPADeduction()
+        {
+            return null;
+        }
+
+        public ICommandResult InsertError()
+        {
+            return null;
+        }
+
+        public ICommandResult InsertLeave()
+        {
+            return null;
+        }
+
+        public IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
+        {
+            return this.GetData<EPADeductionInfo>(criteria);
+        }
+    }
+}

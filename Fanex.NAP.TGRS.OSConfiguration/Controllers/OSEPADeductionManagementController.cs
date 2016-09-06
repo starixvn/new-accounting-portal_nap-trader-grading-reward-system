@@ -6,16 +6,18 @@
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
     using System;
     using System.Web.Mvc;
 
     public class OSEPADeductionManagementController : TGRSBaseController
     {
-        private readonly IEPADeductionManagementService _epaDeductionManagementService;
+        private IEPADeductionManagementService _epaDeductionService;
 
-        public OSEPADeductionManagementController()
+        public OSEPADeductionManagementController(
+            IEPADeductionManagementService epaDeductionService)
         {
-            _epaDeductionManagementService = new EPADeductionManagementService();
+            _epaDeductionService = epaDeductionService;
         }
 
         public ActionResult Index()
@@ -87,7 +89,9 @@
         [HttpGet]
         public JsonResult GetErrorTypes()
         {
-            return null;
+            var errorTypes = _epaDeductionService.GetErrorTypes(new GetAllIssueCriteria());
+
+            return Json(errorTypes, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]

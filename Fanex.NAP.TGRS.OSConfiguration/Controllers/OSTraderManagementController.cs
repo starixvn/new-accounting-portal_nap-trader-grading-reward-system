@@ -4,6 +4,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.TraderManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;

@@ -2,11 +2,13 @@
 using Fanex.NAP.TGRS.OSConfiguration.Services.Implement;
 using Fanex.NAP.TGRS.OSConfiguration.Services.Interface;
 using Fanex.NAP.TGRS.OSConfiguration.Services.TeamManagement;
+using Fanex.NAP.TGRS.OSConfiguration.Services.TraderManagement;
 
 namespace Fanex.NAP.TGRS.OSConfiguration
 {
     using System.Web.Mvc;
     using Simplect;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
 
     /// <summary>
     /// Registers Config area.
@@ -37,6 +39,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration
 
         private void Registerdependency()
         {
+            InjectorFactory.CurrentInjector.Bind<IEPADeductionManagementService>().Using<EPADeductionManagementService>();
             InjectorFactory.CurrentInjector.Bind<ITraderManagementService>().Using<TraderManagementService>();
             InjectorFactory.CurrentInjector.Bind<ITeamManagementService>().Using<TeamManagementService>();
             InjectorFactory.CurrentInjector.Bind<IGradeManagementService>().Using<GradeManagementService>();
