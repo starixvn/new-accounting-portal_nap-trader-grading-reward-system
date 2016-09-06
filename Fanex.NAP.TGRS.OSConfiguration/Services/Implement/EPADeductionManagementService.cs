@@ -10,27 +10,12 @@
 
     public class EPADeductionManagementService : TGRSBaseService, IEPADeductionManagementService
     {
-        public IEnumerable<object> GetEPADeductionHistory()
-        {
-            return null;
-        }
-
         public ICommandResult DeleteEPADeductionHistory()
         {
             return null;
         }
 
-        public IEnumerable<object> GetErrorHistory()
-        {
-            return null;
-        }
-
         public ICommandResult DeleteErrorHistory()
-        {
-            return null;
-        }
-
-        public IEnumerable<object> GetLeaveHistory()
         {
             return null;
         }
@@ -63,6 +48,21 @@
         public IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
         {
             return this.GetData<EPADeductionInfo>(criteria);
+        }
+
+        public IEnumerable<EPADeductionHistory> GetEPADeductionHistory(GetEPADeductionHistoryCriteria criteria)
+        {
+            return this.GetData<EPADeductionHistory>(criteria);
+        }
+
+        public IEnumerable<ErrorHistory> GetErrorHistory(GetErrorHistoryCriteria criteria)
+        {
+            return this.GetData<ErrorHistory>(criteria);
+        }
+
+        public IEnumerable<LeaveHistory> GetLeaveHistory(GetLeaveHistoryCriteria criteria)
+        {
+            return this.GetData<LeaveHistory>(criteria);
         }
     }
 }

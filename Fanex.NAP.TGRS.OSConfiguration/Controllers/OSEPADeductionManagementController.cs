@@ -5,8 +5,8 @@
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement;
-    using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement;
+    using Fanex.NAP.TGRS.OSConfiguration.Services.EPADeductionManagement;
     using System;
     using System.Web.Mvc;
 
@@ -32,7 +32,7 @@
             return View();
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetEPADeductionReport(GetAllEPADeductionCriteria criteria)
         {
@@ -45,9 +45,11 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
-        public JsonResult GetEPADeductionHistory()
+        public JsonResult GetEPADeductionHistory(GetEPADeductionHistoryCriteria criteria)
         {
-            return null;
+            var result = _epaDeductionManagementService.GetEPADeductionHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
@@ -59,9 +61,11 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
-        public JsonResult GetErrorHistory()
+        public JsonResult GetErrorHistory(GetErrorHistoryCriteria criteria)
         {
-            return null;
+            var result = _epaDeductionManagementService.GetErrorHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
@@ -73,9 +77,11 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
-        public JsonResult GetLeaveHistory()
+        public JsonResult GetLeaveHistory(GetLeaveHistoryCriteria criteria)
         {
-            return null;
+            var result = _epaDeductionManagementService.GetLeaveHistory(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Host)]
@@ -85,7 +91,7 @@
             return null;
         }
 
-        //[NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSEPADeductionManagement, Policy = Constant.Policy.Read)]
         [HttpGet]
         public JsonResult GetErrorTypes()
         {

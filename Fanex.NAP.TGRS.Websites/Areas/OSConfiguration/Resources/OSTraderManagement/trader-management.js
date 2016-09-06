@@ -113,7 +113,7 @@ var traderManagement = (function ($) {
             });
     }
 
-    traderManagement.OpenPopupAddNewTrader = function () {
+    traderManagement.OpenPopupAddNewTrader = function (traderId) {
         var form = domElements.divInsertTraderForm.clone();
 
         var teamSelector = $("#ddlTeamPopup", form);

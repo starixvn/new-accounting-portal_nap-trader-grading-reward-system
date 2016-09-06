@@ -5,6 +5,9 @@
 var epaManagementService = (function ($) {
     var epaManagementService = {};
     epaManagementService.EPADeductionList = [];
+    epaManagementService.EPADeductionHistoryList = [];
+    epaManagementService.ErrorHistoryList = [];
+    epaManagementService.LeaveHistoryList = [];
 
     epaManagementService.GetEPADeductionReport = function (criteria) {
         common.DisableInput();
@@ -20,12 +23,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetEPADeductionHistory = function (callback) {
+    epaManagementService.GetEPADeductionHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetEPADeductionHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetEPADeductionHistory(criteria)
+            .success(function (result) {
+                epaManagementService.EPADeductionHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -49,12 +51,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetErrorHistory = function (callback) {
+    epaManagementService.GetErrorHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetErrorHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetErrorHistory(criteria)
+            .success(function (result) {
+                epaManagementService.ErrorHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -78,12 +79,11 @@ var epaManagementService = (function ($) {
             });
     };
 
-    epaManagementService.GetLeaveHistory = function (callback) {
+    epaManagementService.GetLeaveHistory = function (criteria) {
         common.DisableInput();
-        return epaManagementFactory.GetLeaveHistory()
-            .success(function () {
-                var data = [{ TraderName: "adfadf", EPADeduction: 8, Error: 10, EmergencyLeave: 25, TraderId: 8 }];
-                callback(data);
+        return epaManagementFactory.GetLeaveHistory(criteria)
+            .success(function (result) {
+                epaManagementService.LeaveHistoryList = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);

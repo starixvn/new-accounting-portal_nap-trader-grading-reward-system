@@ -19,7 +19,10 @@ var epaManagement = (function ($) {
         divInsertTraderIssueForm: null,
         btnSearch: null,
         hiddenGrid: null,
-        divPopup: null
+        divPopup: null,
+        divEPADeductionHistoryForm: null,
+        divErrorHistoryForm: null,
+        divLeaveHistoryForm: null
     };
 
     var popupElements = {
@@ -33,9 +36,9 @@ var epaManagement = (function ($) {
         btnCancel: null,
         popupType: 0,
         divErrorSuccessMsg: null,
-        popupGridError: null,
-        popupGridLeave: null,
-        popupGridEPA: null
+        divEPADeductionHistoryGrid: null,
+        divErrorHistoryGrid: null,
+        divLeaveHistoryGrid: null
     };
 
     function normalizeString(str) {
@@ -91,6 +94,9 @@ var epaManagement = (function ($) {
         domElements.hiddenGrid = $("#popupGrid");
         domElements.divUpdateErrorForm = $('#divUpdateErrorForm').clone();
         domElements.divPopup = $('#divPopup');
+        domElements.divEPADeductionHistoryForm = $('#divEPADeductionHistoryForm').clone();
+        domElements.divErrorHistoryForm = $('#divErrorHistoryForm').clone();
+        domElements.divLeaveHistoryForm = $('#divLeaveHistoryForm').clone();
 
         $('#divHiddenForm').empty();
         $('#divHiddenTraderIssueForm').empty();
@@ -107,9 +113,14 @@ var epaManagement = (function ($) {
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
         popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', domElements.divPopup);
-        popupElements.popupGridError = $('#popupGridError', domElements.divPopup);
-        popupElements.popupGridLeave = $('#popupGridLeave', domElements.divPopup);
-        popupElements.popupGridEPA = $('#popupGridEPA', domElements.divPopup);
+
+        popupElements.divEPADeductionHistoryForm = $("#divEPADeductionHistoryForm", domElements.divPopup);
+        popupElements.divErrorHistoryForm = $("#divErrorHistoryForm", domElements.divPopup);
+        popupElements.divLeaveHistoryForm = $("#divLeaveHistoryForm", domElements.divPopup);
+
+        popupElements.divErrorHistoryGrid = $('#divErrorHistoryGrid', domElements.divPopup);
+        popupElements.divLeaveHistoryGrid = $('#divLeaveHistoryGrid', domElements.divPopup);
+        popupElements.divEPADeductionHistoryGrid = $('#divEPADeductionHistoryGrid', domElements.divPopup);
     };
 
     function renderGrid(data) {
@@ -157,25 +168,48 @@ var epaManagement = (function ($) {
         });
 
         domElements.EPAGrid.on("click", "span.get-epa-link", function () {
-            var $this = $(this).children().first();
-            var traderId = $this.attr("data-trader-id");
+            var $obj = $(this);
 
-            alert('Cuong');
+            var criteria = {
+                TraderName: $obj.attr("data-trader-name"),
+                TraderId: $obj.attr("data-trader-id"),
+                FromDate: domElements.divDateRange.getFrom(),
+                ToDate: domElements.divDateRange.getTo(),
+            };
+
+            epaManagementService.GetEPADeductionHistory(criteria).then(function () {
+                makeEPADeductionHistoryForm(criteria, epaManagementService.EPADeductionHistoryList);
+            });
         });
 
         domElements.EPAGrid.on("click", "span.get-error-link", function () {
-            var $this = $(this).children().first();
-            var traderId = $this.attr("data-trader-id");
+            var $obj = $(this);
 
-            alert('Cuong');
+            var criteria = {
+                TraderName: $obj.attr("data-trader-name"),
+                TraderId: $obj.attr("data-trader-id"),
+                FromDate: domElements.divDateRange.getFrom(),
+                ToDate: domElements.divDateRange.getTo(),
+            };
+
+            epaManagementService.GetErrorHistory(criteria).then(function () {
+                makeErrorHistoryForm(criteria, epaManagementService.ErrorHistoryList);
+            });
         });
 
         domElements.EPAGrid.on("click", "span.get-leave-link", function () {
-            var $this = $(this).children().first();
-            var traderId = $this.attr("data-trader-id");
+            var $obj = $(this);
 
-            alert('Cuong');
-            //addIssue(traderId);
+            var criteria = {
+                TraderName: $obj.attr("data-trader-name"),
+                TraderId: $obj.attr("data-trader-id"),
+                FromDate: domElements.divDateRange.getFrom(),
+                ToDate: domElements.divDateRange.getTo(),
+            };
+
+            epaManagementService.GetLeaveHistory(criteria).then(function () {
+                makeLeaveHistoryForm(criteria, epaManagementService.LeaveHistoryList);
+            });
         });
     };
 
@@ -298,6 +332,138 @@ var epaManagement = (function ($) {
     var refreshPopup = function () {
         clearTimeout(timeout);
         common.CloseMsgBox();
+    };
+
+    var makeEPADeductionHistoryForm = function (criteria, data) {
+        var form = domElements.divEPADeductionHistoryForm.clone();
+
+        refreshPopup();
+
+        common.Popup(criteria.TraderName, form);
+
+        cachePopupElements();
+
+        renderEPADeductionHistoryGrid(data);
+    };
+
+    var makeErrorHistoryForm = function (criteria, data) {
+        var form = domElements.divErrorHistoryForm.clone();
+
+        refreshPopup();
+
+        common.Popup(criteria.TraderName, form);
+
+        cachePopupElements();
+
+        renderErrorHistoryGrid(data);
+    };
+
+    var makeLeaveHistoryForm = function (criteria, data) {
+        var form = domElements.divLeaveHistoryForm.clone();
+
+        refreshPopup();
+
+        common.Popup(criteria.TraderName, form);
+
+        cachePopupElements();
+
+        renderLeaveHistoryGrid(data);
+    };
+
+    var renderEPADeductionHistoryGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Value', Width: 50, Name: 'DeductionValue', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Deduction Date', Width: 100, Name: 'DeductionDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+            ],
+            showNumberColumn: true,
+            gridExpandHeight: 150
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: '#', Value: index + 1 },
+                                { Name: 'DeductionValue', Value: item.DeductionValue },
+                                { Name: 'DeductionDate', Value: item.DeductionDateFormatted },
+                                { Name: 'Reason', Value: item.Reason },
+                                { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
+                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                    ]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        popupElements.divEPADeductionHistoryGrid.fanexGrid(gridOptions);
+    };
+
+    var renderErrorHistoryGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Error Name', Width: 70, Name: 'ErrorName', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Value', Width: 50, Name: 'Value', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Error Date', Width: 100, Name: 'ErrorDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+            ],
+            showNumberColumn: true,
+            gridExpandHeight: 150
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: '#', Value: index + 1 },
+                                { Name: 'ErrorName', Value: item.ErrorName },
+                                { Name: 'Value', Value: item.Value },
+                                { Name: 'ErrorDate', Value: item.ErrorDateFormatted },
+                                { Name: 'Reason', Value: item.Reason },
+                                { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
+                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                    ]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        popupElements.divErrorHistoryGrid.fanexGrid(gridOptions);
+    };
+
+    var renderLeaveHistoryGrid = function (data) {
+        var gridOptions = {
+            columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Leave Date', Width: 100, Name: 'LeaveDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Reason', Width: 100, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'center' }
+            ],
+            showNumberColumn: true,
+            gridExpandHeight: 150
+        };
+        var bodyData = [];
+        var row;
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: '#', Value: index + 1 },
+                                { Name: 'LeaveDate', Value: item.LeaveDateFormatted },
+                                { Name: 'Reason', Value: item.Reason },
+                                { Name: 'CreatedDate', Value: item.CreatedDateFormatted },
+                                { Name: 'CreatedBy', Value: item.CreatedBy }
+                    ]
+                };
+                bodyData.push(row);
+            });
+        }
+        gridOptions.bodyRows = bodyData;
+        popupElements.divLeaveHistoryGrid.fanexGrid(gridOptions);
     };
 
     return epaManagement;

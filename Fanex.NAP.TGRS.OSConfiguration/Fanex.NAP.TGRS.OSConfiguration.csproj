@@ -47,6 +47,9 @@
     <Compile Include="Controllers\OSTeamManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\GetEPADeductionHistoryCriteria.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\GetErrorHistoryCriteria.cs" />
+    <Compile Include="Criteria\EPADeductionManagement\GetLeaveHistoryCriteria.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetAllEPADeductionCriteria.cs" />
     <Compile Include="Criteria\EPADeductionManagement\GetAllErrorTypeCriteria.cs" />
     <Compile Include="Criteria\ErrorManagement\DeleteErrorCriteria.cs" />
@@ -80,6 +83,9 @@
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTraderCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\UpdateTraderCriteria.cs" />
+    <Compile Include="Models\EPADeductionManagement\LeaveHistory.cs" />
+    <Compile Include="Models\EPADeductionManagement\ErrorHistory.cs" />
+    <Compile Include="Models\EPADeductionManagement\EPADeductionHistory.cs" />
     <Compile Include="Models\EPADeductionManagement\EPADeductionInfo.cs" />
     <Compile Include="Models\ErrorManagement\Error.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
@@ -220,7 +226,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
-    <Folder Include="Models\EPADeductionManagement\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>

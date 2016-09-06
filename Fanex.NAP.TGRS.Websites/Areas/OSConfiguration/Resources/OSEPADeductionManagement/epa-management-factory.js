@@ -22,24 +22,24 @@ var epaManagementFactory = (function ($) {
             return $.get(urls.GetEPADeductionReport, criteria);
         },
 
-        GetEPADeductionHistory: function () {
-            return $.get(urls.GetEPADeductionHistory);
+        GetEPADeductionHistory: function (criteria) {
+            return $.get(urls.GetEPADeductionHistory, criteria);
         },
 
         DeleteEPADeductionHistory: function (error) {
             return $.post(urls.DeleteEPADeductionHistory, error);
         },
 
-        GetErrorHistory: function () {
-            return $.get(urls.GetErrorHistory);
+        GetErrorHistory: function (criteria) {
+            return $.get(urls.GetErrorHistory, criteria);
         },
         
         DeleteErrorHistory: function (error) {
             return $.post(urls.DeleteErrorHistory, error);
         },
 
-        GetLeaveHistory: function () {
-            return $.get(urls.GetLeaveHistory);
+        GetLeaveHistory: function (criteria) {
+            return $.get(urls.GetLeaveHistory, criteria);
         },
 
         DeleteLeaveHistory: function (error) {

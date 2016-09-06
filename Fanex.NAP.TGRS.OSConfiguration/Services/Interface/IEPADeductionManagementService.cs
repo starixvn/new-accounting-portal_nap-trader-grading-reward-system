@@ -11,16 +11,16 @@
     {
         IEnumerable<EPADeductionInfo> GetEPADeductionReport(GetAllEPADeductionCriteria criteria);
 
-        IEnumerable<object> GetEPADeductionHistory();
+        IEnumerable<EPADeductionHistory> GetEPADeductionHistory(GetEPADeductionHistoryCriteria criteria);
 
         ICommandResult DeleteEPADeductionHistory();
 
 
-        IEnumerable<object> GetErrorHistory();
+        IEnumerable<ErrorHistory> GetErrorHistory(GetErrorHistoryCriteria criteria);
 
         ICommandResult DeleteErrorHistory();
 
-        IEnumerable<object> GetLeaveHistory();
+        IEnumerable<LeaveHistory> GetLeaveHistory(GetLeaveHistoryCriteria criteria);
 
         ICommandResult DeleteLeaveHistory();
 
