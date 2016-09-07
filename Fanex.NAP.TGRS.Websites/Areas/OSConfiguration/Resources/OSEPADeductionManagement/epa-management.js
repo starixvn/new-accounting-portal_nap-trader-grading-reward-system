@@ -261,16 +261,6 @@ var epaManagement = (function ($) {
             if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
                 var issueType = $('input[name=issue-type]:checked').val();
 
-                var criteria = {
-                    TraderName: '',
-                    FromDate: domElements.divDateRange.getFrom(),
-                    ToDate: domElements.divDateRange.getTo(),
-                };
-
-                epaManagementService.GetEPADeductionReport(criteria).then(function () {
-                    renderGrid(epaManagementService.EPADeductionList);
-                });
-
                 switch (issueType) {
                     case '1':
                         var errorInfo = {
@@ -427,12 +417,12 @@ var epaManagement = (function ($) {
                         { HeaderText: 'Value', Width: 50, Name: 'DeductionValue', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Deduction Date', Width: 100, Name: 'DeductionDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
-                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 120, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            gridExpandHeight: 150
+            gridExpandHeight: 500
         };
         var bodyData = [];
         var row;
@@ -466,12 +456,12 @@ var epaManagement = (function ($) {
                         { HeaderText: 'Value', Width: 50, Name: 'Value', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Error Date', Width: 100, Name: 'ErrorDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
-                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 120, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            gridExpandHeight: 150
+            gridExpandHeight: 500
         };
         var bodyData = [];
         var row;
@@ -505,12 +495,12 @@ var epaManagement = (function ($) {
             columns: [{ HeaderText: '#', Width: 40, Name: '#', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Leave Date', Width: 100, Name: 'LeaveDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Reason', Width: 250, Name: 'Reason', HeaderAlign: 'center', CellAlign: 'left' },
-                        { HeaderText: 'Created Date', Width: 100, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: 'Created Date', Width: 120, Name: 'CreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                         { HeaderText: 'Created By', Width: 100, Name: 'CreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
                         { HeaderText: '', Width: 40, Name: 'Remove', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            gridExpandHeight: 150
+            gridExpandHeight: 500
         };
         var bodyData = [];
         var row;

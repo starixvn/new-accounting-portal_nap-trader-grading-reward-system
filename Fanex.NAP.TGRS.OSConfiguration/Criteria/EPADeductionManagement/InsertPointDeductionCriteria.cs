@@ -9,7 +9,7 @@
 
         public int TraderId { get; set; }
 
-        public int DeductionValue { get; set; }
+        public decimal DeductionValue { get; set; }
 
         public DateTime DeductionDate { get; set; }
 

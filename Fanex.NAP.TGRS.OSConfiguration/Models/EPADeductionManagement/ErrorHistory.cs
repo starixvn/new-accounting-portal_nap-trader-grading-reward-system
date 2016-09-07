@@ -30,7 +30,7 @@
         {
             get
             {
-                return CreatedDate.ToString("MM/dd/yyyy");
+                return CreatedDate.ToString("MM/dd/yyyy hh:mm:ss");
             }
         }
     }
