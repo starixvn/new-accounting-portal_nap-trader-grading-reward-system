@@ -18,6 +18,8 @@ namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
 
         public double TotalPoint { get; set; }
 
+        public double PointDeduction { get; set; }
+
         public double Margin { get; set; }
 
         public double Turnover { get; set; }

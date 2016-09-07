@@ -21,12 +21,12 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
 
         public decimal TotalPoint { get; set; }
 
+        public decimal PointDeduction { get; set; }
+
         public decimal Margin { get; set; }
 
         public decimal Turnover { get; set; }
 
         public decimal WinLoss { get; set; }
-
-        public int PointDeduction { get; set; }
     }
 }

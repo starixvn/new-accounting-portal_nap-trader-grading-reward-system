@@ -127,6 +127,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
                     item.TeamName,
                     item.GradeName,
                     item.TotalPoint, ////.Format(2),
+                    item.PointDeduction,
                     item.Margin, ////.Format(2),
                     item.Turnover, ////.Format(2),
                     item.WinLoss ////.Format(2)

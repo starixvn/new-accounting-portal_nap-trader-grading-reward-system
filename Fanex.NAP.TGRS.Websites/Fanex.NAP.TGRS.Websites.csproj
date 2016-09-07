@@ -429,6 +429,7 @@
     <Content Include="Areas\OSConfiguration\Views\OSErrorManagement\UpdateErrForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\IndexFilter.cshtml" />
+    <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\InsertPeriodNameForm.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

@@ -178,7 +178,7 @@ var epaManagement = (function ($) {
     }
 
     function addIssue(traderId) {
-        epaManagement.OpenPopupInsertPeriodName(traderId);
+        epaManagement.OpenPopupInsertIssue(traderId);
     }
 
     var handlePageEvents = function () {
@@ -240,7 +240,7 @@ var epaManagement = (function ($) {
         });
     };
 
-    epaManagement.OpenPopupInsertPeriodName = function (traderId) {
+    epaManagement.OpenPopupInsertIssue = function (traderId) {
         var form = domElements.divInsertTraderIssueForm.clone();
         var errorTypesSelector = $("#ddlErrorType", form);
         epaManagement.BindErrorTypes(errorTypes, errorTypesSelector);

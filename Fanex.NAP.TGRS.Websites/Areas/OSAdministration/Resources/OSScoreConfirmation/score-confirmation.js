@@ -112,7 +112,7 @@ var scoreConfirmation = (function ($) {
                     { Name: 'colTeam', Value: item.TeamName },
                     { Name: 'colGrade', Value: item.GradeName },
                     { Name: 'colPoint', Value: item.TotalPoint },
-                    { Name: 'colEPADeduction', Value: item.TotalPoint },
+                    { Name: 'colEPADeduction', Value: item.PointDeduction },
                     { Name: 'colMargin', Value: item.Margin },
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss }
