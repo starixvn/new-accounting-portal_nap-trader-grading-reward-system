@@ -170,7 +170,7 @@ var epaManagement = (function ($) {
                       { HeaderText: "", Width: 50, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
-            gridExpandHeight: 100,
+            gridExpandHeight: 180,
             bodyRows: data.map(mapper)
         };
 
