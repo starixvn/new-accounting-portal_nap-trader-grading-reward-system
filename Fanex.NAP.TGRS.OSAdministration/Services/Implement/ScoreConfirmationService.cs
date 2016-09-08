@@ -31,7 +31,8 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
 
         public LastestScoreHistoryInfo GetLastestScoreHistoryInfo(GetLastedScoreHistoryInfoCriteria criteria)
         {
-            return GetData<LastestScoreHistoryInfo>(criteria).First();
+            var result = GetData<LastestScoreHistoryInfo>(criteria);
+            return result.Count() > 0 ? result.First() : null;
         }
 
         public IEnumerable<TraderScoreInfo> GetTraderScores(GetAllTraderScoreCriteria criteria)

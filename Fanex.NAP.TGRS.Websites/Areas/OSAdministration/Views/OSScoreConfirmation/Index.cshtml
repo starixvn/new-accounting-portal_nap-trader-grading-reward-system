@@ -34,9 +34,19 @@
         </div>
         <div class="filter-row" style="display: inline-flex !important; margin-top: 5px;">
             <div class="star-history"></div>
-            <div style="text-shadow: 0 0.023em 0 #000000; margin-left: 5px;">
-                Last Confirmation: <b><label id="latestConfirm-periodname">@Model.PeriodName</label></b> (<b><label id="latestConfirm-from">@Model.FormattedFromDate</label></b> - <b><label id="latestConfirm-to">@Model.FormattedToDate</label></b>) by <b><label id="latestConfirm-creator">@Model.Creator</label></b>
-            </div> 
+            @if(Model != null)
+            {
+                <div style="text-shadow: 0 0.023em 0 #000000; margin-left: 5px;">
+                    Last Confirmation: <b><label id="latestConfirm-periodname">@Model.PeriodName </label></b> (<b><label id="latestConfirm-from">@Model.FormattedFromDate </label></b> - <b><label id="latestConfirm-to">@Model.FormattedToDate</label></b>) by <b><label id="latestConfirm-creator">@Model.Creator </label></b>
+
+                </div> 
+            }
+            else
+            {
+                <div style="text-shadow: 0 0.023em 0 #000000; margin-left: 5px;">
+                    Last Confirmation: <b><label id="latestConfirm-periodname">None</label></b>
+                </div>
+            }
         </div>
     </div>
 </div>

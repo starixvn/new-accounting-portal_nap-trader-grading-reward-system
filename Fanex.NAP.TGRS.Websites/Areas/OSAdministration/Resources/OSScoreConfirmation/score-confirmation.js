@@ -195,7 +195,6 @@ var scoreConfirmation = (function ($) {
                         });
 
                         updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
-                        reloadPage();
                     } else {
                         if (scoreConfirmation.Result.result.Code == 4101)
                         {
