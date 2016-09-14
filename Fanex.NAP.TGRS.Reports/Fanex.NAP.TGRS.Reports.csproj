@@ -155,6 +155,7 @@
     <Compile Include="Models\PerformanceDetail\BetTypeDetailInfo.cs" />
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\MatchPerformanceRawInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\ScoreByPeriodInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamInfo.cs" />

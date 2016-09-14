@@ -86,26 +86,27 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>MatchPerformanceList object.</returns>
         public MatchPerformanceList GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
-            IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
+            IEnumerable<MatchPerformanceRawInfo> matchData = this.GetData<MatchPerformanceRawInfo>(criteria);
             MatchPerformanceList matchPerformance = new MatchPerformanceList();
 
             if (matchData != null && matchData.Any())
             {
-                IEnumerable<IGrouping<int?, MatchPerformanceInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
+                IEnumerable<IGrouping<int?, MatchPerformanceRawInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
                 MatchPerformanceGroup leagueGroup = null;
 
-                foreach (IGrouping<int?, MatchPerformanceInfo> group in leagueGroups)
+                foreach (IGrouping<int?, MatchPerformanceRawInfo> group in leagueGroups)
                 {
                     if (group.Key.HasValue)
                     {
                         leagueGroup = new MatchPerformanceGroup(group.Key);
 
-                        foreach (MatchPerformanceInfo match in group)
+                        foreach (MatchPerformanceRawInfo match in group)
                         {
                             leagueGroup.AddItem(new MatchPerformanceItem(match));
                         }
 
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
+                        leagueGroup.Total.Score = leagueGroup.Total.SumCategory == 0 ? 0 : (leagueGroup.Total.WinLossScore * 100 / leagueGroup.Total.SumCategory);
                         matchPerformance.AddItem(leagueGroup);
                     }
                 }
