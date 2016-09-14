@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
+//   <change who="Long.Luu" date="2016.10.9">Add Score</change>
 // </history>
 
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
@@ -33,5 +34,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public int? BetCount { get; set; }
 
         public decimal? Margin { get; set; }
+
+        public decimal? Score { get; set; }
     }
 }
