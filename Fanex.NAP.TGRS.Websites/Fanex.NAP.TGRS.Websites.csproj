@@ -430,6 +430,16 @@
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\IndexFilter.cshtml" />
     <Content Include="Areas\OSAdministration\Views\OSScoreConfirmation\InsertPeriodNameForm.cshtml" />
+    <Content Include="Areas\Reports\Views\NewPerformanceDetail\BetTypePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\NewPerformanceDetail\GradePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\NewPerformanceDetail\LeaguePerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\NewPerformanceDetail\TeamPerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\NewPerformanceDetail\TraderPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\BetTypePerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\GradePerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\LeaguePerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\TeamPerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\TraderPerformance.xls" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

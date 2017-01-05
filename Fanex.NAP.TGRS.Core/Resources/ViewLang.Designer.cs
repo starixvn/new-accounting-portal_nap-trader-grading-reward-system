@@ -844,6 +844,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Performance Detail (New) Report.
+        /// </summary>
+        public static string NewPerformanceDetailReport {
+            get {
+                return ResourceManager.GetString("NewPerformanceDetailReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Team.
         /// </summary>
         public static string NewTeam {

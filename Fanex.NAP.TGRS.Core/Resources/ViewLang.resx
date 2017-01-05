@@ -600,4 +600,7 @@
   <data name="ErrorManagement" xml:space="preserve">
     <value>Error Management</value>
   </data>
+  <data name="NewPerformanceDetailReport" xml:space="preserve">
+    <value>Performance Detail (New) Report</value>
+  </data>
 </root>

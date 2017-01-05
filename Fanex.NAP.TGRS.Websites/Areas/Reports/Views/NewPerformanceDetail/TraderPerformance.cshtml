@@ -1,0 +1,107 @@
+﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
+@{
+    ViewBag.Title = ViewLang.NewPerformanceDetailReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/performanceDetail")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="header-button">
+        <a href="@Url.Content("~/Reports/NewPerformanceDetail/LeaguePerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.League
+        </a>
+        <a href="#" class="green-button change-list disabled">
+            <span class="list-icon"></span>@ViewLang.Trader
+        </a>
+        <a href="@Url.Content("~/Reports/NewPerformanceDetail/GradePerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.Grade
+        </a>
+        <a href="@Url.Content("~/Reports/NewPerformanceDetail/TeamPerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.Team
+        </a>
+        <a href="@Url.Content("~/Reports/NewPerformanceDetail/BetTypePerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.BetType
+        </a>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divTraderPerformanceFilter" class="filter-form">
+        <div class="filter-row">
+            <div class="date-range"><div id="divDateRange"></div></div>
+            <div class="lbl-field col_2">
+                <label for="txtTrader">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtTrader" class="trader" maxlength="30" />
+            </div>
+            <div class="col_1">
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divTraderPerformanceContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divBettypeDetailContainer" class="content-grid display-none">
+    <div id="divBettypeDetailGrid" class="freegrid"></div>
+</div>	
+@section Foot
+{
+    @Scripts.Render("~/scripts/traderPerformance")
+    <script type="text/javascript">
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+        var forecastBettype = '@ViewBag.ForecastBetType';
+        var labels = {
+            No: '#',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
+            NoOfMatches: '@ViewLang.NoOfMatches',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            BetCount: '@ViewLang.BetCount',
+            BetTypeBM: '@ViewLang.BetTypeBM',
+            BetType: '@ViewLang.BetType',
+            BetTypeDetail: '@ViewLang.BetTypeDetail',
+            Margin: '@ViewLang.Margin',
+            Trader: '@ViewLang.Trader',
+            Grade: '@ViewLang.Grade',
+            Team: '@ViewLang.Team',
+            Match: '@ViewLang.Match',
+            Total: '@ViewLang.Total',
+            GrandTotal: '@ViewLang.GrandTotal',
+            AllBetTypes: '@ViewLang.AllBetTypes',
+            EventDate: '@ViewLang.EventDate',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            NA: '@ViewLang.NA',
+            Forecast: '@ViewLang.Forecast',
+            TraderPerformance: '@ViewLang.TraderPerformance',
+            MatchPerformance: '@ViewLang.MatchPerformance',
+            TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
+            GradeHistoryDetail: '@ViewLang.GradeHistoryDetail',
+            Score: '@ViewLang.Score',
+            Benchmark: '@ViewLang.BM',
+            ScoreByLatestBenchMark: '@ViewLang.ScoreByLatestBenchMark',
+            ScoreByPeriod: '@ViewLang.ScoreByPeriod'
+        };
+      var messages = {
+          InvalidValue: '@Messages.InvalidValueError',
+          RequiredField: '@Messages.RequiredFieldError'
+      };
+    </script>
+}
