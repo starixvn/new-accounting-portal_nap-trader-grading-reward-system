@@ -176,6 +176,9 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceSummary/grade-history.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/newLeaguePerformance").Include(
+                "~/Areas/Reports/Resources/NewPerformanceDetail/league-performance.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/traderPerformance").Include(
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/trader-performance.js",
