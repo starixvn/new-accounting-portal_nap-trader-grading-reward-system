@@ -19,7 +19,7 @@
         private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\NewDetailReports\TeamPerformance.xls";
         private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\NewDetailReports\BetTypePerformance.xls";
 
-        private readonly INewDetailReportService _detailReportService;
+        private readonly INewDetailReportService _newDetailReportService;
 
         [Simplect.Attribute.InjectObject]
         public NewPerformanceDetailController()
@@ -37,7 +37,7 @@
 
         public NewPerformanceDetailController(INewDetailReportService detailReportService)
         {
-            this._detailReportService = detailReportService ?? new NewDetailReportService();
+            this._newDetailReportService = detailReportService ?? new NewDetailReportService();
         }
 
         #endregion Attributes and Constructors
@@ -60,7 +60,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
-            var result = this._detailReportService.GetLeaguePerformance(criteria);
+            var result = this._newDetailReportService.GetLeaguePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -75,7 +75,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
-            var result = this._detailReportService.GetTraderPerformanceByLeague(criteria);
+            var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -84,7 +84,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
-            var result = this._detailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
+            var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -93,7 +93,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeagueCriteria criteria)
         {
-            var result = this._detailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
+            var result = this._newDetailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -102,7 +102,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
         {
-            var result = this._detailReportService.GetMatchPerformanceOfLeague(criteria);
+            var result = this._newDetailReportService.GetMatchPerformanceOfLeague(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -111,7 +111,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
-            var result = this._detailReportService.GetBettypePerformanceOfLeagueAndMatch(criteria);
+            var result = this._newDetailReportService.GetBettypePerformanceOfLeagueAndMatch(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -130,24 +130,27 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            var traderPerformance = _detailReportService.GetTraderPerformance(criteria);
-            return null;
+            var traderPerformance = _newDetailReportService.GetTraderPerformance(criteria);
+
+            return Json(traderPerformance, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
-            var traderMatchPerformance = _detailReportService.GetTraderMatchPerformance(criteria);
-            return null;
+            var traderMatchPerformance = _newDetailReportService.GetTraderMatchPerformance(criteria);
+
+            return Json(traderMatchPerformance, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceCriteria criteria)
         {
-            var traderMatchBettypePerformance = _detailReportService.GetTraderMatchBettypePerformance(criteria);
-            return null;
+            var traderMatchBettypePerformance = _newDetailReportService.GetTraderMatchBettypePerformance(criteria);
+
+            return Json(traderMatchBettypePerformance, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
