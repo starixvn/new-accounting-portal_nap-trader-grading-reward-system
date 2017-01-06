@@ -177,7 +177,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

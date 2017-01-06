@@ -190,6 +190,9 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceDetail/grade-performance.js",
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/newGradePerformance").Include(
+               "~/Areas/Reports/Resources/NewPerformanceDetail/grade-performance.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/teamPerformance").Include(
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/team-performance.js",

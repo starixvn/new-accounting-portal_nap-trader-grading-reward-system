@@ -32,5 +32,11 @@
 
         IEnumerable<BetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria);
         #endregion
+
+        #region Grade
+
+        IEnumerable<GradePerformanceInfo> GetGradePerformance(ICriteria criteria);
+
+        #endregion Grade
     }
 }

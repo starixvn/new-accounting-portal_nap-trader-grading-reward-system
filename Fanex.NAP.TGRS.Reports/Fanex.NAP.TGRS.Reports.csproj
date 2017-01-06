@@ -181,6 +181,7 @@
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueMatchBettypePerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchPerformanceInfo.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Services\Implements\BetTypeDetailReportService.cs" />
     <Compile Include="Services\Implements\DashboardService.cs" />
     <Compile Include="Services\Implements\GradeDetailReportService.cs" />
+    <Compile Include="Services\Implements\NewGradeDetailReportService.cs" />
     <Compile Include="Services\Implements\NewLeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\LeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\SummaryReportService.cs" />
