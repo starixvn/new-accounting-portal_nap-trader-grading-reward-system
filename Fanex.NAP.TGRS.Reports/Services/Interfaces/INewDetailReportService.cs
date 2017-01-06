@@ -1,11 +1,14 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using System.Collections.Generic;
 
     public interface INewDetailReportService
     {
+        #region League
+
         IEnumerable<LeaguePerformanceInfo> GetLeaguePerformance(ICriteria criteria);
 
         IEnumerable<LeagueTraderPerformanceInfo> GetTraderPerformanceByLeague(ICriteria criteria);
@@ -17,6 +20,10 @@
         IEnumerable<LeagueMatchPerformanceInfo> GetMatchPerformanceOfLeague(ICriteria criteria);
         
         IEnumerable<LeagueMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueAndMatch(ICriteria criteria);
+
+        void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templatePath);
+        
+        #endregion League
         
         #region New Performance Detail - Trader
         IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria);

@@ -68,6 +68,10 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
+            string templatePath = Server.MapPath(LeaguePerformanceDetail);
+
+            this._newDetailReportService.ExportLeaguePerformance(criteria, templatePath);
+
             return new EmptyResult();
         }
 
