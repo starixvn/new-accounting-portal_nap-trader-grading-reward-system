@@ -75,35 +75,45 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
-            return null;
+            var result = this._detailReportService.GetTraderPerformanceByLeague(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
-            return null;
+            var result = this._detailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
         {
-            return null;
+            var result = this._detailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
         {
-            return null;
+            var result = this._detailReportService.GetMatchPerformanceOfLeague(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
-            return null;
+            var result = this._detailReportService.GetBettypePerformanceOfLeagueAndMatch(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         #endregion League Performance

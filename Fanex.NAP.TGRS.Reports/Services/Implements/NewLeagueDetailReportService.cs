@@ -20,5 +20,50 @@
 
             return result;
         }
+
+        public IEnumerable<LeagueTraderPerformanceInfo> GetTraderPerformanceByLeague(ICriteria criteria)
+        {
+            var result = this.GetData<LeagueTraderPerformanceInfo>(criteria);
+
+            result = result ?? new List<LeagueTraderPerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<LeagueTraderMatchPerformanceInfo> GetMatchPerformanceOfLeagueAndTrader(ICriteria criteria)
+        {
+            var result = this.GetData<LeagueTraderMatchPerformanceInfo>(criteria);
+
+            result = result ?? new List<LeagueTraderMatchPerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<LeagueTraderMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueTraderAndMatch(ICriteria criteria)
+        {
+            var result = this.GetData<LeagueTraderMatchBettypePerformanceInfo>(criteria);
+
+            result = result ?? new List<LeagueTraderMatchBettypePerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<LeagueMatchPerformanceInfo> GetMatchPerformanceOfLeague(ICriteria criteria)
+        {
+            var result = this.GetData<LeagueMatchPerformanceInfo>(criteria);
+
+            result = result ?? new List<LeagueMatchPerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<LeagueMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueAndMatch(ICriteria criteria)
+        {
+            var result = this.GetData<LeagueMatchBettypePerformanceInfo>(criteria);
+
+            result = result ?? new List<LeagueMatchBettypePerformanceInfo>();
+
+            return result;
+        }
     }
 }
