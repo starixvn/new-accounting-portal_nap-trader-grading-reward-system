@@ -3,7 +3,7 @@
     using Fanex.NAP.Framework.Data;
     using System;
 
-    public class GetBettypeDetailGrade : CriteriaBase
+    public class GetBettypeDetailGradeCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 

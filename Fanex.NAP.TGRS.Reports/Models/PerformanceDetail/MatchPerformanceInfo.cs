@@ -1,20 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="MatchPerformanceInfo.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Jason.Ly" date="2014.6.9">Created</change>
-//   <change who="Long.Luu" date="2016.10.9">Add Score</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 {
     using System;
 
-    /// <summary>
-    /// Match performance model.
-    /// </summary>
     public class MatchPerformanceInfo
     {
         public int? LeagueId { get; set; }

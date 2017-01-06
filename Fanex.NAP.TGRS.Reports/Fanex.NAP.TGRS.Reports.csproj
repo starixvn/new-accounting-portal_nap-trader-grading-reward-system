@@ -110,10 +110,10 @@
     <Compile Include="Controllers\PerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGrade.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeague.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTeam.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTrader.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeagueCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetTraderMatchBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceOfLeagueMatchCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetGradePerformanceCriteria.cs" />
@@ -127,8 +127,8 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfLeagueCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTeamTraderCriteria.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTraderCriteria.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTraderLeagueTeam.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetTraderMatchPerformanceCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTraderLeagueTeamCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceCriteria.cs" />
@@ -186,6 +186,9 @@
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeaguePerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\MatchPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\TraderPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\BetTypePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeDetailInfo.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Services\Implements\LeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\SummaryReportService.cs" />
     <Compile Include="Services\Implements\TeamDetailReportService.cs" />
+    <Compile Include="Services\Implements\NewTraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderManagementService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />

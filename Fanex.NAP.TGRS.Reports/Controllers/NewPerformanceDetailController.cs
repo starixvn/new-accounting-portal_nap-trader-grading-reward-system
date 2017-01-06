@@ -91,7 +91,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
+        public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeagueCriteria criteria)
         {
             var result = this._detailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
 
@@ -130,13 +130,23 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            var traderPerformance = _detailReportService.GetTraderPerformance(criteria);
             return null;
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeDetailTrader(GetBettypeDetailTrader criteria)
+        public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
+            var traderMatchPerformance = _detailReportService.GetTraderMatchPerformance(criteria);
+            return null;
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceCriteria criteria)
+        {
+            var traderMatchBettypePerformance = _detailReportService.GetTraderMatchBettypePerformance(criteria);
             return null;
         }
 
@@ -144,13 +154,6 @@
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
             return new EmptyResult();
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
-        {
-            return null;
         }
 
         #endregion Trader Performance
@@ -207,7 +210,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
+        public JsonResult GetBettypeDetailGrade(GetBettypeDetailGradeCriteria criteria)
         {
             return null;
         }
@@ -251,7 +254,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeam criteria)
+        public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeamCriteria criteria)
         {
             return null;
         }
@@ -278,7 +281,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeam criteria)
+        public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeamCriteria criteria)
         {
             return null;
         }

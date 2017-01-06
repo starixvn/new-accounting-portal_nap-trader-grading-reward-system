@@ -3,7 +3,7 @@
     using Fanex.NAP.Framework.Data;
     using System;
 
-    public class GetMatchPerformanceOfTraderLeagueTeam : CriteriaBase
+    public class GetMatchPerformanceOfTraderLeagueTeamCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 

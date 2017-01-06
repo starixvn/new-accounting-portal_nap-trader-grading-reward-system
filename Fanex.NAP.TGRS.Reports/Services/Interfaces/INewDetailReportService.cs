@@ -15,7 +15,15 @@
         IEnumerable<LeagueTraderMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueTraderAndMatch(ICriteria criteria);
 
         IEnumerable<LeagueMatchPerformanceInfo> GetMatchPerformanceOfLeague(ICriteria criteria);
-
+        
         IEnumerable<LeagueMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueAndMatch(ICriteria criteria);
+        
+        #region New Performance Detail - Trader
+        IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria);
+
+        IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(ICriteria criteria);
+
+        IEnumerable<BetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria);
+        #endregion
     }
 }
