@@ -37,6 +37,14 @@
 
         IEnumerable<GradePerformanceInfo> GetGradePerformance(ICriteria criteria);
 
+        IEnumerable<GradeLeaguePerformanceInfo> GetGradeLeaguePerformance(ICriteria criteria);
+
+        IEnumerable<GradeLeagueTraderPerformanceInfo> GetGradeLeagueTraderPerformance(ICriteria criteria);
+
+        IEnumerable<GradeLeagueTraderMatchPerformanceInfo> GetGradeLeagueTraderMatchPerformance(ICriteria criteria);
+
+        IEnumerable<GradeLeagueMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria);
+
         #endregion Grade
     }
 }

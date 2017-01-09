@@ -113,6 +113,8 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeagueCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfGradeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderMatchBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceOfLeagueMatchCriteria.cs" />
@@ -180,11 +182,15 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeLeaguePerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeLeagueMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueMatchPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeLeagueTraderMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeLeagueTraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\MatchPerformanceInfo.cs" />

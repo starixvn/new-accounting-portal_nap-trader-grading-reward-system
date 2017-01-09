@@ -193,14 +193,18 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradeLeagueTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradeLeaguePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -212,16 +216,20 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetMatchPerformanceOfGradeLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
+        public JsonResult GetMatchPerformanceOfGradeLeagueTrader(GetMatchPerformanceOfGradeLeagueTraderCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradeLeagueTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeDetailGrade(GetBettypeDetailGradeCriteria criteria)
+        public JsonResult GetBettypeDetailGrade(GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradeLeagueTraderMatchBettypePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
