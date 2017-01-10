@@ -17,7 +17,6 @@
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
     {
         private const string GradePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.NewGradePerformance";
-        private const int PointInPixel = 225;
 
         public IEnumerable<GradePerformanceInfo> GetGradePerformance(ICriteria criteria)
         {

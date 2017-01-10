@@ -325,42 +325,54 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypeTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypeTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypeLeaguePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypeLeagueTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetBetTypeLeagueTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]

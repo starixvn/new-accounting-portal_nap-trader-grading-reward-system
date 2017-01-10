@@ -17,6 +17,7 @@
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.NewLeaguePerformance";
+        private const int PointInPixel = 225;
 
         public IEnumerable<LeaguePerformanceInfo> GetLeaguePerformance(ICriteria criteria)
         {

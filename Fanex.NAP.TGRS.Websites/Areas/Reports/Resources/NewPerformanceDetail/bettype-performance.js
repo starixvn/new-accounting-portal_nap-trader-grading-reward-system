@@ -13,13 +13,13 @@ Namespace.Register('Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance');
 Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     var $this = this;
     var urls = {
-        GetBetTypePerformance: common.ResolveRootUrl('PerformanceDetail/GetBetTypePerformance'),
-        ExportBetTypePerformance: common.ResolveRootUrl('PerformanceDetail/ExportBetTypePerformance'),
-        GetTraderPerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfBetType'),
-        GetMatchPerformanceOfBetTypeTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfBetTypeTrader'),
-        GetLeaguePerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformanceOfBetType'),
-        GetTraderPerformanceOfBetTypeLeague: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfBetTypeLeague'),
-        GetMatchPerformanceOfBetTypeLeagueTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfBetTypeLeagueTrader')
+        GetBetTypePerformance: common.ResolveRootUrl('NewPerformanceDetail/GetBetTypePerformance'),
+        ExportBetTypePerformance: common.ResolveRootUrl('NewPerformanceDetail/ExportBetTypePerformance'),
+        GetTraderPerformanceOfBetType: common.ResolveRootUrl('NewPerformanceDetail/GetTraderPerformanceOfBetType'),
+        GetMatchPerformanceOfBetTypeTrader: common.ResolveRootUrl('NewPerformanceDetail/GetMatchPerformanceOfBetTypeTrader'),
+        GetLeaguePerformanceOfBetType: common.ResolveRootUrl('NewPerformanceDetail/GetLeaguePerformanceOfBetType'),
+        GetTraderPerformanceOfBetTypeLeague: common.ResolveRootUrl('NewPerformanceDetail/GetTraderPerformanceOfBetTypeLeague'),
+        GetMatchPerformanceOfBetTypeLeagueTrader: common.ResolveRootUrl('NewPerformanceDetail/GetMatchPerformanceOfBetTypeLeagueTrader')
     };
     var domElements = {
         divBetTypePerformanceFilter: null,
@@ -41,14 +41,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
     var parameters = {
         FromDate: null,
-        ToDate: null,
-        BetTypes: null,
-        MarginFrom: null,
-        MarginTo: null,
-        BetTypeBMFrom: null,
-        BetTypeBMTo: null,
-        Turnover: null,
-        WinLoss: null
+        ToDate: null
     };
     var cachedData = {
         MatchPerformance: null,
@@ -57,9 +50,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         PageSize: common.Constants.PageSize,
         PageIndex: 0
     };
-    var gradeHistory = new Fanex.TGRS.PerformanceSummary.GradeHistory();
-    var teamHistory = new Fanex.TGRS.PerformanceSummary.TeamHistory();
-    var performanceDetailHelper = new Fanex.NAP.TGRS.PerformanceDetail.Helper();
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -134,17 +124,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w') && validateFilterForm()) {
+            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
-                parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');
-                parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
-                parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
-                parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
-                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
 
                 hideAllReports();
                 getBetTypePerformanceReport();
@@ -158,45 +143,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
-    };
-
-    // Validate filter form.
-    var validateFilterForm = function () {
-        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateBetType();
-    };
-
-    // Validate From/To values.
-    var validateValueRange = function ($from, $to) {
-        var fromValue = $from.val();
-        var toValue = $to.val();
-        var isValid = true;
-
-        if (fromValue !== '' && toValue !== '') {
-            fromValue = fromValue.replace(/,/g, '');
-            toValue = toValue.replace(/,/g, '');
-
-            isValid = $.isNumeric(fromValue) && $.isNumeric(toValue) && parseFloat(fromValue) <= parseFloat(toValue);
-        }
-
-        if (!isValid) {
-            validator.ShowError($to, messages.InvalidValue, 'w');
-        }
-
-        return isValid;
-    };
-
-    // Validate Bet Type field.
-    var validateBetType = function () {
-        var selectedBetTypes = domElements.ddlBetType.val();
-
-        if (!selectedBetTypes) {
-            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
-
-            return false;
-        } else {
-            return true;
-        }
     };
 
     // Get bet type performance.
@@ -230,6 +176,23 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfLeaguesCol = '';
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.BetType, Name: 'ColBetType', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfTraders, Name: 'ColNoOfTraders', MergeRowNumber: 2 },
+                                 { HeaderText: labels.NoOfLeagues, Name: 'ColNoOfLeagues', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfMatches, Name: 'ColNoOfMatches', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
             columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
@@ -238,23 +201,39 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.IntegerFormat
                       },
+                     {
+                         HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                         FormatNumber: common.Formats.DecimalFormat, Sort: true
+                     },
                       {
-                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat, Sort: true
-                      },
-                      {
                           HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
                       }],
-            gridExpandHeight: 260,
+            gridExpandHeight: 200,
             showTitle: true,
             titleInfo: {
                 showExcelButton: true,
@@ -275,37 +254,54 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
-                betTypeCol = betTypeFormat.format(item.BetTypeId, item.BetTypeName);
-                noOfTradersCol = noOfTradersFormat.format(labels.TraderPerformance, numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
-                noOfLeaguesCol = noOfLeaguesFormat.format(labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
+        if (data) {
+            $.each(data, function (index, item) {
+                betTypeCol = betTypeFormat.format(item.BetType, item.TypeName);
+                noOfTradersCol = noOfTradersFormat.format(labels.TraderPerformance, numeral(item.TraderCount).format(common.Formats.IntegerFormat));
+                noOfLeaguesCol = noOfLeaguesFormat.format(labels.LeaguePerformance, numeral(item.LeagueCount).format(common.Formats.IntegerFormat));
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColBetType', Value: betTypeCol },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                               { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
-                              { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                              { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColJuice', Value: item.Juice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                              { Name: 'ColLeftover', Value: item.Leftover },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColBetCount', Value: item.BetCount }]
                 };
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalTrader += item.TraderCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
+                totalLeague += item.LeagueCount;
 
                 bodyData.push(row);
             });
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
-                          { Name: 'ColNoOfLeagues', Value: numeral(data.Total.NoOfLeagues).format(common.Formats.IntegerFormat) },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+                          { Name: 'ColNoOfTraders', Value: numeral(totalTrader).format(common.Formats.IntegerFormat) },
+                          { Name: 'ColNoOfLeagues', Value: numeral(totalLeague).format(common.Formats.IntegerFormat) },
+                          { Name: 'ColNoOfMatches', Value: numeral(totalMatch).format(common.Formats.IntegerFormat) },
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount }]
             };
             footerData.push(row);
         }
@@ -393,9 +389,28 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfMatchesCol = '';
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.Trader, Name: 'ColTrader', MergeRowNumber: 2 },
+                                 { HeaderText: labels.Grade, Name: 'ColGrade', MergeRowNumber: 2 },
+                                { HeaderText: labels.Team, Name: 'ColTeam', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfLeagues, Name: 'ColNoOfLeagues', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfMatches, Name: 'ColNoOfMatches', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
+                                { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       {
                           HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
@@ -410,22 +425,38 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
-                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
                       {
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       }],
-            gridExpandHeight: 260,
+            gridExpandHeight: 200,
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
@@ -454,11 +485,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
-                traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
-                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+        if (data) {
+            $.each(data, function (index, item) {
+                traderCol = traderFormat.format(item.CustId, item.TeamId, item.TraderName);
+                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.MatchCount).format(common.Formats.IntegerFormat));
                 gradeCol = gradeFormat.format(item.Grade);
                 teamCol = teamFormat.format(item.TeamName);
 
@@ -467,26 +499,41 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                               { Name: 'ColTrader', Value: traderCol },
                               { Name: 'ColGrade', Value: gradeCol },
                               { Name: 'ColTeam', Value: teamCol },
-                              { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
+                              { Name: 'ColNoOfLeagues', Value: item.LeagueCount },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColJuice', Value: item.Juice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                              { Name: 'ColLeftover', Value: item.Leftover },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalLeague += item.LeagueCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
 
                 bodyData.push(row);
             });
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
-                          { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+                          { Name: 'ColNoOfLeagues', Value: totalLeague },
+                          { Name: 'ColNoOfMatches', Value: totalMatch },
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount },
                           { Name: 'ColScore', Value: '' }]
             };
             footerData.push(row);
@@ -570,9 +617,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             CustId: traderId,
             BetType: betTypeId,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate,
-            BetTypeBMFrom: parameters.BetTypeBMFrom,
-            BetTypeBMTo: parameters.BetTypeBMTo
+            ToDate: parameters.ToDate
         };
 
         common.DisableInput();
@@ -585,9 +630,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             success: function (result) {
                 cachedData.PageSize = common.Constants.PageSize;
                 cachedData.PageIndex = 0;
-                cachedData.MatchPerformance = result.GroupList;
-                cachedData.GrandTotal = result.GrandTotal;
-                cachedData.TotalItems = result.TotalItems;
+                cachedData.MatchPerformance = result;
+                debugger;
                 reloadPage(cachedData.PageIndex, cachedData.PageSize, betTypeId, betTypeName, traderId, traderName);
             },
             error: function (xhr) {
@@ -606,31 +650,38 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var endIndex = 0;
         var counter = 0;
 
-        if (cachedData.MatchPerformance && cachedData.MatchPerformance.length > 0) {
+        if (cachedData.MatchPerformance) {
             pageIndex = parseInt(pageIndex);
             pageSize = parseInt(pageSize);
             startIndex = pageIndex * pageSize;
             endIndex = startIndex + pageSize - 1;
 
-            $.each(cachedData.MatchPerformance, function (groupIndex, group) {
-                var temCounter = counter + group.ItemList.length - 1;
+            $.each(cachedData.MatchPerformance, function (groupKey, group) {
+                var temCounter = counter + group.length - 1;
                 var currentGroup = null;
 
                 if (temCounter < startIndex || counter > endIndex) {
                     counter = temCounter + 1;
                 } else {
                     currentGroup = {
-                        LeagueId: group.LeagueId,
-                        LeagueName: group.LeagueName,
-                        Total: group.Total,
+                        LeagueName: groupKey,
+                        GroupTO: 0,
+                        GroupJuice: 0,
+                        GroupWL: 0,
+                        GroupBetcount: 0,
                         ItemList: []
                     };
 
-                    $.each(group.ItemList, function (index, item) {
+                    $.each(group, function (index, item) {
                         if (counter >= startIndex && counter <= endIndex) {
                             item.Order = counter;
                             currentGroup.ItemList.push(item);
                         }
+
+                        currentGroup.GroupTO += item.Turnover;
+                        currentGroup.GroupJuice += item.Juice;
+                        currentGroup.GroupWL += item.WinLoss;
+                        currentGroup.GroupBetcount += item.BetCount;
 
                         counter++;
                     });
@@ -638,6 +689,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     pageData.push(currentGroup);
                 }
             });
+
+            cachedData.TotalItems = counter;
         }
 
         cachedData.PageIndex = pageIndex;
@@ -652,15 +705,51 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           '<span> >> {2}</span>';
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.Match, Name: 'ColMatch', MergeRowNumber: 2 },
+                                { HeaderText: labels.EventDate, Name: 'ColEventDate', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
+                                { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
                       { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+                       {
+                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                           FormatNumber: common.Formats.DecimalFormat
+                       },
                       {
-                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
@@ -668,14 +757,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.IntegerFormat
                       },
                       {
-                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                      },
-                    {
-                        HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                    }],
-            gridExpandHeight: 260,
+                         HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                         FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                      }],
+            gridExpandHeight: 200,
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.BetTypePerformance, betTypeName, traderName)
@@ -700,6 +785,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var subRows;
         var row;
         var counter = 0;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalBetcount = 0;
 
         if (data && data.length > 0) {
             $.each(data, function (groupIndex, group) {
@@ -711,23 +797,31 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     row = {
                         Columns: [{ Name: 'ColNo', Value: item.Order + 1, CssClass: 'order-column' },
                                   { Name: 'ColMatch', Value: item.MatchName },
-                                  { Name: 'ColEventDate', Value: item.EventDate },
+                                  { Name: 'ColEventDate', Value: item.EventDateString },
                                   { Name: 'ColTurnover', Value: item.Turnover },
+                                  { Name: 'ColJuice', Value: item.Juice },
+                                  { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                                  { Name: 'ColLeftover', Value: item.Leftover },
+                                  { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                                   { Name: 'ColWinLoss', Value: item.WinLoss },
-                                  { Name: 'ColBetCount', Value: item.BetCount },
                                   { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                                  { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                                  { Name: 'ColBetCount', Value: item.BetCount },
+                                  { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                     };
                     subRows.push(row);
                 });
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: group.LeagueName, MergeColNumber: 3, CellAlign: 'left' },
-                              { Name: 'ColTurnover', Value: group.Total.Turnover },
-                              { Name: 'ColWinLoss', Value: group.Total.WinLoss },
-                              { Name: 'ColBetCount', Value: group.Total.BetCount },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(group.Total.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(group.Total.Score, labels.NA) }],
+                              { Name: 'ColTurnover', Value: group.GroupTO },
+                              { Name: 'ColJuice', Value: group.GroupJuice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(group.GroupTO > 0 ? group.GroupJuice / group.GroupTO * 100 : null, labels.NA) },
+                              { Name: 'ColLeftover', Value: group.GroupWL - group.GroupJuice },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(group.GroupTO > 0 ? (group.GroupWL - group.GroupJuice) / group.GroupTO * 100 : null, labels.NA) },
+                              { Name: 'ColWinLoss', Value: group.GroupWL },
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(group.GroupTO > 0 ? group.GroupWL / group.GroupTO * 100 : null, labels.NA) },
+                              { Name: 'ColBetCount', Value: group.GroupBetcount },
+                              { Name: 'ColScore', Value: '' }],
                     SubRows: subRows
                 };
                 bodyData.push(row);
@@ -735,11 +829,14 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
-                          { Name: 'ColTurnover', Value: cachedData.GrandTotal.Turnover },
-                          { Name: 'ColWinLoss', Value: cachedData.GrandTotal.WinLoss },
-                          { Name: 'ColBetCount', Value: cachedData.GrandTotal.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(cachedData.GrandTotal.Margin, labels.NA) }],
-                          //{ Name: 'ColScore', Value: common.GetNumWithLabel(cachedData.GrandTotal.Score, labels.NA) }]
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount }]
             };
             footerData.push(row);
         }
@@ -751,6 +848,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         gridOptions.footerRows = footerData;
 
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [11]);
+        }
 
         handleMatchPerformanceOfTraderGridEvents();
     };
@@ -803,8 +904,24 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfTradersCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.League, Name: 'ColLeague', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfTraders, Name: 'ColNoOfTraders', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfMatches, Name: 'ColNoOfMatches', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
+            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.League, Width: 350, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
                       {
                           HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
@@ -815,18 +932,34 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat, Sort: true
-                      },
-                      {
                           HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
                       }],
-            gridExpandHeight: 260,
+            gridExpandHeight: 200,
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.BetTypePerformance, betTypeName)
@@ -855,35 +988,51 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalTrader = 0, totalMatch = 0, totalBetcount = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
+        if (data) {
+            $.each(data, function (index, item) {
                 noOfTradersCol = noOfTradersFormat.format(
                                      item.LeagueId,
                                      labels.TraderPerformance,
-                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+                                     numeral(item.TraderCount).format(common.Formats.IntegerFormat));
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-                              { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                              { Name: 'ColNoOfMatches', Value: item.MatchCount },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColJuice', Value: item.Juice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                              { Name: 'ColLeftover', Value: item.Leftover },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColBetCount', Value: item.BetCount }]
                 };
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalTrader += item.TraderCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
 
                 bodyData.push(row);
             });
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+                          { Name: 'ColNoOfTraders', Value: numeral(totalTrader).format(common.Formats.IntegerFormat) },
+                          { Name: 'ColNoOfMatches', Value: numeral(totalMatch).format(common.Formats.IntegerFormat) },
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount }]
             };
             footerData.push(row);
         }
@@ -969,9 +1118,25 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var noOfMatchesCol = '';
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.Trader, Name: 'ColTrader', MergeRowNumber: 2 },
+                                { HeaderText: labels.Team, Name: 'ColTeam', MergeRowNumber: 2 },
+                                { HeaderText: labels.NoOfMatches, Name: 'ColNoOfMatches', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
+                                { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
                       {
                           HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
@@ -982,22 +1147,38 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
-                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
                       {
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       }],
-            gridExpandHeight: 260,
+            gridExpandHeight: 200,
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
@@ -1026,37 +1207,52 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalTrader = 0, totalMatch = 0, totalBetcount = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
-                traderCol = traderFormat.format(item.TraderId, item.TeamId, item.TraderName);
-                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+        if (data) {
+            $.each(data, function (index, item) {
+                traderCol = traderFormat.format(item.CustId, item.TeamId, item.TraderName);
+                noOfMatchesCol = noOfMatchesFormat.format(labels.MatchPerformance, numeral(item.MatchCount).format(common.Formats.IntegerFormat));
                 gradeCol = gradeFormat.format(item.Grade);
                 teamCol = teamFormat.format(item.TeamName);
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColTrader', Value: traderCol },
-                              { Name: 'ColGrade', Value: gradeCol },
                               { Name: 'ColTeam', Value: teamCol },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColJuice', Value: item.Juice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                              { Name: 'ColLeftover', Value: item.Leftover },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalTrader += item.TraderCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
 
                 bodyData.push(row);
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+                          { Name: 'ColNoOfMatches', Value: totalMatch },
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount },
                           { Name: 'ColScore', Value: '' }]
             };
             footerData.push(row);
@@ -1070,7 +1266,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [12]);
         }
 
         handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
@@ -1170,30 +1366,62 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
 
         var gridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                     {
+                         Columns: [
+                                { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
+                                { HeaderText: labels.Match, Name: 'ColMatch', MergeRowNumber: 2 },
+                                { HeaderText: "Event Date", Name: 'ColEventDate', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
+                                { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
+                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
+                                { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
+                         ]
+                     }
+            ],
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.EventDate, Width: 120, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Event Date", Width: 70, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat
                       },
                       {
-                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColJuice', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColJuiceMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.Margin, Width: 100, Name: 'ColLeftoverMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                       },
                       {
-                            HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                            FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                        }],
-            gridExpandHeight: 260,
+                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.IntegerFormat, Sort: true
+                      },
+                      {
+                          HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      }],
+            gridExpandHeight: 200,
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
@@ -1215,30 +1443,44 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var totalTO = 0, totalJuice = 0, totalWL = 0, totalBetcount = 0;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
+        if (data) {
+            $.each(data, function (index, item) {
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColMatch', Value: item.MatchName },
-                              { Name: 'ColEventDate', Value: item.EventDate },
+                              { Name: 'ColEventDate', Value: item.EventDateString },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColJuice', Value: item.Juice },
+                              { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
+                              { Name: 'ColLeftover', Value: item.Leftover },
+                              { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                              { Name: 'ColBetCount', Value: item.BetCount },
+                              { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
                 };
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalBetcount += item.BetCount;
 
                 bodyData.push(row);
             });
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
-                          //{ Name: 'ColScore', Value: common.GetNumWithLabel(data.Total.Score, labels.NA) }]
+                          { Name: 'ColTurnover', Value: totalTO },
+                          { Name: 'ColJuice', Value: totalJuice },
+                          { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalJuice / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColLeftover', Value: totalWL - totalJuice },
+                          { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(totalTO > 0 ? (totalWL - totalJuice) / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColWinLoss', Value: totalWL },
+                          { Name: 'ColMargin', Value: common.GetNumWithLabel(totalTO > 0 ? totalWL / totalTO * 100 : null, labels.NA) },
+                          { Name: 'ColBetCount', Value: totalBetcount },
+                          { Name: 'ColScore', Value: '' }]
             };
             footerData.push(row);
         }
@@ -1249,6 +1491,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [11]);
+        }
 
         handleMatchPerformanceOfLeagueTraderGridEvents();
     };
@@ -1273,7 +1519,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
-        performanceDetailHelper.IntializeFilterData();
         initializeFields();
     };
 };

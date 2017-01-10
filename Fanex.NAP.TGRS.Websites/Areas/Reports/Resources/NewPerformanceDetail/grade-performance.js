@@ -1174,10 +1174,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
                 $.each(group.ItemList, function (index, item) {
                     counter++;
-                    matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.MatchName);
                     row = {
                         Columns: [{ Name: 'ColNo', Value: item.Order + 1, CssClass: 'order-column' },
-                                  { Name: 'ColMatch', Value: matchDetailCol },
+                                  { Name: 'ColMatch', Value: item.MatchName },
                                   { Name: 'ColEventDate', Value: item.EventDateString },
                                   { Name: 'ColTurnover', Value: item.Turnover },
                                   { Name: 'ColJuice', Value: item.Juice },
@@ -1199,7 +1198,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: group.LeagueName, MergeColNumber: 3, CellAlign: 'left' },
-                             { Name: 'ColTurnover', Value: group.GroupTO },
+                              { Name: 'ColTurnover', Value: group.GroupTO },
                               { Name: 'ColJuice', Value: group.GroupJuice },
                               { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(group.GroupTO > 0 ? group.GroupJuice / group.GroupTO * 100 : null, labels.NA) },
                               { Name: 'ColLeftover', Value: group.GroupWL - group.GroupJuice },
@@ -1699,7 +1698,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                          Columns: [
                                 { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
                                 { HeaderText: labels.BetType, Name: 'ColBettype', MergeRowNumber: 2 },
-                                 { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
+                                { HeaderText: labels.Turnover, Name: 'ColTurnover', MergeRowNumber: 2 },
                                 { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
                                 { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
                                 { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },

@@ -19,9 +19,9 @@
             return this.GetData<MatchPerformanceInfo>(criteria);
         }
 
-        public IEnumerable<BetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria)
+        public IEnumerable<TraderMatchBetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria)
         {
-            return this.GetData<BetTypePerformanceInfo>(criteria);
+            return this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
         }
 
         /*
