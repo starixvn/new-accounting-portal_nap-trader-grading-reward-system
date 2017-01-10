@@ -11,7 +11,6 @@
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using NPOI.SS.UserModel;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService

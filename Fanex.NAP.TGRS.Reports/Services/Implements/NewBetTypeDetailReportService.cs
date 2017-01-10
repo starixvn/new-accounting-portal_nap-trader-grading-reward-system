@@ -11,7 +11,6 @@
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using NPOI.SS.UserModel;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
@@ -89,5 +88,109 @@
 
             return result;
         }
+
+        public void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath)
+        {
+            var bettypeData = SessionManager.Get<IEnumerable<BetTypePerformanceInfo>>(BetTypePerformanceDetailReportSessionKey);
+            if (bettypeData == null || (bettypeData != null && bettypeData.Count() == 0))
+            {
+                bettypeData = this.GetData<BetTypePerformanceInfo>(criteria);
+
+                bettypeData = bettypeData ?? new List<BetTypePerformanceInfo>();
+
+                SessionManager.Set<IEnumerable<BetTypePerformanceInfo>>(BetTypePerformanceDetailReportSessionKey, bettypeData);
+            }
+
+            if ((bettypeData != null) && (bettypeData.Count() > 0))
+            {
+                string reportName = string.Format(
+                                    ViewLang.PerformanceDetailFileName,
+                                    ViewLang.BetTypeExcelFile,
+                                    criteria.FromDate.ToShortFormatedDateForFileName(),
+                                    criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
+
+                writer.CopyRows(0, 1);
+
+                FilterBlock(criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 4);
+                FillRowData(bettypeData, ref writer);
+                writer.SyncColumnsWidth(13);
+                writer.Render();
+            }
+        }
+
+        #region Private
+
+        private void FillRowData(IEnumerable<BetTypePerformanceInfo> contentData, ref ExcelTemplateWriter writer)
+        {
+            decimal totalTO = 0, totalJuice = 0, totalWL = 0;
+            int totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0, len = contentData.Count();
+
+            for (int i = 0; i < len; i++)
+            {
+                int styleIndex = (i % 2 == 0) ? 5 : 6;
+                var item = contentData.ElementAt(i);
+
+                var record = new object[]
+                {
+                    i + 1, item.TypeName, item.TraderCount, item.LeagueCount, item.MatchCount,
+                    item.Turnover,
+                    item.Juice,
+                    (object)item.JuiceMargin ?? ViewLang.NA,
+                    item.Leftover,
+                    (object)item.LeftoverMargin ?? ViewLang.NA,
+                    item.WinLoss,
+                    (object)item.Margin ?? ViewLang.NA,
+                    item.BetCount
+                };
+                writer.WriteRow(styleIndex, record);
+
+                totalTO += item.Turnover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalTrader += item.TraderCount;
+                totalLeague += item.LeagueCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
+            }
+
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal, null,
+                totalTrader,
+                totalLeague,
+                totalMatch,
+                totalTO,
+                totalJuice,
+                totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
+                totalWL - totalJuice,
+                totalTO > 0 ? (object)((totalWL - totalJuice) / totalTO * 100) : ViewLang.NA,
+                totalWL,
+                totalTO > 0 ? (object)(totalWL / totalTO * 100) : ViewLang.NA,
+                totalBetcount
+            };
+            writer.WriteRow(7, totalRecord);
+        }
+
+        private void FilterBlock(GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(8, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        #endregion Private
     }
 }

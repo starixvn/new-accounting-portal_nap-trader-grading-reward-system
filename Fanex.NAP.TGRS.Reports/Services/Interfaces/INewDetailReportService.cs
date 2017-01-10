@@ -67,6 +67,8 @@
 
         IEnumerable<BetTypeLeaguePerformanceInfo> GetBetTypeLeaguePerformance(ICriteria criteria);
 
+        void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath);
+
         #endregion Bettype
     }
 }

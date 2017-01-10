@@ -378,6 +378,10 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            var templatePath = Server.MapPath(BetTypePerformanceDetail);
+
+            this._newDetailReportService.ExportBetTypePerformance(criteria, templatePath);
+
             return new EmptyResult();
         }
 
