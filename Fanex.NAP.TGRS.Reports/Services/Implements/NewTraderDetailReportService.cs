@@ -23,6 +23,7 @@
         {
             return this.GetData<BetTypePerformanceInfo>(criteria);
         }
+
         /*
         public TraderPerformanceList GetTraderPerformance(ICriteria criteria)
         {

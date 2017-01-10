@@ -9,12 +9,12 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
-    using System;
     using Fanex.Common;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
+    using System;
 
     /// <summary>
     /// Match performance view model.
@@ -53,8 +53,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetCount = Converter.ToInt(matchData.BetCount);
                 this.Margin = matchData.Margin;
                 this.Score = matchData.SumCategory == 0 ? null : (matchData.WinLossScore * 100 / matchData.SumCategory);
-                this.WinLossScore =  Converter.ToDecimal(matchData.WinLossScore);
-                this.SumCategory =  Converter.ToDecimal(matchData.SumCategory);
+                this.WinLossScore = Converter.ToDecimal(matchData.WinLossScore);
+                this.SumCategory = Converter.ToDecimal(matchData.SumCategory);
             }
         }
 

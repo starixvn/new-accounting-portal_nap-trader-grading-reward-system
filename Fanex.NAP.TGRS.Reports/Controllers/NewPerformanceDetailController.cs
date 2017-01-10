@@ -8,7 +8,6 @@
     using Fanex.NAP.TGRS.Reports.Services;
     using System;
     using System.Web.Mvc;
-    using System.Linq;
 
     public class NewPerformanceDetailController : TGRSBaseController
     {
@@ -240,6 +239,11 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            var templatePath = Server.MapPath(GradePerformanceDetail);
+            var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+
+            this._newDetailReportService.ExportGradePerformance(criteria, isViewScore, templatePath);
+
             return new EmptyResult();
         }
 

@@ -146,7 +146,7 @@
                     (object)item.LeftoverMargin ?? ViewLang.NA,
                     item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA,
-                    item.BetCount,
+                    item.BetCount
                 };
                 writer.WriteRow(styleIndex, record);
 

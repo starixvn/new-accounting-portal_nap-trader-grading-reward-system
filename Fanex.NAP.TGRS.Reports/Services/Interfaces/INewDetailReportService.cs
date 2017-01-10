@@ -49,6 +49,8 @@
 
         Dictionary<string, IEnumerable<GradeTraderMatchPerformanceInfo>> GetGradeTraderMatchPerformance(ICriteria criteria);
 
+        void ExportGradePerformance(GetGradePerformanceCriteria criteria, bool isViewScore, string templatePath);
+
         #endregion Grade
     }
 }
