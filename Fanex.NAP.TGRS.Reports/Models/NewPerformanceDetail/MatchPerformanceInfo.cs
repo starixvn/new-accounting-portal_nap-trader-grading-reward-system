@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail
 {
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.Helpers;
     using System;
 
@@ -29,7 +30,7 @@
             }
         }
 
-        public DateTime? EventDate { get; set; }
+        public DateTime EventDate { get; set; }
 
         public decimal? Turnover { get; set; }
 
@@ -64,6 +65,14 @@
             get
             {
                 return Margin - JuiceMargin;
+            }
+        }
+
+        public string EventDateString
+        {
+            get
+            {
+                return Convert.ToDateTime(EventDate).ToShortFormatedDate();
             }
         }
     }
