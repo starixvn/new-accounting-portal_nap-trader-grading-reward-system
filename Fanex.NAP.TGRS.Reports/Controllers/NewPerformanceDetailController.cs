@@ -8,6 +8,7 @@
     using Fanex.NAP.TGRS.Reports.Services;
     using System;
     using System.Web.Mvc;
+    using System.Linq;
 
     public class NewPerformanceDetailController : TGRSBaseController
     {
@@ -186,7 +187,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetGradeTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -211,7 +214,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
-            return null;
+            var result = _newDetailReportService.GetGradeTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

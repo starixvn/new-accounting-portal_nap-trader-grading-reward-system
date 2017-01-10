@@ -5,6 +5,7 @@
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using System.Collections.Generic;
+    using System.Linq;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
     {
@@ -58,8 +59,42 @@
             return result;
         }
 
+        public IEnumerable<GradeTraderPerformanceInfo> GetGradeTraderPerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeTraderPerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeTraderPerformanceInfo>();
+
+            return result;
+        }
+
+        public Dictionary<string, IEnumerable<GradeTraderMatchPerformanceInfo>> GetGradeTraderMatchPerformance(ICriteria criteria)
+        {
+            var data = this.GetData<GradeTraderMatchPerformanceInfo>(criteria);
+            var result = new Dictionary<string, IEnumerable<GradeTraderMatchPerformanceInfo>>();
+
+            data = data ?? new List<GradeTraderMatchPerformanceInfo>();
+
+            if (data.Count() > 0)
+            {
+                var groups = data.GroupBy(t => t.LeagueId);
+                foreach (var group in groups)
+                {
+                    var leagueName = CacheRef.GetLeagueName(group.Key);
+                    if (string.IsNullOrEmpty(leagueName))
+                    {
+                        leagueName = group.Key.ToString();
+                    }
+                    
+                    result.Add(leagueName, group.Select(t => t));
+                }
+            }
+
+            return result;
+        }
+
         #region Private
-        
+
         #endregion Private
     }
 }

@@ -10,6 +10,7 @@
         public DateTime ToDate { get; set; }
 
         public byte Grade { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_NewPerformanceDetail_Grade_Trader";

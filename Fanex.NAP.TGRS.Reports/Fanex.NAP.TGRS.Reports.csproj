@@ -189,8 +189,10 @@
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\GradeLeagueTraderMatchPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeTraderMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderMatchPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\GradeLeagueTraderPerformanceInfo.cs" />
+    <Compile Include="Models\NewPerformanceDetail\GradeTraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeagueTraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\MatchPerformanceInfo.cs" />
