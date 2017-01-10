@@ -59,7 +59,8 @@
 </div>	
 @section Foot
 {
-    @Scripts.Render("~/scripts/traderPerformance")
+    @Scripts.Render("~/scripts/newtraderPerformance")
+    <script type="text/javascript" src="~/Areas/Reports/Resources/NewPerformanceDetail/trader-performance.js" ></script>
     <script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',

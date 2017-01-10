@@ -7,6 +7,7 @@
     using Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class NewPerformanceDetailController : TGRSBaseController
@@ -123,7 +124,7 @@
         #endregion League Performance
 
         #region Trader Performance
-
+        
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
@@ -145,7 +146,7 @@
         {
             var traderMatchPerformance = _newDetailReportService.GetTraderMatchPerformance(criteria);
 
-            return Json(traderMatchPerformance, JsonRequestBehavior.AllowGet);
+            return Json(traderMatchPerformance.GroupBy(l => l.LeagueId), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
