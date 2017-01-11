@@ -31,6 +31,8 @@
         IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(ICriteria criteria);
 
         IEnumerable<TraderMatchBetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria);
+
+        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true);
         #endregion
 
         #region Grade
