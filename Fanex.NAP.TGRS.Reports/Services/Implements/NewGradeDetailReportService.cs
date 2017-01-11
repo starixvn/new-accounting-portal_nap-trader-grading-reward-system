@@ -55,11 +55,20 @@
             return result;
         }
 
-        public IEnumerable<GradeLeagueMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria)
+        public IEnumerable<GradeLeagueTraderMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria)
         {
-            var result = this.GetData<GradeLeagueMatchBettypePerformanceInfo>(criteria);
+            var result = this.GetData<GradeLeagueTraderMatchBettypePerformanceInfo>(criteria);
 
-            result = result ?? new List<GradeLeagueMatchBettypePerformanceInfo>();
+            result = result ?? new List<GradeLeagueTraderMatchBettypePerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<GradeTraderMatchBettypePerformanceInfo> GetGradeTraderMatchBettypePerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeTraderMatchBettypePerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeTraderMatchBettypePerformanceInfo>();
 
             return result;
         }

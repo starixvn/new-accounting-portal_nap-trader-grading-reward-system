@@ -43,7 +43,9 @@
 
         IEnumerable<GradeLeagueTraderMatchPerformanceInfo> GetGradeLeagueTraderMatchPerformance(ICriteria criteria);
 
-        IEnumerable<GradeLeagueMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria);
+        IEnumerable<GradeLeagueTraderMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria);
+
+        IEnumerable<GradeTraderMatchBettypePerformanceInfo> GetGradeTraderMatchBettypePerformance(ICriteria criteria);
 
         IEnumerable<GradeTraderPerformanceInfo> GetGradeTraderPerformance(ICriteria criteria);
 
@@ -70,5 +72,29 @@
         void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath);
 
         #endregion Bettype
+
+        #region Team
+
+        IEnumerable<TeamInfo> GetTeams();
+
+        IEnumerable<TeamPerformanceInfo> GetTeamPerformance(ICriteria criteria);
+
+        IEnumerable<TeamLeaguePerformanceInfo> GetTeamLeaguePerformance(ICriteria criteria);
+
+        IEnumerable<TeamLeagueTraderPerformanceInfo> GetTeamLeagueTraderPerformance(ICriteria criteria);
+
+        IEnumerable<TeamLeagueTraderMatchPerformanceInfo> GetTeamLeagueTraderMatchPerformance(ICriteria criteria);
+
+        IEnumerable<TeamLeagueTraderMatchBettypePerformanceInfo> GetTeamLeagueTraderMatchBettypePerformance(ICriteria criteria);
+
+        IEnumerable<TeamTraderMatchBettypePerformanceInfo> GetTeamTraderMatchBettypePerformance(ICriteria criteria);
+
+        IEnumerable<TeamTraderPerformanceInfo> GetTeamTraderPerformance(ICriteria criteria);
+
+        Dictionary<string, IEnumerable<TeamTraderMatchPerformanceInfo>> GetTeamTraderMatchPerformance(ICriteria criteria);
+
+        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, bool isViewScore, string templatePath);
+
+        #endregion Team
     }
 }

@@ -15,7 +15,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype";
+            return "TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_Bettype";
         }
 
         public override bool IsValid()

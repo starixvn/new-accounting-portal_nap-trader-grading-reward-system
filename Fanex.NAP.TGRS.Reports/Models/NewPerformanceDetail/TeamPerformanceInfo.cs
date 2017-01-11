@@ -1,8 +1,16 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail
 {
-    public class GradeLeagueMatchBettypePerformanceInfo
+    public class TeamPerformanceInfo
     {
-        public string TypeName { get; set; }
+        public short TeamId { get; set; }
+
+        public string TeamName { get; set; }
+
+        public int TraderCount { get; set; }
+
+        public int LeagueCount { get; set; }
+
+        public int MatchCount { get; set; }
 
         public decimal Turnover { get; set; }
 
@@ -11,6 +19,8 @@
         public decimal Juice { get; set; }
 
         public int BetCount { get; set; }
+
+        public decimal? Score { get; set; }
 
         public decimal Leftover
         {

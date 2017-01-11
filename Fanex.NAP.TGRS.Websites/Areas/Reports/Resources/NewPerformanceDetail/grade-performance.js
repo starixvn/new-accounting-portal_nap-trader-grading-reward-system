@@ -228,7 +228,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       }],
-            gridExpandHeight: 260,
+            gridExpandHeight: 200,
             showTitle: true,
             titleInfo: {
                 showExcelButton: true,

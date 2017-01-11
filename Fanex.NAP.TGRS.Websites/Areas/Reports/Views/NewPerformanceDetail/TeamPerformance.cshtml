@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
+﻿@using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail
 @{
     ViewBag.Title = ViewLang.NewPerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,7 +41,7 @@
             </div>
             <div class="edit-field col_8">
                 <select id="ddlTeam" multiple="multiple">
-                    @foreach (var item in (IEnumerable<TeamItem>)ViewBag.Teams)
+                    @foreach (var item in (IEnumerable<TeamInfo>)ViewBag.Teams)
                     {
                         <option value="@item.TeamId">@item.TeamName</option>
                     }
@@ -69,7 +69,7 @@
 </div>
 @section Foot
 {
-    @Scripts.Render("~/scripts/teamPerformance")
+    @Scripts.Render("~/scripts/newTeamPerformance")
     <script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',

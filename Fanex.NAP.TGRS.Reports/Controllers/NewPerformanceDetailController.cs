@@ -124,7 +124,7 @@
         #endregion League Performance
 
         #region Trader Performance
-        
+
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
@@ -255,6 +255,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TeamPerformance()
         {
+            ViewBag.Teams = this._newDetailReportService.GetTeams();
+
             return View();
         }
 
@@ -262,55 +264,74 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetTeamPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetTeamTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria)
         {
-            return null;
+            var result = _newDetailReportService.GetTeamTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
+        {
+            var templatePath = Server.MapPath(TeamPerformanceDetail);
+            var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+
+            this._newDetailReportService.ExportTeamPerformance(criteria, isViewScore, templatePath);
+
+            return new EmptyResult();
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeamCriteria criteria)
         {
-            return null;
-        }
+            var result = this._newDetailReportService.GetTeamLeagueTraderMatchBettypePerformance(criteria);
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
-        {
-            return new EmptyResult();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueDetailTeam(GetLeagueDetailTeamCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetTeamLeaguePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformanceOfLeagueTeam(GetTraderPerformanceOfLeagueTeam criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetTeamLeagueTraderPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeamCriteria criteria)
         {
-            return null;
+            var result = this._newDetailReportService.GetTeamLeagueTraderMatchPerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion Team Performance
 
