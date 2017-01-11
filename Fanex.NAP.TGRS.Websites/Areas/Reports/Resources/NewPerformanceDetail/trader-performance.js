@@ -713,7 +713,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
             ],
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: labels.BetType, Width: 180, Name: 'ColBettype', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: labels.BetType, Width: 180, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 {
                     HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat
@@ -793,7 +793,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
             $.each(data, function (index, item) {
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
-                            { Name: 'ColBettype', Value: item.TypeName },
+                            { Name: 'ColBetType', Value: item.TypeName },
                             { Name: 'ColTurnover', Value: item.Turnover },
                             { Name: 'ColJuice', Value: item.Juice },
                             { Name: 'ColJuiceMargin', Value: common.GetNumWithLabel(item.Turnover > 0 ? item.Juice / item.Turnover * 100 : null, labels.NA) },
