@@ -1,5 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail
 {
+    using System;
+
+    [Serializable]
     public class LeaguePerformanceInfo
     {
         public int LeagueId { get; set; }
