@@ -712,7 +712,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
                      }
             ],
             columns: [
-                { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: labels.BetType, Width: 180, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 {
                     HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
