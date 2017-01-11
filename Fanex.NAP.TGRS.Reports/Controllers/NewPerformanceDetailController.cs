@@ -161,7 +161,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            var templatePath = Server.MapPath(TeamPerformanceDetail);
+            var templatePath = Server.MapPath(TraderPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
             this._newDetailReportService.ExportTraderPerformance(criteria, templatePath, isViewScore);
