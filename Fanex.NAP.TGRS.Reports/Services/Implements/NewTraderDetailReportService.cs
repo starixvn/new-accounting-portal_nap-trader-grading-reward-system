@@ -28,18 +28,12 @@
 
         public IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(ICriteria criteria)
         {
-            var result = this.GetData<MatchPerformanceInfo>(criteria);
-            SessionManager.Set<IEnumerable<MatchPerformanceInfo>>(TraderPerformanceDetailReportSessionKey, result);
-
-            return result;
+            return this.GetData<MatchPerformanceInfo>(criteria);
         }
 
         public IEnumerable<TraderMatchBetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria)
         {
-            var result = this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
-            SessionManager.Set<IEnumerable<TraderMatchBetTypePerformanceInfo>>(TraderPerformanceDetailReportSessionKey, result);
-
-            return result;
+            return this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
         }
 
         public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true)
@@ -60,7 +54,7 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowData(traderData, ref writer);
-                writer.SyncColumnsWidth(10);
+                writer.SyncColumnsWidth(15);
                 writer.Render();
             }
         }
