@@ -22,6 +22,8 @@
 
         public decimal? Margin { get; set; }
 
+        public decimal? Score { get; set; }
+
         public decimal? Leftover
         {
             get

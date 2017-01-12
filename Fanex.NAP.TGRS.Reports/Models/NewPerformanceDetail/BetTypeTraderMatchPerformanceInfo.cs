@@ -23,6 +23,8 @@
 
         public int BetCount { get; set; }
 
+        public decimal? Score { get; set; }
+
         public decimal Leftover
         {
             get
