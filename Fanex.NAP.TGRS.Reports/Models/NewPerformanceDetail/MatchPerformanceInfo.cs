@@ -8,27 +8,11 @@
     {
         public int? LeagueId { get; set; }
 
-        public string LeagueName
-        {
-            get
-            {
-                return CacheRef.GetLeagueName(LeagueId);
-            }
-        }
-
         public int? MatchId { get; set; }
 
         public int? HomeId { get; set; }
 
         public int? AwayId { get; set; }
-
-        public string MatchName
-        {
-            get
-            {
-                return string.Format("{0} -vs- {1}", CacheRef.GetTeamName(HomeId), CacheRef.GetTeamName(AwayId));
-            }
-        }
 
         public DateTime EventDate { get; set; }
 
@@ -73,6 +57,22 @@
             get
             {
                 return Convert.ToDateTime(EventDate).ToShortFormatedDate();
+            }
+        }
+
+        public string LeagueName
+        {
+            get
+            {
+                return CacheRef.GetLeagueName(LeagueId);
+            }
+        }
+
+        public string MatchName
+        {
+            get
+            {
+                return string.Format("{0} -vs- {1}", CacheRef.GetTeamName(HomeId), CacheRef.GetTeamName(AwayId));
             }
         }
     }
