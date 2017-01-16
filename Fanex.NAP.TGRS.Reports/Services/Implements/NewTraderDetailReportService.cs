@@ -21,6 +21,15 @@
         public IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria)
         {
             var result = this.GetData<TraderPerformanceInfo>(criteria);
+
+            if (!(criteria as GetTraderPerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             SessionManager.Set<IEnumerable<TraderPerformanceInfo>>(TraderPerformanceDetailReportSessionKey, result);
 
             return result;
@@ -28,12 +37,32 @@
 
         public IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(ICriteria criteria)
         {
-            return this.GetData<MatchPerformanceInfo>(criteria);
+            var result = this.GetData<MatchPerformanceInfo>(criteria);
+
+            if (!(criteria as GetTraderMatchPerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            return result;
         }
 
         public IEnumerable<TraderMatchBetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria)
         {
-            return this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
+            var result = this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
+
+            if (!(criteria as GetTraderMatchBettypePerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            return result;
         }
 
         public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true)

@@ -32,6 +32,14 @@
 
             result = result ?? new List<TeamPerformanceInfo>();
 
+            if (!(criteria as GetTeamPerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             SessionManager.Set<IEnumerable<TeamPerformanceInfo>>(TeamPerformanceDetailReportSessionKey, result);
 
             return result;
@@ -52,6 +60,14 @@
 
             result = result ?? new List<TeamLeagueTraderPerformanceInfo>();
 
+            if (!(criteria as GetTraderPerformanceOfLeagueTeam).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -70,6 +86,14 @@
 
             result = result ?? new List<TeamLeagueTraderMatchBettypePerformanceInfo>();
 
+            if (!(criteria as GetBettypeDetailTeamCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -87,6 +111,14 @@
             var result = this.GetData<TeamTraderPerformanceInfo>(criteria);
 
             result = result ?? new List<TeamTraderPerformanceInfo>();
+
+            if (!(criteria as GetTraderPerformanceOfTeamCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
 
             return result;
         }

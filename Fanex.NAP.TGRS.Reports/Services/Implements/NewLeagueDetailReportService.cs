@@ -36,6 +36,14 @@
 
             result = result ?? new List<LeagueTraderPerformanceInfo>();
 
+            if (!(criteria as GetTraderPerformanceOfLeagueCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -54,6 +62,14 @@
 
             result = result ?? new List<LeagueTraderMatchBettypePerformanceInfo>();
 
+            if (!(criteria as GetBettypeDetailLeagueCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -71,6 +87,14 @@
             var result = this.GetData<LeagueMatchBettypePerformanceInfo>(criteria);
 
             result = result ?? new List<LeagueMatchBettypePerformanceInfo>();
+
+            if (!(criteria as GetBetTypePerformanceOfLeagueMatchCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
 
             return result;
         }
@@ -127,7 +151,7 @@
         private void FillRowData(IEnumerable<LeaguePerformanceInfo> data, ref ExcelTemplateWriter writer)
         {
             var len = data.Count();
-            decimal totalTO = 0, totalJuice = 0, totalWL = 0; 
+            decimal totalTO = 0, totalJuice = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0;
 
             for (int i = 0; i < len; i++)

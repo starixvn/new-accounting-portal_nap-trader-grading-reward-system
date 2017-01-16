@@ -23,6 +23,14 @@
 
             result = result ?? new List<GradePerformanceInfo>();
 
+            if (!(criteria as GetGradePerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             SessionManager.Set<IEnumerable<GradePerformanceInfo>>(GradePerformanceDetailReportSessionKey, result);
 
             return result;
@@ -43,6 +51,14 @@
 
             result = result ?? new List<GradeLeagueTraderPerformanceInfo>();
 
+            if (!(criteria as GetTraderPerformanceOfGradeByLeagueCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -61,6 +77,14 @@
 
             result = result ?? new List<GradeLeagueTraderMatchBettypePerformanceInfo>();
 
+            if (!(criteria as GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -78,6 +102,14 @@
             var result = this.GetData<GradeTraderPerformanceInfo>(criteria);
 
             result = result ?? new List<GradeTraderPerformanceInfo>();
+
+            if (!(criteria as GetTraderPerformanceOfGradeCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
 
             return result;
         }

@@ -80,6 +80,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -98,6 +99,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeagueCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -116,6 +118,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBettypePerformanceOfLeagueAndMatch(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -135,6 +138,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderPerformance = _newDetailReportService.GetTraderPerformance(criteria);
 
             return Json(traderPerformance, JsonRequestBehavior.AllowGet);
@@ -144,6 +148,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderMatchPerformance = _newDetailReportService.GetTraderMatchPerformance(criteria);
 
             return Json(traderMatchPerformance.GroupBy(l => l.LeagueId), JsonRequestBehavior.AllowGet);
@@ -153,6 +158,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderMatchBettypePerformance = _newDetailReportService.GetTraderMatchBettypePerformance(criteria);
 
             return Json(traderMatchBettypePerformance, JsonRequestBehavior.AllowGet);
@@ -183,6 +189,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -192,6 +199,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -201,6 +209,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeLeagueTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -237,6 +246,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailGrade(GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeLeagueTraderMatchBettypePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -269,6 +279,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -278,6 +289,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -307,6 +319,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeamCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamLeagueTraderMatchBettypePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -325,6 +338,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformanceOfLeagueTeam(GetTraderPerformanceOfLeagueTeam criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamLeagueTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -361,6 +375,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -370,6 +385,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -388,6 +404,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeLeagueTraderPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -397,6 +414,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeLeagueTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);

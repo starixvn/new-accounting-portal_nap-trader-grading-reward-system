@@ -43,6 +43,14 @@
 
             result = result ?? new List<BetTypeLeagueTraderPerformanceInfo>();
 
+            if (!(criteria as GetTraderPerformanceOfBetTypeLeagueCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -51,6 +59,14 @@
             var result = this.GetData<BetTypeLeagueTraderMatchPerformanceInfo>(criteria);
 
             result = result ?? new List<BetTypeLeagueTraderMatchPerformanceInfo>();
+
+            if (!(criteria as GetMatchPerformanceOfBetTypeLeagueTraderCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
 
             return result;
         }
@@ -61,6 +77,14 @@
 
             result = result ?? new List<BetTypeTraderPerformanceInfo>();
 
+            if (!(criteria as GetTraderPerformanceOfBetTypeCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
             return result;
         }
 
@@ -70,6 +94,14 @@
             var result = new Dictionary<string, IEnumerable<BetTypeTraderMatchPerformanceInfo>>();
 
             data = data ?? new List<BetTypeTraderMatchPerformanceInfo>();
+
+            if (!(criteria as GetMatchPerformanceOfBetTypeTraderCriteria).IsViewScore)
+            {
+                foreach (var item in data)
+                {
+                    item.Score = null;
+                }
+            }
 
             if (data.Count() > 0)
             {
