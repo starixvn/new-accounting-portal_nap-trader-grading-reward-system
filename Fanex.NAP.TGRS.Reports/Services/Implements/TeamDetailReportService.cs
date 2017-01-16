@@ -176,7 +176,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath)
+        public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath, bool isViewScore)
         {
             TeamPerformanceList teamData = SessionManager.Get<TeamPerformanceList>(TeamPerformanceDetailReportSessionKey);
 
@@ -193,8 +193,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
-                FillRowData(teamData, ref writer);
-                writer.SyncColumnsWidth(10);
+                FillRowData(teamData, ref writer, isViewScore);
+                writer.SyncColumnsWidth(9);
+
+                if (!isViewScore)
+                {
+                    writer.SetColumnHidden(9);
+                }
+
                 writer.Render();
             }
         }
@@ -204,7 +210,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillRowData(TeamPerformanceList contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(TeamPerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
             int len = contentData.ItemList.Count;
@@ -226,7 +232,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.WinLoss,
                     item.BetCount,
                     (object)item.Margin ?? ViewLang.NA,
-                    (object)item.Score ?? ViewLang.NA
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }

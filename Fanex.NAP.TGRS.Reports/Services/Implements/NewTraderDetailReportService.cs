@@ -53,14 +53,20 @@
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
-                FillRowData(traderData, ref writer);
+                FillRowData(traderData, ref writer, isViewScore);
                 writer.SyncColumnsWidth(15);
+
+                if (!isViewScore)
+                {
+                    writer.SetColumnHidden(14);
+                }
+
                 writer.Render();
             }
         }
 
         #region Private functions
-        private void FillRowData(IEnumerable<TraderPerformanceInfo> contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(IEnumerable<TraderPerformanceInfo> contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
             int dataLength = contentData.ToList().Count;
@@ -94,7 +100,7 @@
                     item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA,
                     item.BetCount,
-                    (object)item.Score ?? ViewLang.NA
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }
@@ -109,7 +115,7 @@
                 totalMatch,
                 totalTO,
                 totalJuice,
-                totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,                
+                totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
                 totalWL - totalJuice,
                 totalTO > 0 ? (object)((totalWL - totalJuice) / totalTO * 100) : ViewLang.NA,
                 totalWL,
@@ -130,7 +136,7 @@
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            
+
             //// Trader
             string userNameString = (criteria.Username != null) ? string.Format("contains '{0}'", criteria.Username) : string.Empty;
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Trader, boldFont, userNameString, normalFont, "\n");

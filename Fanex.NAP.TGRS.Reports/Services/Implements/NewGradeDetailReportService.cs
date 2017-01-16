@@ -135,6 +135,12 @@
                 FillRowData(gradeData, ref writer, isViewScore);
 
                 writer.SyncColumnsWidth(14);
+
+                if(!isViewScore)
+                {
+                    writer.SetColumnHidden(13);
+                }
+
                 writer.Render();
             }
         }

@@ -106,7 +106,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath);
+        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the grade performance.
@@ -127,7 +127,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath);
+        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the trader performance of a grade.
@@ -184,7 +184,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath);
+        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the bet type performance.

@@ -224,7 +224,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            var betTypes = this._detailReportService.GetBetTypes();
 
             ViewBag.BetTypes = betTypes;
 
@@ -272,9 +272,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            string templatePath = Server.MapPath(TraderPerformanceDetail);
+            var templatePath = Server.MapPath(TraderPerformanceDetail);
+            var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            this._detailReportService.ExportTraderPerformance(criteria, templatePath);
+            this._detailReportService.ExportTraderPerformance(criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }
@@ -410,9 +411,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
-            string templatePath = Server.MapPath(GradePerformanceDetail);
+            var templatePath = Server.MapPath(GradePerformanceDetail);
+            var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            this._detailReportService.ExportGradePerformance(criteria, templatePath);
+            this._detailReportService.ExportGradePerformance(criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }
@@ -505,9 +507,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
-            string templatePath = Server.MapPath(TeamPerformanceDetail);
+            var templatePath = Server.MapPath(TeamPerformanceDetail);
+            var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            _detailReportService.ExportTeamPerformance(criteria, templatePath);
+            _detailReportService.ExportTeamPerformance(criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }

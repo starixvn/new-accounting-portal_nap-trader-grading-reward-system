@@ -96,6 +96,11 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             this._sheet.CreateFreezePane(colSplit, rowSplit);
         }
 
+        public void SetColumnHidden(int colIndex)
+        {
+            this._sheet.SetColumnHidden(colIndex, true);
+        }
+
         /// <summary>
         /// Writes cell range value.
         /// </summary>

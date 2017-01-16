@@ -196,7 +196,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        public void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath)
+        public void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath, bool isViewScore)
         {
             GradePerformanceList gradeData = SessionManager.Get<GradePerformanceList>(GradePerformanceDetailReportSessionKey);
 
@@ -213,8 +213,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
-                FillRowData(gradeData, ref writer);
+                FillRowData(gradeData, ref writer, isViewScore);
                 writer.SyncColumnsWidth(9);
+
+                if (!isViewScore)
+                {
+                    writer.SetColumnHidden(9);
+                }
+
                 writer.Render();
             }
         }
@@ -224,7 +230,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillRowData(GradePerformanceList contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(GradePerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
             int len = contentData.ItemList.Count;
@@ -246,7 +252,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.WinLoss,
                     item.BetCount,
                     (object)item.Margin ?? ViewLang.NA,
-                    (object)item.Score ?? ViewLang.NA
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }
