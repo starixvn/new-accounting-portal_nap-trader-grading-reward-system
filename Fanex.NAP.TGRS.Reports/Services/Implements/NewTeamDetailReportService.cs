@@ -131,11 +131,11 @@
             if (TeamData != null && TeamData.Count() > 0)
             {
                 string reportName = string.Format(
-                                ViewLang.PerformanceDetailFileName,
+                                ViewLang.NewPerformanceDetailFileName,
                                 ViewLang.League,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.LeaguePerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewTeamPerformance);
                 writer.CopyRows(0, 1);
 
                 FilterBlock(criteria, ref writer);

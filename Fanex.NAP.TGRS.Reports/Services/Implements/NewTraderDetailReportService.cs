@@ -43,12 +43,12 @@
             if ((traderData != null) && (traderData.Count > 0))
             {
                 string reportName = string.Format(
-                                ViewLang.PerformanceDetailFileName,
+                                ViewLang.NewPerformanceDetailFileName,
                                 ViewLang.Trader,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderPerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewTraderPerformance);
                 writer.CopyRows(0, 1);
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);

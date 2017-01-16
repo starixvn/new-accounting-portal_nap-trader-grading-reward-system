@@ -826,6 +826,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Bet Type Performance.
+        /// </summary>
+        public static string NewBetTypePerformance {
+            get {
+                return ResourceManager.GetString("NewBetTypePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Grade.
         /// </summary>
         public static string NewGrade {
@@ -835,11 +844,38 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Grade Performance.
+        /// </summary>
+        public static string NewGradePerformance {
+            get {
+                return ResourceManager.GetString("NewGradePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Issue.
         /// </summary>
         public static string NewIssue {
             get {
                 return ResourceManager.GetString("NewIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New League Performance.
+        /// </summary>
+        public static string NewLeaguePerformance {
+            get {
+                return ResourceManager.GetString("NewLeaguePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New_Performance_Detail_{0}_{1}_{2}.
+        /// </summary>
+        public static string NewPerformanceDetailFileName {
+            get {
+                return ResourceManager.GetString("NewPerformanceDetailFileName", resourceCulture);
             }
         }
         
@@ -862,11 +898,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Team Performance.
+        /// </summary>
+        public static string NewTeamPerformance {
+            get {
+                return ResourceManager.GetString("NewTeamPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Trader.
         /// </summary>
         public static string NewTrader {
             get {
                 return ResourceManager.GetString("NewTrader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Trader Performance.
+        /// </summary>
+        public static string NewTraderPerformance {
+            get {
+                return ResourceManager.GetString("NewTraderPerformance", resourceCulture);
             }
         }
         
@@ -1452,6 +1506,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Turnover {
             get {
                 return ResourceManager.GetString("Turnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turnover (MY).
+        /// </summary>
+        public static string TurnoverMY {
+            get {
+                return ResourceManager.GetString("TurnoverMY", resourceCulture);
             }
         }
         

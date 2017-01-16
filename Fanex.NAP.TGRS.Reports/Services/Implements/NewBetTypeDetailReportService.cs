@@ -104,11 +104,11 @@
             if ((bettypeData != null) && (bettypeData.Count() > 0))
             {
                 string reportName = string.Format(
-                                    ViewLang.PerformanceDetailFileName,
+                                    ViewLang.NewPerformanceDetailFileName,
                                     ViewLang.BetTypeExcelFile,
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
                                     criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewBetTypePerformance);
 
                 writer.CopyRows(0, 1);
 
