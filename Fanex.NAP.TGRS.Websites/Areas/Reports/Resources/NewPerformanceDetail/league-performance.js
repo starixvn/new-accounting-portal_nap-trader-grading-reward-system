@@ -1120,7 +1120,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var row;
 
         var totalTO = 0, totalJuice = 0, totalWL = 0, totalBetcount = 0;
-        debugger;
+
         if (data) {
             $.each(data, function (index, item) {
                 matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.MatchName);

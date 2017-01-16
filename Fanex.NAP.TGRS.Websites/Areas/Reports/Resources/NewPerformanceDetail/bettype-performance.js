@@ -631,7 +631,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 cachedData.PageSize = common.Constants.PageSize;
                 cachedData.PageIndex = 0;
                 cachedData.MatchPerformance = result;
-                debugger;
+
                 reloadPage(cachedData.PageIndex, cachedData.PageSize, betTypeId, betTypeName, traderId, traderName);
             },
             error: function (xhr) {
