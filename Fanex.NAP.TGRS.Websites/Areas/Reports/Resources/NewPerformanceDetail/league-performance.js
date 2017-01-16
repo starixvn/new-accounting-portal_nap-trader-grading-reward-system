@@ -1359,6 +1359,10 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid(gridOptions);
 
+        if (!common.HasViewScorePermission) {
+            domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid("hideColumns", gridOptions, [10]);
+        }
+
         handleBettypeOfLeagueMatchDetailGridEvents();
     };
 

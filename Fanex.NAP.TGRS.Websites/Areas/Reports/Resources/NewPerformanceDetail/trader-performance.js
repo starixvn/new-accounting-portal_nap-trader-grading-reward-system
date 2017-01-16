@@ -353,7 +353,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [14]);
         }
 
         handleTraderPerformanceGridEvents();
@@ -841,7 +841,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [6]);
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [10]);
         }
 
         handleBettypeDetailGridEvents();

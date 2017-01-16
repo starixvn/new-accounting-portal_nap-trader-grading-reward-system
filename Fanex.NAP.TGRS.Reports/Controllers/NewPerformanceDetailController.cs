@@ -413,16 +413,5 @@
         }
 
         #endregion Bet Type Performance
-
-        #region Permission
-
-        public ActionResult GetViewScorePermission()
-        {
-            var result = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion Permission
     }
 }

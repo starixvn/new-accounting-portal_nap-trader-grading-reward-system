@@ -547,7 +547,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [14]);
         }
 
         handleTraderPerformanceGridEvents(betTypeId, betTypeName);
@@ -850,7 +850,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [11]);
+            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [11]);
         }
 
         handleMatchPerformanceOfTraderGridEvents();
@@ -1493,7 +1493,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [11]);
+            domElements.divMatchPerformanceGrid.fanexGrid("hideColumns", gridOptions, [11]);
         }
 
         handleMatchPerformanceOfLeagueTraderGridEvents();
