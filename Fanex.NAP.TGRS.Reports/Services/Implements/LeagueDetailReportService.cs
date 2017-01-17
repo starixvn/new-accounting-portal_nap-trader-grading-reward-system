@@ -235,11 +235,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
             if ((leagueData != null) && (leagueData.ItemList.Count > 0))
             {
                 string reportName = string.Format(
-                                ViewLang.NewPerformanceDetailFileName,
+                                ViewLang.PerformanceDetailFileName,
                                 ViewLang.League,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewLeaguePerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.LeaguePerformance);
                 writer.CopyRows(0, 1);
 
                 FilterBlock(criteria, ref writer);

@@ -155,7 +155,7 @@
             {
                 string reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
-                                ViewLang.League,
+                                ViewLang.Grade,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewGradePerformance);

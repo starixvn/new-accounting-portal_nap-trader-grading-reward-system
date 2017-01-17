@@ -150,21 +150,21 @@
 
         public void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, bool isViewScore, string templatePath)
         {
-            var TeamData = SessionManager.Get<IEnumerable<TeamPerformanceInfo>>(TeamPerformanceDetailReportSessionKey);
-            if (TeamData == null || (TeamData != null && TeamData.Count() == 0))
+            var teamData = SessionManager.Get<IEnumerable<TeamPerformanceInfo>>(TeamPerformanceDetailReportSessionKey);
+            if (teamData == null || (teamData != null && teamData.Count() == 0))
             {
-                TeamData = this.GetData<TeamPerformanceInfo>(criteria);
+                teamData = this.GetData<TeamPerformanceInfo>(criteria);
 
-                TeamData = TeamData ?? new List<TeamPerformanceInfo>();
+                teamData = teamData ?? new List<TeamPerformanceInfo>();
 
-                SessionManager.Set<IEnumerable<TeamPerformanceInfo>>(TeamPerformanceDetailReportSessionKey, TeamData);
+                SessionManager.Set<IEnumerable<TeamPerformanceInfo>>(TeamPerformanceDetailReportSessionKey, teamData);
             }
 
-            if (TeamData != null && TeamData.Count() > 0)
+            if (teamData != null && teamData.Count() > 0)
             {
                 string reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
-                                ViewLang.League,
+                                ViewLang.Team,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewTeamPerformance);
@@ -173,7 +173,7 @@
                 FilterBlock(criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
-                FillRowData(TeamData, ref writer, isViewScore);
+                FillRowData(teamData, ref writer, isViewScore);
 
                 writer.SyncColumnsWidth(14);
 
