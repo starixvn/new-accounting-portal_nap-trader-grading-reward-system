@@ -1231,8 +1231,8 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                 { HeaderText: "Juice", Name: "ColJuice", MergeColNumber: 2 },
                                 { HeaderText: "Leftover", Name: "ColLeftover", MergeColNumber: 2 },
                                 { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 2 },
-                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
-                                { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
+                                { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 }
+                                //,{ HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
                          ]
                      }
             ],
@@ -1270,11 +1270,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     {
                         HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
                         FormatNumber: common.Formats.IntegerFormat, Sort: true
-                    },
-                    {
-                        HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                     }
+                    //,{
+                    //    HeaderText: labels.Score, Width: 110, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                    //    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    //}
             ],
             gridExpandHeight: 200,
             showTitle: true,
@@ -1323,8 +1323,9 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                         { Name: 'ColLeftoverMargin', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                         { Name: 'ColWinLoss', Value: item.WinLoss },
                         { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                        { Name: 'ColBetCount', Value: item.BetCount },
-                        { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) });
+                        { Name: 'ColBetCount', Value: item.BetCount }
+                        //,{ Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }
+                        );
                 row = {
                     Columns: currentRowData
                 };
@@ -1359,9 +1360,9 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid(gridOptions);
 
-        if (!common.HasViewScorePermission) {
-            domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid("hideColumns", gridOptions, [10]);
-        }
+        //if (!common.HasViewScorePermission) {
+        //    domElements.divBettypePerformanceOfLeagueMatchGrid.fanexGrid("hideColumns", gridOptions, [10]);
+        //}
 
         handleBettypeOfLeagueMatchDetailGridEvents();
     };
