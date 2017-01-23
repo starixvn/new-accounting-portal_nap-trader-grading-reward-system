@@ -601,25 +601,25 @@
     <value>Error Management</value>
   </data>
   <data name="NewPerformanceDetailReport" xml:space="preserve">
-    <value>Performance Detail (New) Report</value>
+    <value>Performance Detail (Juice &amp; Leftover) Report</value>
   </data>
   <data name="NewBetTypePerformance" xml:space="preserve">
-    <value>New Bet Type Performance</value>
+    <value>Bet Type Performance</value>
   </data>
   <data name="NewGradePerformance" xml:space="preserve">
-    <value>New Grade Performance</value>
+    <value>Grade Performance</value>
   </data>
   <data name="NewLeaguePerformance" xml:space="preserve">
-    <value>New League Performance</value>
+    <value>League Performance</value>
   </data>
   <data name="NewPerformanceDetailFileName" xml:space="preserve">
-    <value>New_Performance_Detail_{0}_{1}_{2}</value>
+    <value>Performance_Detail_{0}_(Juice-LeftOver)_{1}_{2}</value>
   </data>
   <data name="NewTeamPerformance" xml:space="preserve">
-    <value>New Team Performance</value>
+    <value>Team Performance</value>
   </data>
   <data name="NewTraderPerformance" xml:space="preserve">
-    <value>New Trader Performance</value>
+    <value>Trader Performance</value>
   </data>
   <data name="TurnoverMY" xml:space="preserve">
     <value>Turnover (MY)</value>

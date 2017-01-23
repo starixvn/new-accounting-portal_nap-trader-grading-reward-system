@@ -826,7 +826,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Bet Type Performance.
+        ///   Looks up a localized string similar to Bet Type Performance.
         /// </summary>
         public static string NewBetTypePerformance {
             get {
@@ -844,7 +844,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Grade Performance.
+        ///   Looks up a localized string similar to Grade Performance.
         /// </summary>
         public static string NewGradePerformance {
             get {
@@ -862,7 +862,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New League Performance.
+        ///   Looks up a localized string similar to League Performance.
         /// </summary>
         public static string NewLeaguePerformance {
             get {
@@ -871,7 +871,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New_Performance_Detail_{0}_{1}_{2}.
+        ///   Looks up a localized string similar to Performance_Detail_{0}_(Juice-LeftOver)_{1}_{2}.
         /// </summary>
         public static string NewPerformanceDetailFileName {
             get {
@@ -880,7 +880,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Performance Detail (New) Report.
+        ///   Looks up a localized string similar to Performance Detail (Juice &amp; Leftover) Report.
         /// </summary>
         public static string NewPerformanceDetailReport {
             get {
@@ -898,7 +898,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Team Performance.
+        ///   Looks up a localized string similar to Team Performance.
         /// </summary>
         public static string NewTeamPerformance {
             get {
@@ -916,7 +916,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Trader Performance.
+        ///   Looks up a localized string similar to Trader Performance.
         /// </summary>
         public static string NewTraderPerformance {
             get {
