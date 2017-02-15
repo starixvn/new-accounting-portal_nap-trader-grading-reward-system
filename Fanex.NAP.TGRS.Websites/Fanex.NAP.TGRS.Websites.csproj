@@ -261,6 +261,9 @@
     <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting.css" />
     <Content Include="Areas\OSConfiguration\Resources\OSSetting\os-setting.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSRegionManagement\region-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSRegionManagement\region-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSRegionManagement\region-management.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management.js" />
@@ -447,6 +450,9 @@
     <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\TeamPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\NewDetailReports\TraderPerformance.xls" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\performance-detail.less" />
+    <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\InsertRegionForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\UpdateRegionForm.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

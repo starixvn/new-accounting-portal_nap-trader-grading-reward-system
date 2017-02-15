@@ -97,6 +97,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new region has been added successfully!.
+        /// </summary>
+        public static string AddRegionSuccessfully {
+            get {
+                return ResourceManager.GetString("AddRegionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The new team has been added successfully!.
         /// </summary>
         public static string AddTeamSuccessfully {
@@ -444,6 +453,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string UpdateNoChange {
             get {
                 return ResourceManager.GetString("UpdateNoChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The region has been updated successfully!.
+        /// </summary>
+        public static string UpdateRegionSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateRegionSuccessfully", resourceCulture);
             }
         }
         

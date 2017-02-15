@@ -385,6 +385,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Region.
+        /// </summary>
+        public static string EditRegion {
+            get {
+                return ResourceManager.GetString("EditRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Team.
         /// </summary>
         public static string EditTeam {
@@ -655,6 +664,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Of League.
+        /// </summary>
+        public static string LeagueCount {
+            get {
+                return ResourceManager.GetString("LeagueCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League Name.
         /// </summary>
         public static string LeagueName {
@@ -889,6 +907,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Region.
+        /// </summary>
+        public static string NewRegion {
+            get {
+                return ResourceManager.GetString("NewRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Team.
         /// </summary>
         public static string NewTeam {
@@ -1083,6 +1110,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ProfitMargin_4Years {
             get {
                 return ResourceManager.GetString("ProfitMargin_4Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region Management.
+        /// </summary>
+        public static string RegionManagement {
+            get {
+                return ResourceManager.GetString("RegionManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region Name.
+        /// </summary>
+        public static string RegionName {
+            get {
+                return ResourceManager.GetString("RegionName", resourceCulture);
             }
         }
         

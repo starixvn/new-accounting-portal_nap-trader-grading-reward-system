@@ -624,4 +624,19 @@
   <data name="TurnoverMY" xml:space="preserve">
     <value>Turnover (MY)</value>
   </data>
+  <data name="RegionManagement" xml:space="preserve">
+    <value>Region Management</value>
+  </data>
+  <data name="EditRegion" xml:space="preserve">
+    <value>Edit Region</value>
+  </data>
+  <data name="LeagueCount" xml:space="preserve">
+    <value>No. Of League</value>
+  </data>
+  <data name="NewRegion" xml:space="preserve">
+    <value>New Region</value>
+  </data>
+  <data name="RegionName" xml:space="preserve">
+    <value>Region Name</value>
+  </data>
 </root>

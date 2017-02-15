@@ -1,0 +1,51 @@
+﻿@using Fanex.NAP.TGRS.Core.Resources
+@{
+    ViewBag.Title = ViewLang.RegionManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    @if (ViewBag.HasEditRight)
+    {
+        <div class="header-button">
+            <a href="#" id="lnkAddNewRegion" class="green-button change-list"><span class="add-icon"></span>@ViewLang.NewRegion</a>
+        </div>
+    }
+}
+<div id="resultContainer" class="content-grid" hidden>
+    <div id="divRegionsGrid" class="freegrid">
+    </div>
+</div>
+@if (ViewBag.HasEditRight)
+{
+    <div id="divHiddenForm" class="display-none">
+        @Html.Partial("InsertRegionForm")
+        @Html.Partial("UpdateRegionForm")
+    </div>
+}
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-region-management")
+    <script type="text/javascript">
+        var labels = {
+            RegionName: '@ViewLang.RegionName',
+            Description: '@ViewLang.Description',
+            LeagueCount: '@ViewLang.LeagueCount',
+            CreatedDate: '@ViewLang.CreatedDate',
+            CreatedBy: '@ViewLang.CreatedBy',
+            NewRegion: '@ViewLang.NewRegion',
+            EditRegion: '@ViewLang.EditRegion',
+        };
+        var messages = {
+            UpdateRegionSuccessfully: '@Messages.UpdateRegionSuccessfully',
+            AddRegionSuccessfully: '@Messages.AddRegionSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

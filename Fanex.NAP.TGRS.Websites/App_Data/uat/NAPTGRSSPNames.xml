@@ -48,6 +48,11 @@
     <Setting Key="TGRS_OS_TeamInsert" SpName="TGRS_OS_TeamInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TeamUpdate" SpName="TGRS_OS_TeamUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="OSRegionManagement">
+    <Setting Key="TGRS_OS_RegionGetAll" SpName="TGRS_OS_RegionGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_RegionInsert" SpName="TGRS_OS_RegionInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_RegionUpdate" SpName="TGRS_OS_RegionUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="OSTraderManagement">
     <Setting Key="TGRS_OS_TraderGet" SpName="TGRS_OS_TraderGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TraderInsert" SpName="TGRS_OS_TraderInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

@@ -276,4 +276,10 @@
   <data name="InsertErrorSuccessfully" xml:space="preserve">
     <value>The Error has been inserted successfully!</value>
   </data>
+  <data name="AddRegionSuccessfully" xml:space="preserve">
+    <value>The new region has been added successfully!</value>
+  </data>
+  <data name="UpdateRegionSuccessfully" xml:space="preserve">
+    <value>The region has been updated successfully!</value>
+  </data>
 </root>

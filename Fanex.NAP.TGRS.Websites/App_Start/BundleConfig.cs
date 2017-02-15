@@ -295,6 +295,12 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management-factory.js",
                 "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management-service.js",
                 "~/Areas/OSConfiguration/Resources/OSEPADeductionManagement/epa-management.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-region-management")
+                .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management-factory.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management-service.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management.js"));
         }
 
         public static void RegisterOSReportBundles(BundleCollection bundles)

@@ -62,6 +62,8 @@ public static class TGRSFunctionKeys
 
     public const string OSTeamManagement = "OSTeamManagement";
 
+    public const string OSRegionManagement = "OSRegionManagement";
+
     public const string OSTraderManagement = "OSTraderManagement";
 
     public const string OSTraderPerformance = "OSTraderPerformance";
