@@ -48,10 +48,10 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// Gets Index page.
         /// </summary>
         /// <returns>Return Index View.</returns>
-        [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
+        //// [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.GradeManagement, Constant.Policy.Host);
+            //// ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.GradeManagement, Constant.Policy.Host);
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// </summary>
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
+        //// [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need to review here.")]
         public JsonResult GetAllGrade()
         {
@@ -75,7 +75,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <param name="criteria">Criteria that are used to insert data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
+        //// [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
         public JsonResult InsertGrade(InsertGradeCriteria criteria)
         {
             ICommandResult result = null;
@@ -105,7 +105,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         /// <param name="criteria">Criteria that are used to update data.</param>
         /// <returns>JSON object indicates the result of insert.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
+        //// [NapAuth(FunctionKey = TGRSFunctionKeys.GradeManagement, Policy = Constant.Policy.Read)]
         public JsonResult UpdateGrade(UpdateGradeCriteria criteria)
         {
             ICommandResult result = null;

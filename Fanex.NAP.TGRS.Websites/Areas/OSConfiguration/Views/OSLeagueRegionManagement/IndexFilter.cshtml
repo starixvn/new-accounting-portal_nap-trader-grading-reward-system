@@ -1,0 +1,31 @@
+﻿<div class="filter-bar">
+    <div id="divLeagueRegionFilterForm" class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txtLeagueName">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_5">
+                <input type="text" id="txtLeagueName" style="width:100%" maxlength="100" data-val-not-html="@Messages.HtmlInputError" placeholder="All Leagues"/>
+            </div>
+            <div class="lbl-field col_2"> </div>
+            <div class="lbl-field col_2">
+                <label for="ddlSport">@ViewLang.Sport</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddlSport" class="col_5">
+                </select>
+            </div>
+            <div class="lbl-field col_2">
+                <label for="ddlRegion">@ViewLang.Region</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="ddlRegion" class="col_5">
+                    <option region-id="-1">@ViewLang.AllRegions</option>
+                </select>
+            </div>
+            <div class="submit col_4">
+                <input id="btnSearch" type="submit" class="blue-button float-right" value="Search">
+            </div>
+        </div>
+    </div>
+</div>

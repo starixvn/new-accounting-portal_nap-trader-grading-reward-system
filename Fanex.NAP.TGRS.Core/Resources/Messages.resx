@@ -282,4 +282,10 @@
   <data name="UpdateRegionSuccessfully" xml:space="preserve">
     <value>The region has been updated successfully!</value>
   </data>
+  <data name="AddLeagueRegionSuccessfully" xml:space="preserve">
+    <value>The league region has been added successfully!</value>
+  </data>
+  <data name="UpdateLeagueRegionSuccessfully" xml:space="preserve">
+    <value>The league region has been updated successfully!</value>
+  </data>
 </root>

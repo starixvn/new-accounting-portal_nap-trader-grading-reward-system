@@ -267,6 +267,9 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTeamManagement\team-management.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSLeagueRegionManagement\league-region-management-factory.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSLeagueRegionManagement\league-region-management-service.js" />
+    <Content Include="Areas\OSConfiguration\Resources\OSLeagueRegionManagement\league-region-management.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-factory.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
@@ -453,6 +456,8 @@
     <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\InsertRegionForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\UpdateRegionForm.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\Index.cshtml" />
+    <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\IndexFilter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

@@ -133,6 +133,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Regions.
+        /// </summary>
+        public static string AllRegions {
+            get {
+                return ResourceManager.GetString("AllRegions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Sports.
         /// </summary>
         public static string AllSports {
@@ -1110,6 +1119,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ProfitMargin_4Years {
             get {
                 return ResourceManager.GetString("ProfitMargin_4Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        public static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
             }
         }
         

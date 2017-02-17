@@ -639,4 +639,10 @@
   <data name="RegionName" xml:space="preserve">
     <value>Region Name</value>
   </data>
+  <data name="AllRegions" xml:space="preserve">
+    <value>All Regions</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
 </root>

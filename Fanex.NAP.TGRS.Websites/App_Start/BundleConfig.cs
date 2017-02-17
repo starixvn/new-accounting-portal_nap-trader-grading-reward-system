@@ -301,6 +301,12 @@ namespace Fanex.NAP.TGRS.Websites
                 .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management-factory.js")
                 .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management-service.js")
                 .Include("~/Areas/OSConfiguration/Resources/OSRegionManagement/region-management.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-league-region-management")
+                .Include("~/Areas/OSConfiguration/Resources/OSLeagueRegionManagement/league-region-management-factory.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSLeagueRegionManagement/league-region-management-service.js")
+                .Include("~/Areas/OSConfiguration/Resources/OSLeagueRegionManagement/league-region-management.js"));
         }
 
         public static void RegisterOSReportBundles(BundleCollection bundles)

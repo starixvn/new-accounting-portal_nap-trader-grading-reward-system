@@ -46,6 +46,7 @@
     <Compile Include="Controllers\OSSettingController.cs" />
     <Compile Include="Controllers\OSRegionManagementController.cs" />
     <Compile Include="Controllers\OSTeamManagementController.cs" />
+    <Compile Include="Controllers\OSLeagueRegionManagementController.cs" />
     <Compile Include="Controllers\OSTraderManagementController.cs" />
     <Compile Include="Controllers\OSGradeManagementController.cs" />
     <Compile Include="Criteria\EPADeductionManagement\DeleteLeaveHistoryCriteria.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Criteria\GradeManagement\InsertGradeCriteria.cs" />
     <Compile Include="Criteria\GradeManagement\UpdateGradeCriteria.cs" />
     <Compile Include="Criteria\GradeManagement\GetAllGradesCriteria.cs" />
+    <Compile Include="Criteria\LeagueRegionManagement\GetAllSportsCriteria.cs" />
     <Compile Include="Criteria\SettingManagement\AddSettingCriteria.cs" />
     <Compile Include="Criteria\SettingManagement\BettypeGetAllCriteria.cs" />
     <Compile Include="Criteria\SettingManagement\DeleteSettingCriteria.cs" />
@@ -82,6 +84,9 @@
     <Compile Include="Criteria\TeamManagement\InsertTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\UpdateTeamCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetAllTeamsCriteria.cs" />
+    <Compile Include="Criteria\LeagueRegionManagement\GetLeagueRegionCriteria.cs" />
+    <Compile Include="Criteria\LeagueRegionManagement\InsertLeagueRegionCriteria.cs" />
+    <Compile Include="Criteria\LeagueRegionManagement\UpdateLeagueRegionCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllIssueCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertIssueCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
@@ -105,6 +110,7 @@
     <Compile Include="Models\SettingManagement\Sport.cs" />
     <Compile Include="Models\RegionManagement\RegionInfo.cs" />
     <Compile Include="Models\TeamManagement\TeamInfo.cs" />
+    <Compile Include="Models\LeagueRegionManagement\LeagueRegionInfo.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
     <Compile Include="Models\TraderManagement\Issue.cs" />
     <Compile Include="Models\TraderManagement\History.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="Services\Implement\TeamManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\EPADeductionManagementService.cs" />
+    <Compile Include="Services\Implement\LeagueRegionManagementService.cs" />
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Interface\IEPADeductionManagementService.cs">
       <SubType>Code</SubType>
@@ -127,6 +134,7 @@
     <Compile Include="Services\Interface\IIssueService.cs" />
     <Compile Include="Services\Interface\ISettingService.cs" />
     <Compile Include="Services\Interface\IRegionManagementService.cs" />
+    <Compile Include="Services\Interface\ILeagueRegionManagementService.cs" />
     <Compile Include="Services\Interface\ITraderManagementService.cs" />
     <Compile Include="Services\Interface\ITeamManagementService.cs" />
     <Compile Include="Services\Interface\IGradeManagementService.cs" />

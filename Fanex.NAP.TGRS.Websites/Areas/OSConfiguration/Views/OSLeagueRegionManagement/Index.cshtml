@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "League Region Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@Html.Partial("IndexFilter")
+
+<div id="resultContainer" class="content-grid" hidden>
+    <div id="divLeagueRegionsGrid" class="freegrid">
+    </div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-league-region-management")
+    <script type="text/javascript">
+        var labels = {
+            League: '@ViewLang.League',
+            Region: '@ViewLang.Region'
+        };
+        var messages = {
+            UpdateLeagueRegionSuccessfully: '@Messages.UpdateLeagueRegionSuccessfully',
+            AddLeagueRegionSuccessfully: '@Messages.AddLeagueRegionSuccessfully'
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
+}

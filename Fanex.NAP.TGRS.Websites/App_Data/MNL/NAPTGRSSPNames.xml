@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="OSLeagueRegion">
+    <Setting Key="TGRS_OS_LeagueRegionGet" SpName="TGRS_OS_LeagueRegionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_LeagueRegionInsert" SpName="TGRS_OS_LeagueRegionInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_LeagueRegionUpdate" SpName="TGRS_OS_LeagueRegionUpdate" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="OSEPADeductionManagement">
     <Setting Key="TGRS_OS_TraderEPADeductionGet" SpName="TGRS_OS_TraderEPADeductionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_TraderPointDeductionGet" SpName="TGRS_OS_TraderPointDeductionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
