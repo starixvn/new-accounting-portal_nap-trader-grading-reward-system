@@ -39,6 +39,7 @@
         public JsonResult GetLeagueRegions(GetLeagueRegionCriteria criteria)
         {
             criteria.LeagueName = criteria.LeagueName ?? string.Empty;
+            criteria.LeagueName = criteria.LeagueName.Trim();
 
             var result = _leagueRegionManagementService.GetAllLeagueRegion(criteria);
 
