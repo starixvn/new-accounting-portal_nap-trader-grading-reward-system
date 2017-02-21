@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
 
+    [Serializable]
     public class ColumnMappingException : SystemException
     {
-        public ColumnMappingException(string message, IEnumerable<string> errors) : base(message)
+        public ColumnMappingException(string message, IEnumerable<string> errors)
+            : base(message)
         {
             ErrorColumns = errors;
         }

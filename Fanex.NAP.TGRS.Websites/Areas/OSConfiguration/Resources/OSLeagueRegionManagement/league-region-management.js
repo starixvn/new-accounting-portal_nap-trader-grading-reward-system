@@ -157,6 +157,9 @@ var leagueRegionManagement = (function ($) {
             el.parent().remove('select#add-region-link');
 
             var data = leagueRegionManagement.Regions;
+
+            selector.append($("<option></option>").attr("region-id", -1).text('-'));
+
             for (var i = 0; i < data.length; i++) {
                 var option = $("<option></option>").attr("region-id", data[i].RegionId).text(data[i].RegionName);
                 if (data[i].RegionId.toString() === regionId) {
@@ -173,62 +176,59 @@ var leagueRegionManagement = (function ($) {
 
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
                     var newRegionId = container.find(":selected").attr("region-id");
-                    if (newRegionId > 0) {
-                        if (regionId === undefined || regionId === null || parseInt(regionId) === 0) {
-                            if (newRegionId != regionId) {
-                                var criteria = {
-                                    LeagueId: leagueId,
-                                    RegionId: newRegionId
-                                };
+                    if (newRegionId !== regionId && parseInt(regionId) === 0 && parseInt(newRegionId) !== -1) {
+                        var criteria = {
+                            LeagueId: leagueId,
+                            RegionId: newRegionId
+                        };
 
-                                leagueRegionManagementService.InsertLeagueRegion(criteria).then(function () {
-                                    leagueRegionManagement.Result = leagueRegionManagementService.Result;
+                        leagueRegionManagementService.InsertLeagueRegion(criteria).then(function () {
+                            leagueRegionManagement.Result = leagueRegionManagementService.Result;
 
-                                    if (leagueRegionManagement.Result.IsSuccessful) {
-                                        common.ShowInfoMessage(messages.AddLeagueRegionSuccessfully);
+                            if (leagueRegionManagement.Result.IsSuccessful) {
+                                common.ShowInfoMessage(messages.AddLeagueRegionSuccessfully);
 
-                                        for (var i = 0; i < leagueRegionManagement.LeagueRegions.length; i++) {
-                                            var item = leagueRegionManagement.LeagueRegions[i];
-                                            if (item.LeagueId === parseInt(leagueId)) {
-                                                item.RegionId = parseInt(newRegionId);
-                                                item.RegionName = container.find(":selected").text();
-                                                break;
-                                            }
-                                        }
-
-                                    } else {
-                                        common.ShowErrorMessage(leagueRegionManagement.Result.Message);
+                                for (var i = 0; i < leagueRegionManagement.LeagueRegions.length; i++) {
+                                    var item = leagueRegionManagement.LeagueRegions[i];
+                                    if (item.LeagueId === parseInt(leagueId)) {
+                                        item.RegionId = parseInt(newRegionId);
+                                        item.RegionName = container.find(":selected").text();
+                                        break;
                                     }
-                                });
+                                }
+
+                            } else {
+                                common.ShowErrorMessage(leagueRegionManagement.Result.Message);
                             }
-                        }
-                        else {
-                            if (newRegionId != regionId) {
-                                var criteria = {
-                                    LeagueId: leagueId,
-                                    RegionId: newRegionId
-                                };
-                                leagueRegionManagementService.UpdateLeagueRegion(criteria).then(function () {
-                                    leagueRegionManagement.Result = leagueRegionManagementService.Result;
+                        });
 
-                                    if (leagueRegionManagement.Result.IsSuccessful) {
-                                        common.ShowInfoMessage(messages.UpdateLeagueRegionSuccessfully);
+                        el.attr('data-region-id', newRegionId);
+                        el.text(container.find(":selected").text());
+                    }
+                    else if (newRegionId !== regionId && parseInt(regionId) !== 0) {
+                        var criteria = {
+                            LeagueId: leagueId,
+                            RegionId: newRegionId
+                        };
+                        leagueRegionManagementService.UpdateLeagueRegion(criteria).then(function () {
+                            leagueRegionManagement.Result = leagueRegionManagementService.Result;
 
-                                        for (var i = 0; i < leagueRegionManagement.LeagueRegions.length; i++) {
-                                            var item = leagueRegionManagement.LeagueRegions[i];
-                                            if (item.LeagueId === parseInt(leagueId)) {
-                                                item.RegionId = parseInt(newRegionId);
-                                                item.RegionName = container.find(":selected").text();
-                                                break;
-                                            }
-                                        }
+                            if (leagueRegionManagement.Result.IsSuccessful) {
+                                common.ShowInfoMessage(messages.UpdateLeagueRegionSuccessfully);
 
-                                    } else {
-                                        common.ShowErrorMessage(leagueRegionManagement.Result.Message);
+                                for (var i = 0; i < leagueRegionManagement.LeagueRegions.length; i++) {
+                                    var item = leagueRegionManagement.LeagueRegions[i];
+                                    if (item.LeagueId === parseInt(leagueId)) {
+                                        item.RegionId = parseInt(newRegionId);
+                                        item.RegionName = container.find(":selected").text();
+                                        break;
                                     }
-                                });
+                                }
+
+                            } else {
+                                common.ShowErrorMessage(leagueRegionManagement.Result.Message);
                             }
-                        }
+                        });
 
                         el.attr('data-region-id', newRegionId);
                         el.text(container.find(":selected").text());
