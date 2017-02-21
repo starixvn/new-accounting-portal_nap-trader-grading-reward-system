@@ -95,6 +95,7 @@
         }
 
         #region Private functions
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FillRowData(IEnumerable<TraderPerformanceInfo> contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
@@ -155,7 +156,7 @@
             writer.WriteRow(7, totalRecord);
         }
 
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(GetTraderPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();

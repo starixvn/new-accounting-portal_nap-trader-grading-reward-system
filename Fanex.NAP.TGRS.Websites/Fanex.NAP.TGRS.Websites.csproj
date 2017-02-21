@@ -185,7 +185,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="App_Start\BundleExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActivator.cs" />
     <Compile Include="Controllers\ErrorController.cs" />

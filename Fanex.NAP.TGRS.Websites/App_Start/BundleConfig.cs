@@ -150,7 +150,7 @@ namespace Fanex.NAP.TGRS.Websites
         /// Registers the reports module's bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public static void RegisterReportsBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/scripts/performanceSummary").Include(
@@ -186,9 +186,7 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceSummary/team-history.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/newTraderPerformance").Include(
-                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js"//,
-                 //,"~/Areas/Reports/Resources/NewPerformanceDetail/trader-performance.js"
-                 ));
+                "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/gradePerformance").Include(
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
@@ -251,6 +249,7 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public static void RegisterOSConfigurationBundles(BundleCollection bundles)
         {
             bundles.Add(

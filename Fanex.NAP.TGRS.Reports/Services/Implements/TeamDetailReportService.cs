@@ -279,7 +279,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(GetTeamPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();

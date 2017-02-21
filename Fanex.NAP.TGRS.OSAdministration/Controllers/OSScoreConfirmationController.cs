@@ -42,7 +42,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
             ViewBag.MinDate = minDate;
-            var consideredDate = lastestScoreHistory != null ? lastestScoreHistory.ToDate.AddDays(1) : new DateTime(2016,1,1);
+            var consideredDate = lastestScoreHistory != null ? lastestScoreHistory.ToDate.AddDays(1) : new DateTime(2016, 1, 1);
             ViewBag.DefaultFromDate = consideredDate.AddDays(1);
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;

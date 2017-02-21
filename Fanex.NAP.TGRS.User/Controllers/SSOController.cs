@@ -70,7 +70,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <returns>Action result.</returns>
         [AllowAnonymous]
         [HttpGet]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
             string currentTime = this._userService.UserSSOGetTime();

@@ -168,7 +168,7 @@
 
                 writer.SyncColumnsWidth(14);
 
-                if(!isViewScore)
+                if (!isViewScore)
                 {
                     writer.SetColumnHidden(13);
                 }
