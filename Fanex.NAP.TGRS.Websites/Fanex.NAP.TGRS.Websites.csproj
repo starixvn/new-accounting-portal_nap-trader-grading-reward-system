@@ -276,6 +276,8 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management-service.js" />
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard-chart.js" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-service.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.js" />
@@ -460,6 +462,8 @@
     <Content Include="Areas\OSConfiguration\Views\OSRegionManagement\UpdateRegionForm.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\IndexFilter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSDashboard\Index.cshtml" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -625,6 +629,7 @@
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

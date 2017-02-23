@@ -136,13 +136,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\OSDashboardController.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
+    <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\GetTopNWorstTraderCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\GetTopNBestSportCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetSportPerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetAllSportsCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetSportByTraderCriteria.cs" />
+    <Compile Include="Models\Dashboard\DataByMonth.cs" />
+    <Compile Include="Models\Dashboard\TopSport.cs" />
+    <Compile Include="Models\Dashboard\TopTrader.cs" />
     <Compile Include="Models\SportPerformance\BettypePerformanceItem.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Models\SportPerformance\Sport.cs" />
@@ -151,8 +158,10 @@
     <Compile Include="Models\SportPerformance\LeaguePerformanceItem.cs" />
     <Compile Include="Models\SportPerformance\SportPerformanceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implement\DashboardService.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderPerformanceService.cs" />
+    <Compile Include="Services\Interface\IDashboardService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
   </ItemGroup>

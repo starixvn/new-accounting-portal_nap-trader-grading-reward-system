@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="OSDashboard">
+    <Setting Key="TGRS_OS_Rpt_SummaryTopTrader" SpName="TGRS_OS_Rpt_SummaryTopTrader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SummaryTopSport" SpName="TGRS_OS_Rpt_SummaryTopSport" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SummaryData" SpName="TGRS_OS_Rpt_SummaryData" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
   <Function Name="OSLeagueRegion">
     <Setting Key="TGRS_OS_LeagueRegionGet" SpName="TGRS_OS_LeagueRegionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_LeagueRegionInsert" SpName="TGRS_OS_LeagueRegionInsert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

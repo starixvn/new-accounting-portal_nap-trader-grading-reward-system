@@ -9,15 +9,12 @@
 
 namespace Fanex.NAP.TGRS.Websites.Controllers
 {
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
     using System;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.TGRS.Core.BaseClasses;
 
-    /// <summary>
-    /// Home controller.
-    /// </summary>
     [NapSuperAuth]
     public class HomeController : TGRSBaseController
     {
@@ -25,21 +22,32 @@ namespace Fanex.NAP.TGRS.Websites.Controllers
         {
         }
 
-        /// <summary>
-        /// Gets Index page.
-        /// </summary>
-        /// <returns>Return Index View.</returns>
         public ActionResult Index()
         {
             Response.Cookies.Add(new HttpCookie("menu-id") { Expires = DateTime.Now.AddDays(-1d) });
 
-            return RedirectToAction("../Reports/Dashboard");
+            if (this.HasRight(TGRSFunctionKeys.PerformanceSummary, NAP.Core.Business.Constant.Policy.Read))
+            {
+                return RedirectToAction("../Reports/Dashboard");
+            }
+            else if (this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, NAP.Core.Business.Constant.Policy.Read))
+            {
+                return RedirectToAction("../OSReports/OSDashboard");
+            }
+            else if (this.HasRight(TGRSFunctionKeys.TraderReport, NAP.Core.Business.Constant.Policy.Read))
+            {
+                return RedirectToAction("../Reports/Trader");
+            }
+            else
+            {
+                return View();
+            }
+            ////else if (this.HasRight(TGRSFunctionKeys.OSTraderReport, NAP.Core.Business.Constant.Policy.Read))
+            ////{
+            ////    return RedirectToAction("../OSReports/OSTrader");
+            ////}
         }
 
-        /// <summary>
-        /// Get Menu Partial view.
-        /// </summary>
-        /// <returns>Partial menu view.</returns>
         [ChildActionOnly]
         public PartialViewResult Menu()
         {

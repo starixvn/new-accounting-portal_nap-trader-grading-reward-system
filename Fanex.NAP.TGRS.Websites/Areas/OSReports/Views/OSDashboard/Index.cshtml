@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = ViewLang.PerformanceSummaryReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/styles/os-dashboard")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            Performance of last <label id="titleMonthCount" class="no-pointer">6</label> months
+
+            <select class="team-month-picker" id="divTeamMonthPicker"></select>
+
+            <div class="switch-toggle switch-ios flat-switch">
+                <input id="chk2D" name="chartType" type="radio" checked="">
+                <label for="chk2D">2D</label>
+
+                <input id="chk3D" name="chartType" type="radio">
+                <label for="chk3D">3D</label>
+
+                <a id="toggleA"></a>
+            </div>
+        </div>
+    </div>
+    <div id="divTabSummaryContent" class="tab-content">
+        <div class="main-col">
+            <div class="info-cell-2 no-padding-right no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="divMonthMarginContainer" class="chart-container"></div>
+                </div>
+            </div>
+            <div class="info-cell-2 no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="divRegionMarginContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-4 no-padding-right no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="divTeamTurnoverContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-4 no-padding-right no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="divTeamMarginContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-2 no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="divMonthMatchCountContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="sub-col">
+            <div class="info-panel no-padding-bot no-padding-left">
+                <div class="info-panel-content">
+                    <div class="title">Top 5 worst traders</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Trader</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divWorstTrader">
+                    </div>
+                </div>
+            </div>
+            <div class="info-panel no-padding-left no-padding-bot">
+                <div class="info-panel-content">
+                    <div class="title">Sport Perpormance</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Sport</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestSport">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-dashboard")
+    <script type="text/javascript">
+        var labels = {
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            NA: '@ViewLang.NA'
+        };
+    </script>
+}

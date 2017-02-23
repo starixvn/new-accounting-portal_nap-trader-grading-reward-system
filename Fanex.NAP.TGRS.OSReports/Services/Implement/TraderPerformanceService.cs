@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.TGRS.Core.BaseClasses;
-using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
-using Fanex.NAP.TGRS.OSReports.Models.TraderPerformance;
-using Fanex.NAP.TGRS.OSReports.Services.Interface;
-
-namespace Fanex.NAP.TGRS.OSReports.Services.Implement
+﻿namespace Fanex.NAP.TGRS.OSReports.Services.Implement
 {
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
+    using Fanex.NAP.TGRS.OSReports.Models.TraderPerformance;
+    using Fanex.NAP.TGRS.OSReports.Services.Interface;
+    using System.Collections.Generic;
+
     public class TraderPerformanceService : TGRSBaseService, ITraderPerformanceService
     {
         public IEnumerable<TraderPerformance> GetTraderPerformances(GetTraderPerformanceCriteria criteria)
