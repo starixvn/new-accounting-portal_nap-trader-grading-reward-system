@@ -597,7 +597,9 @@
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.prod.config" />
+    <Content Include="Web.prod.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
