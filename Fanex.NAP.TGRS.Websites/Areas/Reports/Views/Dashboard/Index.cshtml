@@ -1,25 +1,38 @@
 ﻿@{
     ViewBag.Title = ViewLang.PerformanceSummaryReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var canSwitch = (bool)(@ViewBag.CanViewOSDashboard) ? true : false;
 }
 @Styles.Render("~/styles/dashboard")
 <div id="divHorizontalTab">
     <div class="dashboard-title">
         <div class="dashboard-content">
-            Performance of last <label id ="titleMonthCount" class="no-pointer">6</label> months
+            Performance of last <label id="titleMonthCount" class="no-pointer">6</label> months
 
-            <select class="team-month-picker" id="divTeamMonthPicker">
-            </select>
+            <select class="team-month-picker" id="divTeamMonthPicker"></select>
 
             <div class="switch-toggle switch-ios flat-switch">
-              <input id="chk2D" name="chartType" type="radio" checked="">
-              <label for="chk2D">2D</label>
+                <input id="chk2D" name="chartType" type="radio" checked="">
+                <label for="chk2D">2D</label>
 
-              <input id="chk3D" name="chartType" type="radio">
-              <label for="chk3D">3D</label>
+                <input id="chk3D" name="chartType" type="radio">
+                <label for="chk3D">3D</label>
 
-              <a id="toggleA"></a>
+                <a id="toggleA"></a>
             </div>
+
+            @if (@canSwitch == true)
+            {
+                <div class="switch-toggle switch-ios flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio">
+                    <label for="chkSoccer">SOCCER</label>
+
+                    <input id="chkOS" name="chartType" type="radio" checked="checked">
+                    <label for="chkOS">OS</label>
+
+                    <a id="toggleB"></a>
+                </div>
+            }
         </div>
     </div>
     <div id="divTabSummaryContent" class="tab-content">
@@ -28,29 +41,34 @@
                 <div class="info-cell-1-left">
                     <div class="info-cell1-content">
                         <label class="title">@ViewLang.Turnover</label>
-                        <label class="number" id="lblTurnOver">123,456,789.00
+                        <label class="number" id="lblTurnOver">
+                            123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">@ViewLang.WinLoss</label>
-                        <label class="number" id="lblWinLoss">123,456,789.00
+                        <label class="number" id="lblWinLoss">
+                            123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">@ViewLang.Margin</label>
-                        <label class="number" id="lblMargin">123,456,789.00
+                        <label class="number" id="lblMargin">
+                            123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">
-                            @ViewLang.MatchCount</label>
-                        <label class="number" id="lblMatches">123,456,789.00
+                            @ViewLang.MatchCount
+                        </label>
+                        <label class="number" id="lblMatches">
+                            123,456,789.00
                         </label>
                     </div>
                 </div>

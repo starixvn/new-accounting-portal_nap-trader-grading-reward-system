@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = ViewLang.PerformanceSummaryReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var canSwitch = (bool)(@ViewBag.CanViewDashboard) ? true : false;
 }
 @Styles.Render("~/styles/os-dashboard")
 <div id="divHorizontalTab">
@@ -19,6 +20,19 @@
 
                 <a id="toggleA"></a>
             </div>
+
+            @if (@canSwitch == true)
+            {
+                <div class="switch-toggle switch-ios flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio">
+                    <label for="chkSoccer">Soccer</label>
+
+                    <input id="chkOS" name="chartType" type="radio" checked="">
+                    <label for="chkOS">OS</label>
+
+                    <a id="toggleB" class="type3D"></a>
+                </div>
+            }
         </div>
     </div>
     <div id="divTabSummaryContent" class="tab-content">

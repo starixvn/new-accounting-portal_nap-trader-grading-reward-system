@@ -125,6 +125,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
             reRenderChart(currentChartType);
             saveChartTypeCookies();
         });
+
+        $('#chkOS').on('change', function () {
+            window.location = common.ResolveRootUrl("OSReports/OSDashboard");
+        });
     };
     //}
 

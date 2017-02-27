@@ -112,6 +112,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
             reRenderChart(currentChartType);
             saveChartTypeCookies();
         });
+
+        $('#chkSoccer').on('change', function () {
+            window.location = common.ResolveRootUrl("Reports/Dashboard");
+        });
     };
     //}
 
