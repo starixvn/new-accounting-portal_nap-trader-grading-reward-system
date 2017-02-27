@@ -73,12 +73,14 @@
                 Winloss = t.Sum(x => x.Winloss),
                 Turnover = t.Sum(x => x.Turnover)
             });
+            var years = currentData.Select(t => t.Year).Union(lastYearData.Select(x => x.Year)).Distinct().OrderBy(t => t);
 
             return Json(
                 new
                 {
                     SummaryData = new
                     {
+                        Years = years,
                         MonthData = monthData.OrderBy(t => t.MonthYear),
                         LastYearMonthData = lastYearMonthData.OrderBy(t => t.MonthYear),
                         RegionData = regionData.OrderBy(t => t.RegionName),

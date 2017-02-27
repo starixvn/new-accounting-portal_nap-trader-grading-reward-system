@@ -15,7 +15,7 @@ Fanex.TGRS.DashboardChart = function () {
                     stops: [
                         [0, '#2a2a2b'],
                         [1, '#3e3e40']
-                     ]
+                    ]
                 },
                 style: {
                     fontFamily: "'Unica One', sans-serif"
@@ -227,7 +227,7 @@ Fanex.TGRS.DashboardChart = function () {
                     viewDistance: 25
                 }
             },
-            colors: ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
+            colors: ['#2f7ed8', '#f28f43', '#1aadce', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
             title: {
                 style: {
                     color: '#5a7dc1',
@@ -321,7 +321,7 @@ Fanex.TGRS.DashboardChart = function () {
                 enabled: false
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y: ,.0f}</b>',
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y: ,.0f}</b><br/>',
                 hideDelay: 250
             },
             plotOptions: {
@@ -346,9 +346,10 @@ Fanex.TGRS.DashboardChart = function () {
     $this.MixChartOption = function () {
         return {
             chart: {
-                type: 'scatter',
+                type: 'column',
                 //margin: 65,
-                //marginRight: 65,
+                //marginLeft: 65,
+                //marginRight: 35,
                 options3d: {
                     enabled: true,
                     alpha: 15,
@@ -357,7 +358,7 @@ Fanex.TGRS.DashboardChart = function () {
                     viewDistance: 25
                 }
             },
-            colors: ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
+            colors: ['#2f7ed8', '#f28f43', '#1aadce', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'],
             title: {
                 style: {
                     color: '#5a7dc1',
@@ -366,23 +367,11 @@ Fanex.TGRS.DashboardChart = function () {
                 }
             },
             legend: {
-                enabled: true,
-                align: 'center',
-                verticalAlign: 'bottom',
-                y: 5,
-                x: 0,
-                itemMarginTop: -20,
-                itemStyle: {
-                    lineHeight: '10px'
-                },
-                layout: 'horizontal'
+                enabled: false
             },
             tooltip: {
-                hideDelay: 200,
-                shared: false,
-                followPointer: false
-                //useHTML: true
-                //backgroundColor: "rgba(255,255,255,1)"
+                hideDelay: 250,
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
             },
             xAxis: {
                 //categories: Highcharts.getOptions().lang.shortMonths
@@ -394,11 +383,9 @@ Fanex.TGRS.DashboardChart = function () {
                         var formatted = text.length > 9 ? text.substring(0, 9) + '...' : text;
 
                         return '<div title="' + text + '">' + formatted + '</div>';
-
                     },
                     style: {
                         fontSize: '12px',
-                        //fontWeight: 'normal',
                         fontFamily: 'Verdana, sans-serif'
                     },
                     useHTML: false
@@ -406,39 +393,17 @@ Fanex.TGRS.DashboardChart = function () {
             },
             yAxis: [{ // Primary yAxis
                 labels: {
-                    //format: '{value}',
                     style: {
-                        color: '#f28f43'
-                    },
-                    formatter: function () {
-                        return formatAxis(this);
+                        color: 'black'
                     }
                 },
-                lineWidth: 1,
                 title: {
-                    text: 'TURNOVER',
+                    text: '',
                     style: {
-                        color: '#f28f43'
+                        color: 'black'
                     }
                 },
                 opposite: false
-            }, { // Secondary yAxis
-                lineWidth: 0.5,
-                title: {
-                    text: 'WIN LOSS',
-                    style: {
-                        color: '#7cb5ec'
-                    }
-                },
-                labels: {
-                    style: {
-                        color: '#7cb5ec'
-                    },
-                    formatter: function () {
-                        return formatAxis(this);
-                    }
-                },
-                opposite: true
             }],
             credits: {
                 enabled: false
@@ -449,17 +414,15 @@ Fanex.TGRS.DashboardChart = function () {
                     colors: ['#7cb5ec', '#B22222', '#90ed7d', '#8085e9', '#f7a35c', '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1']
                 },
                 series: {
-                    stickyTracking: false,
                     dataLabels: {
                         enabled: false,
                         color: '#E0E0E3',
-                        align: 'left',
+                        align: 'right',
                         x: 0,
                         y: -5,
                         style: {
-                            fontSize: '12px',
+                            fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif'
-                            //textShadow: '0 0 3px black'
                         }
                     }
                 }

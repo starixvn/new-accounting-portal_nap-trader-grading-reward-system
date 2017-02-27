@@ -15,6 +15,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var defaultMonthRange = 3;
     var defaultChartType = 2;
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var colors = ['#f28f43', '#1aadce', '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#492970', '#77a1e5', '#c42525', '#a6c96a'];
 
     var ChartOptions = null;
 
@@ -213,15 +214,15 @@ Fanex.TGRS.Reports.Dashboard = function () {
         }
     };
 
-    var prepareSummaryColumnData = function (monthData, monthDataLastYear, regionData, teamData, chartData) {
+    var prepareSummaryColumnData = function (years, monthData, monthDataLastYear, regionData, teamData, chartData) {
         chartData.MixMonthMarginData =
         [
             {
-                name: 'Last Year',
+                name: 'Margin %',
                 data: []
             },
             {
-                name: 'This Year',
+                name: 'Margin %',
                 data: []
             }
         ];
@@ -246,50 +247,40 @@ Fanex.TGRS.Reports.Dashboard = function () {
             data: []
         }];
 
-        chartData.TeamMixData = [{
-            type: 'column',
-            yAxis: 0,
-            name: 'Turnover',
-            zIndex: 1,
-            data: []
-        },
-        {
-            type: 'spline',
-            name: 'Win loss',
-            yAxis: 1,
-            marker: {
-                lineWidth: 2,
-                lineColor: Highcharts.getOptions().colors[3],
-                //lineColor: '#7cb5ec'
-                fillColor: 'white',
-                width: 7,
-                height: 7
-            },
-            zIndex: 2,
-            data: []
-        }];
+        var minYear = years.length > 2 ? years[0] : years[0] - 1;
 
         $.each(monthData, function (index, item) {
-            chartData.MixMonthMarginData[1].data.push(item.Margin);
+            var dataItem = {
+                name: item.Month + "/" + item.Year,
+                color: colors[item.Year - minYear],
+                y: item.Margin
+            }
+
+            chartData.MixMonthMarginData[1].data.push(dataItem);
             chartData.MonthMatchCountData[0].data.push(item.MatchCount);
             chartData.MonthCategories.push(monthNames[item.Month - 1]);
         });
 
         $.each(monthDataLastYear, function (index, item) {
-            chartData.MixMonthMarginData[0].data.push(item.Margin);
+            var dataItem = {
+                name: item.Month + "/" + item.Year,
+                color: colors[item.Year - minYear],
+                y: item.Margin
+            }
+            chartData.MixMonthMarginData[0].data.push(dataItem);
         });
 
         $.each(regionData, function (index, item) {
             chartData.RegionMarginData[0].data.push(item.Margin);
-            chartData.RegionCategories.push(item.RegionName ? item.RegionName : "N/A");
+            chartData.RegionCategories.push(item.RegionName ? item.RegionName : "Unknown");
         });
 
         $.each(teamData, function (index, item) {
-            chartData.TeamCategories.push(item.TeamName ? item.TeamName : "N/A");
+            chartData.TeamCategories.push(item.TeamName ? item.TeamName : "Unknown");
             chartData.TeamMarginData[0].data.push(item.Margin);
 
             var pipeItem = {
-                name: item.TeamName ? item.TeamName : "N/A",
+                name: item.TeamName ? item.TeamName : "Unknown",
                 y: item.Turnover
             };
             chartData.TeamTurnoverData[0].data.push(pipeItem);
@@ -328,11 +319,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
                 MixDataMin: 0
             };
 
-            prepareSummaryColumnData(data.MonthData, data.LastYearMonthData, data.RegionData, data.TeamData, chartData);
+            prepareSummaryColumnData(data.Years, data.MonthData, data.LastYearMonthData, data.RegionData, data.TeamData, chartData);
         }
 
-        var monthMarginColumnOption = ChartOptions.ColumnChartOption();
-        monthMarginColumnOption.legend.enabled = true;
+        var monthMarginColumnOption = ChartOptions.MixChartOption();
         monthMarginColumnOption.title.text = 'Margin (%) By Month';
         monthMarginColumnOption.series = chartData.MixMonthMarginData;
         monthMarginColumnOption.xAxis.categories = chartData.MonthCategories;
