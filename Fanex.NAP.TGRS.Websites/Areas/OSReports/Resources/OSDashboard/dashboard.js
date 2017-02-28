@@ -193,11 +193,15 @@ Fanex.TGRS.Reports.Dashboard = function () {
     };
 
     var createRankRowHtml = function (name, value) {
+        var css = '';
+        if (value < 0) {
+            css = "style='color: red;'"
+        }
         var template = '<div class="rank-row">' +
                         '<div class="name">{0}</div>' +
-                       ' <div class="value"><div class="number-value">{1}</div></div>' +
+                       ' <div class="value"><div class="number-value" {2}>{1}</div></div>' +
                         '</div>';
-        return template.format(name, value);
+        return template.format(name, value, css);
     };
 
     var renderRankInfo = function (worstTraders, bestSports) {
