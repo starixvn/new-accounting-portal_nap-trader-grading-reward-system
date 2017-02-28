@@ -4,9 +4,21 @@
 
     public class DataByMonth
     {
-        public int Month { get; set; }
+        public int Month
+        {
+            get
+            {
+                return EventDate.Month;
+            }
+        }
 
-        public int Year { get; set; }
+        public int Year
+        {
+            get
+            {
+                return EventDate.Year;
+            }
+        }
 
         public decimal Turnover { get; set; }
 
@@ -18,20 +30,7 @@
 
         public string TeamName { get; set; }
 
-        public DateTime MonthYear
-        {
-            get
-            {
-                if (Year > 0 && Month > 0)
-                {
-                    return new DateTime(Year, Month, 1);
-                }
-                else
-                {
-                    return DateTime.Now;
-                }
-            }
-        }
+        public DateTime EventDate { get; set; }
 
         public decimal Margin
         {

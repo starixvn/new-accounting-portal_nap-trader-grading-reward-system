@@ -45,19 +45,17 @@
             var lastYearData = _dashboardService.GetDataByMonthLastYear(month);
             var bestSports = _dashboardService.GetTopNBestSports(month, _numOfSport);
             var worstTraders = _dashboardService.GetTopNWorstTraders(month, _numOfTrader);
-            var monthData = currentData.GroupBy(t => t.MonthYear).Select(t => new DataByMonth
+            var monthData = currentData.GroupBy(t => t.EventDate).Select(t => new DataByMonth
             {
                 MatchCount = t.Sum(x => x.MatchCount),
-                Month = t.ElementAt(0).Month,
-                Year = t.ElementAt(0).Year,
+                EventDate = t.ElementAt(0).EventDate,
                 Winloss = t.Sum(x => x.Winloss),
                 Turnover = t.Sum(x => x.Turnover)
             });
-            var lastYearMonthData = lastYearData.GroupBy(t => t.MonthYear).Select(t => new DataByMonth
+            var lastYearMonthData = lastYearData.GroupBy(t => t.EventDate).Select(t => new DataByMonth
             {
                 MatchCount = t.Sum(x => x.MatchCount),
-                Month = t.ElementAt(0).Month,
-                Year = t.ElementAt(0).Year,
+                EventDate = t.ElementAt(0).EventDate,
                 Winloss = t.Sum(x => x.Winloss),
                 Turnover = t.Sum(x => x.Turnover)
             });
@@ -83,8 +81,8 @@
                     SummaryData = new
                     {
                         Years = years,
-                        MonthData = monthData.OrderBy(t => t.MonthYear),
-                        LastYearMonthData = lastYearMonthData.OrderBy(t => t.MonthYear),
+                        MonthData = monthData.OrderBy(t => t.EventDate),
+                        LastYearMonthData = lastYearMonthData.OrderBy(t => t.EventDate),
                         RegionData = regionData.OrderBy(t => t.RegionName),
                         TeamData = teamData.OrderBy(t => t.TeamName)
                     },

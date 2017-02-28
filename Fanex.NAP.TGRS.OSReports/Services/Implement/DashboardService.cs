@@ -39,28 +39,27 @@
 
         public IEnumerable<DataByMonth> GetDataByMonth(int numOfMonth)
         {
-            var today = DateTime.Now;
+            var thisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
             var criteria = new GetDataByMonthCriteria
             {
-                FromDate = today.AddMonths(-numOfMonth + 1),
-                ToDate = today
+                FromDate = thisMonth.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonth
             };
 
             var result = this.GetData<DataByMonth>(criteria).ToList();
 
             for (var i = 0; i < numOfMonth; i++)
             {
-                if (!result.Exists(t => t.Month == today.Month && t.Year == today.Year))
+                if (!result.Exists(t => t.Month == thisMonth.Month && t.Year == thisMonth.Year))
                 {
                     result.Add(new DataByMonth
                     {
-                        Month = today.Month,
-                        Year = today.Year
+                        EventDate = thisMonth
                     });
                 }
 
-                today = today.AddMonths(-1);
+                thisMonth = thisMonth.AddMonths(-1);
             }
 
             return result;
@@ -68,28 +67,27 @@
 
         public IEnumerable<DataByMonth> GetDataByMonthLastYear(int numOfMonth)
         {
-            var today = DateTime.Now.AddYears(-1);
+            var thisMonthLastYear = new DateTime(DateTime.Now.Year - 1, DateTime.Now.Month, 1);
 
             var criteria = new GetDataByMonthCriteria
             {
-                FromDate = today.AddMonths(-numOfMonth + 1),
-                ToDate = today
+                FromDate = thisMonthLastYear.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonthLastYear
             };
 
             var result = this.GetData<DataByMonth>(criteria).ToList();
 
             for (var i = 0; i < numOfMonth; i++)
             {
-                if (!result.Exists(t => t.Month == today.Month && t.Year == today.Year))
+                if (!result.Exists(t => t.Month == thisMonthLastYear.Month && t.Year == thisMonthLastYear.Year))
                 {
                     result.Add(new DataByMonth
                     {
-                        Month = today.Month,
-                        Year = today.Year
+                        EventDate = thisMonthLastYear
                     });
                 }
 
-                today = today.AddMonths(-1);
+                thisMonthLastYear = thisMonthLastYear.AddMonths(-1);
             }
 
             return result;
