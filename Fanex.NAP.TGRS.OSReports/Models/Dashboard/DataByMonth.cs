@@ -36,7 +36,7 @@
         {
             get
             {
-                return decimal.Round(Turnover > 0 ? Winloss / Turnover : 0, 4);
+                return decimal.Round(Turnover > 0 ? Winloss / Turnover * 100 : 0, 4);
             }
         }
     }

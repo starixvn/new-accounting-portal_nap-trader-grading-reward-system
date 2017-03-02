@@ -321,7 +321,7 @@ Fanex.TGRS.DashboardChart = function () {
                 enabled: false
             },
             tooltip: {
-                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y: ,.0f}</b><br/>',
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>',
                 hideDelay: 250
             },
             plotOptions: {
