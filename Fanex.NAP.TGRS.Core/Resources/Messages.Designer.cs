@@ -241,7 +241,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Emergency-Leave has been inserted successfully!.
+        ///   Looks up a localized string similar to The Bad Attendance has been inserted successfully!.
         /// </summary>
         public static string InsertEmergencyLeaveSuccessfully {
             get {

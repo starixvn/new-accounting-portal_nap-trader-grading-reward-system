@@ -166,7 +166,7 @@ var epaManagement = (function ($) {
                       { HeaderText: "Username", Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: "EPA P.Deduction", Width: 100, Name: 'ColEPA', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "Error", Width: 40, Name: 'ColError', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: "E.Leave", Width: 50, Name: 'ColLeave', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: "Bad Attendance", Width: 85, Name: 'ColLeave', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: "", Width: 50, Name: 'ColErrorInsert', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showNumberColumn: true,
@@ -246,7 +246,7 @@ var epaManagement = (function ($) {
         epaManagement.BindErrorTypes(errorTypes, errorTypesSelector);
 
         refreshPopup();
-        common.Modal("New Error/E.Leave/-EPA", form);
+        common.Modal("New Error/Bad Attendance/-EPA", form);
         cachePopupElements();
         initInsertTraderIssueForm();
 

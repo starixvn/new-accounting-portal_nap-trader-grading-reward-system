@@ -268,7 +268,7 @@
     <value>Trader's Confirmed Scores has been successfully stored!</value>
   </data>
   <data name="InsertEmergencyLeaveSuccessfully" xml:space="preserve">
-    <value>The Emergency-Leave has been inserted successfully!</value>
+    <value>The Bad Attendance has been inserted successfully!</value>
   </data>
   <data name="InsertEPADeductionSuccessfully" xml:space="preserve">
     <value>The EPA-Deduction has been inserted successfully!</value>
