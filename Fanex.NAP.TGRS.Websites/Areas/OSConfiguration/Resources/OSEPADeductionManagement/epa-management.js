@@ -250,19 +250,16 @@ var epaManagement = (function ($) {
         cachePopupElements();
         initInsertTraderIssueForm();
 
-        var maxDate = new Date();
-        maxDate.setYear(maxDate.getFullYear() + 1);
         var minDate = new Date();
-        minDate.setYear(minDate.getFullYear() - 1);
-        layout.CreateDatepicker($("#dpkIssueDate", domElements.divPopup), 'issueDate', "Date", 'lbl-field width-120', new Date(), minDate, maxDate);
+        minDate.setYear(minDate.getFullYear() - 2);
+        layout.CreateDatepicker($("#dpkIssueDate", domElements.divPopup), 'issueDate', "Date", 'lbl-field width-120', new Date(), minDate, datepickerSetting.DefaultToDate);
         popupElements.dpkIssueDate = $('#issueDate', domElements.divPopup).addClass("width-200");
 
         popupElements.btnSave.click(function () {
-            if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
-                var issueType = $('input[name=issue-type]:checked').val();
-
-                switch (issueType) {
-                    case '1':
+            var issueType = $('input[name=issue-type]:checked').val();
+            switch (issueType) {
+                case '1':
+                    if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
                         var errorInfo = {
                             TraderId: traderId,
                             ErrorDate: popupElements.dpkIssueDate.val(),
@@ -273,8 +270,8 @@ var epaManagement = (function ($) {
                         epaManagementService.InsertError(errorInfo).then(function (result) {
                             if (result.Code === 0) {
                                 common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertErrorSuccessfully, false, function () {
-                                            timeout = setTimeout(common.ClosePopup, 3000);
-                                        });
+                                    timeout = setTimeout(common.ClosePopup, 3000);
+                                });
 
                                 epaManagement.GetEPADeductionReport();
                             } else {
@@ -282,28 +279,30 @@ var epaManagement = (function ($) {
                                 return false;
                             }
                         });
-                        break;
-                    case '2':
-                        var leaveInfo = {
-                            TraderId: traderId,
-                            LeaveDate: popupElements.dpkIssueDate.val(),
-                            Reason: popupElements.taReason.val()
-                        };
+                    }
+                    break;
+                case '2':
+                    var leaveInfo = {
+                        TraderId: traderId,
+                        LeaveDate: popupElements.dpkIssueDate.val(),
+                        Reason: popupElements.taReason.val()
+                    };
 
-                        epaManagementService.InsertLeave(leaveInfo).then(function (result) {
-                            if (result.Code === 0) {
-                                common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertEmergencyLeaveSuccessfully, false, function () {
-                                            timeout = setTimeout(common.ClosePopup, 3000);
-                                        });
+                    epaManagementService.InsertLeave(leaveInfo).then(function (result) {
+                        if (result.Code === 0) {
+                            common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertEmergencyLeaveSuccessfully, false, function () {
+                                timeout = setTimeout(common.ClosePopup, 3000);
+                            });
 
-                                epaManagement.GetEPADeductionReport();
-                            } else {
-                                common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
-                                return false;
-                            }
-                        });
-                        break;
-                    case '3':
+                            epaManagement.GetEPADeductionReport();
+                        } else {
+                            common.ShowInlineErrorMsg(popupElements.divErrorSuccessMsg, result.Message);
+                            return false;
+                        }
+                    });
+                    break;
+                case '3':
+                    if (validator.ValidateForm(popupElements.divInsertTraderIssueForm, 'w')) {
                         var deductionInfo = {
                             TraderId: traderId,
                             DeductionDate: popupElements.dpkIssueDate.val(),
@@ -314,8 +313,8 @@ var epaManagement = (function ($) {
                         epaManagementService.InsertEPADeduction(deductionInfo).then(function (result) {
                             if (result.Code === 0) {
                                 common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.InsertEPADeductionSuccessfully, false, function () {
-                                            timeout = setTimeout(common.ClosePopup, 3000);
-                                        });
+                                    timeout = setTimeout(common.ClosePopup, 3000);
+                                });
 
                                 epaManagement.GetEPADeductionReport();
                             } else {
@@ -323,8 +322,8 @@ var epaManagement = (function ($) {
                                 return false;
                             }
                         });
-                        break;
-                }
+                    }
+                    break;
             }
         });
 

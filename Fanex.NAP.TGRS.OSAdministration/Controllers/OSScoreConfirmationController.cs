@@ -14,12 +14,9 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation;
-    using Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory;
     using Fanex.NAP.TGRS.OSAdministration.Services.Implement;
     using Fanex.NAP.TGRS.OSAdministration.Services.Interface;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     public class OSScoreConfirmationController : TGRSBaseController

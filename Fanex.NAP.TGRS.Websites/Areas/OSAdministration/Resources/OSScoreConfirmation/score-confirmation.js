@@ -84,12 +84,10 @@ var scoreConfirmation = (function ($) {
             common.DisableInput();
             ScoreConfirmationService.GetTraderScores(criteria).then(function () {
                 cachedData = ScoreConfirmationService.TraderScores;
-                if (cachedData.length > 0)
-                {
+                if (cachedData.length > 0) {
                     $("#btnConfirm").show();
                 }
-                else
-                {
+                else {
                     $("#btnConfirm").hide();
                 }
 
@@ -129,7 +127,7 @@ var scoreConfirmation = (function ($) {
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'},
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
             ],
             showNumberColumn: true,
@@ -177,7 +175,7 @@ var scoreConfirmation = (function ($) {
                 popupElements.btnSave.trigger('click');
             }
         });
-        
+
         popupElements.btnSave.click(function () {
             if (validator.ValidateForm(popupElements.divInsertPeriodNameForm, 'w')) {
                 var confirmedScore = {
@@ -187,7 +185,9 @@ var scoreConfirmation = (function ($) {
                     IsOverwrite: domElements.isOverwrite
                 };
 
-                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {                    
+                common.DisableInput();
+
+                ScoreConfirmationService.StoreTraderConfirmedScores(confirmedScore).then(function () {
                     scoreConfirmation.Result = ScoreConfirmationService.Result;
                     if (scoreConfirmation.Result.result.Code === 0) {
                         common.ShowInlineSuccessMsg(popupElements.divErrorSuccessMsg, messages.StoreTraderScoreSuccessfully, false, function () {
@@ -196,8 +196,7 @@ var scoreConfirmation = (function ($) {
 
                         updateLastestInfo(scoreConfirmation.Result.lastestScoreHistory);
                     } else {
-                        if (scoreConfirmation.Result.result.Code == 4101)
-                        {
+                        if (scoreConfirmation.Result.result.Code == 4101) {
                             domElements.isOverwrite = true;
                         }
 
@@ -213,7 +212,7 @@ var scoreConfirmation = (function ($) {
             common.ClosePopup();
         });
     };
-    
+
     var refreshPopup = function () {
         clearTimeout(timeout);
         domElements.isOverwrite = false;
