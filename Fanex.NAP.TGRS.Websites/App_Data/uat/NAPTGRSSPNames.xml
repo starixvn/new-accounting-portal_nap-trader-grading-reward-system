@@ -47,8 +47,8 @@
     <Setting Key="TGRS_OS_Rpt_BettypePerformance" SpName="TGRS_OS_Rpt_BettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSTraderPerformance">
-    <Setting Key="TGRS_OS_Rpt_TraderPerformance" SpName="TGRS_OS_Rpt_TraderPerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_SportPerformanceGetByTraderId" SpName="TGRS_OS_Rpt_SportPerformanceGetByTraderId_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_TraderPerformance" SpName="TGRS_OS_Rpt_TraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SportPerformanceGetByTraderId" SpName="TGRS_OS_Rpt_SportPerformanceGetByTraderId" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSGradeManagement">
     <Setting Key="TGRS_OS_GradeGetAll" SpName="TGRS_OS_GradeGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
