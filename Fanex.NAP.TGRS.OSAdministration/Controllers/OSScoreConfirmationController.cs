@@ -32,6 +32,8 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSScoreConfirmation, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
             ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.OSScoreConfirmation, Constant.Policy.Host);
 
             var lastestScoreHistory = _scoreConfirmationService.GetLastestScoreHistoryInfo(new GetLastedScoreHistoryInfoCriteria());
@@ -40,7 +42,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
             ViewBag.MinDate = minDate;
             var consideredDate = lastestScoreHistory != null ? lastestScoreHistory.ToDate.AddDays(1) : new DateTime(2016, 1, 1);
-            ViewBag.DefaultFromDate = consideredDate.AddDays(1);
+            ViewBag.DefaultFromDate = consideredDate < today ? consideredDate.AddDays(1) : today;
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
 

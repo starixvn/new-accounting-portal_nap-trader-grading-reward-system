@@ -38,7 +38,6 @@ var scoreConfirmation = (function ($) {
     var cacheDOMElements = function () {
         domElements.divDateRange = $('#divDateRange');
         domElements.btnSearch = $('#btnSearch');
-        domElements.ddlPeriodType = $('#ddlPeriodType');
         domElements.btnConfirm = $('#btnConfirm');
         domElements.divGrid = $("#resultContainer");
 
@@ -71,13 +70,16 @@ var scoreConfirmation = (function ($) {
     };
 
     var initPageFields = function () {
+        initDatePicker();
+
+        domElements.ddlPeriodType = $('#ddlPeriodType');
         //Date picker
         domElements.ddlPeriodType.val(1);
-        initDatePicker();
 
         //btnSearch
         domElements.btnSearch.click(function () {
             var criteria = {
+                ReportType: domElements.ddlPeriodType.val(),
                 Fromdate: domElements.divDateRange.getFrom(),
                 ToDate: domElements.divDateRange.getTo()
             };
@@ -154,6 +156,7 @@ var scoreConfirmation = (function ($) {
     // Export bet type performance to excel.
     var exportTraderScores = function () {
         var parameters = {
+            ReportType: domElements.ddlPeriodType.val(),
             Fromdate: domElements.divDateRange.getFrom(),
             ToDate: domElements.divDateRange.getTo()
         };

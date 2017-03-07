@@ -19,6 +19,7 @@ var sportPerformance = (function ($) {
     var defaultSelectVal = -1;
 
     var domElements = {
+        ddlPeriodType: null,
         divSportPerformanceFilter: null,
         divDateRange: null,
         ddlSport: null,
@@ -33,6 +34,7 @@ var sportPerformance = (function ($) {
 
     sportPerformance.GetSportPerformance = function () {
         var criteria = {
+            ReportType: domElements.ddlPeriodType.val(),
             FromDate: domElements.divDateRange.getFrom(),
             ToDate: domElements.divDateRange.getTo(),
             SportId: domElements.ddlSport.val()
@@ -47,6 +49,7 @@ var sportPerformance = (function ($) {
 
     sportPerformance.GetLeaguePerformance = function (sportId, sportName) {
         var criteria = {
+            ReportType: domElements.ddlPeriodType.val(),
             FromDate: domElements.divDateRange.getFrom(),
             ToDate: domElements.divDateRange.getTo(),
             SportId: sportId
@@ -61,6 +64,7 @@ var sportPerformance = (function ($) {
 
     sportPerformance.GetBettypePerformance = function (sportId, sportName, leagueId, leagueName) {
         var criteria = {
+            ReportType: domElements.ddlPeriodType.val(),
             FromDate: domElements.divDateRange.getFrom(),
             ToDate: domElements.divDateRange.getTo(),
             SportId: sportId,
@@ -112,6 +116,8 @@ var sportPerformance = (function ($) {
             yearRanges: null,
             labelCss: 'col_5'
         });
+
+        domElements.ddlPeriodType = $('#ddlPeriodType');
 
         //get sports
         sportPerformance.GetAllSports();

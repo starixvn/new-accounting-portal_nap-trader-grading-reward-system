@@ -139,6 +139,8 @@
     <Compile Include="Controllers\OSDashboardController.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
+    <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetTopNWorstTraderCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetTopNBestSportCriteria.cs" />

@@ -41,39 +41,13 @@
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
         public JsonResult GetSummaryData(int month)
         {
-            var currentData = _dashboardService.GetDataByMonth(month);
-            var lastYearData = _dashboardService.GetDataByMonthLastYear(month);
+            var monthData = _dashboardService.GetDataByMonth(month);
+            var lastYearMonthData = _dashboardService.GetDataByMonthLastYear(month);
             var bestSports = _dashboardService.GetTopNBestSports(month, _numOfSport);
             var worstTraders = _dashboardService.GetTopNWorstTraders(month, _numOfTrader);
-            var monthData = currentData.GroupBy(t => t.EventDate).Select(t => new DataByMonth
-            {
-                MatchCount = t.Sum(x => x.MatchCount),
-                EventDate = t.ElementAt(0).EventDate,
-                Winloss = t.Sum(x => x.Winloss),
-                Turnover = t.Sum(x => x.Turnover)
-            });
-            var lastYearMonthData = lastYearData.GroupBy(t => t.EventDate).Select(t => new DataByMonth
-            {
-                MatchCount = t.Sum(x => x.MatchCount),
-                EventDate = t.ElementAt(0).EventDate,
-                Winloss = t.Sum(x => x.Winloss),
-                Turnover = t.Sum(x => x.Turnover)
-            });
-            var regionData = currentData.GroupBy(t => t.RegionName).Select(t => new DataByMonth
-            {
-                MatchCount = t.Sum(x => x.MatchCount),
-                RegionName = t.ElementAt(0).RegionName,
-                Winloss = t.Sum(x => x.Winloss),
-                Turnover = t.Sum(x => x.Turnover)
-            });
-            var teamData = currentData.GroupBy(t => t.TeamName).Select(t => new DataByMonth
-            {
-                MatchCount = t.Sum(x => x.MatchCount),
-                TeamName = t.ElementAt(0).TeamName,
-                Winloss = t.Sum(x => x.Winloss),
-                Turnover = t.Sum(x => x.Turnover)
-            });
-            var years = currentData.Select(t => t.Year).Union(lastYearData.Select(x => x.Year)).Distinct().OrderBy(t => t);
+            var regionData = _dashboardService.GetDataByRegion(month);
+            var teamData = _dashboardService.GetDataByTeam(month);
+            var years = monthData.Select(t => t.Year).Union(lastYearMonthData.Select(x => x.Year)).Distinct().OrderBy(t => t);
 
             return Json(
                 new

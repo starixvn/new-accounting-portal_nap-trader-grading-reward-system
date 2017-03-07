@@ -14,6 +14,8 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance
 
     public class GetLeaguePerformanceCriteria : CriteriaBase
     {
+        public int ReportType { get; set; }
+
         public int SportId { get; set; }
 
         public DateTime FromDate { get; set; }

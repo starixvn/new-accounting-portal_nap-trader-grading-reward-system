@@ -12,5 +12,9 @@
         IEnumerable<DataByMonth> GetDataByMonth(int numOfMonth);
 
         IEnumerable<DataByMonth> GetDataByMonthLastYear(int numOfMonth);
+
+        IEnumerable<DataByMonth> GetDataByTeam(int numOfMonth);
+
+        IEnumerable<DataByMonth> GetDataByRegion(int numOfMonth);
     }
 }

@@ -11,10 +11,12 @@
     {
         public IEnumerable<TopSport> GetTopNBestSports(int numOfMonth, int numberOfBestSport)
         {
+            var thisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
             var criteria = new GetTopNBestSportCriteria
             {
-                FromDate = DateTime.Now.AddMonths(-numOfMonth + 1),
-                ToDate = DateTime.Now,
+                FromDate = thisMonth.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonth,
                 Top = numberOfBestSport
             };
 
@@ -25,10 +27,12 @@
 
         public IEnumerable<TopTrader> GetTopNWorstTraders(int numOfMonth, int numOfWorstTrader)
         {
+            var thisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
             var criteria = new GetTopNWorstTraderCriteria
             {
-                FromDate = DateTime.Now.AddMonths(-numOfMonth + 1),
-                ToDate = DateTime.Now,
+                FromDate = thisMonth.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonth,
                 Top = numOfWorstTrader
             };
 
@@ -89,6 +93,36 @@
 
                 thisMonthLastYear = thisMonthLastYear.AddMonths(-1);
             }
+
+            return result;
+        }
+
+        public IEnumerable<DataByMonth> GetDataByTeam(int numOfMonth)
+        {
+            var thisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+            var criteria = new GetDataByTeamCriteria
+            {
+                FromDate = thisMonth.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonth
+            };
+
+            var result = this.GetData<DataByMonth>(criteria).ToList();
+
+            return result;
+        }
+
+        public IEnumerable<DataByMonth> GetDataByRegion(int numOfMonth)
+        {
+            var thisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
+            var criteria = new GetDataByRegionCriteria
+            {
+                FromDate = thisMonth.AddMonths(-numOfMonth + 1),
+                ToDate = thisMonth
+            };
+
+            var result = this.GetData<DataByMonth>(criteria).ToList();
 
             return result;
         }

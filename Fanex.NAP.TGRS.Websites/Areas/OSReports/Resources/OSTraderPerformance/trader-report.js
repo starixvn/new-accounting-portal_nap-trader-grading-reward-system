@@ -14,7 +14,12 @@ var traderReports = (function ($) {
         divDateRange: null,
         btnSearch: null,
         txtTraderName: null,
-        divGrid: null
+        divGrid: null,
+        ddlPeriodType: null,
+        divSportPerformanceContainer: null,
+        divSportPerformanceGrid: null,
+        divTraderPerformanceContainer: null,
+        divTraderPerformanceGrid: null,
     };
 
     var cachedData = [];
@@ -23,9 +28,12 @@ var traderReports = (function ($) {
     var cacheDOMElements = function () {
         domElements.divDateRange = $('#divDateRange');
         domElements.btnSearch = $('#btnSearch');
-        domElements.ddlPeriodType = $('#ddlPeriodType');
         domElements.txtTraderName = $('#txtTraderName');
         domElements.divGrid = $("#resultContainer");
+        domElements.divSportPerformanceContainer = $('#divSportPerformanceContainer');
+        domElements.divSportPerformanceGrid = $('#divSportPerformanceGrid');
+        domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
+        domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
     };
 
     var initDatePicker = function () {
@@ -42,12 +50,15 @@ var traderReports = (function ($) {
     };
 
     var initPageFields = function () {
+        initDatePicker();
+
+        domElements.ddlPeriodType = $('#ddlPeriodType');
         //Date picker
         domElements.ddlPeriodType.val(1);
-        initDatePicker();
         //btnSearch
         domElements.btnSearch.click(function () {
             var criteria = {
+                ReportType:  domElements.ddlPeriodType.val(),
                 TraderName: domElements.txtTraderName.val().trim(),
                 Fromdate: domElements.divDateRange.getFrom(),
                 ToDate: domElements.divDateRange.getTo()
@@ -55,15 +66,17 @@ var traderReports = (function ($) {
             common.DisableInput();
             TraderReportService.GetTraderPerformance(criteria, function (data) {
                 cachedData = data;
+                showTraderPerformanceReport();
                 renderTraderGrid(data);
             });
         });
 
 
-        domElements.divGrid.on('click', ".sport-link", function () {
+        domElements.divTraderPerformanceGrid.on('click', ".sport-link", function () {
             var $this = $(this);
 
             var criteria = {
+                ReportType: domElements.ddlPeriodType.val(),
                 TraderId: $this.attr("data-trader-id"),
                 FromDate: domElements.divDateRange.getFrom(),
                 ToDate: domElements.divDateRange.getTo()
@@ -72,12 +85,13 @@ var traderReports = (function ($) {
             common.DisableInput();
 
             TraderReportService.GetSportsPerformance(criteria, function (data) {
+                showSportPerformanceReport();
                 renderSportsGrid($this.attr("data-trader-name"), data);
             });
         });
 
-        domElements.divGrid.on('click', '#trader-link', function () {
-            renderTraderGrid(cachedData);
+        domElements.divSportPerformanceContainer.on('click', '#trader-link', function () {
+            showTraderPerformanceReport();
         });
     };
 
@@ -139,8 +153,8 @@ var traderReports = (function ($) {
                 itemsPerPageArray: common.Constants.PagerRanges
             }
         };
-        domElements.divGrid.removeClass("hide");
-        $(".freegrid", domElements.divGrid).fanexGrid(options);
+
+        domElements.divTraderPerformanceGrid.fanexGrid(options);
     }
 
     function renderSportsGrid(traderName, data) {
@@ -185,13 +199,23 @@ var traderReports = (function ($) {
             }
         };
 
-        $(".freegrid", domElements.divGrid).fanexGrid(options);
+        domElements.divSportPerformanceGrid.fanexGrid(options);
     }
 
     traderReports.Initialize = function () {
         cacheDOMElements();
 
         initPageFields();
+    };
+
+    function showSportPerformanceReport() {
+        domElements.divSportPerformanceContainer.removeClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+    };
+
+    function showTraderPerformanceReport() {
+        domElements.divSportPerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.removeClass('display-none');
     };
 
     return traderReports;

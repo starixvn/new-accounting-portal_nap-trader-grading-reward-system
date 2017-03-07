@@ -11,7 +11,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_Rpt_SummaryData";
+            return "TGRS_OS_Rpt_SummaryDataByMonth";
         }
 
         public override bool IsValid()

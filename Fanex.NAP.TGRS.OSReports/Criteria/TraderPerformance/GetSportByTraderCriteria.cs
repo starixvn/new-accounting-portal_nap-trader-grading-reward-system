@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance
+﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance
 {
+    using Fanex.NAP.Framework.Data;
+    using System;
+
     public class GetSportByTraderCriteria : CriteriaBase
     {
+        public int ReportType { get; set; }
+
         public int TraderId { get; set; }
 
         public DateTime FromDate { get; set; }
