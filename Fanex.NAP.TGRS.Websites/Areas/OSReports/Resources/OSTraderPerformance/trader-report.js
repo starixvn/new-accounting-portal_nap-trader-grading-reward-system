@@ -14,6 +14,7 @@ var traderReports = (function ($) {
         divDateRange: null,
         btnSearch: null,
         txtTraderName: null,
+        ddlSport: null,
         divGrid: null,
         ddlPeriodType: null,
         divSportPerformanceContainer: null,
@@ -34,6 +35,7 @@ var traderReports = (function ($) {
         domElements.divSportPerformanceGrid = $('#divSportPerformanceGrid');
         domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
+        domElements.ddlSport = $('#ddlSport');
     };
 
     var initDatePicker = function () {
@@ -58,10 +60,11 @@ var traderReports = (function ($) {
         //btnSearch
         domElements.btnSearch.click(function () {
             var criteria = {
-                ReportType:  domElements.ddlPeriodType.val(),
+                ReportType: domElements.ddlPeriodType.val(),
                 TraderName: domElements.txtTraderName.val().trim(),
                 Fromdate: domElements.divDateRange.getFrom(),
-                ToDate: domElements.divDateRange.getTo()
+                ToDate: domElements.divDateRange.getTo(),
+                SportId: domElements.ddlSport.val()
             };
             common.DisableInput();
             TraderReportService.GetTraderPerformance(criteria, function (data) {
@@ -79,7 +82,8 @@ var traderReports = (function ($) {
                 ReportType: domElements.ddlPeriodType.val(),
                 TraderId: $this.attr("data-trader-id"),
                 FromDate: domElements.divDateRange.getFrom(),
-                ToDate: domElements.divDateRange.getTo()
+                ToDate: domElements.divDateRange.getTo(),
+                SportId: domElements.ddlSport.val()
             }
 
             common.DisableInput();
@@ -92,6 +96,19 @@ var traderReports = (function ($) {
 
         domElements.divSportPerformanceContainer.on('click', '#trader-link', function () {
             showTraderPerformanceReport();
+        });
+
+        TraderReportService.GetAllSports().then(function () {
+            var sports = TraderReportService.Sports;
+
+            TraderReportService.updateSportDropdown(sports, domElements.ddlSport, labels.AllSports, 0);
+
+            domElements.ddlSport.multiselect({
+                selectedList: 1,
+                minWidth: 263,
+                height: 200,
+                multiple: false
+            }).multiselectfilter({ width: 198 });
         });
     };
 
@@ -108,7 +125,7 @@ var traderReports = (function ($) {
     }
 
     function renderTraderGrid(data) {
-        var sportLink = "<span class='sport-link link' data-trader-id='{1}' data-trader-name='{2}'>{0}</span>";
+        var sportLink = "<span class='sport-link link' data-trader-id='{1}' data-trader-name='{2}' data-sport-id={3}>{0}</span>";
 
         var mapper = function (item, idx) {
             return {
@@ -122,7 +139,7 @@ var traderReports = (function ($) {
                     { Name: 'colMargin', Value: item.Margin },
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss },
-                    { Name: 'colSport', Value: sportLink.format(item.SportCount, item.TraderId, item.TraderName) },
+                    { Name: 'colSport', Value: sportLink.format(item.SportCount, item.TraderId, item.TraderName, item.SportId) },
                     { Name: 'colEvent', Value: item.EventProductCount }
                 ]
             }

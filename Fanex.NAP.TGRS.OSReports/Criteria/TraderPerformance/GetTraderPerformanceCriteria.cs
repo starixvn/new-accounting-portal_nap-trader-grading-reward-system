@@ -13,6 +13,8 @@
 
         public DateTime ToDate { get; set; }
 
+        public int SportId { get; set; }
+
         public override bool IsValid()
         {
             return true;
