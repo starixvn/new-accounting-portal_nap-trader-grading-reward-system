@@ -203,7 +203,7 @@
                     item.TeamName, item.TraderCount, item.LeagueCount, item.MatchCount, item.Turnover,
                     item.Juice,
                     (object)item.JuiceMargin ?? ViewLang.NA,
-                    item.Leftover,
+                    item.LeftoverMargin,
                     (object)item.LeftoverMargin ?? ViewLang.NA,
                     item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA,

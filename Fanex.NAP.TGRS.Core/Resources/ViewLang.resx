@@ -645,4 +645,7 @@
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
+  <data name="MarginTotal" xml:space="preserve">
+    <value>Margin on Total %</value>
+  </data>
 </root>

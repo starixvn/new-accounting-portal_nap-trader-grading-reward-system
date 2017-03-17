@@ -745,6 +745,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Margin on Total %.
+        /// </summary>
+        public static string MarginTotal {
+            get {
+                return ResourceManager.GetString("MarginTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Market.
         /// </summary>
         public static string Market {

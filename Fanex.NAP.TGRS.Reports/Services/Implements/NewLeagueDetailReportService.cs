@@ -167,7 +167,7 @@
                     item.Turnover,
                     item.Juice,
                     (object)item.JuiceMargin ?? ViewLang.NA,
-                    item.Leftover,
+                    item.WinlostLeftover,
                     (object)item.LeftoverMargin ?? ViewLang.NA,
                     item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA,
