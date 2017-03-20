@@ -27,5 +27,10 @@
 
             return result != null ? result.ToList() : new List<Sport>();
         }
+
+        public IEnumerable<RegionPerformance> GetRegionPerformances(GetRegionByTraderCriteria criteria)
+        {
+            return GetData<RegionPerformance>(criteria);
+        }
     }
 }

@@ -18,7 +18,9 @@ var traderReports = (function ($) {
         divGrid: null,
         ddlPeriodType: null,
         divSportPerformanceContainer: null,
+        divRegionPerformanceContainer: null,
         divSportPerformanceGrid: null,
+        divRegionPerformanceGrid: null,
         divTraderPerformanceContainer: null,
         divTraderPerformanceGrid: null,
     };
@@ -32,7 +34,9 @@ var traderReports = (function ($) {
         domElements.txtTraderName = $('#txtTraderName');
         domElements.divGrid = $("#resultContainer");
         domElements.divSportPerformanceContainer = $('#divSportPerformanceContainer');
+        domElements.divRegionPerformanceContainer = $('#divRegionPerformanceContainer');
         domElements.divSportPerformanceGrid = $('#divSportPerformanceGrid');
+        domElements.divRegionPerformanceGrid = $('#divRegionPerformanceGrid');
         domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
         domElements.ddlSport = $('#ddlSport');
@@ -94,7 +98,30 @@ var traderReports = (function ($) {
             });
         });
 
+        domElements.divTraderPerformanceGrid.on('click', ".region-link", function () {
+            var $this = $(this);
+
+            var criteria = {
+                ReportType: domElements.ddlPeriodType.val(),
+                TraderId: $this.attr("data-trader-id"),
+                FromDate: domElements.divDateRange.getFrom(),
+                ToDate: domElements.divDateRange.getTo(),
+                SportId: domElements.ddlSport.val()
+            }
+
+            common.DisableInput();
+
+            TraderReportService.GetRegionsPerformance(criteria, function (data) {
+                showRegionPerformanceReport();
+                renderRegionsGrid($this.attr("data-trader-name"), data);
+            });
+        });
+
         domElements.divSportPerformanceContainer.on('click', '#trader-link', function () {
+            showTraderPerformanceReport();
+        });
+
+        domElements.divRegionPerformanceContainer.on('click', '#trader-link', function () {
             showTraderPerformanceReport();
         });
 
@@ -126,6 +153,7 @@ var traderReports = (function ($) {
 
     function renderTraderGrid(data) {
         var sportLink = "<span class='sport-link link' data-trader-id='{1}' data-trader-name='{2}' data-sport-id={3}>{0}</span>";
+        var regionLink = "<span class='region-link link' data-trader-id='{1}' data-trader-name='{2}' data-sport-id={3}>{0}</span>";
 
         var mapper = function (item, idx) {
             return {
@@ -140,6 +168,7 @@ var traderReports = (function ($) {
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss },
                     { Name: 'colSport', Value: sportLink.format(item.SportCount, item.TraderId, item.TraderName, item.SportId) },
+                    { Name: 'colRegion', Value: regionLink.format(item.RegionCount, item.TraderId, item.TraderName, item.SportId) },
                     { Name: 'colEvent', Value: item.EventProductCount }
                 ]
             }
@@ -157,6 +186,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Sports', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Regions', Width: 100, Name: 'colRegion', HeaderAlign: 'center', CellAlign: 'right' },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
             ],
             showNumberColumn: true,
@@ -219,6 +249,49 @@ var traderReports = (function ($) {
         domElements.divSportPerformanceGrid.fanexGrid(options);
     }
 
+    function renderRegionsGrid(traderName, data) {
+        var fallbackLink = '<span id="trader-link" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+
+        var mapper = function (item, idx) {
+            return {
+                Columns: [
+                    { Name: 'colNum', Value: idx + 1 },
+                    { Name: 'colRegion', Value: item.RegionName === null ? "Unknown" : item.RegionName },
+                    { Name: 'colMargin', Value: item.Margin },
+                    { Name: 'colTurnover', Value: item.Turnover },
+                    { Name: 'colWinloss', Value: item.WinLoss },
+                    { Name: 'colEvent', Value: item.EventProductCount }
+                ]
+            }
+        };
+
+        var options = {
+            columns: [
+                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
+                { HeaderText: 'Region', Width: 200, Name: 'colRegion', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
+                { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
+                { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+            ],
+            showNumberColumn: true,
+            bodyRows: data.map(mapper),
+            gridExpandHeight: 220,
+            showTitle: true,
+            titleInfo: {
+                text: fallbackLink.format(labels.TraderPerformance, traderName)
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges
+            }
+        };
+
+        domElements.divRegionPerformanceGrid.fanexGrid(options);
+    }
+
     traderReports.Initialize = function () {
         cacheDOMElements();
 
@@ -228,11 +301,19 @@ var traderReports = (function ($) {
     function showSportPerformanceReport() {
         domElements.divSportPerformanceContainer.removeClass('display-none');
         domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
     };
 
     function showTraderPerformanceReport() {
         domElements.divSportPerformanceContainer.addClass('display-none');
         domElements.divTraderPerformanceContainer.removeClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
+    };
+
+    function showRegionPerformanceReport() {
+        domElements.divRegionPerformanceContainer.removeClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divSportPerformanceContainer.addClass('display-none');
     };
 
     return traderReports;

@@ -22,7 +22,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_Rpt_SportPerformanceGetByTraderId";
+            return "TGRS_OS_Rpt_TraderPerformance_Sport";
         }
     }
 }

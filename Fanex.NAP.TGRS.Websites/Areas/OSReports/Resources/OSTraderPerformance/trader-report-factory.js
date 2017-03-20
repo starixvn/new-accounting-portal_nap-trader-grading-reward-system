@@ -2,6 +2,7 @@
     var urls = {
         GetTraderPerformance: common.ResolveRootUrl('OSTraderPerformance/GetTraderPerformance'),
         GetSportsPerformance: common.ResolveRootUrl('OSTraderPerformance/GetSportsPerformanceByTrader'),
+        GetRegionsPerformance: common.ResolveRootUrl('OSTraderPerformance/GetRegionsPerformanceByTrader'),
         GetAllSports: common.ResolveRootUrl('OSTraderPerformance/GetAllSports'),
     };
 
@@ -16,6 +17,10 @@
 
         GetAllSports: function () {
             return $.get(urls.GetAllSports);
+        },
+
+        GetRegionsPerformance: function (criteria) {
+            return $.get(urls.GetRegionsPerformance, criteria);
         }
     }
 })(jQuery);

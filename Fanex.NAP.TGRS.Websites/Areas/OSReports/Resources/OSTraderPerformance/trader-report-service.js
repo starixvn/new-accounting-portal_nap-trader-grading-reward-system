@@ -24,6 +24,17 @@
         });
     };
 
+    traderReportService.GetRegionsPerformance = function (criteria, callback) {
+        TraderReportFactory.GetRegionsPerformance(criteria)
+        .success(callback)
+        .error(function (xhr) {
+            common.HandleAjaxError(xhr);
+        })
+        .complete(function () {
+            common.EnableInput();
+        });
+    };
+
     traderReportService.GetAllSports = function () {
         common.DisableInput();
         return TraderReportFactory.GetAllSports()

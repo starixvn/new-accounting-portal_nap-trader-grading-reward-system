@@ -9,7 +9,9 @@
     {
         IEnumerable<TraderPerformance> GetTraderPerformances(GetTraderPerformanceCriteria criteria);
 
-        IEnumerable<Models.TraderPerformance.SportPerformance> GetSportPerformances(GetSportByTraderCriteria criteria);
+        IEnumerable<SportPerformance> GetSportPerformances(GetSportByTraderCriteria criteria);
+
+        IEnumerable<RegionPerformance> GetRegionPerformances(GetRegionByTraderCriteria criteria);
 
         List<Sport> GetAllSport();
     }

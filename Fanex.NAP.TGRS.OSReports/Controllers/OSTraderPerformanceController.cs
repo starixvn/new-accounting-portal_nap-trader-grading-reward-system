@@ -47,6 +47,14 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult GetRegionsPerformanceByTrader(GetRegionByTraderCriteria criteria)
+        {
+            var result = _service.GetRegionPerformances(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetAllSports()
         {
             var sports = _service.GetAllSport();

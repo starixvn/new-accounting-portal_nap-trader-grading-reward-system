@@ -23,5 +23,7 @@
         public int SportCount { get; set; }
 
         public int EventProductCount { get; set; }
+
+        public int RegionCount { get; set; }
     }
 }
