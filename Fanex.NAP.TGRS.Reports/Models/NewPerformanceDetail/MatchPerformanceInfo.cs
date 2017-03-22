@@ -18,29 +18,29 @@
 
         public decimal Turnover { get; set; }
 
-        public decimal TurnoverLeftover { get; set; }
+        public decimal TurnoverJuice { get; set; }
 
-        public decimal? TurnoverJuice
+        public decimal TurnoverLeftover
         {
             get
             {
-                return (Turnover - TurnoverLeftover);
+                return Turnover - TurnoverJuice;
             }
         }
 
         public decimal WinLoss { get; set; }
 
-        public decimal WinlostLeftover { get; set; }
-
         public int? BetCount { get; set; }
 
         public decimal? Score { get; set; }
 
-        public decimal Juice
+        public decimal Juice { get; set; }
+
+        public decimal WinlostLeftover
         {
             get
             {
-                return WinLoss - WinlostLeftover;
+                return WinLoss - Juice;
             }
         }
 

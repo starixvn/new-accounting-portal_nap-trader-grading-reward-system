@@ -101,13 +101,18 @@
             // Content rows
             int dataLength = contentData.ToList().Count;
             TraderPerformanceInfo item;
-            decimal? totalTO = 0, totalJuice = 0, totalWL = 0, totalLeague = 0, totalMatch = 0, totalBetcount = 0;
+            decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
+            int? totalLeague = 0, totalMatch = 0, totalBetcount = 0;
 
             for (int i = 0; i < dataLength; i++)
             {
                 int styleIndex = (i % 2 == 0) ? 5 : 6;
                 item = contentData.ElementAt(i);
+
                 totalTO += item.Turnover;
+                totalTOJuice += item.TurnoverJuice;
+                totalTOLeftover += item.TurnoverLeftover;
+                totalLeftover += item.WinlostLeftover;
                 totalJuice += item.Juice;
                 totalWL += item.WinLoss;
                 totalLeague += item.LeagueCount;
@@ -122,12 +127,16 @@
                     item.TeamName,
                     item.LeagueCount,
                     item.MatchCount,
-                    item.Turnover,
                     item.Juice,
-                    item.JuiceMargin,
-                    (object)(item.WinLoss - item.Juice),
-                    item.Turnover > 0 ? (object)((item.WinLoss - item.Juice) / item.Turnover * 100) : ViewLang.NA,
+                    item.TurnoverJuice,
+                    (object)item.JuiceMargin ?? ViewLang.NA,
+                    (object)item.JuiceMarginTotal ?? ViewLang.NA,
+                    item.WinlostLeftover,
+                    item.TurnoverLeftover,
+                    (object)item.LeftoverMargin ?? ViewLang.NA,
+                    (object)item.LeftoverMarginTotal ?? ViewLang.NA,
                     item.WinLoss,
+                    item.Turnover,
                     (object)item.Margin ?? ViewLang.NA,
                     item.BetCount,
                     isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
@@ -143,12 +152,16 @@
                 null,
                 totalLeague,
                 totalMatch,
-                totalTO,
                 totalJuice,
+                totalTOJuice,
+                totalTOJuice > 0 ? (object)(totalJuice / totalTOJuice * 100) : ViewLang.NA,
                 totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
-                totalWL - totalJuice,
-                totalTO > 0 ? (object)((totalWL - totalJuice) / totalTO * 100) : ViewLang.NA,
+                totalLeftover,
+                totalTOLeftover,
+                totalTOLeftover > 0 ? (object)(totalLeftover / totalTOLeftover * 100) : ViewLang.NA,
+                totalTO > 0 ? (object)(totalLeftover / totalTO * 100) : ViewLang.NA,
                 totalWL,
+                totalTO,
                 totalTO > 0 ? (object)(totalWL / totalTO * 100) : ViewLang.NA,
                 totalBetcount,
                 string.Empty

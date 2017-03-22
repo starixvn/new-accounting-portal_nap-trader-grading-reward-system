@@ -157,7 +157,7 @@
 
         private void FillRowData(IEnumerable<BetTypePerformanceInfo> contentData, ref ExcelTemplateWriter writer)
         {
-            decimal totalTO = 0, totalJuice = 0, totalWL = 0;
+            decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0, len = contentData.Count();
 
             for (int i = 0; i < len; i++)
@@ -168,18 +168,25 @@
                 var record = new object[]
                 {
                     i + 1, item.TypeName, item.TraderCount, item.LeagueCount, item.MatchCount,
-                    item.Turnover,
                     item.Juice,
+                    item.TurnoverJuice,
                     (object)item.JuiceMargin ?? ViewLang.NA,
-                    item.LeftoverMargin,
+                    (object)item.JuiceMarginTotal ?? ViewLang.NA,
+                    item.WinlostLeftover,
+                    item.TurnoverLeftover,
                     (object)item.LeftoverMargin ?? ViewLang.NA,
+                    (object)item.LeftoverMarginTotal ?? ViewLang.NA,
                     item.WinLoss,
+                    item.Turnover,
                     (object)item.Margin ?? ViewLang.NA,
                     item.BetCount
                 };
                 writer.WriteRow(styleIndex, record);
 
                 totalTO += item.Turnover;
+                totalTOJuice += item.TurnoverJuice;
+                totalTOLeftover += item.TurnoverLeftover;
+                totalLeftover += item.WinlostLeftover;
                 totalJuice += item.Juice;
                 totalWL += item.WinLoss;
                 totalTrader += item.TraderCount;
@@ -194,12 +201,16 @@
                 totalTrader,
                 totalLeague,
                 totalMatch,
-                totalTO,
                 totalJuice,
+                totalTOJuice,
+                totalTOJuice > 0 ? (object)(totalJuice / totalTOJuice * 100) : ViewLang.NA,
                 totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
-                totalWL - totalJuice,
-                totalTO > 0 ? (object)((totalWL - totalJuice) / totalTO * 100) : ViewLang.NA,
+                totalLeftover,
+                totalTOLeftover,
+                totalTOLeftover > 0 ? (object)(totalLeftover / totalTOLeftover * 100) : ViewLang.NA,
+                totalTO > 0 ? (object)(totalLeftover / totalTO * 100) : ViewLang.NA,
                 totalWL,
+                totalTO,
                 totalTO > 0 ? (object)(totalWL / totalTO * 100) : ViewLang.NA,
                 totalBetcount
             };
