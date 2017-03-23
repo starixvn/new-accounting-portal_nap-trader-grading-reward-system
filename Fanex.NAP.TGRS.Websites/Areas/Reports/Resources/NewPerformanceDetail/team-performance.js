@@ -306,11 +306,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -426,7 +426,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTeamPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [13]);
+            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [17]);
         }
 
         handleTeamPerformanceGridEvents();
@@ -535,11 +535,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -767,11 +767,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -879,7 +879,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [12]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [16]);
         }
 
         handleTraderPerformanceByLeagueGridEvents(teamId, teamName, leagueId, leagueName);
@@ -1002,11 +1002,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -1221,11 +1221,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                     {
                         HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -1333,7 +1333,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [14]);
         }
 
         handleBettypeDetailOfGradeLeagueGridEvents();
@@ -1479,11 +1479,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -1594,7 +1594,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [13]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [17]);
         }
 
         handleTraderPerformanceGridEvents(teamId, teamName);
@@ -1797,11 +1797,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -2031,11 +2031,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                     {
                         HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -2142,7 +2142,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [14]);
         }
 
         handleBettypeDetailGridEvents();

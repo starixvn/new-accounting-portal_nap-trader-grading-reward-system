@@ -265,11 +265,11 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -379,7 +379,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [14]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [18]);
         }
 
         handleTraderPerformanceGridEvents();
@@ -593,11 +593,11 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
                       },
                       {
                           HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
                           HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                       },
                       {
                           HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -824,11 +824,11 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
                 },
                 {
                     HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true
                 },
                 {
                     HeaderText: labels.Margin, Width: 80, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
                 },
                 {
                     HeaderText: labels.BetCount, Width: 90, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
@@ -930,7 +930,7 @@ Fanex.NAP.TGRS.NewPerformanceDetail.TraderPerformance = function () {
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divBettypeDetailGrid.fanexGrid("hideColumns", gridOptions, [14]);
         }
 
         handleBettypeDetailGridEvents();
