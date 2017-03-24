@@ -240,7 +240,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -249,14 +249,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -265,14 +265,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -495,7 +495,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -504,14 +504,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -520,14 +520,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -750,7 +750,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -759,14 +759,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -775,14 +775,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -964,7 +964,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -973,14 +973,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -989,14 +989,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1173,7 +1173,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1182,14 +1182,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1198,14 +1198,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1371,7 +1371,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColJuiceTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1380,14 +1380,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColJuiceMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColLeftover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColLeftoverTO', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
@@ -1396,14 +1396,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                       },
                       {
                           HeaderText: labels.MarginTotal, Width: 80, Name: 'ColLeftoverMarginTotal', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                       },
                       {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
                       {
-                          HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          HeaderText: labels.Turnover, Width: 105, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
