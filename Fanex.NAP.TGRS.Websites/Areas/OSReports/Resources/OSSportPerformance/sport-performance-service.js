@@ -6,6 +6,7 @@ var sportPerformanceService = (function ($) {
     var sportPerformanceService = {};
     sportPerformanceService.SportPerformance = [];
     sportPerformanceService.LeaguePerformance = [];
+    sportPerformanceService.RegionPerformance = [];
     sportPerformanceService.BettypePerformance = [];
     sportPerformanceService.Sports = [];
 
@@ -28,6 +29,20 @@ var sportPerformanceService = (function ($) {
         return sportPerformanceFactory.GetLeaguePerformance(criteria)
             .success(function (result) {
                 sportPerformanceService.LeaguePerformance = result;
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    };
+
+    sportPerformanceService.GetRegionPerformance = function (criteria) {
+        common.DisableInput();
+        return sportPerformanceFactory.GetRegionPerformance(criteria)
+            .success(function (result) {
+                sportPerformanceService.RegionPerformance = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);

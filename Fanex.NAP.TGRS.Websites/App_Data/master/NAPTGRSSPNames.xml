@@ -43,8 +43,9 @@
   <Function Name="OSSportPerformance">
     <Setting Key="TGRS_OS_SportGetAll" SpName="TGRS_OS_SportGetAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_Rpt_SportPerformance" SpName="TGRS_OS_Rpt_SportPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_LeaguePerformance" SpName="TGRS_OS_Rpt_LeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_BettypePerformance" SpName="TGRS_OS_Rpt_BettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SportPerformance_Region" SpName="TGRS_OS_Rpt_SportPerformance_Region" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SportPerformance_League" SpName="TGRS_OS_Rpt_SportPerformance_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_SportPerformance_League_Bettype" SpName="TGRS_OS_Rpt_SportPerformance_League_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSTraderPerformance">
     <Setting Key="TGRS_OS_Rpt_TraderPerformance" SpName="TGRS_OS_Rpt_TraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

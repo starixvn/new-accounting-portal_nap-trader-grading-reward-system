@@ -146,6 +146,7 @@
     <Compile Include="Criteria\Dashboard\GetTopNBestSportCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetLeaguePerformanceCriteria.cs" />
+    <Compile Include="Criteria\SportPerformance\GetRegionBySportCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetSportPerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetAllSportsCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetRegionByTraderCriteria.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Models\Dashboard\TopTrader.cs" />
     <Compile Include="Models\SportPerformance\BettypePerformanceItem.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderPerformanceCriteria.cs" />
+    <Compile Include="Models\SportPerformance\RegionPerformanceItem.cs" />
     <Compile Include="Models\SportPerformance\Sport.cs" />
     <Compile Include="Models\TraderPerformance\RegionPerformance.cs" />
     <Compile Include="Models\TraderPerformance\SportPerformance.cs" />

@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SportPerformanceService.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-// <history>
-//   <change who="Aaron" date="2016.08.10">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
+﻿namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
 {
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
@@ -43,6 +34,13 @@ namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
             var result = this.GetData<BettypePerformanceItem>(criteria);
 
             return result != null ? result.ToList() : new List<BettypePerformanceItem>();
+        }
+
+        public List<RegionPerformanceItem> GetRegionPerformances(GetRegionBySportCriteria criteria)
+        {
+            var result = this.GetData<RegionPerformanceItem>(criteria);
+
+            return result != null ? result.ToList() : new List<RegionPerformanceItem>();
         }
     }
 }

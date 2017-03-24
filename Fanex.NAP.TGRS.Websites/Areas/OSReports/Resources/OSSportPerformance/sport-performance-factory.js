@@ -7,6 +7,7 @@ var sportPerformanceFactory = (function ($) {
         GetAllSports: common.ResolveRootUrl('OSSportPerformance/GetAllSports'),
         GetSportPerformance: common.ResolveRootUrl('OSSportPerformance/GetSportPerformance'),
         GetLeaguePerformance: common.ResolveRootUrl('OSSportPerformance/GetLeaguePerformance'),
+        GetRegionPerformance: common.ResolveRootUrl('OSSportPerformance/GetRegionsPerformanceBySport'),
         GetBettypePerformance: common.ResolveRootUrl('OSSportPerformance/GetBettypePerformance')
     };
 
@@ -21,6 +22,10 @@ var sportPerformanceFactory = (function ($) {
 
         GetLeaguePerformance: function (criteria) {
             return $.get(urls.GetLeaguePerformance, criteria);
+        },
+
+        GetRegionPerformance: function (criteria) {
+            return $.get(urls.GetRegionPerformance, criteria);
         },
 
         GetBettypePerformance: function (criteria) {

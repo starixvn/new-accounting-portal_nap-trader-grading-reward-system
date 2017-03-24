@@ -75,5 +75,13 @@ namespace Fanex.NAP.TGRS.OSReports.Controllers
 
             return Json(bettypePerformance, JsonRequestBehavior.AllowGet);
         }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSSportPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult GetRegionsPerformanceBySport(GetRegionBySportCriteria criteria)
+        {
+            var result = _sportPerformanceService.GetRegionPerformances(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

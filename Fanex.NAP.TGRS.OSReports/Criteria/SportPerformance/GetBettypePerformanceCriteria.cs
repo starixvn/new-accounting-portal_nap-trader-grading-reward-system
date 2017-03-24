@@ -26,7 +26,7 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_Rpt_BettypePerformance";
+            return "TGRS_OS_Rpt_SportPerformance_League_Bettype";
         }
 
         public override bool IsValid()

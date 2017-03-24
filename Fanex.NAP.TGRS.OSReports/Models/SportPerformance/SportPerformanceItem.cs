@@ -17,6 +17,8 @@ namespace Fanex.NAP.TGRS.OSReports.Models.SportPerformance
 
         public int NoOfLeague { get; set; }
 
+        public int RegionCount { get; set; }
+
         public decimal Turnover { get; set; }
 
         public decimal VWinLoss { get; set; }

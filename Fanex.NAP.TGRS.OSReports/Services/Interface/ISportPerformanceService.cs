@@ -22,5 +22,7 @@ namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
         List<LeaguePerformanceItem> GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
 
         List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria);
+
+        List<RegionPerformanceItem> GetRegionPerformances(GetRegionBySportCriteria criteria);
     }
 }

@@ -29,7 +29,9 @@ var sportPerformance = (function ($) {
         divLeaguePerformanceContainer: null,
         divLeaguePerformanceGrid: null,
         divBettypePerformanceContainer: null,
-        divBettypePerformanceGrid: null
+        divBettypePerformanceGrid: null,
+        divRegionPerformanceContainer: null,
+        divRegionPerformanceGrid: null
     };
 
     sportPerformance.GetSportPerformance = function () {
@@ -59,6 +61,21 @@ var sportPerformance = (function ($) {
             sportPerformance.LeaguePerformance = sportPerformanceService.LeaguePerformance;
             showLeaguePerformanceReport();
             renderLeaguePerformanceGrid(sportPerformance.LeaguePerformance, sportId, sportName);
+        });
+    };
+
+    sportPerformance.GetRegionPerformance = function (sportId, sportName) {
+        var criteria = {
+            ReportType: domElements.ddlPeriodType.val(),
+            FromDate: domElements.divDateRange.getFrom(),
+            ToDate: domElements.divDateRange.getTo(),
+            SportId: sportId
+        };
+
+        sportPerformanceService.GetRegionPerformance(criteria).then(function () {
+            sportPerformance.RegionPerformance = sportPerformanceService.RegionPerformance;
+            showRegionPerformanceReport();
+            renderRegionPerformanceGrid(sportPerformance.RegionPerformance, sportId, sportName);
         });
     };
 
@@ -105,6 +122,8 @@ var sportPerformance = (function ($) {
         domElements.divLeaguePerformanceGrid = $('#divLeaguePerformanceGrid');
         domElements.divBettypePerformanceContainer = $('#divBettypePerformanceContainer');
         domElements.divBettypePerformanceGrid = $('#divBettypePerformanceGrid');
+        domElements.divRegionPerformanceContainer = $('#divRegionPerformanceContainer');
+        domElements.divRegionPerformanceGrid = $('#divRegionPerformanceGrid');
 
         //init canlendar
         domElements.divDateRange = domElements.divDateRange.timeRange({
@@ -131,11 +150,13 @@ var sportPerformance = (function ($) {
     // Render sport performance grid.
     function renderSportPerformanceGrid(data) {
         var noOfLeaguesFormat = '<span class="league-link link" data-sport-id="{0}" title="{1}">{2}</span>';
+        var noOfRegionsFormat = '<span class="region-link link" data-sport-id="{0}" title="{1}">{2}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Sport, Width: 200, Name: 'ColSport', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: "Regions", Width: 100, Name: 'ColNoOfRegions', HeaderAlign: 'center', CellAlign: 'right' },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
@@ -193,10 +214,15 @@ var sportPerformance = (function ($) {
                                     item.SportId,
                                     labels.SportPerformance,
                                     numeral(item.NoOfLeague).format(common.Formats.IntegerFormat));
+                var noOfRegions = noOfRegionsFormat.format(
+                                    item.SportId,
+                                    labels.SportPerformance,
+                                    numeral(item.RegionCount).format(common.Formats.IntegerFormat));
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                               { Name: 'ColSport', Value: item.SportName, CssClass: 'sport-name' },
                               { Name: 'ColNoOfLeagues', Value: noOfLeagues },
+                              { Name: 'ColNoOfRegions', Value: noOfRegions },
                               { Name: 'ColTurnover', Value: item.Turnover },
                               { Name: 'ColWinLoss', Value: item.VWinLoss },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
@@ -217,6 +243,7 @@ var sportPerformance = (function ($) {
         domElements.divSportPerformanceContainer.removeClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divBettypePerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
     };
 
     function handleSportPerformanceGridEvents() {
@@ -229,6 +256,17 @@ var sportPerformance = (function ($) {
             sportName = sportName || $sportName.text();
 
             sportPerformance.GetLeaguePerformance(sportId, sportName);
+        });
+
+        domElements.divSportPerformanceGrid.find('span.region-link').click(function () {
+            var $link = $(this);
+            var $sportName = $link.closest('tr').find('div.sport-name');
+            var sportId = $link.attr('data-sport-id');
+            var sportName = $sportName.attr('title');
+
+            sportName = sportName || $sportName.text();
+
+            sportPerformance.GetRegionPerformance(sportId, sportName);
         });
     };
 
@@ -320,6 +358,7 @@ var sportPerformance = (function ($) {
         domElements.divSportPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.removeClass('display-none');
         domElements.divBettypePerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
     };
 
     function handleLeaguePerformanceGridEvents(sportId, sportName) {
@@ -336,6 +375,91 @@ var sportPerformance = (function ($) {
             leagueName = leagueName || $leagueName.text();
 
             sportPerformance.GetBettypePerformance(sportId, sportName, leagueId, leagueName);
+        });
+    };
+
+    // Render region performance grid.
+    function renderRegionPerformanceGrid(data, sportId, sportName) {
+        var titleFormat = '<span id="spanSportLink" class="breadcrumb-link">{0}</span>' +
+                         '<span title="{1}"> >> {2}</span>';
+
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Region, Width: 300, Name: 'ColRegion', HeaderAlign: 'center', CellAlign: 'left' },
+                      {
+                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                      },
+                      {
+                          HeaderText: 'V.Win Loss', Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
+                      },
+                      {
+                          HeaderText: 'V.Margin', Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: 'Event Products', Width: 120, Name: 'ColEvent', HeaderAlign: 'center', CellAlign: 'right',
+                          Sort: true
+                      }],
+            gridExpandHeight: 220,
+            showTitle: true,
+            showNumberColumn: true,
+            titleInfo: {
+                text: titleFormat.format(labels.SportPerformance, sportName, sportName)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleRegionPerformanceGridEvents(sportId, sportName);
+
+                    return rows;
+                }
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    handleRegionPerformanceGridEvents(sportId, sportName);
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+        var bodyData = [];
+
+        if (data !== null) {
+            $.each(data, function (index, item) {
+                row = {
+                    Columns: [{ Name: 'ColNo', Value: index + 1 },
+                              { Name: 'ColRegion', Value: item.RegionName != null ? item.RegionName : "Unknown" },
+                              { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColWinLoss', Value: item.WinLoss },
+                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                              { Name: 'ColEvent', Value: item.EventProductCount }]
+                };
+
+                bodyData.push(row);
+            });
+        }
+
+        gridOptions.bodyRows = bodyData;
+        domElements.divRegionPerformanceGrid.fanexGrid(gridOptions);
+        handleRegionPerformanceGridEvents(sportId, sportName);
+    };
+
+    function showRegionPerformanceReport() {
+        domElements.divSportPerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.removeClass('display-none');
+        domElements.divBettypePerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
+    };
+
+    function handleRegionPerformanceGridEvents(sportId, sportName) {
+        domElements.divRegionPerformanceContainer.find('#spanSportLink').click(function () {
+            showSportPerformanceReport();
         });
     };
 
@@ -421,6 +545,7 @@ var sportPerformance = (function ($) {
     function showBettypePerformanceReport() {
         domElements.divSportPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divRegionPerformanceContainer.addClass('display-none');
         domElements.divBettypePerformanceContainer.removeClass('display-none');
     };
 
