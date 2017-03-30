@@ -11,6 +11,7 @@
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using NPOI.SS.UserModel;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
@@ -188,6 +189,7 @@
 
         #region Private
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FillRowData(IEnumerable<TeamPerformanceInfo> contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;

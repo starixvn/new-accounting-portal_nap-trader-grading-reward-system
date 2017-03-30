@@ -281,6 +281,9 @@
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-service.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-report-factory.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-report-service.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-report.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-service.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report.js" />
@@ -464,6 +467,9 @@
     <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\IndexFilter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSDashboard\Index.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.less" />
+    <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-performance.less" />
+    <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\Index.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\IndexFilter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Trader Performance Report (Juice & Leftover)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render("~/styles/new-trader-performance")
+}
+
+@section Headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@Html.Partial("IndexFilter")
+
+<div id="divTraderPerformanceContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="divSportPerformanceContainer" class="content-grid display-none">
+    <div id="divSportPerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="divRegionPerformanceContainer" class="content-grid display-none">
+    <div id="divRegionPerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="resultContainer" class="content-grid hide">
+    <div id="divGrid" class="freegrid">
+    </div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-new-trader-report")
+
+    <script type="text/javascript">
+        var labels = {
+            TraderPerformance: '@ViewLang.TraderPerformance',
+            AllSports: '@ViewLang.AllSports',
+        };
+        var messages = {
+            UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',
+            AddTraderSuccessfully: '@Messages.AddTraderSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError',
+            AddIssueSuccessfully: '@Messages.AddIssueSuccesfully',
+
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+    </script>
+}

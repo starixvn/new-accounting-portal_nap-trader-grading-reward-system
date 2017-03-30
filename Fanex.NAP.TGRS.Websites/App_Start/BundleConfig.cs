@@ -330,6 +330,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/styles/trader-performance",
                 "~/Areas/OSReports/Resources/OSTraderPerformance/trader-performance.less");
 
+            bundles.AddAndInclude(
+                "~/styles/new-trader-performance",
+                "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-performance.less");
+
             bundles.Add(new ScriptBundle("~/scripts/sport-performance").Include(
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-factory.js",
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-service.js",
@@ -341,6 +345,13 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-factory.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report-service.js",
                     "~/Areas/OSReports/Resources/OSTraderPerformance/trader-report.js"));
+
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-new-trader-report")
+                .Include(
+                    "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report-factory.js",
+                    "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report-service.js",
+                    "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report.js"));
         }
 
         public static void RegisterOSAdministrationBundles(BundleCollection bundles)

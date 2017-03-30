@@ -138,6 +138,7 @@
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Controllers\OSDashboardController.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
+    <Compile Include="Controllers\OSNewTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
@@ -149,6 +150,9 @@
     <Compile Include="Criteria\SportPerformance\GetRegionBySportCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetSportPerformanceCriteria.cs" />
     <Compile Include="Criteria\SportPerformance\GetAllSportsCriteria.cs" />
+    <Compile Include="Criteria\NewTraderPerformance\GetRegionByTraderCriteria.cs" />
+    <Compile Include="Criteria\NewTraderPerformance\GetSportByTraderCriteria.cs" />
+    <Compile Include="Criteria\NewTraderPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetRegionByTraderCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetSportByTraderCriteria.cs" />
     <Compile Include="Models\Dashboard\DataByMonth.cs" />
@@ -158,6 +162,9 @@
     <Compile Include="Criteria\TraderPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Models\SportPerformance\RegionPerformanceItem.cs" />
     <Compile Include="Models\SportPerformance\Sport.cs" />
+    <Compile Include="Models\NewTraderPerformance\RegionPerformance.cs" />
+    <Compile Include="Models\NewTraderPerformance\SportPerformance.cs" />
+    <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
     <Compile Include="Models\TraderPerformance\RegionPerformance.cs" />
     <Compile Include="Models\TraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\TraderPerformance\TraderPerformance.cs" />
@@ -166,9 +173,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\DashboardService.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
+    <Compile Include="Services\Implement\NewTraderPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderPerformanceService.cs" />
     <Compile Include="Services\Interface\IDashboardService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
+    <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
   </ItemGroup>
   <ItemGroup>

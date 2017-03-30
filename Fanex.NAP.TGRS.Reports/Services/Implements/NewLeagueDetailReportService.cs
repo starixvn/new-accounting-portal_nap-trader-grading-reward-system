@@ -12,6 +12,7 @@
     using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
@@ -148,6 +149,7 @@
             writer.CopyRows(3, 2);
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FillRowData(IEnumerable<LeaguePerformanceInfo> data, ref ExcelTemplateWriter writer)
         {
             var len = data.Count();

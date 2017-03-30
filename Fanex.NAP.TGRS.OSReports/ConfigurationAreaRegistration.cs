@@ -1,10 +1,8 @@
-﻿using Fanex.NAP.TGRS.OSReports.Services.Implement;
-using Fanex.NAP.TGRS.OSReports.Services.Interface;
-using Simplect;
-
-namespace Fanex.NAP.TGRS.OSReports
+﻿namespace Fanex.NAP.TGRS.OSReports
 {
-    using System.Web;
+    using Fanex.NAP.TGRS.OSReports.Services.Implement;
+    using Fanex.NAP.TGRS.OSReports.Services.Interface;
+    using Simplect;
     using System.Web.Mvc;
 
     /// <summary>
@@ -37,6 +35,8 @@ namespace Fanex.NAP.TGRS.OSReports
         private static void RegisterDependency()
         {
             InjectorFactory.CurrentInjector.Bind<ITraderPerformanceService>().Using<TraderPerformanceService>();
+
+            InjectorFactory.CurrentInjector.Bind<INewTraderPerformanceService>().Using<NewTraderPerformanceService>();
         }
     }
 }
