@@ -156,7 +156,7 @@ var sportPerformance = (function ($) {
             columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Sport, Width: 200, Name: 'ColSport', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right' },
-                      { HeaderText: "Regions", Width: 100, Name: 'ColNoOfRegions', HeaderAlign: 'center', CellAlign: 'right' },
+                      { HeaderText: "Region", Width: 100, Name: 'ColNoOfRegions', HeaderAlign: 'center', CellAlign: 'right' },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
@@ -385,7 +385,7 @@ var sportPerformance = (function ($) {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Region, Width: 300, Name: 'ColRegion', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: 'Region', Width: 300, Name: 'ColRegion', HeaderAlign: 'center', CellAlign: 'left' },
                       {
                           HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'

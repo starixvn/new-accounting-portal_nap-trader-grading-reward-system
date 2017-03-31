@@ -278,6 +278,9 @@
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard-chart.js" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance-factory.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance-service.js" />
+    <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance-service.js" />
     <Content Include="Areas\OSReports\Resources\OSSportPerformance\sport-performance.js" />
@@ -470,6 +473,8 @@
     <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-performance.less" />
     <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\IndexFilter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSNewSportPerformance\Index.cshtml" />
+    <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

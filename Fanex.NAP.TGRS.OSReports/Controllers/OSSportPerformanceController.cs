@@ -1,20 +1,12 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="OSSportPerformanceController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-// <history>
-//   <change who="Aaron" date="2016.08.10">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.OSReports.Controllers
+﻿namespace Fanex.NAP.TGRS.OSReports.Controllers
 {
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
-    using Fanex.NAP.TGRS.OSReports.Services.SportPerformance;
+    using Fanex.NAP.TGRS.OSReports.Services.Implement;
+    using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System;
     using System.Web.Mvc;
 

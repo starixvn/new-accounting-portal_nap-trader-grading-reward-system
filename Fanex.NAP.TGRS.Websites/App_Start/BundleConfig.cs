@@ -308,6 +308,7 @@ namespace Fanex.NAP.TGRS.Websites
                 .Include("~/Areas/OSConfiguration/Resources/OSLeagueRegionManagement/league-region-management.js"));
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public static void RegisterOSReportBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
@@ -327,6 +328,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance.less");
 
             bundles.AddAndInclude(
+                "~/styles/new-os-sport-performance",
+                "~/Areas/OSReports/Resources/OSNewSportPerformance/sport-performance.less");
+
+            bundles.AddAndInclude(
                 "~/styles/trader-performance",
                 "~/Areas/OSReports/Resources/OSTraderPerformance/trader-performance.less");
 
@@ -338,6 +343,11 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-factory.js",
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance-service.js",
                 "~/Areas/OSReports/Resources/OSSportPerformance/sport-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/new-os-sport-performance").Include(
+               "~/Areas/OSReports/Resources/OSNewSportPerformance/sport-performance-factory.js",
+               "~/Areas/OSReports/Resources/OSNewSportPerformance/sport-performance-service.js",
+               "~/Areas/OSReports/Resources/OSNewSportPerformance/sport-performance.js"));
 
             bundles.Add(
                 new ScriptBundle("~/scripts/os-trader-report")

@@ -168,7 +168,7 @@ var regionManagement = (function ($) {
         var descColFormat = '<span class="wordwrap-span" id="regionDesc_{0}">{1}</span>';
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 40, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.RegionName, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: 'Regions'Name, Width: 200, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.LeagueCount, Width: 80, Name: 'ColLeagueCount', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],

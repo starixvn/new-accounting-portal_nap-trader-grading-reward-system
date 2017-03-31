@@ -4,7 +4,7 @@
     {
         public string RegionName { get; set; }
 
-        public decimal JuiceMarginTotal { get; set; }
+        public double JuiceMarginTotal { get; set; }
 
         public double JuiceMargin { get; set; }
 

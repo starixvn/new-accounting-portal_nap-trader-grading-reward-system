@@ -1,8 +1,9 @@
-﻿namespace Fanex.NAP.TGRS.OSReports.Services.SportPerformance
+﻿namespace Fanex.NAP.TGRS.OSReports.Services.Implement
 {
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.SportPerformance;
+    using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System.Collections.Generic;
     using System.Linq;
 
