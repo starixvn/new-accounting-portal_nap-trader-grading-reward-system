@@ -58,7 +58,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
             writer.CopyRows(0, 1);
             FilterBlock(criteria, ref writer);
             FillHeader(ref writer);
-            writer.FreezeRow(0, 3);
+            writer.FreezeRow(0, 4);
             FillRowData(traderScores, ref writer);
             writer.SyncColumnsWidth(10);
 
@@ -78,7 +78,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
             var contentRichTextString = contentRender.Render();
             var contentRichTextArray = new string[1];
             contentRichTextArray[0] = contentRichTextString.String;
-            writer.WriteRow(7, contentRichTextArray);
+            writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
@@ -111,14 +111,14 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
 
         private void FillHeader(ref ExcelTemplateWriter writer)
         {
-            writer.CopyRows(3, 1);
+            writer.CopyRows(3, 2);
         }
 
         private void FillRowData(IEnumerable<TraderScoreInfo> traderScores, ref ExcelTemplateWriter writer)
         {
             for (var i = 0; i < traderScores.Count(); i++)
             {
-                var styleIndex = (i % 2 == 0) ? 4 : 5;
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
                 var item = traderScores.ElementAt(i);
 
                 var record = new object[]
@@ -127,11 +127,19 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
                     item.TraderName,
                     item.TeamName,
                     item.GradeName,
-                    item.TotalPoint, ////.Format(2),
+                    item.TotalPoint,
                     item.PointDeduction,
-                    item.Margin, ////.Format(2),
-                    item.Turnover, ////.Format(2),
-                    item.WinLoss ////.Format(2)
+                    item.Juice,
+                    item.TurnoverJuice,
+                    (object)item.JuiceMargin ?? ViewLang.NA,
+                    (object)item.JuiceMarginTotal ?? ViewLang.NA,
+                    item.WinlostLeftover,
+                    item.TurnoverLeftover,
+                    (object)item.LeftoverMargin ?? ViewLang.NA,
+                    (object)item.LeftoverMarginTotal ?? ViewLang.NA,
+                    item.WinLoss,
+                    item.Turnover,
+                    (object)item.Margin ?? ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
             }

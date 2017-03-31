@@ -239,8 +239,6 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.js" />
     <Content Include="Areas\Configuration\Resources\GradeManagement\grade-management.js" />
     <Content Include="Areas\Configuration\Resources\TeamManagement\team-management.js" />
-    <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xls" />
-    <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xlsx" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-factory.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation-service.js" />
     <Content Include="Areas\OSAdministration\Resources\OSScoreConfirmation\score-confirmation.js" />
@@ -475,6 +473,7 @@
     <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\IndexFilter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSNewSportPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance.less" />
+    <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xls" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

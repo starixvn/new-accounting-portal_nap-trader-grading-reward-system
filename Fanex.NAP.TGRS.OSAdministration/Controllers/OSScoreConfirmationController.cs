@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Controllers
 
     public class OSScoreConfirmationController : TGRSBaseController
     {
-        private const string TraderScoresExcelPath = @"~\Areas\OSAdministration\ExcelTemplates\TraderScores.xlsx";
+        private const string TraderScoresExcelPath = @"~\Areas\OSAdministration\ExcelTemplates\TraderScores.xls";
         private readonly IScoreConfirmationService _scoreConfirmationService;
 
         public OSScoreConfirmationController(IScoreConfirmationService scoreConfirmationService)

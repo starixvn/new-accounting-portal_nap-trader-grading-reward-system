@@ -113,14 +113,42 @@ var scoreConfirmation = (function ($) {
                     { Name: 'colGrade', Value: item.GradeName },
                     { Name: 'colPoint', Value: item.TotalPoint },
                     { Name: 'colEPADeduction', Value: item.PointDeduction },
-                    { Name: 'colMargin', Value: item.Margin },
+
+                    { Name: 'colJuice', Value: item.Juice },
+                    { Name: 'colTurnoverJuice', Value: item.TurnoverJuice },
+                    { Name: 'colMarginJuice', Value: item.JuiceMargin },
+                    { Name: 'colMarginJuiceTotal', Value: item.JuiceMarginTotal },
+
+                    { Name: 'colLeftover', Value: item.WinlostLeftover },
+                    { Name: 'colTurnoverLeftover', Value: item.TurnoverLeftover },
+                    { Name: 'colMarginLeftover', Value: item.LeftoverMargin },
+                    { Name: 'colMarginLeftoverTotal', Value: item.LeftoverMarginTotal },
+
+                    { Name: 'colWinloss', Value: item.WinLoss },
                     { Name: 'colTurnover', Value: item.Turnover },
-                    { Name: 'colWinloss', Value: item.WinLoss }
+                    { Name: 'colMargin', Value: item.Margin }
                 ]
             }
         }
 
         var options = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                    {
+                        Columns: [
+                                { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', MergeRowNumber: 2 },
+                                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true, MergeRowNumber: 2 },
+                                { HeaderText: 'Team ', Width: 100, Name: 'colTeam', HeaderAlign: 'center', CellAlign: 'left', MergeRowNumber: 2 },
+                                { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left', MergeRowNumber: 2 },
+                                { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', MergeRowNumber: 2 },
+                                { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', MergeRowNumber: 2 },
+
+                                { HeaderText: "Juice", Name: "colJuice", MergeColNumber: 4 },
+                                { HeaderText: "Leftover", Name: "colLeftover", MergeColNumber: 4 },
+                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 }
+                        ]
+                    }
+            ],
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
@@ -128,9 +156,20 @@ var scoreConfirmation = (function ($) {
                 { HeaderText: 'Grade', Width: 100, Name: 'colGrade', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
+
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'Margin on Total', Width: 100, Name: 'colMarginJuiceTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'},
+
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginLeftoverTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
