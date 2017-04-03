@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="OSNewSportPerformance">
-    <Setting Key="TGRS_OS_Rpt_NewSportPerformance" SpName="TGRS_OS_Rpt_SportPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_Region" SpName="TGRS_OS_Rpt_SportPerformance_Region" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_League" SpName="TGRS_OS_Rpt_SportPerformance_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_League_Bettype" SpName="TGRS_OS_Rpt_SportPerformance_League_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewSportPerformance" SpName="TGRS_OS_Rpt_NewSportPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_Region" SpName="TGRS_OS_Rpt_NewSportPerformance_Region" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_League" SpName="TGRS_OS_Rpt_NewSportPerformance_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewSportPerformance_League_Bettype" SpName="TGRS_OS_Rpt_NewSportPerformance_League_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSNewTraderPerformance">
-    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance" SpName="TGRS_OS_Rpt_TraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance_Sport" SpName="TGRS_OS_Rpt_TraderPerformance_Sport" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance_Region" SpName="TGRS_OS_Rpt_TraderPerformance_Region" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance" SpName="TGRS_OS_Rpt_NewTraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance_Sport" SpName="TGRS_OS_Rpt_NewTraderPerformance_Sport" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_OS_Rpt_NewTraderPerformance_Region" SpName="TGRS_OS_Rpt_NewTraderPerformance_Region" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="OSDashboard">
     <Setting Key="TGRS_OS_Rpt_SummaryTopTrader" SpName="TGRS_OS_Rpt_SummaryTopTrader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
