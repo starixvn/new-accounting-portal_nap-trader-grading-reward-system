@@ -12,25 +12,67 @@
 
         public decimal Turnover { get; set; }
 
-        public decimal VWinLoss { get; set; }
-
-        public decimal? VMargin { get; set; }
+        public decimal WinLoss { get; set; }
 
         public decimal JuiceTurnover { get; set; }
 
         public decimal JuiceWinLoss { get; set; }
 
-        public decimal? JuiceMargin { get; set; }
+        public decimal? JuiceMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(JuiceWinLoss / Turnover * 100)) : null;
+            }
+        }
 
-        public decimal LeftoverTurnover { get; set; }
+        public decimal? JuiceMargin
+        {
+            get
+            {
+                return JuiceTurnover != 0 ? ((decimal?)(JuiceWinLoss / JuiceTurnover * 100)) : null;
+            }
+        }
 
-        public decimal LeftoverWinLoss { get; set; }
+        public decimal? LeftoverMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(LeftoverWinLoss / Turnover * 100)) : null;
+            }
+        }
 
-        public decimal? LeftoverMargin { get; set; }
+        public decimal? LeftoverMargin
+        {
+            get
+            {
+                return LeftoverTurnover != 0 ? ((decimal?)(LeftoverWinLoss / LeftoverTurnover * 100)) : null;
+            }
+        }
 
-        public decimal? JuiceMarginTotal { get; set; }
+        public decimal LeftoverTurnover
+        {
+            get
+            {
+                return Turnover - JuiceTurnover;
+            }
+        }
 
-        public decimal? LeftoverMarginTotal { get; set; }
+        public decimal LeftoverWinLoss
+        {
+            get
+            {
+                return WinLoss - JuiceWinLoss;
+            }
+        }
+
+        public decimal? Margin
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(WinLoss / Turnover * 100)) : null;
+            }
+        }
 
         public decimal? AverageVTurnover { get; set; }
 

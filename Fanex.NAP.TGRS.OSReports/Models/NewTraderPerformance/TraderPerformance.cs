@@ -10,36 +10,78 @@
 
         public string GradeName { get; set; }
 
-        public double TotalPoint { get; set; }
+        public decimal TotalPoint { get; set; }
 
-        public double PointDeduction { get; set; }
+        public decimal PointDeduction { get; set; }
 
-        public double JuiceMarginTotal { get; set; }
+        public decimal Turnover { get; set; }
 
-        public double JuiceMargin { get; set; }
+        public decimal WinLoss { get; set; }
 
-        public double JuiceTurnover { get; set; }
+        public decimal JuiceTurnover { get; set; }
 
-        public double JuiceWinLoss { get; set; }
-
-        public double LeftoverMarginTotal { get; set; }
-
-        public double LeftoverMargin { get; set; }
-
-        public double LeftoverTurnover { get; set; }
-
-        public double LeftoverWinLoss { get; set; }
-
-        public double Margin { get; set; }
-
-        public double Turnover { get; set; }
-
-        public double WinLoss { get; set; }
+        public decimal JuiceWinLoss { get; set; }
 
         public int SportCount { get; set; }
 
         public int EventProductCount { get; set; }
 
         public int RegionCount { get; set; }
+
+        public decimal? JuiceMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(JuiceWinLoss / Turnover * 100)) : null;
+            }
+        }
+
+        public decimal? JuiceMargin
+        {
+            get
+            {
+                return JuiceTurnover != 0 ? ((decimal?)(JuiceWinLoss / JuiceTurnover * 100)) : null;
+            }
+        }
+
+        public decimal? LeftoverMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(LeftoverWinLoss / Turnover * 100)) : null;
+            }
+        }
+
+        public decimal? LeftoverMargin
+        {
+            get
+            {
+                return LeftoverTurnover != 0 ? ((decimal?)(LeftoverWinLoss / LeftoverTurnover * 100)) : null;
+            }
+        }
+
+        public decimal LeftoverTurnover
+        {
+            get
+            {
+                return Turnover - JuiceTurnover;
+            }
+        }
+
+        public decimal LeftoverWinLoss
+        {
+            get
+            {
+                return WinLoss - JuiceWinLoss;
+            }
+        }
+
+        public decimal? Margin
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(WinLoss / Turnover * 100)) : null;
+            }
+        }
     }
 }

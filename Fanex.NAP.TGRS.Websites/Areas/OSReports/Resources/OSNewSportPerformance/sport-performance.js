@@ -255,9 +255,9 @@ var sportPerformance = (function ($) {
                               { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.VWinLoss, labels.NA) },
+                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                               { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
-                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
+                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
                               { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
@@ -402,9 +402,9 @@ var sportPerformance = (function ($) {
                               { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.VWinLoss, labels.NA) },
+                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                               { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
-                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
+                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
                               { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
@@ -651,9 +651,9 @@ var sportPerformance = (function ($) {
                               { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                               { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.VWinLoss, labels.NA) },
+                              { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                               { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
-                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
+                              { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
                               { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]

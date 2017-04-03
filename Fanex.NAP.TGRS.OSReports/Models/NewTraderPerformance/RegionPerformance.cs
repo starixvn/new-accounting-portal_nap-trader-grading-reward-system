@@ -4,27 +4,69 @@
     {
         public string RegionName { get; set; }
 
-        public double JuiceMarginTotal { get; set; }
+        public decimal Turnover { get; set; }
 
-        public double JuiceMargin { get; set; }
+        public decimal WinLoss { get; set; }
 
-        public double JuiceTurnover { get; set; }
+        public decimal JuiceTurnover { get; set; }
 
-        public double JuiceWinLoss { get; set; }
+        public decimal JuiceWinLoss { get; set; }
 
-        public double LeftoverMarginTotal { get; set; }
+        public decimal? JuiceMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(JuiceWinLoss / Turnover * 100)) : null;
+            }
+        }
 
-        public double LeftoverMargin { get; set; }
+        public decimal? JuiceMargin
+        {
+            get
+            {
+                return JuiceTurnover != 0 ? ((decimal?)(JuiceWinLoss / JuiceTurnover * 100)) : null;
+            }
+        }
 
-        public double LeftoverTurnover { get; set; }
+        public decimal? LeftoverMarginTotal
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(LeftoverWinLoss / Turnover * 100)) : null;
+            }
+        }
 
-        public double LeftoverWinLoss { get; set; }
+        public decimal? LeftoverMargin
+        {
+            get
+            {
+                return LeftoverTurnover != 0 ? ((decimal?)(LeftoverWinLoss / LeftoverTurnover * 100)) : null;
+            }
+        }
 
-        public double Margin { get; set; }
+        public decimal LeftoverTurnover
+        {
+            get
+            {
+                return Turnover - JuiceTurnover;
+            }
+        }
 
-        public double Turnover { get; set; }
+        public decimal LeftoverWinLoss
+        {
+            get
+            {
+                return WinLoss - JuiceWinLoss;
+            }
+        }
 
-        public double WinLoss { get; set; }
+        public decimal? Margin
+        {
+            get
+            {
+                return Turnover != 0 ? ((decimal?)(WinLoss / Turnover * 100)) : null;
+            }
+        }
 
         public int EventProductCount { get; set; }
     }
