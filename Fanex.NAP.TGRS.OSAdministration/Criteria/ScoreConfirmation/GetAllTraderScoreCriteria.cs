@@ -20,7 +20,7 @@ namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation
 
         public override string GetSettingKey()
         {
-            return "TGRS_OS_Rpt_TraderPerformance";
+            return "TGRS_OS_Rpt_NewTraderPerformance";
         }
 
         public override bool IsValid()
