@@ -1,13 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TraderScoreInfo.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Aaron.Cao" date="2016.8.25">Created</change>
-// </history>
-
-namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
+﻿namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
 {
     public class TraderScoreInfo
     {
@@ -26,7 +17,15 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
 
         public decimal Turnover { get; set; }
 
-        public decimal TurnoverJuice { get; set; }
+        public decimal JuiceTurnover { get; set; }
+
+        public decimal TurnoverJuice
+        {
+            get
+            {
+                return JuiceTurnover;
+            }
+        }
 
         public decimal TurnoverLeftover
         {
@@ -37,8 +36,17 @@ namespace Fanex.NAP.TGRS.OSAdministration.Models.ScoreHistory
         }
 
         public decimal WinLoss { get; set; }
-        
-        public decimal Juice { get; set; }
+
+
+        public decimal JuiceWinLoss { get; set; }
+
+        public decimal Juice
+        {
+            get
+            {
+                return JuiceWinLoss;
+            }
+        }
 
         public decimal WinlostLeftover
         {
