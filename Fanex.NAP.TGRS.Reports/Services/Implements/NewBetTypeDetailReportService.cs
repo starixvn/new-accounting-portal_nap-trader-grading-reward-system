@@ -170,16 +170,16 @@
                 var record = new object[]
                 {
                     i + 1, item.TypeName, item.TraderCount, item.LeagueCount, item.MatchCount,
-                    item.Juice,
                     item.TurnoverJuice,
+                    item.Juice,
                     (object)item.JuiceMargin ?? ViewLang.NA,
                     (object)item.JuiceMarginTotal ?? ViewLang.NA,
-                    item.WinlostLeftover,
                     item.TurnoverLeftover,
+                    item.WinlostLeftover,
                     (object)item.LeftoverMargin ?? ViewLang.NA,
                     (object)item.LeftoverMarginTotal ?? ViewLang.NA,
-                    item.WinLoss,
                     item.Turnover,
+                    item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA,
                     item.BetCount
                 };
@@ -203,16 +203,16 @@
                 totalTrader,
                 totalLeague,
                 totalMatch,
-                totalJuice,
                 totalTOJuice,
+                totalJuice,
                 totalTOJuice > 0 ? (object)(totalJuice / totalTOJuice * 100) : ViewLang.NA,
                 totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
-                totalLeftover,
                 totalTOLeftover,
+                totalLeftover,
                 totalTOLeftover > 0 ? (object)(totalLeftover / totalTOLeftover * 100) : ViewLang.NA,
                 totalTO > 0 ? (object)(totalLeftover / totalTO * 100) : ViewLang.NA,
-                totalWL,
                 totalTO,
+                totalWL,
                 totalTO > 0 ? (object)(totalWL / totalTO * 100) : ViewLang.NA,
                 totalBetcount
             };

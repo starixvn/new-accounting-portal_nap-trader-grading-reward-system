@@ -165,18 +165,18 @@ var traderReports = (function ($) {
                     { Name: 'colPoint', Value: common.GetNumWithLabel(item.TotalPoint, labels.NA) },
                     { Name: 'colPointDeduction', Value: common.GetNumWithLabel(item.PointDeduction, labels.NA) },
 
-                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA)},
                     { Name: 'colTurnoverJuice', Value: common.GetNumWithLabel(item.JuiceTurnover, labels.NA) },
+                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA)},
                     { Name: 'colMarginJuice', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
                     { Name: 'colMarginJuiceTotal', Value: common.GetNumWithLabel(item.JuiceMarginTotal, labels.NA) },
 
-                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colTurnoverLeftover', Value: common.GetNumWithLabel(item.LeftoverTurnover, labels.NA) },
+                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                     { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
+                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                     { Name: 'colSport', Value: sportLink.format(item.SportCount, item.TraderId, item.TraderName, item.SportId) },
@@ -198,8 +198,8 @@ var traderReports = (function ($) {
                                { HeaderText: 'V.Total Point', Name: 'colPoint', MergeRowNumber: 2 },
                                { HeaderText: 'P.Deduction', Name: 'colPointDeduction', MergeRowNumber: 2 },
 
-                               { HeaderText: "Juice", Name: "colJuice", MergeColNumber: 4 },
-                               { HeaderText: "Leftover", Name: "colLeftover", MergeColNumber: 4 },
+                               { HeaderText: "Juice", Name: "colTurnoverJuice", MergeColNumber: 4 },
+                               { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Sports', Name: 'colSport', MergeRowNumber: 2 },
@@ -216,18 +216,18 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Total Point', Width: 75, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'P.Deduction', Width: 75, Name: 'colPointDeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginJuiceTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginLeftoverTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
 
                 { HeaderText: 'Sports', Width: 65, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'right' },
@@ -259,18 +259,18 @@ var traderReports = (function ($) {
                     { Name: 'colSport', Value: item.SportName },
                     { Name: 'colPoint', Value: common.GetNumWithLabel(item.TotalPoint, labels.NA) },
 
-                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA) },
                     { Name: 'colTurnoverJuice', Value: common.GetNumWithLabel(item.JuiceTurnover, labels.NA) },
+                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA) },
                     { Name: 'colMarginJuice', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
                     { Name: 'colMarginJuiceTotal', Value: common.GetNumWithLabel(item.JuiceMarginTotal, labels.NA) },
 
-                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colTurnoverLeftover', Value: common.GetNumWithLabel(item.LeftoverTurnover, labels.NA) },
+                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                     { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
+                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                     { Name: 'colEvent', Value: item.EventProductCount }
@@ -287,8 +287,8 @@ var traderReports = (function ($) {
                                { HeaderText: 'Sport', Name: 'colSport', MergeRowNumber: 2 },
                                { HeaderText: 'V.Total Point', Name: 'colPoint', MergeRowNumber: 2 },
 
-                               { HeaderText: "Juice", Name: "colJuice", MergeColNumber: 4 },
-                               { HeaderText: "Leftover", Name: "colLeftover", MergeColNumber: 4 },
+                               { HeaderText: "Juice", Name: "colTurnoverJuice", MergeColNumber: 4 },
+                               { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 }
@@ -297,21 +297,21 @@ var traderReports = (function ($) {
             ],
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNo', HeaderAlign: 'center', CellAlign: 'center', },
-                { HeaderText: 'Sport', Width: 100, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
+                { HeaderText: 'Sport', Width: 150, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginJuiceTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginLeftoverTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', SortDirection: 'desc', Sort: true },
 
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
@@ -343,18 +343,18 @@ var traderReports = (function ($) {
                     { Name: 'colNo', Value: idx + 1 },
                     { Name: 'colRegion', Value: item.RegionName === null ? "Unknown" : item.RegionName },
 
-                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA) },
                     { Name: 'colTurnoverJuice', Value: common.GetNumWithLabel(item.JuiceTurnover, labels.NA) },
+                    { Name: 'colJuice', Value: common.GetNumWithLabel(item.JuiceWinLoss, labels.NA) },
                     { Name: 'colMarginJuice', Value: common.GetNumWithLabel(item.JuiceMargin, labels.NA) },
                     { Name: 'colMarginJuiceTotal', Value: common.GetNumWithLabel(item.JuiceMarginTotal, labels.NA) },
 
-                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colTurnoverLeftover', Value: common.GetNumWithLabel(item.LeftoverTurnover, labels.NA) },
+                    { Name: 'colLeftover', Value: common.GetNumWithLabel(item.LeftoverWinLoss, labels.NA) },
                     { Name: 'colMarginLeftover', Value: common.GetNumWithLabel(item.LeftoverMargin, labels.NA) },
                     { Name: 'colMarginLeftoverTotal', Value: common.GetNumWithLabel(item.LeftoverMarginTotal, labels.NA) },
 
-                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colTurnover', Value: common.GetNumWithLabel(item.Turnover, labels.NA) },
+                    { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                     { Name: 'colEvent', Value: item.EventProductCount }
@@ -370,8 +370,8 @@ var traderReports = (function ($) {
                                { HeaderText: '#', Name: 'colNo', MergeRowNumber: 2 },
                                { HeaderText: 'Region', Name: 'colRegion', MergeRowNumber: 2 },
 
-                               { HeaderText: "Juice", Name: "colJuice", MergeColNumber: 4 },
-                               { HeaderText: "Leftover", Name: "colLeftover", MergeColNumber: 4 },
+                               { HeaderText: "Juice", Name: "colTurnoverJuice", MergeColNumber: 4 },
+                               { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 }
@@ -382,18 +382,18 @@ var traderReports = (function ($) {
                 { HeaderText: '#', Width: 40, Name: 'colNo', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Region', Width: 200, Name: 'colRegion', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginJuiceTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginLeftoverTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 140, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 120, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', SortDirection: 'desc', Sort: true },
 
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },

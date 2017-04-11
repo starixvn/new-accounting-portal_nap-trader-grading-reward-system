@@ -125,8 +125,8 @@ var scoreHistory = (function ($) {
                                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', MergeRowNumber: 2 },
                                 { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', MergeRowNumber: 2 },
 
-                                { HeaderText: "Juice", Name: "colJuice", MergeColNumber: 4 },
-                                { HeaderText: "Leftover", Name: "colLeftover", MergeColNumber: 4 },
+                                { HeaderText: "Juice", Name: "colTurnoverJuice", MergeColNumber: 4 },
+                                { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                 { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 }
                         ]
                     }
@@ -139,18 +139,18 @@ var scoreHistory = (function ($) {
                 { HeaderText: 'V.Total Point', Width: 100, Name: 'colPoint', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: 'P.Deduction', Width: 100, Name: 'colEPADeduction', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 130, Name: 'colTurnoverJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 110, Name: 'colJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginJuice', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Margin on Total', Width: 100, Name: 'colMarginJuiceTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 130, Name: 'colTurnoverLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 110, Name: 'colLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMarginLeftover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin on Total', Width: 100, Name: 'colMarginLeftoverTotal', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
 
-                { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
-                { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Turnover', Width: 130, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: 'V.Win Loss', Width: 110, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true }
             ],
             gridExpandHeight: 220,
@@ -180,18 +180,18 @@ var scoreHistory = (function ($) {
                         { Name: 'colPoint', Value: item.TotalPoint },
                         { Name: 'colEPADeduction', Value: item.PointDeduction },
 
-                        { Name: 'colJuice', Value: item.Juice },
                         { Name: 'colTurnoverJuice', Value: item.TurnoverJuice },
+                        { Name: 'colJuice', Value: item.Juice },
                         { Name: 'colMarginJuice', Value: item.JuiceMargin },
                         { Name: 'colMarginJuiceTotal', Value: item.JuiceMarginTotal },
 
-                        { Name: 'colLeftover', Value: item.WinlostLeftover },
                         { Name: 'colTurnoverLeftover', Value: item.TurnoverLeftover },
+                        { Name: 'colLeftover', Value: item.WinlostLeftover },
                         { Name: 'colMarginLeftover', Value: item.LeftoverMargin },
                         { Name: 'colMarginLeftoverTotal', Value: item.LeftoverMarginTotal },
 
-                        { Name: 'colWinloss', Value: item.WinLoss },
                         { Name: 'colTurnover', Value: item.Turnover },
+                        { Name: 'colWinloss', Value: item.WinLoss },
                         { Name: 'colMargin', Value: item.Margin }
                     ]
                 };

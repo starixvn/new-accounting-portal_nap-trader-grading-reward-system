@@ -129,16 +129,16 @@ namespace Fanex.NAP.TGRS.OSAdministration.Services.Implement
                     item.GradeName,
                     item.TotalPoint,
                     item.PointDeduction,
-                    item.Juice,
                     item.TurnoverJuice,
+                    item.Juice,
                     (object)item.JuiceMargin ?? ViewLang.NA,
                     (object)item.JuiceMarginTotal ?? ViewLang.NA,
-                    item.WinlostLeftover,
                     item.TurnoverLeftover,
+                    item.WinlostLeftover,
                     (object)item.LeftoverMargin ?? ViewLang.NA,
                     (object)item.LeftoverMarginTotal ?? ViewLang.NA,
-                    item.WinLoss,
                     item.Turnover,
+                    item.WinLoss,
                     (object)item.Margin ?? ViewLang.NA
                 };
                 writer.WriteRow(styleIndex, record);
