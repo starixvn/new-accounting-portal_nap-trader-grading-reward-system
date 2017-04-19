@@ -35,6 +35,13 @@
     </div>
 </div>
 
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divBettypePerformanceContainer" class="content-grid display-none">
+    <div id="divBettypePerformanceGrid" class="freegrid"></div>
+</div>
+
 @section Foot
 {
     @Scripts.Render("~/scripts/os-trader-report")
@@ -42,7 +49,21 @@
     <script type="text/javascript">
         var labels = {
             TraderPerformance: '@ViewLang.TraderPerformance',
+            No: '#',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
+            NoOfBettypes: '@ViewLang.NoOfBetTypes',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
+            SportPerformance: '@ViewLang.SportPerformance',
+            BetTypePerformance: '@ViewLang.BetTypePerformance',
+            Sport: '@ViewLang.Sport',
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            Trader: '@ViewLang.Trader',
+            GrandTotal: '@ViewLang.GrandTotal',
             AllSports: '@ViewLang.AllSports',
+            NA: '@ViewLang.NA'
         };
         var messages = {
             UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',

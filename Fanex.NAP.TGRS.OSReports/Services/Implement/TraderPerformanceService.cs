@@ -32,5 +32,19 @@
         {
             return GetData<RegionPerformance>(criteria);
         }
+
+        public List<LeaguePerformance> GetTraderSportLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria)
+        {
+            var result = this.GetData<LeaguePerformance>(criteria);
+
+            return result != null ? result.ToList() : new List<LeaguePerformance>();
+        }
+
+        public List<BettypePerformance> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
+        {
+            var result = this.GetData<BettypePerformance>(criteria);
+
+            return result != null ? result.ToList() : new List<BettypePerformance>();
+        }
     }
 }

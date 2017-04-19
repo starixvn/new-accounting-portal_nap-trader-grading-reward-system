@@ -14,7 +14,6 @@
 
         public decimal PointDeduction { get; set; }
 
-
         public decimal Turnover { get; set; }
 
         public decimal JuiceTurnover { get; set; }
@@ -36,7 +35,6 @@
         }
 
         public decimal WinLoss { get; set; }
-
 
         public decimal JuiceWinLoss { get; set; }
 

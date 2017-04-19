@@ -13,6 +13,10 @@
 
         IEnumerable<RegionPerformance> GetRegionPerformances(GetRegionByTraderCriteria criteria);
 
+        List<LeaguePerformance> GetTraderSportLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria);
+
+        List<BettypePerformance> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
+
         List<Sport> GetAllSport();
     }
 }

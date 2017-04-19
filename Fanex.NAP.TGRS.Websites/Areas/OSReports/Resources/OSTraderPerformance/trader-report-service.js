@@ -1,6 +1,8 @@
 ﻿var TraderReportService = (function ($) {
     var traderReportService = {};
     traderReportService.Sports = [];
+    traderReportService.LeaguePerformance = [];
+    traderReportService.BettypePerformance = [];
 
     traderReportService.GetTraderPerformance = function (criteria, callback) {
         TraderReportFactory.GetTraderPerformance(criteria)
@@ -35,11 +37,39 @@
         });
     };
 
+    traderReportService.GetLeaguePerformance = function (criteria) {
+        common.DisableInput();
+        return TraderReportFactory.GetLeaguePerformance(criteria)
+            .success(function (result) {
+                traderReportService.LeaguePerformance = result;
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    };
+
     traderReportService.GetAllSports = function () {
         common.DisableInput();
         return TraderReportFactory.GetAllSports()
             .success(function (result) {
                 traderReportService.Sports = result;
+            })
+            .error(function (xhr) {
+                common.HandleAjaxError(xhr);
+            })
+            .complete(function () {
+                common.EnableInput();
+            });
+    };
+
+    traderReportService.GetBettypePerformance = function (criteria) {
+        common.DisableInput();
+        return TraderReportFactory.GetBettypePerformance(criteria)
+            .success(function (result) {
+                traderReportService.BettypePerformance = result;
             })
             .error(function (xhr) {
                 common.HandleAjaxError(xhr);

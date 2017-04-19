@@ -2,7 +2,13 @@
 {
     public class SportPerformance
     {
+        public int SportId { get; set; }
+
         public string SportName { get; set; }
+
+        public int NoOfLeague { get; set; }
+
+        public int RegionCount { get; set; }
 
         public double TotalPoint { get; set; }
 

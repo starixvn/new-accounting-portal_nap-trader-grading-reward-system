@@ -43,7 +43,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetSportsPerformanceByTrader(GetSportByTraderCriteria criteria)
         {
-            return Json(_service.GetSportPerformances(criteria), JsonRequestBehavior.AllowGet);
+            var result = _service.GetSportPerformances(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
@@ -60,6 +62,22 @@
             var sports = _service.GetAllSport();
 
             return Json(sports, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult GetLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria)
+        {
+            var result = _service.GetTraderSportLeaguePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult GetBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
+        {
+            var result = _service.GetTraderSportLeagueBettypePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
