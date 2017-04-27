@@ -31,7 +31,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         divHorizontalTab: null,
 
         divMonthMarginContainer: null,
-        divTeamTurnoverContainer: null,
+        divRegionTurnoverContainer: null,
         divTeamMarginContainer: null,
         divRegionMarginContainer: null,
         divMonthMatchCountContainer: null,
@@ -50,7 +50,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divHorizontalTab = $('#divHorizontalTab');
 
         domElements.divMonthMarginContainer = $('#divMonthMarginContainer');
-        domElements.divTeamTurnoverContainer = $('#divTeamTurnoverContainer');
+        domElements.divRegionTurnoverContainer = $('#divRegionTurnoverContainer');
         domElements.divTeamMarginContainer = $('#divTeamMarginContainer');
         domElements.divRegionMarginContainer = $('#divRegionMarginContainer');
         domElements.divMonthMatchCountContainer = $('#divMonthMatchCountContainer');
@@ -250,7 +250,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
             data: []
         }];
 
-        chartData.TeamTurnoverData = [{
+        chartData.RegionTurnoverData = [{
             name: 'Turnover',
             data: []
         }];
@@ -281,17 +281,17 @@ Fanex.TGRS.Reports.Dashboard = function () {
         $.each(regionData, function (index, item) {
             chartData.RegionMarginData[0].data.push(item.Margin);
             chartData.RegionCategories.push(item.RegionName ? item.RegionName : "Unknown");
+
+            var pipeItem = {
+                name: item.RegionName ? item.RegionName : "Unknown",
+                y: item.Turnover
+            };
+            chartData.RegionTurnoverData[0].data.push(pipeItem);
         });
 
         $.each(teamData, function (index, item) {
             chartData.TeamCategories.push(item.TeamName ? item.TeamName : "Unknown");
             chartData.TeamMarginData[0].data.push(item.Margin);
-
-            var pipeItem = {
-                name: item.TeamName ? item.TeamName : "Unknown",
-                y: item.Turnover
-            };
-            chartData.TeamTurnoverData[0].data.push(pipeItem);
         });
     };
 
@@ -309,7 +309,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var drawSummaryChart = function (data, type) {
         domElements.divMonthMarginContainer.html('');
         domElements.divRegionMarginContainer.html('');
-        domElements.divTeamTurnoverContainer.html('');
+        domElements.divRegionTurnoverContainer.html('');
         domElements.divTeamMarginContainer.html('');
         domElements.divMonthMatchCountContainer.html('');
 
@@ -320,7 +320,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
                 RegionMarginData: [],
                 RegionCategories: [],
                 TeamMarginData: [],
-                TeamTurnoverData: [],
+                RegionTurnoverData: [],
                 MonthMatchCountData: [],
                 TeamCategories: [],
                 MonthCategories: [],
@@ -367,12 +367,12 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divMonthMatchCountContainer.highcharts(teamMatchCountColumnOption);
 
         var pipeChartOption = ChartOptions.PipeChartOption();
-        pipeChartOption.title.text = 'Turnover By Team';
-        pipeChartOption.series = chartData.TeamTurnoverData;
+        pipeChartOption.title.text = 'Turnover By Region';
+        pipeChartOption.series = chartData.RegionTurnoverData;
         if (type === ChartType._2D) {
             pipeChartOption.chart.options3d.enabled = false;
         }
-        domElements.divTeamTurnoverContainer.highcharts(pipeChartOption);
+        domElements.divRegionTurnoverContainer.highcharts(pipeChartOption);
     };
     //}
 };
