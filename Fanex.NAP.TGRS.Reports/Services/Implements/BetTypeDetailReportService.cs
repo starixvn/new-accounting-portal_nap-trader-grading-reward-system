@@ -278,7 +278,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IFont normalFont = writer.GetFont(11, 0);
             int lineCount = 0;
 
-            List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
+            List<BetTypeItem> betTypes = this.GetBetTypes(ReportUtil.BettypePermission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

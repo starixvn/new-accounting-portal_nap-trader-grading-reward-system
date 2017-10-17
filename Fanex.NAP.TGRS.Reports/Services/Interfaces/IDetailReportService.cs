@@ -15,14 +15,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     public interface IDetailReportService
     {
         /// <summary>
-        /// Gets the bet types.
+        ///  Gets bet types by permissions
         /// </summary>
-        /// <returns>List of BetTypeItem objects.</returns>
-        IEnumerable<BetTypeItem> GetBetTypes();
+        /// <param name="permission">permission on bettype</param>
+        /// <returns></returns>
+        IEnumerable<BetTypeItem> GetBetTypes(BettypeViewPermission permission = BettypeViewPermission.All);
 
         /// <summary>
         /// Gets the bet types from session.

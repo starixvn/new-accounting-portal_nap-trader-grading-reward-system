@@ -10,12 +10,22 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
     using Fanex.NAP.Framework.Data;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     /// <summary>
     /// Getting bet types criteria.
     /// </summary>
     public class GetBetTypesCriteria : CriteriaBase
     {
+        public GetBetTypesCriteria() : this(BettypeViewPermission.All) { }
+
+        public GetBetTypesCriteria(BettypeViewPermission permission)
+        {
+            ViewPermission = (int)permission;
+        }
+
+        public int ViewPermission { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

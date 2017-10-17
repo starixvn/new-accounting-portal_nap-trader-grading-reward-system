@@ -33,3 +33,4 @@ packages
 */obj/*
 */bin/*
 */StyleCop.Cache
+.vs/*

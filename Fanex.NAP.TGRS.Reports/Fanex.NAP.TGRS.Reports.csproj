@@ -241,6 +241,7 @@
     <Compile Include="Models\PerformanceSummary\League.cs" />
     <Compile Include="Models\PerformanceSummary\GeneralInfo.cs" />
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
+    <Compile Include="Models\Permission\BettypeViewPermission.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\Trader\LeaguePerformance.cs" />
     <Compile Include="Models\Trader\TraderWinlossTurnover.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />
     <Compile Include="Services\Interfaces\ITraderManagementService.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
+    <Compile Include="ReportUtil.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceItem.cs" />
@@ -304,6 +306,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

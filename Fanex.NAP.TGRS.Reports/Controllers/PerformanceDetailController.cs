@@ -14,7 +14,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
@@ -88,7 +87,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             return Json(new
             {
-                DefaultBettypes = from betType in betTypes where betType.IsDefaultCheck == true select betType.BetTypeId
+                DefaultBettypes = from betType in betTypes where betType.IsDefaultCheck select betType.BetTypeId
             });
         }
 
@@ -99,7 +98,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            var permission = ReportUtil.BettypePermission;
+
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(permission);
 
             ViewBag.BetTypes = betTypes;
             return View();
@@ -224,7 +225,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
-            var betTypes = this._detailReportService.GetBetTypes();
+            var betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
 
             ViewBag.BetTypes = betTypes;
 
@@ -306,7 +307,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
 
             ViewBag.BetTypes = betTypes;
 
@@ -431,7 +432,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult TeamPerformance()
         {
             IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Teams = teams;
@@ -535,6 +536,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             return Json(_detailReportService.GetMatchPerformanceOfTrader(criteria), JsonRequestBehavior.AllowGet);
         }
+
         #endregion Team Performance
 
         #region Bet Type Performance
@@ -546,7 +548,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
 
             ViewBag.BetTypes = betTypes;
 

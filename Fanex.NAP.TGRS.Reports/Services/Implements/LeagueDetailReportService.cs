@@ -26,6 +26,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     /// <summary>
     /// Detail report service.
@@ -39,13 +40,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private const string MaxPercentString = "max";
 
         /// <summary>
-        /// Gets the bet types.
+        ///  Gets bet types by permissions
         /// </summary>
-        /// <returns>List of BetTypeItem objects.</returns>
-        public IEnumerable<BetTypeItem> GetBetTypes()
+        /// <param name="permission">permission on bettype</param>
+        /// <returns></returns>
+        public IEnumerable<BetTypeItem> GetBetTypes(BettypeViewPermission permission = BettypeViewPermission.All)
         {
             List<BetTypeItem> betTypes = null;
-            var criteria = new GetBetTypesCriteria();
+            var criteria = new GetBetTypesCriteria(permission);
             IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
 
             if (data != null && data.Any())
@@ -66,7 +68,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             var betTypes = SessionManager.Get<List<BetTypeItem>>(DefaultBettypeSessionKey);
             if (betTypes == null)
             {
-                betTypes = this.GetBetTypes().ToList();
+                betTypes = this.GetBetTypes(ReportUtil.BettypePermission).ToList();
             }
 
             return betTypes;
@@ -395,7 +397,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IFont normalFont = writer.GetFont(11, 0);
             int lineCount = 0;
 
-            List<BetTypeItem> betTypes = this.GetBetTypes().ToList();
+            List<BetTypeItem> betTypes = this.GetBetTypes(ReportUtil.BettypePermission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlossString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

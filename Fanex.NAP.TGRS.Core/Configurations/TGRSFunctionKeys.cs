@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 2/17/2017 10:09:02 AM
+// Lasted generated date: 10/17/2017 14:56:23
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -54,6 +54,8 @@ public static class TGRSFunctionKeys
 
         public const string OSLeagueRegionManagement = "OSLeagueRegionManagement";
 
+        public const string OSPerformanceSummary = "OSPerformanceSummary";
+
         public const string OSRegionManagement = "OSRegionManagement";
 
         public const string OSReports = "OSReports";
@@ -72,11 +74,11 @@ public static class TGRSFunctionKeys
 
         public const string OSTraderPerformance = "OSTraderPerformance";
 
-        public const string OSPerformanceSummary = "OSPerformanceSummary";
-
-        public const string OSTraderReport = "OSTraderReport";
-
         public const string PerformanceDetail = "PerformanceDetail";
+
+        public const string PerformanceDetail_majorbettypes = "PerformanceDetail_majorbettypes";
+
+        public const string PerformanceDetail_PHbettypes = "PerformanceDetail_PHbettypes";
 
         public const string PerformanceSummary = "PerformanceSummary";
 
