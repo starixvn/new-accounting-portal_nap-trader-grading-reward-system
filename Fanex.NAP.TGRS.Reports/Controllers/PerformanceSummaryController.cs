@@ -31,18 +31,15 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     {
         private readonly ISummaryReportService _summaryReportService;
 
-        private readonly IDetailReportService _detailReportService;
-
         [Simplect.Attribute.InjectObject]
         public PerformanceSummaryController()
-            : this(null, null)
+            : this(null)
         {
         }
 
-        public PerformanceSummaryController(ISummaryReportService summaryReportService, IDetailReportService detailReportService)
+        public PerformanceSummaryController(ISummaryReportService summaryReportService)
         {
             this._summaryReportService = summaryReportService ?? new SummaryReportService();
-            _detailReportService = new DetailReportService();
         }
 
         /// <summary>
@@ -124,88 +121,5 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             return Json(result);
         }
-
-        #region Parrallel Tasks
-
-        private void GetLeagueResult(string bettypes, ReportFilter filter, out GeneralInfo generalInfo, out IEnumerable<League> topWin, out IEnumerable<League> topLose)
-        {
-            var leagueCriteria = new Criteria.PerformanceDetail.GetLeaguePerformanceCriteria
-            {
-                LeagueName = string.Empty,
-                FromDate = filter.FromDate,
-                ToDate = filter.ToDate,
-                BetTypes = bettypes
-            };
-
-            var leagues = _detailReportService.GetLeaguePerformance(leagueCriteria);
-        }
-
-        private void GetTeamResult(string bettypes, ReportFilter filter, out IEnumerable<TeamPerformance> teamResult)
-        {
-            var teamCriteria = new Criteria.PerformanceDetail.GetTeamPerformanceCriteria
-            {
-                TeamIds = string.Empty,
-                FromDate = filter.FromDate,
-                ToDate = filter.ToDate,
-                BetTypes = bettypes
-            };
-
-            teamResult =
-                _detailReportService
-                    .GetTeamPerformance(criteria)
-                    .ItemList
-                    .Select(t => new TeamPerformance
-                    {
-                        TeamId = t.TeamId,
-                        TeamName = t.TeamName,
-                        Margin = t.Margin,
-                        Match = t.NoOfMatches,
-                        Turnover = t.Turnover,
-                        Winlost = t.WinLoss
-                    });
-        }
-
-        private void GetTraderResult(string bettypes, ReportFilter filter, out TraderPerformance traderResult)
-        {
-            var criteria = new Criteria.PerformanceDetail.GetTraderPerformanceCriteria
-            {
-                BetTypes = bettypes,
-                FromDate = filter.FromDate,
-                ToDate = filter.ToDate,
-                Username = string.Empty
-            };
-
-            var traders = _detailReportService.GetTraderPerformance(criteria);
-
-            traderResult = new TraderPerformance
-            {
-                
-            }
-        }
-
-        private void GetBettypeResult(string bettypes, ReportFilter filter, out IEnumerable<BetTypePerformance> bettypeResult)
-        {
-            var criteria = new Criteria.PerformanceDetail.GetBetTypePerformanceCriteria
-            {
-                Bettypes = bettypes,
-                FromDate = filter.FromDate,
-                ToDate = filter.ToDate
-            };
-
-            bettypeResult = 
-                _detailReportService
-                .GetBetTypePerformance(criteria)
-                .ItemList
-                .Select(bt => new BetTypePerformance
-                {
-                    BetCount = bt.BetCount,
-                    BetType = bt.BetTypeId,
-                    TypeName = bt.BetTypeName,
-                    Margin = bt.Margin,
-                    Turnover = bt.Turnover,
-                    Winlost = bt.WinLoss
-                });
-        }
-        #endregion Parrallel Tasks
     }
 }

@@ -144,7 +144,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Username = domElements.txtTrader.val();
-                parameters.BetTypes = selectedBetTypes.length === betTypeOptions.length ? '0' : selectedBetTypes.join(',');
+                parameters.BetTypes = selectedBetTypes.join(',');
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
