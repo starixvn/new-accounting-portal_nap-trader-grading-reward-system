@@ -18,5 +18,13 @@
                 else return BettypeViewPermission.None;
             }
         }
+
+        public static bool HasDetailPermission
+        {
+            get
+            {
+                return BettypePermission != BettypeViewPermission.None;
+            }
+        }
     }
 }

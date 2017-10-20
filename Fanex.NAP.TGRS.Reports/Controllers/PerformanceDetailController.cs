@@ -71,6 +71,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            if (!ReportUtil.HasDetailPermission) return Redirect("~/Error/AccessDenied");
+
             return RedirectToAction("LeaguePerformance");
         }
 

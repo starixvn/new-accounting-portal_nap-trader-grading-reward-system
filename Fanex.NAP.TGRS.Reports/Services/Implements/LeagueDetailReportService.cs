@@ -56,7 +56,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             SessionManager.Set<List<BetTypeItem>>(DefaultBettypeSessionKey, betTypes);
-            return betTypes;
+            return betTypes ?? new List<BetTypeItem>();
         }
 
         /// <summary>
