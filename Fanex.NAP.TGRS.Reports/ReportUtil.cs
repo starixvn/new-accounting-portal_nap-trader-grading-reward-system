@@ -10,7 +10,7 @@
             get
             {
                 var hasPH = PermissionService.HasPermission(TGRSFunctionKeys.PerformanceDetail_PHbettypes);
-                var hasMajor = PermissionService.HasPermission(TGRSFunctionKeys.PerformanceDetail_majorbettypes);
+                var hasMajor = PermissionService.HasPermission(TGRSFunctionKeys.PerformanceDetail_Majorbettypes);
 
                 if (hasPH && !hasMajor) return BettypeViewPermission.PHAIO_Only;
                 else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
