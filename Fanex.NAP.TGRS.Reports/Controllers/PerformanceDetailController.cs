@@ -57,7 +57,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         public PerformanceDetailController(IDetailReportService detailReportService)
         {
-            this._detailReportService = detailReportService ?? new DetailReportService();
+            var service = new DetailReportService();
+            service.PermissionCheck = HasRight;
+            this._detailReportService = service;
         }
 
         #endregion Attributes and Constructors
@@ -71,7 +73,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            if (!ReportUtil.HasDetailPermission) return Redirect("~/Error/AccessDenied");
+            var permission = ReportUtil.GetBettypePermission(HasRight);
+
+            if (permission == Models.Permission.BettypeViewPermission.None) return Redirect("~/Error/AccessDenied");
 
             return RedirectToAction("LeaguePerformance");
         }
@@ -100,7 +104,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
-            var permission = ReportUtil.BettypePermission;
+            var permission = ReportUtil.GetBettypePermission(HasRight);
 
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(permission);
 
@@ -227,7 +231,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
-            var betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
+            var permission = ReportUtil.GetBettypePermission(HasRight);
+
+            var betTypes = this._detailReportService.GetBetTypes(permission);
 
             ViewBag.BetTypes = betTypes;
 
@@ -309,7 +315,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
 
@@ -434,7 +440,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult TeamPerformance()
         {
             IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
+            var permission = ReportUtil.GetBettypePermission(HasRight);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(permission);
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Teams = teams;
@@ -550,7 +557,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.BettypePermission);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
 

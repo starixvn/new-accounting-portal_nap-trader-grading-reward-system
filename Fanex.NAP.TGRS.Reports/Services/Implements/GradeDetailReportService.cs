@@ -22,6 +22,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     /// <summary>
     /// Detail report service.
@@ -288,7 +289,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IFont normalFont = writer.GetFont(11, 0);
             int lineCount = 0;
 
-            List<BetTypeItem> betTypes = this.GetBetTypes(ReportUtil.BettypePermission).ToList();
+            var permission = (PermissionCheck == null) ? BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
+            List<BetTypeItem> betTypes = this.GetBetTypes(permission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

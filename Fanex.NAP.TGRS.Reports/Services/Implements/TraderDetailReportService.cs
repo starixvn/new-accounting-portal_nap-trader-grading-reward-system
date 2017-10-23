@@ -8,14 +8,10 @@
 //   <change who="Ken.Nguyen" date="2014.6.13">Add Excel export</change>
 // </history>
 
-using Fanex.NAP.Framework.Data;
-
 namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using Fanex.NAP.Core.Web;
+    using Fanex.NAP.Framework.Data;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
@@ -25,6 +21,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using static Fanex.NAP.Core.Business.Constant;
 
     /// <summary>
     /// Detail report service.
@@ -32,6 +33,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
     public partial class DetailReportService : TGRSBaseService, IDetailReportService
     {
         private const string TraderPerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.TraderPerformance";
+
+        public Func<string, Policy, bool> PermissionCheck { get; set; }
 
         /// <summary>
         /// Gets the trader performance.
@@ -222,7 +225,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IFont normalFont = writer.GetFont(11, 0);
             int lineCount = 0;
 
-            List<BetTypeItem> betTypes = this.GetBetTypes(ReportUtil.BettypePermission).ToList();
+            var permission = (PermissionCheck == null) ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
+
+            List<BetTypeItem> betTypes = this.GetBetTypes(permission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

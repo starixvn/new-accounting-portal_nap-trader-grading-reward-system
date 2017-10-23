@@ -2,29 +2,20 @@
 {
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Models.Permission;
+    using System;
+    using static Fanex.NAP.Core.Business.Constant;
 
     public static class ReportUtil
     {
-        public static BettypeViewPermission BettypePermission
+        public static BettypeViewPermission GetBettypePermission(Func<string, Policy, bool> checkFunctionKeyMethod)
         {
-            get
-            {
-                var hasPH = PermissionService.HasPermission(TGRSFunctionKeys.PerformanceDetail_PHbettypes);
-                var hasMajor = PermissionService.HasPermission(TGRSFunctionKeys.PerformanceDetail_Majorbettypes);
+            var hasPH = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_PHbettypes, Policy.Read);
+            var hasMajor = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_Majorbettypes, Policy.Read);
 
-                if (hasPH && !hasMajor) return BettypeViewPermission.PHAIO_Only;
-                else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
-                else if (hasPH && hasMajor) return BettypeViewPermission.All;
-                else return BettypeViewPermission.None;
-            }
-        }
-
-        public static bool HasDetailPermission
-        {
-            get
-            {
-                return BettypePermission != BettypeViewPermission.None;
-            }
+            if (hasPH && !hasMajor) return BettypeViewPermission.PHAIO_Only;
+            else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
+            else if (hasPH && hasMajor) return BettypeViewPermission.All;
+            else return BettypeViewPermission.None;
         }
     }
 }
