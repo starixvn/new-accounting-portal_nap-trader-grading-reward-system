@@ -16,12 +16,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
-    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceSummary;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using System.Web.Mvc;
 
     /// <summary>
@@ -49,6 +47,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var permission = ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
+
+            if (permission == Models.Permission.BettypeViewPermission.None) return Redirect("~/Error/AccessDenied");
+
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
@@ -56,6 +58,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+
             return View();
         }
 
@@ -77,7 +80,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         public JsonResult GetReports(ReportFilter filter)
         {
-            var permission = (int)ReportUtil.GetBettypePermission(HasRight);
+            var permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
 
             var generalCriteria = new GetGeneralInfoCriteria
             {
