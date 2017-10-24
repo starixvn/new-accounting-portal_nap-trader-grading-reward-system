@@ -77,7 +77,15 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         public JsonResult GetReports(ReportFilter filter)
         {
-            var generalCriteria = new GetGeneralInfoCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var permission = (int)ReportUtil.GetBettypePermission(HasRight);
+
+            var generalCriteria = new GetGeneralInfoCriteria
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission
+            };
             GeneralInfo generalInfo = this._summaryReportService.GetGeneralInfo(generalCriteria).First();
 
             var teamCriteria = new GetTeamPerformanceCriteria { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
