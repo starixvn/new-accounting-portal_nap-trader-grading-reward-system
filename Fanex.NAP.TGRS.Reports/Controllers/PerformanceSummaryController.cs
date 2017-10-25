@@ -80,6 +80,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         public JsonResult GetReports(ReportFilter filter)
         {
+            filter.FromDate = DateTime.Now.AddDays(-10);
+            filter.ToDate = DateTime.Now;
             var permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
 
             var generalCriteria = new GetGeneralInfoCriteria
@@ -109,13 +111,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             };
             TraderPerformance traderResult = this._summaryReportService.GetTraderPerformance(traderCriteria).First();
 
-            var betTypeCriteria = new GetBetTypePerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var betTypeCriteria = new GetBetTypePerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
             IEnumerable<BetTypePerformance> betTypeResult = this._summaryReportService.GetBetTypePerformance(betTypeCriteria);
 
-            var winLeagueCriteria = new GetTopWinLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var winLeagueCriteria = new GetTopWinLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
             IEnumerable<League> winLeagueResult = this._summaryReportService.GetTopWinLeague(winLeagueCriteria);
 
-            var loseLeagueCriteria = new GetTopLoseLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var loseLeagueCriteria = new GetTopLoseLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
             IEnumerable<League> loseLeagueResult = this._summaryReportService.GetTopLoseLeague(loseLeagueCriteria);
 
             Reports reports = new Reports()

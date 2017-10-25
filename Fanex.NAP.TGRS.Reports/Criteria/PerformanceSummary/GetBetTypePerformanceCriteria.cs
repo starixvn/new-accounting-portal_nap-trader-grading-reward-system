@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get bet type performance.
     /// </summary>
-    public class GetBetTypePerformanceCriteria : CriteriaBase
+    public class GetBetTypePerformanceCriteria : BettypeGroupCriteria
     {
         public int ReportType { get; set; }
 

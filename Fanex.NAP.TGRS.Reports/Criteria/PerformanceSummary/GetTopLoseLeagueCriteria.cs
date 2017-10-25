@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get top lose league.
     /// </summary>
-    public class GetTopLoseLeagueCriteria : CriteriaBase
+    public class GetTopLoseLeagueCriteria : BettypeGroupCriteria
     {
         public int ReportType { get; set; }
 

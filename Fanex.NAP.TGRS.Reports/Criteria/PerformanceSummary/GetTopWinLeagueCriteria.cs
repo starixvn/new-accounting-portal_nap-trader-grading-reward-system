@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get top win league.
     /// </summary>
-    public class GetTopWinLeagueCriteria : CriteriaBase
+    public class GetTopWinLeagueCriteria : BettypeGroupCriteria
     {
         public int ReportType { get; set; }
 
