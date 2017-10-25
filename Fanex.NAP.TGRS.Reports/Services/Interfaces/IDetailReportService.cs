@@ -11,11 +11,11 @@ using Fanex.NAP.Framework.Data;
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
+    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     public interface IDetailReportService
     {

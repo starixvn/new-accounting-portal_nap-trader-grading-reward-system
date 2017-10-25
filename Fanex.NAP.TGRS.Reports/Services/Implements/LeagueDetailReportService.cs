@@ -12,10 +12,6 @@ using Fanex.NAP.Framework.Data;
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
@@ -24,9 +20,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
-    using Fanex.NAP.TGRS.Reports.Models.Permission;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     /// <summary>
     /// Detail report service.
