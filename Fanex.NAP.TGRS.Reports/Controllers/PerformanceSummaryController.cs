@@ -140,6 +140,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderRankData(GetTopTraderCriteria criteria)
         {
+            var permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
+
+            criteria.ViewPermission = permission;
+
             IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);
 
             return Json(result);

@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get top trader.
     /// </summary>
-    public class GetTopTraderCriteria : CriteriaBase
+    public class GetTopTraderCriteria : BettypeGroupCriteria
     {
         public int Top { get; set; }
 
