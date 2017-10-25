@@ -1,15 +1,14 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.Dashboard;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Trader Management Service.
@@ -23,7 +22,7 @@
         /// <returns>
         /// General info list.
         /// </returns>
-        public IEnumerable<GeneralInfo> GetGeneralInfo(int month)
+        public IEnumerable<GeneralInfo> GetGeneralInfo(int month, int permission)
         {
             IEnumerable<GeneralInfo> result = null;
 
@@ -31,7 +30,8 @@
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                ViewPermission = permission
             };
             result = this.GetData<GeneralInfo>(summaryCriteria);
 
@@ -45,13 +45,14 @@
         /// <returns>
         /// List of league.
         /// </returns>
-        public IEnumerable<League> GetTopWinLeague(int month)
+        public IEnumerable<League> GetTopWinLeague(int month, int permission)
         {
             var topLeagueCriteria = new GetTopWinLeagueCriteria
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                ViewPermission = permission
             };
 
             IEnumerable<League> result = this.GetData<League>(topLeagueCriteria);
@@ -68,7 +69,7 @@
         /// <returns>
         /// List Top Trader.
         /// </returns>
-        public IEnumerable<TopTrader> GetTopTrader(int month)
+        public IEnumerable<TopTrader> GetTopTrader(int month, int permission)
         {
             var topTraderCriteria = new GetTopTraderCriteria
             {
@@ -76,7 +77,8 @@
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
                 Top = 5,
-                IsBottom = 0
+                IsBottom = 0,
+                ViewPermission = permission
             };
 
             IEnumerable<TopTrader> result = this.GetData<TopTrader>(topTraderCriteria);
@@ -91,13 +93,14 @@
         /// <returns>
         /// List Bet type.
         /// </returns>
-        public IEnumerable<BetTypePerformance> GetTopBettype(int month)
+        public IEnumerable<BetTypePerformance> GetTopBettype(int month, int permission)
         {
             var topBettypeCriteria = new GetBetTypePerformanceCriteria
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                ViewPermission = permission
             };
 
             IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
@@ -112,13 +115,14 @@
         /// <returns>
         /// List Month Items.
         /// </returns>
-        public IEnumerable<MonthAmountItem> GetSummaryData(int month)
+        public IEnumerable<MonthAmountItem> GetSummaryData(int month, int permission)
         {
             var summaryCriteria = new GetSummaryInfoCriteria
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                ViewPermission = permission
             };
 
             List<MonthAmount> rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
@@ -139,13 +143,14 @@
         /// </summary>
         /// <param name="month">The month.</param>
         /// <returns>List of team performance.</returns>
-        public IEnumerable<TeamPerformance> GetTeamData(int month)
+        public IEnumerable<TeamPerformance> GetTeamData(int month, int permission)
         {
             var teamCriteria = new GetTeamPerformanceCriteria
             {
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
-                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
+                ViewPermission = permission
             };
 
             IEnumerable<TeamPerformance> teamData = this.GetData<TeamPerformance>(teamCriteria);

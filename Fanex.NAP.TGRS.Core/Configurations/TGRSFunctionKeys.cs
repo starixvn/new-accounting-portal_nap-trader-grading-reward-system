@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 10/24/2017 17:00:13
+// Lasted generated date: 10/25/2017 13:27:29
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -33,6 +33,10 @@ public static class TGRSFunctionKeys
         public const string BenchmarkManagement = "BenchmarkManagement";
 
         public const string Configuration = "Configuration";
+
+        public const string Dashboard_Majorbettypes = "Dashboard_Majorbettypes";
+
+        public const string Dashboard_PHbettypes = "Dashboard_PHbettypes";
 
         public const string ManageFunction = "ManageFunction";
 

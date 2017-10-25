@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria
     /// <summary>
     /// Get general info.
     /// </summary>
-    public class GetSummaryInfoCriteria : CriteriaBase
+    public class GetSummaryInfoCriteria : BettypeGroupCriteria
     {
         public int ReportType { get; set; }
 

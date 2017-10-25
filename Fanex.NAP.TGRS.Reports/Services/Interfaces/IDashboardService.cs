@@ -1,22 +1,21 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
+    using System.Collections.Generic;
 
     public interface IDashboardService
     {
-        IEnumerable<GeneralInfo> GetGeneralInfo(int month);
+        IEnumerable<GeneralInfo> GetGeneralInfo(int month, int permission);
 
-        IEnumerable<League> GetTopWinLeague(int month);
+        IEnumerable<League> GetTopWinLeague(int month, int permission);
 
-        IEnumerable<TopTrader> GetTopTrader(int month);
+        IEnumerable<TopTrader> GetTopTrader(int month, int permission);
 
-        IEnumerable<BetTypePerformance> GetTopBettype(int month);
+        IEnumerable<BetTypePerformance> GetTopBettype(int month, int permission);
 
-        IEnumerable<MonthAmountItem> GetSummaryData(int month);
+        IEnumerable<MonthAmountItem> GetSummaryData(int month, int permission);
 
-        IEnumerable<TeamPerformance> GetTeamData(int month);
+        IEnumerable<TeamPerformance> GetTeamData(int month, int permission);
     }
 }

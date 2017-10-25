@@ -1,16 +1,15 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web.Mvc;
 
     /// <summary>
     /// Performance summary report controller.
@@ -19,10 +18,13 @@
     {
         private readonly IDashboardService _dashboardService;
 
+        private int _permission;
+
         [Simplect.Attribute.InjectObject]
         public DashboardController()
             : this(null)
         {
+            _permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.Dashboard_PHbettypes, TGRSFunctionKeys.Dashboard_Majorbettypes);
         }
 
         public DashboardController(IDashboardService dashboardService)
@@ -54,12 +56,12 @@
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
         public JsonResult GetSummaryData(int month)
         {
-            GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo(month).First();
-            IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague(month);
-            IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader(month);
-            IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype(month);
-            IEnumerable<MonthAmountItem> monthData = this._dashboardService.GetSummaryData(month);
-            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(month);
+            GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo(month, _permission).First();
+            IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague(month, _permission);
+            IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader(month, _permission);
+            IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype(month, _permission);
+            IEnumerable<MonthAmountItem> monthData = this._dashboardService.GetSummaryData(month, _permission);
+            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(month, _permission);
             return Json(
                 new
                 {
@@ -79,7 +81,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamData(int month)
         {
-            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(month);
+            IEnumerable<TeamPerformance> teamData = this._dashboardService.GetTeamData(month, _permission);
 
             return Json(new
             {
