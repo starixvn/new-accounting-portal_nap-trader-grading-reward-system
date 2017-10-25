@@ -80,8 +80,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>List of JSON objects.</returns>
         public JsonResult GetReports(ReportFilter filter)
         {
-            filter.FromDate = DateTime.Now.AddDays(-10);
-            filter.ToDate = DateTime.Now;
             var permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
 
             var generalCriteria = new GetGeneralInfoCriteria
