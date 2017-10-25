@@ -39,6 +39,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None) return View("~/Views/Home/Index.cshtml");
+
             ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
 
             return View();
