@@ -91,10 +91,22 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             };
             GeneralInfo generalInfo = this._summaryReportService.GetGeneralInfo(generalCriteria).First();
 
-            var teamCriteria = new GetTeamPerformanceCriteria { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var teamCriteria = new GetTeamPerformanceCriteria
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission
+            };
             IEnumerable<TeamPerformance> teamResult = this._summaryReportService.GetTeamPerformance(teamCriteria);
 
-            var traderCriteria = new GetTraderPerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };
+            var traderCriteria = new GetTraderPerformanceCriteria
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission
+            };
             TraderPerformance traderResult = this._summaryReportService.GetTraderPerformance(traderCriteria).First();
 
             var betTypeCriteria = new GetBetTypePerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate };

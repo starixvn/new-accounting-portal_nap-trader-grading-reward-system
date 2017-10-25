@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
     /// <summary>
     /// Get all trader performance.
     /// </summary>
-    public class GetTraderPerformanceCriteria : CriteriaBase
+    public class GetTraderPerformanceCriteria : BettypeGroupCriteria
     {
         public int ReportType { get; set; }
 
