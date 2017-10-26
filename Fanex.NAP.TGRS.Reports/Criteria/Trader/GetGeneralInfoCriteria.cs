@@ -3,7 +3,7 @@
     using Fanex.NAP.Framework.Data;
     using System;
 
-    public class GetGeneralInfoCriteria : CriteriaBase
+    public class GetGeneralInfoCriteria : BettypeGroupCriteria
     {
         public int TraderId { get; set; }
 

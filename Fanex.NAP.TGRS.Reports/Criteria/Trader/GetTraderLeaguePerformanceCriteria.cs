@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Text;
 
-    public class GetTraderLeaguePerformanceCriteria : CriteriaBase
+    public class GetTraderLeaguePerformanceCriteria : BettypeGroupCriteria
     {
         public int TraderId { get; set; }
 

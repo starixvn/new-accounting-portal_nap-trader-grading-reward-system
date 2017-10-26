@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 10/25/2017 13:27:29
+// Lasted generated date: 10/26/2017 10:18:53
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -109,6 +109,10 @@ public static class TGRSFunctionKeys
         public const string TraderReport = "TraderReport";
 
         public const string TraderReportAdmin = "TraderReportAdmin";
+
+        public const string TraderReportAdmin_Majorbettypes = "TraderReportAdmin_Majorbettypes";
+
+        public const string TraderReportAdmin_PHbettypes = "TraderReportAdmin_PHbettypes";
 
     }
  

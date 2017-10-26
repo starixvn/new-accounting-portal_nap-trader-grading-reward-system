@@ -3,7 +3,7 @@
     using Fanex.NAP.Framework.Data;
     using System;
 
-    public class GetTraderWinLossTurnoverCriteria : CriteriaBase
+    public class GetTraderWinLossTurnoverCriteria : BettypeGroupCriteria
     {
         public int TraderId { get; set; }
 

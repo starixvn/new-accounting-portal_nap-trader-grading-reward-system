@@ -7,6 +7,7 @@
     using Fanex.NAP.TGRS.Reports.Criteria.Trader;
     using Fanex.NAP.TGRS.Reports.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
+    using Fanex.NAP.TGRS.Reports.Models.Permission;
     using Fanex.NAP.TGRS.Reports.Models.Trader;
     using Fanex.NAP.TGRS.Reports.Services.Implements;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
@@ -25,10 +26,13 @@
         private readonly ITraderReportService traderReportService;
         private readonly ITraderManagementService traderMgnt;
 
+        private BettypeViewPermission _permission;
+
         [Simplect.Attribute.InjectObject]
         public TraderController()
             : this(null, null)
         {
+            _permission = ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.TraderReportAdmin_PHbettypes, TGRSFunctionKeys.TraderReportAdmin_Majorbettypes);
         }
 
         public TraderController(ITraderReportService traderReportService, ITraderManagementService traderMgnt)
@@ -53,6 +57,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReportAdmin, Policy = Constant.Policy.Read)]
         public ActionResult Admin()
         {
+            if (_permission == BettypeViewPermission.None) return Redirect("~/Error/AccessDenied");
+
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
@@ -67,6 +73,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderReport, Policy = Constant.Policy.Read)]
         public JsonResult GetReportsForTrader(ReportFilter filter)
         {
+            _permission = BettypeViewPermission.All;
             return GetReports(filter);
         }
 
@@ -80,6 +87,8 @@
         [HttpPost]
         public JsonResult ReloadChart(ReportFilter filter)
         {
+            CheckComeFromTraderReport();
+
             var traderId = this.CurrentSession.UserId;
 
             if (filter.Trader != null)
@@ -100,7 +109,8 @@
                 TraderId = traderId,
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
-                ToDate = filter.ToDate
+                ToDate = filter.ToDate,
+                ViewPermission = (int)_permission
             };
 
             return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
@@ -153,7 +163,7 @@
                 }
             }
 
-            GetTraderLeaguePerformanceMatchDetailCriteria bettypeCriteria = new GetTraderLeaguePerformanceMatchDetailCriteria() 
+            GetTraderLeaguePerformanceMatchDetailCriteria bettypeCriteria = new GetTraderLeaguePerformanceMatchDetailCriteria()
             {
                 TraderId = traderId,
                 EventDate = filter.EventDate,
@@ -202,7 +212,8 @@
                 TraderId = traderId,
                 ReportType = reportType,
                 FromDate = fromtDate,
-                ToDate = toDate
+                ToDate = toDate,
+                ViewPermission = (int)_permission
             };
 
             return traderReportService.GetGeneralInfo(criteria).FirstOrDefault();
@@ -215,7 +226,8 @@
                 TraderId = traderId,
                 ReportType = reportType,
                 FromDate = fromtDate,
-                ToDate = toDate
+                ToDate = toDate,
+                ViewPermission = (int)_permission
             };
 
             return traderReportService.GetTraderWinlossTurnover(criteria).ToList();
@@ -227,7 +239,8 @@
             {
                 TraderId = traderId,
                 FromDate = fromtDate,
-                ToDate = toDate
+                ToDate = toDate,
+                ViewPermission = (int)_permission
             };
 
             return traderReportService.GetTraderBettypePerformance(criteria).ToList();
@@ -239,10 +252,20 @@
             {
                 TraderId = traderId,
                 FromDate = fromtDate,
-                ToDate = toDate
+                ToDate = toDate,
+                ViewPermission = (int)_permission
             };
 
             return traderReportService.GetTraderLeaguePerformance(criteria);
+        }
+
+        private void CheckComeFromTraderReport()
+        {
+            var referrer = Request.UrlReferrer;
+
+            var action = referrer.Segments[referrer.Segments.Length - 1];
+
+            if (action == "Trader") _permission = BettypeViewPermission.All;
         }
     }
 }
