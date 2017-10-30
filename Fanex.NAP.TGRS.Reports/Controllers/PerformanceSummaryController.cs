@@ -56,7 +56,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.MinDate = minDate;
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
 
             return View();
