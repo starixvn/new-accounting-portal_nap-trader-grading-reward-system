@@ -25,7 +25,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using static Fanex.NAP.Core.Business.Constant;
 
     /// <summary>
     /// Detail report service.
@@ -34,7 +33,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     {
         private const string TraderPerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.TraderPerformance";
 
-        public Func<string, Policy, bool> PermissionCheck { get; set; }
+        public Func<string, Fanex.NAP.Core.Business.Constant.Policy, bool> PermissionCheck { get; set; }
 
         /// <summary>
         /// Gets the trader performance.

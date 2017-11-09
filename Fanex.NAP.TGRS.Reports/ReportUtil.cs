@@ -2,14 +2,13 @@
 {
     using Fanex.NAP.TGRS.Reports.Models.Permission;
     using System;
-    using static Fanex.NAP.Core.Business.Constant;
 
     public static class ReportUtil
     {
-        public static BettypeViewPermission GetBettypePermission(Func<string, Policy, bool> checkFunctionKeyMethod)
+        public static BettypeViewPermission GetBettypePermission(Func<string, Fanex.NAP.Core.Business.Constant.Policy, bool> checkFunctionKeyMethod)
         {
-            var hasPH = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_PHbettypes, Policy.Read);
-            var hasMajor = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_Majorbettypes, Policy.Read);
+            var hasPH = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_PHbettypes, Fanex.NAP.Core.Business.Constant.Policy.Read);
+            var hasMajor = checkFunctionKeyMethod(TGRSFunctionKeys.PerformanceDetail_Majorbettypes, Fanex.NAP.Core.Business.Constant.Policy.Read);
 
             if (hasPH && !hasMajor) return BettypeViewPermission.PHAIO_Only;
             else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
@@ -17,10 +16,10 @@
             else return BettypeViewPermission.None;
         }
 
-        public static BettypeViewPermission GetBettypeViewPermission(Func<string, Policy, bool> checkFunctionKeyMethod, string phKey, string majorKey)
+        public static BettypeViewPermission GetBettypeViewPermission(Func<string, Fanex.NAP.Core.Business.Constant.Policy, bool> checkFunctionKeyMethod, string phKey, string majorKey)
         {
-            var hasPH = checkFunctionKeyMethod(phKey, Policy.Read);
-            var hasMajor = checkFunctionKeyMethod(majorKey, Policy.Read);
+            var hasPH = checkFunctionKeyMethod(phKey, Fanex.NAP.Core.Business.Constant.Policy.Read);
+            var hasMajor = checkFunctionKeyMethod(majorKey, Fanex.NAP.Core.Business.Constant.Policy.Read);
 
             if (hasPH && !hasMajor) return BettypeViewPermission.PHAIO_Only;
             else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
