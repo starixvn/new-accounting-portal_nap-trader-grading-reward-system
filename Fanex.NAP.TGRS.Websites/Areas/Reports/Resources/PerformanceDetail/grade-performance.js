@@ -254,6 +254,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
+                          HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
@@ -308,6 +312,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
                               { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
@@ -323,6 +328,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
+                          { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
@@ -421,6 +427,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
+                          HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
@@ -474,6 +484,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                               { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
@@ -487,6 +498,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
+                          { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
@@ -581,6 +593,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
+                          HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
@@ -640,6 +656,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColTeam', Value: teamCol, CssClass: 'history' },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
@@ -653,6 +670,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
                           { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
+                          { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
@@ -757,6 +775,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           FormatNumber: common.Formats.DecimalFormat, Sort: true
                       },
                       {
+                          HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: common.Formats.DecimalFormat, Sort: true
+                      },
+                      {
                           HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                       },
@@ -816,6 +838,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                               { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
                               { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                               { Name: 'ColTurnover', Value: item.Turnover },
+                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                               { Name: 'ColWinLoss', Value: item.WinLoss },
                               { Name: 'ColBetCount', Value: item.BetCount },
                               { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
@@ -830,6 +853,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
                           { Name: 'ColNoOfMatches', Value: numeral(data.Total.NoOfMatches).format(common.Formats.IntegerFormat) },
                           { Name: 'ColTurnover', Value: data.Total.Turnover },
+                          { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
                           { Name: 'ColWinLoss', Value: data.Total.WinLoss },
                           { Name: 'ColBetCount', Value: data.Total.BetCount },
                           { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },

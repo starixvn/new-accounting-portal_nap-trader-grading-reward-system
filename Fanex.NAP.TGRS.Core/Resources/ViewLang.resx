@@ -648,4 +648,7 @@
   <data name="MarginTotal" xml:space="preserve">
     <value>Margin on Total %</value>
   </data>
+  <data name="AvgTurnoverPerMatch" xml:space="preserve">
+    <value>Avg. TO Per Match</value>
+  </data>
 </root>

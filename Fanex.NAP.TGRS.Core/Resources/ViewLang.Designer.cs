@@ -178,6 +178,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avg. TO Per Match.
+        /// </summary>
+        public static string AvgTurnoverPerMatch {
+            get {
+                return ResourceManager.GetString("AvgTurnoverPerMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
