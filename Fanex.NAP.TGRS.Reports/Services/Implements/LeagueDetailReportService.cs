@@ -323,6 +323,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.NoOfTraders,
                     item.NoOfMatches,
                     item.Turnover,
+                    item.Turnover / item.NoOfMatches,
                     item.WinLoss,
                     item.BetCount,
                     (object)item.Margin ?? ViewLang.NA,
@@ -339,6 +340,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 total.NoOfTraders,
                 total.NoOfMatches,
                 total.Turnover,
+                total.Turnover / total.NoOfMatches,
                 total.WinLoss,
                 total.BetCount,
                 (object)total.Margin ?? ViewLang.NA
