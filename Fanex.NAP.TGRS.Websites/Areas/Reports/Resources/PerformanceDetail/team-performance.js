@@ -365,7 +365,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTeamPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
         }
 
         handleTeamPerformanceGridEvents();
@@ -682,7 +682,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [8]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
         }
 
         handleTraderPerformanceByLeagueGridEvents(teamId, teamName, leagueId, leagueName);
@@ -1255,7 +1255,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
         }
 
         handleTraderPerformanceGridEvents(teamId, teamName);

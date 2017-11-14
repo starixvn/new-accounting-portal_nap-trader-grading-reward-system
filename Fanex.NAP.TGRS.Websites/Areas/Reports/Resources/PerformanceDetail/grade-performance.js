@@ -342,7 +342,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divGradePerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divGradePerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divGradePerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
         }
 
         handleGradePerformanceGridEvents();
@@ -687,7 +687,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divTraderPerformanceByLeagueGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [8]);
+            domElements.divTraderPerformanceByLeagueGrid.fanexGrid("hideColumns", gridOptions, [9]);
         }
 
         handleTraderPerformanceByLeagueGridEvents(grade, leagueId, leagueName);
@@ -870,7 +870,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [9]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
         }
 
         handleTraderPerformanceGridEvents(grade);

@@ -352,7 +352,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
 
         if (!common.HasViewScorePermission) {
-            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
+            domElements.divTraderPerformanceGrid.fanexGrid("hideColumns", gridOptions, [11]);
         }
 
         handleTraderPerformanceGridEvents();
