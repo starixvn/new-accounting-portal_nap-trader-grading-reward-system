@@ -651,4 +651,25 @@
   <data name="AvgTurnoverPerMatch" xml:space="preserve">
     <value>Avg. TO Per Match</value>
   </data>
+  <data name="BettypeManagement" xml:space="preserve">
+    <value>Bet Type Management</value>
+  </data>
+  <data name="NewBettype" xml:space="preserve">
+    <value>New Bet Type</value>
+  </data>
+  <data name="AssignmentType" xml:space="preserve">
+    <value>Assignment Type</value>
+  </data>
+  <data name="BettypeId" xml:space="preserve">
+    <value>Bet Type Id</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="OperatorType" xml:space="preserve">
+    <value>Operator Type</value>
+  </data>
 </root>

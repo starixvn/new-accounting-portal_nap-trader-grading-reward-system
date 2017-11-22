@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>d139bb27</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,9 +100,8 @@
     <Reference Include="MsieJavaScriptEngine">
       <HintPath>..\packages\MsieJavaScriptEngine.1.4.2\lib\net40\MsieJavaScriptEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Simplect">
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
@@ -231,6 +231,7 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\team-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
+    <Content Include="Areas\Configuration\Resources\BettypeManagement\bettype-management.js" />
     <Content Include="Areas\Configuration\Resources\TargetedMargin\targeted-margin.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\delete.png" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\popup-result.js" />
@@ -474,6 +475,8 @@
     <Content Include="Areas\OSReports\Views\OSNewSportPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance.less" />
     <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xls" />
+    <Content Include="Areas\Configuration\Views\BettypeManagement\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\BettypeManagement\AddNewBettypeForm.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

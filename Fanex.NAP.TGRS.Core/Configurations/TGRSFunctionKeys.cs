@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 10/26/2017 10:18:53
+// Lasted generated date: 11/22/2017 14:37:29
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -31,6 +31,8 @@ public static class TGRSFunctionKeys
         public const string AssignSiteToUser = "AssignSiteToUser";
 
         public const string BenchmarkManagement = "BenchmarkManagement";
+
+        public const string BettypeManagement = "BettypeManagement";
 
         public const string Configuration = "Configuration";
 
@@ -97,8 +99,6 @@ public static class TGRSFunctionKeys
         public const string SpreadManagement = "SpreadManagement";
 
         public const string SystemConfiguration = "SystemConfiguration";
-
-        public const string SystemSetting = "SystemSetting";
 
         public const string TargetedMargin = "TargetedMargin";
 

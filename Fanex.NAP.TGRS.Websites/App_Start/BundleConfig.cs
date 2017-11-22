@@ -144,6 +144,9 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.AddAndInclude(
                 "~/styles/systemConfiguration",
                 "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/bettypeManagement").Include(
+                "~/Areas/Configuration/Resources/BettypeManagement/bettype-management.js"));
         }
 
         /// <summary>

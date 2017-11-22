@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -160,6 +160,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assignment Type.
+        /// </summary>
+        public static string AssignmentType {
+            get {
+                return ResourceManager.GetString("AssignmentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average Grade.
         /// </summary>
         public static string AvgGrade {
@@ -255,6 +264,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string BetTypeExcelFile {
             get {
                 return ResourceManager.GetString("BetTypeExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Id.
+        /// </summary>
+        public static string BettypeId {
+            get {
+                return ResourceManager.GetString("BettypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Management.
+        /// </summary>
+        public static string BettypeManagement {
+            get {
+                return ResourceManager.GetString("BettypeManagement", resourceCulture);
             }
         }
         
@@ -619,6 +646,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IsEnabled.
         /// </summary>
         public static string IsEnabled {
@@ -871,6 +907,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Bet Type.
+        /// </summary>
+        public static string NewBettype {
+            get {
+                return ResourceManager.GetString("NewBettype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type Performance.
         /// </summary>
         public static string NewBetTypePerformance {
@@ -1038,6 +1092,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Olympic {
             get {
                 return ResourceManager.GetString("Olympic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator Type.
+        /// </summary>
+        public static string OperatorType {
+            get {
+                return ResourceManager.GetString("OperatorType", resourceCulture);
             }
         }
         

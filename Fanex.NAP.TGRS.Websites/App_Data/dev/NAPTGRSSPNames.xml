@@ -242,4 +242,7 @@
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
   </Function>
+  <Function Name="BettypeManagement">
+    <Setting Key="TGRS_BettypeManagement_Bettype_SelectAll" SpName="TGRS_BettypeManagement_Bettype_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>
