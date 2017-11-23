@@ -1087,6 +1087,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number only.
+        /// </summary>
+        public static string NumberInput {
+            get {
+                return ResourceManager.GetString("NumberInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olympic.
         /// </summary>
         public static string Olympic {

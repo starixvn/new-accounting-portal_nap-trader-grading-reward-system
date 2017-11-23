@@ -123,6 +123,8 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BettypeManagement\GetAllBettypeCriteria.cs" />
+    <Compile Include="Criteria\BettypeManagement\InsertNewBettypeCriteria.cs" />
+    <Compile Include="Criteria\BettypeManagement\UpdateBettypeCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
     <Compile Include="Criteria\Common\GetLeagueIdsCriteria.cs" />
     <Compile Include="Criteria\Common\GetBetTypeIdsCriteria.cs" />

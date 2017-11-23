@@ -672,4 +672,7 @@
   <data name="OperatorType" xml:space="preserve">
     <value>Operator Type</value>
   </data>
+  <data name="NumberInput" xml:space="preserve">
+    <value>Number only</value>
+  </data>
 </root>

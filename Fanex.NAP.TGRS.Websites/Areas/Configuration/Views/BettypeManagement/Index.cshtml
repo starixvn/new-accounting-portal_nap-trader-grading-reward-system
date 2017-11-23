@@ -11,7 +11,7 @@
     </div>
 
     <div class="header-button">
-        <a href="#" id="lnkAddNewTeam" class="green-button change-list">
+        <a href="#" id="lnkAddNewBettype" class="green-button change-list">
             <span class="add-icon">
             </span>@ViewLang.NewBettype
         </a>
@@ -19,36 +19,28 @@
 
 }
 <div id="resultContainer" class="content-grid">
-    <div id="divTeamsGrid" class="freegrid">
+    <div id="bettypeGrid" class="freegrid">
     </div>
 </div>
 
-@*<div id="divHiddenForm" class="display-none">
-    @Html.Partial("InsertTeamForm")
-    @Html.Partial("UpdateTeamForm")
-</div>*@
+<div id="divHiddenForm" class="display-none">
+    @Html.Partial("AddNewBettypeForm")
+</div>
 
 @section Foot
 {
-    @*@Scripts.Render("~/scripts/teamManagement")*@
     @Scripts.Render("~/scripts/bettypeManagement")
 
     <script type="text/javascript">
         var bettypeColumns = [@Html.Raw(ViewBag.BettypeColumns)];
         var labels = {
-            TeamName: '@ViewLang.TeamName',
-            Description: '@ViewLang.Description',
-            TraderCount: '@ViewLang.TraderCount',
-            CreatedDate: '@ViewLang.CreatedDate',
-            CreatedBy: '@ViewLang.CreatedBy',
-            NewTeam: '@ViewLang.NewTeam',
-            EditTeam: '@ViewLang.EditTeam',
-            AvgGrade: '@ViewLang.AvgGrade'
+            NewBettype: 'New Bettype'
         };
+
         var messages = {
-            UpdateTeamSuccessfully: '@Messages.UpdateTeamSuccessfully',
-            AddTeamSuccessfully: '@Messages.AddTeamSuccessfully',
-            InvalidValueError: '@Messages.InvalidValueError'
+            AddBettypeSuccessfully: 'dafdaf',
+            InvalidValueError: '@Messages.InvalidValueError',
+            NumberInput: '@ViewLang.NumberInput'
         };
         var hasEditRight = '@ViewBag.HasEditRight' === 'True';
     </script>

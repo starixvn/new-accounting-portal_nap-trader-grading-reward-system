@@ -14,10 +14,10 @@
         public string Group { get; set; }
 
         [JsonProperty("Operator Type")]
-        public int OperatorType { get; set; }
+        public short? OperatorType { get; set; }
 
         [JsonProperty("Assignment Bet Type")]
-        public int AssignmentType { get; set; }
+        public short? AssignmentBetType { get; set; }
 
         [JsonIgnore]
         public bool IsDisabled { get; set; }
