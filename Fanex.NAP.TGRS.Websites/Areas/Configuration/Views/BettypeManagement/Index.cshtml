@@ -34,14 +34,14 @@
     <script type="text/javascript">
         var bettypeColumns = [@Html.Raw(ViewBag.BettypeColumns)];
         var labels = {
-            NewBettype: 'New Bettype'
+            NewBettype: '@ViewLang.NewBettype'
         };
 
         var messages = {
-            AddBettypeSuccessfully: 'dafdaf',
+            AddBettypeSuccessfully: '@Messages.InsertBettypeSuccessfully',
             InvalidValueError: '@Messages.InvalidValueError',
-            NumberInput: '@ViewLang.NumberInput'
+            NumberInput: '@ViewLang.NumberInput',
+            UpdateBettypeSucessully: '@Messages.UpdatedSuccessfully'
         };
-        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
     </script>
 }

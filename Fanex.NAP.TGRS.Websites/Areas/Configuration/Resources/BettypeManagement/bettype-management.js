@@ -16,18 +16,18 @@
     }
 
     function renderValue(id, name, value) {
-        if (typeof value === "boolean") return "<input type='checkbox' class='editable' name='{0}'  {1}/>".format(name, value ? "checked" : "");
+        if (typeof value === "boolean") return "<input type='checkbox' class='editable' name='{0}'  {1} data-id='{2}'/>".format(name, value ? "checked" : "", id);
 
         if (name == "Group") {
-            var major = value == "Major" ? "selected" : "";
-            var ph = value == "PH" ? "selected" : "";
-            return "<span>{0}</span><select class='editable hide' data-id='{3}' name='{4}' style='width: 100%'><option value='1' {1}>Major</option><option value='2' {2}>PH</option></select>".format(value, major, ph, id, name);
+            var major = value == "Major" ? "selected='selected'" : "";
+            var ph = value == "PH" ? "selected='selected'" : "";
+            return "<span>{0}</span><select class='editable display-none' data-id='{1}' name='{2}' style='width: 100%'><option value='1'>Major</option><option value='2'>PH</option></select>".format(value, id, name);
         }
 
-        var input = "<input type='text' class='editable hide' name='{0}' data-id='{1}' {2} style='width:100%; padding: 0'/>".format(name, id, isNaN(value) ? "" : "data-val-number='adfda'");
+        var input = "<input type='text' class='editable display-none' name='{0}' data-id='{1}' style='width:100%; padding: 0'/>".format(name, id);
 
-        if (value === null || value === undefined) return "<form><span>-</span>{0}</form>".format(input);
-        return "<form onsubmit='return false'><span>{0}</span>{1}</form>".format(value, input);
+        if (value === null || value === undefined) return "<span>-</span>{0}".format(input);
+        return "<span>{0}</span>{1}".format(value, input);
     }
 
     function createRow(value, index) {
@@ -53,10 +53,16 @@
     }
 
     function renderEdit($target) {
-        $target.addClass("hide")
-        var $input = $target.next().removeClass("hide").focus();
+        $target.addClass("display-none")
+        var $editable = $target.next().removeClass("display-none").focus();
         var val = $target.text();
-        if (val != "-") $input.val(val);
+
+        if ($editable.is("select")) {
+            $editable.val(val == "Major" ? "1" : "2");
+            return;
+        }
+
+        if (val != "-") $editable.val(val);
     }
 
     function renderGrid(data) {
@@ -73,19 +79,20 @@
 
         grid.fanexGrid(gridOptions);
 
+        common.EnableInput();
+
         $(".editable:not(:checkbox)")
-            .focusout(function (e) {
-                var $this = $(e.target);
-                var oldVal = $this.addClass("hide").prev().removeClass("hide").text();
-                if (oldVal != "-") $this.val(oldVal);
-                else $this.val("");
-            })
+            .keydown(e => e.keyCode == 27 ? $(e.target).focusout(): 1)
+            .focusout(e => focusOut($(e.target)))
             .change(e => updateBettype($(e.target)))
             .parent().click(e => renderEdit($("span", e.target)))
             .children("span").click(e => renderEdit($(e.target)));
+
+        $("input.editable:checkbox").change(e => updateBettype($(e.target)));
     }
 
     function getBettypes() {
+        common.DisableInput();
         var url = common.ResolveRootUrl('Configuration/BettypeManagement/GetAllBettype')
         $.post(url, renderGrid);
     }
@@ -95,13 +102,13 @@
 
         if (result.IsSuccessful) {
             common.ShowInlineSuccessMsg($div, messages.AddBettypeSuccessfully, false, function () {
-                timeout = setTimeout(common.ClosePopup, 3000);
+                timeout = setTimeout(common.ClosePopup, 1000);
             });
-            disablePopup();
+
             getBettypes();
         }
         else {
-            common.ShowInlineErrorMsg($div, result.ErrorMessage);
+            common.ShowInlineErrorMsg($div, result.Message);
             return false;
         }
     }
@@ -130,20 +137,58 @@
         common.Modal(labels.NewBettype, form);
 
         $("#btnSave", form).click(() => insertNewBettype(form));
+
+        $("#btnCancel", form).click(() => common.ClosePopup());
     }
 
-    function updateBettype($editable){
-        var url = common.ResolveRootUrl('Configuration/BettypeManagement/UpdateBettype');
+    function focusOut($editable) {
+        var oldVal = $editable.addClass("display-none").prev().removeClass("display-none").text();
+        if (oldVal != "-") $editable.val(oldVal);
+        else $editable.val("");
+    }
 
-        var data = {};
-        data.BettypeId = $editable.attr("data-id");
-        var attr = $editable.attr("name").replace(/ /g, "");
+    function updateBettype($editable) {
+        var val = $editable.val();
 
-        data[attr.includes("ID") ? "New" + attr: attr] = $editable.val();
+        if ($editable.is(":checkbox")) val = $editable.is(":checked");
 
-        $.post(url, data);
+        if (val != null && val !== "" && $(val).length == 0) {
+            var url = common.ResolveRootUrl('Configuration/BettypeManagement/UpdateBettype');
 
-        console.log(data);
+            var data = {};
+            data.BettypeId = $editable.attr("data-id");
+            var attr = $editable.attr("name").replace(/ /g, "");
+
+            if ((attr == "BetTypeID" || attr == "OperatorType" || attr == "AssignmentBetType") && isNaN(val)) {
+                common.ShowErrorMessage(messages.InvalidValueError);
+                return;
+            }
+
+            data[attr.includes("ID") ? "New" + attr : attr] = val;
+
+            $.post(url, data, result => updateBettypeCallback($editable, result, val));
+
+            console.log(data);
+        }
+        else {
+            common.ShowErrorMessage(messages.InvalidValueError);
+        }
+    }
+
+    function updateBettypeCallback($editable, result, newVal) {
+        if (result.IsSuccessful) {
+            common.ShowInfoMessage(messages.UpdateBettypeSucessully);
+
+            $editable.val(newVal);
+
+            if ($editable.is("select")) $editable.prev().text(newVal == "1" ? "Major" : "PH");
+            else $editable.prev().text(newVal);
+
+            $editable.focusout();
+        }
+        else {
+            common.ShowErrorMessage(result.Message);
+        }
     }
 
     getBettypes();
