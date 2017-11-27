@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterOSConfigurationBundles(bundles);
             RegisterOSReportBundles(bundles);
             RegisterOSAdministrationBundles(bundles);
+            RegisterSetting(bundles);
         }
 
         /// <summary>
@@ -382,6 +383,12 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-factory.js",
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-service.js",
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history.js"));
+        }
+
+        public static void RegisterSetting(BundleCollection bundles)
+        {
+            bundles.Add(new StyleBundle("~/styles/settings").Include("~/Areas/User/Resources/UserInfo/settings.less"));
+            bundles.Add(new ScriptBundle("~/scripts/settings").Include("~/Areas/User/Resources/UserInfo/settings.js"));
         }
     }
 }

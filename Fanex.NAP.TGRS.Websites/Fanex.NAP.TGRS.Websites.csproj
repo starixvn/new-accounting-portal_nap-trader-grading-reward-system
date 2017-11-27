@@ -328,6 +328,7 @@
     <Content Include="Areas\User\Resources\Login\img\title-bg.jpg" />
     <Content Include="Areas\User\Resources\Login\img\username.png" />
     <Content Include="Areas\User\Resources\Login\img\warn.png" />
+    <Content Include="Areas\User\Resources\UserInfo\settings.js" />
     <Content Include="Areas\User\Resources\UserInfo\user-profile.js" />
     <Content Include="Areas\User\Resources\UserInfo\change-password.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -477,6 +478,8 @@
     <Content Include="Areas\OSAdministration\ExcelTemplates\TraderScores.xls" />
     <Content Include="Areas\Configuration\Views\BettypeManagement\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\BettypeManagement\AddNewBettypeForm.cshtml" />
+    <Content Include="Areas\User\Views\UserInfo\Setting.cshtml" />
+    <Content Include="Areas\User\Resources\UserInfo\settings.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

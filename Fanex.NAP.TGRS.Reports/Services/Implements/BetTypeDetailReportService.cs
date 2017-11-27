@@ -194,7 +194,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        public void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath)
+        public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
             BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
 
@@ -208,7 +208,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
 
                 writer.CopyRows(0, 1);
-                FilterBlock(criteria, ref writer);
+                FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
                 FillRowData(betTypeData, ref writer);
@@ -273,7 +273,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(int userid, GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(10, 0);
@@ -281,7 +281,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             int lineCount = 0;
 
             var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
-            List<BetTypeItem> betTypes = this.GetBetTypes(permission).ToList();
+            List<BetTypeItem> betTypes = this.GetBetTypes(userid, permission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

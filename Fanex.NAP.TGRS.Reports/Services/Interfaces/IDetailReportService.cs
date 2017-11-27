@@ -24,14 +24,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="permission">permission on bettype</param>
         /// <returns></returns>
-        IEnumerable<BetTypeItem> GetBetTypes(BettypeViewPermission permission = BettypeViewPermission.All);
+        IEnumerable<BetTypeItem> GetBetTypes(int userid, BettypeViewPermission permission = BettypeViewPermission.All);
 
         /// <summary>
         /// Gets the bet types from session.
         /// </summary>
         /// <returns>List of BetTypeItem objects.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed")]
-        IEnumerable<BetTypeItem> GetBetTypesFromSession();
+        IEnumerable<BetTypeItem> GetBetTypesFromSession(int userid);
 
         /// <summary>
         /// Gets the league performance.
@@ -80,7 +80,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templatePath);
+        void ExportLeaguePerformance(int userid, GetLeaguePerformanceCriteria criteria, string templatePath);
 
         /// <summary>
         /// Gets the trader performance.
@@ -108,7 +108,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore);
+        void ExportTraderPerformance(int userId, GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the grade performance.
@@ -129,7 +129,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportGradePerformance(GetGradePerformanceCriteria criteria, string templatePath, bool isViewScore);
+        void ExportGradePerformance(int userId, GetGradePerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the trader performance of a grade.
@@ -186,7 +186,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportTeamPerformance(GetTeamPerformanceCriteria criteria, string templatePath, bool isViewScore);
+        void ExportTeamPerformance(int userid, GetTeamPerformanceCriteria criteria, string templatePath, bool isViewScore);
 
         /// <summary>
         /// Gets the bet type performance.
@@ -237,6 +237,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        void ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria, string templatePath);
+        void ExportBetTypePerformance(int userid, GetBetTypePerformanceCriteria criteria, string templatePath);
     }
 }

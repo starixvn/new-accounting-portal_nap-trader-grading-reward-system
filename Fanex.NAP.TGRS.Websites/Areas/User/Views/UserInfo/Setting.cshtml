@@ -1,0 +1,123 @@
+﻿@using System
+@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
+@using Fanex.NAP.TGRS.Core.Resources
+
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/settings")
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.Setting</span>
+        </div>
+    </div>
+}
+<!-- Temporarily hidden
+<div id="divScoreCalculateConfig" class="score-calculate-config">
+    <div class="filter-bar">
+        <div class="group-title">
+            <div>
+                <span class="curr">@ViewLang.ScoreCalculationPeriod</span>
+            </div>
+        </div>
+        <div id="scoreCalculateFilter" class="filter-form full-width">
+            <div class="filter-row possition-relative full-width">
+                <div class="periodTile float-left">
+                    <label>
+                        Period 1:</label></div>
+                <div class="float-left width135">
+                    <select id="beginSelectDateOption">
+                    </select>
+                    <select id="beginSelectMonthOption">
+                    </select>
+                </div>
+                <div class="float-left toTitle">
+                    <label>
+                        to</label>
+                </div>
+                <div class="float-left width135">
+                    <select id="firstSelectDateOption">
+                    </select>
+                    <select id="firstSelectMonthOption">
+                    </select>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="filter-row possition-relative full-width">
+                <div class="periodTile float-left">
+                    <label>
+                        Period 2:</label></div>
+                <div class="float-left width135">
+                    <select id="secondSelectDateOption">
+                    </select>
+                    <select id="secondSelectMonthOption">
+                    </select>
+                </div>
+                <div class="float-left toTitle">
+                    <label>
+                        to</label>
+                </div>
+                <div class="float-left width135">
+                    <select id="endSelectDateOption">
+                    </select>
+                    <select id="endSelectMonthOption">
+                    </select>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="filter-row full-width">
+                <div class="submit">
+                    <input id="btnScoreCalculateSubmit" class="blue-button" type="submit" value="@ViewLang.Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<div id="divBettypeConfigGroup" class="bettype-config-group">
+    <div class="filter-bar">
+        <div class="group-title">
+            <div>
+                <span class="curr">@ViewLang.DefaultBetTypeFilter</span>
+            </div>
+        </div>
+        <div id="divBettypeContent" class="filter-form bettype-content">
+            <div class="filter-row bettype-filter-row">
+                <div class="edit-field col_9">
+                    <select id="ddlBetType" multiple="multiple" style="height:700px;">
+                        @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                        {
+                            <option value="@item.BetTypeId" data-default="@(item.IsDefaultCheck? 1 : 0)">@item.BetTypeName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row bettype-submit-row">
+                <div class="submit">
+                    <input id="btnBettypeFilterSubmit" class="blue-button" type="submit" value="@ViewLang.Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/settings")
+    <script type="text/javascript">
+        var labels = {
+            AllBetTypes: '@ViewLang.AllBetTypes'
+        };
+
+        var messages = {
+            UpdateBettypeSuccessfully: '@Messages.UpdateBettypeSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError'
+        };
+    </script>
+}

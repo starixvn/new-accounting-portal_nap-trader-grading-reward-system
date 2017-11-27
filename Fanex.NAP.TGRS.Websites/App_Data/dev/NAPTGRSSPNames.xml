@@ -247,4 +247,8 @@
     <Setting Key="TGRS_BettypeManagement_Bettype_Insert" SpName="TGRS_BettypeManagement_Bettype_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_BettypeManagement_Bettype_Update" SpName="TGRS_BettypeManagement_Bettype_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name ="UserSetting">
+    <Setting Key="TGRS_UserSetting_GetBettypes" SpName="TGRS_UserSetting_GetBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_UserSetting_UpdateDefaultBettypes" SpName="TGRS_UserSetting_UpdateDefaultBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>
