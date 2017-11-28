@@ -114,6 +114,8 @@
     <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_Shift_SelectAll" SpName="TGRS_Trader_Shift_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_Trader_ShiftHistory" SpName="TGRS_Trader_ShiftHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="TeamManagement">
     <Setting Key="TGRS_Team_SelList" SpName="TGRS_Team_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
 {
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
+    using System;
 
     /// <summary>
     /// Trader info view model.
@@ -28,6 +29,9 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
             this.CreatedUsername = traderInfo.CreatedUsername;
             this.TeamEffectiveDate = traderInfo.TeamEffectiveDate.ToShortFormatedDate();
             this.GradeEffectiveDate = traderInfo.GradeEffectiveDate.ToShortFormatedDate();
+            this.ShiftName = traderInfo.ShiftName;
+            this.Remark = traderInfo.Remark;
+            this.ShiftEffectiveDate = traderInfo.ShiftEffectiveDate?.ToShortFormatedDate();
         }
 
         public int CustId { get; set; }
@@ -47,5 +51,11 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement
         public string TeamEffectiveDate { get; set; }
 
         public string GradeEffectiveDate { get; set; }
+
+        public string ShiftName { get; set; }
+
+        public string Remark { get; set; }
+
+        public string ShiftEffectiveDate { get; set; }
     }
 }

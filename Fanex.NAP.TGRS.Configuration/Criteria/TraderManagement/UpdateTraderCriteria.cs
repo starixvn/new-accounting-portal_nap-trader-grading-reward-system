@@ -27,6 +27,12 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
 
         public DateTime? NewGradeEffectiveDate { get; set; }
 
+        public DateTime? NewShiftEffectiveDate { get; set; }
+
+        public int NewShift { get; set; }
+
+        public string NewRemark { get; set; }
+
         public int UserId { get; set; }
 
         public int ErrCode { get; set; }

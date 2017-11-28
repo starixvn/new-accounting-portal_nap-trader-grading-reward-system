@@ -45,6 +45,26 @@
             <div id="dpkGradeEffectiveDate">
             </div>
         </div>
+        <div class="form-row">
+            <div class="lbl-field width-120">
+                <label>@ViewLang.Shift</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlShiftPopup"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div id="dpkShiftEffectiveDate">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-120">
+                <label>@ViewLang.Remark</label>
+            </div>
+            <div class="edit-field">
+                <textarea type="text" id="txtRemark" class="width-200" rows="5" style="resize:none" data-val-not-html="@Messages.HtmlInputError"></textarea>
+            </div>
+        </div>
         <div class="form-row button-row">
             <div class="lbl-field width-120">
             </div>
@@ -53,5 +73,6 @@
                 <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
             </div>
         </div>
+        <div class="form-row"></div>
     </div>
 </div>

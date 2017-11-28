@@ -33,6 +33,8 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
 
         public int Grade { get; set; }
 
+        public int Shift { get; set; }
+
         /// <summary>
         /// Gets Setting Key.
         /// </summary>

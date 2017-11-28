@@ -4,6 +4,7 @@
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.TraderManagement;
+    using Fanex.NAP.TGRS.Configuration.Models.TraderManagement;
 
     public interface ITraderManagementService
     {
@@ -16,5 +17,9 @@
         IEnumerable<GradeHistoryItem> GetGradeHistory(GetGradeHistoryCriteria criteria);
 
         IEnumerable<TeamHistoryItem> GetTeamHistory(GetTeamHistoryCriteria criteria);
+
+        IEnumerable<Shift> GetShifts();
+
+        IEnumerable<ShiftHistory> GetShiftHistory(GetShiftHistoryCriteria criteria);
     }
 }

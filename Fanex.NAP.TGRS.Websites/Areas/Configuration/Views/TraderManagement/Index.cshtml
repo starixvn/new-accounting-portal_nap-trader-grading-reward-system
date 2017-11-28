@@ -29,6 +29,12 @@
     @Html.Partial("UpdateTraderForm")
     @Html.Partial("GradeHistoryForm")
     @Html.Partial("TeamHistoryForm")
+    <div id="divShiftHistoryForm" class="min-width-history">
+        <div id="resultContainer" class="display-none">
+            <div id="divShiftHistoryGrid" class="freegrid">
+            </div>
+        </div>
+    </div>
 </div>
 @section Foot
 {
@@ -39,19 +45,25 @@
             EmployeeId: '@ViewLang.EmployeeId',
             Team: '@ViewLang.Team',
             Grade: '@ViewLang.Grade',
+            Shift: '@ViewLang.Shift',
+            Remark: '@ViewLang.Remark',
             CreatedDate: '@ViewLang.CreatedDate',
             CreatedBy: '@ViewLang.CreatedBy',
             NewTrader: '@ViewLang.NewTrader',
             EditTrader: '@ViewLang.EditTrader',
             AllTeams: '@ViewLang.AllTeams',
             AllGrades: '@ViewLang.AllGrades',
+            AllShifts: '@ViewLang.AllShift',
             SelectATeam: '@ViewLang.SelectATeam',
             SelectAGrade: '@ViewLang.SelectAGrade',
+            SelectAShift: '@ViewLang.SelectAShift',
             EffectiveDate: '@ViewLang.EffectiveDate',
             TeamEffectiveDate: '@ViewLang.TeamEffectiveDate',
             GradeEffectiveDate: '@ViewLang.GradeEffectiveDate',
+            ShiftEffectiveDate: '@ViewLang.ShiftEffectiveDate',
             GradeHistory: '@ViewLang.GradeHistory',
-            TeamHistory: '@ViewLang.TeamHistory'
+            TeamHistory: '@ViewLang.TeamHistory',
+            ShiftHistory: 'adfdaf'
         };
         var messages = {
             UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',

@@ -678,4 +678,19 @@
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
   </data>
+  <data name="Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="Remark" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="SelectAShift" xml:space="preserve">
+    <value>Select a shift</value>
+  </data>
+  <data name="AllShift" xml:space="preserve">
+    <value>All Shift</value>
+  </data>
+  <data name="ShiftEffectiveDate" xml:space="preserve">
+    <value>Shift Effective Date</value>
+  </data>
 </root>

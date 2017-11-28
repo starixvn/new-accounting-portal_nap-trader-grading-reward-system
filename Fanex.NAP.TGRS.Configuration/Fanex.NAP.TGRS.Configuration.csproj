@@ -137,7 +137,9 @@
     <Compile Include="Criteria\TargetedMargin\GetAllTargetedMarginCriteria.cs" />
     <Compile Include="Criteria\TargetedMargin\UpdateTargetedMaringCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetAllShiftCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetShiftHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
@@ -167,6 +169,8 @@
     <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="Models\TargetedMargin\TargetedMarginWithShift.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
+    <Compile Include="Models\TraderManagement\Shift.cs" />
+    <Compile Include="Models\TraderManagement\ShiftHistory.cs" />
     <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />

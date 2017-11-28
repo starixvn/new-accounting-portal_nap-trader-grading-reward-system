@@ -142,6 +142,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Shift.
+        /// </summary>
+        public static string AllShift {
+            get {
+                return ResourceManager.GetString("AllShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Sports.
         /// </summary>
         public static string AllSports {
@@ -1240,6 +1249,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remark.
+        /// </summary>
+        public static string Remark {
+            get {
+                return ResourceManager.GetString("Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
@@ -1330,6 +1348,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select a shift.
+        /// </summary>
+        public static string SelectAShift {
+            get {
+                return ResourceManager.GetString("SelectAShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a team.
         /// </summary>
         public static string SelectATeam {
@@ -1344,6 +1371,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Setting {
             get {
                 return ResourceManager.GetString("Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift.
+        /// </summary>
+        public static string Shift {
+            get {
+                return ResourceManager.GetString("Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift Effective Date.
+        /// </summary>
+        public static string ShiftEffectiveDate {
+            get {
+                return ResourceManager.GetString("ShiftEffectiveDate", resourceCulture);
             }
         }
         
