@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
+﻿namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
 {
+    using Fanex.NAP.Core.Web;
+    using System;
+
     public class ShiftHistory
     {
         public string ShiftName { get; set; }
@@ -12,7 +13,7 @@ namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
         {
             get
             {
-                return BeginDate.ToShortDateString();
+                return BeginDate.ToShortFormatedDate();
             }
         }
     }

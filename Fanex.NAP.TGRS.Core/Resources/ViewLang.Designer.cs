@@ -1393,6 +1393,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shift History.
+        /// </summary>
+        public static string ShiftHistory {
+            get {
+                return ResourceManager.GetString("ShiftHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Soccer.
         /// </summary>
         public static string Soccer {

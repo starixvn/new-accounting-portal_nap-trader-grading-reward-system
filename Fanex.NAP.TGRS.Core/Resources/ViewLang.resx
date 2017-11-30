@@ -693,4 +693,7 @@
   <data name="ShiftEffectiveDate" xml:space="preserve">
     <value>Shift Effective Date</value>
   </data>
+  <data name="ShiftHistory" xml:space="preserve">
+    <value>Shift History</value>
+  </data>
 </root>
