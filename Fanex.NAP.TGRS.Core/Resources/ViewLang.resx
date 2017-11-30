@@ -688,7 +688,7 @@
     <value>Select a shift</value>
   </data>
   <data name="AllShift" xml:space="preserve">
-    <value>All Shift</value>
+    <value>All Shifts</value>
   </data>
   <data name="ShiftEffectiveDate" xml:space="preserve">
     <value>Shift Effective Date</value>

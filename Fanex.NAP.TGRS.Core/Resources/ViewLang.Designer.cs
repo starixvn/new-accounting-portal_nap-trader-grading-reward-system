@@ -142,7 +142,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Shift.
+        ///   Looks up a localized string similar to All Shifts.
         /// </summary>
         public static string AllShift {
             get {

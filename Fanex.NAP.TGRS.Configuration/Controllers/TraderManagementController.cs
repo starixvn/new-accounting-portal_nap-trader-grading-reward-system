@@ -183,7 +183,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             TraderInfoList updatedItems = null;
 
             updateCriteria.UserId = this.CurrentSession.UserId;
-            updateCriteria.NewRemark = updateCriteria.NewRemark ?? string.Empty;
+            updateCriteria.NewRemark = updateCriteria.NewRemark;
 
             result = this._traderService.UpdateTrader(updateCriteria);
 

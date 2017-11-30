@@ -190,7 +190,7 @@ Fanex.TGRS.TraderManagement = function () {
                     NewRemark: popupElements.txtRemark.val()
                 };
 
-                var countNeedUpdate = 3;
+                var countNeedUpdate = 4;
                 if (parameters.NewGrade === currentFilterVal.grade && parameters.NewGradeEffectiveDate === currentFilterVal.gradeEffectiveDate) {
                     parameters.NewGrade = null;
                     parameters.NewGradeEffectiveDate = null;
@@ -201,11 +201,12 @@ Fanex.TGRS.TraderManagement = function () {
                     parameters.NewTeamEffectiveDate = null;
                     countNeedUpdate--;
                 }
-                if (parameters.NewShift === currentFilterVal.shiftId && parameters.NewShiftEffectiveDate === currentFilterVal.shiftEffectiveDate) {
+                if (parseInt(parameters.NewShift) === currentFilterVal.shiftId && parameters.NewShiftEffectiveDate === currentFilterVal.shiftEffectiveDate) {
                     parameters.NewShift = null;
                     parameters.NewShiftEffectiveDate = null;
                     countNeedUpdate--;
                 }
+                if (parameters.NewRemark === currentFilterVal.remark) countNeedUpdate--;
 
                 if (countNeedUpdate > 0) {
                     updateTrader(parameters);
