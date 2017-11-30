@@ -319,9 +319,9 @@ Fanex.TGRS.TraderManagement = function () {
         nameColFormat += 'data-trader-employeeId="{4}" data-trader-teamEffectiveDate="{5}" data-trader-gradeEffectiveDate="{6}"';
         nameColFormat += 'data-shift="{7}" data-shift-effective-date="{8}" data-remark="{9}"'
         nameColFormat += '>{1}</span>'
-        var teamDateColFormat = '<span class="view-teamHistory-link new-link" data-cust-id="{0}" data-username="{1}">{2}</span>';
-        var gradeDateColFormat = '<span class="view-gradeHistory-link new-link" data-cust-id="{0}" data-username="{1}">{2}</span>';
-        var shiftDateColFormat = '<span class="view-shiftHistory-link new-link" data-cust-id="{0}" data-username="{1}">From {2}</span>';
+        var teamDateColFormat = '<span class="view-teamHistory-link new-link"   style="float: right; margin-right: 5px" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var gradeDateColFormat = '<span class="view-gradeHistory-link new-link" style="float: right; margin-right: 5px" data-cust-id="{0}" data-username="{1}">{2}</span>';
+        var shiftDateColFormat = '<span class="view-shiftHistory-link new-link"     style="float: right; margin-right: 5px" data-cust-id="{0}" data-username="{1}">From {2} </span>';
         var remarkFormat = '<span data-remark="{0}" title="{2}">{1}</span>'
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColNum', HeaderAlign: 'center', CellAlign: 'center' },
@@ -329,7 +329,7 @@ Fanex.TGRS.TraderManagement = function () {
             { HeaderText: labels.EmployeeId, Width: 100, Name: 'ColEmployee', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Shift, Width: 150, Name: 'ColShift', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Shift, Width: 200, Name: 'ColShift', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.Remark, Width: 250, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.CreatedBy, Width: 150, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' }],
