@@ -63,6 +63,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.BettypeManagement, Policy = Constant.Policy.Read)]
         public ActionResult InserNewBettype(InsertNewBettypeCriteria criteria)
         {
+            criteria.UserId = CurrentSession.UserId;
             return Json(_bettypeManagementService.InsertNewBettype(criteria));
         }
 
@@ -70,6 +71,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.BettypeManagement, Policy = Constant.Policy.Read)]
         public ActionResult UpdateBettype(UpdateBettypeCriteria criteria)
         {
+            criteria.UserId = CurrentSession.UserId;
             return Json(_bettypeManagementService.UpdateBettype(criteria));
         }
     }

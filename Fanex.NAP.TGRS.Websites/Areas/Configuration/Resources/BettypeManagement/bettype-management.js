@@ -47,8 +47,8 @@
 
     function renderColumns(columns) {
         columns[1].CellAlign = "left";
-        columns[1].Width = 250;
-
+        columns[1].Width = 300;
+     
         columns[5].Width = 120;
     }
 
@@ -149,10 +149,11 @@
 
     function updateBettype($editable) {
         var val = $editable.val();
+        var exp = /[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g;
 
         if ($editable.is(":checkbox")) val = $editable.is(":checked");
 
-        if (val != null && val !== "" && $(val).length == 0) {
+        if (val != null && val !== "" && !exp.test(val.toString()) && val.toString().length <= 50) {
             var url = common.ResolveRootUrl('Configuration/BettypeManagement/UpdateBettype');
 
             var data = {};
@@ -169,6 +170,9 @@
             $.post(url, data, result => updateBettypeCallback($editable, result, val));
 
             console.log(data);
+        }
+        else if (val.toString().length > 50) {
+            common.ShowErrorMessage("Maximum 50 characters");
         }
         else {
             common.ShowErrorMessage(messages.InvalidValueError);
