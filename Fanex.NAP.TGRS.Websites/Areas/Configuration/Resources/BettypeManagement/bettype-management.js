@@ -149,7 +149,7 @@
 
     function updateBettype($editable) {
         var val = $editable.val();
-        var exp = /[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g;
+        var exp = /[!"#$%&;<=>?@[\\\]^`{|}~]/g;
 
         if ($editable.is(":checkbox")) val = $editable.is(":checked");
 
