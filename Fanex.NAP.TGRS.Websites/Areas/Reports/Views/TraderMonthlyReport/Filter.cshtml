@@ -1,0 +1,41 @@
+﻿@using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
+@using Fanex.NAP.TGRS.Reports
+@using System.Linq
+
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="bettypeSelector">@ViewLang.BetType</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="bettypeSelector">
+                    @foreach (var bettype in Enum.GetValues(typeof(Bettype)).Cast<Bettype>().OrderBy(s => (int)s))
+                    {
+                        <option value="@((int) bettype)">@bettype.GetString()</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="traderSearch">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_5">
+                <input id="traderSearch" type="text" />
+            </div>
+            <div class="lbl-field col_3">
+                <label for="liveSelector">@ViewLang.LiveStatus</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="liveSelector">
+                    @foreach (var status in Enum.GetValues(typeof(LiveStatus)).Cast<LiveStatus>().OrderBy(s => (int) s))
+                    { 
+                        <option value="@((int) status)">@status.GetString()</option>
+                    }
+                </select>
+            </div>
+            <div class="submit col_5">
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
+    </div>
+</div>

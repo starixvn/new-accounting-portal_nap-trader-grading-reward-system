@@ -251,6 +251,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/Trader/report.js",
                 "~/Areas/Reports/Resources/Trader/trader-report-admin.js",
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/traderPerformanceMonthly").Include(
+                    "~/Areas/Reports/Resources/TraderPerformanceMonthly/*.js"
+                ));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

@@ -60,6 +60,9 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
@@ -109,6 +112,7 @@
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
+    <Compile Include="Controllers\TraderMonthlyReportController.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
@@ -177,6 +181,7 @@
     <Compile Include="Criteria\PerformanceSummary\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformanceMonthly\MonthlyFilter.cs" />
     <Compile Include="Criteria\Trader\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceCriteria.cs" />
@@ -244,6 +249,15 @@
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
     <Compile Include="Models\Permission\BettypeViewPermission.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\AvgSummary.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\Bettype.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\LiveStatus.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\MonthSummary.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\Summary.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\SummaryItem.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\SummaryList.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\Trader.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\YearSummary.cs" />
     <Compile Include="Models\Trader\LeaguePerformance.cs" />
     <Compile Include="Models\Trader\TraderWinlossTurnover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,12 +276,14 @@
     <Compile Include="Services\Implements\NewTraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderManagementService.cs" />
+    <Compile Include="Services\Implements\TraderMonthlyReportService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />
     <Compile Include="Services\Interfaces\IDashboardService.cs" />
     <Compile Include="Services\Interfaces\INewDetailReportService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />
     <Compile Include="Services\Interfaces\ITraderManagementService.cs" />
+    <Compile Include="Services\Interfaces\ITraderMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />

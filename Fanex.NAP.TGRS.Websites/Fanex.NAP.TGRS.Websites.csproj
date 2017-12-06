@@ -307,6 +307,7 @@
     <Content Include="Areas\Reports\Resources\PerformanceDetail\grade-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\league-performance.js" />
+    <Content Include="Areas\Reports\Resources\TraderPerformanceMonthly\trader-performance-monthly.js" />
     <Content Include="Areas\Reports\Resources\Trader\report.js" />
     <Content Include="Areas\Reports\Resources\Trader\sampleData.js" />
     <Content Include="Areas\Reports\Resources\Trader\trader-chart.js" />
@@ -480,6 +481,8 @@
     <Content Include="Areas\Configuration\Views\BettypeManagement\AddNewBettypeForm.cshtml" />
     <Content Include="Areas\User\Views\UserInfo\Setting.cshtml" />
     <Content Include="Areas\User\Resources\UserInfo\settings.less" />
+    <Content Include="Areas\Reports\Views\TraderMonthlyReport\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\TraderMonthlyReport\Filter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

@@ -696,4 +696,10 @@
   <data name="ShiftHistory" xml:space="preserve">
     <value>Shift History</value>
   </data>
+  <data name="TraderMonthlyPerformance" xml:space="preserve">
+    <value>Trader Monthly Performance</value>
+  </data>
+  <data name="LiveStatus" xml:space="preserve">
+    <value>LiveStatus</value>
+  </data>
 </root>

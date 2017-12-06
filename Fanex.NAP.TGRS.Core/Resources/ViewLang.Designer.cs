@@ -754,6 +754,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LiveStatus.
+        /// </summary>
+        public static string LiveStatus {
+            get {
+                return ResourceManager.GetString("LiveStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Live Turnover.
         /// </summary>
         public static string LiveTurnover {
@@ -1677,6 +1686,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string TraderManagement {
             get {
                 return ResourceManager.GetString("TraderManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trader Monthly Performance.
+        /// </summary>
+        public static string TraderMonthlyPerformance {
+            get {
+                return ResourceManager.GetString("TraderMonthlyPerformance", resourceCulture);
             }
         }
         

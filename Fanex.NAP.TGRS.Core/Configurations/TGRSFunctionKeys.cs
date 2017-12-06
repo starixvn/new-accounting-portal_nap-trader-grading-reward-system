@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 11/22/2017 14:37:29
+// Lasted generated date: 12/6/2017 09:02:35
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -105,6 +105,8 @@ public static class TGRSFunctionKeys
         public const string TeamManagement = "TeamManagement";
 
         public const string TraderManagement = "TraderManagement";
+
+        public const string TraderPerformanceMonthly = "TraderPerformanceMonthly";
 
         public const string TraderReport = "TraderReport";
 
