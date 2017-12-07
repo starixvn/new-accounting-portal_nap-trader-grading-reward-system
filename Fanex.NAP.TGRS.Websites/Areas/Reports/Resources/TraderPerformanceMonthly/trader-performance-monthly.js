@@ -210,17 +210,22 @@
         c.push({
             HeaderText: "#",
             Name: "#",
-            Width: 50,
+            Width: 20,
             HeaderAlign: "center",
             CellAlign: "center"
         });
 
         // trader
         for (var key in columns.trader) {
+            var width = 100;
+
+            if (key.includes("Grade")) width = 40
+            else if(key == "Remark") width = 250
+
             c.push({
                 HeaderText: columns.trader[key],
                 Name: columns.trader[key],
-                Width: key == "Remark" ? 250 : 100,
+                Width: width,
                 HeaderAlign: "center",
                 CellAlign: "center",
                 AllowTruncate: true
