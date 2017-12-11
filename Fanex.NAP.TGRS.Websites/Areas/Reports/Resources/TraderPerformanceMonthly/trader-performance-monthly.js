@@ -25,7 +25,9 @@
         {
             customizeHeader: true,
             showFooter: true,
-            numberOfFrozenColumn: 1 + Object.keys(columns.trader).length
+            //numberOfFrozenColumn: 1 + Object.keys(columns.trader).length,
+            showDistinctRow: false,
+            showTree: true
         }
 
     var grid = $("#table");
@@ -47,10 +49,30 @@
         $.post(url, filter, renderData);
     }
 
+    function renderGroup(group) {       
+        var obj = { Columns: [] };
+
+        var row = group.Shift;
+
+        renderTrader(row.Trader, obj, true);
+        renderSummary(row.FstHalf, "fst", obj, columns.avg);
+        renderSummary(row.SndHalf, "snd", obj, columns.avg);
+        renderSummary(row.CurrentYear, "this year", obj, columns.avg);
+        renderSummary(row.LastYear, "last year", obj, columns.avg);
+
+        for (var i = 0; i < 12; i++) {
+            renderSummary(row.Months[i + 1], i + 1, obj, columns.month);
+        }
+
+        obj.SubRows = group.Data.map(renderRow);
+
+        return obj;
+    }
+
     function renderRow(row) {
         var obj = { Columns: [] };
 
-        renderTrader(row.Trader, obj);
+        renderTrader(row.Trader, obj, false);
         renderSummary(row.FstHalf, "fst", obj, columns.avg);
         renderSummary(row.SndHalf, "snd", obj, columns.avg);
         renderSummary(row.CurrentYear, "this year", obj, columns.avg);
@@ -63,34 +85,41 @@
         return obj;
     }
 
-    function renderTrader(trader, obj) {
-        var isSummary = false;
-
+    function renderTrader(trader, obj, isSummary) {
         for (var prop in columns.trader) {
             var column = columns.trader[prop];
             var value = trader[column];
 
             if (value === null) {
-                obj.Columns.push({
-                    Name: column,
-                    Value: "-"
-                });
-
-                isSummary = prop === "TraderName" || isSummary;
+                if (!isSummary) {
+                    obj.Columns.push({
+                        Name: column,
+                        Value: "-"
+                    });
+                }
             } else {
-                obj.Columns.push({
-                    Name: column,
-                    Value: value
-                });
+                var col =
+                    {
+                        Name: isSummary? "#" : column,
+                        Value: value
+                    };
+
+                if (isSummary) {
+                    col.MergeColNumber = 1 + Object.keys(columns.trader).length;
+                }
+
+                obj.Columns.push(col);
             }
         }
 
-        obj.Columns.unshift({
-            Name: "#",
-            Value: isSummary ? "-" : index++
-        });
+        if (!isSummary) {
+            obj.Columns.unshift({
+                Name: "#",
+                Value: index++
+            });
+        }
 
-        if (isSummary) obj.CssClass = "shift-summary";
+        //if (isSummary) obj.CssClass = "shift-summary";
     }
 
     function renderSummary(summary, prefix, obj, columns) {
@@ -119,7 +148,8 @@
         obj.Columns.push({
             Name: "#",
             MergeColNumber: 1 + Object.keys(columns.trader).length,
-            Value: labels.Overall
+            Value: labels.Overall,
+            CellAlign: "right"
         });
 
         renderSummary(row.FstHalf, "fst", obj, columns.avg);
@@ -136,15 +166,14 @@
 
     function renderData(result) {
         index = 1;
-
-        gridOptions.bodyRows = result.Data.map(renderRow);
+        gridOptions.bodyRows = result.Data.map(renderGroup);
         gridOptions.footerRows = renderTotal(result.Total);
 
         grid.fanexGrid(gridOptions)
 
         common.EnableInput();
 
-        console.log(result);
+        console.log(gridOptions);
     }
 
     function getHeaders() {
@@ -210,9 +239,10 @@
         c.push({
             HeaderText: "#",
             Name: "#",
-            Width: 20,
+            Width: 40,
             HeaderAlign: "center",
-            CellAlign: "center"
+            CellAlign: "left",
+            ShowCollapseExpand: true
         });
 
         // trader

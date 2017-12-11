@@ -14,17 +14,11 @@ namespace Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
                     .GroupJoin(years, s => s.Trader.TraderId, y => y.TraderId, (s, y) => s.WithYears(y))
                     .GroupJoin(months, s => s.Trader.TraderId, m => m.TraderId, (s, ms) => s.WithMonths(ms));
 
-            var final = new Queue<SummaryItem>();
+            var final = new Queue<ShiftGroup>();
 
             foreach (var shiftGroup in joined.GroupBy(s => s.Trader.ShiftName))
             {
-                foreach (var summary in shiftGroup)
-                {
-                    final.Enqueue(summary);
-                }
-
-                var shift = shiftGroup.Aggregate(new SummaryItem(), (acc, s) => acc + s);
-                shift.Trader = new Trader { ShiftName = shiftGroup.Key };
+                var shift = new ShiftGroup(shiftGroup.Key, shiftGroup);
                 final.Enqueue(shift);
             }
 
@@ -32,7 +26,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
             Total = joined.Aggregate(new SummaryItem(), (acc, s) => acc + s);
         }
 
-        public IEnumerable<SummaryItem> Data { get; set; }
+        public IEnumerable<ShiftGroup> Data { get; set; }
 
         public SummaryItem Total { get; set; }
     }

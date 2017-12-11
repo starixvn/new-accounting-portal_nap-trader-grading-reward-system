@@ -45,7 +45,7 @@
                 ThisYear: "YR {0} Up To Date".format(@DateTime.Today.Year),
                 LastYear: "Year {0}".format(@DateTime.Today.Year - 1),
                 Month: '@(string.Format("{{0}} - {0}", DateTime.Today.Year % 100))',
-                Overall: "Overall"
+                Overall: "@ViewLang.Total"
             }
     </script>
     @Scripts.Render("~/scripts/traderPerformanceMonthly")

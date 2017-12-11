@@ -253,6 +253,7 @@
     <Compile Include="Models\TraderPerformanceMonthly\Bettype.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\LiveStatus.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\MonthSummary.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\ShiftGroup.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\Summary.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\SummaryItem.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\SummaryList.cs" />

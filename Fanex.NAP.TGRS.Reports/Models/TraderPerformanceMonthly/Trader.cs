@@ -36,7 +36,7 @@
 
                 var tmp = "";
 
-                if (table.Contains(Bettype.OP)) tmp = table.Count > 1 ? "+OP" : "OP";
+                if (table.Contains(Bettype.OP)) tmp = table.Count > 1 ? "/OP" : "OP";
 
                 table.Remove(Bettype.OP);
 
