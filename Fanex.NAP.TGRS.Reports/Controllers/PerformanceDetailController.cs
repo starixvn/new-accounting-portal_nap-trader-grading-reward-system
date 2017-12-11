@@ -624,6 +624,15 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return jsonResult;
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetBetChoicePerformanceOfBetType(GetBetChoicePerformanceOfBetTypeCriteria criteria)
+        {
+            var result = this._detailReportService.GetBetTypeBetChoicePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Gets the trader performance of a pair of bet type and league.
         /// </summary>

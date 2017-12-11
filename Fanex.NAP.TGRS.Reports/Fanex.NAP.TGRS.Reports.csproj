@@ -168,6 +168,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetGradePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeagueDetailTeamCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetBetChoicePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeTraderCriteria.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Models\NewPerformanceDetail\TraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\TraderMatchBetTypePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\BetTypeBetChoicePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeDetailInfo.cs" />
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
