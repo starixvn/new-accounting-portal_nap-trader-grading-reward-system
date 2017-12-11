@@ -24,7 +24,6 @@
         [JsonProperty("Shift")]
         public string ShiftName { get; set; }
 
-        [JsonProperty("Products")]
         public string Product
         {
             get { return _products; }
