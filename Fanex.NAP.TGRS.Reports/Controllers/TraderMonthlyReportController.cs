@@ -32,5 +32,13 @@
             var json = JObject.FromObject(data);
             return Content(json.ToString(), "application/json");
         }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult ExportExcel(MonthlyFilter filter)
+        {
+            var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/template.xlsx"), filter);
+
+            return File(file, "application/vnd.ms-excel", "Trader performance monthly.xlsx");
+        }
     }
 }

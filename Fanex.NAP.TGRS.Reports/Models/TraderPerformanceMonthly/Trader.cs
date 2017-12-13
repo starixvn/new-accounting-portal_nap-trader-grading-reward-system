@@ -30,7 +30,11 @@
 
             set
             {
-                if (string.IsNullOrEmpty(value)) return;
+                if (string.IsNullOrEmpty(value))
+                {
+                    _products = null;
+                    return;
+                }
 
                 var table = new HashSet<Bettype>(value.Split(',').Where(str => !string.IsNullOrWhiteSpace(str)).Select(id => (Bettype)int.Parse(id)));
 

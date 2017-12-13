@@ -754,7 +754,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LiveStatus.
+        ///   Looks up a localized string similar to Live Status.
         /// </summary>
         public static string LiveStatus {
             get {

@@ -25,21 +25,36 @@
         {
             customizeHeader: true,
             showFooter: true,
-            //numberOfFrozenColumn: 1 + Object.keys(columns.trader).length,
+            numberOfFrozenColumn: 1 + Object.keys(columns.trader).length,
             showDistinctRow: false,
-            showTree: true
+            showTree: true,
+            showTitle: true,
+            gridExpandHeight: 200,
+            titleInfo:
+            {
+                showExcelButton: true,
+                exportExcelFunction: getExcel
+            }
         }
 
     var grid = $("#table");
 
     var index = 0;
 
+    var filter = null;
+
+    function getExcel() {
+        var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/ExportExcel");
+
+        common.DownloadFile(url, filter);
+    }
+
     function getData() {
         common.DisableInput();
 
         var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/GetMonthlyData");
 
-        var filter =
+        filter =
             {
                 bettype: bettypeSelector.val(),
                 tradername: traderSearch.val(),
@@ -49,7 +64,7 @@
         $.post(url, filter, renderData);
     }
 
-    function renderGroup(group) {       
+    function renderGroup(group) {
         var obj = { Columns: [] };
 
         var row = group.Shift;
@@ -100,7 +115,7 @@
             } else {
                 var col =
                     {
-                        Name: isSummary? "#" : column,
+                        Name: isSummary ? "#" : column,
                         Value: value
                     };
 
@@ -250,7 +265,7 @@
             var width = 100;
 
             if (key.includes("Grade")) width = 40
-            else if(key == "Remark") width = 250
+            else if (key == "Remark") width = 250
 
             c.push({
                 HeaderText: columns.trader[key],
