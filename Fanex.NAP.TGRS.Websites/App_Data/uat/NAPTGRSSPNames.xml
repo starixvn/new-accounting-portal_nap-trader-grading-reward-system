@@ -111,11 +111,11 @@
   <Function Name="TraderManagement">
     <Setting Key="TGRS_Trader_GradeHistory" SpName="TGRS_Trader_GradeHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Trader_TeamHistory" SpName="TGRS_Trader_TeamHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Trader_Shift_SelectAll" SpName="TGRS_Trader_Shift_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_Trader_ShiftHistory" SpName="TGRS_Trader_ShiftHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_Shift_SelectAll" SpName="TGRS_Trader_Shift_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_Trader_ShiftHistory" SpName="TGRS_Trader_ShiftHistory_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="TeamManagement">
     <Setting Key="TGRS_Team_SelList" SpName="TGRS_Team_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
@@ -128,67 +128,67 @@
     <Setting Key="TGRS_TargetedMargin_SelectAll" SpName="TGRS_TargetedMargin_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="DetailReports">
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_BetType" SpName="TGRS_Rpt_PerformanceDetail_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Bettype_SelList" SpName="TGRS_Bettype_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade" SpName="TGRS_Rpt_PerformanceDetail_Grade" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League" SpName="TGRS_Rpt_PerformanceDetail_Team_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League" SpName="TGRS_Rpt_PerformanceDetail_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Team_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_ScoreDetail" SpName="TGRS_Rpt_ScoreDetail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team" SpName="TGRS_Rpt_PerformanceDetail_Team" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_Trader" SpName="TGRS_Rpt_PerformanceDetail_Bettype_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_League" SpName="TGRS_Rpt_PerformanceDetail_Grade_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Grade_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_PerformanceDetail_League_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_BetType" SpName="TGRS_Rpt_PerformanceDetail_BetType_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Bettype_SelList" SpName="TGRS_Bettype_SelList_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade" SpName="TGRS_Rpt_PerformanceDetail_Grade_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League" SpName="TGRS_Rpt_PerformanceDetail_Team_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League" SpName="TGRS_Rpt_PerformanceDetail_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Team_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_ScoreDetail" SpName="TGRS_Rpt_ScoreDetail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team" SpName="TGRS_Rpt_PerformanceDetail_Team_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Trader" SpName="TGRS_Rpt_PerformanceDetail_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_Trader" SpName="TGRS_Rpt_PerformanceDetail_Bettype_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_League" SpName="TGRS_Rpt_PerformanceDetail_Grade_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Grade_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="NewDetailReports">
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_BetType" SpName="TGRS_Rpt_NewPerformanceDetail_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade" SpName="TGRS_Rpt_NewPerformanceDetail_Grade" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League" SpName="TGRS_Rpt_NewPerformanceDetail_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Match" SpName="TGRS_Rpt_NewPerformanceDetail_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team" SpName="TGRS_Rpt_NewPerformanceDetail_Team" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_BetType" SpName="TGRS_Rpt_NewPerformanceDetail_BetType_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League" SpName="TGRS_Rpt_NewPerformanceDetail_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Match" SpName="TGRS_Rpt_NewPerformanceDetail_League_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team" SpName="TGRS_Rpt_NewPerformanceDetail_Team_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Bettype_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Team_League_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_League_Trader_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Team_Trader_Match_Bettype_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="SpreadManagement">
     <Setting Key="TGRS_League_SelectList" SpName="TGRS_League_SelectList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
@@ -214,16 +214,16 @@
   <Function Name="SummaryReport">
     <Setting Key="TGRS_Rpt_Detail_GradeHistory" SpName="TGRS_Rpt_Detail_GradeHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_Detail_TeamHistory" SpName="TGRS_Rpt_Detail_TeamHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryBetTypePerformance" SpName="TGRS_Rpt_SummaryBetTypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTraderPerformace" SpName="TGRS_Rpt_SummaryTraderPerformace" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTopWinLeague" SpName="TGRS_Rpt_SummaryTopWinLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTopTrader" SpName="TGRS_Rpt_SummaryTopTrader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTopLoseLeague" SpName="TGRS_Rpt_SummaryTopLoseLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTeamPerformance" SpName="TGRS_Rpt_SummaryTeamPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryGeneralInfo" SpName="TGRS_Rpt_SummaryGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryBetTypePerformance" SpName="TGRS_Rpt_SummaryBetTypePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTraderPerformace" SpName="TGRS_Rpt_SummaryTraderPerformace_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTopWinLeague" SpName="TGRS_Rpt_SummaryTopWinLeague_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTopTrader" SpName="TGRS_Rpt_SummaryTopTrader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTopLoseLeague" SpName="TGRS_Rpt_SummaryTopLoseLeague_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTeamPerformance" SpName="TGRS_Rpt_SummaryTeamPerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryGeneralInfo" SpName="TGRS_Rpt_SummaryGeneralInfo_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="Dashboard">
-    <Setting Key="TGRS_Rpt_SummaryGeneralInfo_Detail" SpName="TGRS_Rpt_SummaryGeneralInfo_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryGeneralInfo_Detail" SpName="TGRS_Rpt_SummaryGeneralInfo_Detail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="SystemConfiguration">
     <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
@@ -231,29 +231,29 @@
     <Setting Key="TGRS_Setting_ScorePeriodUpd" SpName="TGRS_Setting_ScorePeriodUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
   </Function>
   <Function Name="TraderReport">
-    <Setting Key="TGRS_Rpt_TraderWinlossTurnover" SpName="TGRS_Rpt_TraderWinlossTurnover" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderGeneralInfo" SpName="TGRS_Rpt_TraderGeneralInfo" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_TraderWinlossTurnover" SpName="TGRS_Rpt_TraderWinlossTurnover_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderBettypePerformance" SpName="TGRS_Rpt_TraderBettypePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderGeneralInfo" SpName="TGRS_Rpt_TraderGeneralInfo_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance" SpName="TGRS_Rpt_TraderLeaguePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_TraderLeaguePerformance_Detail" SpName="TGRS_Rpt_TraderLeaguePerformance_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance_Detail" SpName="TGRS_Rpt_TraderLeaguePerformance_Detail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
-    <Setting Key="TGRS_Rpt_TraderLeaguePerformance_MatchDetail" SpName="TGRS_Rpt_TraderLeaguePerformance_MatchDetail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
+    <Setting Key="TGRS_Rpt_TraderLeaguePerformance_MatchDetail" SpName="TGRS_Rpt_TraderLeaguePerformance_MatchDetail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
   </Function>
   <Function Name="BettypeManagement">
-    <Setting Key="TGRS_BettypeManagement_Bettype_SelectAll" SpName="TGRS_BettypeManagement_Bettype_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_BettypeManagement_Bettype_Insert" SpName="TGRS_BettypeManagement_Bettype_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_BettypeManagement_Bettype_Update" SpName="TGRS_BettypeManagement_Bettype_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_BettypeManagement_Bettype_SelectAll" SpName="TGRS_BettypeManagement_Bettype_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_BettypeManagement_Bettype_Insert" SpName="TGRS_BettypeManagement_Bettype_Insert_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_BettypeManagement_Bettype_Update" SpName="TGRS_BettypeManagement_Bettype_Update_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name ="UserSetting">
-    <Setting Key="TGRS_UserSetting_GetBettypes" SpName="TGRS_UserSetting_GetBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_UserSetting_UpdateDefaultBettypes" SpName="TGRS_UserSetting_UpdateDefaultBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_UserSetting_GetBettypes" SpName="TGRS_UserSetting_GetBettypes_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_UserSetting_UpdateDefaultBettypes" SpName="TGRS_UserSetting_UpdateDefaultBettypes_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="TraderPerformanceMonthly">
-    <Setting Key="TGRS_Rpt_TraderPerformanceMonthly" SpName="TGRS_Rpt_TraderPerformanceMonthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_TraderPerformanceMonthly" SpName="TGRS_Rpt_TraderPerformanceMonthly_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
 </Functions>
