@@ -216,14 +216,14 @@
     <Setting Key="TGRS_Rpt_Detail_TeamHistory" SpName="TGRS_Rpt_Detail_TeamHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_SummaryBetTypePerformance" SpName="TGRS_Rpt_SummaryBetTypePerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_SummaryTraderPerformace" SpName="TGRS_Rpt_SummaryTraderPerformace_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTopWinLeague" SpName="TGRS_Rpt_SummaryTopWinLeague_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTopWinLeague" SpName="TGRS_Rpt_SummaryTopWinLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_SummaryTopTrader" SpName="TGRS_Rpt_SummaryTopTrader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTopLoseLeague" SpName="TGRS_Rpt_SummaryTopLoseLeague_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_SummaryTeamPerformance" SpName="TGRS_Rpt_SummaryTeamPerformance_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTopLoseLeague" SpName="TGRS_Rpt_SummaryTopLoseLeague" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryTeamPerformance" SpName="TGRS_Rpt_SummaryTeamPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_SummaryGeneralInfo" SpName="TGRS_Rpt_SummaryGeneralInfo_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="Dashboard">
-    <Setting Key="TGRS_Rpt_SummaryGeneralInfo_Detail" SpName="TGRS_Rpt_SummaryGeneralInfo_Detail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_SummaryGeneralInfo_Detail" SpName="TGRS_Rpt_SummaryGeneralInfo_Detail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="SystemConfiguration">
     <Setting Key="TGRS_Bettype_ListUpd" SpName="TGRS_Bettype_ListUpd" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"></Setting>
