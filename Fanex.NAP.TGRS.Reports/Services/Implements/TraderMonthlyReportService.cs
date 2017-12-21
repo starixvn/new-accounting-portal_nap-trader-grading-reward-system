@@ -70,6 +70,8 @@
                 rowIdx++;
             }
 
+            WriteTotal(sheet, data.Total);
+
             sheet.RemoveRow(sheet.GetRow(rowIdx));
             sheet.RemoveRow(sheet.GetRow(rowIdx + 1));
             sheet.ShiftRows(sheet.LastRowNum - 1, sheet.LastRowNum, -2);
@@ -140,6 +142,36 @@
             for (int i = 0; i < 12; i++)
             {
                 if (item.Months.ContainsKey(i + 1)) WriteObject(row, offset, item.Months[i + 1], Summary.Columns);
+                else WriteObject(row, offset, null, Summary.Columns);
+                offset += Summary.Columns.Count;
+            }
+        }
+
+        private void WriteTotal(ISheet sheet, SummaryItem total)
+        {
+            var row = sheet.GetRow(sheet.LastRowNum - 1);
+
+            var offset = 1 + Trader.Columns.Count;
+
+            //fst half
+            WriteObject(row, offset, total.FstHalf, AvgSummary.Columns);
+            offset += AvgSummary.Columns.Count + 1;
+
+            //snd half
+            WriteObject(row, offset, total.SndHalf, AvgSummary.Columns);
+            offset += AvgSummary.Columns.Count + 1;
+
+            //this year
+            WriteObject(row, offset, total.CurrentYear, AvgSummary.Columns);
+            offset += AvgSummary.Columns.Count + 1;
+
+            //last year
+            WriteObject(row, offset, total.LastYear, AvgSummary.Columns);
+            offset += AvgSummary.Columns.Count + 1;
+
+            for (int i = 0; i < 12; i++)
+            {
+                if (total.Months.ContainsKey(i + 1)) WriteObject(row, offset, total.Months[i + 1], Summary.Columns);
                 else WriteObject(row, offset, null, Summary.Columns);
                 offset += Summary.Columns.Count;
             }
