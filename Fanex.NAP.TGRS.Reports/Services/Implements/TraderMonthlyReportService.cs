@@ -58,16 +58,16 @@
 
             foreach (var shiftGroup in data.Data)
             {
+                WriteRow(sheet, rowIdx, -1, shiftGroup.Shift);
+                rowIdx++;
+
                 foreach (var trader in shiftGroup.Data)
                 {
                     WriteRow(sheet, rowIdx, noIdx, trader);
 
                     rowIdx++;
                     noIdx++;
-                }
-
-                WriteRow(sheet, rowIdx, -1, shiftGroup.Shift);
-                rowIdx++;
+                }             
             }
 
             WriteTotal(sheet, data.Total);
@@ -116,28 +116,28 @@
 
             CopyStyle(sheet.GetRow(noIdx < 0 ? rowIdx + 2 : rowIdx + 1), row);
 
-            row.GetCell(0).SetCellValue(noIdx < 0 ? "" : noIdx.ToString());
+            row.GetCell(0).SetCellValue(noIdx < 0 ? item.Trader.ShiftName : noIdx.ToString());
             var offset = 1;
 
             //trader
-            WriteObject(row, offset, item.Trader, Trader.Columns);
+            if (noIdx > 0) WriteObject(row, offset, item.Trader, Trader.Columns);
             offset += Trader.Columns.Count;
 
             //fst half
             WriteObject(row, offset, item.FstHalf, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //snd half
             WriteObject(row, offset, item.SndHalf, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //this year
             WriteObject(row, offset, item.CurrentYear, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //last year
             WriteObject(row, offset, item.LastYear, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             for (int i = 0; i < 12; i++)
             {
@@ -149,25 +149,25 @@
 
         private void WriteTotal(ISheet sheet, SummaryItem total)
         {
-            var row = sheet.GetRow(sheet.LastRowNum - 1);
+            var row = sheet.GetRow(sheet.LastRowNum);
 
             var offset = 1 + Trader.Columns.Count;
 
             //fst half
             WriteObject(row, offset, total.FstHalf, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //snd half
             WriteObject(row, offset, total.SndHalf, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //this year
             WriteObject(row, offset, total.CurrentYear, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             //last year
             WriteObject(row, offset, total.LastYear, AvgSummary.Columns);
-            offset += AvgSummary.Columns.Count + 1;
+            offset += AvgSummary.Columns.Count;
 
             for (int i = 0; i < 12; i++)
             {
