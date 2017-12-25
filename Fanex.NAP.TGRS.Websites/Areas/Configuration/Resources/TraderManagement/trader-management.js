@@ -329,7 +329,7 @@ Fanex.TGRS.TraderManagement = function () {
             { HeaderText: labels.UserName, Width: 130, Name: 'ColName', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.EmployeeId, Width: 100, Name: 'ColEmployee', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.Team, Width: 200, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Grade, Width: 100, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Grade, Width: 150, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.Shift, Width: 200, Name: 'ColShift', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.Remark, Width: 250, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: labels.CreatedDate, Width: 180, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
