@@ -181,10 +181,13 @@
 
     function renderData(result) {
         index = 1;
-        gridOptions.bodyRows = result.Data.map(renderGroup);
-        gridOptions.footerRows = renderTotal(result.Total);
 
-        grid.fanexGrid(gridOptions)
+        if (result !== null && result.Data !== null && result.Data.length > 0) {
+            gridOptions.bodyRows = result.Data.map(renderGroup);
+            gridOptions.footerRows = renderTotal(result.Total);
+        }
+
+        grid.fanexGrid(gridOptions);
 
         common.EnableInput();
 
