@@ -173,7 +173,7 @@
         renderSummary(row.LastYear, "last year", obj, columns.avg);
 
         for (var i = 0; i < 12; i++) {
-            renderSummary(row.Months[i + 1], i + 1, obj, columns.month);
+            renderSummary(row.Months != null ? row.Months[i + 1] : null, i + 1, obj, columns.month);
         }
 
         return [obj];
