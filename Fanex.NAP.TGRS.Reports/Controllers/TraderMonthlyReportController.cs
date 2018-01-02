@@ -28,9 +28,16 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
         public ActionResult GetMonthlyData(MonthlyFilter filter)
         {
-            var data = _service.GetReports(filter);
-            var json = JObject.FromObject(data);
-            return Content(json.ToString(), "application/json");
+            try
+            {
+                var data = _service.GetReports(filter);
+                var json = JObject.FromObject(data);
+                return Content(json.ToString(), "application/json");
+            }
+            catch (System.Exception e)
+            {
+                return Json(new { msg = e.Message, stack = e.StackTrace });
+            }
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
