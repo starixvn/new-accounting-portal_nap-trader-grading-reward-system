@@ -186,6 +186,10 @@
             gridOptions.bodyRows = result.Data.map(renderGroup);
             gridOptions.footerRows = renderTotal(result.Total);
         }
+        else {
+            gridOptions.bodyRows = [];
+            gridOptions.footerRows = [];
+        }
 
         grid.fanexGrid(gridOptions);
 
