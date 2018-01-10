@@ -702,4 +702,7 @@
   <data name="LiveStatus" xml:space="preserve">
     <value>Live Status</value>
   </data>
+  <data name="BetChoice" xml:space="preserve">
+    <value>Bet Choice</value>
+  </data>
 </root>

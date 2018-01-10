@@ -288,7 +288,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                betTypeCol = betTypeFormat.format(item.BetTypeId, item.BetTypeName);
+                betTypeCol = (item.BetTypeId < 0 || item.BetTypeId === 46) ? item.BetTypeName : betTypeFormat.format(item.BetTypeId, item.BetTypeName);
                 noOfTradersCol = noOfTradersFormat.format(labels.TraderPerformance, numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
                 noOfLeaguesCol = noOfLeaguesFormat.format(labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
