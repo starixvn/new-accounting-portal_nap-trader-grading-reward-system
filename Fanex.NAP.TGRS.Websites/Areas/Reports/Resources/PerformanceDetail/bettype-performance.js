@@ -228,7 +228,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
     // Render bet type performance grid.
     var renderBetTypePerformanceGrid = function (data) {
-        var betTypeFormat = '<span class="bettype link" data-bettype="{0}">{1}</span>';
+        var betTypeFormat = '<span class="bettype link bettype-link" data-bettype="{0}">{1}</span>';
+        var betTypeFormatNoLink = '<span class="bettype" data-bettype="{0}">{1}</span>';
         var noOfTradersFormat = '<span class="trader-link link" title="{0}">{1}</span>';
         var noOfLeaguesFormat = '<span class="league-link link" title="{0}">{1}</span>';
         var noOfTradersCol = '';
@@ -288,7 +289,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                betTypeCol = (item.BetTypeId < 0 || item.BetTypeId === 416 || item.BetTypeId === 5 || item.BetTypeId === 15) ? item.BetTypeName : betTypeFormat.format(item.BetTypeId, item.BetTypeName);
+                betTypeCol = (item.BetTypeId < 0 || item.BetTypeId === 416 || item.BetTypeId === 5 || item.BetTypeId === 15) ? betTypeFormatNoLink.format(item.BetTypeId, item.BetTypeName) : betTypeFormat.format(item.BetTypeId, item.BetTypeName);
                 noOfTradersCol = noOfTradersFormat.format(labels.TraderPerformance, numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
                 noOfLeaguesCol = noOfLeaguesFormat.format(labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
@@ -347,7 +348,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             getLeaguePerformanceReport(betTypeId, betTypeName);
         });
 
-        domElements.divBetTypePerformanceGrid.find('span.bettype').click(function () {
+        domElements.divBetTypePerformanceGrid.find('span.bettype-link').click(function () {
             var $link = $(this);
             var betTypeId = $link.attr('data-bettype');
             var betTypeName = $link.text();
