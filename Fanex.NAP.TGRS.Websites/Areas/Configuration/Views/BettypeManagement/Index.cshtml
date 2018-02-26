@@ -1,0 +1,47 @@
+﻿@using Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
+@{
+    ViewBag.Title = ViewLang.BettypeManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+
+    <div class="header-button">
+        <a href="#" id="lnkAddNewBettype" class="green-button change-list">
+            <span class="add-icon">
+            </span>@ViewLang.NewBettype
+        </a>
+    </div>
+
+}
+<div id="resultContainer" class="content-grid">
+    <div id="bettypeGrid" class="freegrid">
+    </div>
+</div>
+
+<div id="divHiddenForm" class="display-none">
+    @Html.Partial("AddNewBettypeForm")
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/bettypeManagement")
+
+    <script type="text/javascript">
+        var bettypeColumns = [@Html.Raw(ViewBag.BettypeColumns)];
+        var labels = {
+            NewBettype: '@ViewLang.NewBettype'
+        };
+
+        var messages = {
+            AddBettypeSuccessfully: '@Messages.InsertBettypeSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError',
+            NumberInput: '@ViewLang.NumberInput',
+            UpdateBettypeSucessully: '@Messages.UpdatedSuccessfully'
+        };
+    </script>
+}

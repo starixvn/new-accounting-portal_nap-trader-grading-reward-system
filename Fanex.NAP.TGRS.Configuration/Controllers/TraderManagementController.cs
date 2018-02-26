@@ -106,6 +106,15 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderManagement, Policy = Constant.Policy.Read)]
+        public JsonResult GetShiftHistory(GetShiftHistoryCriteria criteria)
+        {
+            var result = this._traderService.GetShiftHistory(criteria);
+
+            return Json(result);
+        }
+
         /// <summary>
         /// Gets initialized data for index page.
         /// </summary>
@@ -116,10 +125,12 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         public JsonResult GetInitializedData()
         {
             TeamInfoList teams = this._teamService.GetTeamSelectList(new GetTeamSelectListCriteria());
+            var shifts = _traderService.GetShifts();
 
             return Json(new
             {
-                Teams = teams
+                Teams = teams,
+                Shifts = shifts
             });
         }
 
@@ -139,6 +150,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             insertCriteria.Username = insertCriteria.Username ?? string.Empty;
             insertCriteria.EmployeeId = insertCriteria.EmployeeId ?? string.Empty;
             insertCriteria.UserId = this.CurrentSession.UserId;
+            insertCriteria.Remark = insertCriteria.Remark ?? string.Empty;
 
             result = this._traderService.InsertTrader(insertCriteria);
 
@@ -171,6 +183,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             TraderInfoList updatedItems = null;
 
             updateCriteria.UserId = this.CurrentSession.UserId;
+            updateCriteria.NewRemark = updateCriteria.NewRemark;
 
             result = this._traderService.UpdateTrader(updateCriteria);
 

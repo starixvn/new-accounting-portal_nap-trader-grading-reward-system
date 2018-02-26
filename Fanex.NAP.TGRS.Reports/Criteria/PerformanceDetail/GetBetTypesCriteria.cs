@@ -21,10 +21,12 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public GetBetTypesCriteria(BettypeViewPermission permission)
         {
-            ViewPermission = (int)permission;
+            BettypePermission = (int)permission;
         }
 
-        public int ViewPermission { get; set; }
+        public int UserId { get; set; }
+
+        public int BettypePermission { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -32,7 +34,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Bettype_SelList";
+            return "TGRS_UserSetting_GetBettypes";
         }
 
         /// <summary>

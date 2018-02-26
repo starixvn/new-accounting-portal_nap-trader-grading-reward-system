@@ -118,5 +118,15 @@ namespace Fanex.NAP.TGRS.Configuration.Services.TraderManagement
         {
             return this.UpdateData(criteria);
         }
+
+        public IEnumerable<Shift> GetShifts()
+        {
+            return GetData<Shift>(new GetAllShiftCriteria());
+        }
+
+        public IEnumerable<ShiftHistory> GetShiftHistory(GetShiftHistoryCriteria criteria)
+        {
+            return GetData<ShiftHistory>(criteria);
+        }
     }
 }

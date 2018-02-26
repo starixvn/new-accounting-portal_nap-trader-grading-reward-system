@@ -7,7 +7,7 @@
                 <label>@ViewLang.Username</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError"  maxlength="30" />
+                <input type="text" id="txtUserName" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-val-not-html="@Messages.HtmlInputError"  maxlength="30" />
             </div>
         </div>
         <div class="form-row">
@@ -15,7 +15,7 @@
                 <label>@ViewLang.EmployeeId</label>
             </div>
             <div class="edit-field">
-                <input type="text" id="txtEmployeeId" class="width-200 " data-val-required="@Messages.RequiredFieldError" maxlength="20" />
+                <input type="text" id="txtEmployeeId" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-val-not-html="@Messages.HtmlInputError" maxlength="20" />
             </div>
         </div>
         <div class="form-row">
@@ -23,7 +23,7 @@
                 <label>@ViewLang.Team</label>
             </div>
             <div class="edit-field">
-                <select id="ddlTeamPopup" data-val-required="@Messages.RequiredFieldError">
+                <select id="ddlTeamPopup">
                 </select>
             </div>
         </div>
@@ -32,8 +32,24 @@
                 <label>@ViewLang.Grade</label>
             </div>
             <div class="edit-field">
-                <select id="ddlGradePopup" data-val-required="@Messages.RequiredFieldError">
+                <select id="ddlGradePopup">
                 </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.Shift</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlShiftPopup"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.Remark</label>
+            </div>
+            <div class="edit-field">
+                <textarea type="text" id="txtRemark" class="width-200" rows="5" style="resize:none" data-val-not-html="@Messages.HtmlInputError"></textarea>
             </div>
         </div>
         <div class="form-row button-row">

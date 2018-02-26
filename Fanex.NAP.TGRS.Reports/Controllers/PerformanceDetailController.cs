@@ -89,7 +89,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
         public JsonResult GetDefaultBettypes()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypesFromSession();
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypesFromSession(CurrentSession.UserId);
 
             return Json(new
             {
@@ -106,7 +106,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             var permission = ReportUtil.GetBettypePermission(HasRight);
 
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(permission);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
 
             ViewBag.BetTypes = betTypes;
             return View();
@@ -140,7 +140,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             string templatePath = Server.MapPath(LeaguePerformanceDetail);
 
-            this._detailReportService.ExportLeaguePerformance(criteria, templatePath);
+            this._detailReportService.ExportLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -233,7 +233,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             var permission = ReportUtil.GetBettypePermission(HasRight);
 
-            var betTypes = this._detailReportService.GetBetTypes(permission);
+            var betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
 
             ViewBag.BetTypes = betTypes;
 
@@ -284,7 +284,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var templatePath = Server.MapPath(TraderPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            this._detailReportService.ExportTraderPerformance(criteria, templatePath, isViewScore);
+            this._detailReportService.ExportTraderPerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }
@@ -315,7 +315,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.GetBettypePermission(HasRight));
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
 
@@ -423,7 +423,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var templatePath = Server.MapPath(GradePerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            this._detailReportService.ExportGradePerformance(criteria, templatePath, isViewScore);
+            this._detailReportService.ExportGradePerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }
@@ -441,7 +441,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
             var permission = ReportUtil.GetBettypePermission(HasRight);
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(permission);
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Teams = teams;
@@ -520,7 +520,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var templatePath = Server.MapPath(TeamPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
-            _detailReportService.ExportTeamPerformance(criteria, templatePath, isViewScore);
+            _detailReportService.ExportTeamPerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);
 
             return new EmptyResult();
         }
@@ -557,7 +557,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(ReportUtil.GetBettypePermission(HasRight));
+            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
 
@@ -664,7 +664,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             string templatePath = Server.MapPath(BetTypePerformanceDetail);
 
-            this._detailReportService.ExportBetTypePerformance(criteria, templatePath);
+            this._detailReportService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }

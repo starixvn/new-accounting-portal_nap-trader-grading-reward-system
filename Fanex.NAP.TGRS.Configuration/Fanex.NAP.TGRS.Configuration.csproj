@@ -49,6 +49,9 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependencies\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
       <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
@@ -59,9 +62,20 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Simplect">
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
@@ -102,9 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BenchmarkManagementController.cs" />
+    <Compile Include="Controllers\BettypeManagementController.cs" />
     <Compile Include="Controllers\TargetedMarginController.cs" />
     <Compile Include="Controllers\SpreadManagementController.cs" />
-    <Compile Include="Controllers\SystemConfigurationController.cs" />
     <Compile Include="Controllers\TraderManagementController.cs" />
     <Compile Include="Controllers\GradeManagementController.cs" />
     <Compile Include="Controllers\TeamManagementController.cs" />
@@ -119,6 +133,9 @@
     <Compile Include="Criteria\BenchmarkManagement\UpdateBetTypeBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateLeagueBenchmarkCriteria.cs" />
     <Compile Include="Criteria\BenchmarkManagement\UpdateTeamBenchmarkCriteria.cs" />
+    <Compile Include="Criteria\BettypeManagement\GetAllBettypeCriteria.cs" />
+    <Compile Include="Criteria\BettypeManagement\InsertNewBettypeCriteria.cs" />
+    <Compile Include="Criteria\BettypeManagement\UpdateBettypeCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
     <Compile Include="Criteria\Common\GetLeagueIdsCriteria.cs" />
     <Compile Include="Criteria\Common\GetBetTypeIdsCriteria.cs" />
@@ -131,7 +148,9 @@
     <Compile Include="Criteria\TargetedMargin\GetAllTargetedMarginCriteria.cs" />
     <Compile Include="Criteria\TargetedMargin\UpdateTargetedMaringCriteria.cs" />
     <Compile Include="Criteria\TeamManagement\GetTeamSelectListCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetAllShiftCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetGradeHistoryCriteria.cs" />
+    <Compile Include="Criteria\TraderManagement\GetShiftHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\InsertTraderCriteria.cs" />
@@ -150,6 +169,7 @@
     <Compile Include="Models\BenchmarkManagement\ProfitMargin.cs" />
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
+    <Compile Include="Models\BettypeManagement\Bettype.cs" />
     <Compile Include="Models\SpreadManagement\Bettype.cs" />
     <Compile Include="Models\SpreadManagement\SpreadValidation.cs" />
     <Compile Include="Models\SpreadManagement\League.cs" />
@@ -160,6 +180,8 @@
     <Compile Include="Models\TargetedMargin\TargetedMargin.cs" />
     <Compile Include="Models\TargetedMargin\TargetedMarginWithShift.cs" />
     <Compile Include="Models\TraderManagement\GradeHistory.cs" />
+    <Compile Include="Models\TraderManagement\Shift.cs" />
+    <Compile Include="Models\TraderManagement\ShiftHistory.cs" />
     <Compile Include="Models\TraderManagement\TeamHistory.cs" />
     <Compile Include="Models\TraderManagement\TraderInfo.cs" />
     <Compile Include="Models\GradeManagement\GradeInfo.cs" />
@@ -167,6 +189,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationAreaRegistration.cs" />
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
+    <Compile Include="Services\Implement\BettypeManagementService.cs" />
     <Compile Include="Services\Implement\CommonService.cs" />
     <Compile Include="Services\Implement\TargetedMarginService.cs" />
     <Compile Include="Services\Implement\SpreadManagementService.cs" />
@@ -174,6 +197,7 @@
     <Compile Include="Services\Implement\TraderManagementService.cs" />
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
+    <Compile Include="Services\Interface\IBettypeManagement.cs" />
     <Compile Include="Services\Interface\ITargetedMarginService.cs" />
     <Compile Include="Services\Interface\ISpreadManagementService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -216,6 +240,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

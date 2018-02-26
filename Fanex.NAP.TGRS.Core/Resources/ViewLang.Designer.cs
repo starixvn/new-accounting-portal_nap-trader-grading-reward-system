@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -142,6 +142,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Shifts.
+        /// </summary>
+        public static string AllShift {
+            get {
+                return ResourceManager.GetString("AllShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Sports.
         /// </summary>
         public static string AllSports {
@@ -156,6 +165,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string AllTeams {
             get {
                 return ResourceManager.GetString("AllTeams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assignment Type.
+        /// </summary>
+        public static string AssignmentType {
+            get {
+                return ResourceManager.GetString("AssignmentType", resourceCulture);
             }
         }
         
@@ -255,6 +273,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string BetTypeExcelFile {
             get {
                 return ResourceManager.GetString("BetTypeExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Id.
+        /// </summary>
+        public static string BettypeId {
+            get {
+                return ResourceManager.GetString("BettypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Management.
+        /// </summary>
+        public static string BettypeManagement {
+            get {
+                return ResourceManager.GetString("BettypeManagement", resourceCulture);
             }
         }
         
@@ -619,6 +655,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string Group {
+            get {
+                return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IsEnabled.
         /// </summary>
         public static string IsEnabled {
@@ -705,6 +750,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string LeaguePerformance {
             get {
                 return ResourceManager.GetString("LeaguePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live Status.
+        /// </summary>
+        public static string LiveStatus {
+            get {
+                return ResourceManager.GetString("LiveStatus", resourceCulture);
             }
         }
         
@@ -871,6 +925,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Bet Type.
+        /// </summary>
+        public static string NewBettype {
+            get {
+                return ResourceManager.GetString("NewBettype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type Performance.
         /// </summary>
         public static string NewBetTypePerformance {
@@ -1033,11 +1105,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number only.
+        /// </summary>
+        public static string NumberInput {
+            get {
+                return ResourceManager.GetString("NumberInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olympic.
         /// </summary>
         public static string Olympic {
             get {
                 return ResourceManager.GetString("Olympic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator Type.
+        /// </summary>
+        public static string OperatorType {
+            get {
+                return ResourceManager.GetString("OperatorType", resourceCulture);
             }
         }
         
@@ -1168,6 +1258,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remark.
+        /// </summary>
+        public static string Remark {
+            get {
+                return ResourceManager.GetString("Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
@@ -1258,11 +1357,56 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select a shift.
+        /// </summary>
+        public static string SelectAShift {
+            get {
+                return ResourceManager.GetString("SelectAShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a team.
         /// </summary>
         public static string SelectATeam {
             get {
                 return ResourceManager.GetString("SelectATeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        public static string Setting {
+            get {
+                return ResourceManager.GetString("Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift.
+        /// </summary>
+        public static string Shift {
+            get {
+                return ResourceManager.GetString("Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift Effective Date.
+        /// </summary>
+        public static string ShiftEffectiveDate {
+            get {
+                return ResourceManager.GetString("ShiftEffectiveDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift History.
+        /// </summary>
+        public static string ShiftHistory {
+            get {
+                return ResourceManager.GetString("ShiftHistory", resourceCulture);
             }
         }
         
@@ -1542,6 +1686,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string TraderManagement {
             get {
                 return ResourceManager.GetString("TraderManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trader Monthly Performance.
+        /// </summary>
+        public static string TraderMonthlyPerformance {
+            get {
+                return ResourceManager.GetString("TraderMonthlyPerformance", resourceCulture);
             }
         }
         

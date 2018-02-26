@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports
 {
     using Fanex.NAP.TGRS.Reports.Models.Permission;
+    using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly;
     using System;
 
     public static class ReportUtil
@@ -25,6 +26,28 @@
             else if (!hasPH && hasMajor) return BettypeViewPermission.Major_Only;
             else if (hasPH && hasMajor) return BettypeViewPermission.All;
             else return BettypeViewPermission.None;
+        }
+
+        public static string GetString(this LiveStatus status)
+        {
+            switch (status)
+            {
+                case LiveStatus.NonLive:
+                    return "Non Live";
+                default:
+                    return status.ToString();
+            }
+        }
+
+        public static string GetString(this Bettype bettype)
+        {
+            switch (bettype)
+            {
+                case Bettype.OxT:
+                    return "1x2";
+                default:
+                    return bettype.ToString();
+            }
         }
     }
 }

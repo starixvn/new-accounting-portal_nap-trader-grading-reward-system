@@ -32,6 +32,12 @@ namespace Fanex.NAP.TGRS.Configuration.Models.TraderManagement
 
         public string CreatedUsername { get; set; }
 
+        public string ShiftName { get; set; }
+
+        public string Remark { get; set; }
+
+        public DateTime? ShiftEffectiveDate { get; set; }
+
         public DateTime TeamEffectiveDate { get; set; }
 
         public DateTime GradeEffectiveDate { get; set; }

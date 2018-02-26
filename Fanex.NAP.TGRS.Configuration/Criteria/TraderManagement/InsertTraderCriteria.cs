@@ -27,6 +27,10 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement
 
         public int UserId { get; set; }
 
+        public int Shift { get; set; }
+
+        public string Remark { get; set; }
+
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }

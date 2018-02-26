@@ -10,12 +10,6 @@
 
 namespace Fanex.NAP.TGRS.User.Controllers
 {
-    using System;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Security;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Service.Impl;
@@ -23,6 +17,15 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.User.Criteria.Setting;
+    using Fanex.NAP.TGRS.User.Services.Implements;
+    using Fanex.NAP.TGRS.User.Services.Interfaces;
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
 
     /// <summary>
     /// User controller.
@@ -31,6 +34,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
     {
         private const string FormTokenKey = "_SecureChangePasswordFormToken";
         private readonly IUserService _userService;
+        private readonly IUserSetting _userSetting;
+        private readonly TGRS.Reports.Services.IDetailReportService _detailReportService;
         private HashAlgorithm _hashAlgorithm;
 
         [Simplect.Attribute.InjectObject]
@@ -43,6 +48,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
         {
             _userService = userService ?? new UserService { ServiceContext = ServiceContext };
             _hashAlgorithm = new SHA256Managed();
+            _userSetting = new UserSettings();
+            _detailReportService = new Reports.Services.DetailReportService();
         }
 
         public string FormToken
@@ -169,6 +176,35 @@ namespace Fanex.NAP.TGRS.User.Controllers
         }
 
         #endregion Profile
+
+        #region Setting
+
+        public ActionResult Setting()
+        {
+            var id = CurrentSession.UserId;
+            var permission = Reports.ReportUtil.GetBettypePermission(HasRight);
+
+            var bettypes = _userSetting.GetDefaultBettypes(id, permission);
+
+            ViewBag.BetTypes = bettypes;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult UpdateDefaultBettype(UpdateDefaultBettypeCriteria criteria)
+        {
+            criteria.IsDefaultBettypes = criteria.IsDefaultBettypes ?? string.Empty;
+            criteria.UserId = CurrentSession.UserId;
+
+            ICommandResult result = _userSetting.UpdateDefaultBettypes(criteria);
+
+            return Json(new
+            {
+                ErrorCode = result.Code,
+                ErrorMessage = result.Message
+            });
+        }
+        #endregion Setting
 
         #region Helpers
 

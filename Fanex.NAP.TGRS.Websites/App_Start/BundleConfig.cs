@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterOSConfigurationBundles(bundles);
             RegisterOSReportBundles(bundles);
             RegisterOSAdministrationBundles(bundles);
+            RegisterSetting(bundles);
         }
 
         /// <summary>
@@ -144,6 +145,9 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.AddAndInclude(
                 "~/styles/systemConfiguration",
                 "~/Areas/Configuration/Resources/SystemConfiguration/system-configuration.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/bettypeManagement").Include(
+                "~/Areas/Configuration/Resources/BettypeManagement/bettype-management.js"));
         }
 
         /// <summary>
@@ -247,6 +251,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/Trader/report.js",
                 "~/Areas/Reports/Resources/Trader/trader-report-admin.js",
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/traderPerformanceMonthly").Include(
+                    "~/Areas/Reports/Resources/TraderPerformanceMonthly/*.js"
+                ));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
@@ -379,6 +387,12 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-factory.js",
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history-service.js",
                     "~/Areas/OSAdministration/Resources/OSScoreHistory/score-history.js"));
+        }
+
+        public static void RegisterSetting(BundleCollection bundles)
+        {
+            bundles.Add(new StyleBundle("~/styles/settings").Include("~/Areas/User/Resources/UserInfo/settings.less"));
+            bundles.Add(new ScriptBundle("~/scripts/settings").Include("~/Areas/User/Resources/UserInfo/settings.js"));
         }
     }
 }

@@ -44,10 +44,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="permission">permission on bettype</param>
         /// <returns></returns>
-        public IEnumerable<BetTypeItem> GetBetTypes(BettypeViewPermission permission = BettypeViewPermission.All)
+        public IEnumerable<BetTypeItem> GetBetTypes(int userId, BettypeViewPermission permission = BettypeViewPermission.All)
         {
             List<BetTypeItem> betTypes = null;
-            var criteria = new GetBetTypesCriteria(permission);
+            var criteria = new GetBetTypesCriteria(permission) { UserId = userId};
             IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);
 
             if (data != null && data.Any())
@@ -63,13 +63,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// Gets the bet types from session.
         /// </summary>
         /// <returns>List of BetTypeItem objects.</returns>
-        public IEnumerable<BetTypeItem> GetBetTypesFromSession()
+        public IEnumerable<BetTypeItem> GetBetTypesFromSession(int userId)
         {
             var betTypes = SessionManager.Get<List<BetTypeItem>>(DefaultBettypeSessionKey);
             if (betTypes == null)
             {
                 var permission = (PermissionCheck == null) ? BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
-                betTypes = this.GetBetTypes().ToList();
+                betTypes = this.GetBetTypes(userId, permission).ToList();
             }
 
             return betTypes;
@@ -231,7 +231,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
-        public void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templatePath)
+        public void ExportLeaguePerformance(int userId, GetLeaguePerformanceCriteria criteria, string templatePath)
         {
             LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey);
 
@@ -245,7 +245,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.LeaguePerformance);
                 writer.CopyRows(0, 1);
 
-                FilterBlock(criteria, ref writer);
+                FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
                 FillRowData(leagueData, ref writer);
@@ -393,7 +393,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(int userId,GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(10, 0);
@@ -401,7 +401,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             int lineCount = 0;
 
             var permission = (PermissionCheck == null) ? BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
-            List<BetTypeItem> betTypes = this.GetBetTypes(permission).ToList();
+            List<BetTypeItem> betTypes = this.GetBetTypes(userId, permission).ToList();
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlossString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;

@@ -114,6 +114,8 @@
     <Setting Key="TGRS_Trader_SelectAll" SpName="TGRS_Trader_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Trader_Insert" SpName="TGRS_Trader_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Trader_Update" SpName="TGRS_Trader_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Trader_Shift_SelectAll" SpName="TGRS_Trader_Shift_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_Trader_ShiftHistory" SpName="TGRS_Trader_ShiftHistory" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="TeamManagement">
     <Setting Key="TGRS_Team_SelList" SpName="TGRS_Team_SelList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
@@ -241,5 +243,17 @@
     <Setting Key="TGRS_Rpt_TraderLeaguePerformance_MatchDetail" SpName="TGRS_Rpt_TraderLeaguePerformance_MatchDetail" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet">
       <Mapping DataField="Winlost" ObjectProperty="Winloss" />
     </Setting>
+  </Function>
+  <Function Name="BettypeManagement">
+    <Setting Key="TGRS_BettypeManagement_Bettype_SelectAll" SpName="TGRS_BettypeManagement_Bettype_SelectAll" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_BettypeManagement_Bettype_Insert" SpName="TGRS_BettypeManagement_Bettype_Insert" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_BettypeManagement_Bettype_Update" SpName="TGRS_BettypeManagement_Bettype_Update" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
+  <Function Name ="UserSetting">
+    <Setting Key="TGRS_UserSetting_GetBettypes" SpName="TGRS_UserSetting_GetBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_UserSetting_UpdateDefaultBettypes" SpName="TGRS_UserSetting_UpdateDefaultBettypes" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
+  <Function Name="TraderPerformanceMonthly">
+    <Setting Key="TGRS_Rpt_TraderPerformanceMonthly" SpName="TGRS_Rpt_TraderPerformanceMonthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
 </Functions>
