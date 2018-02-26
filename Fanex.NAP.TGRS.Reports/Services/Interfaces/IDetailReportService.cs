@@ -12,6 +12,7 @@ using Fanex.NAP.Framework.Data;
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.Permission;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using System.Collections.Generic;
@@ -201,6 +202,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>TraderPerformanceList object.</returns>
         TraderPerformanceList GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria);
+
+        IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetTypeBetChoicePerformance(GetBetChoicePerformanceOfBetTypeCriteria criteria);
 
         /// <summary>
         /// Gets the match performance of a pair of bet type and trader.

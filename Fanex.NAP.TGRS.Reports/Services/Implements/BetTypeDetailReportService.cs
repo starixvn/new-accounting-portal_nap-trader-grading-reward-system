@@ -24,6 +24,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
+    using System;
 
     /// <summary>
     /// Detail report service.
@@ -322,13 +323,22 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 }
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
-            }            
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        public IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetTypeBetChoicePerformance(GetBetChoicePerformanceOfBetTypeCriteria criteria)
+        {
+            var result = this.GetData<BetTypeBetChoicePerformanceInfo>(criteria);
+
+            result = result ?? new List<BetTypeBetChoicePerformanceInfo>();
+
+            return result;
         }
     }
 }
