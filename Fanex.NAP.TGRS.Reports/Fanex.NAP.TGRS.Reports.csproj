@@ -193,7 +193,7 @@
     <Compile Include="Criteria\PerformanceSummary\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
-    <Compile Include="Criteria\TraderPerformanceMonthly\MonthlyFilter.cs" />
+    <Compile Include="Criteria\TraderPerformanceMonthly\GetTraderPerformanceMonthlyCriteria.cs" />
     <Compile Include="Criteria\Trader\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceCriteria.cs" />

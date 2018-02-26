@@ -14,7 +14,7 @@
 
     internal class TraderMonthlyReportService : TGRSBaseService, ITraderMonthlyReport
     {
-        public SummaryList GetReports(MonthlyFilter filter)
+        public SummaryList GetReports(GetTraderPerformanceMonthlyCriteria filter)
         {
             using (var db = new ObjectDb(filter.GetSettingKey()))
             {
@@ -44,7 +44,7 @@
             }
         }
 
-        public Stream ExportExcel(string template, MonthlyFilter filter)
+        public Stream ExportExcel(string template, GetTraderPerformanceMonthlyCriteria filter)
         {
             var wb = new XSSFWorkbook(File.OpenRead(template));
             var sheet = wb.GetSheetAt(0);

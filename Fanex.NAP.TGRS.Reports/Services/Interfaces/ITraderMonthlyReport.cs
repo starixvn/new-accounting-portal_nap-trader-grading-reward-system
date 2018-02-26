@@ -6,8 +6,8 @@
 
     public interface ITraderMonthlyReport
     {
-        SummaryList GetReports(MonthlyFilter filter);
+        SummaryList GetReports(GetTraderPerformanceMonthlyCriteria filter);
 
-        Stream ExportExcel(string template, MonthlyFilter filter);
+        Stream ExportExcel(string template, GetTraderPerformanceMonthlyCriteria filter);
     }
 }

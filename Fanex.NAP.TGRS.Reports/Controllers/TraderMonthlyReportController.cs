@@ -26,7 +26,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
-        public ActionResult GetMonthlyData(MonthlyFilter filter)
+        public ActionResult GetMonthlyData(GetTraderPerformanceMonthlyCriteria filter)
         {
             try
             {
@@ -41,7 +41,7 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
-        public ActionResult ExportExcel(MonthlyFilter filter)
+        public ActionResult ExportExcel(GetTraderPerformanceMonthlyCriteria filter)
         {
             var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/template.xlsx"), filter);
 
