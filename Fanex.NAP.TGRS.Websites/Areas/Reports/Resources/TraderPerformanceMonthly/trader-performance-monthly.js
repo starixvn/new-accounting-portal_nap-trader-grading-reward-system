@@ -9,6 +9,36 @@
                 height: 120
             });
 
+    var yearSelector =
+        $("#yearSelector")
+            .multiselect({
+                selectedList: 1,
+                minWidth: 150,
+                multiple: false,
+                header: false,
+                height: 100
+            });
+
+    var shiftSelector =
+        $("#shiftSelector")
+            .multiselect({
+                selectedList: 1,
+                minWidth: 150,
+                multiple: false,
+                header: false,
+                height: 120
+            });
+
+    var gradeSelector =
+        $("#gradeSelector")
+            .multiselect({
+                selectedList: 1,
+                minWidth: 150,
+                multiple: false,
+                header: false,
+                height: 120
+            });
+
     var traderSearch = $("#traderSearch");
 
     var liveSelector =
@@ -58,8 +88,17 @@
             {
                 bettype: bettypeSelector.val(),
                 tradername: traderSearch.val(),
-                livestatus: liveSelector.val()
+                Year: yearSelector.val(),
+                Shift: 1,//shiftSelector.val(),
+                Grade: 1,//gradeSelector.val()
             };
+
+        labels.ThisYear = filter.Year;
+        labels.LastYear = parseInt(filter.Year) - 1;
+        labels.Month = "{0} - " + labels.ThisYear;
+
+        getHeaders();
+        getColumns();
 
         $.post(url, filter, renderData);
     }
@@ -353,9 +392,6 @@
 
         gridOptions.columns = c;
     }
-
-    getHeaders();
-    getColumns();
 
     $("#btnGenerate").click(getData);
 }

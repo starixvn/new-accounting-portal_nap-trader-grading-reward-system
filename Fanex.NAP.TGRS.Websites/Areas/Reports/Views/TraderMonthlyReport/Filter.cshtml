@@ -6,7 +6,26 @@
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_3">
-                <label for="bettypeSelector">@ViewLang.BetType</label>
+                <label for="yearSelector">Year</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="yearSelector">
+                    @for (var year = DateTime.Now.Year; year >= 2015; year--)
+                    {
+                        if (year < DateTime.Now.Year)
+                        {
+                            <option value="@((int) year)">@year</option>
+                        }
+                        else
+                        {
+                            <option value="@((int) year)" selected>@year</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="lbl-field col_3">
+                <label for="bettypeSelector">Product</label>
             </div>
             <div class="edit-field col_5">
                 <select id="bettypeSelector">
@@ -16,26 +35,45 @@
                     }
                 </select>
             </div>
+
+            <div class="lbl-field col_3">
+                <label for="shiftSelector">Shift</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="shiftSelector">
+                    @foreach (var bettype in Enum.GetValues(typeof(Bettype)).Cast<Bettype>().OrderBy(s => (int)s))
+                    {
+                        <option value="@((int) bettype)">@bettype.GetString()</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="gradeSelector">Grade</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="gradeSelector">
+                    @foreach (var bettype in Enum.GetValues(typeof(Bettype)).Cast<Bettype>().OrderBy(s => (int)s))
+                    {
+                        <option value="@((int) bettype)">@bettype.GetString()</option>
+                    }
+                </select>
+            </div>
+
             <div class="lbl-field col_3">
                 <label for="traderSearch">@ViewLang.Trader</label>
             </div>
             <div class="edit-field col_5">
-                <input id="traderSearch" type="text" />
+                <input id="traderSearch" type="text" style="width:150px;" />
             </div>
             <div class="lbl-field col_3">
-                <label for="liveSelector">@ViewLang.LiveStatus</label>
-            </div>
-            <div class="edit-field col_5">
-                <select id="liveSelector">
-                    @foreach (var status in Enum.GetValues(typeof(LiveStatus)).Cast<LiveStatus>().OrderBy(s => (int) s))
-                    { 
-                        <option value="@((int) status)">@status.GetString()</option>
-                    }
-                </select>
             </div>
             <div class="submit col_5">
                 <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
         </div>
+
     </div>
 </div>
