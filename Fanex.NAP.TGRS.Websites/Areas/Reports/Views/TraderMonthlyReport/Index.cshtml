@@ -1,52 +1,53 @@
 ﻿@using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
+@model IEnumerable<Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly.Shift>
 
-@{
-    ViewBag.Title = ViewLang.TraderMonthlyPerformance;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var traderColumns = Trader.Columns.ToString();
-    var avgColumns = AvgSummary.Columns.ToString();
-    var monthColumns = Summary.Columns.ToString();
-}
+    @{
+        ViewBag.Title = ViewLang.TraderMonthlyPerformance;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var traderColumns = Trader.Columns.ToString();
+        var avgColumns = AvgSummary.Columns.ToString();
+        var monthColumns = Summary.Columns.ToString();
+    }
 
-@section Headline
+    @section Headline
 {
-    <style>
-        .freegrid .grid-fixed-table tr.shift-summary td {
-            background: #FEE4D7
-        }
-    </style>
-    <div class="title">
-        <div>
-            <span class="curr">@ViewBag.Title</span>
+        <style>
+            .freegrid .grid-fixed-table tr.shift-summary td {
+                background: #FEE4D7;
+            }
+        </style>
+        <div class="title">
+            <div>
+                <span class="curr">@ViewBag.Title</span>
+            </div>
+        </div>
+    }
+
+    @Html.Partial("Filter")
+
+    <div class="content-grid display-none">
+        <div id="table" class="freegrid">
         </div>
     </div>
-}
 
-@Html.Partial("Filter")
+    @section Foot{
+        <script>
+            var columns =
+                {
+                    trader: @Html.Raw(traderColumns),
+                    avg: @Html.Raw(avgColumns),
+                    month: @Html.Raw(monthColumns)
+                    };
 
-<div class="content-grid display-none">
-    <div id="table" class="freegrid">
-    </div>
-</div>
-
-@section Foot{
-    <script>
-        var columns =
-            {
-                trader: @Html.Raw(traderColumns),
-                avg: @Html.Raw(avgColumns),
-                month: @Html.Raw(monthColumns)
-            };
-
-        var labels = 
-            {
-                FstHalf: "Half Year 1 to 6",
-                SndHalf: "Half Year 7 to 12",
-                ThisYear: "YR {0} Up To Date".format(@DateTime.Today.Year),
-                LastYear: "Year {0}".format(@DateTime.Today.Year - 1),
-                Month: '@(string.Format("{{0}} - {0}", DateTime.Today.Year % 100))',
-                Overall: "@ViewLang.Total"
-            }
-    </script>
-    @Scripts.Render("~/scripts/traderPerformanceMonthly")
-}
+            var labels =
+                {
+                    FstHalf: "Half Year 1 to 6",
+                    SndHalf: "Half Year 7 to 12",
+                    ThisYear: "YR {0} Up To Date".format(@DateTime.Today.Year),
+                    LastYear: "Year {0}".format(@DateTime.Today.Year - 1),
+                    Month: '@(string.Format("{{0}} - {0}", DateTime.Today.Year % 100))',
+                    Overall: "@ViewLang.Total"
+                }
+        </script>
+        @Scripts.Render("~/scripts/traderPerformanceMonthly")
+    }

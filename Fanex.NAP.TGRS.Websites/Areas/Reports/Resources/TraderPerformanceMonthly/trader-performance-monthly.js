@@ -89,8 +89,8 @@
                 bettype: bettypeSelector.val(),
                 tradername: traderSearch.val(),
                 Year: yearSelector.val(),
-                Shift: 1,//shiftSelector.val(),
-                Grade: 1,//gradeSelector.val()
+                Shift: shiftSelector.val(),
+                Grade: gradeSelector.val()
             };
 
         labels.ThisYear = filter.Year;

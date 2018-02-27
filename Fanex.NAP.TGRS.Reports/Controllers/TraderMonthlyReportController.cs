@@ -21,7 +21,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            return View();
+            var shifts = _service.GetShifts();
+
+            return View(shifts);
         }
 
         [HttpPost]

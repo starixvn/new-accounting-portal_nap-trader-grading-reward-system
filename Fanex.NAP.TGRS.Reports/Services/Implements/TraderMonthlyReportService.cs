@@ -9,6 +9,7 @@
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
@@ -67,7 +68,7 @@
 
                     rowIdx++;
                     noIdx++;
-                }             
+                }
             }
 
             WriteTotal(sheet, data.Total);
@@ -81,6 +82,11 @@
             stream.Position = 0;
 
             return stream;
+        }
+
+        public IEnumerable<Shift> GetShifts()
+        {
+            return GetData<Shift>(new GetAllShiftCriteria());
         }
 
         private void WriteHeader(ISheet sheet)

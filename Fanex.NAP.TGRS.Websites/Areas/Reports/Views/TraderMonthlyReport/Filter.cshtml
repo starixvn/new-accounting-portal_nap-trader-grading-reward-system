@@ -41,9 +41,10 @@
             </div>
             <div class="edit-field col_5">
                 <select id="shiftSelector">
-                    @foreach (var bettype in Enum.GetValues(typeof(Bettype)).Cast<Bettype>().OrderBy(s => (int)s))
+                    <option value="-1">All</option>
+                    @foreach (var shift in Model)
                     {
-                        <option value="@((int) bettype)">@bettype.GetString()</option>
+                        <option value="@shift.ShiftId">@shift.ShiftName</option>
                     }
                 </select>
             </div>
@@ -55,10 +56,12 @@
             </div>
             <div class="edit-field col_6">
                 <select id="gradeSelector">
-                    @foreach (var bettype in Enum.GetValues(typeof(Bettype)).Cast<Bettype>().OrderBy(s => (int)s))
+                    <option value="-1">All</option>
+                    @for (var grade = 1; grade < 11; grade++)
                     {
-                        <option value="@((int) bettype)">@bettype.GetString()</option>
+                        <option value="@grade">@grade</option>
                     }
+                    <option value="200">200</option>
                 </select>
             </div>
 
