@@ -17,9 +17,9 @@
 
         public Dictionary<int, Summary> Months { get; set; }
 
-        public SummaryItem WithYears(IEnumerable<YearSummary> years)
+        public SummaryItem WithYears(IEnumerable<YearSummary> years, int reportYear)
         {
-            var currentYear = DateTime.Today.Year;
+            var currentYear = reportYear;
 
             foreach (var year in years)
             {

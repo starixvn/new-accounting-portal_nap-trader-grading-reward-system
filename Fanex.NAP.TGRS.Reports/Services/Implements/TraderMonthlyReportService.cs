@@ -40,7 +40,7 @@
                     var years = multi.Read<YearSummary>();
                     var months = multi.Read<MonthSummary>();
 
-                    return new SummaryList(traders, fstHalves, sndHalves, years, months);
+                    return new SummaryList(traders, fstHalves, sndHalves, years, months, filter.Year);
                 }
             }
         }
