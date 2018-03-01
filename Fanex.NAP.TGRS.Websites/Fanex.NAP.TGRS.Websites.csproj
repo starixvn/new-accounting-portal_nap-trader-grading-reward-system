@@ -419,6 +419,7 @@
     <Content Include="Content\MsgBox\images\info.png" />
     <Content Include="Content\MsgBox\images\question.png" />
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
+    <Content Include="Content\Site\images\sprite.png" />
     <Content Include="Content\Themes\Images\add-icon.ico" />
     <Content Include="Content\Themes\Images\bgmenu-more.png" />
     <Content Include="Content\Themes\Images\btn-close.png" />

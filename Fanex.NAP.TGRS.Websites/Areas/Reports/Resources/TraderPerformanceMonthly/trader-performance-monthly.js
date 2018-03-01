@@ -63,11 +63,19 @@
             autoResizeColumn: true,
             columnsNeedHide: [],
             gridExpandHeight: 230,
+            showPager: true,
+            customPager: false,
+            allowTruncate: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges
+            },
             titleInfo:
             {
                 showExcelButton: true,
-                exportExcelFunction: getExcel,
-                customButtons: '<span id="idShowhideColum" class="text-right" style="color:red;">Manage Columns</span>'
+                customButtons: '<div class="text-right" id="idShowHideColumns"></div>',
+                exportExcelFunction: getExcel
             }
         }
 
@@ -76,20 +84,6 @@
     var index = 0;
 
     var filter = null;
-
-    var showColumns = [];
-
-    getShowColumns();
-
-    createShowHideColumnMenu(grid, showColumns);
-
-    registerShowHideColumnEvent(grid, gridOptions);
-
-    function getShowColumns() {
-        for (var i = 0; i < 7 + 5 * 7 + 12 * 5; i++) {
-            showColumns.push(i);
-        }
-    }
 
     function getExcel() {
         var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/ExportExcel");
@@ -248,7 +242,13 @@
             gridOptions.footerRows = [];
         }
 
+        gridOptions.pagerOption.totalItem = result.Data.length;
+
         grid.fanexGrid(gridOptions);
+
+        createShowHideColumnMenuEvent($("#idShowHideColumns"));
+
+        registerShowHideColumnEvent(grid, gridOptions);
 
         common.EnableInput();
     }
@@ -311,28 +311,17 @@
             }
 
             $(gridElement).fanexGrid("hideColumns", gridOptions, gridOptions.columnsNeedHide);
-            $(gridElement).fanexGrid("resizeGrid", gridOptions);
         });
     };
 
-    function createShowHideColumnMenu(gridElement, showColumns) {
-        var gridTitle = $('<div class="grid-title" >' +
-                            '<div class="grid-title-label" ></div>' +
-                            '<div class="grid-toolbox col-sm-3"></div>' +
-                        '</div>');
-        var hideColumnsParentDiv = $('<div class="text-right"></div>');
-        var hideColumnsButton = $('<span class="text-related">Manage Columns</span><a class="icon icon-related" href></a>');
+    function createShowHideColumnMenuEvent(hideColumnsParentDiv) {
+        var hideColumnsButton = $('<a title="Manage Columns" class="icon icon-related" href></a>');
         var hideColumnsMenu = $('<div class="menu-column col-sm-10 text-left"></div>');
 
-        var hideColumnsForm = generateFormForMenu(showColumns);
+        var hideColumnsForm = generateFormForMenu();
 
         hideColumnsMenu.append(hideColumnsForm);
         hideColumnsParentDiv.append(hideColumnsButton).append(hideColumnsMenu);
-
-        gridTitle.insertBefore(gridElement);
-
-        $(".grid-title .grid-toolbox").append(hideColumnsParentDiv);
-        $(".grid-toolbox").append(hideColumnsParentDiv);
 
         hideColumnsMenu.hide();
 
@@ -357,19 +346,26 @@
         });
     };
 
-    function generateFormForMenu(showColumns) {
+    function generateFormForMenu() {
         var hideColumnsForm = $('<form class="form-horizontal "></form>');
         var definedColumns = getHeaders();
 
         $(definedColumns[0].Columns).each(function (idx, column) {
-            if (idx > 0) {
+            if (idx > 6) {
                 //default set checked for all checkboxes
                 var checkbox = '<input type="checkbox" checked data-index="' + idx + '" id="' + idx + '">' +
                                '<label class="checkbox-label" for="' + idx + '">' + column.HeaderText + '</label>';
 
-                var index = $(showColumns).index(idx);
-                //check if the showColumns contain the index of this column.
-                if (index === -1) {
+                if (idx < 11) {
+                    idx = (idx - 6) * 7;
+                }
+                else {
+                    idx = (idx - 11) * 5 + 4 * 7 + 7;
+                }
+
+                var index = $(gridOptions.columnsNeedHide).index(idx);
+
+                if (index > -1) {
                     //remove 'checked' for the hide column
                     checkbox = checkbox.replace("checked", "");
                 }
