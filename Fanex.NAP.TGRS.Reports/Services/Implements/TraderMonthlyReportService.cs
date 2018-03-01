@@ -50,7 +50,7 @@
             var wb = new XSSFWorkbook(File.OpenRead(template));
             var sheet = wb.GetSheetAt(0);
 
-            WriteHeader(sheet);
+            WriteHeader(sheet, filter);
 
             var data = GetReports(filter);
 
@@ -89,12 +89,12 @@
             return GetData<Shift>(new GetAllShiftCriteria());
         }
 
-        private void WriteHeader(ISheet sheet)
+        private void WriteHeader(ISheet sheet, GetTraderPerformanceMonthlyCriteria filter)
         {
             var row = sheet.GetRow(0);
 
             var month = 1;
-            var year = DateTime.Today.Year;
+            var year = filter.Year;
 
             foreach (var cell in row.Cells.Where(c => c.CellType != CellType.Blank))
             {

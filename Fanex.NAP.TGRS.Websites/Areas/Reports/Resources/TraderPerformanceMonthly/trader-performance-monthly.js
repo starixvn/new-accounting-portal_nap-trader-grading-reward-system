@@ -88,8 +88,9 @@
     var filter = null;
 
     function GetColumnsNeedHide() {
-        var cookies = GetCookie(cookieShowHideColumn);
+        gridOptions.columnsNeedHide = [];
 
+        var cookies = GetCookie(cookieShowHideColumn);
         if (cookies === null) {
             gridOptions.columnsNeedHide = [];
         }
@@ -287,8 +288,6 @@
             gridOptions.bodyRows = [];
             gridOptions.footerRows = [];
         }
-
-        gridOptions.pagerOption.totalItem = result.Data.length;
 
         GetColumnsNeedHide();
 
