@@ -91,10 +91,7 @@
         gridOptions.columnsNeedHide = [];
 
         var cookies = GetCookie(cookieShowHideColumn);
-        if (cookies === null) {
-            gridOptions.columnsNeedHide = [];
-        }
-        else {
+        if (cookies !== null && cookies.length > 0) {
             var items = cookies.split(",");
 
             $(items).each(function (idx, item) {
