@@ -7,6 +7,7 @@
         var traderColumns = Trader.Columns.ToString();
         var avgColumns = AvgSummary.Columns.ToString();
         var monthColumns = Summary.Columns.ToString();
+        var userId = ViewBag.UserId;
     }
 
     @section Headline
@@ -42,7 +43,7 @@
             .grid-title .menu-column {
                 background-color: #fff;
                 box-shadow: 0 0 1rem rgba(0,0,0,.1);
-                min-width: 100px;
+                min-width: 125px;
                 max-height: 500px;
                 overflow: auto;
                 padding: 5px 10px;
@@ -84,6 +85,8 @@
                     avg: @Html.Raw(avgColumns),
                     month: @Html.Raw(monthColumns)
                     };
+
+            var userId = @userId;
 
             var labels =
                 {

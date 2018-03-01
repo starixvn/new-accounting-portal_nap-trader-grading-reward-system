@@ -22,6 +22,7 @@
         public ActionResult Index()
         {
             var shifts = _service.GetShifts();
+            ViewBag.UserId = this.CurrentSession.OnUserId;
 
             return View(shifts);
         }

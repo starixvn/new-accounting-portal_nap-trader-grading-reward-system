@@ -63,7 +63,7 @@
             autoResizeColumn: true,
             columnsNeedHide: [],
             gridExpandHeight: 230,
-            showPager: true,
+            showPager: false,
             customPager: false,
             allowTruncate: true,
             pagerOption: {
@@ -79,11 +79,57 @@
             }
         }
 
+    var cookieShowHideColumn = userId + "-" + "columns";
+
     var grid = $("#table");
 
     var index = 0;
 
     var filter = null;
+
+    function GetColumnsNeedHide() {
+        var cookies = GetCookie(cookieShowHideColumn);
+
+        if (cookies === null) {
+            gridOptions.columnsNeedHide = [];
+        }
+        else {
+            var items = cookies.split(",");
+
+            $(items).each(function (idx, item) {
+                gridOptions.columnsNeedHide.push(parseInt(item));
+            });
+        }
+    }
+
+    function SetCookie(cname, cvalue, expiredays) {
+        var expires = ""
+        if (expiredays) {
+            var date = new Date();
+            date.setTime(date.getTime() + (expiredays * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+
+        document.cookie = cname + "=" + cvalue + expires + "; path=/";
+    };
+
+    function GetCookie(cname) {
+        var nameEQ = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0)
+                return c.substring(nameEQ.length, c.length);
+        }
+
+        return null;
+    }
+
+    function EraseCookie(cname) {
+        SetCookie(cname, "", -1);
+    }
 
     function getExcel() {
         var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/ExportExcel");
@@ -244,6 +290,8 @@
 
         gridOptions.pagerOption.totalItem = result.Data.length;
 
+        GetColumnsNeedHide();
+
         grid.fanexGrid(gridOptions);
 
         createShowHideColumnMenuEvent($("#idShowHideColumns"));
@@ -309,6 +357,8 @@
                     }
                 }
             }
+
+            SetCookie(cookieShowHideColumn, gridOptions.columnsNeedHide, 7);
 
             $(gridElement).fanexGrid("hideColumns", gridOptions, gridOptions.columnsNeedHide);
         });
