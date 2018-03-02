@@ -121,7 +121,7 @@
         click: function (event, ui) {
             var columnIndex = parseInt(ui.value);
             var isChecked = ui.checked;
-            var columnsNeedHide = gridOptions.columnsNeedHide;
+            var columnsNeedHide = GetColumnsNeedHideFromCookies();
 
             if (columnIndex < 7) {
                 var index = $(columnsNeedHide).index(columnIndex);
@@ -143,7 +143,7 @@
             else {
                 var startIndex = 0;
                 var endIndex = 0;
-                if (columnIndex < 40) {
+                if (columnIndex < 35) {
                     startIndex = columnIndex;
                     endIndex = startIndex + 7;
                 }
@@ -382,11 +382,9 @@
             gridOptions.footerRows = [];
         }
 
-        gridOptions.columnsNeedHide = GetColumnsNeedHideFromCookies();
+        gridOptions.hiddenColumns = GetColumnsNeedHideFromCookies();
 
         grid.fanexGrid(gridOptions);
-
-        grid.fanexGrid("hideColumns", gridOptions, gridOptions.columnsNeedHide);
 
         common.EnableInput();
     }
