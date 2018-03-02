@@ -51,6 +51,10 @@
                 height: 75
             });
 
+    var showHideCloumnsSelector = $("#idColumns");
+    var columnIndexList = [7, 14, 21, 28, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
+
+
     var gridOptions =
         {
             customizeHeader: true,
@@ -74,7 +78,6 @@
             titleInfo:
             {
                 showExcelButton: true,
-                customButtons: '<div class="text-right" id="idShowHideColumns"></div>',
                 exportExcelFunction: getExcel
             }
         }
@@ -87,17 +90,110 @@
 
     var filter = null;
 
-    function GetColumnsNeedHide() {
-        gridOptions.columnsNeedHide = [];
+    showHideCloumnsSelector.multiselect({
+        header: false,
+        minWidth: 150,
+        classes: '',
+        checkAllText: 'Check',
+        uncheckAllText: 'Uncheck',
+        noneSelectedText: 'Select columns',
+        allSelectedText: 'All columns selected',
+        selectedText: '# columns selected',
+        selectedList: 0,
+        show: null,
+        hide: null,
+        autoOpen: false,
+        multiple: true,
+        create: function () {
+            var columnsNeedHide = GetColumnsNeedHideFromCookies();
+
+            var showIndexes = [];
+
+            $(columnIndexList).each(function (idx, item) {
+                if ($(columnsNeedHide).index(item) === -1) {
+                    showIndexes.push(item);
+                }
+            });
+
+            showHideCloumnsSelector.val(showIndexes);
+            showHideCloumnsSelector.multiselect("refresh");
+        },
+        click: function (event, ui) {
+            var columnIndex = parseInt(ui.value);
+            var isChecked = ui.checked;
+            var columnsNeedHide = gridOptions.columnsNeedHide;
+
+            if (columnIndex < 7) {
+                var index = $(columnsNeedHide).index(columnIndex);
+
+                if (isChecked) {
+                    //Show the grid column
+                    if (index > -1) {
+                        //remove column index
+                        columnsNeedHide.splice(index, 1);
+                    }
+                } else {
+                    //Hide the grid column
+                    if (index === -1) {
+                        //insert column index
+                        columnsNeedHide.push(columnIndex);
+                    }
+                }
+            }
+            else {
+                var startIndex = 0;
+                var endIndex = 0;
+                if (columnIndex < 40) {
+                    startIndex = columnIndex;
+                    endIndex = startIndex + 7;
+                }
+                else {
+                    startIndex = columnIndex;
+                    endIndex = startIndex + 5;
+                }
+
+                for (var i = startIndex ; i < endIndex; i++) {
+                    var index = $(columnsNeedHide).index(i);
+
+                    if (isChecked) {
+                        //Show the grid column
+                        if (index > -1) {
+                            //remove column index
+                            columnsNeedHide.splice(index, 1);
+                        }
+                    } else {
+                        //Hide the grid column
+                        if (index === -1) {
+                            //insert column index
+                            columnsNeedHide.push(i);
+                        }
+                    }
+                }
+            }
+
+            SetCookie(cookieShowHideColumn, columnsNeedHide, 7);
+        },
+        checkAll: function () {
+
+        },
+        uncheckAll: function () {
+
+        }
+    });
+
+    function GetColumnsNeedHideFromCookies() {
+        var columnsNeedHide = [];
 
         var cookies = GetCookie(cookieShowHideColumn);
         if (cookies !== null && cookies.length > 0) {
             var items = cookies.split(",");
 
             $(items).each(function (idx, item) {
-                gridOptions.columnsNeedHide.push(parseInt(item));
+                columnsNeedHide.push(parseInt(item));
             });
         }
+
+        return columnsNeedHide;
     }
 
     function SetCookie(cname, cvalue, expiredays) {
@@ -286,146 +382,14 @@
             gridOptions.footerRows = [];
         }
 
-        GetColumnsNeedHide();
+        gridOptions.columnsNeedHide = GetColumnsNeedHideFromCookies();
 
         grid.fanexGrid(gridOptions);
 
-        createShowHideColumnMenuEvent($("#idShowHideColumns"));
-
-        registerShowHideColumnEvent(grid, gridOptions);
+        grid.fanexGrid("hideColumns", gridOptions, gridOptions.columnsNeedHide);
 
         common.EnableInput();
     }
-
-    function registerShowHideColumnEvent(gridElement, gridOptions) {
-        var checkboxColumns = $(".menu-column input[type='checkbox']");
-
-        checkboxColumns.off("change");
-
-        checkboxColumns.on("change", function () {
-            var columnIndex = $(this).data("index");
-            var isChecked = $(this).prop("checked");
-
-            if (columnIndex < 7) {
-                var index = $(gridOptions.columnsNeedHide).index(columnIndex);
-
-                if (isChecked) {
-                    //Show the grid column
-                    if (index > -1) {
-                        //remove column index
-                        gridOptions.columnsNeedHide.splice(index, 1);
-                    }
-                } else {
-                    //Hide the grid column
-                    if (index === -1) {
-                        //insert column index
-                        gridOptions.columnsNeedHide.push(columnIndex);
-                    }
-                }
-            }
-            else {
-                var startIndex = 0;
-                var endIndex = 0;
-                if (columnIndex < 11) {
-                    startIndex = (columnIndex - 6) * 7;
-                    endIndex = startIndex + 7;
-                }
-                else {
-                    startIndex = (columnIndex - 11) * 5 + 4 * 7 + 7;
-                    endIndex = startIndex + 5;
-                }
-
-                for (var i = startIndex ; i < endIndex; i++) {
-                    var index = $(gridOptions.columnsNeedHide).index(i);
-
-                    if (isChecked) {
-                        //Show the grid column
-                        if (index > -1) {
-                            //remove column index
-                            gridOptions.columnsNeedHide.splice(index, 1);
-                        }
-                    } else {
-                        //Hide the grid column
-                        if (index === -1) {
-                            //insert column index
-                            gridOptions.columnsNeedHide.push(i);
-                        }
-                    }
-                }
-            }
-
-            SetCookie(cookieShowHideColumn, gridOptions.columnsNeedHide, 7);
-
-            $(gridElement).fanexGrid("hideColumns", gridOptions, gridOptions.columnsNeedHide);
-        });
-    };
-
-    function createShowHideColumnMenuEvent(hideColumnsParentDiv) {
-        var hideColumnsButton = $('<a title="Manage Columns" class="icon icon-related" href></a>');
-        var hideColumnsMenu = $('<div class="menu-column col-sm-10 text-left"></div>');
-
-        var hideColumnsForm = generateFormForMenu();
-
-        hideColumnsMenu.append(hideColumnsForm);
-        hideColumnsParentDiv.append(hideColumnsButton).append(hideColumnsMenu);
-
-        hideColumnsMenu.hide();
-
-        hideColumnsButton.click(function (event) {
-            event.preventDefault();
-
-            hideColumnsMenu.show();
-        });
-
-        hideMenuWhenClickOutside(hideColumnsMenu);
-    };
-
-    function hideMenuWhenClickOutside(hideColumnsMenu) {
-        $(document).on("mouseup", function (e) {
-            var container = hideColumnsMenu;
-
-            if (!container.is(e.target) // if the target of the click isn't the container...
-                && container.has(e.target).length === 0) // ... nor a descendant of the container
-            {
-                container.hide();
-            }
-        });
-    };
-
-    function generateFormForMenu() {
-        var hideColumnsForm = $('<form class="form-horizontal "></form>');
-        var definedColumns = getHeaders();
-
-        $(definedColumns[0].Columns).each(function (idx, column) {
-            if (idx > 6) {
-                //default set checked for all checkboxes
-                var checkbox = '<input type="checkbox" checked data-index="' + idx + '" id="' + idx + '">' +
-                               '<label class="checkbox-label" for="' + idx + '">' + column.HeaderText + '</label>';
-
-                if (idx < 11) {
-                    idx = (idx - 6) * 7;
-                }
-                else {
-                    idx = (idx - 11) * 5 + 4 * 7 + 7;
-                }
-
-                var index = $(gridOptions.columnsNeedHide).index(idx);
-
-                if (index > -1) {
-                    //remove 'checked' for the hide column
-                    checkbox = checkbox.replace("checked", "");
-                }
-
-                hideColumnsForm.append('<div class="form-group">' +
-                                            '<span class="checkbox">' +
-                                                checkbox +
-                                            '</span>' +
-                                    '<div>');
-            }
-        });
-
-        return hideColumnsForm;
-    };
 
     function getHeaders() {
         var groupHeaders = [{ Columns: [] }];
