@@ -6,7 +6,9 @@
     using Fanex.NAP.TGRS.Reports.Criteria.TraderPerformanceMonthly;
     using Fanex.NAP.TGRS.Reports.Services.Implements;
     using Fanex.NAP.TGRS.Reports.Services.Interfaces;
+    using NAP.Core.Web;
     using Newtonsoft.Json.Linq;
+    using System;
     using System.Web.Mvc;
 
     public class TraderMonthlyReportController : TGRSBaseController
@@ -46,9 +48,11 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
         public ActionResult ExportExcel(GetTraderPerformanceMonthlyCriteria filter)
         {
-            var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/template.xlsx"), filter);
+            var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformance.xlsx"), filter);
+            var fileName = "Trader_Monthly_Performance_" + DateTime.Now.ToShortFormatedDateForFileName() + ".xlsx";
 
-            return File(file, "application/vnd.ms-excel", "Trader performance monthly.xlsx");
+
+            return File(file, "application/vnd.ms-excel", fileName);
         }
     }
 }

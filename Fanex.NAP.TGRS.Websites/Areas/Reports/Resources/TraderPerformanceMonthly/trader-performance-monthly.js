@@ -36,7 +36,7 @@
                 minWidth: 150,
                 multiple: false,
                 header: false,
-                height: 120
+                height: 180
             });
 
     var traderSearch = $("#traderSearch");
@@ -93,6 +93,7 @@
     showHideCloumnsSelector.multiselect({
         header: false,
         minWidth: 150,
+        height: 180,
         classes: '',
         checkAllText: 'Check',
         uncheckAllText: 'Uncheck',
@@ -454,7 +455,7 @@
         c.push({
             HeaderText: "#",
             Name: "#",
-            Width: 40,
+            Width: 60,
             HeaderAlign: "center",
             CellAlign: "left",
             ShowCollapseExpand: true
