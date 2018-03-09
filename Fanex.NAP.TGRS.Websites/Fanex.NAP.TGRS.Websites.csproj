@@ -501,7 +501,6 @@
     <Content Include="Areas\User\Resources\UserInfo\settings.less" />
     <Content Include="Areas\Reports\Views\TraderMonthlyReport\Index.cshtml" />
     <Content Include="Areas\Reports\Views\TraderMonthlyReport\Filter.cshtml" />
-    <Content Include="Areas\Reports\ExcelTemplates\PerformanceMonthly\template.xlsx" />
     <Content Include="Areas\Reports\ExcelTemplates\PerformanceMonthly\MonthlyPerformance.xlsx" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
