@@ -82,7 +82,7 @@
             }
         }
 
-    var cookieShowHideColumn = userId + "-" + "columns";
+    var cookieShowHideColumn = user + "-" + "columns";
 
     var grid = $("#table");
 
@@ -184,46 +184,25 @@
 
     function GetColumnsNeedHideFromCookies() {
         var columnsNeedHide = [];
-
         var cookies = GetCookie(cookieShowHideColumn);
-        if (cookies !== null && cookies.length > 0) {
-            var items = cookies.split(",");
 
-            $(items).each(function (idx, item) {
-                columnsNeedHide.push(parseInt(item));
-            });
+        if (cookies !== undefined) {
+            columnsNeedHide = cookies.hiddenColumns;
         }
 
         return columnsNeedHide;
     }
 
     function SetCookie(cname, cvalue, expiredays) {
-        var expires = ""
-        if (expiredays) {
-            var date = new Date();
-            date.setTime(date.getTime() + (expiredays * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toGMTString();
-        }
-
-        document.cookie = cname + "=" + cvalue + expires + "; path=/";
+        Cookies.set(cname, { hiddenColumns: cvalue }, { expires: expiredays });
     };
 
     function GetCookie(cname) {
-        var nameEQ = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ')
-                c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0)
-                return c.substring(nameEQ.length, c.length);
-        }
-
-        return null;
+        return Cookies.getJSON(cname);
     }
 
     function EraseCookie(cname) {
-        SetCookie(cname, "", -1);
+        Cookies.remove(cname);
     }
 
     function getExcel() {
@@ -455,7 +434,7 @@
         c.push({
             HeaderText: "#",
             Name: "#",
-            Width: 60,
+            Width: 40,
             HeaderAlign: "center",
             CellAlign: "left",
             ShowCollapseExpand: true

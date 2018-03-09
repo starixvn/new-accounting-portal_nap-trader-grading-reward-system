@@ -506,6 +506,7 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\Libraries\Cookie\jquery.cookie.js" />
     <Content Include="Scripts\Libraries\Highcharts\exporting.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts.js" />

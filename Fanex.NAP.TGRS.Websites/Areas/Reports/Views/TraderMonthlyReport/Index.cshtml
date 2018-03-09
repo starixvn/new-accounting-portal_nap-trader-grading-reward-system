@@ -7,7 +7,7 @@
         var traderColumns = Trader.Columns.ToString();
         var avgColumns = AvgSummary.Columns.ToString();
         var monthColumns = Summary.Columns.ToString();
-        var userId = ViewBag.UserId;
+        var user = ViewBag.User;
     }
 
     @section Headline
@@ -86,7 +86,7 @@
                     month: @Html.Raw(monthColumns)
                     };
 
-            var userId = @userId;
+            var user = '@user';
 
             var labels =
                 {
