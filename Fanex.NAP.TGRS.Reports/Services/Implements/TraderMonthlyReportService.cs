@@ -22,6 +22,11 @@
                 using (var multi = db.QueryMultiple(filter))
                 {
                     var traders = multi.Read<Trader>();
+                    if (traders != null && traders.Count() > 0)
+                    {
+                        traders = traders.OrderBy(t => t.ShiftOrder);
+                    }
+
 
                     if (filter.Bettype != (int)Bettype.All)
                     {

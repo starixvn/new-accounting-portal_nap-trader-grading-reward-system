@@ -434,7 +434,7 @@
         c.push({
             HeaderText: "#",
             Name: "#",
-            Width: 40,
+            Width: 60,
             HeaderAlign: "center",
             CellAlign: "left",
             ShowCollapseExpand: true
