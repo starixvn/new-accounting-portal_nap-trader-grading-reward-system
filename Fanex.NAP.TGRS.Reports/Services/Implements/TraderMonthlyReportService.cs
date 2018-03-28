@@ -204,7 +204,7 @@
                 {
                     var value = jtoken.Value<double>();
 
-                    if (pair.Key.Contains("Margin")) cell.SetCellValue(value / 100);
+                    if (pair.Key.Contains("Margin")) cell.SetCellValue(value);
                     else cell.SetCellValue(value);
                 }
                 else

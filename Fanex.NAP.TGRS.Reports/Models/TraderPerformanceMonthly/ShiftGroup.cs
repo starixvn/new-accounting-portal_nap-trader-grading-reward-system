@@ -11,7 +11,7 @@
             shift.Trader = new Trader { ShiftName = shiftName };
             Shift = shift;
 
-            Data = shiftGroup.OrderBy(s => s.Trader.TraderName);
+            Data = shiftGroup.OrderBy(s => s.Trader.Grade).ThenBy(s => s.Trader.TraderName);
         }
 
         public SummaryItem Shift { get; }
