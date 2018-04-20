@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="ChangedData">
+    <Setting Key="TGRS_Service_ChangedData_Get" SpName="TGRS_Service_ChangedData_Get" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
+</Functions>
