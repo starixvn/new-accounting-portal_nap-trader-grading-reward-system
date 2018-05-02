@@ -118,6 +118,7 @@
     <None Include="App.config" />
     <None Include="App.UAT.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App_Data\public.snk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
