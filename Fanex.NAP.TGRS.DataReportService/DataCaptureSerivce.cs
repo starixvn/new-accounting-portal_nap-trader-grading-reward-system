@@ -15,9 +15,11 @@
 
     public partial class DataCaptureSerivce : ServiceBase
     {
-        private static ChangedDataList capturedData;
-
-        private Timer timer = new Timer(60 * 60 * 1000);
+#if DEBUG
+        private Timer timer = new Timer(30 * 1000);
+#else
+        private Timer timer = new Timer(24 * 60 * 60 * 1000);
+#endif
 
         private static string target = "TGRSDataCaptureService";
 
@@ -30,20 +32,15 @@
         {
             get
             {
-                if (capturedData == null)
-                {
-                    return GetChangedData();
-                }
-                else
-                {
-                    return GetChangedData() - capturedData;
-                }
+                return GetChangedData();
             }
         }
 
         protected override void OnStart(string[] args)
         {
             timer.Elapsed += Run;
+            timer.AutoReset = true;
+            timer.Enabled = true;
             timer.Start();
         }
 
@@ -58,56 +55,21 @@
             SendData();
         }
 
-        public string RenderData()
-        {
-            if (capturedData == null)
-            {
-                capturedData = GetChangedData();
-            }
-            else
-            {
-                capturedData = GetChangedData() - capturedData;
-            }
-
-            var data = capturedData;
-
-            var result = new StringBuilder();
-
-            if (data.Traders.Any())
-            {
-                result.Append("- Traders:\n");
-                RenderData(result, data.Traders);
-            }
-
-            if (data.Matches.Any())
-            {
-                result.Append("- Matches:\n");
-                RenderData(result, data.Matches);
-            }
-
-            return result.ToString();
-        }
-
         public void SendData()
         {
             var data = CapturedData;
 
-            if (data.Traders.Any() || data.Matches.Any())
-            {
-                SendGreetings();
-            }
-
             if (data.Traders.Any())
             {
-                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "+ Traders:" } } });
-
                 var result = new Queue<string>();
 
                 var arr = data.Traders.ToArray();
 
                 RenderMsg(arr, 0, arr.Length - 1, result);
 
-                foreach (var msg in result)
+                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
+
+                foreach (var msg in result.Skip(1))
                 {
                     SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
                 }
@@ -115,15 +77,15 @@
 
             if (data.Matches.Any())
             {
-                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "+ Matches:" } } });
-
                 var result = new Queue<string>();
 
                 var arr = data.Matches.ToArray();
 
                 RenderMsg(arr, 0, arr.Length - 1, result);
 
-                foreach (var msg in result)
+                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
+
+                foreach (var msg in result.Skip(1))
                 {
                     SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
                 }
