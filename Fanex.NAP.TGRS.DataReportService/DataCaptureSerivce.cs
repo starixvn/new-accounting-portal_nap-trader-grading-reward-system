@@ -15,11 +15,8 @@
 
     public partial class DataCaptureSerivce : ServiceBase
     {
-#if DEBUG
+
         private Timer timer = new Timer(30 * 1000);
-#else
-        private Timer timer = new Timer(24 * 60 * 60 * 1000);
-#endif
 
         private static string target = "TGRSDataCaptureService";
 
@@ -57,38 +54,45 @@
 
         public void SendData()
         {
-            var data = CapturedData;
-
-            if (data.Traders.Any())
+            try
             {
-                var result = new Queue<string>();
+                var data = CapturedData;
 
-                var arr = data.Traders.ToArray();
-
-                RenderMsg(arr, 0, arr.Length - 1, result);
-
-                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
-
-                foreach (var msg in result.Skip(1))
+                if (data.Traders.Any())
                 {
-                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                    var result = new Queue<string>();
+
+                    var arr = data.Traders.ToArray();
+
+                    RenderMsg(arr, 0, arr.Length - 1, result);
+
+                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
+
+                    foreach (var msg in result.Skip(1))
+                    {
+                        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                    }
+                }
+
+                if (data.Matches.Any())
+                {
+                    var result = new Queue<string>();
+
+                    var arr = data.Matches.ToArray();
+
+                    RenderMsg(arr, 0, arr.Length - 1, result);
+
+                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
+
+                    foreach (var msg in result.Skip(1))
+                    {
+                        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                    }
                 }
             }
-
-            if (data.Matches.Any())
+            catch (Exception ex)
             {
-                var result = new Queue<string>();
-
-                var arr = data.Matches.ToArray();
-
-                RenderMsg(arr, 0, arr.Length - 1, result);
-
-                SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
-
-                foreach (var msg in result.Skip(1))
-                {
-                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
-                }
+                Logging.Logger.Log.Error("error", ex);
             }
         }
 
