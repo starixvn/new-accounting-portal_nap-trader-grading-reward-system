@@ -116,9 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="App.UAT.config">
+    <None Include="Fanex.NAP.TGRS.DataReportService.exe.UAT.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App_Data\public.snk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
