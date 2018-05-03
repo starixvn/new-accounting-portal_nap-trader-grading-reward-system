@@ -47,7 +47,7 @@
             {
                 var data = GetChangedData();
 
-                Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: ${data.Matches.Count()}");
+                Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: {data.Matches.Count()}");
 
                 if (data.Traders.Any())
                 {
@@ -160,7 +160,7 @@
                     var data1 = queries.Read<RawChangedData>();
                     var data2 = queries.Read<RawChangedData>();
 
-                    Logging.Logger.Log.Info("Called SP");
+                    Logging.Logger.Log.Info($"Called SP - data1: {data1.Count()} - data2: {data2.Count()}");
 
                     return new ChangedDataList(data1.Concat(data2));
                 }
