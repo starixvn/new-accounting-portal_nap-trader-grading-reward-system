@@ -128,7 +128,7 @@
 
         public static void SendMessage(LetsTalkMessage message)
         {
-            var url = "http://10.40.40.73/letstalk/api/Message";
+            var url = "http://10.40.40.127:801/api/Message";
 
             using (var client = new HttpClient())
             {
