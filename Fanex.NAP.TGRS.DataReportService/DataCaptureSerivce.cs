@@ -157,10 +157,12 @@
             {
                 try
                 {
+                    Logging.Logger.Log.Info($"sql: {queries.Command.CommandText} - {nameof(queries.IsConsumed)} - {queries.IsConsumed}");
+
                     var data1 = queries.Read<RawChangedData>();
                     var data2 = queries.Read<RawChangedData>();
 
-                    Logging.Logger.Log.Info($"Called SP - data1: {data1.Count()} - data2: {data2.Count()}");
+                    Logging.Logger.Log.Info($"Called SP - data1: {data1.Count()} - data2: {data2.Count()} - {nameof(queries.IsConsumed)} - {queries.IsConsumed}");
 
                     return new ChangedDataList(data1.Concat(data2));
                 }
