@@ -34,10 +34,17 @@
 
         protected override void OnStart(string[] args)
         {
-            timer.Elapsed += Run;
-            timer.AutoReset = true;
-            timer.Enabled = true;
-            timer.Start();
+            try
+            {
+                timer.Elapsed += Run;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                Logging.Logger.Log.Error(ex.Message, ex);
+            }
         }
 
         protected override void OnStop()
