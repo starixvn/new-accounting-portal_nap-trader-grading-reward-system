@@ -47,6 +47,8 @@
             {
                 var data = GetChangedData();
 
+                Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: ${data.Matches.Count()}");
+
                 if (data.Traders.Any())
                 {
                     var result = new Queue<string>();
