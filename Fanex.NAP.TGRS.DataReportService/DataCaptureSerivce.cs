@@ -124,7 +124,7 @@
 
         public static void SendMessage(LetsTalkMessage message)
         {
-            var url = "http://deployment-proxy.starific.net/letstalk/api/Message";
+            var url = "http://10.40.40.73/letstalk/api/Message";
 
             using (var client = new HttpClient())
             {
