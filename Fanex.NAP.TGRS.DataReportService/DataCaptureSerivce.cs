@@ -11,11 +11,11 @@
     using System.Net.Http;
     using System.ServiceProcess;
     using System.Text;
-    using System.Timers;
+    using System.Threading;
 
     public partial class DataCaptureSerivce : ServiceBase
     {
-        private Timer timer = new Timer(60 * 1000);
+        private Timer timer = new Timer(SendData, null, 1000, 30 * 60 * 1000);
 
         private static string target = "TGRSDataCaptureService";
 
@@ -34,35 +34,18 @@
 
         protected override void OnStart(string[] args)
         {
-            try
-            {
-                //timer.Elapsed += Run;
-                //timer.AutoReset = true;
-                //timer.Enabled = true;
-                //timer.Start();
-            }
-            catch (Exception ex)
-            {
-                Logging.Logger.Log.Error(ex.Message, ex);
-            }
         }
 
         protected override void OnStop()
         {
-            timer.Stop();
             timer.Dispose();
         }
 
-        private void Run(object sender, ElapsedEventArgs e)
-        {
-            SendData();
-        }
-
-        public void SendData()
+        public static void SendData(object state)
         {
             try
             {
-                var data = CapturedData;
+                var data = GetChangedData();
 
                 if (data.Traders.Any())
                 {
@@ -165,13 +148,25 @@
         {
             var criteria = new ChangedDataGetCriteria();
 
+            Logging.Logger.Log.Info("Created criteria");
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             using (var queries = db.QueryMultiple())
             {
-                var data1 = queries.Read<RawChangedData>();
-                var data2 = queries.Read<RawChangedData>();
+                try
+                {
+                    var data1 = queries.Read<RawChangedData>();
+                    var data2 = queries.Read<RawChangedData>();
 
-                return new ChangedDataList(data1.Concat(data2));
+                    Logging.Logger.Log.Info("Called SP");
+
+                    return new ChangedDataList(data1.Concat(data2));
+                }
+                catch (Exception ex)
+                {
+                    Logging.Logger.Log.Error(ex.Message, ex);
+                    throw ex;
+                }
             }
         }
 

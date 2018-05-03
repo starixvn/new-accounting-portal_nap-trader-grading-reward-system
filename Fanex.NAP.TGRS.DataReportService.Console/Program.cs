@@ -15,7 +15,7 @@
 
             var service = new DataCaptureSerivce();
 
-            service.SendData();
+            DataCaptureSerivce.SendData(null);
 
             System.Console.ReadLine();
         }
