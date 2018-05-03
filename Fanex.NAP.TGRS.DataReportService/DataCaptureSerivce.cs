@@ -36,10 +36,10 @@
         {
             try
             {
-                timer.Elapsed += Run;
-                timer.AutoReset = true;
-                timer.Enabled = true;
-                timer.Start();
+                //timer.Elapsed += Run;
+                //timer.AutoReset = true;
+                //timer.Enabled = true;
+                //timer.Start();
             }
             catch (Exception ex)
             {
