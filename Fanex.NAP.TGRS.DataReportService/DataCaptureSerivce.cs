@@ -57,6 +57,8 @@
 
                     RenderMsg(arr, 0, arr.Length - 1, result);
 
+                    Logging.Logger.Log.Info($"Trader messages: {result.Count}");
+
                     SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
 
                     foreach (var msg in result.Skip(1))
@@ -72,6 +74,8 @@
                     var arr = data.Matches.ToArray();
 
                     RenderMsg(arr, 0, arr.Length - 1, result);
+
+                    Logging.Logger.Log.Info($"Match messages: {result.Count}");
 
                     SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
 
