@@ -146,7 +146,7 @@
                 builder.Append("\t" + datum.Header + "\n");
                 builder.Append(string.Format("\t\t- WL: {0}/{1}\n", FormatNumer(datum.OldWinLoss ?? 0), FormatNumer(datum.NewWinLoss ?? 0)));
                 builder.Append(string.Format("\t\t- TO: {0}/{1}\n", FormatNumer(datum.OldTurnover ?? 0), FormatNumer(datum.NewTurnover ?? 0)));
-                builder.Append(string.Format("\t\t- #Ticket: {0}/{1}\n", datum.OldBetCount, datum.NewBetCount));
+                builder.Append(string.Format("\t\t- #Ticket: {0}/{1}\n", datum.OldBetCount.Value.ToString("N"), datum.NewBetCount.Value.ToString("N")));
             }
         }
 
@@ -180,19 +180,7 @@
 
         private static string FormatNumer(double a)
         {
-            if ((int)a == a)
-            {
-                return a + ".00";
-            }
-
-            var rounded = Math.Round(a, 2);
-
-            if ((int)(rounded * 10) == rounded * 10)
-            {
-                return rounded + "0";
-            }
-
-            return rounded.ToString();
+            return a.ToString("N2");
         }
 
         private static string EncryptJson(object data)
