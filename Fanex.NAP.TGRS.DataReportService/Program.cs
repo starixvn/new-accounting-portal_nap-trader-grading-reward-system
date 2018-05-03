@@ -10,20 +10,27 @@
         /// </summary>
         private static void Main()
         {
-            DbSettingProviderManager
-                .StartNewSession()
-                .UseDefaultConnectionStringProvider()
-                .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/UAT", enableWatching: true)
-                .Run();
-
-            ServiceBase[] ServicesToRun;
-
-            ServicesToRun = new ServiceBase[]
+            try
             {
-                new DataCaptureSerivce()
-            };
+                DbSettingProviderManager
+                    .StartNewSession()
+                    .UseDefaultConnectionStringProvider()
+                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/UAT", enableWatching: true)
+                    .Run();
 
-            ServiceBase.Run(ServicesToRun);
+                ServiceBase[] ServicesToRun;
+
+                ServicesToRun = new ServiceBase[]
+                {
+                new DataCaptureSerivce()
+                };
+
+                ServiceBase.Run(ServicesToRun);
+            }
+            catch (System.Exception ex)
+            {
+                Logging.Logger.Log.Error(ex.Message, ex);
+            }
         }
     }
 }

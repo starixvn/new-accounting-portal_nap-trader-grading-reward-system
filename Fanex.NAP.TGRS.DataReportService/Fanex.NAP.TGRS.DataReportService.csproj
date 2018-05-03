@@ -122,9 +122,11 @@
     <None Include="App_Data\public.snk">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="install.bat" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="uninstall.bat" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
@@ -135,7 +137,9 @@
     <Content Include="App_Data\SP.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\UAT\SP_UAT.xml" />
+    <Content Include="App_Data\UAT\SP_UAT.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
