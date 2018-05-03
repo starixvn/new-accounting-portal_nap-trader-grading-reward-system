@@ -36,7 +36,7 @@
                         MatchId = g.Key,
                         AwayId = g.First().AwayId,
                         HomeId = g.First().HomeId,
-                        Bettypes = g.ToDictionary(a => a.BettypeId, a => a.Bettype),
+                        Bettypes = g.GroupBy(a => a.BettypeId).ToDictionary(a => a.Key, a => a.First().Bettype),
                         OldBetCount = g.Sum(r => r.OldBetCount),
                         OldTurnover = g.Sum(r => r.OldTurnover),
                         OldWinLoss = g.Sum(r => r.OldWinLoss),
