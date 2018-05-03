@@ -22,7 +22,7 @@
 
                 ServicesToRun = new ServiceBase[]
                 {
-                new DataCaptureSerivce()
+                    new DataCaptureSerivce()
                 };
 
                 ServiceBase.Run(ServicesToRun);
