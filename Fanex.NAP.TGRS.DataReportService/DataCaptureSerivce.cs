@@ -146,7 +146,7 @@
                 builder.Append("\t" + datum.Header + "\n");
                 builder.Append(string.Format("\t\t- WL: {0}/{1}\n", FormatNumer(datum.OldWinLoss ?? 0), FormatNumer(datum.NewWinLoss ?? 0)));
                 builder.Append(string.Format("\t\t- TO: {0}/{1}\n", FormatNumer(datum.OldTurnover ?? 0), FormatNumer(datum.NewTurnover ?? 0)));
-                builder.Append(string.Format("\t\t- #Ticket: {0}/{1}\n", datum.OldBetCount.Value.ToString("N"), datum.NewBetCount.Value.ToString("N")));
+                builder.Append(string.Format("\t\t- #Ticket: {0}/{1}\n", (int)datum.OldBetCount.Value, (int)datum.NewBetCount.Value));
             }
         }
 
