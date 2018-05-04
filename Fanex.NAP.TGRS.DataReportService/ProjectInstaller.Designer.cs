@@ -39,7 +39,7 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "Data Report Service";
-            this.serviceInstaller1.DisplayName = "Fanex.NAP.TGRS.DataReportService";
+            this.serviceInstaller1.DisplayName = "Fanex.NAP.TGRS.DataReport.Service";
             this.serviceInstaller1.ServiceName = "DataReportService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 

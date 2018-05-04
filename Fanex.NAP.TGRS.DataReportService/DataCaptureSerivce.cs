@@ -15,7 +15,7 @@
 
     public partial class DataCaptureSerivce : ServiceBase
     {
-        private Timer timer = new Timer(SendData, null, 1000, 30 * 60 * 1000);
+        private Timer timer = new Timer(SendData, null, 1000, 24 * 60 * 60 * 1000);
 
         private static string target = "TGRSDataCaptureService";
 
