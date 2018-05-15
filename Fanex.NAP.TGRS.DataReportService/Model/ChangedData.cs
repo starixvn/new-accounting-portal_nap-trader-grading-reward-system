@@ -22,7 +22,7 @@
                 return string.Join(", ", sorted.Take(3)) + "...";
             }
         }
-        
+
         public double? OldTurnover { get; set; }
 
         public double? OldWinLoss { get; set; }
@@ -34,6 +34,14 @@
         public double? NewWinLoss { get; set; }
 
         public double? NewBetCount { get; set; }
+
+        public bool IsObsolete
+        {
+            get
+            {
+                return OldTurnover == NewTurnover && OldWinLoss == NewWinLoss && OldBetCount == NewBetCount;
+            }
+        }
 
         protected bool Equal(ChangedData data)
         {

@@ -45,45 +45,45 @@
         {
             try
             {
-                var data = GetChangedData();
+                //var data = GetChangedData();
 
-                Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: {data.Matches.Count()}");
+                //Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: {data.Matches.Count()}");
 
-                if (data.Traders.Any())
-                {
-                    var result = new Queue<string>();
+                //if (data.Traders.Any())
+                //{
+                //    var result = new Queue<string>();
 
-                    var arr = data.Traders.ToArray();
+                //    var arr = data.Traders.Where(tr => !tr.IsObsolete).ToArray();
 
-                    RenderMsg(arr, 0, arr.Length - 1, result);
+                //    RenderMsg(arr, 0, arr.Length - 1, result);
 
-                    Logging.Logger.Log.Info($"Trader messages: {result.Count}");
+                //    Logging.Logger.Log.Info($"Trader messages: {result.Count}");
 
-                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
+                //    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
 
-                    foreach (var msg in result.Skip(1))
-                    {
-                        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
-                    }
-                }
+                //    foreach (var msg in result.Skip(1))
+                //    {
+                //        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                //    }
+                //}
 
-                if (data.Matches.Any())
-                {
-                    var result = new Queue<string>();
+                //if (data.Matches.Any())
+                //{
+                //    var result = new Queue<string>();
 
-                    var arr = data.Matches.ToArray();
+                //    var arr = data.Matches.Where(tr => !tr.IsObsolete).ToArray();
 
-                    RenderMsg(arr, 0, arr.Length - 1, result);
+                //    RenderMsg(arr, 0, arr.Length - 1, result);
 
-                    Logging.Logger.Log.Info($"Match messages: {result.Count}");
+                //    Logging.Logger.Log.Info($"Match messages: {result.Count}");
 
-                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
+                //    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
 
-                    foreach (var msg in result.Skip(1))
-                    {
-                        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
-                    }
-                }
+                //    foreach (var msg in result.Skip(1))
+                //    {
+                //        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                //    }
+                //}
             }
             catch (Exception ex)
             {
