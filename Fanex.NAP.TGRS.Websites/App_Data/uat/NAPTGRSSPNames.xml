@@ -257,4 +257,7 @@
   <Function Name="TraderPerformanceMonthly">
     <Setting Key="TGRS_Rpt_TraderPerformanceMonthly" SpName="TGRS_Rpt_TraderPerformanceMonthly_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+  <Function Name="BettypeMonthlyPerformance">
+    <Setting Key="TGRS_Rpt_BettypePerformanceMonthly" SpName="TGRS_Rpt_BettypePerformanceMonthly_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>

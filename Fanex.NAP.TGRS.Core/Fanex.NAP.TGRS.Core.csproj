@@ -143,6 +143,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClasses\ExcelStream.cs" />
+    <Compile Include="BaseClasses\ExcelUtilities.cs" />
+    <Compile Include="BaseClasses\FSExcelConfig.cs" />
     <Compile Include="BaseClasses\TGRSBaseController.cs" />
     <Compile Include="BaseClasses\TGRSBaseService.cs" />
     <Compile Include="Configurations\AppSettings.cs" />

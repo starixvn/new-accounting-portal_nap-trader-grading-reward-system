@@ -52,8 +52,8 @@
             });
 
     var showHideCloumnsSelector = $("#idColumns");
-    var columnIndexList = [7, 14, 21, 28, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 
+    var columnIndexList = [7, 14, 21, 28, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
 
     var gridOptions =
         {
@@ -63,23 +63,19 @@
             showDistinctRow: false,
             showTree: true,
             showTitle: true,
+            titleInfo:
+            {
+                    showExcelButton: true,
+                    exportExcelFunction: getExcel,
+                    showCollapseExpandButton: true,
+            },
             showColumnsShowHide: false,
             autoResizeColumn: true,
             columnsNeedHide: [],
             gridExpandHeight: 230,
-            showPager: false,
-            customPager: false,
             allowTruncate: true,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges
-            },
-            titleInfo:
-            {
-                showExcelButton: true,
-                exportExcelFunction: getExcel
-            }
+            defaultCollapseAllGroups: true,
+            virtualScroller: true
         }
 
     var cookieShowHideColumn = user + "-" + "columns";
@@ -256,7 +252,7 @@
     }
 
     function renderRow(row) {
-        var obj = { Columns: [] };
+        var obj = { Columns: [], SubRows: '' };
 
         renderTrader(row.Trader, obj, false);
         renderSummary(row.FstHalf, "fst", obj, columns.avg);

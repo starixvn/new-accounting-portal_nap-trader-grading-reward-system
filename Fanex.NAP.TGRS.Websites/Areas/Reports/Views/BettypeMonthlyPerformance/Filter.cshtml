@@ -1,0 +1,70 @@
+﻿@using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
+@using Fanex.NAP.TGRS.Reports
+@using System.Linq
+@model IEnumerable<Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail.BetTypeItem>
+
+    <div class="filter-bar">
+        <div class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_3">
+                    <label for="yearSelector">Year</label>
+                </div>
+                <div class="edit-field col_3">
+                    <select id="yearSelector">
+                        @for (var year = DateTime.Now.Year; year >= 2015; year--)
+                        {
+                            if (year < DateTime.Now.Year)
+                            {
+                                <option value="@((int) year)">@year</option>
+                            }
+                            else
+                            {
+                                <option value="@((int) year)" selected>@year</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="lbl-field col_3">
+                    <label for="bettypeSelector">Bet Type</label>
+                </div>
+                <div class="edit-field col_12">
+                    <select id="bettypeSelector" multiple="multiple">
+                        @foreach (var bettype in Model)
+                        {
+                            <option value="@((int) bettype.BetTypeId)">@bettype.BetTypeName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="lbl-field col_3">
+                    <label for="idColumns">Columns</label>
+                </div>
+                <div class="edit-field col_5">
+                    <select multiple="multiple" id="idColumns">
+                        <option data-default="1">1st Half Year</option>
+                        <option>2nd Half Year</option>
+                        <option>Full Year</option>
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
+                </div>
+
+                <div class="lbl-field col_3">
+                </div>
+                <div class="submit col_5">
+                    <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+                </div>
+            </div>
+        </div>
+    </div>

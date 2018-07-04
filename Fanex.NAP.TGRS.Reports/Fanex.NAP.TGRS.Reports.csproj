@@ -78,6 +78,10 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Others\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="Simplect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
@@ -118,6 +122,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BettypeMonthlyPerformanceController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\NewPerformanceDetailController.cs" />
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
@@ -125,6 +130,7 @@
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Controllers\TraderMonthlyReportController.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
+    <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeagueCriteria.cs" />
@@ -201,6 +207,11 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
+    <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
+    <Compile Include="Models\BettypeMonthlyPerformance\BettypeSummary.cs" />
+    <Compile Include="Models\BettypeMonthlyPerformance\ExcelConfig.cs" />
+    <Compile Include="Models\BettypeMonthlyPerformance\Summary.cs" />
+    <Compile Include="Models\BettypeMonthlyPerformance\SummaryList.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\NewPerformanceDetail\GradeTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\TeamTraderMatchBettypePerformanceInfo.cs" />
@@ -280,6 +291,7 @@
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="ReportsAreaRegistration.cs" />
     <Compile Include="Services\Implements\BetTypeDetailReportService.cs" />
+    <Compile Include="Services\Implements\BettypeMonthlyService.cs" />
     <Compile Include="Services\Implements\DashboardService.cs" />
     <Compile Include="Services\Implements\GradeDetailReportService.cs" />
     <Compile Include="Services\Implements\NewTeamDetailReportService.cs" />
@@ -294,6 +306,7 @@
     <Compile Include="Services\Implements\TraderManagementService.cs" />
     <Compile Include="Services\Implements\TraderMonthlyReportService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />
+    <Compile Include="Services\Interfaces\IBettypeMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\IDashboardService.cs" />
     <Compile Include="Services\Interfaces\INewDetailReportService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
