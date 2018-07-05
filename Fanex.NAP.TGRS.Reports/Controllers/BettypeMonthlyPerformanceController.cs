@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using Fanex.NAP.Core.Web;
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.Services.Implements;
@@ -9,6 +10,7 @@
     using System.Linq;
     using System.Web.Mvc;
 
+    [NapAuth(FunctionKey = TGRSFunctionKeys.BettypeMonthlyPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
     public class BettypeMonthlyPerformanceController : TGRSBaseController
     {
         private readonly IDetailReportService _detailReportService = new DetailReportService();

@@ -100,6 +100,8 @@
     }
 
     function generateData() {
+        common.DisableInput();
+
         var url = common.ResolveRootUrl("Reports/BettypeMonthlyPerformance/GenerateData");
 
         var filter =
@@ -116,6 +118,7 @@
             data = json;
             renderData(filter);
             showHideColumn();
+            common.EnableInput();
         });
     }
 
