@@ -101,42 +101,22 @@
 
         protected override IRow GetTemplateRow(ISheet sheet, BettypeMonthlySummary data)
         {
-            return sheet.GetRow(sheet.LastRowNum - 2);
+            return sheet.GetRow(sheet.LastRowNum - 1);
         }
 
         protected override void CleanupTemplate(ISheet sheet)
         {
-            sheet.ShiftRows(sheet.LastRowNum - 1, sheet.LastRowNum, -1, true, false);
-
-            if (_showedColumns.Count != 0 && _showedColumns.Count != 15)
-            {
-                var emptyRow = sheet.GetRow(sheet.LastRowNum - 1);
-
-                var lastCell = emptyRow.Cells.Last();
-
-                var cell = emptyRow.CopyCell(lastCell.ColumnIndex, _showedColumns.Count * 5);
-
-                emptyRow.RemoveCell(lastCell);
-            }
-            else
-            {
-                var emptyRow = sheet.GetRow(sheet.LastRowNum - 1);
-
-                foreach (var cell in emptyRow.Cells)
-                {
-                    emptyRow.RemoveCell(cell);
-                }
-            }
+            sheet.ShiftRows(sheet.LastRowNum, sheet.LastRowNum, -1, true, false);
         }
 
         protected override int ShiftTemplate(ISheet sheet)
         {
-            var start = sheet.GetRow(sheet.LastRowNum - 2);
+            var start = sheet.GetRow(sheet.LastRowNum - 1);
             var end = sheet.GetRow(sheet.LastRowNum);
 
             sheet.ShiftRows(start.RowNum, end.RowNum, 1, true, false);
 
-            return sheet.LastRowNum - 3;
+            return sheet.LastRowNum - 2;
         }
 
         private int FillSummary(IRow row, int offset, Summary data)
