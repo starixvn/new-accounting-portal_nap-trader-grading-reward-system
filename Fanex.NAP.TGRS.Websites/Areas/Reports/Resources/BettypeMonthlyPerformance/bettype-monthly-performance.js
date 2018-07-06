@@ -106,7 +106,7 @@
 
         var filter =
             {
-                bettypes: bettypeSelector.val().join(","),
+                bettypes: (bettypeSelector.val() || []).join(","),
                 year: yearSelector.val()
             }
 
@@ -184,7 +184,7 @@
 
             var winloss = generateSummaryColumn(prefix, "Win Loss", "winloss", false);
 
-            var margin = generateSummaryColumn(prefix, "Margin", "margin", false);
+            var margin = generateSummaryColumn(prefix, "Margin(%)", "margin", false);
 
             var tickets = generateSummaryColumn(prefix, "Bet Count", "bet-count", true);
 
@@ -314,7 +314,7 @@
 
         var filter =
             {
-                bettypes: bettypeSelector.val().join(","),
+                bettypes: (bettypeSelector.val() || []).join(","),
                 year: yearSelector.val(),
                 columns: (currentSelected || []).join(",")
             };
