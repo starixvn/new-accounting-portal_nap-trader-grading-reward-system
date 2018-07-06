@@ -108,7 +108,7 @@
         {
             sheet.ShiftRows(sheet.LastRowNum - 1, sheet.LastRowNum, -1, true, false);
 
-            if (_showedColumns.Count != 0)
+            if (_showedColumns.Count != 0 && _showedColumns.Count != 15)
             {
                 var emptyRow = sheet.GetRow(sheet.LastRowNum - 1);
 
