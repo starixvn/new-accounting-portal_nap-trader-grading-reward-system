@@ -59,6 +59,8 @@
 
     initColumn();
 
+    var currentSelected = null;
+
     function readCookie() {
         return (Cookies.getJSON("bettype-columns") || {}).data;
     }
@@ -85,8 +87,7 @@
                 noneSelectedText: 'Select columns',
                 allSelectedText: 'All columns selected',
                 selectedText: '# columns selected',
-            })
-            .change(showHideColumn);
+            });
 
         var cookie = readCookie();
 
@@ -230,6 +231,8 @@
             grid.fanexGrid("hideColumns", gridOptions, columns);
         }
 
+        currentSelected = selected;
+
         setCookie(selected || []);
     }
 
@@ -313,7 +316,7 @@
             {
                 bettypes: bettypeSelector.val().join(","),
                 year: yearSelector.val(),
-                columns: (showHideCloumnsSelector.val() || []).join(",")
+                columns: (currentSelected || []).join(",")
             };
 
         common.DownloadFile(url, filter);
