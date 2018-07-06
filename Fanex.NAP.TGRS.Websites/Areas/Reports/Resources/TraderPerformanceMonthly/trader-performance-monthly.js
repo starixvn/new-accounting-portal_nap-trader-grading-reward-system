@@ -64,11 +64,11 @@
             showTree: true,
             showTitle: true,
             titleInfo:
-            {
+                {
                     showExcelButton: true,
                     exportExcelFunction: getExcel,
                     showCollapseExpandButton: true,
-            },
+                },
             showColumnsShowHide: false,
             autoResizeColumn: true,
             columnsNeedHide: [],
@@ -85,6 +85,8 @@
     var index = 0;
 
     var filter = null;
+
+    var openedGroup = null;
 
     showHideCloumnsSelector.multiselect({
         header: false,
@@ -149,7 +151,7 @@
                     endIndex = startIndex + 5;
                 }
 
-                for (var i = startIndex ; i < endIndex; i++) {
+                for (var i = startIndex; i < endIndex; i++) {
                     var index = $(columnsNeedHide).index(i);
 
                     if (isChecked) {
@@ -171,10 +173,8 @@
             SetCookie(cookieShowHideColumn, columnsNeedHide, 7);
         },
         checkAll: function () {
-
         },
         uncheckAll: function () {
-
         }
     });
 
@@ -362,6 +362,8 @@
 
         grid.fanexGrid(gridOptions);
 
+        limitGroup();
+
         common.EnableInput();
     }
 
@@ -521,6 +523,25 @@
         }
 
         gridOptions.columns = c;
+    }
+
+    function limitGroup() {
+        function limit(e) {
+            //var target = $(e.target).is("td") ? $(e.target) : $(e.target).parents("td");
+
+            //if (openedGroup == null) {
+            //    openedGroup = target[0];
+            //}
+            //else if ($(openedGroup).is(target)) {
+            //    openedGroup = null
+            //}
+            //else {
+            //    $(openedGroup).click();
+            //    openedGroup = target[0];
+            //}
+        }
+
+        $("td.tr-grid-collapse-expand").click(limit);
     }
 
     $("#btnGenerate").click(getData);

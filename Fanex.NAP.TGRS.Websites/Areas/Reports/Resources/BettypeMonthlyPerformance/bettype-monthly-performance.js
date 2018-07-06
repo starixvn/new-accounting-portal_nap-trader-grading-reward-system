@@ -55,7 +55,7 @@
 
     var data = { Data: null, Total: null };
 
-    var hiddenColumns = [];
+    var columnList = [];
 
     initColumn();
 
@@ -74,7 +74,7 @@
     function initColumn() {
         $("option", showHideCloumnsSelector).each(function (idx, ele) {
             ele.value = 1 + 5 * idx;
-            hiddenColumns.push(ele.value);
+            columnList.push(ele.value);
         });
 
         showHideCloumnsSelector
@@ -91,8 +91,7 @@
         var cookie = readCookie();
 
         if (cookie == null) {
-            showHideCloumnsSelector.val(hiddenColumns).multiselect("refresh");
-            hiddenColumns = [];
+            showHideCloumnsSelector.val(columnList).multiselect("refresh");
         }
         else {
             showHideCloumnsSelector.val(cookie).multiselect("refresh");
@@ -221,7 +220,7 @@
 
             var columns = []
 
-            hiddenColumns.filter(v => !val.has(v)).forEach(function (v) {
+            columnList.filter(v => !val.has(v)).forEach(function (v) {
                 for (var i = 0; i < 5; i++) {
                     var k = parseInt(v);
                     columns.push(k + i);
