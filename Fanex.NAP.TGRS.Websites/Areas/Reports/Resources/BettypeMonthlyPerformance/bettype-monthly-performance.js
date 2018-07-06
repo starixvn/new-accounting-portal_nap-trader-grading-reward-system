@@ -155,7 +155,7 @@
             var date = moment(`${filter.year}-${i + 1}-1`, "YYYY-MM-DD");
 
             result.Columns.push({
-                HeaderText: `${date.format("MMM")}-${filter.year}`,
+                HeaderText: `${date.format("MMM")} - ${filter.year}`,
                 Name: `${i + 1}-match`,
                 MergeColNumber: columns
             });
@@ -182,7 +182,7 @@
 
             var turnover = generateSummaryColumn(prefix, "Turnover", "turnover", false);
 
-            var winloss = generateSummaryColumn(prefix, "Win Loss", "winloss", false);
+            var winloss = generateSummaryColumn(prefix, "Winloss", "winloss", false);
 
             var margin = generateSummaryColumn(prefix, "Margin(%)", "margin", false);
 
