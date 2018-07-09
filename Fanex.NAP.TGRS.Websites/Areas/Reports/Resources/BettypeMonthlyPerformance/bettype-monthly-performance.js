@@ -13,7 +13,9 @@
                 create: function () {
                     performanceDetailHelper.SelectDefaultBettypes($(this), performanceDetailHelper.GetDefaultBettypes());
                 }
-            }).multiselectfilter({ width: 135 });
+            })
+            .multiselectfilter({ width: 135 })
+            .change(() => validator.ClearError(bettypeSelector.next()));
 
     var yearSelector =
         $("#yearSelector")
@@ -87,7 +89,7 @@
                 noneSelectedText: 'Select columns',
                 allSelectedText: 'All columns selected',
                 selectedText: '# columns selected',
-            });
+            })
 
         var cookie = readCookie();
 
@@ -100,8 +102,6 @@
     }
 
     function generateData() {
-        common.DisableInput();
-
         var url = common.ResolveRootUrl("Reports/BettypeMonthlyPerformance/GenerateData");
 
         var filter =
@@ -114,12 +114,28 @@
 
         generateColumns(filter);
 
-        $.get(url, filter, function (json) {
-            data = json;
-            renderData(filter);
-            showHideColumn();
-            common.EnableInput();
-        });
+        if (validateBettypes()) {
+            common.DisableInput();
+
+            $.get(url, filter, function (json) {
+                data = json;
+                renderData(filter);
+                showHideColumn();
+                common.EnableInput();
+            });
+        }
+    }
+
+    function validateBettypes() {
+        var val = bettypeSelector.val();
+
+        if (val == null) {
+            validator.ShowError(bettypeSelector.next(), "Required field!", "w");
+
+            return false;
+        }
+
+        return true;
     }
 
     function generateHeaders(filter) {
@@ -262,7 +278,7 @@
 
             result.push({
                 Name: `${prefix}-bet-count`,
-                Value: summary == null ? "-" : summary.Turnover
+                Value: summary == null ? "-" : summary.BetCount
             });
 
             return result;
