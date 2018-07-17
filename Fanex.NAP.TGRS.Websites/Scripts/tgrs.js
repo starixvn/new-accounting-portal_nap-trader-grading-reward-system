@@ -232,6 +232,16 @@ Fanex.TGRS.Common = function () {
             $this.HasViewScorePermission = result;
         });
     };
+
+    $this.bindDataToFanexGrid = function (freeGridDiv, offset = 0, data, globalData) {
+        if (data != null && data.length != 0) {
+            $("table.col_body_content tbody tr", freeGridDiv).each(function (idx, ele) {
+                var obj = Object.assign(($(ele).data() || {}), data[idx + offset]);
+                if (globalData != null) obj.global = globalData;
+                $(ele).data(obj);
+            });
+        }
+    }
 };
 
 var common = new Fanex.TGRS.Common();

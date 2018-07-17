@@ -96,6 +96,10 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Others\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="Simplect">
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
     </Reference>
@@ -159,6 +163,8 @@
     <Compile Include="Criteria\NewTraderPerformance\GetRegionByTraderCriteria.cs" />
     <Compile Include="Criteria\NewTraderPerformance\GetSportByTraderCriteria.cs" />
     <Compile Include="Criteria\NewTraderPerformance\GetTraderPerformanceCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformance\GetMatchBettypeCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformance\GetTraderMatchPerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderSportLeagueBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetRegionByTraderCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderSportLeaguePerformanceCriteria.cs" />
@@ -180,6 +186,10 @@
     <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
     <Compile Include="Models\TraderPerformance\BettypePerformance.cs" />
     <Compile Include="Models\TraderPerformance\LeaguePerformance.cs" />
+    <Compile Include="Models\TraderPerformance\MatchBettype.cs" />
+    <Compile Include="Models\TraderPerformance\MatchPerformance.cs" />
+    <Compile Include="Models\TraderPerformance\MatchPerformanceGroup.cs" />
+    <Compile Include="Models\TraderPerformance\MatchPerformanceList.cs" />
     <Compile Include="Models\TraderPerformance\RegionPerformance.cs" />
     <Compile Include="Models\TraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\TraderPerformance\TraderPerformance.cs" />

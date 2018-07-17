@@ -25,5 +25,7 @@
         public int EventProductCount { get; set; }
 
         public int RegionCount { get; set; }
+
+        public int MatchCount { get; set; }
     }
 }

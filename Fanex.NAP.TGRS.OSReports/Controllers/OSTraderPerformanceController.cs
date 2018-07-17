@@ -79,5 +79,20 @@
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult GetMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
+        {
+            var data =
+                _service
+                .GetTraderMatchPerformance(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetMatchBettypePerformanace(GetMatchBettypeCriteria criteria)
+        {
+            return Json(_service.GetMatchBettypes(criteria), JsonRequestBehavior.AllowGet);
+        }
     }
 }

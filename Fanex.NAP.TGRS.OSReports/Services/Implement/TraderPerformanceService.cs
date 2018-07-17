@@ -46,5 +46,12 @@
 
             return result != null ? result.ToList() : new List<BettypePerformance>();
         }
+
+        public IEnumerable<MatchPerformance> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
+        {
+            return GetData<MatchPerformance>(criteria);
+        }
+
+        public IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria) => GetData<MatchBettype>(criteria);
     }
 }

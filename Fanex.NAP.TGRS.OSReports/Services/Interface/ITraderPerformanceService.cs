@@ -18,5 +18,9 @@
         List<BettypePerformance> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
 
         List<Sport> GetAllSport();
+
+        IEnumerable<MatchPerformance> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria);
+
+        IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria);
     }
 }
