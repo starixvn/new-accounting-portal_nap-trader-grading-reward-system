@@ -691,7 +691,7 @@ var traderReports = (function ($) {
 
         $("#divMatchPerformanceGrid tr span.link").click(e => getMatchBettype($(e.target).parents("tr").data()));
 
-        titles.push({ class: "match-fallback-link", value: leagueName }); common.bindDataToFanexGrid("#divMatchPerformanceGrid", options.currentPage, json, { titles, traderId, sportId })
+        titles.push({ class: "match-fallback-link", value: leagueName });
 
         common.bindDataToFanexGrid("#divMatchPerformanceGrid", 0, json, { titles, traderId, sportId })
 
@@ -741,12 +741,6 @@ var traderReports = (function ($) {
 
         var name = obj.TeamName;
 
-        if (title.length >= 100) {
-            var n = 94 - prefix.length;
-            
-            name = `<span title='${name}'>${name.substring(0, n)}...</span>`;
-        }
-
         var columns =
             [
                 { HeaderText: "#", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
@@ -777,6 +771,10 @@ var traderReports = (function ($) {
         $("#divBettypePerformanceGrid").fanexGrid(options);
 
         showHideReport("#divBettypePerformanceContainer");
+
+        if (title.length >= 100) {
+            $("#divBettypePerformanceContainer .grid-title").css("height", "40px");
+        }
 
         common.EnableInput();
     }
