@@ -460,7 +460,7 @@ var traderReports = (function ($) {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                     { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                     { Name: 'ColNoOfBettypes', Value: noOfBettypes },
-                    { Name: 'colMatch', Value: `<span class='match-link link'  data-league-id="${item.LeagueId}" data-league-name="${item.LeagueName}" data-trader-id="${traderId}" data-trader-name="${traderName}" data-sport-name="${sportName}" data-sport-id="${sportId}">${item.NoOfMatch}</span>` },
+                    { Name: 'colMatch', Value: `<span class='match-link link' title='Match Performance'  data-league-id="${item.LeagueId}" data-league-name="${item.LeagueName}" data-trader-id="${traderId}" data-trader-name="${traderName}" data-sport-name="${sportName}" data-sport-id="${sportId}">${item.NoOfMatch}</span>` },
                     { Name: 'ColTurnover', Value: item.Turnover },
                     { Name: 'ColWinLoss', Value: item.VWinLoss },
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
@@ -648,8 +648,8 @@ var traderReports = (function ($) {
         function renderData(data, idx) {
             return {
                 Columns: [
-                    { Name: "No", Value: idx + 1 },
-                    { Name: "Match", Value: `<span class='link'>${data.TeamName}</span>` },
+                    { Name: "No", Value: `<span data-index="${idx}">${idx + 1}</span>` },
+                    { Name: "Match", Value: `<span class='link' title='Bet Type Detail'>${data.TeamName}</span>` },
                     { Name: "EventDate", Value: data.Date },
                     { Name: "Turnover", Value: data.Turnover, },
                     { Name: "Winloss", Value: data.Winloss, },
@@ -683,17 +683,16 @@ var traderReports = (function ($) {
                     currentPage: 0,
                     itemsPerPage: common.Constants.PageSize,
                     itemsPerPageArray: common.Constants.PagerRanges,
-                    afterPagedFunction: options => common.bindDataToFanexGrid("#divMatchPerformanceGrid", options.currentPage, json, { titles, traderId, sportId })
                 },
             };
 
         $("#divMatchPerformanceGrid").fanexGrid(options);
 
-        $("#divMatchPerformanceGrid tr span.link").click(e => getMatchBettype($(e.target).parents("tr").data()));
+        $("#divMatchPerformanceGrid tr span.link").click(e => getMatchBettype(common.getGridData(e.target)));
 
         titles.push({ class: "match-fallback-link", value: leagueName });
 
-        common.bindDataToFanexGrid("#divMatchPerformanceGrid", 0, json, { titles, traderId, sportId })
+        common.bindDataToFanexGrid("#divMatchPerformanceGrid", json, { titles, traderId, sportId })
 
         common.EnableInput();
     }

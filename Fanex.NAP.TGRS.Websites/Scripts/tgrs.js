@@ -233,14 +233,30 @@ Fanex.TGRS.Common = function () {
         });
     };
 
-    $this.bindDataToFanexGrid = function (freeGridDiv, offset = 0, data, globalData) {
+    $this.bindDataToFanexGrid = function (freeGridDiv, data = [], globalData) {
         if (data != null && data.length != 0) {
-            $("table.col_body_content tbody tr", freeGridDiv).each(function (idx, ele) {
-                var obj = Object.assign(($(ele).data() || {}), data[idx + offset]);
-                if (globalData != null) obj.global = globalData;
-                $(ele).data(obj);
-            });
+            if (globalData != null) {
+                data.forEach(function (d) {
+                    d.global = globalData;
+                });
+            }
+
+            $(freeGridDiv).data({ data });
         }
+    }
+
+    $this.getGridData = function (cell) {
+        var row = $(cell).parents("tr");
+
+        var idx = $("[data-index]", row).attr("data-index");
+
+        return (row.parents(".freegrid").data() || {}).data[idx];
+    }
+
+    $this.renderTitles = function (titles = [], modifier) {
+        return titles.map(function (c) {
+            return `<span class="${c.class}">${(modifier == null ? c.value : modifier(c))}<span>`
+        }).join(" >> ")
     }
 };
 
