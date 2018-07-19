@@ -661,11 +661,11 @@ var traderReports = (function ($) {
         var columns =
             [
                 { HeaderText: "#", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: "Match", Width: 700, Name: "Match", HeaderAlign: "center", CellAlign: "left", },
+                { HeaderText: "Match", Width: 500, Name: "Match", HeaderAlign: "center", CellAlign: "left" },
                 { HeaderText: "Event Date", Width: 100, Name: "EventDate", HeaderAlign: "center", CellAlign: "center", },
-                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: "Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: "Margin %", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Margin %", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
             ]
 
         var options =
@@ -684,12 +684,12 @@ var traderReports = (function ($) {
                     itemsPerPage: common.Constants.PageSize,
                     itemsPerPageArray: common.Constants.PagerRanges,
                     afterPagedFunction: options => common.bindDataToFanexGrid("#divMatchPerformanceGrid", options.currentPage, json, { titles, traderId, sportId })
-                }
+                },
             };
 
-        $("#divMatchPerformanceGrid")
-            .fanexGrid(options)
-            .on("click", "span.link", e => getMatchBettype($(e.target).parents("tr").data()));
+        $("#divMatchPerformanceGrid").fanexGrid(options);
+
+        $("#divMatchPerformanceGrid tr span.link").click(e => getMatchBettype($(e.target).parents("tr").data()));
 
         titles.push({ class: "match-fallback-link", value: leagueName }); common.bindDataToFanexGrid("#divMatchPerformanceGrid", options.currentPage, json, { titles, traderId, sportId })
 
@@ -741,8 +741,8 @@ var traderReports = (function ($) {
 
         var name = obj.TeamName;
 
-        if (title.length >= 106) {
-            var n = 100 - prefix.length;
+        if (title.length >= 100) {
+            var n = 94 - prefix.length;
             
             name = `<span title='${name}'>${name.substring(0, n)}...</span>`;
         }
@@ -751,9 +751,9 @@ var traderReports = (function ($) {
             [
                 { HeaderText: "#", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Product", Width: 300, Name: "Product", HeaderAlign: "center", CellAlign: "left", },
-                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
+                { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
+                { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
             ]
 
         var options =
