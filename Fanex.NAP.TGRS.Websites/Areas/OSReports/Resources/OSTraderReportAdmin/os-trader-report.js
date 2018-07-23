@@ -587,7 +587,8 @@
             {
                 columns,
                 bodyRows: json.map(renderRow),
-                gridExpandHeight: 150,
+                gridExpandHeight: 50,
+                minHeight: 100,
                 fullHeight: false,
                 showTitle: true,
                 titleInfo:
@@ -596,9 +597,12 @@
                     },
                 showPager: true,
                 pagerOption: {
+                    itemsPerPage: 20,
+                    maxItemsPerPage: 100,
                     currentPage: 0,
-                    itemsPerPage: common.Constants.PageSize,
-                    itemsPerPageArray: common.Constants.PagerRanges,
+                    totalItem: 100,
+                    startPerPage: 10,
+                    pageStep: 10,
                 },
             };
 
