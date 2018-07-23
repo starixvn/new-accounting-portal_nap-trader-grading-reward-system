@@ -255,7 +255,7 @@ Fanex.TGRS.Common = function () {
 
     $this.renderTitles = function (titles = [], modifier) {
         return titles.map(function (c) {
-            return `<span class="${c.class}">${(modifier == null ? c.value : modifier(c))}<span>`
+            return `<span class="${c.class} breadcrumb-link">${(modifier == null ? c.value : modifier(c))}</span>`
         }).join(" >> ")
     }
 };

@@ -13,6 +13,8 @@
 
         public DateTime ToDate { get; set; }
 
+        public int TraderId { get; set; } = -1;
+
         public override bool IsValid()
         {
             return true;

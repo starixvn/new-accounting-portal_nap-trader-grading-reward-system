@@ -96,6 +96,9 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Others\RemotingRef.dll</HintPath>
@@ -145,6 +148,7 @@
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
     <Compile Include="Controllers\OSNewTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
+    <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
@@ -169,6 +173,9 @@
     <Compile Include="Criteria\TraderPerformance\GetRegionByTraderCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderSportLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetSportByTraderCriteria.cs" />
+    <Compile Include="Criteria\TraderReport\GetChartDataCriteria.cs" />
+    <Compile Include="Criteria\TraderReport\GetGeneralInfoCriteria.cs" />
+    <Compile Include="Criteria\TraderReport\GetSportPerformanceCriteria.cs" />
     <Compile Include="Models\Dashboard\DataByMonth.cs" />
     <Compile Include="Models\Dashboard\TopSport.cs" />
     <Compile Include="Models\Dashboard\TopTrader.cs" />
@@ -195,17 +202,22 @@
     <Compile Include="Models\TraderPerformance\TraderPerformance.cs" />
     <Compile Include="Models\SportPerformance\LeaguePerformanceItem.cs" />
     <Compile Include="Models\SportPerformance\SportPerformanceItem.cs" />
+    <Compile Include="Models\TraderReport\ChartData.cs" />
+    <Compile Include="Models\TraderReport\Sport.cs" />
+    <Compile Include="Models\TraderReport\Trader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\DashboardService.cs" />
     <Compile Include="Services\Implement\NewSportPerformanceService.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
     <Compile Include="Services\Implement\NewTraderPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderPerformanceService.cs" />
+    <Compile Include="Services\Implement\TraderReportService.cs" />
     <Compile Include="Services\Interface\IDashboardService.cs" />
     <Compile Include="Services\Interface\INewSportPerformanceService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
+    <Compile Include="Services\Interface\ITraderReportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

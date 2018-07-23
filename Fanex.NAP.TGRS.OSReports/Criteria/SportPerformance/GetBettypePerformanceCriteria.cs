@@ -24,6 +24,8 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance
 
         public DateTime ToDate { get; set; }
 
+        public int TraderId { get; set; } = -1;
+
         public override string GetSettingKey()
         {
             return "TGRS_OS_Rpt_SportPerformance_League_Bettype";

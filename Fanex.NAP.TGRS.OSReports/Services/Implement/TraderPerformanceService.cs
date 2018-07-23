@@ -52,6 +52,12 @@
             return GetData<MatchPerformance>(criteria);
         }
 
-        public IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria) => GetData<MatchBettype>(criteria);
+        public IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria)
+        {
+            return GetData<MatchBettype>(criteria)
+                .OrderByDescending(bt => bt.Margin)
+                .ThenByDescending(bt => bt.Turnover)
+                .ThenByDescending(bt => bt.VWinloss);
+        }
     }
 }

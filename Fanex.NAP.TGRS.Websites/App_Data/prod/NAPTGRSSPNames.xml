@@ -263,4 +263,18 @@
   <Function Name="BettypeMonthlyPerformance">
     <Setting Key="TGRS_Rpt_BettypePerformanceMonthly" SpName="TGRS_Rpt_BettypePerformanceMonthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+
+  <Function Name="OSTraderReport">
+    <Setting Key="TGRS_OS_Rpt_TraderReport_SportPerformance"
+             SpName="TGRS_OS_Rpt_TraderReport_SportPerformance"
+             DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+
+    <Setting Key="TGRS_OS_Rpt_TraderReport"
+             SpName="TGRS_OS_Rpt_TraderReport"
+             DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+
+    <Setting Key="TGRS_OS_Rpt_TraderReport_Chart"
+         SpName="TGRS_OS_Rpt_TraderReport_Chart"
+         DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>
