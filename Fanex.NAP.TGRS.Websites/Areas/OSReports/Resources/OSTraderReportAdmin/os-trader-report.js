@@ -21,7 +21,7 @@
     $("#btnSearch").click(function () {
         common.DisableInput();
 
-        var url = common.ResolveRootUrl("OSTraderReport/GetGeneralInfo");
+        var url = common.ResolveRootUrl("OSTraderReportAdmin/GetGeneralInfo");
 
         var trader = traderName.val();
 
@@ -55,7 +55,7 @@
 
         var id = e.target.id;
 
-        var url = common.ResolveRootUrl("OSTraderReport/GetChartData");
+        var url = common.ResolveRootUrl("OSTraderReportAdmin/GetChartData");
 
         var fromDate = moment(dateRange.getFrom());
         var toDate = moment(dateRange.getTo());
@@ -80,7 +80,7 @@
     $("#sport-grid").on("click", ".region-link", function (e) {
         common.DisableInput();
 
-        var url = common.ResolveRootUrl("OSTraderReport/GetRegionData");
+        var url = common.ResolveRootUrl("OSTraderReportAdmin/GetRegionData");
 
         var obj = common.getGridData(e.target);
 
@@ -100,7 +100,7 @@
     $("#sport-grid").on("click", ".league-link", function (e) {
         common.DisableInput();
 
-        var url = common.ResolveRootUrl("OSTraderReport/GetLeagueData");
+        var url = common.ResolveRootUrl("OSTraderReportAdmin/GetLeagueData");
 
         var obj = common.getGridData(e.target);
 
@@ -120,7 +120,7 @@
     $("#league-grid").on("click", ".bettype-link", function (e) {
         common.DisableInput();
 
-        var url = common.ResolveRootUrl("OSTraderReport/GetBettypeData");
+        var url = common.ResolveRootUrl("OSTraderReportAdmin/GetBettypeData");
 
         var obj = common.getGridData(e.target);
 

@@ -304,7 +304,7 @@
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-service.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report.js" />
-    <Content Include="Areas\OSReports\Resources\OSTraderReport\os-trader-report.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderReportAdmin\os-trader-report.js" />
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
@@ -507,8 +507,8 @@
     <Content Include="Areas\Reports\Views\BettypeMonthlyPerformance\Index.cshtml" />
     <Content Include="Areas\Reports\Views\BettypeMonthlyPerformance\Filter.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\BettypeMonthlyPerformance\MonthlyPerformance.xlsx" />
-    <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
-    <Content Include="Areas\OSReports\Views\OSTraderReport\Filter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Index.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Filter.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />

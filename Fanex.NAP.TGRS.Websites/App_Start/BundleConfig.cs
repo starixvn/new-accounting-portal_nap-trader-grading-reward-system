@@ -378,8 +378,8 @@ namespace Fanex.NAP.TGRS.Websites
 
 
 
-            bundles.Add(new ScriptBundle("~/scripts/os-trader-performance").Include(
-                "~/Areas/OSReports/Resources/OSTraderReport/*.js",
+            bundles.Add(new ScriptBundle("~/scripts/os-trader-performance-admin").Include(
+                "~/Areas/OSReports/Resources/OSTraderReportAdmin/*.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js"));
         }

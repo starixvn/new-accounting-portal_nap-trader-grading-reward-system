@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Controllers
 {
+    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
@@ -10,7 +11,8 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    public class OSTraderReportController : TGRSBaseController
+    [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderReportAdmin, Policy = NAP.Core.Business.Constant.Policy.Read)]
+    public class OSTraderReportAdminController : TGRSBaseController
     {
         private ITraderReportService _service = new TraderReportService();
 
