@@ -528,8 +528,7 @@
             {
                 columns,
                 bodyRows: json.map(renderRow),
-                fullHeight: false,
-                gridHeight: 300,
+                gridExpandHeight: 690,
                 showTitle: true,
                 titleInfo:
                     {
