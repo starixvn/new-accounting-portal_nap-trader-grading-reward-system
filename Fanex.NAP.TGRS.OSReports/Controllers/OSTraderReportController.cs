@@ -7,6 +7,7 @@
     using Fanex.NAP.TGRS.OSReports.Services.Implement;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class OSTraderReportController : TGRSBaseController
@@ -58,21 +59,36 @@
         {
             criteria.TraderId = (int)Session["traderId"];
 
-            return Json(_sportService.GetRegionPerformances(criteria), JsonRequestBehavior.AllowGet);
+            var data = _sportService.GetRegionPerformances(criteria)
+                .OrderByDescending(r => r.Turnover)
+                .ThenByDescending(r => r.WinLoss)
+                .ThenByDescending(r => r.Margin);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetLeagueData(GetLeaguePerformanceCriteria criteria)
         {
             criteria.TraderId = (int)Session["traderId"];
 
-            return Json(_sportService.GetLeaguePerformance(criteria), JsonRequestBehavior.AllowGet);
+            var data = _sportService.GetLeaguePerformance(criteria)
+                .OrderByDescending(l => l.Turnover)
+                .ThenByDescending(l => l.VWinLoss)
+                .ThenByDescending(l => l.VMargin);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetBettypeData(GetBettypePerformanceCriteria criteria)
         {
             criteria.TraderId = (int)Session["traderId"];
 
-            return Json(_sportService.GetBettypePerformance(criteria), JsonRequestBehavior.AllowGet);
+            var data = _sportService.GetBettypePerformance(criteria)
+                .OrderByDescending(l => l.Turnover)
+                .ThenByDescending(l => l.VWinLoss)
+                .ThenByDescending(l => l.VMargin);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

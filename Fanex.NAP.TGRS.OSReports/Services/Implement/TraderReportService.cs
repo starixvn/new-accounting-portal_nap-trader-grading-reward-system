@@ -9,7 +9,13 @@
 
     public class TraderReportService : TGRSBaseService, ITraderReportService
     {
-        public IEnumerable<Sport> GetSportPerformance(GetSportPerformanceCriteria criteria) => GetData<Sport>(criteria);
+        public IEnumerable<Sport> GetSportPerformance(GetSportPerformanceCriteria criteria)
+        {
+            return GetData<Sport>(criteria)
+                .OrderByDescending(s => s.Turnover)
+                .ThenByDescending(s => s.VWinloss)
+                .ThenByDescending(s => s.VMargin);
+        }
 
         public Trader GetGeneralInfo(GetGeneralInfoCriteria criteria) => GetData<Trader>(criteria).First();
 
