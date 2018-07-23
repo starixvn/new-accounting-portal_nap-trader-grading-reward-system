@@ -418,7 +418,7 @@
                 { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
-                { HeaderText: "Average V.Turnover", Width: 130, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
             ];
 
@@ -520,7 +520,7 @@
                 { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
-                { HeaderText: "Average V.Turnover", Width: 130, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
             ];
 
@@ -576,7 +576,7 @@
                 { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
-                { HeaderText: "Average V.Turnover", Width: 130, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
             ];
 
