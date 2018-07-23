@@ -31,8 +31,6 @@
 
         public ActionResult GetGeneralInfo(GetGeneralInfoCriteria criteria)
         {
-            var tuple = _service.GetGeneralInfo(criteria);
-
             var trader = _service.GetGeneralInfo(criteria);
 
             Session.Add("traderId", trader.TraderId);

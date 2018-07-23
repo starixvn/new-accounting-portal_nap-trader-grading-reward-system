@@ -529,7 +529,7 @@
                 columns,
                 bodyRows: json.map(renderRow),
                 fullHeight: false,
-                gridHeight: 320,
+                gridHeight: 300,
                 showTitle: true,
                 titleInfo:
                     {
