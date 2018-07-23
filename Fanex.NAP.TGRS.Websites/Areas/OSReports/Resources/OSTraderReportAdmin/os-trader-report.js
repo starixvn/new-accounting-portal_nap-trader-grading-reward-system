@@ -426,7 +426,7 @@
             {
                 columns,
                 bodyRows: json.map(renderRow),
-                gridExpandHeight: 170,
+                gridExpandHeight: 50,
                 showTitle: true,
                 titleInfo:
                     {
@@ -434,9 +434,12 @@
                     },
                 showPager: true,
                 pagerOption: {
+                    itemsPerPage: 20,
+                    maxItemsPerPage: 100,
                     currentPage: 0,
-                    itemsPerPage: common.Constants.PageSize,
-                    itemsPerPageArray: common.Constants.PagerRanges
+                    totalItem: 100,
+                    startPerPage: 10,
+                    pageStep: 10,
                 },
             };
 
@@ -477,7 +480,7 @@
             {
                 columns,
                 bodyRows: json.map(renderRow),
-                gridExpandHeight: 170,
+                gridExpandHeight: 50,
                 showTitle: true,
                 titleInfo:
                     {
@@ -485,9 +488,12 @@
                     },
                 showPager: true,
                 pagerOption: {
+                    itemsPerPage: 20,
+                    maxItemsPerPage: 100,
                     currentPage: 0,
-                    itemsPerPage: common.Constants.PageSize,
-                    itemsPerPageArray: common.Constants.PagerRanges,
+                    totalItem: 100,
+                    startPerPage: 10,
+                    pageStep: 10,
                 },
             };
 
@@ -529,7 +535,6 @@
                 columns,
                 bodyRows: json.map(renderRow),
                 gridExpandHeight: 50,
-                minHeight: 100,
                 showTitle: true,
                 titleInfo:
                     {
@@ -588,8 +593,6 @@
                 columns,
                 bodyRows: json.map(renderRow),
                 gridExpandHeight: 50,
-                minHeight: 100,
-                fullHeight: false,
                 showTitle: true,
                 titleInfo:
                     {
