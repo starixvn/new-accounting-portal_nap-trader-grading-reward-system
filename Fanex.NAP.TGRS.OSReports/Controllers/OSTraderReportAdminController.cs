@@ -45,6 +45,7 @@
                 ReportType = criteria.ReportType
             });
 
+
             return Json(new { trader, sports }, JsonRequestBehavior.AllowGet);
         }
 
