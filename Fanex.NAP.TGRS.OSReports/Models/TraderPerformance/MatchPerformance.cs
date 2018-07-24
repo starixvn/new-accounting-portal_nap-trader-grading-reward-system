@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
 {
+    using Fanex.NAP.TGRS.Core.Helpers;
     using RemotingRef;
     using System;
 
@@ -17,7 +18,7 @@
 
         public int AwayId { get; set; }
 
-        public string TeamName => $"{RefData.GetTeamName(HomeId.ToString(), "en")} - vs - {RefData.GetTeamName(AwayId.ToString(), "en")}";
+        public string TeamName => $"{CacheRef.GetTeamName(HomeId)} - vs - {CacheRef.GetTeamName(AwayId)}";
 
         public string Date => eventDate.ToString("MM/dd/yyyy");
 
