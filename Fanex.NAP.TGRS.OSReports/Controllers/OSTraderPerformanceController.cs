@@ -37,7 +37,7 @@
         {
             criteria.TraderName = criteria.TraderName ?? string.Empty;
             criteria.TraderName = criteria.TraderName.Trim();
-            return Json(_service.GetTraderPerformances(criteria), JsonRequestBehavior.AllowGet);
+            return Json(new { data = _service.GetTraderPerformances(criteria) , fuck = 1 }, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
@@ -68,8 +68,6 @@
         public ActionResult GetLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria)
         {
             var result = _service.GetTraderSportLeaguePerformance(criteria);
-
-            //Logger.Log.Info($"{result[0].LeagueName} - {result[0].NoOfMatch}");
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
