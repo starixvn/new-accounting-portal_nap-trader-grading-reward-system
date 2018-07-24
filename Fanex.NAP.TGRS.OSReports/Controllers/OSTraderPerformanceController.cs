@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Controllers
 {
+    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -69,6 +70,8 @@
         {
             var result = _service.GetTraderSportLeaguePerformance(criteria);
 
+            Logger.Log.Info($"{result[0].LeagueName} - {result[0].NoOfMatch}");
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -90,6 +93,7 @@
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchBettypePerformanace(GetMatchBettypeCriteria criteria)
         {
             return Json(_service.GetMatchBettypes(criteria), JsonRequestBehavior.AllowGet);
