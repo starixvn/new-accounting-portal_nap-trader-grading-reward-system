@@ -72,7 +72,7 @@
 
             //Logger.Log.Info($"{result[0].LeagueName} - {result[0].NoOfMatch}");
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result, check = result[0] }, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
