@@ -69,7 +69,7 @@
         {
             var result = _service.GetTraderSportLeaguePerformance(criteria);
 
-            return Json(new { data = result, haha = 1 }, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
