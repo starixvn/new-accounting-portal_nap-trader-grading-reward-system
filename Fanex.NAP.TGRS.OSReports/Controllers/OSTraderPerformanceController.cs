@@ -72,6 +72,7 @@
 
             Logger.Log.Info($"{result[0].LeagueName} - {result[0].NoOfMatch}");
 
+
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
