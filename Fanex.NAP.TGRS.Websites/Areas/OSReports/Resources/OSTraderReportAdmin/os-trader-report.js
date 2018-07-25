@@ -57,17 +57,9 @@
 
         var url = common.ResolveRootUrl("OSTraderReportAdmin/GetChartData");
 
-        var fromDate = moment(dateRange.getFrom());
-        var toDate = moment(dateRange.getTo());
-
-        if (id == "chkMonth") {
-            fromDate = fromDate.startOf("month");
-            toDate = toDate.endOf("month");
-        }
-
         var criteria = {
-            fromDate: fromDate.format("YYYY-MM-D"),
-            toDate: toDate.format("YYYY-MM-D"),
+            fromDate: dateRange.getFrom(),
+            toDate: dateRange.getTo(),
             reportType: id == "chkMonth" ? 2 : 1
         };
 
