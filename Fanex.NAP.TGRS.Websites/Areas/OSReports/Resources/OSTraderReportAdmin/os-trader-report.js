@@ -388,9 +388,9 @@
         function renderRow(data, index) {
             return {
                 Columns: [
-                    { Name: "No", Value: `<span data-index="${index}">${index + 1}</span>` },
+                    { Name: "No", Value: 0 },
                     { Name: "Sport", Value: data.SportName },
-                    { Name: "Leagues", Value: `<span class="league-link link" title="League Performance">${data.NoOfLeague}</span>` },
+                    { Name: "Leagues", Value: `<span class="league-link link" title="League Performance" data-index="${index}">${data.NoOfLeague}</span>` },
                     { Name: "Regions", Value: `<span class="region-link link" title="Region Performance">${data.RegionCount}</span>` },
                     { Name: "Turnover", Value: data.Turnover },
                     { Name: "Winloss", Value: data.VWinloss },
@@ -433,6 +433,7 @@
                     startPerPage: 10,
                     pageStep: 10,
                 },
+                showNumberColumn: true,
             };
 
         $("#sport-grid", sportContainer).fanexGrid(options);
@@ -448,7 +449,7 @@
         function renderRow(data, index) {
             return {
                 Columns: [
-                    { Name: "No", Value: index + 1 },
+                    { Name: "No", Value: 0 },
                     { Name: "Region", Value: (data.RegionName || "Unknown") },
                     { Name: "Turnover", Value: data.Turnover },
                     { Name: "Winloss", Value: data.WinLoss },
@@ -487,6 +488,7 @@
                     startPerPage: 10,
                     pageStep: 10,
                 },
+                showNumberColumn: true,
             };
 
         $("#region-grid", regionContainer).fanexGrid(options);
@@ -498,9 +500,9 @@
         function renderRow(data, index) {
             return {
                 Columns: [
-                    { Name: "No", Value: `<span data-index="${index}">${index + 1}</span>` },
+                    { Name: "No", Value: 0 },
                     { Name: "League", Value: data.LeagueName },
-                    { Name: "Bettypes", Value: `<span class="bettype-link link" title="Bet Type Detail">${data.NoOfBettype}</span>` },
+                    { Name: "Bettypes", Value: `<span class="bettype-link link" title="Bet Type Detail" data-index="${index}">${data.NoOfBettype}</span>` },
                     { Name: "Turnover", Value: data.Turnover },
                     { Name: "Winloss", Value: data.VWinLoss },
                     { Name: "Margin", Value: data.VMargin },
@@ -541,6 +543,7 @@
                     startPerPage: 10,
                     pageStep: 10,
                 },
+                showNumberColumn: true,
             };
 
         var newTitles = Array.from(obj.global.titles);
@@ -558,7 +561,7 @@
         function renderRow(data, index) {
             return {
                 Columns: [
-                    { Name: "No", Value: index + 1 },
+                    { Name: "No", Value: 0 },
                     { Name: "Product", Value: data.BettypeName },
                     { Name: "Turnover", Value: data.Turnover },
                     { Name: "Winloss", Value: data.VWinLoss },
@@ -599,6 +602,7 @@
                     startPerPage: 10,
                     pageStep: 10,
                 },
+                showNumberColumn: true,
             };
 
         $("#bettype-grid", bettypeContainer).fanexGrid(options);

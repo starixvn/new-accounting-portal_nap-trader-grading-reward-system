@@ -170,6 +170,21 @@ var traderReports = (function ($) {
             .on("click", ".league-fallback-link", () => showHideReport("#divLeaguePerformanceContainer"))
             .on("click", ".match-fallback-link", () => showHideReport("#divMatchPerformanceContainer"));
 
+        domElements.divSportPerformanceGrid.on("click", "span.league-link", function () {
+            var $link = $(this);
+            var sportId = $link.attr('data-sport-id');
+            var sportName = $link.attr('data-sport-name');
+
+            var traderId = $link.attr('data-trader-id');
+            var traderName = $link.attr('data-trader-name');
+
+            sportName = sportName || $sportName.text();
+
+            traderReports.GetLeaguePerformance(traderId, traderName, sportId, sportName);
+        });
+
+        $("#divMatchPerformanceGrid").on("click", "tr span.link",e => getMatchBettype(common.getGridData(e.target)));
+
         TraderReportService.GetAllSports().then(function () {
             var sports = TraderReportService.Sports;
 
@@ -395,7 +410,7 @@ var traderReports = (function ($) {
         var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span>' +
             '<span id="spanSportLink" class="breadcrumb-link"> >> {1}</span>' +
             '<span> >> {2}</span>';
-        var noOfBettypesFormat = '<span class="bettype-link link" data-league-id="{0}" title="{1}">{2}</span>';
+        var noOfBettypesFormat = '<span class="bettype-link link" data-league-id="{0}" title="{1}" data-trader-id="{3}" data-trader-name="{4}">{2}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -455,7 +470,10 @@ var traderReports = (function ($) {
                 var noOfBettypes = noOfBettypesFormat.format(
                     item.LeagueId,
                     labels.BetTypePerformance,
-                    numeral(item.NoOfBettype).format(common.Formats.IntegerFormat));
+                    numeral(item.NoOfBettype).format(common.Formats.IntegerFormat),
+                    traderId,
+                    traderName
+                );
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
                     { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
@@ -490,31 +508,22 @@ var traderReports = (function ($) {
             showTraderPerformanceReport();
         });
 
-        domElements.divLeaguePerformanceGrid.find('span.bettype-link').click(function () {
+        domElements.divLeaguePerformanceGrid.find('span.bettype-link').click(function (e) {
             var $link = $(this);
             var leagueId = $link.attr('data-league-id');
             var $leagueName = $link.closest('tr').find('div.league-name');
             var leagueName = $leagueName.attr('title');
 
-            leagueName = leagueName || $leagueName.text();
+            var traderId = $link.attr("data-trader-id");
+            var traderName = $link.attr("data-trader-name");
 
+            leagueName = leagueName || $leagueName.text();
+              
             traderReports.GetBettypePerformance(traderId, traderName, sportId, sportName, leagueId, leagueName);
         });
     };
 
     function handleSportPerformanceGridEvents() {
-        domElements.divSportPerformanceGrid.find('span.league-link').click(function () {
-            var $link = $(this);
-            var sportId = $link.attr('data-sport-id');
-            var sportName = $link.attr('data-sport-name');
-
-            var traderId = $link.attr('data-trader-id');
-            var traderName = $link.attr('data-trader-name');
-
-            sportName = sportName || $sportName.text();
-
-            traderReports.GetLeaguePerformance(traderId, traderName, sportId, sportName);
-        });
     };
 
     function renderBettypePerformanceGrid(data, traderName, sportName, leagueName) {
@@ -648,8 +657,8 @@ var traderReports = (function ($) {
         function renderData(data, idx) {
             return {
                 Columns: [
-                    { Name: "No", Value: `<span data-index="${idx}">${idx + 1}</span>` },
-                    { Name: "Match", Value: `<span class='link' title='Bet Type Detail'>${data.TeamName}</span>` },
+                    { Name: "No", Value: 0 },
+                    { Name: "Match", Value: `<span class='link' title='Bet Type Detail' data-index="${idx}">${data.TeamName}</span>` },
                     { Name: "EventDate", Value: data.Date },
                     { Name: "Turnover", Value: data.Turnover, },
                     { Name: "Winloss", Value: data.Winloss, },
@@ -684,11 +693,10 @@ var traderReports = (function ($) {
                     itemsPerPage: common.Constants.PageSize,
                     itemsPerPageArray: common.Constants.PagerRanges,
                 },
+                showNumberColumn: true,
             };
 
         $("#divMatchPerformanceGrid").fanexGrid(options);
-
-        $("#divMatchPerformanceGrid tr span.link").click(e => getMatchBettype(common.getGridData(e.target)));
 
         titles.push({ class: "match-fallback-link", value: leagueName });
 
@@ -725,7 +733,7 @@ var traderReports = (function ($) {
         function renderData(data, idx) {
             return {
                 Columns: [
-                    { Name: "No", Value: idx + 1 },
+                    { Name: "No", Value: 0 },
                     { Name: "Product", Value: data.BettypeName },
                     { Name: "Turnover", Value: data.Turnover, },
                     { Name: "Winloss", Value: data.VWinloss, },
@@ -764,7 +772,8 @@ var traderReports = (function ($) {
                     currentPage: 0,
                     itemsPerPage: common.Constants.PageSize,
                     itemsPerPageArray: common.Constants.PagerRanges,
-                }
+                },
+                showNumberColumn: true,
             };
 
         $("#divBettypePerformanceGrid").fanexGrid(options);
