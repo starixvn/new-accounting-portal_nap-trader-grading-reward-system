@@ -19,6 +19,7 @@ namespace Fanex.NAP.TGRS.Websites
     using Fanex.Data.Configuration;
     using Fanex.Logging;
     using Infrastructure;
+    using RemotingRef;
     using Simplect;
 
     /// <summary>

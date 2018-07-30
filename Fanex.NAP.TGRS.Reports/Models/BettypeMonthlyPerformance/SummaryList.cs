@@ -1,16 +1,14 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.BettypeMonthlyPerformance
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
 
     public class SummaryList
     {
         public SummaryList(IEnumerable<BettypeMonthlySummary> data)
         {
-            var positiveBettype = data.Where(d => d.BettypeId >= 0).OrderBy(d => d.BettypeId);
-            var negativeBettype = data.Where(d => d.BettypeId < 0).OrderBy(d => -d.BettypeId);
-
-            Data = positiveBettype.Concat(negativeBettype);
+            Data = OrderBettype(data);
         }
 
         public IEnumerable<BettypeMonthlySummary> Data { get; }
@@ -39,6 +37,20 @@
 
                 return result;
             }
+        }
+
+        private IEnumerable<BettypeMonthlySummary> OrderBettype(IEnumerable<BettypeMonthlySummary> data)
+        {
+            var orderList = ConfigurationManager.AppSettings["BettypeOrder"].Split(',').Select(int.Parse).ToList();
+
+            return data
+                .OrderBy(bt =>
+                {
+                    var index = orderList.FindIndex(i => i == bt.BettypeId);
+
+                    return index == -1 ? 99 : index;
+                })
+                .ThenBy(bt => bt.BettypeName);
         }
     }
 }
