@@ -128,9 +128,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SP.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\UAT\SP_UAT.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
