@@ -15,7 +15,7 @@
                 DbSettingProviderManager
                     .StartNewSession()
                     .UseDefaultConnectionStringProvider()
-                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/UAT", enableWatching: true)
+                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/UAT/", enableWatching: true)
                     .Run();
 
                 ServiceBase[] ServicesToRun;
