@@ -98,13 +98,7 @@
       <DependentUpon>DataCaptureSerivce.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ChangedData.cs" />
-    <Compile Include="Model\ChangedDataList.cs" />
-    <Compile Include="Model\ChangedDataWithHeader.cs" />
-    <Compile Include="Model\ChangedMatch.cs" />
-    <Compile Include="Model\ChangedTrader.cs" />
     <Compile Include="Model\LetsTalkMessage.cs" />
-    <Compile Include="Model\RawChangedData.cs" />
-    <Compile Include="Model\TraderComparer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -137,6 +131,15 @@
     <Content Include="App_Data\SP.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\UAT\SP_UAT.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
+      <Project>{C4051C15-1655-42E1-A071-A943BC29B37C}</Project>
+      <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,56 +1,47 @@
 ﻿namespace Fanex.NAP.TGRS.DataReportService.Model
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    public abstract class ChangedData
+    public class ChangedData
     {
-        public IDictionary<int, string> Bettypes { get; set; }
+        public int MatchId { get; set; }
 
-        public string JoinedBettypes
-        {
-            get
-            {
-                var prioritized_bettype = new HashSet<int> { 1, 3, 7, 8, 5, 15 };
-                var sorted = Bettypes.OrderBy(kv => !prioritized_bettype.Contains(kv.Key) ? 99 : kv.Key == 5 ? 10 : kv.Key).Select(kv => kv.Value);
+        public int HomeId { get; set; }
 
-                if (sorted.Count() <= 3)
-                {
-                    return string.Join(", ", sorted);
-                }
+        public int AwayId { get; set; }
 
-                return string.Join(", ", sorted.Take(3)) + "...";
-            }
-        }
+        public string Bettype { get; set; }
+
+        #region old
+
+        public string OldTraderName { get; set; }
 
         public double? OldTurnover { get; set; }
 
-        public double? OldWinLoss { get; set; }
+        public double? OldWinLost { get; set; }
 
-        public double? OldBetCount { get; set; }
+        public int? OldBetCount { get; set; }
+
+        #endregion old
+
+        #region new
+
+        public string NewTraderName { get; set; }
 
         public double? NewTurnover { get; set; }
 
-        public double? NewWinLoss { get; set; }
+        public double? NewWinLost { get; set; }
 
-        public double? NewBetCount { get; set; }
+        public int? NewBetCount { get; set; }
 
-        public bool IsObsolete
-        {
-            get
-            {
-                return OldTurnover == NewTurnover && OldWinLoss == NewWinLoss && OldBetCount == NewBetCount;
-            }
-        }
+        #endregion new
 
         protected bool Equal(ChangedData data)
         {
             return OldTurnover == data.OldTurnover
-                && OldWinLoss == data.OldWinLoss
+                && OldWinLost == data.OldWinLost
                 && OldBetCount == data.OldBetCount
                 && NewBetCount == data.NewBetCount
                 && NewTurnover == data.NewTurnover
-                && NewWinLoss == data.NewWinLoss;
+                && NewWinLost == data.NewWinLost;
         }
     }
 }

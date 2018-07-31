@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.DataReportService
 {
     using Fanex.Data;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.DataReportService.Criteria;
     using Fanex.NAP.TGRS.DataReportService.Model;
     using Newtonsoft.Json;
@@ -24,14 +25,6 @@
             InitializeComponent();
         }
 
-        public ChangedDataList CapturedData
-        {
-            get
-            {
-                return GetChangedData();
-            }
-        }
-
         protected override void OnStart(string[] args)
         {
         }
@@ -41,49 +34,31 @@
             timer.Dispose();
         }
 
-        public static void SendData(object state)
+        public static void SendData(object state = null)
         {
             try
             {
-                //var data = GetChangedData();
+                var data = GetChangedData();
 
-                //Logging.Logger.Log.Info($"data:\n\tTraders: {data.Traders.Count()}\n\tMatches: {data.Matches.Count()}");
+                Logging.Logger.Log.Info($"total row: {data.Count()}");
 
-                //if (data.Traders.Any())
-                //{
-                //    var result = new Queue<string>();
+                if (data.Any())
+                {
+                    var result = new Queue<string>();
 
-                //    var arr = data.Traders.Where(tr => !tr.IsObsolete).ToArray();
+                    var arr = data.GroupBy(c => c.MatchId).ToArray();
 
-                //    RenderMsg(arr, 0, arr.Length - 1, result);
+                    RenderMsg(arr, 0, arr.Length - 1, result);
 
-                //    Logging.Logger.Log.Info($"Trader messages: {result.Count}");
+                    Logging.Logger.Log.Info($"messages: {result.Count}");
 
-                //    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n* Traders:\n" + result.First() } } });
+                    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "TGRS Data Capture Service\nHi all, here's the captured changed data\n" + result.First() } } });
 
-                //    foreach (var msg in result.Skip(1))
-                //    {
-                //        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
-                //    }
-                //}
-
-                //if (data.Matches.Any())
-                //{
-                //    var result = new Queue<string>();
-
-                //    var arr = data.Matches.Where(tr => !tr.IsObsolete).ToArray();
-
-                //    RenderMsg(arr, 0, arr.Length - 1, result);
-
-                //    Logging.Logger.Log.Info($"Match messages: {result.Count}");
-
-                //    SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", "* Matches:\n" + result.First() } } });
-
-                //    foreach (var msg in result.Skip(1))
-                //    {
-                //        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
-                //    }
-                //}
+                    foreach (var msg in result.Skip(1))
+                    {
+                        SendMessage(new LetsTalkMessage { TargetName = target, Message = new Dictionary<string, string> { { "content", msg } } });
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -91,9 +66,9 @@
             }
         }
 
-        public static void RenderMsg<T>(T[] arr, int i, int j, Queue<string> result) where T : ChangedDataWithHeader
+        public static void RenderMsg(IGrouping<int, ChangedData>[] arr, int i, int j, Queue<string> result)
         {
-            var segment = new ArraySegment<T>(arr, i, j - i + 1);
+            var segment = new ArraySegment<IGrouping<int, ChangedData>>(arr, i, j - i + 1);
 
             var str = new StringBuilder();
 
@@ -139,48 +114,71 @@
             }
         }
 
-        private static void RenderData<T>(StringBuilder builder, IEnumerable<T> data) where T : ChangedDataWithHeader
+        private static void RenderData(StringBuilder builder, IEnumerable<IGrouping<int, ChangedData>> g)
         {
-            foreach (var datum in data)
+            foreach (var data in g)
             {
-                builder.Append("\t" + datum.Header + "\n");
-                builder.Append(string.Format("\t\t- WL: {0}/{1}\n", FormatNumer(datum.OldWinLoss ?? 0), FormatNumer(datum.NewWinLoss ?? 0)));
-                builder.Append(string.Format("\t\t- TO: {0}/{1}\n", FormatNumer(datum.OldTurnover ?? 0), FormatNumer(datum.NewTurnover ?? 0)));
-                builder.Append(string.Format("\t\t- #Ticket: {0}/{1}\n", (int)datum.OldBetCount.Value, (int)datum.NewBetCount.Value));
+                builder.AppendLine($"•{CacheRef.GetTeamName(g.First().First().HomeId)} - vs - {CacheRef.GetTeamName(g.First().First().AwayId)}");
+
+                foreach (var datum in data)
+                {
+                    builder.AppendLine($"\t•{datum.Bettype}");
+
+                    if (datum.NewTraderName != datum.OldTraderName)
+                    {
+                        builder.AppendLine($"\t\t-Trader: {datum.OldTraderName ?? "--"} / {datum.NewTraderName ?? "--"}");
+                    }
+
+                    if (Math.Abs(datum.OldTurnover ?? double.NegativeInfinity - datum.NewTurnover ?? double.PositiveInfinity) > 0.1)
+                    {
+                        builder.AppendLine($"\t\t-TO: {FormatNumber(datum.OldTurnover)} / {FormatNumber(datum.NewTurnover)}");
+                    }
+
+                    if (Math.Abs(datum.OldWinLost ?? double.NegativeInfinity - datum.NewWinLost ?? double.PositiveInfinity) > 0.1)
+                    {
+                        builder.AppendLine($"\t\t-WL: {FormatNumber(datum.OldWinLost)} / {FormatNumber(datum.NewWinLost)}");
+                    }
+
+                    if (datum.OldBetCount != datum.NewBetCount)
+                    {
+                        builder.AppendLine($"\t\t-Bet count: {FormatNumber(datum.OldBetCount)} / {FormatNumber(datum.NewBetCount)}");
+                    }
+                }
             }
         }
 
-        private static ChangedDataList GetChangedData()
+        public static IEnumerable<ChangedData> GetChangedData()
         {
             var criteria = new ChangedDataGetCriteria();
 
-            Logging.Logger.Log.Info("Created criteria");
-
             using (var db = new ObjectDb(criteria.GetSettingKey()))
-            using (var queries = db.QueryMultiple())
+            using (var query = db.QueryMultiple(criteria))
             {
-                try
-                {
-                    Logging.Logger.Log.Info($"sql: {queries.Command.CommandText} - {nameof(queries.IsConsumed)} - {queries.IsConsumed}");
+                var data1 = query.Read<ChangedData>();
+                var data2 = query.Read<ChangedData>();
 
-                    var data1 = queries.Read<RawChangedData>();
-                    var data2 = queries.Read<RawChangedData>();
-
-                    Logging.Logger.Log.Info($"Called SP - data1: {data1.Count()} - data2: {data2.Count()} - {nameof(queries.IsConsumed)} - {queries.IsConsumed}");
-
-                    return new ChangedDataList(data1.Concat(data2));
-                }
-                catch (Exception ex)
-                {
-                    Logging.Logger.Log.Error(ex.Message, ex);
-                    throw ex;
-                }
+                return data1.Concat(data2);
             }
         }
 
-        private static string FormatNumer(double a)
+        private static string FormatNumber(double? a)
         {
-            return a.ToString("N2");
+            if (a.HasValue)
+            {
+                return a.Value.ToString("N2");
+            }
+
+            return "--";
+        }
+
+        private static string FormatNumber(int? a)
+        {
+            if (a.HasValue)
+            {
+                return a.Value.ToString("N0");
+            }
+
+            return "--";
         }
 
         private static string EncryptJson(object data)
