@@ -74,7 +74,7 @@
 
             RenderData(str, segment);
 
-            if (str.Length <= 512)
+            if (str.Length <= 512 || i == j)
             {
                 result.Enqueue(str.ToString());
             }
