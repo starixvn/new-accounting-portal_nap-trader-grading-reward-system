@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -80,19 +81,35 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
-            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
-            var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
+            try
+            {
+                criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+                var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message, ex);
+                return null;
+            }
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
-            var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
+            try
+            {
+                var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message, ex);
+                return null;
+            }
         }
 
         [HttpPost]
@@ -352,6 +369,7 @@
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         #endregion Team Performance
 
         #region Bet Type Performance
