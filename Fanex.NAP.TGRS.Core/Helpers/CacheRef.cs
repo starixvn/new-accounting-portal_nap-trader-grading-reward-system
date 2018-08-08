@@ -17,6 +17,8 @@ namespace Fanex.NAP.TGRS.Core.Helpers
     /// </summary>
     public static class CacheRef
     {
+        private static readonly RemotingRefService refService = new RemotingRefService();
+
         /// <summary>
         /// Gets bet type name.
         /// </summary>
@@ -42,7 +44,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
                 resourceId = betId.ToString().Substring(1);
             }
 
-            return RefData.GetBetTypeName(betTypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
+            return refService.GetBetTypeName(betTypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>Sport name.</returns>
         public static string GetSportName(object sportId)
         {
-            return RefData.GetSportName(Converter.ToString2(sportId), TWLang("en-US"), string.Empty);
+            return refService.GetSportName(Converter.ToString2(sportId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>Team name.</returns>
         public static string GetTeamName(object teamId)
         {
-            return RefData.GetTeamName(Converter.ToString2(teamId), TWLang("en-US"), string.Empty);
+            return refService.GetTeamName(Converter.ToString2(teamId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>League name.</returns>
         public static string GetLeagueName(object leagueId)
         {
-            return RefData.GetLeagueName(Converter.ToString2(leagueId), TWLang("en-US"), string.Empty);
+            return refService.GetLeagueName(Converter.ToString2(leagueId), TWLang("en-US"), string.Empty);
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>Odd type name.</returns>
         public static string GetOddsTypeName(object oddsType)
         {
-            return RefData.GetOddsTypeName(Converter.ToString2(oddsType), TWLang("en-US"));
+            return refService.GetOddsTypeName(Converter.ToString2(oddsType), TWLang("en-US"));
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>The country name.</returns>
         public static string GetCountryName(string countryCode)
         {
-            return RefData.GetCountryName(countryCode, TWLang("en-US"));
+            return refService.GetCountryName(countryCode, TWLang("en-US"));
         }
 
         /// <summary>
