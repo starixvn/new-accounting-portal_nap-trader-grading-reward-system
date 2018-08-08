@@ -9,18 +9,19 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
+    using Fanex.Data.Configuration;
+    using Fanex.Logging;
+    using Infrastructure;
+    using RemotingRef;
+    using Simplect;
     using System;
+    using System.Configuration;
     using System.Data.SqlClient;
     using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.Data.Configuration;
-    using Fanex.Logging;
-    using Infrastructure;
-    using RemotingRef;
-    using Simplect;
 
     /// <summary>
     /// MVC application configuration.
@@ -43,6 +44,10 @@ namespace Fanex.NAP.TGRS.Websites
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            RefDataTypeContainer
+              .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
+              .FromApplication("Your Application Name");
         }
 
         /// <summary>
