@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
 {
     using Fanex.NAP.TGRS.Core.Helpers;
-    using RemotingRef;
     using System;
 
     public class MatchPerformance

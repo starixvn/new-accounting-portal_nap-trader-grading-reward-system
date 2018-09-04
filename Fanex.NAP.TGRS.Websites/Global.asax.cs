@@ -47,7 +47,7 @@ namespace Fanex.NAP.TGRS.Websites
 
             RefDataTypeContainer
               .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
-              .FromApplication("Your Application Name");
+              .FromApplication("SPU - TGRS");
         }
 
         /// <summary>

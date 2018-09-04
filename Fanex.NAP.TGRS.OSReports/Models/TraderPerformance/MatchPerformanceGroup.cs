@@ -1,4 +1,4 @@
-﻿using RemotingRef;
+﻿using Fanex.NAP.TGRS.Core.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +10,7 @@ namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
         {
             GroupDetails = data;
 
-            League = RefData.GetLeagueName(leagueId.ToString(), "en");
+            League = CacheRef.GetLeagueName(leagueId);
         }
 
         public IEnumerable<MatchPerformance> GroupDetails { get; }
