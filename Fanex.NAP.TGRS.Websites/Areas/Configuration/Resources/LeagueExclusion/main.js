@@ -39,7 +39,7 @@
             var obj = common.getGridData(e.target);
 
             common.ShowConfirmMessage(`Do you want to remove ${obj.LeagueName} from exclusion list?`, function () {
-                changeLeagueExclusion(obj, false);                
+                changeLeagueExclusion(obj, false);
             });
         });
     }
@@ -87,16 +87,23 @@
             columns,
             bodyRows: (json || []).map(renderRow),
             showNumberColumn: true,
-            gridHeight: 200,
+            gridHeight: 380,
             fullHeight: false,
-            marginRight: 0
+            showPager: true,
+            pagerOption: {
+                itemsPerPage: 50,
+                currentPage: 0,
+                itemsPerPageArray: [ 50 ]
+            }
         };
 
+        target.fanexGrid(gridOptions);
+        target.fanexGrid(gridOptions);
         target.fanexGrid(gridOptions);
 
         common.bindDataToFanexGrid(target, json);
 
-        $("input", target).change(function (e) {
+        target.on("change", "input", function (e) {
             var obj = common.getGridData(e.target);
 
             changeLeagueExclusion(obj, $(e.target).is(":checked"));
@@ -116,20 +123,22 @@
     }
 
     function searchLeague(form) {
-        common.DisableInput();
-
         var league = $("#league-name", form).val();
 
-        if (league == null || league.length == 0) {
+        if (league == null || league.length == 0 || league.includes("<") || league.includes(">")) {
             common.ShowErrorMessage("Invalid League Name!");
         }
         else {
+            common.DisableInput();
+
             var searchString = JSON.stringify(league);
 
             var url = "LeagueExclusion/SearchLeague";
 
             $.get(url, { searchString }, function (json) {
                 renderPickLeagueGrid(json, $("#avaiable-league-grid", form));
+
+                $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css("width", "900px");
 
                 common.EnableInput();
             });
@@ -138,15 +147,22 @@
 
     requestData();
 
-    $("#exclude-league-button").click(function () {
-        var clone = exclusionForm.clone();
+    $("#exclude-league-button")
+        .click(function () {
+            var clone = exclusionForm.clone();
 
-        common.Popup("League Exclusion Form", clone);
+            common.Popup("League Exclusion Form", clone);
 
-        $("#btnCancel", clone).click(common.ClosePopup);
+            $("#btnCancel", clone).click(common.ClosePopup);
 
-        $("#btnSearch", clone).click(() => searchLeague(clone));
-    });
+            $("#btnSearch", clone).click(() => searchLeague(clone));
+
+            $("input", clone).keydown(function (e) {
+                if (e.keyCode == 13) {
+                    searchLeague(clone);
+                }
+            });
+        });
 }
 
 $(leagueExclution);
