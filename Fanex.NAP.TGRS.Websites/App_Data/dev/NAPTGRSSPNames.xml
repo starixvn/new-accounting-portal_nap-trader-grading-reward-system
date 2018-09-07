@@ -277,4 +277,22 @@
              SpName="TGRS_OS_Rpt_TraderReport_Chart"
              DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+
+  <Function Name="LeagueExclusion">
+    <Setting Key="TGRS_LeagueExclusion_SelectAll"
+             SpName="TGRS_LeagueExclusion_SelectAll"
+             DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+
+    <Setting Key="TGRS_League_SelectByName"
+         SpName="TGRS_League_SelectByName"
+         DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+
+    <Setting Key="TGRS_LeagueExclusion_Insert "
+     SpName="TGRS_LeagueExclusion_Insert "
+     DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+
+    <Setting Key="TGRS_LeagueExclusion_Delete"
+     SpName="TGRS_LeagueExclusion_Delete"
+     DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+  </Function>
 </Functions>

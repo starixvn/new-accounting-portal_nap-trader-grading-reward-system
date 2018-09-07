@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BenchmarkManagementController.cs" />
     <Compile Include="Controllers\BettypeManagementController.cs" />
+    <Compile Include="Controllers\LeagueExclusionController.cs" />
     <Compile Include="Controllers\TargetedMarginController.cs" />
     <Compile Include="Controllers\SpreadManagementController.cs" />
     <Compile Include="Controllers\TraderManagementController.cs" />
@@ -136,6 +137,10 @@
     <Compile Include="Criteria\BettypeManagement\GetAllBettypeCriteria.cs" />
     <Compile Include="Criteria\BettypeManagement\InsertNewBettypeCriteria.cs" />
     <Compile Include="Criteria\BettypeManagement\UpdateBettypeCriteria.cs" />
+    <Compile Include="Criteria\LeagueExclusion\LeagueExclusionDeleteCriteria.cs" />
+    <Compile Include="Criteria\LeagueExclusion\LeagueExclusionInsertCriteria.cs" />
+    <Compile Include="Criteria\LeagueExclusion\LeagueGetCriteria.cs" />
+    <Compile Include="Criteria\LeagueExclusion\LeagueSearchCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
     <Compile Include="Criteria\Common\GetLeagueIdsCriteria.cs" />
     <Compile Include="Criteria\Common\GetBetTypeIdsCriteria.cs" />
@@ -170,6 +175,7 @@
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
     <Compile Include="Models\BettypeManagement\Bettype.cs" />
+    <Compile Include="Models\LeagueExclusion\League.cs" />
     <Compile Include="Models\SpreadManagement\Bettype.cs" />
     <Compile Include="Models\SpreadManagement\SpreadValidation.cs" />
     <Compile Include="Models\SpreadManagement\League.cs" />
@@ -191,6 +197,7 @@
     <Compile Include="Services\Implement\BenchmarkManagementService.cs" />
     <Compile Include="Services\Implement\BettypeManagementService.cs" />
     <Compile Include="Services\Implement\CommonService.cs" />
+    <Compile Include="Services\Implement\LeagueExclusionService.cs" />
     <Compile Include="Services\Implement\TargetedMarginService.cs" />
     <Compile Include="Services\Implement\SpreadManagementService.cs" />
     <Compile Include="Services\Implement\SystemConfigurationService.cs" />
@@ -198,6 +205,7 @@
     <Compile Include="Services\Implement\GradeManagementService.cs" />
     <Compile Include="Services\Implement\TeamManagementService.cs" />
     <Compile Include="Services\Interface\IBettypeManagement.cs" />
+    <Compile Include="Services\Interface\ILeagueExclusionService.cs" />
     <Compile Include="Services\Interface\ITargetedMarginService.cs" />
     <Compile Include="Services\Interface\ISpreadManagementService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>

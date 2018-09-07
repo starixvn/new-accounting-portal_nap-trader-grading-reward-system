@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "League Exclusion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render("~/styles/spreadManagement")
+}
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    @if (ViewBag.HasEditRight)
+    {
+        <div class="header-button">
+            <a href="#" id="exclude-league-button" class="green-button change-list">
+                <span class="add-icon">
+                </span>Exclude League
+            </a>
+        </div>
+    }
+}
+
+<div id="resultContainer" class="content-grid">
+    <div id="league-grid" class="freegrid">
+    </div>
+</div>
+
+<div class="display-none">
+    <div id="league-exclusion-form" class="form-bar">
+        <div class="form expand-form">
+            <div id="divErrorSuccessMsg" class="inline-message">
+            </div>
+            <div class="form-row">
+                <div class="lbl-field width-80">
+                    <label>@ViewLang.LeagueName</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" id="league-name" class="width-200 " data-val-required="@Messages.RequiredFieldError" data-val-not-html="InvalidInput" />
+                    <input id="btnSearch" type="button" class="blue-button" value="Search" />
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div id="avaiable-league-grid" class="freegrid">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Foot{
+    @Scripts.Render("~/scripts/LeagueExclusion")
+}
