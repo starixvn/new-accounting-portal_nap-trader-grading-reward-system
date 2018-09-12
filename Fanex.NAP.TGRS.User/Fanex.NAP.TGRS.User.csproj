@@ -53,6 +53,9 @@
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependencies\Fanex\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\Dependencies\Others\IBCFile.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
