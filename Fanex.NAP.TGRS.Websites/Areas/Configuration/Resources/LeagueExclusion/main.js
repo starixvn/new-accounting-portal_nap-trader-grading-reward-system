@@ -102,12 +102,6 @@
         target.fanexGrid(gridOptions);
 
         common.bindDataToFanexGrid(target, json);
-
-        target.on("change", "input", function (e) {
-            var obj = common.getGridData(e.target);
-
-            changeLeagueExclusion(obj, $(e.target).is(":checked"));
-        });
     }
 
     function requestData() {
@@ -125,8 +119,13 @@
     function searchLeague(form) {
         var league = $("#league-name", form).val();
 
-        if (league == null || league.length < 3 || league.includes("<") || league.includes(">")) {
+        if (league == null || league.length == 0 || league.includes("<") || league.includes(">")) {
             common.ShowErrorMessage("Invalid League Name!");
+
+            setTimeout(common.CloseMsgBox, 1500);
+        }
+        else if (league.length < 3) {
+            common.ShowErrorMessage("League name must have at least 3 letters!");
 
             setTimeout(common.CloseMsgBox, 1500);
         }
@@ -140,7 +139,9 @@
             $.get(url, { searchString }, function (json) {
                 renderPickLeagueGrid(json, $("#avaiable-league-grid", form));
 
-                $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable").css("width", "910px");
+                $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable")
+                    .css("width", "910px")
+                    .css("left", "26%");
 
                 common.EnableInput();
             });
@@ -163,6 +164,12 @@
                 if (e.keyCode == 13) {
                     searchLeague(clone);
                 }
+            });
+
+            $("#avaiable-league-grid", clone).on("change", "input", function (e) {
+                var obj = common.getGridData(e.target);
+
+                changeLeagueExclusion(obj, $(e.target).is(":checked"));
             });
         });
 }
