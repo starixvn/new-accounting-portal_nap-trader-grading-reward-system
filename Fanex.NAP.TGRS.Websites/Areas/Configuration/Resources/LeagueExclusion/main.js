@@ -38,7 +38,7 @@
         $(".league-exclusion-box", leagueGrid).click(function (e) {
             var obj = common.getGridData(e.target);
 
-            common.ShowConfirmMessage(`Do you want to remove ${obj.LeagueName} from exclusion list?`, function () {
+            common.ShowConfirmMessage(`Do you want to remove ${obj.LeagueName} from league exclusion list?`, function () {
                 changeLeagueExclusion(obj, false);
             });
         });
@@ -93,7 +93,7 @@
             pagerOption: {
                 itemsPerPage: 50,
                 currentPage: 0,
-                itemsPerPageArray: [ 50 ]
+                itemsPerPageArray: [10, 20, 50, 100, 200]
             }
         };
 
@@ -125,8 +125,10 @@
     function searchLeague(form) {
         var league = $("#league-name", form).val();
 
-        if (league == null || league.length == 0 || league.includes("<") || league.includes(">")) {
+        if (league == null || league.length < 3 || league.includes("<") || league.includes(">")) {
             common.ShowErrorMessage("Invalid League Name!");
+
+            setTimeout(common.CloseMsgBox, 1500);
         }
         else {
             common.DisableInput();
@@ -138,20 +140,20 @@
             $.get(url, { searchString }, function (json) {
                 renderPickLeagueGrid(json, $("#avaiable-league-grid", form));
 
-                $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable.ui-resizable").css("width", "900px");
+                $(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-draggable").css("width", "910px");
 
                 common.EnableInput();
             });
         }
     }
-
+                                                                                                                                                                                                             
     requestData();
 
     $("#exclude-league-button")
         .click(function () {
             var clone = exclusionForm.clone();
 
-            common.Popup("League Exclusion Form", clone);
+            common.Popup("League Exclusion", clone, { resizable: false });
 
             $("#btnCancel", clone).click(common.ClosePopup);
 
