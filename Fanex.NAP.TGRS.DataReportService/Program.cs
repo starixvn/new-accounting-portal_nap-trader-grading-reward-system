@@ -18,13 +18,12 @@
                 DbSettingProviderManager
                     .StartNewSession()
                     .UseDefaultConnectionStringProvider()
-                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/", enableWatching: true)
+                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data", enableWatching: true)
                     .Run();
 
                 RefDataTypeContainer
                   .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
                   .FromApplication("SPU-TGRS-Data-Report-Service");
-
 
                 ServiceBase[] ServicesToRun;
 
