@@ -48,11 +48,17 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
         public ActionResult ExportExcel(GetTraderPerformanceMonthlyCriteria filter)
         {
-            var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformance.xlsx"), filter);
-            var fileName = "Trader_Monthly_Performance_" + DateTime.Now.ToShortFormatedDateForFileName() + ".xlsx";
+            try
+            {
+                var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformance.xlsx"), filter);
+                var fileName = "Trader_Monthly_Performance_" + DateTime.Now.ToShortFormatedDateForFileName() + ".xlsx";
 
-
-            return File(file, "application/vnd.ms-excel", fileName);
+                return File(file, "application/vnd.ms-excel", fileName);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ex.Message, ex.StackTrace }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
