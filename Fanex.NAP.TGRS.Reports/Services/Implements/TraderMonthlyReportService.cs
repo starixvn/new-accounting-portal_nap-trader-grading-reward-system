@@ -199,7 +199,17 @@
                 var cell = row.GetCell(i + offset);
 
                 if (jtoken == null) cell.SetCellValue("");
-                else if (jtoken.Type == JTokenType.Integer) cell.SetCellValue(jtoken.Value<int>());
+                else if (jtoken.Type == JTokenType.Integer)
+                {
+                    try
+                    {
+                        cell.SetCellValue(jtoken.Value<int>());
+                    }
+                    catch (Exception)
+                    {
+                        cell.SetCellValue(jtoken.Value<long>());
+                    }
+                }
                 else if (jtoken.Type == JTokenType.Float)
                 {
                     var value = jtoken.Value<double>();
