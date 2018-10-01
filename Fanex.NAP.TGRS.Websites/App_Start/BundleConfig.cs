@@ -31,6 +31,7 @@ namespace Fanex.NAP.TGRS.Websites
             RegisterOSReportBundles(bundles);
             RegisterOSAdministrationBundles(bundles);
             RegisterSetting(bundles);
+            RegisterLeagueExclusion(bundles);
         }
 
         /// <summary>
@@ -405,6 +406,11 @@ namespace Fanex.NAP.TGRS.Websites
         {
             bundles.Add(new StyleBundle("~/styles/settings").Include("~/Areas/User/Resources/UserInfo/settings.less"));
             bundles.Add(new ScriptBundle("~/scripts/settings").Include("~/Areas/User/Resources/UserInfo/settings.js"));
+        }
+
+        public static void RegisterLeagueExclusion(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/scripts/LeagueExclusion").Include("~/Areas/Configuration/Resources/LeagueExclusion/*.js"));
         }
     }
 }

@@ -281,6 +281,7 @@
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\league-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\bettype-benchmark-management.js" />
     <Content Include="Areas\Configuration\Resources\BettypeManagement\bettype-management.js" />
+    <Content Include="Areas\Configuration\Resources\LeagueExclusion\main.js" />
     <Content Include="Areas\Configuration\Resources\TargetedMargin\targeted-margin.js" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\delete.png" />
     <Content Include="Areas\Configuration\Resources\SpreadManagement\popup-result.js" />
@@ -543,6 +544,7 @@
     <Content Include="Areas\Reports\ExcelTemplates\BettypeMonthlyPerformance\MonthlyPerformance.xlsx" />
     <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Filter.cshtml" />
+    <Content Include="Areas\Configuration\Views\LeagueExclusion\Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />

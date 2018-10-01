@@ -1,6 +1,9 @@
 ﻿namespace Fanex.NAP.TGRS.DataReportService
 {
     using Fanex.Data;
+    using Fanex.RemotingRef;
+    using System;
+    using System.Configuration;
     using System.ServiceProcess;
 
     public static class Program
@@ -15,8 +18,12 @@
                 DbSettingProviderManager
                     .StartNewSession()
                     .UseDefaultConnectionStringProvider()
-                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/UAT/", enableWatching: true)
+                    .UseDefaultDbSettingProvider(resourcePath: "~/App_Data", enableWatching: true)
                     .Run();
+
+                RefDataTypeContainer
+                  .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
+                  .FromApplication("SPU-TGRS-Data-Report-Service");
 
                 ServiceBase[] ServicesToRun;
 

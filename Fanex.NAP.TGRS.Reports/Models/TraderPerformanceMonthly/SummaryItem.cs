@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SummaryItem
     {
@@ -43,7 +44,10 @@
 
             foreach (var month in months)
             {
-                Months.Add(month.Month, month);
+                if (!Months.ContainsKey(month.Month))
+                {
+                    Months.Add(month.Month, month);
+                }
             }
 
             return this;
