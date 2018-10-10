@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Services.Implement
 {
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Configuration.Criteria.LeagueExclusion;
     using Fanex.NAP.TGRS.Configuration.Models.LeagueExclusion;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;

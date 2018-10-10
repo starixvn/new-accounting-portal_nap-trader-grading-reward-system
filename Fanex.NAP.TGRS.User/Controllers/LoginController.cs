@@ -46,7 +46,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private ISiteService _siteService;
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
-        private IMaintenanceService _maintenanceService;
         private IFunctionService _functionService;
         private HashAlgorithm _hashAlgorithm;
 
@@ -56,7 +55,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         [Simplect.Attribute.InjectObject]
         public LoginController()
-            : this(null, null, null, null, null, null, null)
+            : this(null, null, null, null, null, null)
         {
         }
 
@@ -66,7 +65,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
             ISiteService siteService,
             IMenuItemService menuItemService,
             ICurrentSession currentSession,
-            IMaintenanceService maintenanceService,
             IFunctionService functionService)
         {
             this._userService = userService ?? new UserService();
@@ -74,7 +72,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
             this._siteService = siteService ?? new SiteService();
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
-            this._maintenanceService = maintenanceService ?? new MaintenanceService();
             this._functionService = functionService ?? new FunctionService();
             this._hashAlgorithm = new SHA256Managed();
         }
@@ -116,11 +113,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
             {
                 // if login-directly feature is disabled then redirect users to NAP Hub
                 return Redirect(NapSettings.Settings.HubUrl);
-            }
-
-            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
-            {
-                return RedirectToAction("Offline", "Common");
             }
 
             GenerateToken();
@@ -244,13 +236,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
         [HttpPost]
         public ActionResult RecheckLogin()
         {
-            var maintenanceInfo = this._maintenanceService.GetDowntimeInfo();
-
-            if (maintenanceInfo.IsDowntime)
-            {
-                return this.Json("-1");
-            }
-
             if (!AppSettings.IsLocalTest)
             {
                 // check if not nap hub
@@ -266,7 +251,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
                 var criteria = new UserReCheckInUserCriteria();
                 criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
-                this._userService.ReUserCheckIn(ref criteria);
+                this._userService.ReUserCheckIn(criteria);
 
                 return this.Json(criteria.IsKickedOut ? "1" : "0");
             }
@@ -297,7 +282,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 Platform = CurrentContext.Platform
             };
 
-            this._userService.UserCheckIn(ref criteria);
+            this._userService.UserCheckIn(criteria);
 
             // saves user session
             this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
@@ -326,7 +311,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="user">The login user.</param>
         private void CreateAuthInfo(User user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
+            var currentDomain = CurrentContext.CurrentDomain;
 
             var authInfo = new AuthInfo();
 

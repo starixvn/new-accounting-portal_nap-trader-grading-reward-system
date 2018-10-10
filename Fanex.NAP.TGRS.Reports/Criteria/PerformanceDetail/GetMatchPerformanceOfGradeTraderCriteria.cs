@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Getting performance on match of a trader that belongs to a grade.

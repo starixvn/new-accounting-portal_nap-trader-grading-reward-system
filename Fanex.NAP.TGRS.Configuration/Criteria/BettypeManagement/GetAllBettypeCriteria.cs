@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.BettypeManagement
 {
-    using NAP.Framework.Data;
+    using Data.Repository;
 
     public class GetAllBettypeCriteria : CriteriaBase
     {

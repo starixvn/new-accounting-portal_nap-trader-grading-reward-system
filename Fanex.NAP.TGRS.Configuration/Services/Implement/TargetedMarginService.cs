@@ -6,7 +6,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.Implement
     using Core.BaseClasses;
     using Criteria.TargetedMargin;
     using Framework.Command;
-    using Framework.Data;
+    using Data.Repository;
     using Models.TargetedMargin;
 
     public class TargetedMarginService : TGRSBaseService, Interface.ITargetedMarginService

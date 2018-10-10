@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get team performance.

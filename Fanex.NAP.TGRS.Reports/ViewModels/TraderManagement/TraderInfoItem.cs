@@ -12,7 +12,7 @@
             this.EmployeeId = traderInfo.EmployeeId;
             this.TeamName = traderInfo.TeamName;
             this.Grade = traderInfo.Grade;
-            this.CreatedDate = traderInfo.CreatedDate.ToFullFormatedDate();
+            this.CreatedDate = traderInfo.CreatedDate.ToShortFormatedDate();
             this.CreatedUsername = traderInfo.CreatedUsername;
             this.TeamEffectiveDate = traderInfo.TeamEffectiveDate.ToShortFormatedDate();
             this.GradeEffectiveDate = traderInfo.GradeEffectiveDate.ToShortFormatedDate();

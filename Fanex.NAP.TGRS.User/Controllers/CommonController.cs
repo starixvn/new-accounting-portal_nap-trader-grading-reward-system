@@ -20,17 +20,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
     /// </summary>
     public class CommonController : Controller
     {
-        private readonly IMaintenanceService _maintenanceService;
-
         [Simplect.Attribute.InjectObject]
         public CommonController()
-            : this(null)
         {
-        }
-
-        public CommonController(IMaintenanceService maintenanceService)
-        {
-            this._maintenanceService = maintenanceService ?? new MaintenanceService();
         }
 
         /// <summary>
@@ -39,17 +31,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <returns>Return status of maintenance.</returns>
         public ActionResult Offline()
         {
-            var downTime = this._maintenanceService.GetDowntimeInfo();
+            FormsAuthentication.RedirectToLoginPage();
 
-            if (!downTime.IsDowntime)
-            {
-                FormsAuthentication.RedirectToLoginPage();
-            }
-
-            ViewBag.UmtFrom = downTime.From;
-            ViewBag.UmtTo = downTime.To;
-
-            return this.View();
+            return View();
         }
     }
 }

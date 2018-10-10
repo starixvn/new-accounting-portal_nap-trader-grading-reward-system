@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.NewSportPerformance
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetAllSportsCriteria : CriteriaBase
     {

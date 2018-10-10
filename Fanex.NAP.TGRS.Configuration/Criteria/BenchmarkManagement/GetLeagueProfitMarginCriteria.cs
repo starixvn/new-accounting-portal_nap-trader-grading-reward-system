@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to get league profit margin.

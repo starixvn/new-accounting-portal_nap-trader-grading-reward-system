@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.User.Criteria.Setting
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class UpdateDefaultBettypeCriteria : CriteriaBase
     {

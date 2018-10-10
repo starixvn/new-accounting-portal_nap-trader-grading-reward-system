@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Configuration.Models.TeamManagement
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Team information model.

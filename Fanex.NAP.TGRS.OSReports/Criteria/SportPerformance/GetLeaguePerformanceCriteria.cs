@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class GetLeaguePerformanceCriteria : CriteriaBase

@@ -103,7 +103,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 {
                     criteria.CustId = user.Id;
 
-                    ICommandResult result = this._userService.InsertOrUpdate(criteria);
+                    var result = this._userService.InsertOrUpdate(criteria);
 
                     if (result != null && result.IsSuccessful)
                     {
@@ -164,7 +164,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 criteria.LastName = criteria.LastName ?? string.Empty;
                 criteria.Email = criteria.Email ?? string.Empty;
 
-                ICommandResult result = this._userService.InsertOrUpdate(criteria);
+                var result = this._userService.InsertOrUpdate(criteria);
 
                 if (result != null && result.IsSuccessful)
                 {

@@ -9,8 +9,8 @@
 
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
+    using Fanex.Data.Repository;
     using System;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// The criteria which are used to get the trader performance data of a league.

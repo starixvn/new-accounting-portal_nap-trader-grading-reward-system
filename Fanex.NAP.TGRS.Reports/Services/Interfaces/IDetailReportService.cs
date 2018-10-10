@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
 
-using Fanex.NAP.Framework.Data;
+using Fanex.Data.Repository;
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
@@ -39,7 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>LeaguePerformanceList object.</returns>
-        LeaguePerformanceList GetLeaguePerformance(ICriteria criteria);
+        LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria);
 
         /// <summary>
         /// Gets the trader performance of a league.
@@ -88,14 +88,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>TraderPerformanceList object.</returns>
-        TraderPerformanceList GetTraderPerformance(ICriteria criteria);
+        TraderPerformanceList GetTraderPerformance(Fanex.Data.Repository.ICriteria criteria);
 
         /// <summary>
         /// Gets the match performance of a trader.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceList object.</returns>
-        MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria);
+        MatchPerformanceList GetMatchPerformanceOfTrader(Fanex.Data.Repository.ICriteria criteria);
 
         /// <summary>
         /// Gets the bet type detail from trader report.

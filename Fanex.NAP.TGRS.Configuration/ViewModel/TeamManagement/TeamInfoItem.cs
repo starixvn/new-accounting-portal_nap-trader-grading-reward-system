@@ -23,7 +23,7 @@ namespace Fanex.NAP.TGRS.Configuration.ViewModel.TeamManagement
             this.TeamName = teamInfo.TeamName;
             this.Description = teamInfo.Description;
             this.TraderCount = teamInfo.TraderCount;
-            this.CreatedDate = teamInfo.CreatedDate.ToFullFormatedDate();
+            this.CreatedDate = teamInfo.CreatedDate.ToShortFormatedDate();
             this.CreatedBy = teamInfo.CreatedBy;
             this.CreatedUsername = teamInfo.CreatedUsername;
             this.AvgGrade = teamInfo.AvgGrade;

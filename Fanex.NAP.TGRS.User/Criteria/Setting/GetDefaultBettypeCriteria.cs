@@ -1,8 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.User.Criteria.Setting
 {
-    using Fanex.NAP.Framework.Data;
-
-    public class GetDefaultBettypeCriteria : CriteriaBase
+    public class GetDefaultBettypeCriteria : Data.Repository.CriteriaBase
     {
         public int UserId { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.LeagueExclusion
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class LeagueExclusionInsertCriteria : CriteriaBase
     {

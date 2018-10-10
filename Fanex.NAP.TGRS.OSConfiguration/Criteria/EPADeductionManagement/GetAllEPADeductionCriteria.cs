@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.EPADeductionManagement
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class GetAllEPADeductionCriteria : CriteriaBase

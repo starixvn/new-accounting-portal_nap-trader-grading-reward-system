@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Reports.Models.Permission;
 
     /// <summary>

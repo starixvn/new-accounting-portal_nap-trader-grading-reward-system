@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.BettypeMonthlyPerformance
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class BettypeMonthlyGetCriteria : CriteriaBase
     {

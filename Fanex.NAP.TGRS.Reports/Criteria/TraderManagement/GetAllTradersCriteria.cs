@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.TraderManagement
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get all Trader.

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.Dashboard
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetDataByRegionCriteria : CriteriaBase
     {

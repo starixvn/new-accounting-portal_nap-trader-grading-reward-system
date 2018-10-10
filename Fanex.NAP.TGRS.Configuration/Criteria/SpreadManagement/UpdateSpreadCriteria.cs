@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.SpreadManagement
 {
-    using Framework.Data;
+    using Data.Repository;
 
     public class UpdateSpreadCriteria : CriteriaBase
     {

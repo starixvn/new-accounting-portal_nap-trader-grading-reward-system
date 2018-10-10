@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Getting bet type detail from league detail report.

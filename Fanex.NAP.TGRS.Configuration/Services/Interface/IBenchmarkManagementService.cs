@@ -12,7 +12,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.BenchmarkManagement
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement;
     using Fanex.NAP.TGRS.Configuration.ViewModel.BenchmarkManagement;
 

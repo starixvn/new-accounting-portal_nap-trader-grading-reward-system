@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.TraderPerformanceMonthly
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetAllShiftCriteria : CriteriaBase
     {

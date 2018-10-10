@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public abstract class BettypeGroupCriteria : CriteriaBase
     {

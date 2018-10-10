@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreConfirmation
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class GetAllTraderScoreCriteria : CriteriaBase

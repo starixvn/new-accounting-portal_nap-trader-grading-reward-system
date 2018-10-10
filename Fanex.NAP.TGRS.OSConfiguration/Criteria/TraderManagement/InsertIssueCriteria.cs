@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TraderManagement
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class InsertIssueCriteria : CriteriaBase
     {

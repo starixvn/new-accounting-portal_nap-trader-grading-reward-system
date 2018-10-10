@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.TargetedMargin
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using NAP.TGRS.Configuration.Models.TargetedMargin;
 
     public class UpdateTargetedMarginCriteria : CriteriaBase

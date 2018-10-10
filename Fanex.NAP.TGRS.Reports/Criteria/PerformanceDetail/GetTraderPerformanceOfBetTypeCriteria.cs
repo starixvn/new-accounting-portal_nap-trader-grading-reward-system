@@ -10,8 +10,8 @@
 
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
+    using Fanex.Data.Repository;
     using System;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// The criteria that are used to query the performance data of a trader on a specific bet type.

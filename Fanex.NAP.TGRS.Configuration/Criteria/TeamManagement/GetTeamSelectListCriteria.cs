@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.Configuration.Criteria.TeamManagement
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get all team.

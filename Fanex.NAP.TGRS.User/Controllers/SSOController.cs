@@ -100,7 +100,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                     Platform = CurrentContext.Platform
                 };
 
-                this._userService.UserSSOCheckIn(ref criteria);
+                this._userService.UserSSOCheckIn(criteria);
 
                 if (criteria.OnUserId != 0)
                 {
@@ -139,7 +139,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="user">The user object.</param>
         private void CreateAuthInfo(User user)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
+            var currentDomain = CurrentContext.CurrentDomain;
 
             var authInfo = new AuthInfo();
 

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.NewTraderPerformance
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class GetSportByTraderCriteria : CriteriaBase

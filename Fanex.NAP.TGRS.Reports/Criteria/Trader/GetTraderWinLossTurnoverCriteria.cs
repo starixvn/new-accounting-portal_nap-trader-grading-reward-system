@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.Trader
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
     public class GetTraderWinLossTurnoverCriteria : BettypeGroupCriteria

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Configuration.Criteria.TargetedMargin
 {
-    using Framework.Data;
+    using Data.Repository;
 
     public class GetAllTargetedMarginCriteria : CriteriaBase
     {

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetTeamsCriteria : CriteriaBase
     {

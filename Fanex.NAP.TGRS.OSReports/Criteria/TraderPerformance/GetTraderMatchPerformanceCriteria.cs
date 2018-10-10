@@ -1,4 +1,4 @@
-﻿using Fanex.NAP.Framework.Data;
+﻿using Fanex.Data.Repository;
 using System;
 
 namespace Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance

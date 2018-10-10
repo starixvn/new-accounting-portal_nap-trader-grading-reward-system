@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetSettingAllCriteria : CriteriaBase
     {

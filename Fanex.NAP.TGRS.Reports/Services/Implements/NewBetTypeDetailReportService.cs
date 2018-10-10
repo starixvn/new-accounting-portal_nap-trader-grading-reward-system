@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;

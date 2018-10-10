@@ -10,7 +10,7 @@
 namespace Fanex.NAP.TGRS.OSConfiguration.Services.GradeManagement
 {
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.OSConfiguration.Criteria.GradeManagement;
     using Fanex.NAP.TGRS.OSConfiguration.Models.GradeManagement;
     using System.Collections.Generic;

@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.OSAdministration.Criteria.ScoreHistory
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetAllScoreHistoryCriteria : CriteriaBase
     {

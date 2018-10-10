@@ -14,7 +14,7 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
     using Fanex.Data;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Base Service.

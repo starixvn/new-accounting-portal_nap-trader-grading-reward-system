@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.TeamManagement
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
 
     public class UpdateTeamCriteria : CriteriaBase

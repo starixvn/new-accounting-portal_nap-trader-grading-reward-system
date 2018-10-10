@@ -10,7 +10,7 @@ namespace Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// TODO: Update summary.

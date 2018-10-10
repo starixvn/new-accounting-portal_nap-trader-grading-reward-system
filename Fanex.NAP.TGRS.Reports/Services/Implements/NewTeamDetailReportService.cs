@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
@@ -202,7 +202,7 @@
                 var record = new object[]
                 {
                     i + 1,
-                    item.TeamName, item.TraderCount, item.LeagueCount, item.MatchCount, 
+                    item.TeamName, item.TraderCount, item.LeagueCount, item.MatchCount,
                     item.TurnoverJuice,
                     item.Juice,
                     (object)item.JuiceMargin ?? ViewLang.NA,

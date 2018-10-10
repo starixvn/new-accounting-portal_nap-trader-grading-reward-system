@@ -53,7 +53,7 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
             ViewFlags = new ViewFlags
             {
-                IsLive = this.Environment.Equals(Constant.LIVE),
+                IsLive = this.Environment.Equals(Constant.Live),
                 HasEditRight = false,
                 IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };

@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
 
-using Fanex.NAP.Framework.Data;
+using Fanex.Data.Repository;
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {

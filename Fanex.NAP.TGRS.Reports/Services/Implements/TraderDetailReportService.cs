@@ -11,7 +11,7 @@
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
@@ -40,7 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>TraderPerformanceList object.</returns>
-        public TraderPerformanceList GetTraderPerformance(ICriteria criteria)
+        public TraderPerformanceList GetTraderPerformance(Fanex.Data.Repository.ICriteria criteria)
         {
             IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
             TraderPerformanceList traderPerformance = new TraderPerformanceList();
@@ -64,7 +64,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>MatchPerformanceList object.</returns>
-        public MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria)
+        public MatchPerformanceList GetMatchPerformanceOfTrader(Fanex.Data.Repository.ICriteria criteria)
         {
             IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
             MatchPerformanceList matchPerformance = new MatchPerformanceList();

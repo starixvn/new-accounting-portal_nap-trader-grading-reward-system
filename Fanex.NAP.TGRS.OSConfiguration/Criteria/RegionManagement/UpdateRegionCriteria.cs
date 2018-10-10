@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.RegionManagement
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.TGRS.OSConfiguration.Services.Utility;
 
     public class UpdateRegionCriteria : CriteriaBase
