@@ -742,6 +742,7 @@
     </Content>
     <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.master.config" />
     <Content Include="Web.ConnectionString.local.config">
