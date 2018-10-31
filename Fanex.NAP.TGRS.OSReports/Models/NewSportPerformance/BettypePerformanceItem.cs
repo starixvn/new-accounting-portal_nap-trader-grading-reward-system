@@ -72,6 +72,6 @@
 
         public decimal? PointMargin { get; set; }
 
-        public int? BetCount { get; set; }
+        public int BetCount { get; set; }
     }
 }
