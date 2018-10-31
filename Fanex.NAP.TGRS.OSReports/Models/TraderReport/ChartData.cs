@@ -9,5 +9,7 @@
         public double Turnover { get; set; }
 
         public double WinLost { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

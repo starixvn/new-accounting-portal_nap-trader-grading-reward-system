@@ -22,5 +22,7 @@ namespace Fanex.NAP.TGRS.OSReports.Models.SportPerformance
         public decimal? AverageVTurnover { get; set; }
 
         public decimal? PointMargin { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

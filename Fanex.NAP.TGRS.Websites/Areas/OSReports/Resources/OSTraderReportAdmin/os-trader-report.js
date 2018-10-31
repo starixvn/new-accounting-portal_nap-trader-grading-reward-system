@@ -397,6 +397,7 @@
                     { Name: "Margin", Value: data.VMargin },
                     { Name: "AvgTurnover", Value: data.AverageVTurnover },
                     { Name: "Point", Value: data.PointMargin },
+                    { Name: "BetCount", Value: data.BetCount },
                 ]
             };
         }
@@ -412,6 +413,7 @@
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat },
             ];
 
         var options =
@@ -455,6 +457,7 @@
                     { Name: "Winloss", Value: data.WinLoss },
                     { Name: "Margin", Value: data.Margin },
                     { Name: "Products", Value: data.EventProductCount },
+                    { Name: "BetCount", Value: data.BetCount },
                 ]
             };
         }
@@ -467,6 +470,7 @@
                 { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "Event Products", Width: 130, Name: "Products", HeaderAlign: "center", CellAlign: "right", Sort: true },
+                { HeaderText: "Bet Count", Width: 130, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat },
             ];
 
         var options =
@@ -508,6 +512,7 @@
                     { Name: "Margin", Value: data.VMargin },
                     { Name: "AvgTurnover", Value: data.AverageVTurnover },
                     { Name: "Point", Value: data.PointMargin },
+                    { Name: "BetCount", Value: data.BetCount },
                 ]
             };
         }
@@ -522,6 +527,7 @@
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat },
             ];
 
         var options =
@@ -568,6 +574,7 @@
                     { Name: "Margin", Value: data.VMargin },
                     { Name: "AvgTurnover", Value: data.AverageVTurnover },
                     { Name: "Point", Value: data.PointMargin },
+                    { Name: "BetCount", Value: data.BetCount },
                 ]
             };
         }
@@ -581,6 +588,7 @@
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: "Average V.Turnover", Width: 150, Name: "AvgTurnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Point Margin", Width: 100, Name: "Point", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat },
             ];
 
         var options =

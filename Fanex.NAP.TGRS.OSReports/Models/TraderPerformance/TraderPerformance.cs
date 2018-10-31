@@ -27,5 +27,7 @@
         public int RegionCount { get; set; }
 
         public int MatchCount { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

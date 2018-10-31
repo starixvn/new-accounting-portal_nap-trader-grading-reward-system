@@ -30,5 +30,7 @@
         public double Point { get; set; }
 
         public int EventProductCount { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

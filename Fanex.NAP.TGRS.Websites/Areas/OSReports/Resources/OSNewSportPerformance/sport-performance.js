@@ -167,7 +167,8 @@ var sportPerformance = (function ($) {
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Average V.Turnover', Name: 'ColAverageTurnover', MergeRowNumber: 2 },
-                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 }
+                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -197,6 +198,9 @@ var sportPerformance = (function ($) {
                       {
                           HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
                       }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -260,7 +264,8 @@ var sportPerformance = (function ($) {
                               { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
-                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
+                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) },
+                              { Name: 'ColBetCount', Value: common.GetNumWithLabel(item.BetCount, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -323,7 +328,8 @@ var sportPerformance = (function ($) {
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Average V.Turnover', Name: 'ColAverageTurnover', MergeRowNumber: 2 },
-                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 }
+                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -352,6 +358,9 @@ var sportPerformance = (function ($) {
                       {
                           HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
                       }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -407,7 +416,8 @@ var sportPerformance = (function ($) {
                               { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
-                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
+                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) },
+                              { Name: 'ColBetCount', Value: common.GetNumWithLabel(item.BetCount, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -460,7 +470,8 @@ var sportPerformance = (function ($) {
                                { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
-                               { HeaderText: 'Event Products', Name: 'ColEvent', MergeRowNumber: 2 }
+                               { HeaderText: 'Event Products', Name: 'ColEvent', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -484,6 +495,9 @@ var sportPerformance = (function ($) {
                       {
                           HeaderText: 'Event Products', Width: 120, Name: 'ColEvent', HeaderAlign: 'center', CellAlign: 'right',
                           Sort: true
+                      },
+                      {
+                          HeaderText: 'Bet Count', Width: 120, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
                       }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -533,7 +547,8 @@ var sportPerformance = (function ($) {
                               { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                               { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
-                              { Name: 'ColEvent', Value: item.EventProductCount }]
+                              { Name: 'ColEvent', Value: item.EventProductCount },
+                              { Name: 'ColBetCount', Value: item.BetCount }]
                 };
 
                 bodyData.push(row);
@@ -578,7 +593,8 @@ var sportPerformance = (function ($) {
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
                                { HeaderText: 'Average V.Turnover', Name: 'ColAverageTurnover', MergeRowNumber: 2 },
-                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 }
+                               { HeaderText: 'Point Margin', Name: 'ColPointMargin', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -606,6 +622,9 @@ var sportPerformance = (function ($) {
                       {
                           HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                      },
+                      {
+                          HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
                       }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -656,7 +675,8 @@ var sportPerformance = (function ($) {
                               { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
                               { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
-                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
+                              { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) },
+                              { Name: 'ColBetCount', Value: common.GetNumWithLabel(item.BetCount, labels.NA) }]
                 };
 
                 bodyData.push(row);

@@ -19,5 +19,7 @@
         public double AverageVTurnover { get; set; }
 
         public double PointMargin { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

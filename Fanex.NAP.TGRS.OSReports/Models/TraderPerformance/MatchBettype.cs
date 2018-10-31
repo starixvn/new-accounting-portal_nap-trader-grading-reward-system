@@ -9,5 +9,7 @@
         public decimal VWinloss { get; set; }
 
         public decimal Margin => Turnover == 0 ? 0 : VWinloss * 100 / Turnover;
+
+        public int BetCount { get; set; }
     }
 }

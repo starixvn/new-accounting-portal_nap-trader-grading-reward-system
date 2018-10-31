@@ -181,7 +181,8 @@ var traderReports = (function ($) {
 
                     { Name: 'colSport', Value: sportLink.format(item.SportCount, item.TraderId, item.TraderName, item.SportId) },
                     { Name: 'colRegion', Value: regionLink.format(item.RegionCount, item.TraderId, item.TraderName, item.SportId) },
-                    { Name: 'colEvent', Value: item.EventProductCount }
+                    { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'ColBetCount', Value: item.BetCount }
                 ]
             }
         }
@@ -204,7 +205,8 @@ var traderReports = (function ($) {
 
                                { HeaderText: 'Sports', Name: 'colSport', MergeRowNumber: 2 },
                                { HeaderText: 'Regions', Name: 'colRegion', MergeRowNumber: 2 },
-                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 }
+                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -233,6 +235,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'Sports', Width: 65, Name: 'colSport', HeaderAlign: 'center', CellAlign: 'right' },
                 { HeaderText: 'Regions', Width: 65, Name: 'colRegion', HeaderAlign: 'center', CellAlign: 'right' },
                 { HeaderText: 'Event Products', Width: 90, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 90, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -273,7 +276,8 @@ var traderReports = (function ($) {
                     { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
-                    { Name: 'colEvent', Value: item.EventProductCount }
+                    { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'ColBetCount', Value: item.BetCount }
                 ]
             }
         };
@@ -291,7 +295,8 @@ var traderReports = (function ($) {
                                { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
-                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 }
+                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -315,6 +320,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', SortDirection: 'desc', Sort: true },
 
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 100, Name: 'colBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -357,7 +363,8 @@ var traderReports = (function ($) {
                     { Name: 'colWinloss', Value: common.GetNumWithLabel(item.WinLoss, labels.NA) },
                     { Name: 'colMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
 
-                    { Name: 'colEvent', Value: item.EventProductCount }
+                    { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'ColBetCount', Value: item.BetCount }
                 ]
             }
         };
@@ -374,7 +381,8 @@ var traderReports = (function ($) {
                                { HeaderText: "Leftover", Name: "colTurnoverLeftover", MergeColNumber: 4 },
                                { HeaderText: "Total", Name: "colWinloss", MergeColNumber: 3 },
 
-                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 }
+                               { HeaderText: 'Event Products', Name: 'colEvent', MergeRowNumber: 2 },
+                               { HeaderText: 'Bet Count', Name: 'ColBetCount', MergeRowNumber: 2 }
                         ]
                     }
             ],
@@ -397,6 +405,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Margin', Width: 100, Name: 'colMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', SortDirection: 'desc', Sort: true },
 
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 100, Name: 'colBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),

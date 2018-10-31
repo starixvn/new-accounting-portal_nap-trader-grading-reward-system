@@ -69,5 +69,7 @@
         }
 
         public int EventProductCount { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

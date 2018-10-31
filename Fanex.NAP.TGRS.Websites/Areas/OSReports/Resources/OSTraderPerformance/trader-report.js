@@ -270,6 +270,7 @@ var traderReports = (function ($) {
                     //{ Name: 'colMatch', Value: `<span class='match-link link' data-trader-id="${item.TraderId}" data-trader-name="${item.TraderName}">${item.MatchCount}</span>` },
                     { Name: 'colRegion', Value: regionLink.format(item.RegionCount, item.TraderId, item.TraderName, item.SportId) },
                     { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'colBetCount', Value: item.BetCount }
                 ]
             }
         }
@@ -289,6 +290,7 @@ var traderReports = (function ($) {
                 //{ HeaderText: "Matches", Width: 100, Name: "colMatch", HeaderAlign: "center", CellAlign: "right" },
                 { HeaderText: 'Regions', Width: 100, Name: 'colRegion', HeaderAlign: 'center', CellAlign: 'right' },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 100, Name: 'colBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -327,7 +329,8 @@ var traderReports = (function ($) {
                     { Name: 'colMargin', Value: item.Margin },
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss },
-                    { Name: 'colEvent', Value: item.EventProductCount }
+                    { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'colBetCount', Value: item.BetCount }
                 ]
             }
         };
@@ -342,6 +345,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 100, Name: 'colBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -374,7 +378,8 @@ var traderReports = (function ($) {
                     { Name: 'colMargin', Value: item.Margin },
                     { Name: 'colTurnover', Value: item.Turnover },
                     { Name: 'colWinloss', Value: item.WinLoss },
-                    { Name: 'colEvent', Value: item.EventProductCount }
+                    { Name: 'colEvent', Value: item.EventProductCount },
+                    { Name: 'colBetCount', Value: item.BetCount }
                 ]
             }
         };
@@ -387,6 +392,7 @@ var traderReports = (function ($) {
                 { HeaderText: 'V.Turnover', Width: 100, Name: 'colTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: 'V.Win Loss', Width: 100, Name: 'colWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc' },
                 { HeaderText: 'Event Products', Width: 100, Name: 'colEvent', HeaderAlign: 'center', CellAlign: 'right' },
+                { HeaderText: 'Bet Count', Width: 100, Name: 'colBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat }
             ],
             showNumberColumn: true,
             bodyRows: data.map(mapper),
@@ -436,6 +442,9 @@ var traderReports = (function ($) {
             {
                 HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+            },
+            {
+                HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
             }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -483,7 +492,8 @@ var traderReports = (function ($) {
                     { Name: 'ColWinLoss', Value: item.VWinLoss },
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
                     { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
-                    { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
+                    { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) },
+                    { Name: 'ColBetCount', Value: common.GetNumWithLabel(item.BetCount, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -554,6 +564,9 @@ var traderReports = (function ($) {
             {
                 HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+            },
+            {
+                HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
             }],
             gridExpandHeight: 220,
             showTitle: true,
@@ -592,7 +605,8 @@ var traderReports = (function ($) {
                     { Name: 'ColWinLoss', Value: item.VWinLoss },
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(item.VMargin, labels.NA) },
                     { Name: 'ColAverageTurnover', Value: common.GetNumWithLabel(item.AverageVTurnover, labels.NA) },
-                    { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) }]
+                    { Name: 'ColPointMargin', Value: common.GetNumWithLabel(item.PointMargin, labels.NA) },
+                    { Name: 'ColBetCount', Value: common.GetNumWithLabel(item.BetCount, labels.NA) }]
                 };
 
                 bodyData.push(row);
@@ -662,7 +676,8 @@ var traderReports = (function ($) {
                     { Name: "EventDate", Value: data.Date },
                     { Name: "Turnover", Value: data.Turnover, },
                     { Name: "Winloss", Value: data.Winloss, },
-                    { Name: "Margin", Value: data.Margin, }
+                    { Name: "Margin", Value: data.Margin, },
+                    { Name: "BetCount", Value: data.BetCount, }
                 ]
             };
         }
@@ -675,6 +690,7 @@ var traderReports = (function ($) {
                 { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: "Margin %", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
+                { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat }
             ]
 
         var options =
@@ -737,7 +753,8 @@ var traderReports = (function ($) {
                     { Name: "Product", Value: data.BettypeName },
                     { Name: "Turnover", Value: data.Turnover, },
                     { Name: "Winloss", Value: data.VWinloss, },
-                    { Name: "Margin", Value: data.Margin, }
+                    { Name: "Margin", Value: data.Margin, },
+                    { Name: "BetCount", Value: data.BetCount, }
                 ]
             };
         }
@@ -755,6 +772,7 @@ var traderReports = (function ($) {
                 { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, /*SortDirection: 'desc'*/ },
                 { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, /*SortDirection: 'desc'*/ },
                 { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, /*SortDirection: 'desc'*/ },
+                { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat }
             ]
 
         var options =

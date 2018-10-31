@@ -11,5 +11,7 @@
         public double Margin { get; set; }
 
         public int SportCount { get; set; }
+
+        public int BetCount { get; set; }
     }
 }

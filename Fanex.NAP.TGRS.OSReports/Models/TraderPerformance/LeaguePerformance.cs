@@ -19,5 +19,7 @@
         public decimal? PointMargin { get; set; }
 
         public int NoOfMatch { get; set; }
+
+        public int BetCount { get; set; }
     }
 }
