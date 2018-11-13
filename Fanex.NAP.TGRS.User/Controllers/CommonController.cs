@@ -12,13 +12,14 @@ namespace Fanex.NAP.TGRS.User.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
+    using ONEbook.UM.Services;
+    using System.Threading.Tasks;
+    using Core.BaseClasses;
 
     /// <summary>
     /// Common controller.
     /// </summary>
-    public class CommonController : Controller
+    public class CommonController : TGRSBaseController
     {
         [Simplect.Attribute.InjectObject]
         public CommonController()
@@ -29,9 +30,18 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// Offline this instance.
         /// </summary>
         /// <returns>Return status of maintenance.</returns>
-        public ActionResult Offline()
+        public async Task<ActionResult> Offline()
         {
-            FormsAuthentication.RedirectToLoginPage();
+            var maintenanceService = new MaintenanceService();
+            var downTime = await maintenanceService.GetUnderMaintenanceTime();
+
+            if (!downTime.IsUnderMaintenanceTime)
+            {
+                return RedirectToAction("LogOut", "Login");
+            }
+
+            ViewBag.UmtFrom = downTime.From;
+            ViewBag.UmtTo = downTime.To;
 
             return View();
         }

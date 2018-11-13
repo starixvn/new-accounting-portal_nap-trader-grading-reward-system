@@ -236,6 +236,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         [HttpPost]
         public ActionResult RecheckLogin()
         {
+            return this.Json("-1");
             if (!AppSettings.IsLocalTest)
             {
                 // check if not nap hub

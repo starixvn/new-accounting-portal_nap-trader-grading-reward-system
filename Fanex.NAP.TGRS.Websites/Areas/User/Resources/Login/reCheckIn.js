@@ -48,7 +48,7 @@ Fanex.TGRS.ReCheckIn = function () {
                     cachedElements.HeadlineMsgBox.showInfo(cachedElements.KickedOutMessage, { closeBtn: false });
                 }
                 if (result === '-1') {
-                    window.location.href = cachedElements.RootURL + 'User/Login/Offline';
+                    window.location.href = cachedElements.RootURL + 'User/Common/Offline';
                 }
             }
         });

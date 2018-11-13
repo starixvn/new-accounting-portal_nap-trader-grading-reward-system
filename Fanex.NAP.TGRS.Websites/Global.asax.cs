@@ -12,6 +12,10 @@ namespace Fanex.NAP.TGRS.Websites
     using Fanex.Data.Configuration;
     using Fanex.Logging;
     using Infrastructure;
+    using ONEbook.UM;
+    using ONEbook.UM.AspNetMVC.Configuration;
+    using ONEbook.UM.Helpers;
+    using ONEbook.UM.Transport;
     using RemotingRef;
     using Simplect;
     using System;
@@ -48,6 +52,12 @@ namespace Fanex.NAP.TGRS.Websites
             RefDataTypeContainer
               .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service.Url"]))
               .FromApplication("SPU - TGRS");
+
+            var umConfig = new UMClientConfiguration();
+            UMClientManager
+                .UseConfig(umConfig)
+                .UseRestClient(new RestClient(umConfig))
+                .UseHttpContext(new HttpContextHelper());
         }
 
         /// <summary>
