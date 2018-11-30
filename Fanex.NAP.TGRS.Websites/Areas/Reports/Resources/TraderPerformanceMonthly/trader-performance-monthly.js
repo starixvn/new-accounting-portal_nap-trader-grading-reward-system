@@ -40,6 +40,7 @@
             });
 
     var traderSearch = $("#traderSearch");
+    var leagueSearch = $("#leagueSearch");
 
     var liveSelector =
         $("#liveSelector")
@@ -207,28 +208,45 @@
         common.DownloadFile(url, filter);
     }
 
+    function inputHtmlExisted()
+    {
+        var regex = new RegExp("<[^>]*>");
+        var traderNameHtmlExisted = traderSearch.val().match(regex);
+        var leagueNameHtmlExisted = leagueSearch.val().match(regex);
+        return traderNameHtmlExisted || leagueNameHtmlExisted;
+    }
+
     function getData() {
-        common.DisableInput();
+        if (!inputHtmlExisted()) {
+            common.DisableInput();
 
-        var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/GetMonthlyData");
+            var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/GetMonthlyData");
 
-        filter =
-            {
-                bettype: bettypeSelector.val(),
-                tradername: traderSearch.val(),
-                Year: yearSelector.val(),
-                Shift: shiftSelector.val(),
-                Grade: gradeSelector.val()
-            };
+            filter =
+                {
+                    bettype: bettypeSelector.val(),
+                    tradername: traderSearch.val(),
+                    LeagueName: leagueSearch.val(),
+                    Year: yearSelector.val(),
+                    Shift: shiftSelector.val(),
+                    Grade: gradeSelector.val()
+                };
 
-        labels.ThisYear = filter.Year;
-        labels.LastYear = parseInt(filter.Year) - 1;
-        labels.Month = "{0} - " + labels.ThisYear;
+            labels.ThisYear = filter.Year;
+            labels.LastYear = parseInt(filter.Year) - 1;
+            labels.Month = "{0} - " + labels.ThisYear;
 
-        getHeaders();
-        getColumns();
+            getHeaders();
+            getColumns();
 
-        $.post(url, filter, renderData);
+            $.post(url, filter, renderData);
+        }
+        else {
+            gridOptions.bodyRows = [];
+            gridOptions.footerRows = [];
+            gridOptions.hiddenColumns = GetColumnsNeedHideFromCookies();
+            grid.fanexGrid(gridOptions);
+        }
     }
 
     function renderGroup(group) {

@@ -35,6 +35,7 @@
         {
             try
             {
+                filter.LeagueName = filter.LeagueName ?? string.Empty;
                 var data = _service.GetReports(filter);
                 var json = JObject.FromObject(data);
                 return Content(json.ToString(), "application/json");
@@ -50,6 +51,7 @@
         {
             try
             {
+                filter.LeagueName = filter.LeagueName ?? string.Empty;
                 var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformance.xlsx"), filter);
                 var fileName = "Trader_Monthly_Performance_" + DateTime.Now.ToShortFormatedDateForFileName() + ".xlsx";
 
