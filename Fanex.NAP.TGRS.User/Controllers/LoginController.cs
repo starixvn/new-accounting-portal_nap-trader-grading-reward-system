@@ -31,10 +31,12 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// Login controller.
     /// </summary>
+    [CheckUMFilter]
     public class LoginController : TGRSBaseController
     {
         #region Members

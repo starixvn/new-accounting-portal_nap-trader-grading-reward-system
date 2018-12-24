@@ -24,10 +24,12 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using ONEbook.UM.Filters;
 
     /// <summary>
     /// SSO controller.
     /// </summary>
+    [CheckUMFilter]
     public class SSOController : TGRSBaseController
     {
         #region members
