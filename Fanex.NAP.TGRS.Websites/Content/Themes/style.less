@@ -211,9 +211,9 @@ input, select {
     outline: 0 none;
 }
 
-    input[type=checkbox], input[type=radio] {
-        padding: 0;
-    }
+input[type=checkbox], input[type=radio] {
+    padding: 0;
+}
 
 select {
     cursor: pointer;
@@ -387,7 +387,7 @@ header {
                 }
             }
 
-            >li {
+            > li {
                 &.normal {
                     ul {
                         left: 0px;
@@ -1370,4 +1370,66 @@ header {
     height: 14px;
     width: 14px;
     cursor: pointer;
+}
+
+
+.checkbox-group {
+    @size: 16px;
+    @color: #2575d8;
+    @background: #fff;
+
+    display: inline-block;
+
+    input[type="checkbox"] {
+        display: block;
+        opacity: 0;
+        height: @size;
+        position: absolute;
+        width: @size;
+
+        &:checked + label::after {
+            background-color: @color;
+            transform: scale(1);
+        }
+
+        &:disabled + label::after {
+            background-color: @color;
+            transform: scale(1);
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        &:disabled + label {
+            cursor: not-allowed;
+        }
+    }
+
+    label {
+        display: block;
+        padding-left: 25px;
+        position: relative;
+        color: #535353;
+        margin-bottom: 8px;
+        cursor: pointer;
+
+        &:before, &:after {
+            box-sizing: border-box;
+            border: 1px solid #737373;
+            content: "";
+            display: block;
+            left: 0;
+            height: @size;
+            position: absolute;
+            width: @size;
+            top: 0;
+            border-radius: 2px;
+        }
+
+        &:after {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC") center center no-repeat;
+            border: 0;
+            transform: scale(0);
+            transition: .2s;
+        }
+    }
 }
