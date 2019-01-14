@@ -161,8 +161,10 @@
     <Compile Include="Criteria\BettypeManagement\UpdateBettypeCriteria.cs" />
     <Compile Include="Criteria\LeagueExclusion\LeagueExclusionDeleteCriteria.cs" />
     <Compile Include="Criteria\LeagueExclusion\LeagueExclusionInsertCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\LeagueExclusionConfigGetCriteria.cs" />
     <Compile Include="Criteria\LeagueExclusion\LeagueGetCriteria.cs" />
     <Compile Include="Criteria\LeagueExclusion\LeagueSearchCriteria.cs" />
+    <Compile Include="Criteria\SystemConfiguration\LeagueExclusionConfigUpdateCriteria.cs" />
     <Compile Include="Criteria\SpreadManagement\UpdateSpreadCriteria.cs" />
     <Compile Include="Criteria\Common\GetLeagueIdsCriteria.cs" />
     <Compile Include="Criteria\Common\GetBetTypeIdsCriteria.cs" />

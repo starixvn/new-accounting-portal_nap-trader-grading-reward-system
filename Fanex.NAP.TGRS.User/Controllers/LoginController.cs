@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
+    using Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using ONEbook.UM.Filters;
 
@@ -49,6 +50,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
         private IFunctionService _functionService;
+        private ISystemConfigurationService _systemConfigService;
         private HashAlgorithm _hashAlgorithm;
 
         #endregion Members
@@ -57,7 +59,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         [Simplect.Attribute.InjectObject]
         public LoginController()
-            : this(null, null, null, null, null, null)
+            : this(null, null, null, null, null, null, null)
         {
         }
 
@@ -67,7 +69,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
             ISiteService siteService,
             IMenuItemService menuItemService,
             ICurrentSession currentSession,
-            IFunctionService functionService)
+            IFunctionService functionService,
+            ISystemConfigurationService systemConfigService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
@@ -75,6 +78,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
             this._functionService = functionService ?? new FunctionService();
+            this._systemConfigService = systemConfigService ?? new SystemConfigurationService();
             this._hashAlgorithm = new SHA256Managed();
         }
 
@@ -166,6 +170,10 @@ namespace Fanex.NAP.TGRS.User.Controllers
                                     _functionService.GetByUserAndSiteIncludeGroup(user.Id, NapSettings.Settings.SiteId, NapSettings.Settings.Environment);
                             AppSession.CurrentUser = user;
                             AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);
+
+                            // Config for League Exclusion
+                            var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
+                            AppSession.IsExcludingLeagues = IsExcludeLeague;
 
                             // if the user login directly, not through NAP Hub
                             if (this.EnableDirectLogin)

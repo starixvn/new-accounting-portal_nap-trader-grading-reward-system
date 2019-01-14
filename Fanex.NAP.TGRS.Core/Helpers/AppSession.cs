@@ -27,6 +27,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         private const string IsAccountingLoginKey = "Fanex.NAP.TGRS.Contants.AppSession.IsAccountingLogin";
         private const string ViewIpVnKey = "ViewIPVN";
         private const string CurrentWorkingOnMenuKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentWorkingOnMenu";
+        private const string IsExcludingLeaguesKey = "Fanex.NAP.TGRS.Contants.AppSession.IsExcludingLeagues";
 
         /// <summary>
         ///     Gets or sets current login user.
@@ -106,6 +107,13 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             get { return SessionManager.Get<bool>(ViewIpVnKey); }
 
             set { SessionManager.Set(ViewIpVnKey, value); }
+        }
+
+        public static bool IsExcludingLeagues
+        {
+            get { return SessionManager.Get<bool>(IsExcludingLeaguesKey); }
+
+            set { SessionManager.Set(IsExcludingLeaguesKey, value); }
         }
     }
 }

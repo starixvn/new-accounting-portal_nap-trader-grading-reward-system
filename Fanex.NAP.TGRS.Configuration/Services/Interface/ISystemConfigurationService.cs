@@ -25,5 +25,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
         List<ScoreCalculationPeriod> GetScoreCalculationPeriod(ScoreCalculationPeriodCriteria criteria);
 
         ICommandResult UpdateScoreCalculationPeriod(UpdateScoreCalculationPeriodCriteria criteria);
+
+        bool GetLeagueExclusionConfig();
+
+        ICommandResult UpdateLeagueExclusionConfig(bool onOffValue);
     }
 }

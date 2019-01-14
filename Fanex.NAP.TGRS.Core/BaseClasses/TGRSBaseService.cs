@@ -54,5 +54,13 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
                 Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
             };
         }
+
+        protected T GetSingle<T>(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                return db.QueryEntity<T>(criteria);
+            }
+        }
     }
 }

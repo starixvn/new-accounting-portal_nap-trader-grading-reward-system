@@ -12,6 +12,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
     using System.Linq;
     using Fanex.Common;
     using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.TGRS.Configuration.Criteria.LeagueExclusion;
     using Fanex.NAP.TGRS.Configuration.Criteria.SystemConfiguration;
     using Fanex.NAP.TGRS.Configuration.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Configuration.Models.SystemConfiguration;
@@ -73,6 +74,20 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
             criteria.EndDay = Converter.ToDateTime(criteria.EndDay).ToString("yyyy-MM-dd");
             criteria.SelectedDay = Converter.ToDateTime(criteria.SelectedDay).ToString("yyyy-MM-dd");
             return this.UpdateData(criteria);
+        }
+
+        public bool GetLeagueExclusionConfig()
+        {
+            var result = GetSingle<dynamic>(new LeagueExclusionConfigGetCriteria());
+
+            return result.IsExcludeLeagues;
+        }
+
+        public ICommandResult UpdateLeagueExclusionConfig(bool onOffValue)
+        {
+            var criteria = new LeagueExclusionConfigUpdateCriteria { OnOffValue = onOffValue };
+
+            return UpdateData(criteria);
         }
     }
 }

@@ -270,7 +270,9 @@
   <Function Name="LeagueExclusion">
     <Setting Key="TGRS_LeagueExclusion_SelectAll" SpName="TGRS_LeagueExclusion_SelectAll_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
     <Setting Key="TGRS_League_SelectByName" SpName="TGRS_League_SelectByName_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_LeagueExclusion_Insert " SpName="TGRS_LeagueExclusion_Insert_xtest " DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_LeagueExclusion_Insert " SpName="TGRS_LeagueExclusion_Insert_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
     <Setting Key="TGRS_LeagueExclusion_Delete" SpName="TGRS_LeagueExclusion_Delete_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_LeagueExclusion_SelectConfig" SpName="TGRS_LeagueExclusion_SelectConfig_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_LeagueExclusion_UpdateConfig" SpName="TGRS_LeagueExclusion_UpdateConfig_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
 </Functions>
