@@ -42,7 +42,7 @@
 
         public ActionResult UpdateLeagueExclusionConfig(bool onOffValue)
         {
-            return Json(_systemConfigservice.UpdateLeagueExclusionConfig(onOffValue));
+            return Json(_systemConfigservice.UpdateLeagueExclusionConfig(CurrentSession.UserId, onOffValue));
         }
     }
 }

@@ -4,6 +4,7 @@
 
     public class LeagueExclusionConfigUpdateCriteria : CriteriaBase
     {
+        public int UserId { get; set; }
         public bool OnOffValue { get; set; }
 
         public int ErrCode { get; set; }

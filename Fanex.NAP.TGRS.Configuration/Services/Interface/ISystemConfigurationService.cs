@@ -28,6 +28,6 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
 
         bool GetLeagueExclusionConfig();
 
-        ICommandResult UpdateLeagueExclusionConfig(bool onOffValue);
+        ICommandResult UpdateLeagueExclusionConfig(int userId, bool onOffValue);
     }
 }

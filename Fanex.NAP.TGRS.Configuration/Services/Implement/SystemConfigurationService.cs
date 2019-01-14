@@ -83,9 +83,9 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
             return result.IsExcludeLeagues;
         }
 
-        public ICommandResult UpdateLeagueExclusionConfig(bool onOffValue)
+        public ICommandResult UpdateLeagueExclusionConfig(int userId, bool onOffValue)
         {
-            var criteria = new LeagueExclusionConfigUpdateCriteria { OnOffValue = onOffValue };
+            var criteria = new LeagueExclusionConfigUpdateCriteria { UserId = userId, OnOffValue = onOffValue };
 
             return UpdateData(criteria);
         }
