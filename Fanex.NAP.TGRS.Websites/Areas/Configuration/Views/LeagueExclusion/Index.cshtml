@@ -22,7 +22,7 @@
             </span>Exclude League
         </a>
             <div class="checkbox-group">
-                <input id="applyLeagueExclusion" name="applyLeagueExclusion" type="checkbox" value="true">
+                <input id="applyLeagueExclusion" name="applyLeagueExclusion" type="checkbox" value="true" @(ViewBag.IsExcludeLeagues == true ? "checked" : "")>
                 <label for="applyLeagueExclusion">Apply League Exclusion for reports</label>
             </div>
     </div>
@@ -58,5 +58,11 @@
 </div>
 
 @section Foot{
+    <script type="text/javascript">
+        var messages = {
+            UpdateLeagueExclusionStatusSucessully: 'Successfully update status for League Exclusion!',
+        };
+    </script>
+
     @Scripts.Render("~/scripts/LeagueExclusion")
 }

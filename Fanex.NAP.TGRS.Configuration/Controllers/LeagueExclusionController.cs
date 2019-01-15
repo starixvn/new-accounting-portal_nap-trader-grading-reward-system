@@ -6,6 +6,7 @@
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
     using Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using System.Web.Mvc;
 
     [NapAuth(FunctionKey = TGRSFunctionKeys.LeagueExclusion, Policy = NAP.Core.Business.Constant.Policy.Read)]
@@ -17,6 +18,7 @@
         public LeagueExclusionController()
         {
             ViewBag.HasEditRight = this.HasRight(TGRSFunctionKeys.LeagueExclusion, Constant.Policy.Host);
+            ViewBag.IsExcludeLeagues = AppSession.IsExcludingLeagues;
         }
 
         public ActionResult Index()

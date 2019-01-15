@@ -1,4 +1,4 @@
-﻿function leagueExclution() {
+﻿function leagueExclusion() {
     var leagueGrid = $("#league-grid"),
         exclusionForm = $("#league-exclusion-form");
 
@@ -172,6 +172,27 @@
                 changeLeagueExclusion(obj, $(e.target).is(":checked"));
             });
         });
+
+    $("#applyLeagueExclusion")
+        .click(function (e) {
+            var url = common.ResolveRootUrl('LeagueExclusion/UpdateLeagueExclusionConfig');
+
+            var data = {};
+            data.onOffValue = $(e.target).is(":checked");
+
+            $.post(url, data, result => updateLeagueExclusionStatus(result));
+
+            console.log(data);
+        });
+
+    function updateLeagueExclusionStatus(result) {
+        if (result.IsSuccessful) {
+            common.ShowInfoMessage(messages.UpdateLeagueExclusionStatusSucessully);
+        }
+        else {
+            common.ShowErrorMessage(result.Message);
+        }
+    }
 }
 
-$(leagueExclution);
+$(leagueExclusion);
