@@ -13,6 +13,8 @@
 
         public int LeagueId { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         [SpParam(Ignored = true)]
         public bool IsViewScore { get; set; }
 

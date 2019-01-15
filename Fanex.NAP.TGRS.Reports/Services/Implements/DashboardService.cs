@@ -15,6 +15,14 @@
     /// </summary>
     public class DashboardService : TGRSBaseService, IDashboardService
     {
+
+        public bool IsExcludeLeagueStatus;
+
+        public DashboardService(bool isExcludeLeague)
+        {
+            IsExcludeLeagueStatus = isExcludeLeague;
+        }
+
         /// <summary>
         /// Gets the general information.
         /// </summary>
@@ -31,7 +39,8 @@
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
             result = this.GetData<GeneralInfo>(summaryCriteria);
 
@@ -52,7 +61,8 @@
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
             IEnumerable<League> result = this.GetData<League>(topLeagueCriteria);
@@ -78,7 +88,8 @@
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
                 Top = 5,
                 IsBottom = 0,
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
             IEnumerable<TopTrader> result = this.GetData<TopTrader>(topTraderCriteria);
@@ -100,7 +111,8 @@
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
             IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
@@ -122,7 +134,8 @@
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
             List<MonthAmount> rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
@@ -150,7 +163,8 @@
                 ReportType = 2,
                 FromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1 - month),
                 ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)),
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
             IEnumerable<TeamPerformance> teamData = this.GetData<TeamPerformance>(teamCriteria);

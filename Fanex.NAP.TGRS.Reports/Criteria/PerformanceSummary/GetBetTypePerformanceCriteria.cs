@@ -23,6 +23,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 
         public DateTime ToDate { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         /// <summary>
         /// Gets Setting Key.
         /// </summary>

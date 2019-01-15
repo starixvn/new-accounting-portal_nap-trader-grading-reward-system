@@ -3,6 +3,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
@@ -29,7 +30,7 @@
 
         public DashboardController(IDashboardService dashboardService)
         {
-            this._dashboardService = dashboardService ?? new DashboardService();
+            this._dashboardService = dashboardService ?? new DashboardService(AppSession.IsExcludingLeagues);
         }
 
         /// <summary>

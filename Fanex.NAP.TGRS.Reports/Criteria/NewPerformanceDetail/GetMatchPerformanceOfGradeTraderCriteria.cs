@@ -11,6 +11,8 @@
 
         public int CustId { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match";

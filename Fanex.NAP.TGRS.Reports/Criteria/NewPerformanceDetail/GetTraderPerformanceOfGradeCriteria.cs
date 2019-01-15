@@ -11,6 +11,8 @@
 
         public byte Grade { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         [SpParam(Ignored = true)]
         public bool IsViewScore { get; set; }
 

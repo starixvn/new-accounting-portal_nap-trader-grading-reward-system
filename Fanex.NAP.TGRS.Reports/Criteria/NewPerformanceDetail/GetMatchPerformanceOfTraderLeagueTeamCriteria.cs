@@ -15,6 +15,8 @@
 
         public int CustId { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         public override bool IsValid()
         {
             return true;

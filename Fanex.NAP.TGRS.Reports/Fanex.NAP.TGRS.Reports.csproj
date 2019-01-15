@@ -174,7 +174,6 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTeamTraderCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderMatchPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfTraderLeagueTeamCriteria.cs" />
-    <Compile Include="Criteria\NewPerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceOfBetTypeCriteria.cs" />

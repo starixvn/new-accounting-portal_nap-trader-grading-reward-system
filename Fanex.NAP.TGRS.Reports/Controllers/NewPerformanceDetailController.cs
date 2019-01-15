@@ -5,6 +5,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using System;
@@ -62,6 +63,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetLeaguePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -70,8 +72,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             string templatePath = Server.MapPath(LeaguePerformanceDetail);
-
             this._newDetailReportService.ExportLeaguePerformance(criteria, templatePath);
 
             return new EmptyResult();
@@ -83,6 +85,7 @@
         {
             try
             {
+                criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
                 criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
                 var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
 
@@ -101,6 +104,7 @@
         {
             try
             {
+                criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
                 var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
 
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -116,6 +120,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBettypePerformanceOfLeagueTraderAndMatch(criteria);
 
@@ -126,6 +131,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetMatchPerformanceOfLeague(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -135,6 +141,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBettypePerformanceOfLeagueAndMatch(criteria);
 
@@ -155,6 +162,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderPerformance = _newDetailReportService.GetTraderPerformance(criteria);
 
@@ -165,6 +173,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderMatchPerformance = _newDetailReportService.GetTraderMatchPerformance(criteria);
 
@@ -175,6 +184,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var traderMatchBettypePerformance = _newDetailReportService.GetTraderMatchBettypePerformance(criteria);
 
@@ -184,6 +194,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TraderPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -206,6 +217,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradePerformance(criteria);
 
@@ -216,6 +228,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeTraderPerformance(criteria);
 
@@ -226,6 +239,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeLeagueTraderPerformance(criteria);
 
@@ -236,6 +250,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetGradeLeaguePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -245,6 +260,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = _newDetailReportService.GetGradeTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -254,6 +270,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeLeagueTrader(GetMatchPerformanceOfGradeLeagueTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetGradeLeagueTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -263,6 +280,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailGrade(GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetGradeLeagueTraderMatchBettypePerformance(criteria);
 
@@ -272,6 +290,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(GradePerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -296,6 +315,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamPerformance(criteria);
 
@@ -306,6 +326,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamTraderPerformance(criteria);
 
@@ -316,6 +337,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = _newDetailReportService.GetTeamTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -324,6 +346,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TeamPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -336,6 +359,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamLeagueTraderMatchBettypePerformance(criteria);
 
@@ -346,6 +370,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueDetailTeam(GetLeagueDetailTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetTeamLeaguePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -355,6 +380,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformanceOfLeagueTeam(GetTraderPerformanceOfLeagueTeam criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetTeamLeagueTraderPerformance(criteria);
 
@@ -365,6 +391,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetTeamLeagueTraderMatchPerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -384,6 +411,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetBetTypePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -393,6 +421,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeTraderPerformance(criteria);
 
@@ -403,6 +432,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeTraderMatchPerformance(criteria);
 
@@ -413,6 +443,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._newDetailReportService.GetBetTypeLeaguePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -422,6 +453,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeLeagueTraderPerformance(criteria);
 
@@ -432,6 +464,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
             var result = this._newDetailReportService.GetBetTypeLeagueTraderMatchPerformance(criteria);
 
@@ -441,6 +474,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(BetTypePerformanceDetail);
 
             this._newDetailReportService.ExportBetTypePerformance(criteria, templatePath);

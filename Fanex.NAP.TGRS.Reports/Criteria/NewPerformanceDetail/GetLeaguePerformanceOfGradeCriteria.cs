@@ -11,6 +11,8 @@
 
         public byte Grade { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_NewPerformanceDetail_Grade_League";

@@ -9,16 +9,10 @@
 
     public class BettypeMonthlyService : TGRSBaseService, IBettypeMonthlyReport
     {
-        public SummaryList GenerateData(string bettypes, int year)
+        public SummaryList GenerateData(BettypeMonthlyGetCriteria criteria)
         {
-            var critieria = new BettypeMonthlyGetCriteria
-            {
-                Bettypes = bettypes,
-                Year = year
-            };
-
-            using (var db = new ObjectDb(critieria.GetSettingKey()))
-            using (var multi = db.QueryMultiple(critieria))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var multi = db.QueryMultiple(criteria))
             {
                 var months = multi.Read<BettypeSummary>();
 
@@ -50,13 +44,13 @@
             }
         }
 
-        public byte[] GenerateExcel(string bettypes, int year, int[] showColumns, string template)
+        public byte[] GenerateExcel(BettypeMonthlyGetCriteria critieria, int[] showColumns, string template)
         {
             var wb = ExcelUtilities.GetWorkbook(template);
 
-            var data = GenerateData(bettypes, year);
+            var data = GenerateData(critieria);
 
-            var config = new BettypeMonthlyExcelConfig(showColumns, year);
+            var config = new BettypeMonthlyExcelConfig(showColumns, critieria.Year);
 
             config.RenderExcel(wb, null, data.Data, data.Total);
 
