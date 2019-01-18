@@ -23,6 +23,9 @@
 
         public ActionResult Index()
         {
+            var IsExcludeLeague = _systemConfigservice.GetLeagueExclusionConfig();
+            //AppSession.IsExcludingLeagues = IsExcludeLeague;
+            ViewBag.IsExcludeLeagues = IsExcludeLeague;
             return View();
         }
 
@@ -44,7 +47,13 @@
 
         public ActionResult UpdateLeagueExclusionConfig(bool onOffValue)
         {
-            return Json(_systemConfigservice.UpdateLeagueExclusionConfig(CurrentSession.UserId, onOffValue));
+            var result = _systemConfigservice.UpdateLeagueExclusionConfig(CurrentSession.UserId, onOffValue);
+            if(result.IsSuccessful)
+            {
+                AppSession.IsExcludingLeagues = onOffValue;
+            }
+
+            return Json(result);
         }
     }
 }

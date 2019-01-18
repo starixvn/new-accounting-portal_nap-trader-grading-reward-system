@@ -79,7 +79,7 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
         public bool GetLeagueExclusionConfig()
         {
             var result = GetSingle<dynamic>(new LeagueExclusionConfigGetCriteria());
-            return result.IsExcludeLeagues == "1" ? true : false;
+            return result.IsExcludeLeagues == "True" ? true : false;
         }
 
         public ICommandResult UpdateLeagueExclusionConfig(int userId, bool onOffValue)
