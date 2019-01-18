@@ -31,6 +31,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string BetTypes { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

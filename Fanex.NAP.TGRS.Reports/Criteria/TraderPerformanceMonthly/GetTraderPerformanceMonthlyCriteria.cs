@@ -24,6 +24,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.TraderPerformanceMonthly
             }
         }
 
+        public bool IsExcludeLeagues { get; set; }
+
         public override bool IsValid()
         {
             return true;

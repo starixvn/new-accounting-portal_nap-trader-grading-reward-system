@@ -13,6 +13,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
@@ -70,6 +71,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
         public ActionResult TraderRank(GetTopTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
             return View(criteria);
         }
 
@@ -87,8 +90,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
-                ViewPermission = permission
-            };
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
+        };
             GeneralInfo generalInfo = this._summaryReportService.GetGeneralInfo(generalCriteria).First();
 
             var teamCriteria = new GetTeamPerformanceCriteria
@@ -96,7 +100,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
             IEnumerable<TeamPerformance> teamResult = this._summaryReportService.GetTeamPerformance(teamCriteria);
 
@@ -105,17 +110,39 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
-                ViewPermission = permission
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
             TraderPerformance traderResult = this._summaryReportService.GetTraderPerformance(traderCriteria).First();
 
-            var betTypeCriteria = new GetBetTypePerformanceCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
+            var betTypeCriteria = new GetBetTypePerformanceCriteria()
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
+            };
             IEnumerable<BetTypePerformance> betTypeResult = this._summaryReportService.GetBetTypePerformance(betTypeCriteria);
 
-            var winLeagueCriteria = new GetTopWinLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
+            var winLeagueCriteria = new GetTopWinLeagueCriteria()
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
+            };
             IEnumerable<League> winLeagueResult = this._summaryReportService.GetTopWinLeague(winLeagueCriteria);
 
-            var loseLeagueCriteria = new GetTopLoseLeagueCriteria() { ReportType = filter.ReportType, FromDate = filter.FromDate, ToDate = filter.ToDate, ViewPermission = permission };
+            var loseLeagueCriteria = new GetTopLoseLeagueCriteria()
+            {
+                ReportType = filter.ReportType,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                ViewPermission = permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
+            };
             IEnumerable<League> loseLeagueResult = this._summaryReportService.GetTopLoseLeague(loseLeagueCriteria);
 
             Reports reports = new Reports()
@@ -142,6 +169,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             var permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.PerformanceSummary_PHbettypes, TGRSFunctionKeys.PerformanceSummary_Majorbettypes);
 
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.ViewPermission = permission;
 
             IEnumerable<TopTrader> result = this._summaryReportService.GetTopTrader(criteria);

@@ -39,6 +39,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private const string MinPercentString = "min";
         private const string MaxPercentString = "max";
 
+        public bool IsExludeLeague = false;
+
         /// <summary>
         ///  Gets bet types by permissions
         /// </summary>

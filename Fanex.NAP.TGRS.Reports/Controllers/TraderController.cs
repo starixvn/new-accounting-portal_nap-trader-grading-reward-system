@@ -4,6 +4,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.Trader;
     using Fanex.NAP.TGRS.Reports.Criteria.TraderManagement;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
@@ -110,7 +111,8 @@
                 ReportType = filter.ReportType,
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
-                ViewPermission = (int)_permission
+                ViewPermission = (int)_permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
@@ -140,6 +142,7 @@
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate,
                 LeagueId = filter.LeagueId,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
             var result = traderReportService.GetMatchPerformanceOfLeague(detailCriteria);
             return Json(result);
@@ -167,7 +170,8 @@
             {
                 TraderId = traderId,
                 EventDate = filter.EventDate,
-                MatchId = filter.MatchId
+                MatchId = filter.MatchId,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
             var result = traderReportService.GetBetTypeOfMatch(bettypeCriteria).ToList();
             return Json(result);
@@ -213,7 +217,8 @@
                 ReportType = reportType,
                 FromDate = fromtDate,
                 ToDate = toDate,
-                ViewPermission = (int)_permission
+                ViewPermission = (int)_permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             return traderReportService.GetGeneralInfo(criteria).FirstOrDefault();
@@ -227,7 +232,8 @@
                 ReportType = reportType,
                 FromDate = fromtDate,
                 ToDate = toDate,
-                ViewPermission = (int)_permission
+                ViewPermission = (int)_permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             return traderReportService.GetTraderWinlossTurnover(criteria).ToList();
@@ -240,7 +246,8 @@
                 TraderId = traderId,
                 FromDate = fromtDate,
                 ToDate = toDate,
-                ViewPermission = (int)_permission
+                ViewPermission = (int)_permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             return traderReportService.GetTraderBettypePerformance(criteria).ToList();
@@ -253,7 +260,8 @@
                 TraderId = traderId,
                 FromDate = fromtDate,
                 ToDate = toDate,
-                ViewPermission = (int)_permission
+                ViewPermission = (int)_permission,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             return traderReportService.GetTraderLeaguePerformance(criteria);

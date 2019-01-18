@@ -11,6 +11,8 @@
 
         public DateTime EventDate { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_TraderLeaguePerformance_MatchDetail";

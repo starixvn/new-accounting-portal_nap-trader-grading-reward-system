@@ -14,6 +14,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
@@ -123,6 +124,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             LeaguePerformanceList leaguePerformance = null;
 
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.LeagueName = criteria.LeagueName ?? string.Empty;
             leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria);
             JsonResult jsonResult = Json(leaguePerformance);
@@ -138,6 +140,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             string templatePath = Server.MapPath(LeaguePerformanceDetail);
 
             this._detailReportService.ExportLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
@@ -154,6 +157,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfLeague(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -169,6 +173,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -184,6 +189,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetBettypeDetailLeague criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailLeague(criteria);
             JsonResult jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -199,6 +205,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeague(GetMatchPerformanceOfLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeague(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -214,6 +221,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             IEnumerable<BetTypeDetailItem> bettypePerformance = this._detailReportService.GetBettypePerformanceOfLeagueMatch(criteria);
             JsonResult jsonResult = Json(bettypePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -251,6 +259,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             TraderPerformanceList traderPerformance = null;
 
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.Username = criteria.Username ?? string.Empty;
             traderPerformance = this._detailReportService.GetTraderPerformance(criteria);
             JsonResult jsonResult = Json(traderPerformance);
@@ -267,6 +276,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTrader(GetBettypeDetailTrader criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTrader(criteria);
             JsonResult jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -281,6 +291,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TraderPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -298,6 +309,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceList martchPerformance = this._detailReportService.GetMatchPerformanceOfTrader(criteria);
             JsonResult jsonResult = Json(martchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -331,6 +343,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             GradePerformanceList gradePerformance = this._detailReportService.GetGradePerformance(criteria);
             JsonResult jsonResult = Json(gradePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -346,6 +359,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfGrade(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -356,6 +370,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfGradeByLeague(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -366,6 +381,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfGrade(criteria);
             JsonResult jsonResult = Json(leaguePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -381,6 +397,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfGradeTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -391,6 +408,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -406,6 +424,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailGrade(criteria);
             JsonResult jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -420,6 +439,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(GradePerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -458,6 +478,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TeamPerformanceList teamPerformance = this._detailReportService.GetTeamPerformance(criteria);
             JsonResult jsonResult = Json(teamPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -473,6 +494,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfTeam(GetTraderPerformanceOfTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfTeam(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -488,6 +510,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTeamTrader(GetMatchPerformanceOfTeamTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfTeamTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -503,6 +526,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTeam(GetBettypeDetailTeam criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             IEnumerable<BetTypeDetailItem> bettypeDetail = this._detailReportService.GetBettypeDetailTeam(criteria);
             JsonResult jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -517,6 +541,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TeamPerformanceDetail);
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
@@ -529,6 +554,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueDetailTeam(GetLeagueDetailTeamCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             return Json(_detailReportService.GetLeaguePerformance(criteria), JsonRequestBehavior.AllowGet);
         }
 
@@ -536,6 +562,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformanceOfLeagueTeam(GetTraderPerformanceOfLeagueTeam criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             return Json(_detailReportService.GetTraderPerformance(criteria), JsonRequestBehavior.AllowGet);
         }
 
@@ -543,6 +570,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeam criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             return Json(_detailReportService.GetMatchPerformanceOfTrader(criteria), JsonRequestBehavior.AllowGet);
         }
 
@@ -573,6 +601,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             BetTypePerformanceList betTypePerformance = this._detailReportService.GetBetTypePerformance(criteria);
             JsonResult jsonResult = Json(betTypePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -588,6 +617,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetType(GetTraderPerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetType(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -603,6 +633,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceList matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -618,6 +649,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfBetType(criteria);
             JsonResult jsonResult = Json(leaguePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -628,6 +660,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBetChoicePerformanceOfBetType(GetBetChoicePerformanceOfBetTypeCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var result = this._detailReportService.GetBetTypeBetChoicePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -642,6 +675,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             TraderPerformanceList traderPerformance = this._detailReportService.GetTraderPerformanceOfBetTypeLeague(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -657,6 +691,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfBetTypeLeagueTrader(criteria);
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -671,6 +706,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             string templatePath = Server.MapPath(BetTypePerformanceDetail);
 
             this._detailReportService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
