@@ -160,6 +160,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 ToDate = criteria.ToDate,
                 CustId = criteria.CustId,
                 MatchId = criteria.MatchId,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
             IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
             List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();

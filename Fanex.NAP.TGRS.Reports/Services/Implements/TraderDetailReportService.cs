@@ -107,6 +107,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 ToDate = criteria.ToDate,
                 CustId = criteria.CustId,
                 MatchId = criteria.MatchId,
+                IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
             var bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
