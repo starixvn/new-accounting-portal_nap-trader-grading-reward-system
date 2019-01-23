@@ -864,11 +864,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 total.Margin = total.WinLoss / total.Turnover * 100;
             }
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColTurnover', Value: total.Turnover },
-                          { Name: 'ColWinLoss', Value: total.WinLoss },
-                          { Name: 'ColBetCount', Value: total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) }
+                Columns: [  { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
+                            { Name: 'ColTurnover', Value: total.Turnover },
+                            { Name: 'ColWinLoss', Value: total.WinLoss },
+                            { Name: 'ColBetCount', Value: total.BetCount },
+                            { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) }
                 ]
             };
             footerData.push(row);

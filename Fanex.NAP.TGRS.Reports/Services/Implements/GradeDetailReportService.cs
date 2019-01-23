@@ -161,33 +161,27 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of bet type detail objects.</returns>
         public IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGrade criteria)
         {
-            GetScoreByPeriodCriteria scoreByPeriodCriteria = new GetScoreByPeriodCriteria
-            {
-                FromDate = criteria.FromDate,
-                ToDate = criteria.ToDate,
-                CustId = criteria.CustId,
-                MatchId = criteria.MatchId,
-                IsExcludeLeagues = AppSession.IsExcludingLeagues
-            };
-
             IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
             List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
 
             if (bettypeData != null && bettypeData.Any())
             {
-                foreach (var item in bettypeData)
+                GetScoreByPeriodCriteria scoreByPeriodCriteria = new GetScoreByPeriodCriteria
                 {
-                    var bettypeItem = new BetTypeDetailItem(item);
-                    bettypeItem.ScoreByPeriod = new List<ScoreByPeriodItem>();
-                    scoreByPeriodCriteria.Bettypes = item.BetType.ToString();
-                    IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
-                    foreach (var scoreByPeriodInfo in scoreByPeriodData)
-                    {
-                        bettypeItem.ScoreByPeriod.Add(new ScoreByPeriodItem(scoreByPeriodInfo));
-                    }
+                    FromDate = criteria.FromDate,
+                    ToDate = criteria.ToDate,
+                    CustId = criteria.CustId,
+                    MatchId = criteria.MatchId,
+                    Bettypes = string.Join(",", bettypeData.Select(b => b.BetType.ToString())),
+                    IsExcludeLeagues = AppSession.IsExcludingLeagues
+                };
 
-                    bettypeDetail.Add(bettypeItem);
-                }
+                IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
+                bettypeDetail = bettypeData.Select(b => new BetTypeDetailItem(b)
+                {
+                    Score = scoreByPeriodData.Where(s => s.BetType == b.BetType).First().Score,
+                    ScoreByPeriod = scoreByPeriodData.Where(s => s.BetType == b.BetType).ToList().Select(i => new ScoreByPeriodItem(i)).ToList()
+                }).ToList();
             }
 
             return bettypeDetail;
