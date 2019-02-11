@@ -23,7 +23,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
+    using Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using ONEbook.UM.Filters;
 
     /// <summary>
@@ -39,6 +41,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private IUserService _userService;
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
+        private ISystemConfigurationService _systemConfigService;
 
         #endregion members
 
@@ -46,18 +49,20 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         [Simplect.Attribute.InjectObject]
         public SSOController()
-            : this(null, null, null)
+            : this(null, null, null, null)
         {
         }
 
         public SSOController(
             IUserService userService,
             IMenuItemService menuItemService,
-            ICurrentSession currentSession)
+            ICurrentSession currentSession,
+            ISystemConfigurationService systemConfigService)
         {
             this._userService = userService ?? new UserService();
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
+            this._systemConfigService = systemConfigService ?? new SystemConfigurationService();
         }
 
         #endregion ctors
@@ -114,6 +119,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
                     this._currentSession.OnUserId = criteria.OnUserId;
                     this._currentSession.SessionId = Session.SessionID.ToString();
                     this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+
+                    var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
+                    AppSession.IsExcludingLeagues = IsExcludeLeague;
 
                     if (this.SiteId != 0)
                     {
