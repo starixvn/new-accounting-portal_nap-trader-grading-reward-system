@@ -714,4 +714,7 @@
   <data name="Leftover" xml:space="preserve">
     <value>Leftover</value>
   </data>
+  <data name="TraderActualRate" xml:space="preserve">
+    <value>Trader_Actual_Rate</value>
+  </data>
 </root>

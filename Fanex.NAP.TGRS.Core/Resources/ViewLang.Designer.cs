@@ -1708,6 +1708,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trader_Actual_Rate.
+        /// </summary>
+        public static string TraderActualRate {
+            get {
+                return ResourceManager.GetString("TraderActualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No. Of Trader.
         /// </summary>
         public static string TraderCount {

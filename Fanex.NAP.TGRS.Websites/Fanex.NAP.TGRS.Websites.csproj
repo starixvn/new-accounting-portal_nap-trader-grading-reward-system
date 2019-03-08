@@ -596,6 +596,7 @@
     <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Reports\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Reports\Views\PerformanceDetailActualRate\TraderPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailActualRateReports\TraderPerformanceActualRate.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

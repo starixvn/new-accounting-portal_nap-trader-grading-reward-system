@@ -30,7 +30,7 @@
         {
             var result = this.GetData<TraderPerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderPerformanceCriteria).IsViewScore)
+            if (!(criteria as GetTraderPerformanceActualRateCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -47,7 +47,7 @@
         {
             var result = this.GetData<MatchPerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderMatchPerformanceCriteria).IsViewScore)
+            if (!(criteria as GetTraderMatchPerformanceActualRateCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -62,7 +62,7 @@
         {
             var result = this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderMatchBettypePerformanceCriteria).IsViewScore)
+            if (!(criteria as GetTraderMatchBettypePerformanceActualRateCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -73,7 +73,7 @@
             return result;
         }
 
-        public void ExportTraderPerformance(GetTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true)
+        public void ExportTraderPerformance(GetTraderPerformanceActualRateCriteria criteria, string templatePath, bool isViewScore = true)
         {
             var traderData = SessionManager.Get<IEnumerable<TraderPerformanceInfo>>(TraderPerformanceDetailReportSessionKey).ToList();
 
@@ -81,7 +81,7 @@
             {
                 string reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
-                                ViewLang.Trader,
+                                ViewLang.TraderActualRate,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
@@ -184,7 +184,7 @@
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(GetTraderPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(GetTraderPerformanceActualRateCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);

@@ -17,7 +17,7 @@
     public class PerformanceDetailActualRateController : TGRSBaseController
     {
         #region Attributes and Contructors
-        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\NewDetailReports\TraderPerformance.xls";
+        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailActualRateReports\TraderPerformanceActualRate.xls";
         private readonly IDetailActualRateReportService _detailReportService;
 
         [Simplect.Attribute.InjectObject]
@@ -62,7 +62,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
+        public JsonResult GetTraderPerformance(GetTraderPerformanceActualRateCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
@@ -73,7 +73,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
+        public JsonResult GetTraderMatchPerformance(GetTraderMatchPerformanceActualRateCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
@@ -84,7 +84,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceCriteria criteria)
+        public JsonResult GetTraderMatchBettypePerformance(GetTraderMatchBettypePerformanceActualRateCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
@@ -93,7 +93,7 @@
             return Json(traderMatchBettypePerformance, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
+        public ActionResult ExportTraderPerformance(GetTraderPerformanceActualRateCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TraderPerformanceDetail);

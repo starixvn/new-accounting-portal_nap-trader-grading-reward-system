@@ -2,13 +2,14 @@
 {
     using Fanex.Data.Repository;
     using System;
-    public class GetTraderPerformanceCriteria : CriteriaBase
-    {
-        public string Username { get; set; }
 
+    public class GetTraderMatchPerformanceActualRateCriteria : CriteriaBase
+    {
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
+
+        public int CustId { get; set; }
 
         public bool IsExcludeLeagues { get; set; }
 
@@ -17,7 +18,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_ARPerformanceDetail_Trader";
+            return "TGRS_Rpt_ARPerformanceDetail_Trader_Match";
         }
 
         public override bool IsValid()
