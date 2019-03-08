@@ -705,4 +705,13 @@
   <data name="BetChoice" xml:space="preserve">
     <value>Bet Choice</value>
   </data>
+  <data name="PerformanceDetailActualRateReport" xml:space="preserve">
+    <value>Performance Detail Actual Rate (Juice &amp; Leftover) Report</value>
+  </data>
+  <data name="Juice" xml:space="preserve">
+    <value>Juice</value>
+  </data>
+  <data name="Leftover" xml:space="preserve">
+    <value>Leftover</value>
+  </data>
 </root>

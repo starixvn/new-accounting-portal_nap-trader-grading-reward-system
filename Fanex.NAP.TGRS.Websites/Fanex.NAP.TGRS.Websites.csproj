@@ -395,6 +395,7 @@
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\team-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\trader-performance.js" />
+    <Content Include="Areas\Reports\Resources\PerformanceDetailActualRate\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
@@ -502,6 +503,7 @@
     <Content Include="Content\MsgBox\images\info.png" />
     <Content Include="Content\MsgBox\images\question.png" />
     <Content Include="Content\MsgBox\msgbox-0.0.1.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\Site\images\sprite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -591,6 +593,13 @@
     <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\OSTraderReportAdmin\Filter.cshtml" />
     <Content Include="Areas\Configuration\Views\LeagueExclusion\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Reports\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetailActualRate\TraderPerformance.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Scripts\Fanex.Grid\Fanex.Grid.js" />
@@ -632,6 +641,7 @@
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
     <Content Include="Scripts\Libraries\MultipleSelect\jquery.multiselect.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\Libraries\Modernizr\modernizr.30715.min.js" />

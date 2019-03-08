@@ -146,6 +146,7 @@
     <Compile Include="Controllers\BettypeMonthlyPerformanceController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\NewPerformanceDetailController.cs" />
+    <Compile Include="Controllers\PerformanceDetailActualRateController.cs" />
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
@@ -184,6 +185,9 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceOfLeagueTeam.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceOfTeamCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTeamsCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetailActualRate\GetTraderMatchBettypePerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetailActualRate\GetTraderMatchPerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetailActualRate\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTrader.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTeam.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailGrade.cs" />
@@ -322,12 +326,14 @@
     <Compile Include="Services\Implements\SummaryReportService.cs" />
     <Compile Include="Services\Implements\TeamDetailReportService.cs" />
     <Compile Include="Services\Implements\NewTraderDetailReportService.cs" />
+    <Compile Include="Services\Implements\TraderDetailActualRateReportService.cs" />
     <Compile Include="Services\Implements\TraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderManagementService.cs" />
     <Compile Include="Services\Implements\TraderMonthlyReportService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />
     <Compile Include="Services\Interfaces\IBettypeMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\IDashboardService.cs" />
+    <Compile Include="Services\Interfaces\IDetailActualRateReportService.cs" />
     <Compile Include="Services\Interfaces\INewDetailReportService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />

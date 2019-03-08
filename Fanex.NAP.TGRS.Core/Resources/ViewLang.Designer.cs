@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -718,6 +718,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Juice.
+        /// </summary>
+        public static string Juice {
+            get {
+                return ResourceManager.GetString("Juice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League.
         /// </summary>
         public static string League {
@@ -759,6 +768,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string LeaguePerformance {
             get {
                 return ResourceManager.GetString("LeaguePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leftover.
+        /// </summary>
+        public static string Leftover {
+            get {
+                return ResourceManager.GetString("Leftover", resourceCulture);
             }
         }
         
@@ -1146,6 +1164,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string OtherMarkets {
             get {
                 return ResourceManager.GetString("OtherMarkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performance Detail Actual Rate (Juice &amp; Leftover) Report.
+        /// </summary>
+        public static string PerformanceDetailActualRateReport {
+            get {
+                return ResourceManager.GetString("PerformanceDetailActualRateReport", resourceCulture);
             }
         }
         
