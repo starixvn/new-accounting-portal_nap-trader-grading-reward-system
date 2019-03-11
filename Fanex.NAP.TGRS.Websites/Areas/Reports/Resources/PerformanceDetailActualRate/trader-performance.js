@@ -367,6 +367,13 @@ Fanex.NAP.TGRS.PerformanceDetailActualRate.TraderPerformance = function () {
         });
     }
    
+    //Show trader performance report and hide other report
+    var showTraderPerformanceReport = function () {
+        domElements.divTraderPerformanceContainer.removeClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divBettypeDetailContainer.addClass('display-none');
+    };
+
     var getMatchPerformanceReport = function (traderId, traderName) {
         var matchPerformanceParameters = {
             CustId: traderId,
