@@ -395,7 +395,8 @@
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\team-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\trader-performance.js" />
-    <Content Include="Areas\Reports\Resources\PerformanceDetailActualRate\trader-performance.js" />
+    <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\league-performance.js" />
+    <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\performance-detail-helper.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\team-history.js" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\grade-history.js" />
@@ -595,8 +596,9 @@
     <Content Include="Areas\Configuration\Views\LeagueExclusion\Index.cshtml" />
     <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Reports\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Reports\Views\PerformanceDetailActualRate\TraderPerformance.cshtml" />
-    <Content Include="Areas\Reports\ExcelTemplates\DetailActualRateReports\TraderPerformanceActualRate.xls" />
+    <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\TraderPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateTraderPerformance.xls" />
+    <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\LeaguePerformance.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

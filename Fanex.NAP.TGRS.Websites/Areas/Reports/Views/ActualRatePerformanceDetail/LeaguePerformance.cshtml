@@ -1,6 +1,6 @@
 ﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 @{
-    ViewBag.Title = ViewLang.PerformanceDetailActualRateReport;
+    ViewBag.Title = ViewLang.ActualRatePerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head
@@ -14,27 +14,33 @@
             <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
-    <div class="header-button">       
+    <div class="header-button">
         <a href="#" class="green-button change-list disabled">
+            <span class="list-icon"></span>@ViewLang.League
+        </a>
+        <a href="@Url.Content("~/Reports/ActualRatePerformanceDetail/TraderPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Trader
-        </a>          
-    </div>
+        </a>       
+    </div>    
 }
 <div class="filter-bar">
-    <div id="divTraderPerformanceFilter" class="filter-form">
+    <div id="divLeaguePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="date-range"><div id="divDateRange"></div></div>
             <div class="lbl-field col_2">
-                <label for="txtTrader">@ViewLang.Trader</label>
+                <label for="txtLeague">@ViewLang.League</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txtTrader" class="trader" maxlength="30" />
+                <input type="text" id="txtLeague" class="league" maxlength="100" />
             </div>
             <div class="col_1">
                 <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
         </div>
     </div>
+</div>
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
 </div>
 <div id="divTraderPerformanceContainer" class="content-grid display-none">
     <div id="divTraderPerformanceGrid" class="freegrid"></div>
@@ -45,9 +51,15 @@
 <div id="divBettypeDetailContainer" class="content-grid display-none">
     <div id="divBettypeDetailGrid" class="freegrid"></div>
 </div>
+<div id="divMatchPerformanceOfLeagueContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceOfLeagueGrid" class="freegrid"></div>
+</div>
+<div id="divBettypePerformanceOfLeagueMatchContainer" class="content-grid display-none">
+    <div id="divBettypePerformanceOfLeagueMatchGrid" class="freegrid"></div>
+</div>
 @section Foot
 {
-    <script type="text/javascript" src="~/Areas/Reports/Resources/PerformanceDetailActualRate/trader-performance.js"></script>
+    <script type="text/javascript" src="~/Areas/Reports/Resources/ActualRatePerformanceDetail/league-performance.js"></script>
     <script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
@@ -55,24 +67,21 @@
             DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
-
         var forecastBettype = '@ViewBag.ForecastBetType';
-
         var labels = {
             No: '#',
-            NoOfLeagues: '@ViewLang.NoOfLeagues',
+            League: '@ViewLang.League',
+            NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.TurnoverMY',
             WinLoss: '@ViewLang.WinLoss',
-            Juice: '@ViewLang.Juice',
-            Leftover: '@ViewLang.Leftover',
-            Total: '@ViewLang.Total',
             BetCount: '@ViewLang.BetCount',
+            Margin: '@ViewLang.Margin',
+            MarginTotal: '@ViewLang.MarginTotal',
+            LeagueBM: '@ViewLang.LeagueBM',
             BetTypeBM: '@ViewLang.BetTypeBM',
             BetType: '@ViewLang.BetType',
             BetTypeDetail: '@ViewLang.BetTypeDetail',
-            Margin: '@ViewLang.Margin',
-            MarginTotal: '@ViewLang.MarginTotal',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',
@@ -80,10 +89,10 @@
             Total: '@ViewLang.Total',
             GrandTotal: '@ViewLang.GrandTotal',
             AllBetTypes: '@ViewLang.AllBetTypes',
-            EventDate: '@ViewLang.EventDate',
-            EffectiveDate: '@ViewLang.EffectiveDate',
             NA: '@ViewLang.NA',
             Forecast: '@ViewLang.Forecast',
+            EffectiveDate: '@ViewLang.EffectiveDate',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
             TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
@@ -95,8 +104,7 @@
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',
-            RequiredField : '@Messages.RequiredFieldError'
+            RequiredField: '@Messages.RequiredFieldError'
         };
     </script>
 }
-

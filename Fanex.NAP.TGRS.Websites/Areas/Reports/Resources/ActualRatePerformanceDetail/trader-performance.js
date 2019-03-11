@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
-    var traderPerformance = new Fanex.NAP.TGRS.PerformanceDetailActualRate.TraderPerformance();
+    var traderPerformance = new Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance();
 
     traderPerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.PerformanceDetailActualRate.TraderPerformance');
+Namespace.Register('Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance');
 
-Fanex.NAP.TGRS.PerformanceDetailActualRate.TraderPerformance = function () {
+Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
     var $this = this;
     var maximumMatchNameLength = 142;
     var domElements = {
@@ -28,10 +28,10 @@ Fanex.NAP.TGRS.PerformanceDetailActualRate.TraderPerformance = function () {
     };
 
     var urls = {        
-        GetTraderPerformance: common.ResolveRootUrl('PerformanceDetailActualRate/GetTraderPerformance'),
-        GetMatchPerformanceOfTrader: common.ResolveRootUrl('PerformanceDetailActualRate/GetTraderMatchPerformance'),
-        GetBettypeDetail: common.ResolveRootUrl('PerformanceDetailActualRate/GetTraderMatchBettypePerformance'),
-        ExportTraderPerformance: common.ResolveRootUrl('PerformanceDetailActualRate/ExportTraderPerformance')
+        GetTraderPerformance: common.ResolveRootUrl('ActualRatePerformanceDetail/GetTraderPerformance'),
+        GetMatchPerformanceOfTrader: common.ResolveRootUrl('ActualRatePerformanceDetail/GetTraderMatchPerformance'),
+        GetBettypeDetail: common.ResolveRootUrl('ActualRatePerformanceDetail/GetTraderMatchBettypePerformance'),
+        ExportTraderPerformance: common.ResolveRootUrl('ActualRatePerformanceDetail/ExportTraderPerformance')
     };
 
     var parameters = {

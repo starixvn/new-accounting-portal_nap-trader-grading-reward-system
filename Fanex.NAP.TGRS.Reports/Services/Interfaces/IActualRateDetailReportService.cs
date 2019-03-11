@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.TGRS.Reports.Services
+﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.Data.Repository;
-    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetailActualRate;
+    using Fanex.NAP.TGRS.Reports.Criteria.ActualRatePerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using System.Collections.Generic;
 
-    public interface IDetailActualRateReportService
+    public interface IActualRateDetailReportService
     {
         #region New Performance Detail - Trader
         IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria);

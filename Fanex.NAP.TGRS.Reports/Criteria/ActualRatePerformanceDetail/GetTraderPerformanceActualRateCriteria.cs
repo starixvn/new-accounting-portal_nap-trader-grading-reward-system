@@ -1,15 +1,14 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetailActualRate
+﻿namespace Fanex.NAP.TGRS.Reports.Criteria.ActualRatePerformanceDetail
 {
     using Fanex.Data.Repository;
     using System;
-
-    public class GetTraderMatchPerformanceActualRateCriteria : CriteriaBase
+    public class GetTraderPerformanceActualRateCriteria : CriteriaBase
     {
+        public string Username { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
-
-        public int CustId { get; set; }
 
         public bool IsExcludeLeagues { get; set; }
 
@@ -18,7 +17,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_ARPerformanceDetail_Trader_Match";
+            return "TGRS_Rpt_ARPerformanceDetail_Trader";
         }
 
         public override bool IsValid()

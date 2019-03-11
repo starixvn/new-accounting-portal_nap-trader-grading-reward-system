@@ -7,20 +7,18 @@
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
-    using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetailActualRate;
+    using Fanex.NAP.TGRS.Reports.Criteria.ActualRatePerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using NPOI.SS.UserModel;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Interfaces;
-    using NPOI.SS.Formula.Functions;
     using System;
 
-    public class DetailActualRateReportService : TGRSBaseService, IDetailActualRateReportService
+    public class ActualRateTraderDetailReportService : TGRSBaseService, IActualRateDetailReportService
     {
         #region Constants
-        private const string TraderPerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.TraderPerformanceActualRate";
+        private const string TraderPerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.ActualRateTraderPerformance";
         private const int PointInPixel = 225;
 
         #endregion Constants 

@@ -2,26 +2,23 @@
 {
     using Core.Configurations;
     using Core.Helpers;
-    using Criteria.PerformanceDetailActualRate;
+    using Criteria.ActualRatePerformanceDetail;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Services;
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
-    using ViewModels.PerformanceDetail;
 
-    public class PerformanceDetailActualRateController : TGRSBaseController
+    public class ActualRatePerformanceDetailController : TGRSBaseController
     {
         #region Attributes and Contructors
-        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailActualRateReports\TraderPerformanceActualRate.xls";
-        private readonly IDetailActualRateReportService _detailReportService;
+        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateTraderPerformance.xls";
+        private readonly IActualRateDetailReportService _detailReportService;
 
         [Simplect.Attribute.InjectObject]
-        public PerformanceDetailActualRateController() : this(null)
+        public ActualRatePerformanceDetailController() : this(null)
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
 
@@ -33,9 +30,9 @@
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
         }
 
-        public PerformanceDetailActualRateController(DetailActualRateReportService detailReportService)
+        public ActualRatePerformanceDetailController(ActualRateTraderDetailReportService detailReportService)
         {
-            this._detailReportService = detailReportService ?? new DetailActualRateReportService();
+            this._detailReportService = detailReportService ?? new ActualRateTraderDetailReportService();
         }
 
         #endregion Attributes and Contructors
@@ -48,10 +45,19 @@
             {
                 return Redirect("~/Error/AccessDenied");
             }
-            return RedirectToAction("TraderPerformance");
+            return RedirectToAction("LeaguePerformance");
         }
 
         #endregion Index Page
+
+        #region League Performance
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult LeaguePerformance()
+        {
+            return View();
+        }
+
+        #endregion League Performance
 
         #region Trader Performance
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]

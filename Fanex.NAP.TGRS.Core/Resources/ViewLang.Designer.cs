@@ -61,6 +61,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Performance Detail Actual Rate (Juice &amp; Leftover) Report.
+        /// </summary>
+        public static string ActualRatePerformanceDetailReport {
+            get {
+                return ResourceManager.GetString("ActualRatePerformanceDetailReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Afternoon.
         /// </summary>
         public static string Afternoon {
@@ -1164,15 +1173,6 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string OtherMarkets {
             get {
                 return ResourceManager.GetString("OtherMarkets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Performance Detail Actual Rate (Juice &amp; Leftover) Report.
-        /// </summary>
-        public static string PerformanceDetailActualRateReport {
-            get {
-                return ResourceManager.GetString("PerformanceDetailActualRateReport", resourceCulture);
             }
         }
         
