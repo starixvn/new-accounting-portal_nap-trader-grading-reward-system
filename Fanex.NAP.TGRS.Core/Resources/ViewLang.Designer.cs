@@ -61,6 +61,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Performance_Detail_{0}_(Juice-LeftOver)_{1}_{2}.
+        /// </summary>
+        public static string ActualRatePerformanceDetailFileName {
+            get {
+                return ResourceManager.GetString("ActualRatePerformanceDetailFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Performance Detail Actual Rate (Juice &amp; Leftover) Report.
         /// </summary>
         public static string ActualRatePerformanceDetailReport {
@@ -741,6 +750,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string League {
             get {
                 return ResourceManager.GetString("League", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League_Actual_Rate.
+        /// </summary>
+        public static string LeagueActualRate {
+            get {
+                return ResourceManager.GetString("LeagueActualRate", resourceCulture);
             }
         }
         

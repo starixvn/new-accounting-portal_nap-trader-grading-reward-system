@@ -15,20 +15,20 @@
     using System.Linq;
     using System;
 
-    public class ActualRateTraderDetailReportService : TGRSBaseService, IActualRateDetailReportService
+    public partial class ActualRateDetailReportService : TGRSBaseService, IActualRateDetailReportService
     {
         #region Constants
         private const string TraderPerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.ActualRateTraderPerformance";
         private const int PointInPixel = 225;
 
-        #endregion Constants 
+        #endregion Constants        
 
         #region Trader Performance
         public IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria)
         {
             var result = this.GetData<TraderPerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderPerformanceActualRateCriteria).IsViewScore)
+            if (!(criteria as GetActualRateTraderPerformanceCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -45,7 +45,7 @@
         {
             var result = this.GetData<MatchPerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderMatchPerformanceActualRateCriteria).IsViewScore)
+            if (!(criteria as GetActualRateTraderMatchPerformanceCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -60,7 +60,7 @@
         {
             var result = this.GetData<TraderMatchBetTypePerformanceInfo>(criteria);
 
-            if (!(criteria as GetTraderMatchBettypePerformanceActualRateCriteria).IsViewScore)
+            if (!(criteria as GetActualRateTraderMatchBettypePerformanceCriteria).IsViewScore)
             {
                 foreach (var item in result)
                 {
@@ -71,14 +71,14 @@
             return result;
         }
 
-        public void ExportTraderPerformance(GetTraderPerformanceActualRateCriteria criteria, string templatePath, bool isViewScore = true)
+        public void ExportTraderPerformance(GetActualRateTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true)
         {
             var traderData = SessionManager.Get<IEnumerable<TraderPerformanceInfo>>(TraderPerformanceDetailReportSessionKey).ToList();
 
             if ((traderData != null) && (traderData.Count > 0))
             {
                 string reportName = string.Format(
-                                ViewLang.NewPerformanceDetailFileName,
+                                ViewLang.ActualRatePerformanceDetailFileName,
                                 ViewLang.TraderActualRate,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
@@ -182,7 +182,7 @@
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(GetTraderPerformanceActualRateCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(GetActualRateTraderPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);

@@ -717,4 +717,10 @@
   <data name="TraderActualRate" xml:space="preserve">
     <value>Trader_Actual_Rate</value>
   </data>
+  <data name="ActualRatePerformanceDetailFileName" xml:space="preserve">
+    <value>Performance_Detail_{0}_(Juice-LeftOver)_{1}_{2}</value>
+  </data>
+  <data name="LeagueActualRate" xml:space="preserve">
+    <value>League_Actual_Rate</value>
+  </data>
 </root>

@@ -151,6 +151,12 @@
     <Compile Include="Controllers\PerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Controllers\TraderMonthlyReportController.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBettypeDetailLeagueCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBetTypePerformanceOfLeagueMatchCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfLeagueCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfLeagueTraderCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfLeagueCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
@@ -185,9 +191,9 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceOfLeagueTeam.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderPerformanceOfTeamCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTeamsCriteria.cs" />
-    <Compile Include="Criteria\ActualRatePerformanceDetail\GetTraderMatchBettypePerformanceActualRateCriteria.cs" />
-    <Compile Include="Criteria\ActualRatePerformanceDetail\GetTraderMatchPerformanceActualRateCriteria.cs" />
-    <Compile Include="Criteria\ActualRatePerformanceDetail\GetTraderPerformanceActualRateCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderMatchBettypePerformanceCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderMatchPerformanceCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTrader.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailTeam.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBettypeDetailGrade.cs" />
@@ -314,6 +320,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="ReportsAreaRegistration.cs" />
+    <Compile Include="Services\Implements\ActualRateLeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\BetTypeDetailReportService.cs" />
     <Compile Include="Services\Implements\BettypeMonthlyService.cs" />
     <Compile Include="Services\Implements\DashboardService.cs" />

@@ -3,13 +3,15 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class GetTraderMatchPerformanceActualRateCriteria : CriteriaBase
+    public class GetActualRateBetTypePerformanceOfLeagueMatchCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
 
-        public int CustId { get; set; }
+        public int LeagueId { get; set; }
+
+        public int MatchId { get; set; }
 
         public bool IsExcludeLeagues { get; set; }
 
@@ -18,7 +20,7 @@
 
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_ARPerformanceDetail_Trader_Match";
+            return "TGRS_Rpt_ARPerformanceDetail_League_Match_Bettype";
         }
 
         public override bool IsValid()

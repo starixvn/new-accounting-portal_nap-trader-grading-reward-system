@@ -7,14 +7,31 @@
 
     public interface IActualRateDetailReportService
     {
-        #region New Performance Detail - Trader
+        #region Trader
         IEnumerable<TraderPerformanceInfo> GetTraderPerformance(ICriteria criteria);
 
         IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(ICriteria criteria);
 
         IEnumerable<TraderMatchBetTypePerformanceInfo> GetTraderMatchBettypePerformance(ICriteria criteria);
 
-        void ExportTraderPerformance(GetTraderPerformanceActualRateCriteria criteria, string templatePath, bool isViewScore = true);        
-        #endregion
+        void ExportTraderPerformance(GetActualRateTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true);
+        #endregion Trader
+
+        #region League
+        IEnumerable<LeaguePerformanceInfo> GetLeaguePerformance(ICriteria criteria);
+                
+        IEnumerable<LeagueTraderPerformanceInfo> GetTraderPerformanceByLeague(ICriteria criteria);
+
+        IEnumerable<LeagueTraderMatchPerformanceInfo> GetMatchPerformanceOfLeagueAndTrader(ICriteria criteria);
+
+        IEnumerable<LeagueTraderMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueTraderAndMatch(ICriteria criteria);
+
+        IEnumerable<LeagueMatchPerformanceInfo> GetMatchPerformanceOfLeague(ICriteria criteria);
+
+        IEnumerable<LeagueMatchBettypePerformanceInfo> GetBettypePerformanceOfLeagueAndMatch(ICriteria criteria);
+
+        void ExportLeaguePerformance(GetActualRateLeaguePerformanceCriteria criteria, string templatePath);
+        #endregion League
+
     }
 }
