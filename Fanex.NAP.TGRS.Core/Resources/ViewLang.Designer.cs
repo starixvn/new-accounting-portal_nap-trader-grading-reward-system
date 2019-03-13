@@ -619,6 +619,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade_Actual_Rate.
+        /// </summary>
+        public static string GradeActualRate {
+            get {
+                return ResourceManager.GetString("GradeActualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grade Effective Date.
         /// </summary>
         public static string GradeEffectiveDate {
@@ -1551,6 +1560,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Team {
             get {
                 return ResourceManager.GetString("Team", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team_Actual_Rate.
+        /// </summary>
+        public static string TeamActualRate {
+            get {
+                return ResourceManager.GetString("TeamActualRate", resourceCulture);
             }
         }
         

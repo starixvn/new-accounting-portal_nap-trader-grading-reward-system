@@ -386,6 +386,8 @@
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-service.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderReportAdmin\os-trader-report.js" />
+    <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\grade-performance.js" />
+    <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\team-performance.js" />
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
@@ -600,6 +602,10 @@
     <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateTraderPerformance.xls" />
     <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\LeaguePerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateLeaguePerformance.xls" />
+    <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\GradePerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateGradePerformance.xls" />
+    <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\TeamPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateTeamPerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

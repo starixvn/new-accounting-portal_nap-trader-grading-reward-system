@@ -1,0 +1,267 @@
+﻿namespace Fanex.NAP.TGRS.Reports.Services
+{
+    using Fanex.NAP.Core.Web;
+    using Fanex.Data.Repository;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
+    using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;    
+    using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
+    using NPOI.SS.UserModel;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using Criteria.ActualRatePerformanceDetail;
+    public partial class ActualRateDetailReportService : TGRSBaseService, IActualRateDetailReportService
+    {
+        #region Constants
+        private const string GradePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.ActualRateGradePerformance";
+        #endregion Constants
+
+        public IEnumerable<GradePerformanceInfo> GetGradePerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradePerformanceInfo>(criteria);
+
+            result = result ?? new List<GradePerformanceInfo>();
+
+            if (!(criteria as GetActualRateGradePerformanceCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            SessionManager.Set<IEnumerable<GradePerformanceInfo>>(GradePerformanceDetailReportSessionKey, result);
+
+            return result;
+        }
+
+        public IEnumerable<GradeLeaguePerformanceInfo> GetGradeLeaguePerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeLeaguePerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeLeaguePerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<GradeLeagueTraderPerformanceInfo> GetGradeLeagueTraderPerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeLeagueTraderPerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeLeagueTraderPerformanceInfo>();
+
+            if (!(criteria as GetActualRateTraderPerformanceOfGradeByLeagueCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<GradeLeagueTraderMatchPerformanceInfo> GetGradeLeagueTraderMatchPerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeLeagueTraderMatchPerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeLeagueTraderMatchPerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<GradeLeagueTraderMatchBettypePerformanceInfo> GetGradeLeagueTraderMatchBettypePerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeLeagueTraderMatchBettypePerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeLeagueTraderMatchBettypePerformanceInfo>();
+
+            if (!(criteria as GetActualRateBetTypePerformanceOfGradeLeagueTraderMatchCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerable<GradeTraderMatchBettypePerformanceInfo> GetGradeTraderMatchBettypePerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeTraderMatchBettypePerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeTraderMatchBettypePerformanceInfo>();
+
+            return result;
+        }
+
+        public IEnumerable<GradeTraderPerformanceInfo> GetGradeTraderPerformance(ICriteria criteria)
+        {
+            var result = this.GetData<GradeTraderPerformanceInfo>(criteria);
+
+            result = result ?? new List<GradeTraderPerformanceInfo>();
+
+            if (!(criteria as GetActualRateTraderPerformanceOfGradeCriteria).IsViewScore)
+            {
+                foreach (var item in result)
+                {
+                    item.Score = null;
+                }
+            }
+
+            return result;
+        }
+
+        public Dictionary<string, IEnumerable<GradeTraderMatchPerformanceInfo>> GetGradeTraderMatchPerformance(ICriteria criteria)
+        {
+            var data = this.GetData<GradeTraderMatchPerformanceInfo>(criteria);
+            var result = new Dictionary<string, IEnumerable<GradeTraderMatchPerformanceInfo>>();
+
+            data = data ?? new List<GradeTraderMatchPerformanceInfo>();
+
+            if (data.Count() > 0)
+            {
+                var groups = data.GroupBy(t => t.LeagueId);
+                foreach (var group in groups)
+                {
+                    var leagueName = CacheRef.GetLeagueName(group.Key);
+                    if (string.IsNullOrEmpty(leagueName))
+                    {
+                        leagueName = group.Key.ToString();
+                    }
+
+                    result.Add(leagueName, group.Select(t => t));
+                }
+            }
+
+            return result;
+        }
+
+        public void ExportGradePerformance(GetActualRateGradePerformanceCriteria criteria, bool isViewScore, string templatePath)
+        {
+            var gradeData = SessionManager.Get<IEnumerable<GradePerformanceInfo>>(GradePerformanceDetailReportSessionKey);
+            if (gradeData == null || (gradeData != null && gradeData.Count() == 0))
+            {
+                gradeData = this.GetData<GradePerformanceInfo>(criteria);
+
+                gradeData = gradeData ?? new List<GradePerformanceInfo>();
+
+                SessionManager.Set<IEnumerable<GradePerformanceInfo>>(GradePerformanceDetailReportSessionKey, gradeData);
+            }
+
+            if (gradeData != null && gradeData.Count() > 0)
+            {
+                string reportName = string.Format(
+                                ViewLang.ActualRatePerformanceDetailFileName,
+                                ViewLang.GradeActualRate,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.NewGradePerformance);
+                writer.CopyRows(0, 1);
+
+                FilterBlock(criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 4);
+                FillRowData(gradeData, ref writer, isViewScore);
+
+                writer.SyncColumnsWidth(14);
+
+                if (!isViewScore)
+                {
+                    writer.SetColumnHidden(13);
+                }
+
+                writer.Render();
+            }
+        }
+
+        #region Private
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        private void FillRowData(IEnumerable<GradePerformanceInfo> contentData, ref ExcelTemplateWriter writer, bool isViewScore)
+        {
+            decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
+            int totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0, len = contentData.Count();
+
+            for (int i = 0; i < len; i++)
+            {
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
+                var item = contentData.ElementAt(i);
+                var record = new object[]
+                {
+                    i + 1,
+                    (int)item.Grade, item.TraderCount, item.LeagueCount, item.MatchCount,
+                    item.TurnoverJuice,
+                    item.Juice,
+                    (object)item.JuiceMargin ?? ViewLang.NA,
+                    (object)item.JuiceMarginTotal ?? ViewLang.NA,
+                    item.TurnoverLeftover,
+                    item.WinlostLeftover,
+                    (object)item.LeftoverMargin ?? ViewLang.NA,
+                    (object)item.LeftoverMarginTotal ?? ViewLang.NA,
+                    item.Turnover,
+                    item.WinLoss,
+                    (object)item.Margin ?? ViewLang.NA,
+                    item.BetCount,
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
+                };
+                writer.WriteRow(styleIndex, record);
+
+                totalTO += item.Turnover;
+                totalTOJuice += item.TurnoverJuice;
+                totalTOLeftover += item.TurnoverLeftover;
+                totalLeftover += item.WinlostLeftover;
+                totalJuice += item.Juice;
+                totalWL += item.WinLoss;
+                totalTrader += item.TraderCount;
+                totalLeague += item.LeagueCount;
+                totalMatch += item.MatchCount;
+                totalBetcount += item.BetCount;
+            }
+
+            var totalRecord = new object[]
+            {
+                ViewLang.GrandTotal, null,
+                totalTrader,
+                totalLeague,
+                totalMatch,
+                totalTOJuice,
+                totalJuice,
+                totalTOJuice > 0 ? (object)(totalJuice / totalTOJuice * 100) : ViewLang.NA,
+                totalTO > 0 ? (object)(totalJuice / totalTO * 100) : ViewLang.NA,
+                totalTOLeftover,
+                totalLeftover,
+                totalTOLeftover > 0 ? (object)(totalLeftover / totalTOLeftover * 100) : ViewLang.NA,
+                totalTO > 0 ? (object)(totalLeftover / totalTO * 100) : ViewLang.NA,
+                totalTO,
+                totalWL,
+                totalTO > 0 ? (object)(totalWL / totalTO * 100) : ViewLang.NA,
+                totalBetcount
+            };
+            writer.WriteRow(7, totalRecord);
+        }
+
+        private void FilterBlock(GetActualRateGradePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(8, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        #endregion Private
+
+    }
+}

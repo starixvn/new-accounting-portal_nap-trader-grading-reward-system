@@ -723,4 +723,10 @@
   <data name="LeagueActualRate" xml:space="preserve">
     <value>League_Actual_Rate</value>
   </data>
+  <data name="GradeActualRate" xml:space="preserve">
+    <value>Grade_Actual_Rate</value>
+  </data>
+  <data name="TeamActualRate" xml:space="preserve">
+    <value>Team_Actual_Rate</value>
+  </data>
 </root>
