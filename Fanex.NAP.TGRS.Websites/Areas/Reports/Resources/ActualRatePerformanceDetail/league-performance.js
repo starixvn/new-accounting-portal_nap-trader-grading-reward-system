@@ -13,12 +13,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
         divDateRange: null,
         dpkFromDate: null,
         dpkToDate: null,
-        txtLeague: null,
-        ddlBetType: null,
-        txtMarginFrom: null,
-        txtMarginTo: null,
-        txtMinTurnover: null,
-        txtMinWinLoss: null,
+        txtLeague: null,   
         btnGenerate: null,
         divLeaguePerformanceContainer: null,
         divLeaguePerformanceGrid: null,
@@ -59,12 +54,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
     var cacheDOMElements = function () {
         domElements.divLeaguePerformanceFilter = $('#divLeaguePerformanceFilter');
         domElements.divDateRange = domElements.divLeaguePerformanceFilter.find('#divDateRange');
-        domElements.txtLeague = domElements.divLeaguePerformanceFilter.find('#txtLeague');
-        domElements.ddlBetType = domElements.divLeaguePerformanceFilter.find('#ddlBetType');
-        domElements.txtMarginFrom = domElements.divLeaguePerformanceFilter.find('#txtMarginFrom');
-        domElements.txtMarginTo = domElements.divLeaguePerformanceFilter.find('#txtMarginTo');
-        domElements.txtMinTurnover = domElements.divLeaguePerformanceFilter.find('#txtMinTurnover');
-        domElements.txtMinWinLoss = domElements.divLeaguePerformanceFilter.find('#txtMinWinLoss');
+        domElements.txtLeague = domElements.divLeaguePerformanceFilter.find('#txtLeague');   
         domElements.btnGenerate = domElements.divLeaguePerformanceFilter.find('#btnGenerate');
         domElements.divLeaguePerformanceContainer = $('#divLeaguePerformanceContainer');
         domElements.divLeaguePerformanceGrid = $('#divLeaguePerformanceGrid');
@@ -97,21 +87,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
 
             domElements.txtLeague.val(value);
         });
-
-        domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtMarginFrom.val());
-
-            domElements.txtMarginFrom.val(value);
-            validator.ClearError(domElements.txtMarginFrom);
-        });
-
-        domElements.txtMarginTo.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtMarginTo.val());
-
-            domElements.txtMarginTo.val(value);
-            validator.ClearError(domElements.txtMarginTo);
-        });
-
+      
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divLeaguePerformanceFilter, 'w')) {
                 parameters.FromDate = domElements.divDateRange.getFrom();
@@ -404,9 +380,9 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
                                 { HeaderText: labels.Grade, Name: 'ColGrade', MergeRowNumber: 2 },
                                 { HeaderText: labels.Team, Name: 'ColTeam', MergeRowNumber: 2 },
                                 { HeaderText: labels.NoOfMatches, Name: 'ColNoOfMatches', MergeRowNumber: 2 },
-                                { HeaderText: "Juice", Name: "ColJuiceTO", MergeColNumber: 4 },
-                                { HeaderText: "Leftover", Name: "ColLeftoverTO", MergeColNumber: 4 },
-                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 3 },
+                                { HeaderText: labels.Juice, Name: "ColJuiceTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Leftover, Name: "ColLeftoverTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Total, Name: "ColWinLoss", MergeColNumber: 3 },
                                 { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 },
                                 { HeaderText: labels.Score, Name: 'ColScore', MergeRowNumber: 2 }
                          ]
@@ -1274,9 +1250,9 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
                          Columns: [
                                 { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
                                 { HeaderText: labels.BetType, Name: 'ColBettype', MergeRowNumber: 2 },
-                                { HeaderText: "Juice", Name: "ColJuiceTO", MergeColNumber: 4 },
-                                { HeaderText: "Leftover", Name: "ColLeftoverTO", MergeColNumber: 4 },
-                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 3 },
+                                { HeaderText: labels.Juice, Name: "ColJuiceTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Leftover, Name: "ColLeftoverTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Total, Name: "ColWinLoss", MergeColNumber: 3 },
                                 { HeaderText: labels.BetCount, Name: 'ColBetCount', MergeRowNumber: 2 }
                          ]
                      }

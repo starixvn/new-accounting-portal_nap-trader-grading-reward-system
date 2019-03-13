@@ -11,12 +11,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.GradePerformance = function () {
     var maximumMatchNameLength = 142;
     var domElements = {
         divGradePerformanceFilter: null,
-        divDateRange: null,
-        ddlBetType: null,
-        txtMarginFrom: null,
-        txtMarginTo: null,
-        txtMinTurnover: null,
-        txtMinWinLoss: null,
+        divDateRange: null,      
         btnGenerate: null,
         divGradePerformanceContainer: null,
         divGradePerformanceGrid: null,
@@ -56,12 +51,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.GradePerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divGradePerformanceFilter = $('#divGradePerformanceFilter');
-        domElements.divDateRange = domElements.divGradePerformanceFilter.find('#divDateRange');
-        domElements.ddlBetType = domElements.divGradePerformanceFilter.find('#ddlBetType');
-        domElements.txtMarginFrom = domElements.divGradePerformanceFilter.find('#txtMarginFrom');
-        domElements.txtMarginTo = domElements.divGradePerformanceFilter.find('#txtMarginTo');
-        domElements.txtMinTurnover = domElements.divGradePerformanceFilter.find('#txtMinTurnover');
-        domElements.txtMinWinLoss = domElements.divGradePerformanceFilter.find('#txtMinWinLoss');
+        domElements.divDateRange = domElements.divGradePerformanceFilter.find('#divDateRange');             
         domElements.btnGenerate = domElements.divGradePerformanceFilter.find('#btnGenerate');
         domElements.divGradePerformanceContainer = $('#divGradePerformanceContainer');
         domElements.divGradePerformanceGrid = $('#divGradePerformanceGrid');

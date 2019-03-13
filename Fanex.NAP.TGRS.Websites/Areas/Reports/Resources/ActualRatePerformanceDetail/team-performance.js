@@ -11,12 +11,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TeamPerformance = function () {
     var domElements = {
         divTeamPerformanceFilter: null,
         divDateRange: null,
-        ddlTeam: null,
-        ddlBetType: null,
-        txtMarginFrom: null,
-        txtMarginTo: null,
-        txtMinTurnover: null,
-        txtMinWinLoss: null,
+        ddlTeam: null,   
         btnGenerate: null,
         divTeamPerformanceContainer: null,
         divTeamPerformanceGrid: null,
@@ -56,12 +51,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TeamPerformance = function () {
     var cacheDOMElements = function () {
         domElements.divTeamPerformanceFilter = $('#divTeamPerformanceFilter');
         domElements.divDateRange = domElements.divTeamPerformanceFilter.find('#divDateRange');
-        domElements.ddlTeam = domElements.divTeamPerformanceFilter.find('#ddlTeam');
-        domElements.ddlBetType = domElements.divTeamPerformanceFilter.find('#ddlBetType');
-        domElements.txtMarginFrom = domElements.divTeamPerformanceFilter.find('#txtMarginFrom');
-        domElements.txtMarginTo = domElements.divTeamPerformanceFilter.find('#txtMarginTo');
-        domElements.txtMinTurnover = domElements.divTeamPerformanceFilter.find('#txtMinTurnover');
-        domElements.txtMinWinLoss = domElements.divTeamPerformanceFilter.find('#txtMinWinLoss');
+        domElements.ddlTeam = domElements.divTeamPerformanceFilter.find('#ddlTeam');       
         domElements.btnGenerate = domElements.divTeamPerformanceFilter.find('#btnGenerate');
         domElements.divTeamPerformanceContainer = $('#divTeamPerformanceContainer');
         domElements.divTeamPerformanceGrid = $('#divTeamPerformanceGrid');
@@ -97,21 +87,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TeamPerformance = function () {
             }
         }).multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlTeam.next());
-        });
-
-        domElements.txtMarginFrom.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtMarginFrom.val());
-
-            domElements.txtMarginFrom.val(value);
-            validator.ClearError(domElements.txtMarginFrom);
-        });
-
-        domElements.txtMarginTo.numberField(2, true, null).focusout(function () {
-            var value = $.trim(domElements.txtMarginTo.val());
-
-            domElements.txtMarginTo.val(value);
-            validator.ClearError(domElements.txtMarginTo);
-        });
+        });              
     
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divTeamPerformanceFilter, 'w')) {                                
@@ -167,14 +143,10 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TeamPerformance = function () {
     };
 
     // Validate dropdown fields.
-    var validateDropdownFields = function () {
-        var selectedBetTypes = domElements.ddlBetType.val();
+    var validateDropdownFields = function () {        
         var selectedTeams = domElements.ddlTeam.val();
-
-        if (!selectedBetTypes) {
-            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
-            return false;
-        } else if (!selectedTeams) {
+        
+        if (!selectedTeams) {
             validator.ShowError(domElements.ddlTeam.next(), messages.RequiredField, 'w');
             return false;
         }

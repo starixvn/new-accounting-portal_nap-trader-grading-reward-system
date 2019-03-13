@@ -11,13 +11,8 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
     var maximumMatchNameLength = 142;
     var domElements = {
         divTraderPerformanceFilter: null,
-        divDateRange: null,
-        ddlBetType: null,
-        txtTrader: null,
-        txtMarginFrom: null,
-        txtMarginTo: null,
-        txtMinTurnover: null,
-        txtMinWinLoss: null,
+        divDateRange: null,      
+        txtTrader: null,       
         btnGenerate: null,
         divTraderPerformanceContainer: null,
         divTraderPerformanceGrid: null,
@@ -38,11 +33,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
         FromDate: null,
         ToDate: null,
         BetType: null,
-        UserName: null,
-        MarginFrom: null,
-        MarginTo: null,
-        TurnOver: null,
-        WinLoss: null
+        UserName: null       
     };
 
     var cachedData = {
@@ -56,13 +47,8 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
     //Cache DOM elements
     var cacheDOMElements = function () {
         domElements.divTraderPerformanceFilter = $('#divTraderPerformanceFilter');
-        domElements.divDateRange = domElements.divTraderPerformanceFilter.find('#divDateRange');
-        domElements.ddlBetType = domElements.divTraderPerformanceFilter.find('#ddlBetType');
-        domElements.txtTrader = domElements.divTraderPerformanceFilter.find('#txtTrader');
-        domElements.txtMarginFrom = domElements.divTraderPerformanceFilter.find('#txtMarginFrom');
-        domElements.txtMarginTo = domElements.divTraderPerformanceFilter.find('#txtMarginTo');
-        domElements.txtMinTurnover = domElements.divTraderPerformanceFilter.find('#txtMinTurnover');
-        domElements.txtMinWinLoss = domElements.divTraderPerformanceFilter.find('#txtMinWinLoss');
+        domElements.divDateRange = domElements.divTraderPerformanceFilter.find('#divDateRange');        
+        domElements.txtTrader = domElements.divTraderPerformanceFilter.find('#txtTrader');      
         domElements.btnGenerate = domElements.divTraderPerformanceFilter.find('#btnGenerate');
         domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
@@ -91,17 +77,11 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
         });
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w')) {
-                var selectedBetTypes = domElements.ddlBetType.val();
-
+            if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w')) {               
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.UserName = domElements.txtTrader.val();
-                parameters.BetType = '1,3,7,8';
-                parameters.MarginFrom = '';
-                parameters.MarginTo = '';
-                parameters.TurnOver = '';
-                parameters.WinLoss = '';
+                parameters.BetType = '1,3,7,8';               
 
                 hideReports();
                 getTraderPerformanceReport();
@@ -710,9 +690,9 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.TraderPerformance = function () {
                          Columns: [
                                 { HeaderText: labels.No, Name: 'ColNo', MergeRowNumber: 2 },
                                 { HeaderText: labels.BetType, Name: 'ColBetType', MergeRowNumber: 2 },
-                                { HeaderText: "Juice", Name: "ColJuiceTO", MergeColNumber: 4 },
-                                { HeaderText: "Leftover", Name: "ColLeftoverTO", MergeColNumber: 4 },
-                                { HeaderText: "Total", Name: "ColWinLoss", MergeColNumber: 3 },
+                                { HeaderText: labels.Juice, Name: "ColJuiceTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Leftover, Name: "ColLeftoverTO", MergeColNumber: 4 },
+                                { HeaderText: labels.Total, Name: "ColWinLoss", MergeColNumber: 3 },
                                 { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
                                 { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 }
                          ]
