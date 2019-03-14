@@ -153,11 +153,15 @@
     <Compile Include="Controllers\TraderMonthlyReportController.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBettypeDetailLeagueCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBettypeDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBetTypePerformanceOfGradeLeagueTraderMatchCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBetTypePerformanceOfLeagueMatchCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateGradePerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeagueDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceOfGradeCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfBetTypeLeagueTraderCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfBetTypeTraderCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfGradeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfGradeTraderCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfLeagueCriteria.cs" />
@@ -166,6 +170,8 @@
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateMatchPerformanceOfTraderLeagueTeamCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTeamsCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfBetTypeCriteria.cs" />
+    <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfBetTypeLeagueCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfGradeByLeagueCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfGradeCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfLeagueCriteria.cs" />
@@ -335,6 +341,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="ReportsAreaRegistration.cs" />
+    <Compile Include="Services\Implements\ActualRateBetTypeDetailReportService.cs" />
     <Compile Include="Services\Implements\ActualRateGradeDetailReportService.cs" />
     <Compile Include="Services\Implements\ActualRateLeagueDetailReportService.cs" />
     <Compile Include="Services\Implements\ActualRateTeamDetailReportService.cs" />

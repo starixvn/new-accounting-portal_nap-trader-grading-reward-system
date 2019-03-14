@@ -277,6 +277,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BetType_Actual_Rate.
+        /// </summary>
+        public static string BetTypeActualRate {
+            get {
+                return ResourceManager.GetString("BetTypeActualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type BM %.
         /// </summary>
         public static string BetTypeBM {

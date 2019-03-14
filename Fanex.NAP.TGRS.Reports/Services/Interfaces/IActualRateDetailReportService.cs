@@ -75,5 +75,20 @@
         void ExportTeamPerformance(GetActualRateTeamPerformanceCriteria criteria, bool isViewScore, string templatePath);
         #endregion Team
 
+        #region Bet Type
+        IEnumerable<BetTypePerformanceInfo> GetBetTypePerformance(ICriteria criteria);
+
+        IEnumerable<BetTypeTraderPerformanceInfo> GetBetTypeTraderPerformance(ICriteria criteria);
+
+        Dictionary<string, IEnumerable<BetTypeTraderMatchPerformanceInfo>> GetBetTypeTraderMatchPerformance(ICriteria criteria);
+
+        IEnumerable<BetTypeLeaguePerformanceInfo> GetBetTypeLeaguePerformance(ICriteria criteria);
+
+        IEnumerable<BetTypeLeagueTraderPerformanceInfo> GetBetTypeLeagueTraderPerformance(ICriteria criteria);
+
+        IEnumerable<BetTypeLeagueTraderMatchPerformanceInfo> GetBetTypeLeagueTraderMatchPerformance(ICriteria criteria);
+
+        void ExportBetTypePerformance(GetActualRateBetTypePerformanceCriteria criteria, string templatePath);
+        #endregion Bet Type
     }
 }

@@ -729,4 +729,7 @@
   <data name="TeamActualRate" xml:space="preserve">
     <value>Team_Actual_Rate</value>
   </data>
+  <data name="BetTypeActualRate" xml:space="preserve">
+    <value>BetType_Actual_Rate</value>
+  </data>
 </root>
