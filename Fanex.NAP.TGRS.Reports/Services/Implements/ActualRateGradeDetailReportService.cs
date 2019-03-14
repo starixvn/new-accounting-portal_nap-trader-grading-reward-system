@@ -155,6 +155,9 @@
 
             if (gradeData != null && gradeData.Count() > 0)
             {
+                //sort desc field Margin before export data to excel, because this is set default for javascript display into grid
+                gradeData = gradeData.OrderByDescending(c => c.Margin);
+
                 string reportName = string.Format(
                                 ViewLang.ActualRatePerformanceDetailFileName,
                                 ViewLang.GradeActualRate,
@@ -167,8 +170,8 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowData(gradeData, ref writer, isViewScore);
-
-                writer.SyncColumnsWidth(14);
+                //total column in the file is 18
+                writer.SyncColumnsWidth(18);
 
                 if (!isViewScore)
                 {

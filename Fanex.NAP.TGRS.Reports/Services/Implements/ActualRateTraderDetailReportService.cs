@@ -73,10 +73,13 @@
 
         public void ExportTraderPerformance(GetActualRateTraderPerformanceCriteria criteria, string templatePath, bool isViewScore = true)
         {
-            var traderData = SessionManager.Get<IEnumerable<TraderPerformanceInfo>>(TraderPerformanceDetailReportSessionKey).ToList();
+            var traderData = SessionManager.Get<IEnumerable<TraderPerformanceInfo>>(TraderPerformanceDetailReportSessionKey);
 
-            if ((traderData != null) && (traderData.Count > 0))
+            if ((traderData != null) && (traderData.Count() > 0))
             {
+                //sort desc field Margin before export data to excel, because this is set default for javascript display into grid
+                traderData = traderData.OrderByDescending(c => c.Margin);
+
                 string reportName = string.Format(
                                 ViewLang.ActualRatePerformanceDetailFileName,
                                 ViewLang.TraderActualRate,
@@ -89,7 +92,8 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowData(traderData, ref writer, isViewScore);
-                writer.SyncColumnsWidth(15);
+                //total column in the file is 19
+                writer.SyncColumnsWidth(19);
 
                 if (!isViewScore)
                 {

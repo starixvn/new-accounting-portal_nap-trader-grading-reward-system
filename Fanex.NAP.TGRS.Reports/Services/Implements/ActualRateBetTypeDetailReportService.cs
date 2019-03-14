@@ -26,8 +26,8 @@
 
             result = result ?? new List<BetTypePerformanceInfo>();
 
-            SessionManager.Set<IEnumerable<BetTypePerformanceInfo>>(BetTypePerformanceDetailReportSessionKey, result);
-
+            SessionManager.Set<IEnumerable<BetTypePerformanceInfo>>(BetTypePerformanceDetailReportSessionKey, result); 
+                       
             return result;
         }
 
@@ -129,10 +129,12 @@
                 bettypeData = bettypeData ?? new List<BetTypePerformanceInfo>();
 
                 SessionManager.Set<IEnumerable<BetTypePerformanceInfo>>(BetTypePerformanceDetailReportSessionKey, bettypeData);
-            }
-
+            }           
             if ((bettypeData != null) && (bettypeData.Count() > 0))
             {
+                //sort desc field Margin before export data to excel, because this is set default for javascript display into grid
+                bettypeData = bettypeData.OrderByDescending(c => c.Margin);
+
                 string reportName = string.Format(
                                     ViewLang.ActualRatePerformanceDetailFileName,
                                     ViewLang.BetTypeActualRate,
@@ -146,7 +148,8 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowData(bettypeData, ref writer);
-                writer.SyncColumnsWidth(13);
+                //total column in the file is 17
+                writer.SyncColumnsWidth(17);
                 writer.Render();
             }
         }
