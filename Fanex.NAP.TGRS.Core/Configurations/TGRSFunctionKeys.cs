@@ -96,6 +96,8 @@ public static class TGRSFunctionKeys
 
         public const string PerformanceSummary_PHbettypes = "PerformanceSummary_PHbettypes";
 
+        public const string PerformanceDetailActualRate = "PerformanceDetailActualRate";
+
         public const string Reports = "Reports";
 
         public const string ScoreViewing = "ScoreViewing";

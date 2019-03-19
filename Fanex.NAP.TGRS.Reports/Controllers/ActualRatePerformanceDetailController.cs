@@ -56,14 +56,14 @@
         #endregion Index Page
 
         #region League Performance
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult LeaguePerformance()
         {
             return View();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformance(GetActualRateLeaguePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -73,7 +73,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetActualRateTraderPerformanceOfLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -84,7 +84,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeague(GetActualRateMatchPerformanceOfLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -94,7 +94,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetActualRateMatchPerformanceOfLeagueTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -104,7 +104,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailLeague(GetActualRateBettypeDetailLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -115,7 +115,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypePerformanceOfLeagueMatch(GetActualRateBetTypePerformanceOfLeagueMatchCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -125,7 +125,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetActualRateLeaguePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -137,14 +137,14 @@
         #endregion League Performance
 
         #region Trader Performance
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
             return View();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetActualRateTraderPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -155,7 +155,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchPerformance(GetActualRateTraderMatchPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -166,7 +166,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderMatchBettypePerformance(GetActualRateTraderMatchBettypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -189,14 +189,14 @@
         #endregion Trader Performance
 
         #region Grade Performance
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
         {
             return View();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetGradePerformance(GetActualRateGradePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -207,7 +207,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGrade(GetActualRateTraderPerformanceOfGradeCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -218,7 +218,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfGradeByLeague(GetActualRateTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -229,7 +229,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfGrade(GetActualRateLeaguePerformanceOfGradeCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -239,7 +239,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeTrader(GetActualRateMatchPerformanceOfGradeTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -249,7 +249,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfGradeLeagueTrader(GetActualRateMatchPerformanceOfGradeLeagueTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -259,7 +259,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailGrade(GetActualRateBetTypePerformanceOfGradeLeagueTraderMatchCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -269,7 +269,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetActualRateGradePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -283,7 +283,7 @@
         #endregion Grade Performance
 
         #region Team Performance
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult TeamPerformance()
         {
             ViewBag.Teams = this._detailReportService.GetTeams();
@@ -292,7 +292,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTeamPerformance(GetActualRateTeamPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -303,7 +303,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfTeam(GetActualRateTraderPerformanceOfTeamCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -314,7 +314,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTeamTrader(GetActualRateMatchPerformanceOfTeamTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -324,7 +324,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeDetailTeam(GetActualRateBettypeDetailTeamCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -335,7 +335,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueDetailTeam(GetActualRateLeagueDetailTeamCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -345,7 +345,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult GetTraderPerformanceOfLeagueTeam(GetActualRateTraderPerformanceOfLeagueTeam criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -356,7 +356,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetActualRateMatchPerformanceOfTraderLeagueTeamCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -365,7 +365,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult ExportTeamPerformance(GetActualRateTeamPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -379,14 +379,14 @@
         #endregion Team Performance
 
         #region BetType Performance
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
             return View();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetBetTypePerformance(GetActualRateBetTypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -396,7 +396,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetType(GetActualRateTraderPerformanceOfBetTypeCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -407,7 +407,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeTrader(GetActualRateMatchPerformanceOfBetTypeTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -418,7 +418,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguePerformanceOfBetType(GetActualRateLeaguePerformanceOfBetTypeCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -428,7 +428,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfBetTypeLeague(GetActualRateTraderPerformanceOfBetTypeLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -439,7 +439,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfBetTypeLeagueTrader(GetActualRateMatchPerformanceOfBetTypeLeagueTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
@@ -449,7 +449,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
        
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetailActualRate, Policy = Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetActualRateBetTypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
