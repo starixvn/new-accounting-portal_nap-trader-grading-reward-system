@@ -14,6 +14,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Text;
 
     public partial class NewDetailReportService : TGRSBaseService, INewDetailReportService
     {
@@ -122,6 +123,79 @@
                 writer.SyncColumnsWidth(12);
                 writer.Render();
             }
+        }
+
+        public string ExportMatchPerformance(ICriteria criteria)
+        {
+            var match = this.GetData<LeagueMatchPerformanceInfo>(criteria);
+            var content = new StringBuilder();
+            string NA = "N/A";
+            string formatNumber = "0.##";
+
+            decimal totalTO = 0, totalWL = 0, totalJuiceWL = 0, totalJuiceTO = 0, totalLeftoverWL = 0, totalLeftoverTO = 0;
+            int totalMatch = 0, totalLeague = 0, totalBetcount = 0;
+
+            totalMatch = match.Select(m => m.MatchId).Distinct().Count();
+            totalLeague = match.Select(m => m.LeagueId).Distinct().Count();
+
+            content.AppendLine("Event Date,League,Match,Juice_Turnover(MY),Juice_WinLoss,Juice_Margin,Juice_MarginTotal,LO_Turnover(MY),LO_WinLoss,LO_Margin,LO_MarginTotal,Total_TurnOver(MY),Total_WinLoss,Total_Margin,Bet_Count");           
+
+            foreach (var item in match)
+            {
+                string juiceMargin = item.JuiceMargin.HasValue ? item.JuiceMargin.Value.ToString(formatNumber) : NA;
+                string juiceMarginTotal = item.JuiceMarginTotal.HasValue ? item.JuiceMarginTotal.Value.ToString(formatNumber) : NA;
+                string leftoverMargin = item.LeftoverMargin.HasValue ? item.LeftoverMargin.Value.ToString(formatNumber) : NA;
+                string leftoverMarginTotal = item.LeftoverMarginTotal.HasValue ? item.LeftoverMarginTotal.Value.ToString(formatNumber) : NA;
+                string margin = item.Margin.HasValue ? item.Margin.Value.ToString(formatNumber) : NA;
+
+                content.AppendLine($"{item.EventDateString}," +
+                    $"{ item.LeagueName}," +
+                    $"{item.MatchName}," +
+                    $"{item.TurnoverJuice.ToString(formatNumber)}," +
+                    $"{item.Juice.ToString(formatNumber)}," +
+                    $"{juiceMargin}," +
+                    $"{juiceMarginTotal}," +
+                    $"{item.TurnoverLeftover.ToString(formatNumber)}," +
+                    $"{item.WinlostLeftover.ToString(formatNumber)}," +
+                    $"{leftoverMargin}," +
+                    $"{leftoverMarginTotal}," +
+                    $"{item.Turnover.ToString(formatNumber)}," +
+                    $"{item.WinLoss.ToString(formatNumber)}," +
+                    $"{margin}," +
+                    $"{item.BetCount}");
+
+                totalJuiceTO += item.TurnoverJuice;
+                totalJuiceWL += item.Juice;
+                totalLeftoverTO += item.TurnoverLeftover;
+                totalLeftoverWL += item.WinlostLeftover;
+                totalTO += item.Turnover;
+                totalWL += item.WinLoss;
+                totalBetcount += item.BetCount.HasValue ? item.BetCount.Value : 0;
+            }
+
+            string totalJuiceMargin = totalJuiceTO > 0 ? (totalJuiceWL / totalJuiceTO * 100).ToString(formatNumber) : NA;
+            string totalJuiceMarginTotal = totalTO > 0 ? (totalJuiceWL / totalTO * 100).ToString(formatNumber) : NA;
+            string totalLeftoverMargin = totalLeftoverTO > 0 ? (totalLeftoverWL / totalLeftoverTO * 100).ToString(formatNumber) : NA;
+            string totalLeftoverMarginTotal = totalTO > 0 ? (totalLeftoverWL / totalTO * 100).ToString(formatNumber) : NA;
+            string totalMargin = totalTO > 0 ? (totalWL / totalTO * 100).ToString(formatNumber) : NA;
+
+            content.AppendLine("Total," +
+                $"{totalLeague}," +
+                $"{totalMatch}," +
+                $"{totalJuiceTO.ToString(formatNumber)}," +
+                $"{totalJuiceWL.ToString(formatNumber)}," +
+                $"{totalJuiceMargin}," +
+                $"{totalJuiceMarginTotal}," +
+                $"{totalLeftoverTO.ToString(formatNumber)}," +
+                $"{totalLeftoverWL.ToString(formatNumber)}," +
+                $"{totalLeftoverMargin}," +
+                $"{totalLeftoverMarginTotal}," +
+                $"{totalTO.ToString(formatNumber)}," +
+                $"{totalWL.ToString(formatNumber)}," +
+                $"{totalMargin}," +
+                $"{totalBetcount.ToString(formatNumber)}");
+                
+            return content.ToString();
         }
 
         #region Private

@@ -97,3 +97,62 @@
         }
     }
 }
+
+.dropdown {
+    float: right;
+    position: absolute;
+    right: 8px;
+
+    .selection-export {
+        position: relative;
+        float: right;
+        right: 8px;
+        text-align: right;
+        cursor: pointer;
+        width: 145px;
+
+        ul {
+            position: absolute;
+            right: 0;
+            top: 0;
+            visibility: hidden;
+            opacity: 0;
+            background-color: #FFFFFF;
+            list-style-type: none;
+            margin: 0;
+            border: solid 1px #808080;
+            width: 100%;
+            padding: 0px;
+            z-index: 11;
+
+            li {
+                display: block;
+                text-align: left;
+                white-space: nowrap;
+                padding: 5px 10px;
+
+                span {
+                    display: block;
+                    color: #000000;
+                    font-size: 0.9em;
+                }
+
+                &:hover {
+                    background-color: #5a7dc1;
+                    span {
+                        text-decoration: none;
+                        color: #FFFFFF;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            ul {
+                top: 18px;
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+}

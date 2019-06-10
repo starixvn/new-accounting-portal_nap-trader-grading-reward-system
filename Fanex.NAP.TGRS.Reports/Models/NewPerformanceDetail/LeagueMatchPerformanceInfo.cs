@@ -96,5 +96,9 @@
                 return string.Format("{0} {1} {2}", CacheRef.GetTeamName(HomeId), ViewLang.Vs, CacheRef.GetTeamName(AwayId));
             }
         }
+
+        public int LeagueId { get; set; }
+
+        public string LeagueName { get; set; }
     }
 }

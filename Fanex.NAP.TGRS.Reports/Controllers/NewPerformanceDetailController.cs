@@ -10,6 +10,7 @@
     using Fanex.NAP.TGRS.Reports.Services;
     using System;
     using System.Linq;
+    using System.Text;
     using System.Web.Mvc;
 
     public class NewPerformanceDetailController : TGRSBaseController
@@ -77,6 +78,17 @@
             this._newDetailReportService.ExportLeaguePerformance(criteria, templatePath);
 
             return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportMatchPerformance(GetMatchPerformanceOfLeagueNameCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;            
+            var csvData = _newDetailReportService.ExportMatchPerformance(criteria);
+            var csvFileName = string.Format("Performance_Detail_All_Matches_(Juice-LeftOver)_{0}_{1}.csv", criteria.FromDate.ToString("yyyyMMdd"), criteria.ToDate.ToString("yyyyMMdd"));
+            var encoded = Encoding.UTF8.GetBytes(csvData);
+
+            return File(encoded, "text/plain", csvFileName);
         }
 
         [HttpPost]

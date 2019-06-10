@@ -185,6 +185,7 @@
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeagueCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTeamCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceOfGradeLeagueTraderMatchCriteria.cs" />
+    <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfLeagueNameCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetMatchPerformanceOfGradeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetTraderMatchBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBetTypePerformanceCriteria.cs" />

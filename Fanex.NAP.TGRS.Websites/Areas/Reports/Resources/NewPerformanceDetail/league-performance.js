@@ -42,6 +42,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         GetInitializedData: common.ResolveRootUrl('NewPerformanceDetail/GetInitializedData'),
         GetLeaguePerformance: common.ResolveRootUrl('NewPerformanceDetail/GetLeaguePerformance'),
         ExportLeaguePerformance: common.ResolveRootUrl('NewPerformanceDetail/ExportLeaguePerformance'),
+        ExportMatchPerformance: common.ResolveRootUrl('NewPerformanceDetail/ExportMatchPerformance'),
         GetTraderPerformanceOfLeague: common.ResolveRootUrl('NewPerformanceDetail/GetTraderPerformanceOfLeague'),
         GetMatchPerformanceOfLeagueTrader: common.ResolveRootUrl('NewPerformanceDetail/GetMatchPerformanceOfLeagueTrader'),
         GetMatchPerformanceOfLeague: common.ResolveRootUrl('NewPerformanceDetail/GetMatchPerformanceOfLeague'),
@@ -58,6 +59,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         Turnover: null,
         WinLoss: null
     };
+
+    var divSelectionExportButton = '<div class="dropdown"><div class="selection-export">';
+    divSelectionExportButton += '<input type="button" class="btnExcel" title="Export" />';
+    divSelectionExportButton += '<ul>';
+    divSelectionExportButton += '<li><span id="exportLeague">Export Excel</span></li>';
+    divSelectionExportButton += '<li><span id="exportMatch">Export as Match view</span></li>';
+    divSelectionExportButton += '</ul>';
+    divSelectionExportButton += '</div></div>';
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -286,10 +295,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             gridExpandHeight: 200,
             showTitle: true,
             titleInfo: {
-                showExcelButton: true,
-                exportExcelFunction: function () {
-                    exportLeaguePerformance();
-                }
+                customButtons: divSelectionExportButton               
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -381,6 +387,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeaguePerformanceGridEvents();
+        handleSelectionExport();
     };
 
     // Handle grid's events.
@@ -416,11 +423,21 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         domElements.divBettypeDetailContainer.addClass('display-none');
         domElements.divMatchPerformanceOfLeagueContainer.addClass('display-none');
         domElements.divBettypePerformanceOfLeagueMatchContainer.addClass('display-none');
+    };   
+
+    var handleSelectionExport = function () {
+        $('#exportLeague').click(exportLeaguePerformance);
+        $('#exportMatch').click(exportMatchPerformance);
     };
 
     // Export league performance to excel.
     var exportLeaguePerformance = function () {
         common.DownloadFile(urls.ExportLeaguePerformance, parameters);
+    };
+
+    // Export Match performace to CSV
+    var exportMatchPerformance = function () {
+        common.DownloadFile(urls.ExportMatchPerformance, parameters);
     };
 
     // Get trader performance on a specific league.

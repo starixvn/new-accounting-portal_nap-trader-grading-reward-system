@@ -23,6 +23,8 @@
 
         void ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria, string templatePath);
 
+        string ExportMatchPerformance(ICriteria criteria);
+
         #endregion League
 
         #region New Performance Detail - Trader

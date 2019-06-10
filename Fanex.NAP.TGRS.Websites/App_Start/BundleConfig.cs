@@ -176,6 +176,11 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail.less",
                 "~/Areas/Reports/Resources/PerformanceSummary/performance-summary.less");
 
+            bundles.AddAndInclude(
+                "~/styles/newperformanceDetail",
+                "~/Areas/Reports/Resources/NewPerformanceDetail/performance-detail.less",
+                "~/Areas/Reports/Resources/NewPerformanceDetail/performance-summary.less");
+
             bundles.Add(new ScriptBundle("~/scripts/leaguePerformance").Include(
                 "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                 "~/Areas/Reports/Resources/PerformanceDetail/league-performance.js",
