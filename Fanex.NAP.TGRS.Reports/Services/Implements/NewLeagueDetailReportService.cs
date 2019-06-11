@@ -148,7 +148,7 @@
                 string leftoverMarginTotal = item.LeftoverMarginTotal.HasValue ? item.LeftoverMarginTotal.Value.ToString(formatNumber) : NA;
                 string margin = item.Margin.HasValue ? item.Margin.Value.ToString(formatNumber) : NA;
 
-                content.AppendLine($"{item.EventDateString}," +
+                content.AppendLine($"'{item.EventDateString}," +
                     $"{ item.LeagueName}," +
                     $"{item.MatchName}," +
                     $"{item.TurnoverJuice.ToString(formatNumber)}," +
