@@ -127,7 +127,7 @@
 
         public string ExportMatchPerformance(ICriteria criteria)
         {
-            var match = this.GetData<LeagueMatchPerformanceInfo>(criteria);
+            var match = this.GetData<LeagueMatchPerformanceInfo>(criteria).OrderBy(c=>c.EventDate).ThenBy(c=>c.LeagueName);
             var content = new StringBuilder();
             string NA = "N/A";
             string formatNumber = "0.##";
@@ -148,8 +148,8 @@
                 string leftoverMarginTotal = item.LeftoverMarginTotal.HasValue ? item.LeftoverMarginTotal.Value.ToString(formatNumber) : NA;
                 string margin = item.Margin.HasValue ? item.Margin.Value.ToString(formatNumber) : NA;
 
-                content.AppendLine($"'{item.EventDateString}," +
-                    $"{ item.LeagueName}," +
+                content.AppendLine($"{item.EventDateString}," +
+                    $"{item.LeagueName}," +
                     $"{item.MatchName}," +
                     $"{item.TurnoverJuice.ToString(formatNumber)}," +
                     $"{item.Juice.ToString(formatNumber)}," +
