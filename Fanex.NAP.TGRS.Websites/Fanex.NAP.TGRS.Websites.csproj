@@ -385,6 +385,7 @@
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report-service.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderPerformance\trader-report.js" />
+    <Content Include="Areas\OSReports\Resources\OSTraderReport\os-trader-report.js" />
     <Content Include="Areas\OSReports\Resources\OSTraderReportAdmin\os-trader-report.js" />
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\grade-performance.js" />
@@ -610,6 +611,8 @@
     <Content Include="Areas\Reports\Views\ActualRatePerformanceDetail\BetTypePerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\ActualRateDetailReports\ActualRateBetTypePerformance.xls" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\performance-summary.less" />
+    <Content Include="Areas\OSReports\Views\OSTraderReport\Filter.cshtml" />
+    <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

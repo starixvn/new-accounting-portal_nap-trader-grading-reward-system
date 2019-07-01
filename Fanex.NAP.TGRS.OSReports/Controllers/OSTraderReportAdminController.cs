@@ -8,6 +8,7 @@
     using Fanex.NAP.TGRS.OSReports.Services.Implement;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -35,16 +36,22 @@
         {
             var trader = _service.GetGeneralInfo(criteria);
 
+            var sports = new List<Models.TraderReport.Sport>();
+
+            if(trader.TraderId == 0)
+            {
+                return Json(new { trader, sports }, JsonRequestBehavior.AllowGet);
+            }
+
             Session.Add("traderId", trader.TraderId);
 
-            var sports = _service.GetSportPerformance(new Criteria.TraderReport.GetSportPerformanceCriteria
+            sports = _service.GetSportPerformance(new Criteria.TraderReport.GetSportPerformanceCriteria
             {
                 TraderId = trader.TraderId,
                 FromDate = criteria.FromDate,
                 ToDate = criteria.ToDate,
                 ReportType = criteria.ReportType
-            });
-
+            }).ToList();
 
             return Json(new { trader, sports }, JsonRequestBehavior.AllowGet);
         }
@@ -53,7 +60,7 @@
         {
             criteria.TraderId = (int)Session["traderId"];
 
-            return Json(_service.GetChartData(criteria), JsonRequestBehavior.AllowGet);
+            return Json(_service.GetChartData(criteria).ToList().OrderBy(c => c.WLDate), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetRegionData(GetRegionBySportCriteria criteria)

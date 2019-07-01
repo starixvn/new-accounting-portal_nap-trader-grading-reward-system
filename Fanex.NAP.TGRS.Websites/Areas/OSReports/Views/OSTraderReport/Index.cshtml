@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Trader's Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/styles/trader")
+
+@section Headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@Html.Partial("Filter")
+
+<div id="divReportData">
+    <div id="divGeneralInfo" class="content-general-info display-none">
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.Turnover</label>
+            <label class="number" id="lblTurnOver">
+            </label>
+        </div>
+
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.WinLoss</label>
+            <label class="number" id="lblWinLoss">
+            </label>
+        </div>
+
+        <div class="info-cell-1">
+            <label class="title">@ViewLang.Margin</label>
+            <label class="number" id="lblMargin">
+            </label>
+        </div>
+
+        <div class="info-cell-1">
+            <label class="title">
+                Sports
+            </label>
+            <label class="number" id="lblSports">
+            </label>
+        </div>
+
+        <div class="info-cell-2-left">
+            <div id="chart-data-container" class="display-none"></div>
+            <div id="winloss-container" class="chart-container">
+            </div>
+            <div id="switchChart" class="switch-toggle switch-ios flat-switch" style="margin-right: 12px">
+                <input id="chkMonth" name="chartType" type="radio">
+                <label for="chkMonth">Month</label>
+
+                <input id="chkDay" name="chartType" type="radio" checked="">
+                <label for="chkDay">Day</label>
+
+                <a id="toggleA"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sport-container" class="content-grid margin-bottom display-none">
+    <div id="sport-grid" class="freegrid display-none">
+    </div>
+</div>
+
+<div id="region-container" class="content-grid margin-bottom display-none">
+    <div id="region-grid" class="freegrid display-none">
+    </div>
+</div>
+
+<div id="league-container" class="content-grid margin-bottom display-none">
+    <div id="league-grid" class="freegrid display-none">
+    </div>
+</div>
+
+<div id="bettype-container" class="content-grid margin-bottom display-none">
+    <div id="bettype-grid" class="freegrid display-none">
+    </div>
+</div>
+
+@section Foot{
+    @Scripts.Render("~/scripts/os-trader-report-traderview")
+
+    <script>
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+    </script>
+}

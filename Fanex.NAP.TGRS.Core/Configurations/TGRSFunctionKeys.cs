@@ -84,6 +84,8 @@ public static class TGRSFunctionKeys
 
         public const string OSTraderReportAdmin = "OSTraderReportAdmin";
 
+        public const string OSTraderReport = "OSTraderReport";
+
         public const string PerformanceDetail = "PerformanceDetail";
 
         public const string PerformanceDetail_Majorbettypes = "PerformanceDetail_Majorbettypes";

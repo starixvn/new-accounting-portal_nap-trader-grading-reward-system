@@ -187,10 +187,23 @@
                 {
                     UserName = filter.Trader
                 };
-                TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
-                if (trader != null)
+
+                var trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems;
+
+                if(trader.Count() > 1)
                 {
-                    traderId = trader.CustId;
+                    return Json(new TraderReports()
+                    {
+                        GeneralInfo = new GeneralInfo(),
+                        BetTypePerformances = new List<BetTypePerformance>(),
+                        WinlossTurnover = new List<TraderWinlossTurnover>(),
+                        LeaguesPerformance = new LeaguePerformanceList()
+                    });
+                }
+
+                if (trader.FirstOrDefault() != null)
+                {
+                    traderId = trader.FirstOrDefault().CustId;
                 }
             }
 
