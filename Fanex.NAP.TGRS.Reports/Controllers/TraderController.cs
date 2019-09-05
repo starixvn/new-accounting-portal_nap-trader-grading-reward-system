@@ -249,7 +249,7 @@
                 IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
-            return traderReportService.GetTraderWinlossTurnover(criteria).ToList();
+            return traderReportService.GetTraderWinlossTurnover(criteria).OrderBy(t => t.WLDate).ToList();
         }
 
         private List<BetTypePerformance> GetTraderBettypePerformance(int traderId, DateTime fromtDate, DateTime toDate)
