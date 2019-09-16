@@ -125,5 +125,9 @@ public static class TGRSFunctionKeys
         public const string TraderReportAdmin_PHbettypes = "TraderReportAdmin_PHbettypes";
 
         public const string LeagueExclusion = "LeagueExclusion";
+
+        public const string SoccerLive = "SoccerLive";
+
+        public const string SoccerNonLive = "SoccerNonLive";
     }
  

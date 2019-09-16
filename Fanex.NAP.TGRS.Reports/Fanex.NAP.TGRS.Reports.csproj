@@ -259,6 +259,7 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeSummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\ExcelConfig.cs" />

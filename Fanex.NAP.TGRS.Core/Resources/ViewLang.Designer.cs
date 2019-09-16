@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -894,6 +894,33 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Market {
             get {
                 return ResourceManager.GetString("Market", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string MarketAll {
+            get {
+                return ResourceManager.GetString("MarketAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string MarketLive {
+            get {
+                return ResourceManager.GetString("MarketLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None Live.
+        /// </summary>
+        public static string MarketNoneLive {
+            get {
+                return ResourceManager.GetString("MarketNoneLive", resourceCulture);
             }
         }
         

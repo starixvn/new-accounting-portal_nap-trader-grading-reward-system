@@ -28,6 +28,8 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         private const string ViewIpVnKey = "ViewIPVN";
         private const string CurrentWorkingOnMenuKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentWorkingOnMenu";
         private const string IsExcludingLeaguesKey = "Fanex.NAP.TGRS.Contants.AppSession.IsExcludingLeagues";
+        private const string IsSoccerLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerLivePermission";
+        private const string IsSoccerNoneLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerNoneLivePermission";
 
         /// <summary>
         ///     Gets or sets current login user.
@@ -114,6 +116,20 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             get { return SessionManager.Get<bool>(IsExcludingLeaguesKey); }
 
             set { SessionManager.Set(IsExcludingLeaguesKey, value); }
+        }
+
+        public static bool IsSoccerLivePermission
+        {
+            get { return SessionManager.Get<bool>(IsSoccerLivePermissionKey); }
+
+            set { SessionManager.Set(IsSoccerLivePermissionKey, value); }
+        }
+
+        public static bool IsSoccerNoneLivePermission
+        {
+            get { return SessionManager.Get<bool>(IsSoccerNoneLivePermissionKey); }
+
+            set { SessionManager.Set(IsSoccerNoneLivePermissionKey, value); }
         }
     }
 }

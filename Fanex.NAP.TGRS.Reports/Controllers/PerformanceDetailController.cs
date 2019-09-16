@@ -15,6 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
@@ -110,6 +111,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
 
             ViewBag.BetTypes = betTypes;
+            ViewBag.Markets = GetMarketsPermission();
+
             return View();
         }
 
@@ -228,6 +231,31 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return jsonResult;
         }
 
+        private Dictionary<Market, string> GetMarketsPermission()
+        {
+            var markets = new Dictionary<Market, string>();
+
+            if (AppSession.IsSoccerLivePermission && AppSession.IsSoccerNoneLivePermission)
+            {
+                markets.Add(Market.All, ViewLang.MarketAll);
+                markets.Add(Market.Live, ViewLang.MarketLive);
+                markets.Add(Market.NoneLive, ViewLang.MarketNoneLive);
+            }
+            else
+            {
+                if (AppSession.IsSoccerLivePermission)
+                {
+                    markets.Add(Market.Live, ViewLang.MarketLive);
+                }
+
+                if (AppSession.IsSoccerNoneLivePermission)
+                {
+                    markets.Add(Market.NoneLive, ViewLang.MarketNoneLive);
+                }
+            }
+
+            return markets;
+        }
         #endregion League Performance
 
         #region Trader Performance
@@ -244,6 +272,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
 
             ViewBag.BetTypes = betTypes;
+            ViewBag.Markets = GetMarketsPermission();
 
             return View();
         }
@@ -330,6 +359,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
+            ViewBag.Markets = GetMarketsPermission();
 
             return View();
         }
@@ -465,6 +495,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Teams = teams;
+            ViewBag.Markets = GetMarketsPermission();
 
             return View();
         }
@@ -588,6 +619,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
 
             ViewBag.BetTypes = betTypes;
+            ViewBag.Markets = GetMarketsPermission();
 
             return View();
         }

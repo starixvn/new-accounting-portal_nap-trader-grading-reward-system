@@ -15,6 +15,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     var maximumMatchNameLength = 142;
     var domElements = {
         divLeaguePerformanceFilter: null,
+        ddlMarket: null,
         divDateRange: null,
         dpkFromDate: null,
         dpkToDate: null,
@@ -49,6 +50,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         GetBettypePerformanceOfLeagueMatch: common.ResolveRootUrl('PerformanceDetail/GetBettypePerformanceOfLeagueMatch')
     };
     var parameters = {
+        Market: null,
         FromDate: null,
         ToDate: null,
         LeagueName: null,
@@ -66,6 +68,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divLeaguePerformanceFilter = $('#divLeaguePerformanceFilter');
+        domElements.ddlMarket = $('#ddlMarket');
         domElements.divDateRange = domElements.divLeaguePerformanceFilter.find('#divDateRange');
         domElements.txtLeague = domElements.divLeaguePerformanceFilter.find('#txtLeague');
         domElements.ddlBetType = domElements.divLeaguePerformanceFilter.find('#ddlBetType');
@@ -151,6 +154,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
+                parameters.Market = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueName = domElements.txtLeague.val();
@@ -280,6 +284,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var bodyData = [];
         var footerData = [];
         var row;
+        var currentMergeRowNumber = 3;
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
@@ -289,19 +294,24 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
                 var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, labels.MatchPerformance, item.NoOfMatches);
 
+              
+                
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: index + 1 },
-                              { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
-                              { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-                              { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
-                              { Name: 'ColTurnover', Value: item.Turnover },
-                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
-                              { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+                    Columns: [
+                        //{ Name: 'ColNo', Value: index + 1, MergeRowNumber: currentMergeRowNumber },
+                        //{ Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name', MergeRowNumber: currentMergeRowNumber },
+                        { Name: 'ColNo', Value: index + 1 },
+                        { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
+                        { Name: 'ColNoOfTraders', Value: noOfTradersCol },
+                        { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
+                        { Name: 'ColTurnover', Value: item.Turnover },
+                        { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                        { Name: 'ColWinLoss', Value: item.WinLoss },
+                        { Name: 'ColBetCount', Value: item.BetCount },
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
                 };
 
-                bodyData.push(row);
+                bodyData.push(row);                
             });
 
             row = {
@@ -319,6 +329,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+        //gridOptions.showDistinctRow = false;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeaguePerformanceGridEvents();
     };

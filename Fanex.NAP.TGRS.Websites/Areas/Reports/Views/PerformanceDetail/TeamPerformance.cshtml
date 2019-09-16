@@ -1,7 +1,12 @@
 ﻿@using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
+@using Fanex.NAP.TGRS.Reports
 @{
     ViewBag.Title = ViewLang.PerformanceDetailReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Dictionary<Market, string> markets = ViewBag.Markets;
+    var isDisableMarket = markets.Count == 1;
 }
 @section Head
 {
@@ -35,6 +40,17 @@
 <div class="filter-bar">
     <div id="divTeamPerformanceFilter" class="filter-form">
         <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label>@ViewLang.Market</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="ddlMarket" disabled="@isDisableMarket">
+                    @foreach (KeyValuePair<Market, string> item in markets)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
             <div class="date-range"><div id="divDateRange"></div></div>
             <div class="lbl-field col_3">
                 <label for="ddlBetType">@ViewLang.BetType</label>
@@ -67,7 +83,7 @@
             <div class="edit-field col_9">
                 <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
                 <span> - </span>
-                <input type="text" id="txtMarginTo"  class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
         </div>
         <div class="filter-row">

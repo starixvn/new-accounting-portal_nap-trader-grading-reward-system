@@ -732,4 +732,13 @@
   <data name="BetTypeActualRate" xml:space="preserve">
     <value>BetType_Actual_Rate</value>
   </data>
+  <data name="MarketAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="MarketLive" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="MarketNoneLive" xml:space="preserve">
+    <value>None Live</value>
+  </data>
 </root>
