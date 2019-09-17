@@ -739,6 +739,6 @@
     <value>Live</value>
   </data>
   <data name="MarketNoneLive" xml:space="preserve">
-    <value>None Live</value>
+    <value>None - live</value>
   </data>
 </root>

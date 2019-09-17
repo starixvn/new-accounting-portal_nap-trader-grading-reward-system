@@ -916,7 +916,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None Live.
+        ///   Looks up a localized string similar to None - live.
         /// </summary>
         public static string MarketNoneLive {
             get {

@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
     using Fanex.Common;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
@@ -38,6 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetTypeBMShift2 = leagueData.BetTypeBMShift2;
                 this.BetTypeBMShift3 = leagueData.BetTypeBMShift3;
                 this.Margin = leagueData.Margin;
+                this.Market = GetMaketToString(leagueData.Market);
             }
         }
 
@@ -62,5 +64,17 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public decimal? BetTypeBMShift2 { get; set; }
 
         public decimal? BetTypeBMShift3 { get; set; }
+
+        public string Market { get; set; }
+
+        private string GetMaketToString(Market market)
+        {
+            if (market == Reports.Market.Live)
+            {
+                return ViewLang.MarketLive;
+            }
+
+            return ViewLang.MarketNoneLive;
+        }
     }
 }
