@@ -916,11 +916,11 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None - live.
+        ///   Looks up a localized string similar to Non - live.
         /// </summary>
-        public static string MarketNoneLive {
+        public static string MarketNonLive {
             get {
-                return ResourceManager.GetString("MarketNoneLive", resourceCulture);
+                return ResourceManager.GetString("MarketNonLive", resourceCulture);
             }
         }
         

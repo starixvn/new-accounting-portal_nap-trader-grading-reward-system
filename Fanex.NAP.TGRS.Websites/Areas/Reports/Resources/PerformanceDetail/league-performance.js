@@ -221,7 +221,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Render league performance grid.
     var renderLeaguePerformanceGrid = function (data) {
-        var gridOptions = generateLeaguePerformanceGridOptions();
         var bodyData = [];
         var footerData = [];
 
@@ -231,7 +230,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             bodyData = generateLeaguePerformanceGridToBody_Test(data);
             footerData = generateLeaguePerformanceGridToFooter_Test(data);
         }
-
+        var gridOptions = generateLeaguePerformanceGridOptions();
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         gridOptions.showDistinctRow = false;
@@ -297,6 +296,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     return rows;
                 }
             },
+            showDistinctRow: false,
             showFooter: true
         };
 
@@ -336,15 +336,14 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             }
             row = {
                 Columns: currentColumms.concat([
-                    { Name: 'ColMarket', Value: item.Market },
+                    { Name: 'ColMarket', Value: index% 2 == 0 ? 'Non - live' : 'Live' },
                     { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                     { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                     { Name: 'ColTurnover', Value: item.Turnover },
                     { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                     { Name: 'ColWinLoss', Value: item.WinLoss },
                     { Name: 'ColBetCount', Value: item.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
-                ),
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]),
                 CssClass: evenClass
             };
             
@@ -387,11 +386,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
     }
 
     var generateLeaguePerformanceGridToFooter_Test = function (data) {
-        var footerRows = [
+        return footerRows = [
             {
                 Columns: [
                     { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, MergeRowNumber: 2, CellAlign: 'right' },
-                    { Name: 'ColMarket', Value: 'None - live' },
+                    { Name: 'ColMarket', Value: 'Non - live' },
                     { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
                     { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                     { Name: 'ColTurnover', Value: data.Total.Turnover },
@@ -412,8 +411,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
             }
         ];
-
-        return footerRows;
     }
 
     var generateLeaguePerformanceGridToFooter = function (data) {

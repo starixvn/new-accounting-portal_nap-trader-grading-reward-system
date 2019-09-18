@@ -84,46 +84,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         public LeaguePerformanceList GetLeaguePerformance(Data.Repository.ICriteria criteria)
         {
-            //IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
-            //LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
 
-            //if (leagueData != null && leagueData.Any())
-            //{
-            //    foreach (LeaguePerformanceInfo item in leagueData)
-            //    {
-            //        leaguePerformance.AddItem(new LeaguePerformanceItem(item));
-            //    }
+            if (leagueData != null && leagueData.Any())
+            {
+                foreach (LeaguePerformanceInfo item in leagueData)
+                {
+                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
+                }
 
-            //    leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-            //    SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
-            //}
-
-            //return leaguePerformance;
-
-            return GetLeaguePerformance_Test();
-        }
-
-        private LeaguePerformanceList GetLeaguePerformance_Test()
-        {
-            var leaguePerformance = new LeaguePerformanceList();
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(1, "League A", Market.NoneLive)));
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(2, "League A", Market.Live)));
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(3, "League B", Market.NoneLive)));
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(4, "League B", Market.Live)));
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(5, "League C", Market.NoneLive)));
-            leaguePerformance.AddItem(new LeaguePerformanceItem(GetLeague(6, "League C", Market.Live)));
+                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
+            }
 
             return leaguePerformance;
-        }
-
-        private LeaguePerformanceInfo GetLeague(int id, string name, Market market)
-        {
-            var leaguePerformanceInfo = new LeaguePerformanceInfo();
-            leaguePerformanceInfo.LeagueId = id;
-            leaguePerformanceInfo.LeagueName = name;
-            leaguePerformanceInfo.Market = market;
-
-            return leaguePerformanceInfo;
         }
 
         /// <summary>

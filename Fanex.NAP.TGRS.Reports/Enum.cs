@@ -4,6 +4,6 @@
     {
         All,
         Live,
-        NoneLive
+        NonLive
     }
 }

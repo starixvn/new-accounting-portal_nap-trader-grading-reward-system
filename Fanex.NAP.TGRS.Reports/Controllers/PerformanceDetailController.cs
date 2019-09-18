@@ -239,7 +239,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             {
                 markets.Add(Market.All, ViewLang.MarketAll);
                 markets.Add(Market.Live, ViewLang.MarketLive);
-                markets.Add(Market.NoneLive, ViewLang.MarketNoneLive);
+                markets.Add(Market.NonLive, ViewLang.MarketNonLive);
             }
             else
             {
@@ -250,7 +250,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
                 if (AppSession.IsSoccerNoneLivePermission)
                 {
-                    markets.Add(Market.NoneLive, ViewLang.MarketNoneLive);
+                    markets.Add(Market.NonLive, ViewLang.MarketNonLive);
                 }
             }
 

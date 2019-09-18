@@ -74,7 +74,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 return ViewLang.MarketLive;
             }
 
-            return ViewLang.MarketNoneLive;
+            return ViewLang.MarketNonLive;
         }
     }
 }

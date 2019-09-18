@@ -249,46 +249,66 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
     // Render team performance grid.
     var renderTeamPerformanceGrid = function (data) {
-        var noOfTradersFormat = '<span class="trader-link link" data-team-id="{0}" title="{1}">{2}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" data-team-id="{0}" data-team-name="{1}">{2}</span>';
-        var noOfTradersCol = '';
+        var bodyData = [];
+        var footerData = [];        
 
+        if (data && data.ItemList.length > 0) {
+            //bodyData = renderTeamPerformanceGridToBody(data);
+            bodyData = renderTeamPerformanceGridToBody_Test(data);
+            footerData = renderTeamPerformanceGridToFooter(data);
+        }
+        var gridOptions = renderTeamPerformanceGridOptions();
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+        domElements.divTeamPerformanceGrid.fanexGrid(gridOptions);
+
+        if (!common.HasViewScorePermission) {
+            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
+        }
+
+        handleTeamPerformanceGridEvents();
+    };
+
+    var renderTeamPerformanceGridOptions = function () {
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
-                      {
-                          HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      {
-                          HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      {
-                          HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
-                      },
-                      {
-                          HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true
-                      },
-                      {
-                          HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-                      },
-                      {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat, Sort: true
-                      },
-                      {
-                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-                      },
-                      {
-                          HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-                      }],
+            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
+            { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
+            {
+                HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat//, Sort: true
+            },
+            {
+                HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat//, Sort: true
+            },
+            {
+                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat//, Sort: true
+                , FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat//, Sort: true
+            },
+            {
+                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true//, SortDirection: 'desc'
+                , FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat//, Sort: true
+                , FormatNegative: '$'
+            }],
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
@@ -304,8 +324,10 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                     return rows;
                 }
             },
+            showTree: true,
+            showDistinctRow: false,
             showPager: true,
-            showNumberColumn: true,
+            showNumberColumn: false,
             showFooter: true,
             pagerOption: {
                 currentPage: 0,
@@ -318,58 +340,124 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 }
             }
         };
+
+        return gridOptions;
+    }
+
+    var renderTeamPerformanceGridToBody_Test = function (data) {
+        var noOfTradersFormat = '<span class="trader-link link" data-team-id="{0}" title="{1}">{2}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-team-id="{0}" data-team-name="{1}">{2}</span>';
+        var noOfTradersCol = '';
         var bodyData = [];
-        var footerData = [];
+        var subRows = [];
         var row;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
-                noOfTradersCol = noOfTradersFormat.format(
-                                     item.TeamId,
-                                     labels.TraderPerformance,
-                                     numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
-                row = {
-                    Columns: [{ Name: 'ColNo', Value: index + 1 },
-                              { Name: 'ColTeam', Value: item.TeamName, CssClass: 'team-name' },
-                              { Name: 'ColNoOfTraders', Value: noOfTradersFormat.format(item.TeamId, '', item.NoOfTraders) },
-                              { Name: 'ColNoOfLeagues', Value: noOfLeaguesFormat.format(item.TeamId, item.TeamName, item.NoOfLeagues) },
-                              { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
-                              { Name: 'ColTurnover', Value: item.Turnover },
-                              { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
-                              { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                              { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
-                };
+        // add Non Live group
+        var item = data.ItemList[0];
+        var subRowsNonLive = [];
+        subRowsNonLive.push({
+            Columns: [{ Name: 'ColNo', Value: 1 },
+            { Name: 'ColTeam', Value: item.TeamName, CssClass: 'team-name' },
+            { Name: 'ColNoOfTraders', Value: noOfTradersFormat.format(item.TeamId, '', item.NoOfTraders) },
+            { Name: 'ColNoOfLeagues', Value: noOfLeaguesFormat.format(item.TeamId, item.TeamName, item.NoOfLeagues) },
+            { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+            { Name: 'ColTurnover', Value: item.Turnover },
+            { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+            { Name: 'ColWinLoss', Value: item.WinLoss },
+            { Name: 'ColBetCount', Value: item.BetCount },
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+            { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+        });
 
-                bodyData.push(row);
-            });
+        row = {
+            Columns: [
+                { Name: 'ColNo', Value: 'Non Live', CellAlign: 'left', MergeColNumber: 11 }
+            ],
+            SubRows: subRowsNonLive
+        }
+        bodyData.push(row);
 
+        // add Live group
+        $.each(data.ItemList, function (index, item) {
+            noOfTradersCol = noOfTradersFormat.format(
+                item.TeamId,
+                labels.TraderPerformance,
+                numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+            row = {
+                Columns: [{ Name: 'ColNo', Value: index + 1 },
+                { Name: 'ColTeam', Value: item.TeamName, CssClass: 'team-name' },
+                { Name: 'ColNoOfTraders', Value: noOfTradersFormat.format(item.TeamId, '', item.NoOfTraders) },
+                { Name: 'ColNoOfLeagues', Value: noOfLeaguesFormat.format(item.TeamId, item.TeamName, item.NoOfLeagues) },
+                { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                { Name: 'ColTurnover', Value: item.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: item.WinLoss },
+                { Name: 'ColBetCount', Value: item.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+            };
+
+            subRows.push(row);
+        });
+
+        row = {
+            Columns: [
+                { Name: 'ColNo', Value: 'Live', CellAlign: 'left', MergeColNumber: 11 }
+            ],
+            SubRows: subRows
+        }
+        bodyData.push(row);
+
+        return bodyData;
+    }
+
+    var renderTeamPerformanceGridToBody = function (data) {
+        var noOfTradersFormat = '<span class="trader-link link" data-team-id="{0}" title="{1}">{2}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-team-id="{0}" data-team-name="{1}">{2}</span>';
+        var noOfTradersCol = '';
+        var bodyData = [];
+
+        $.each(data.ItemList, function (index, item) {
+            noOfTradersCol = noOfTradersFormat.format(
+                item.TeamId,
+                labels.TraderPerformance,
+                numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+            row = {
+                Columns: [{ Name: 'ColNo', Value: index + 1 },
+                { Name: 'ColTeam', Value: item.TeamName, CssClass: 'team-name' },
+                { Name: 'ColNoOfTraders', Value: noOfTradersFormat.format(item.TeamId, '', item.NoOfTraders) },
+                { Name: 'ColNoOfLeagues', Value: noOfLeaguesFormat.format(item.TeamId, item.TeamName, item.NoOfLeagues) },
+                { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                { Name: 'ColTurnover', Value: item.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: item.WinLoss },
+                { Name: 'ColBetCount', Value: item.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+            };
+
+            bodyData.push(row);
+        });
+
+        return bodyData;
+    }
+
+    var renderTeamPerformanceGridToFooter = function (data) {
+        return footerData = [
             row = {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
-                          { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnover', Value: data.Total.Turnover },
-                          { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
-                          { Name: 'ColScore', Value: '' }]
-            };
-            footerData.push(row);
-        }
-
-        gridOptions.bodyRows = bodyData;
-        gridOptions.footerRows = footerData;
-        domElements.divTeamPerformanceGrid.fanexGrid(gridOptions);
-
-        if (!common.HasViewScorePermission) {
-            domElements.divTeamPerformanceGrid.fanexGrid("hideColumns", gridOptions, [10]);
-        }
-
-        handleTeamPerformanceGridEvents();
-    };
+                { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
+                { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
+                { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+                { Name: 'ColTurnover', Value: data.Total.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+                { Name: 'ColBetCount', Value: data.Total.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+                { Name: 'ColScore', Value: '' }]
+            }        
+        ];
+    }
 
     // Handle grid's events.
     var handleTeamPerformanceGridEvents = function () {
