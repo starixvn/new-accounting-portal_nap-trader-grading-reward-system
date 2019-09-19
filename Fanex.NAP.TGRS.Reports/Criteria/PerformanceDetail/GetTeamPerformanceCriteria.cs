@@ -17,6 +17,9 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
     /// </summary>
     public class GetTeamPerformanceCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public Market Market { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

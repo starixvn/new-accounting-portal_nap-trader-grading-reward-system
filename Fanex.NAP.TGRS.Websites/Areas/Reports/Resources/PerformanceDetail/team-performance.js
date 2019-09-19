@@ -15,6 +15,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     var maximumMatchNameLength = 142;
     var domElements = {
         divTeamPerformanceFilter: null,
+        ddlMarket: null,
         divDateRange: null,
         ddlTeam: null,
         ddlBetType: null,
@@ -45,6 +46,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
         GetMatchTraderLeagueTeam: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfTraderLeagueTeam')
     };
     var parameters = {
+        Market: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,
@@ -67,6 +69,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divTeamPerformanceFilter = $('#divTeamPerformanceFilter');
+        domElements.ddlMarket = domElements.divTeamPerformanceFilter.find('#ddlMarket');
         domElements.divDateRange = domElements.divTeamPerformanceFilter.find('#divDateRange');
         domElements.ddlTeam = domElements.divTeamPerformanceFilter.find('#ddlTeam');
         domElements.ddlBetType = domElements.divTeamPerformanceFilter.find('#ddlBetType');
@@ -158,6 +161,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 var selectedTeams = domElements.ddlTeam.val();
                 var teamOptions = domElements.ddlTeam.find('option');
 
+                parameters.Market = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.TeamIds = selectedTeams.length === teamOptions.length ? '0' : selectedTeams.join(',');

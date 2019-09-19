@@ -16,6 +16,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     var domElements = {
         divGradePerformanceFilter: null,
         divDateRange: null,
+        ddlMarket: null,
         ddlBetType: null,
         txtMarginFrom: null,
         txtMarginTo: null,
@@ -46,6 +47,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         GetMatchPerformanceOfGradeLeagueTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfGradeLeagueTrader')
     };
     var parameters = {
+        Market: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,
@@ -68,6 +70,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divGradePerformanceFilter = $('#divGradePerformanceFilter');
+        domElements.ddlMarket = domElements.divGradePerformanceFilter.find('#ddlMarket');
         domElements.divDateRange = domElements.divGradePerformanceFilter.find('#divDateRange');
         domElements.ddlBetType = domElements.divGradePerformanceFilter.find('#ddlBetType');
         domElements.txtMarginFrom = domElements.divGradePerformanceFilter.find('#txtMarginFrom');
@@ -146,6 +149,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
+                parameters.Market = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.BetTypes = selectedBetTypes.join(',');

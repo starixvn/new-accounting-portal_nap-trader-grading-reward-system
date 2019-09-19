@@ -15,6 +15,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     var maximumMatchNameLength = 142;
     var domElements = {
         divTraderPerformanceFilter: null,
+        ddlMarket: null,
         divDateRange: null,
         ddlBetType: null,
         txtTrader: null,
@@ -39,6 +40,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     };
 
     var parameters = {
+        Market: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,
@@ -62,6 +64,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divTraderPerformanceFilter = $('#divTraderPerformanceFilter');
+        domElements.ddlMarket = domElements.divTraderPerformanceFilter.find('#ddlMarket');
         domElements.divDateRange = domElements.divTraderPerformanceFilter.find('#divDateRange');
         domElements.ddlBetType = domElements.divTraderPerformanceFilter.find('#ddlBetType');
         domElements.txtTrader = domElements.divTraderPerformanceFilter.find('#txtTrader');
@@ -141,6 +144,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
+                parameters.Market = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Username = domElements.txtTrader.val();

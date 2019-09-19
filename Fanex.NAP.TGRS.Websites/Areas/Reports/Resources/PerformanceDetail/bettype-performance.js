@@ -24,6 +24,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
     var domElements = {
         divBetTypePerformanceFilter: null,
+        ddlMarket: null,
         divDateRange: null,
         ddlBetType: null,
         txtMarginFrom: null,
@@ -43,6 +44,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         divBetChoicePerformanceGrid: null
     };
     var parameters = {
+        Market: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,
@@ -67,6 +69,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     // Cache DOM Elements.
     var cacheDOMElements = function () {
         domElements.divBetTypePerformanceFilter = $('#divBetTypePerformanceFilter');
+        domElements.ddlMarket = domElements.divBetTypePerformanceFilter.find('#ddlMarket');
         domElements.divDateRange = domElements.divBetTypePerformanceFilter.find('#divDateRange');
         domElements.ddlBetType = domElements.divBetTypePerformanceFilter.find('#ddlBetType');
         domElements.txtMarginFrom = domElements.divBetTypePerformanceFilter.find('#txtMarginFrom');
@@ -143,6 +146,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
+                parameters.Market = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.BetTypes = selectedBetTypes.join(',');
