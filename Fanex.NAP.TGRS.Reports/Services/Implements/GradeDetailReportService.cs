@@ -75,7 +75,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
