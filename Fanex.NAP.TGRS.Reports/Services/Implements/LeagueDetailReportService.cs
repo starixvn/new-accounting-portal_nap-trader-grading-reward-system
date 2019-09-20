@@ -113,11 +113,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                foreach (TraderPerformanceInfo item in traderData)
-                {
-                    traderPerformance.AddItem(new TraderPerformanceItem(item));
-                }
-
+                traderPerformance.AddTraderList(traderData, true);
+                
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
 

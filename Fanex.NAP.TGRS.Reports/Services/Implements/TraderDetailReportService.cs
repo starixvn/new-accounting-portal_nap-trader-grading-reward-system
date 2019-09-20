@@ -10,8 +10,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using Fanex.NAP.Core.Web;
-    using Fanex.Data.Repository;
+    using Fanex.NAP.Core.Web;    
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
@@ -47,10 +46,18 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                foreach (TraderPerformanceInfo item in traderData)
-                {
-                    traderPerformance.AddItem(new TraderPerformanceItem(item));
-                }
+                // Non live
+                var traderPerformanceNonLive = traderData.AsEnumerable()
+                                                .Where(c => !c.IsLive)
+                                                .Select(c => c);
+
+                // Live
+                var traderPerformanceLive = traderData.AsEnumerable()
+                                                .Where(c => c.IsLive)
+                                                .Select(c => c);
+
+                traderPerformance.AddTraderList(traderPerformanceNonLive, false);
+                traderPerformance.AddTraderList(traderPerformanceLive, true);
 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
                 SessionManager.Set<TraderPerformanceList>(TraderPerformanceDetailReportSessionKey, traderPerformance);
@@ -136,7 +143,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             TraderPerformanceList traderData = SessionManager.Get<TraderPerformanceList>(TraderPerformanceDetailReportSessionKey);
 
-            if ((traderData != null) && (traderData.ItemList.Count > 0))
+            if ((traderData != null) && (traderData.ItemLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -169,30 +176,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(TraderPerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
-            int len = contentData.ItemList.Count;
-            TraderPerformanceItem item;
-
-            for (int i = 0; i < len; i++)
+            if (contentData.ItemNonLiveList.Any())
             {
-                int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemList[i];
+                FillGroupName(ref writer, ViewLang.MarketNonLive);
+                FillGroupRowData(contentData.ItemNonLiveList, ref writer, isViewScore);
+            }
 
-                var record = new object[]
-                {
-                    i + 1,
-                    item.TraderName,
-                    item.Grade,
-                    item.TeamName,
-                    item.NoOfLeagues,
-                    item.NoOfMatches,
-                    item.Turnover,
-                    item.Turnover / item.NoOfMatches,
-                    item.WinLoss,
-                    item.BetCount,
-                    (object)item.Margin ?? ViewLang.NA,
-                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
-                };
-                writer.WriteRow(styleIndex, record);
+            if (contentData.ItemLiveList.Any())
+            {
+                FillGroupName(ref writer, ViewLang.MarketLive);
+                FillGroupRowData(contentData.ItemLiveList, ref writer, isViewScore);
             }
 
             // Total row
@@ -215,6 +208,32 @@ namespace Fanex.NAP.TGRS.Reports.Services
             writer.WriteRow(6, totalRecord);
         }
 
+        private void FillGroupRowData(List<TraderPerformanceItem> items, ref ExcelTemplateWriter writer, bool isViewScore)
+        {
+            var styleIndex = 4;
+            var index = 0;
+
+            foreach (var item in items)
+            {
+                var record = new object[]
+                {
+                    ++index,
+                    item.TraderName,
+                    item.Grade,
+                    item.TeamName,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.Turnover / item.NoOfMatches,
+                    item.WinLoss,
+                    item.BetCount,
+                    (object)item.Margin ?? ViewLang.NA,
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
+                };
+                writer.WriteRow(styleIndex, record);
+            }
+        }
+
         /// <summary>
         /// Make Filter row.
         /// </summary>
@@ -234,7 +253,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+            string marketString = Enum.GetName(typeof(Market), criteria.MarketFilter);
 
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
 
@@ -283,6 +304,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
-        }
+        }      
     }
 }

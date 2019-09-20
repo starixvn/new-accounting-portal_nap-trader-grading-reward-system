@@ -340,8 +340,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var noOfLeaguesFormat = '<span class="league-link link" data-grade="{0}" title="{1}">{2}</span>';
         var noOfTradersCol = '';
         var noOfLeaguesCol = '';
-        var rows = [];
         var subRows = [];
+        var rows = [];        
+        var row;
 
         $.each(items, function (index, item) {
             noOfTradersCol = noOfTradersFormat.format(

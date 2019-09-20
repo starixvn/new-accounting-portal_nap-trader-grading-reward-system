@@ -75,10 +75,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                foreach (TraderPerformanceInfo item in traderData)
-                {
-                    traderPerformance.AddItem(new TraderPerformanceItem(item));
-                }
+                traderPerformance.AddTraderList(traderData, true);
 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -93,10 +90,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                foreach (TraderPerformanceInfo item in traderData)
-                {
-                    traderPerformance.AddItem(new TraderPerformanceItem(item));
-                }
+                traderPerformance.AddTraderList(traderData, true);
 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -278,12 +272,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
             WriteRowFromRichText(5, contentRender, ref writer);
         }
 
-        private void FillGroupRowData(List<GradePerformanceItem> Items, ref ExcelTemplateWriter writer, bool isViewScore)
+        private void FillGroupRowData(List<GradePerformanceItem> items, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             var styleIndex = 4;
             var index = 0;
 
-            foreach (var item in Items)
+            foreach (var item in items)
             {
                 var record = new object[]
                 {
@@ -361,17 +355,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
             }
-
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
-            contentRichTextArray[0] = contentRichTextString;
-            writer.WriteRow(7, contentRichTextArray);
+           
+            WriteRowFromRichText(7, contentRender, ref writer);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
         private void WriteRowFromRichText(int rowIndex, RichTextRender contentRender, ref ExcelTemplateWriter writer)
         {
-            IRichTextString contentRichTextString = contentRender.Render();
+            var contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(rowIndex, contentRichTextArray);

@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using System;
     using System.Collections.Generic;
 
@@ -20,38 +21,49 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public TraderPerformanceList()
         {
-            this.ItemList = new List<TraderPerformanceItem>();
+            this.ItemLiveList = new List<TraderPerformanceItem>();
+            this.ItemNonLiveList = new List<TraderPerformanceItem>();
             this.Total = new TraderPerformanceItem();
         }
 
-        public List<TraderPerformanceItem> ItemList { get; set; }
+        public List<TraderPerformanceItem> ItemLiveList { get; set; }
 
         public List<TraderPerformanceItem> ItemNonLiveList { get; set; }
 
         public TraderPerformanceItem Total { get; set; }
-
-        /// <summary>
-        /// Adds an item to the group.
-        /// </summary>
-        /// <param name="item">The item that needs to be added.</param>
-        public void AddItem(TraderPerformanceItem item, bool isNonLive = false)
+     
+        public void AddTraderList(IEnumerable<TraderPerformanceInfo> traderPerformanceInfos, bool isLive)
         {
-            if (item != null)
+            foreach (var item in traderPerformanceInfos)
             {
-                if (isNonLive)
+                if (item != null)
                 {
-                    this.ItemNonLiveList.Add(item);
-                }
-                else
-                {
-                    this.ItemList.Add(item);
+                    this.AddItem(new TraderPerformanceItem(item), isLive);
                 }                
-                this.Total.NoOfLeagues += item.NoOfLeagues;
-                this.Total.NoOfMatches += item.NoOfMatches;
-                this.Total.Turnover += item.Turnover;
-                this.Total.WinLoss += item.WinLoss;
-                this.Total.BetCount += item.BetCount;
             }
+        }
+
+        private void AddItem(TraderPerformanceItem item, bool isLive)
+        {
+            if (isLive)
+            {
+                this.ItemLiveList.Add(item);
+            }
+            else
+            {
+                this.ItemNonLiveList.Add(item);
+            }
+
+            CalculateTotal(item);
+        }
+
+        private void CalculateTotal(TraderPerformanceItem item)
+        {
+            this.Total.NoOfLeagues += item.NoOfLeagues;
+            this.Total.NoOfMatches += item.NoOfMatches;
+            this.Total.Turnover += item.Turnover;
+            this.Total.WinLoss += item.WinLoss;
+            this.Total.BetCount += item.BetCount;
         }
     }
 }

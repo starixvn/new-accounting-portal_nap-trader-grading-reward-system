@@ -34,7 +34,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public void AddGradeList(IEnumerable<GradePerformanceInfo> gradePerformanceInfos, bool isLive)
         {
-            foreach (GradePerformanceInfo item in gradePerformanceInfos)
+            foreach (var item in gradePerformanceInfos)
             {
                 if (item != null)
                 {

@@ -41,5 +41,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public int? NoOfGradeChanged { get; set; }
 
         public decimal? Score { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }
