@@ -18,7 +18,22 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
     public class GetGradePerformanceCriteria : CriteriaBase
     {
         [SpParam(Ignored = true)]
-        public Market Market { get; set; }
+        public Market MarketFilter { get; set; }
+
+        public Int16 Market {
+            get
+            {
+                switch (this.MarketFilter)
+                {                   
+                    case Reports.Market.Live:
+                        return 1;
+                    case Reports.Market.NonLive:
+                        return 0;
+                    default:
+                        return -1;
+                }
+            }
+        }
 
         public DateTime FromDate { get; set; }
 

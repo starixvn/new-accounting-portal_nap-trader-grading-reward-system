@@ -149,7 +149,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var betTypeOptions = domElements.ddlBetType.find('option');
 
-                parameters.Market = domElements.ddlMarket.val();
+                parameters.MarketFilter = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.BetTypes = selectedBetTypes.join(',');
@@ -239,9 +239,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         var bodyData = [];
         var footerData = [];
 
-        if (data && data.ItemList.length > 0) {
-            //bodyData = renderGradePerformanceGridToBody(data);
-            bodyData = renderGradePerformanceGridToBody_Test(data);
+        if (data && (data.ItemList.length > 0 || data.ItemNonLiveList.length > 0)) {
+            bodyData = renderGradePerformanceGridToBody(data);
             footerData = renderGradePerformanceGridToFooter(data);
         }
         var gridOptions = renderGradePerformanceGridOptions(); 
@@ -319,42 +318,32 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         return gridOptions;
     }
 
-    var renderGradePerformanceGridToBody_Test = function (data) {
+    var renderGradePerformanceGridToBody = function (data) {
+        var nonLiveData = [];
+        var liveData = [];
+
+        if (data.ItemNonLiveList.length > 0) {
+            nonLiveData = addGradePerformanceToRowsBody(data.ItemNonLiveList, labels.MarketNonLive);
+        }
+
+        if (data.ItemList.length > 0) {
+            liveData = addGradePerformanceToRowsBody(data.ItemList, labels.MarketLive);
+        }
+        
+        var bodyData = nonLiveData.concat(liveData);
+
+        return bodyData;
+    }
+
+    var addGradePerformanceToRowsBody = function (items, groupName) {
         var noOfTradersFormat = '<span class="trader-link link" data-grade="{0}" title="{1}">{2}</span>';
         var noOfLeaguesFormat = '<span class="league-link link" data-grade="{0}" title="{1}">{2}</span>';
         var noOfTradersCol = '';
         var noOfLeaguesCol = '';
-        var bodyData = [];
+        var rows = [];
         var subRows = [];
-        var row;
 
-        // add Non Live group
-        var item = data.ItemList[0];
-        var subRowsNonLive = [];
-        subRowsNonLive.push({
-            Columns: [{ Name: 'ColNo', Value: 1 },
-            { Name: 'ColGrade', Value: item.Grade },
-            { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-            { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
-            { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
-            { Name: 'ColTurnover', Value: item.Turnover },
-            { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
-            { Name: 'ColWinLoss', Value: item.WinLoss },
-            { Name: 'ColBetCount', Value: item.BetCount },
-            { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-            { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
-        });
-        
-        row = {
-            Columns: [
-                { Name: 'ColNo', Value: 'Non Live', CellAlign: 'left', MergeColNumber: 11 }
-            ],
-            SubRows: subRowsNonLive
-        }
-        bodyData.push(row);
-
-        // add Live group
-        $.each(data.ItemList, function (index, item) {
+        $.each(items, function (index, item) {
             noOfTradersCol = noOfTradersFormat.format(
                 item.Grade,
                 labels.TraderPerformance,
@@ -379,55 +368,18 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             };
 
             subRows.push(row);
-        });       
+        });
 
         row = {
             Columns: [
-                { Name: 'ColNo', Value: 'Live', CellAlign: 'left', MergeColNumber: 11 }
+                { Name: 'ColNo', Value: groupName, CellAlign: 'left', MergeColNumber: 11 }
             ],
             SubRows: subRows
         }
-        bodyData.push(row);
+        rows.push(row);
 
-        return bodyData;
-    }
-
-    var renderGradePerformanceGridToBody = function (data) {
-        var noOfTradersFormat = '<span class="trader-link link" data-grade="{0}" title="{1}">{2}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" data-grade="{0}" title="{1}">{2}</span>';
-        var noOfTradersCol = '';
-        var noOfLeaguesCol = '';
-        var bodyData = [];
-        var row;
-
-        $.each(data.ItemList, function (index, item) {
-            noOfTradersCol = noOfTradersFormat.format(
-                item.Grade,
-                labels.TraderPerformance,
-                numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
-            noOfLeaguesCol = noOfLeaguesFormat.format(
-                item.Grade,
-                labels.LeaguePerformance,
-                numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
-            row = {
-                Columns: [{ Name: 'ColNo', Value: index + 1 },
-                { Name: 'ColGrade', Value: item.Grade },
-                { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-                { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
-                { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
-                { Name: 'ColTurnover', Value: item.Turnover },
-                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
-                { Name: 'ColWinLoss', Value: item.WinLoss },
-                { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
-            };
-
-            bodyData.push(row);
-        });
-
-        return bodyData;
-    }
+        return rows;
+    }   
 
     var renderGradePerformanceGridToFooter = function (data) {
         return footerData = [

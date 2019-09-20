@@ -26,17 +26,26 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public List<TraderPerformanceItem> ItemList { get; set; }
 
+        public List<TraderPerformanceItem> ItemNonLiveList { get; set; }
+
         public TraderPerformanceItem Total { get; set; }
 
         /// <summary>
         /// Adds an item to the group.
         /// </summary>
         /// <param name="item">The item that needs to be added.</param>
-        public void AddItem(TraderPerformanceItem item)
+        public void AddItem(TraderPerformanceItem item, bool isNonLive = false)
         {
             if (item != null)
             {
-                this.ItemList.Add(item);
+                if (isNonLive)
+                {
+                    this.ItemNonLiveList.Add(item);
+                }
+                else
+                {
+                    this.ItemList.Add(item);
+                }                
                 this.Total.NoOfLeagues += item.NoOfLeagues;
                 this.Total.NoOfMatches += item.NoOfMatches;
                 this.Total.Turnover += item.Turnover;

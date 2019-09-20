@@ -20,6 +20,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.Permission;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -43,10 +44,17 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (gradeData != null && gradeData.Any())
             {
-                foreach (GradePerformanceInfo item in gradeData)
-                {
-                    gradePerformance.AddItem(new GradePerformanceItem(item));
-                }
+                // Non live
+                var gradePerformanceNonLive = gradeData.AsEnumerable()
+                                                .Where(c => !c.IsLive)
+                                                .Select(c => c);
+                // Live
+                var gradePerformanceLive = gradeData.AsEnumerable()
+                                                .Where(c => c.IsLive)
+                                                .Select(c => c);
+
+                gradePerformance.AddGradeList(gradePerformanceNonLive, false);
+                gradePerformance.AddGradeList(gradePerformanceLive, true);
 
                 gradePerformance.Total.Margin = CalculateTotalMargin(gradePerformance.Total.WinLoss, gradePerformance.Total.Turnover);
                 SessionManager.Set<GradePerformanceList>(GradePerformanceDetailReportSessionKey, gradePerformance);
@@ -196,7 +204,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             GradePerformanceList gradeData = SessionManager.Get<GradePerformanceList>(GradePerformanceDetailReportSessionKey);
 
-            if ((gradeData != null) && (gradeData.ItemList.Count > 0))
+            if ((gradeData != null) && (gradeData.ItemList.Any() || gradeData.ItemNonLiveList.Any()))
             {
                 string reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
@@ -229,29 +237,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(GradePerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
-            int len = contentData.ItemList.Count;
-            GradePerformanceItem item;
-
-            for (int i = 0; i < len; i++)
+            if (contentData.ItemNonLiveList.Any())
             {
-                int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemList[i];
+                FillGroupName(ref writer, ViewLang.MarketNonLive);
+                FillGroupRowData(contentData.ItemNonLiveList, ref writer, isViewScore);
+            }
 
-                var record = new object[]
-                {
-                    i + 1,
-                    item.Grade,
-                    item.NoOfTraders,
-                    item.NoOfLeagues,
-                    item.NoOfMatches,
-                    item.Turnover,
-                    item.Turnover / item.NoOfMatches,
-                    item.WinLoss,
-                    item.BetCount,
-                    (object)item.Margin ?? ViewLang.NA,
-                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
-                };
-                writer.WriteRow(styleIndex, record);
+            if (contentData.ItemList.Any())
+            {
+                FillGroupName(ref writer, ViewLang.MarketLive);
+                FillGroupRowData(contentData.ItemList, ref writer, isViewScore);
             }
 
             // Total row
@@ -273,6 +268,41 @@ namespace Fanex.NAP.TGRS.Reports.Services
             writer.WriteRow(6, totalRecord);
         }
 
+        private void FillGroupName(ref ExcelTemplateWriter writer, string groupName)
+        {
+            var contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(10, 0);
+            TextBlock nameBlock = new TextBlock(groupName, boldFont);
+            contentRender = contentRender.AddText(nameBlock);
+
+            WriteRowFromRichText(5, contentRender, ref writer);
+        }
+
+        private void FillGroupRowData(List<GradePerformanceItem> Items, ref ExcelTemplateWriter writer, bool isViewScore)
+        {
+            var styleIndex = 4;
+            var index = 0;
+
+            foreach (var item in Items)
+            {
+                var record = new object[]
+                {
+                    ++index,
+                    item.Grade,
+                    item.NoOfTraders,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.Turnover / item.NoOfMatches,
+                    item.WinLoss,
+                    item.BetCount,
+                    (object)item.Margin ?? ViewLang.NA,
+                    isViewScore ? (object)item.Score ?? ViewLang.NA : ViewLang.NA
+                };
+                writer.WriteRow(styleIndex, record);
+            }
+        }       
+
         /// <summary>
         /// Make Filter row.
         /// </summary>
@@ -291,7 +321,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+            string marketString = Enum.GetName(typeof(Market), criteria.MarketFilter);
 
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
@@ -335,6 +367,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        private void WriteRowFromRichText(int rowIndex, RichTextRender contentRender, ref ExcelTemplateWriter writer)
+        {
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(rowIndex, contentRichTextArray);
         }
     }
 }
