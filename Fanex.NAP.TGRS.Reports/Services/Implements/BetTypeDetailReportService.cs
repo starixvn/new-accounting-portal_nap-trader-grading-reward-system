@@ -100,7 +100,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                         foreach (MatchPerformanceRawInfo match in group)
                         {
-                            leagueGroup.AddItem(new MatchPerformanceItem(match));
+                            //leagueGroup.AddItem(new MatchPerformanceItem(match));
                         }
 
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
@@ -131,7 +131,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (LeaguePerformanceInfo item in leagueData)
                 {
-                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
+                    //leaguePerformance.AddItem(new LeaguePerformanceItem(item));
                 }
 
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
@@ -175,7 +175,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (MatchPerformanceInfo item in matchData)
                 {
-                    matchPerformance.AddItem(new MatchPerformanceItem(item));
+                    //matchPerformance.AddItem(new MatchPerformanceItem(item));
                 }
 
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);

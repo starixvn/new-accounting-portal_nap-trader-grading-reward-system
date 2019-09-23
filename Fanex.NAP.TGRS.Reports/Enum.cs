@@ -2,6 +2,7 @@
 {
     public enum Market
     {
+        None,
         All,
         Live,
         NonLive

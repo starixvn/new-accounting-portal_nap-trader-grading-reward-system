@@ -91,7 +91,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (LeaguePerformanceInfo item in leagueData)
                 {
-                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
+                    //leaguePerformance.AddItem(new LeaguePerformanceItem(item));
                 }
 
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
@@ -133,10 +133,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (matchData != null && matchData.Any())
             {
-                foreach (MatchPerformanceInfo item in matchData)
-                {
-                    matchPerformance.AddItem(new MatchPerformanceItem(item));
-                }
+                matchPerformance.AddMatchList(matchData, criteria.IsLive);
 
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
             }
@@ -191,7 +188,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 foreach (MatchPerformanceInfo item in matchData)
                 {
-                    matchPerformance.AddItem(new MatchPerformanceItem(item));
+                    //matchPerformance.AddItem(new MatchPerformanceItem(item));
                 }
 
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
@@ -230,7 +227,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey);
 
-            if ((leagueData != null) && (leagueData.ItemList.Count > 0))
+            if ((leagueData != null) && (leagueData.ItemLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -303,13 +300,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(LeaguePerformanceList contentData, ref ExcelTemplateWriter writer)
         {
             // Content rows
-            int len = contentData.ItemList.Count;
+            int len = contentData.ItemLiveList.Count;
             LeaguePerformanceItem item;
 
             for (int i = 0; i < len; i++)
             {
                 int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemList[i];
+                item = contentData.ItemLiveList[i];
 
                 var record = new object[]
                 {

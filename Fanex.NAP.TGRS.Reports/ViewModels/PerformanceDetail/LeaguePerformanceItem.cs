@@ -40,6 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetTypeBMShift3 = leagueData.BetTypeBMShift3;
                 this.Margin = leagueData.Margin;
                 this.Market = GetMaketToString(leagueData.Market);
+                this.IsLive = leagueData.IsLive;
             }
         }
 
@@ -76,5 +77,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
             return ViewLang.MarketNonLive;
         }
+
+        public bool IsLive { get; set; }
     }
 }

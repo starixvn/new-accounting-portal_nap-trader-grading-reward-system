@@ -114,7 +114,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                         foreach (MatchPerformanceInfo match in group)
                         {
-                            leagueGroup.AddItem(new MatchPerformanceItem(match));
+                            //leagueGroup.AddItem(new MatchPerformanceItem(match));
                         }
 
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);

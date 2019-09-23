@@ -21,12 +21,12 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public GradePerformanceList()
         {
-            this.ItemList = new List<GradePerformanceItem>();
+            this.ItemLiveList = new List<GradePerformanceItem>();
             this.ItemNonLiveList = new List<GradePerformanceItem>();
             this.Total = new GradePerformanceItem();
         }
 
-        public List<GradePerformanceItem> ItemList { get; set; }
+        public List<GradePerformanceItem> ItemLiveList { get; set; }
 
         public List<GradePerformanceItem> ItemNonLiveList { get; set; }
 
@@ -47,7 +47,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         {
             if (isLive)
             {
-                this.ItemList.Add(item);
+                this.ItemLiveList.Add(item);
                 
             }
             else

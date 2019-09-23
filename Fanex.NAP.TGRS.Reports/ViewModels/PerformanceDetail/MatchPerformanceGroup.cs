@@ -11,7 +11,9 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
 
     /// <summary>
     /// Match performance group view model.
@@ -21,7 +23,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public MatchPerformanceGroup()
         {
-            this.ItemList = new LinkedList<MatchPerformanceItem>();
+            this.ItemLiveList = new LinkedList<MatchPerformanceItem>();
+            this.ItemNonLiveList = new LinkedList<MatchPerformanceItem>();
             this.Total = new MatchPerformanceItem();
         }
 
@@ -39,25 +42,55 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public string LeagueName { get; set; }
 
-        public ICollection<MatchPerformanceItem> ItemList { get; set; }
+        public ICollection<MatchPerformanceItem> ItemLiveList { get; set; }
+
+        public ICollection<MatchPerformanceItem> ItemNonLiveList { get; set; }
 
         public MatchPerformanceItem Total { get; set; }
 
-        /// <summary>
-        /// Adds an item to the group.
-        /// </summary>
-        /// <param name="item">The item that needs to be added.</param>
-        public void AddItem(MatchPerformanceItem item)
+        public void AddMatchList(IEnumerable<MatchPerformanceInfo> matchPerformanceInfos, bool isLive)
         {
-            if (item != null)
+            foreach (var item in matchPerformanceInfos)
             {
-                this.ItemList.Add(item);
-                this.Total.Turnover += item.Turnover;
-                this.Total.WinLoss += item.WinLoss;
-                this.Total.BetCount += item.BetCount;
-                this.Total.WinLossScore += item.WinLossScore;
-                this.Total.SumCategory += item.SumCategory;
+                if (item != null)
+                {
+                    this.AddItem(new MatchPerformanceItem(item), isLive);
+                }
             }
+        }
+
+        public void AddMatchList(IGrouping<int?, MatchPerformanceInfo> grouping, bool isLive)
+        {
+            foreach (var item in grouping)
+            {
+                if (item != null)
+                {
+                    this.AddItem(new MatchPerformanceItem(item), isLive);
+                }                
+            }
+        }
+
+        private void AddItem(MatchPerformanceItem item, bool isLive)
+        {
+            if (isLive)
+            {
+                this.ItemLiveList.Add(item);
+            }
+            else
+            {
+                this.ItemNonLiveList.Add(item);
+            }
+
+            CalculateTotal(item);
+        }
+      
+        private void CalculateTotal(MatchPerformanceItem item)
+        {
+            this.Total.Turnover += item.Turnover;
+            this.Total.WinLoss += item.WinLoss;
+            this.Total.BetCount += item.BetCount;
+            this.Total.WinLossScore += item.WinLossScore;
+            this.Total.SumCategory += item.SumCategory;
         }
     }
 }

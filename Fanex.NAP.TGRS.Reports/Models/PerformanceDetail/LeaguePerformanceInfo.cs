@@ -39,5 +39,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public decimal? Margin { get; set; }
 
         public Market Market { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }

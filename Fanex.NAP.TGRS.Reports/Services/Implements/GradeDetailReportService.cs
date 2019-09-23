@@ -90,7 +90,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -105,10 +105,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (leagueData != null && leagueData.Any())
             {
-                foreach (LeaguePerformanceInfo item in leagueData)
-                {
-                    leaguePerformance.AddItem(new LeaguePerformanceItem(item));
-                }
+                leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
 
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
@@ -138,11 +135,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     {
                         leagueGroup = new MatchPerformanceGroup(group.Key);
 
-                        foreach (MatchPerformanceInfo match in group)
-                        {
-                            leagueGroup.AddItem(new MatchPerformanceItem(match));
-                        }
-
+                        leagueGroup.AddMatchList(group, criteria.IsLive);                       
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                         matchPerformance.AddItem(leagueGroup);
                     }
@@ -198,7 +191,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             GradePerformanceList gradeData = SessionManager.Get<GradePerformanceList>(GradePerformanceDetailReportSessionKey);
 
-            if ((gradeData != null) && (gradeData.ItemList.Any() || gradeData.ItemNonLiveList.Any()))
+            if ((gradeData != null) && (gradeData.ItemLiveList.Any() || gradeData.ItemNonLiveList.Any()))
             {
                 string reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
@@ -237,10 +230,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FillGroupRowData(contentData.ItemNonLiveList, ref writer, isViewScore);
             }
 
-            if (contentData.ItemList.Any())
+            if (contentData.ItemLiveList.Any())
             {
                 FillGroupName(ref writer, ViewLang.MarketLive);
-                FillGroupRowData(contentData.ItemList, ref writer, isViewScore);
+                FillGroupRowData(contentData.ItemLiveList, ref writer, isViewScore);
             }
 
             // Total row
