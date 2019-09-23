@@ -84,12 +84,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 if (group.Key.HasValue)
                 {
                     leagueGroup = new MatchPerformanceGroup(group.Key);
-
-                    foreach (MatchPerformanceInfo match in group)
-                    {
-                        //leagueGroup.AddItem(new MatchPerformanceItem(match));
-                    }
-
+                    var isLive = (criteria as GetMatchPerformanceOfTraderCriteria).IsLive;
+                    leagueGroup.AddMatchList(group, isLive);
                     leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                     matchPerformance.AddItem(leagueGroup);
                 }
