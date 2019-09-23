@@ -1,13 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Fanex.Data.Repository;
-
-namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
+    using System;
+    using Fanex.Data.Repository;
+
     public class GetMatchPerformanceOfTraderLeagueTeam : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public bool IsLive { get; set; }
+
+        public Int16 Market
+        {
+            get
+            {
+                if (this.IsLive)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

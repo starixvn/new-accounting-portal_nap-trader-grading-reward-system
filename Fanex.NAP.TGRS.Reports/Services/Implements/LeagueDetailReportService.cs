@@ -89,11 +89,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (leagueData != null && leagueData.Any())
             {
-                foreach (LeaguePerformanceInfo item in leagueData)
-                {
-                    //leaguePerformance.AddItem(new LeaguePerformanceItem(item));
-                }
-
+                var isLive = (criteria as GetLeagueDetailTeamCriteria).IsLive;
+                leaguePerformance.AddLeagueList(leagueData, isLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }

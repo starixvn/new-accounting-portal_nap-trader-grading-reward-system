@@ -37,6 +37,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetCount = Converter.ToInt(teamData.BetCount);
                 this.Margin = teamData.Margin;
                 this.Score = teamData.Score;
+                this.IsLive = teamData.IsLive;
             }
         }
 
@@ -59,5 +60,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public decimal? Margin { get; set; }
 
         public decimal? Score { get; set; }
+
+        public bool IsLive { get; set; }
     }
 }

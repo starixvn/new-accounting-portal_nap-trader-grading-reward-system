@@ -17,6 +17,22 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
     /// </summary>
     public class GetTraderPerformanceOfTeamCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public bool IsLive { get; set; }
+
+        public Int16 Market
+        {
+            get
+            {
+                if (this.IsLive)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

@@ -10,6 +10,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
+    using Fanex.Data.Repository;
     using Fanex.NAP.Core.Web;    
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
@@ -84,8 +85,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 if (group.Key.HasValue)
                 {
                     leagueGroup = new MatchPerformanceGroup(group.Key);
-                    var isLive = (criteria as GetMatchPerformanceOfTraderCriteria).IsLive;
-                    leagueGroup.AddMatchList(group, isLive);
+                    leagueGroup.AddMatchList(group, GetIsLive(criteria));
                     leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                     matchPerformance.AddItem(leagueGroup);
                 }
@@ -95,6 +95,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
             matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
             matchPerformance.TotalItems = matchData.Count();
             return matchPerformance;
+        }
+
+        private bool GetIsLive(ICriteria criteria)
+        {
+            if (criteria is GetMatchPerformanceOfTraderLeagueTeam)
+            {
+                return (criteria as GetMatchPerformanceOfTraderLeagueTeam).IsLive;
+            }
+
+            if (criteria is GetMatchPerformanceOfTraderCriteria)
+            {
+                return (criteria as GetMatchPerformanceOfTraderCriteria).IsLive;
+            }
+
+            return false;
         }
 
         /// <summary>

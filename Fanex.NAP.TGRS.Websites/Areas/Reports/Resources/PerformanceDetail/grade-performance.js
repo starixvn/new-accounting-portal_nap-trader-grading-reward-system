@@ -47,7 +47,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         GetMatchPerformanceOfGradeLeagueTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfGradeLeagueTrader')
     };
     var parameters = {
-        Market: null,
+        MarketFilter: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,

@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
+    using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using System;
     using System.Collections.Generic;
 
@@ -20,31 +21,55 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public TeamPerformanceList()
         {
-            this.ItemList = new List<TeamPerformanceItem>();
+            this.ItemLiveList = new List<TeamPerformanceItem>();
+            this.ItemNonLiveList = new List<TeamPerformanceItem>();
             this.Total = new TeamPerformanceItem();
         }
 
-        public List<TeamPerformanceItem> ItemList { get; set; }
+        public List<TeamPerformanceItem> ItemLiveList { get; set; }
+
+        public List<TeamPerformanceItem> ItemNonLiveList { get; set; }
 
         public TeamPerformanceItem Total { get; set; }
+
+        public void AddTeamList(IEnumerable<TeamPerformanceInfo> teamPerformanceInfos, bool isLive)
+        {
+            foreach (var item in teamPerformanceInfos)
+            {
+                if (item != null)
+                {
+                    this.AddItem(new TeamPerformanceItem(item), isLive);
+                }
+            }
+        }
 
         /// <summary>
         /// Adds an item to the group.
         /// </summary>
         /// <param name="item">The item that needs to be added.</param>
-        public void AddItem(TeamPerformanceItem item)
+        private void AddItem(TeamPerformanceItem item, bool isLive)
         {
-            if (item != null)
+            if (isLive)
             {
-                this.ItemList.Add(item);
-                this.Total.NoOfTraders += item.NoOfTraders;
-                this.Total.NoOfLeagues += item.NoOfLeagues;
-                this.Total.NoOfMatches += item.NoOfMatches;
-                this.Total.Turnover += item.Turnover;
-                this.Total.WinLoss += item.WinLoss;
-                this.Total.BetCount += item.BetCount;
-                this.Total.Margin += item.Margin;
+                this.ItemLiveList.Add(item);
             }
+            else
+            {
+                this.ItemNonLiveList.Add(item);
+            }
+
+            CalculateTotal(item);
+        }
+
+        private void CalculateTotal(TeamPerformanceItem item)
+        {
+            this.Total.NoOfTraders += item.NoOfTraders;
+            this.Total.NoOfLeagues += item.NoOfLeagues;
+            this.Total.NoOfMatches += item.NoOfMatches;
+            this.Total.Turnover += item.Turnover;
+            this.Total.WinLoss += item.WinLoss;
+            this.Total.BetCount += item.BetCount;
+            this.Total.Margin += item.Margin;
         }
     }
 }

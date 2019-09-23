@@ -59,11 +59,18 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (teamData != null && teamData.Any())
             {
-                foreach (TeamPerformanceInfo item in teamData)
-                {
-                    teamPerformance.AddItem(new TeamPerformanceItem(item));
-                }
+                // Non live
+                var teamPerformanceNonLive = teamData.AsEnumerable()
+                                            .Where(c => !c.IsLive)
+                                            .Select(c => c);
 
+                // Live
+                var teamPerformanceLive = teamData.AsEnumerable()
+                                            .Where(c => c.IsLive)
+                                            .Select(c => c);
+
+                teamPerformance.AddTeamList(teamPerformanceNonLive, false);
+                teamPerformance.AddTeamList(teamPerformanceLive, true);
                 teamPerformance.Total.Margin = CalculateTotalMargin(teamPerformance.Total.WinLoss, teamPerformance.Total.Turnover);
                 SessionManager.Set<TeamPerformanceList>(TeamPerformanceDetailReportSessionKey, teamPerformance);
             }
@@ -83,7 +90,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
                 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -111,12 +118,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     if (group.Key.HasValue)
                     {
                         leagueGroup = new MatchPerformanceGroup(group.Key);
-
-                        foreach (MatchPerformanceInfo match in group)
-                        {
-                            //leagueGroup.AddItem(new MatchPerformanceItem(match));
-                        }
-
+                        leagueGroup.AddMatchList(group, criteria.IsLive);
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                         matchPerformance.AddItem(leagueGroup);
                     }
@@ -172,7 +174,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             TeamPerformanceList teamData = SessionManager.Get<TeamPerformanceList>(TeamPerformanceDetailReportSessionKey);
 
-            if ((teamData != null) && (teamData.ItemList.Count > 0))
+            if ((teamData != null) && (teamData.ItemLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -205,13 +207,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(TeamPerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
-            int len = contentData.ItemList.Count;
+            int len = contentData.ItemLiveList.Count;
             TeamPerformanceItem item;
 
             for (int i = 0; i < len; i++)
             {
                 int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemList[i];
+                item = contentData.ItemLiveList[i];
 
                 var record = new object[]
                 {
