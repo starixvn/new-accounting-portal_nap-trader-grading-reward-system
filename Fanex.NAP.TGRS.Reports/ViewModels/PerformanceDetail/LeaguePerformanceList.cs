@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
     {
         public LeaguePerformanceList()
         {
-            this.ItemByOrderLeagueList = new List<LeaguePerformanceItem>();
+            this.ItemByOrderList = new List<LeaguePerformanceItem>();
             this.ItemLiveList = new List<LeaguePerformanceItem>();
             this.ItemNonLiveList = new List<LeaguePerformanceItem>();
             this.Total = new LeaguePerformanceItem();
@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.TotalItemNonLive = new LeaguePerformanceItem();
         }
 
-        public List<LeaguePerformanceItem> ItemByOrderLeagueList { get; set; }
+        public List<LeaguePerformanceItem> ItemByOrderList { get; set; }
 
         public List<LeaguePerformanceItem> ItemLiveList { get; set; }
 
@@ -65,7 +65,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         private void AddItem(LeaguePerformanceItem item)
         {
-            this.ItemByOrderLeagueList.Add(item);
+            this.ItemByOrderList.Add(item);
 
             CalculateTotal(item, item.IsLive);
         }

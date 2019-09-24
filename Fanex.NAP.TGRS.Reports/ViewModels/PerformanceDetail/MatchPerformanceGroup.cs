@@ -59,6 +59,17 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             }
         }
 
+        public void AddMatchList(IEnumerable<MatchPerformanceRawInfo> matchPerformanceInfos, bool isLive)
+        {
+            foreach (var item in matchPerformanceInfos)
+            {
+                if (item != null)
+                {
+                    this.AddItem(new MatchPerformanceItem(item), isLive);
+                }
+            }
+        }
+
         public void AddMatchList(IGrouping<int?, MatchPerformanceInfo> grouping, bool isLive)
         {
             foreach (var item in grouping)

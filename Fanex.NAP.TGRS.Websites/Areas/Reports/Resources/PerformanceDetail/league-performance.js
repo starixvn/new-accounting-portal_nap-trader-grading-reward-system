@@ -225,7 +225,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var footerData = [];
 
         if (data) {
-            if (data.ItemByOrderLeagueList.length > 0) {
+            if (data.ItemByOrderList.length > 0) {
                 bodyData = generateLeaguePerformanceGridMergeLeagueToBody(data);
                 footerData = generateLeaguePerformanceGridMergeLeagueToFooter(data);
             }
@@ -321,7 +321,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var row;      
         var rowIndex = 0;
 
-        $.each(data.ItemByOrderLeagueList, function (index, item) {
+        $.each(data.ItemByOrderList, function (index, item) {
             noOfTradersCol = noOfTradersFormat.format(
                 item.LeagueId,
                 item.IsLive,

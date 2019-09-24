@@ -21,5 +21,7 @@
                 return Turnover != 0 ? ((decimal?)(WinLoss / Turnover * 100)) : null;
             }
         }
+
+        public bool IsLive { get; set; }
     }
 }

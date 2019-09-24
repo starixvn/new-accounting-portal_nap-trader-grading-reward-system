@@ -7,8 +7,6 @@
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
 
-using Fanex.Data.Repository;
-
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
@@ -45,9 +43,17 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (betTypeData != null && betTypeData.Any())
             {
-                foreach (BetTypePerformanceInfo item in betTypeData)
+                if (criteria.MarketFilter == Market.All)
                 {
-                    betTypePerformance.AddItem(new BetTypePerformanceItem(item));
+                    var data = betTypeData.AsEnumerable()
+                              .OrderByDescending(c => c.BetType)
+                              .ThenBy(c => c.IsLive);
+                 
+                    betTypePerformance.AddBetTypeList(data);
+                }
+                else
+                {
+                    betTypePerformance.AddBetTypeList(betTypeData, criteria.MarketFilter == Market.Live);
                 }
 
                 betTypePerformance.Total.Margin = CalculateTotalMargin(betTypePerformance.Total.WinLoss, betTypePerformance.Total.Turnover);
@@ -69,7 +75,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
                
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -97,12 +103,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     if (group.Key.HasValue)
                     {
                         leagueGroup = new MatchPerformanceGroup(group.Key);
-
-                        foreach (MatchPerformanceRawInfo match in group)
-                        {
-                            //leagueGroup.AddItem(new MatchPerformanceItem(match));
-                        }
-
+                        leagueGroup.AddMatchList(group, criteria.IsLive);
                         leagueGroup.Total.Margin = CalculateTotalMargin(leagueGroup.Total.WinLoss, leagueGroup.Total.Turnover);
                         leagueGroup.Total.Score = leagueGroup.Total.SumCategory == 0 ? 0 : (leagueGroup.Total.WinLossScore * 100 / leagueGroup.Total.SumCategory);
                         matchPerformance.AddItem(leagueGroup);
@@ -129,11 +130,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (leagueData != null && leagueData.Any())
             {
-                foreach (LeaguePerformanceInfo item in leagueData)
-                {
-                    //leaguePerformance.AddItem(new LeaguePerformanceItem(item));
-                }
-
+                leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }
@@ -153,7 +150,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
                 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -173,11 +170,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (matchData != null && matchData.Any())
             {
-                foreach (MatchPerformanceInfo item in matchData)
-                {
-                    //matchPerformance.AddItem(new MatchPerformanceItem(item));
-                }
-
+                matchPerformance.AddMatchList(matchData, criteria.IsLive);
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
             }
 
@@ -193,7 +186,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
 
-            if ((betTypeData != null) && (betTypeData.ItemList.Count > 0))
+            if ((betTypeData != null) && (betTypeData.ItemLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
@@ -220,13 +213,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(BetTypePerformanceList contentData, ref ExcelTemplateWriter writer)
         {
             // Content rows
-            int len = contentData.ItemList.Count;
+            int len = contentData.ItemLiveList.Count;
             BetTypePerformanceItem item;
 
             for (int i = 0; i < len; i++)
             {
                 int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemList[i];
+                item = contentData.ItemLiveList[i];
 
                 var record = new object[]
                 {
