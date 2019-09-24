@@ -40,7 +40,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     };
 
     var parameters = {
-        Market: null,
+        MarketFilter: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,

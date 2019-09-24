@@ -82,15 +82,27 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>LeaguePerformanceList object.</returns>
-        public LeaguePerformanceList GetLeaguePerformance(Data.Repository.ICriteria criteria)
+        public LeaguePerformanceList GetLeaguePerformance(Data.Repository.ICriteria criteria, bool isGroupOfLeague = false)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
             LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
-                var isLive = (criteria as GetLeagueDetailTeamCriteria).IsLive;
-                leaguePerformance.AddLeagueList(leagueData, isLive);
+                if (isGroupOfLeague)
+                {
+                    var data = leagueData.AsEnumerable()
+                            .OrderBy(c => c.LeagueId)
+                            .ThenBy(c => c.IsLive);
+
+                    leaguePerformance.AddLeagueList(data);
+                }
+                else
+                {
+                    var isLive = GetIsLive(criteria);
+
+                    leaguePerformance.AddLeagueList(leagueData, isLive);
+                }
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }
@@ -110,7 +122,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (traderData != null && traderData.Any())
             {
-                traderPerformance.AddTraderList(traderData, true);
+                traderPerformance.AddTraderList(traderData, criteria.IsLive);
                 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
             }
@@ -183,11 +195,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (matchData != null && matchData.Any())
             {
-                foreach (MatchPerformanceInfo item in matchData)
-                {
-                    //matchPerformance.AddItem(new MatchPerformanceItem(item));
-                }
-
+                matchPerformance.AddMatchList(matchData, criteria.IsLive);             
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
             }
 

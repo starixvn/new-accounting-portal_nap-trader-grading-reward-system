@@ -109,6 +109,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 return (criteria as GetMatchPerformanceOfTraderCriteria).IsLive;
             }
 
+            if(criteria is GetLeagueDetailTeamCriteria)
+            {
+                return (criteria as GetLeagueDetailTeamCriteria).IsLive;
+            }
+
+            if (criteria is GetLeaguePerformanceCriteria)
+            {
+                return (criteria as GetLeaguePerformanceCriteria).MarketFilter == Market.Live;
+            }
+
             return false;
         }
 
