@@ -91,9 +91,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 if (isGroupOfLeague)
                 {
-                    var data = leagueData.AsEnumerable()
-                            .OrderBy(c => c.LeagueId)
-                            .ThenBy(c => c.IsLive);
+                    var data = SortLeaguePerformanceInfo(leagueData);
 
                     leaguePerformance.AddLeagueList(data);
                 }
@@ -103,11 +101,36 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                     leaguePerformance.AddLeagueList(leagueData, isLive);
                 }
-                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+                leaguePerformance.CalculateTotalMargin();
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }
 
             return leaguePerformance;
+        }
+
+        private IEnumerable<LeaguePerformanceInfo> SortLeaguePerformanceInfo(IEnumerable<LeaguePerformanceInfo> leagueData)
+        {
+            return leagueData.AsEnumerable()
+                            .OrderBy(c => c.LeagueId)
+                            .ThenBy(c => c.IsLive)
+                            .Select(c => new LeaguePerformanceInfo
+                            {
+                                LeagueId = c.LeagueId,
+                                LeagueName = c.LeagueName,
+                                LeagueBenchmark = c.LeagueBenchmark,
+                                BetTypeBMShift1 = c.BetTypeBMShift1,
+                                BetTypeBMShift2 = c.BetTypeBMShift2,
+                                BetTypeBMShift3 = c.BetTypeBMShift3,
+                                TraderCount = c.TraderCount,
+                                MatchCount = c.MatchCount,
+                                Turnover = c.Turnover,
+                                WinLoss = c.WinLoss,
+                                BetCount = c.BetCount,
+                                Margin = c.Margin,
+                                Market = c.Market,
+                                IsLive = c.IsLive,
+                                FlagForViewReport = leagueData.Count(b=>b.LeagueId == c.LeagueId)
+                            });
         }
 
         /// <summary>
@@ -402,7 +425,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlossString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+            string marketString = Enum.GetName(typeof(Market), criteria.MarketFilter);
 
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");

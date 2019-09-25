@@ -63,6 +63,24 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             }
         }
 
+        public void CalculateTotalMargin()
+        {
+            if (this.Total != null)
+            {
+                this.Total.Margin = CalculateTotalMargin(this.Total.WinLoss, this.Total.Turnover);
+            }
+
+            if (this.TotalItemLive != null)
+            {
+                this.TotalItemLive.Margin = CalculateTotalMargin(this.TotalItemLive.WinLoss, this.TotalItemLive.Turnover);
+            }
+
+            if (this.TotalItemNonLive != null)
+            {
+                this.TotalItemNonLive.Margin = CalculateTotalMargin(this.TotalItemNonLive.WinLoss, this.TotalItemNonLive.Turnover);
+            }
+        }
+
         private void AddItem(BetTypePerformanceItem item)
         {
             this.ItemByOrderList.Add(item);
@@ -114,6 +132,18 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TotalItemNonLive.WinLoss += item.WinLoss;
                 this.TotalItemNonLive.BetCount += item.BetCount;
             }
+        }        
+
+        private decimal? CalculateTotalMargin(decimal winLoss, decimal turnover)
+        {
+            decimal? margin = null;
+
+            if (turnover != 0)
+            {
+                margin = winLoss / turnover * 100;
+            }
+
+            return margin;
         }
     }
 }

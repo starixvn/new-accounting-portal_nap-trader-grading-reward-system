@@ -41,5 +41,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public Market Market { get; set; }
 
         public bool IsLive { get; set; }
+
+        public int FlagForViewReport { get; set; }
     }
 }

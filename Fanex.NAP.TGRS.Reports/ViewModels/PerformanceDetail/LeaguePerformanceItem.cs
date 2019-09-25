@@ -41,6 +41,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.Margin = leagueData.Margin;
                 this.Market = GetMaketToString(leagueData.Market);
                 this.IsLive = leagueData.IsLive;
+                this.FlagForViewReport = leagueData.FlagForViewReport;
             }
         }
 
@@ -79,5 +80,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         }
 
         public bool IsLive { get; set; }
+
+        public int FlagForViewReport { get; set; }
     }
 }

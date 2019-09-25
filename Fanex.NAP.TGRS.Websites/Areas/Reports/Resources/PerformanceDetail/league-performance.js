@@ -318,8 +318,9 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}" data-is-live="{2}" title="{3}">{4}</span>';
         var noOfTradersCol = '';
         var bodyData = [];
-        var row;      
-        var rowIndex = 0;
+        var row;    
+        var leagueId = '';
+        var evenClass = '';
 
         $.each(data.ItemByOrderList, function (index, item) {
             noOfTradersCol = noOfTradersFormat.format(
@@ -330,11 +331,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, item.IsLive, labels.MatchPerformance, item.NoOfMatches);
          
             var currentColumms = [];
-            var evenClass = '';
             
-            if (index % 2 == 0) {
+            
+            if (item.FlagForViewReport == 2 && (leagueId != item.LeagueId)) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: rowIndex + 1, MergeRowNumber: 2 },
+                    { Name: 'ColNo', Value: index + 1, MergeRowNumber: 2 },
                     { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name', MergeRowNumber: 2 }
                 );
                 if (evenClass == 'freegrid-even') {
@@ -343,11 +344,22 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 else {
                     evenClass = 'freegrid-even';
                 }
-                rowIndex += 1;
+            }
+            else if (item.FlagForViewReport == 1) {
+                currentColumms.push(
+                    { Name: 'ColNo', Value: index + 1 },
+                    { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' }
+                );
+                if (evenClass == 'freegrid-even') {
+                    evenClass = '';
+                }
+                else {
+                    evenClass = 'freegrid-even';
+                }
             }
             row = {
                 Columns: currentColumms.concat([
-                    { Name: 'ColMarket', Value: index% 2 == 0 ? 'Non - live' : 'Live' },
+                    { Name: 'ColMarket', Value: item.IsLive ? labels.MarketLive : labels.MarketNonLive },
                     { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                     { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                     { Name: 'ColTurnover', Value: item.Turnover },
@@ -359,6 +371,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             };
             
             bodyData.push(row);
+            leagueId = item.LeagueId;
         });
 
         return bodyData;

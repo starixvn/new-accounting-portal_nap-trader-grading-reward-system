@@ -321,7 +321,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var betChoiceCol = '';
         var bodyData = [];
         var row;
-        var rowIndex = 0;
+        var betTypeId = '';
+        var evenClass = '';
 
         $.each(data.ItemByOrderList, function (index, item) {
             betTypeCol = betTypeFormat.format(item.BetTypeId, item.BetTypeName);
@@ -329,11 +330,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             noOfLeaguesCol = noOfLeaguesFormat.format(item.BetTypeId, item.IsLive, labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
             var currentColumms = [];
-            var evenClass = '';
 
-            if (index % 2 == 0) {
+            if (item.FlagForViewReport == 2 && (betTypeId != item.BetTypeId)) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: rowIndex + 1, MergeRowNumber: 2 },
+                    { Name: 'ColNo', Value: index + 1, MergeRowNumber: 2 },
                     { Name: 'ColBetType', Value: betTypeCol, MergeRowNumber: 2 },
                 );
                 if (evenClass == 'freegrid-even') {
@@ -342,11 +342,23 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 else {
                     evenClass = 'freegrid-even';
                 }
-                rowIndex += 1;
             }
-            row = {
+            else if (item.FlagForViewReport == 1) {
+                currentColumms.push(
+                    { Name: 'ColNo', Value: index + 1 },
+                    { Name: 'ColBetType', Value: betTypeCol },
+                );
+                if (evenClass == 'freegrid-even') {
+                    evenClass = '';
+                }
+                else {
+                    evenClass = 'freegrid-even';
+                }
+            }
+            
+            row = {                
                 Columns: currentColumms.concat([
-                    { Name: 'ColMarket', Value: index % 2 == 0 ? 'Non - live' : 'Live' },
+                    { Name: 'ColMarket', Value: item.IsLive ? labels.MarketLive : labels.MarketNonLive },
                     { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                     { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
                     { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
@@ -359,6 +371,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             };
 
             bodyData.push(row);
+            betTypeId = item.BetTypeId;
         });
 
         return bodyData;

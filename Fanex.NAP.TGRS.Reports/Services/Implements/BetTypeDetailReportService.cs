@@ -45,10 +45,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 if (criteria.MarketFilter == Market.All)
                 {
-                    var data = betTypeData.AsEnumerable()
-                              .OrderByDescending(c => c.BetType)
-                              .ThenBy(c => c.IsLive);
-                 
+                    var data = SortBetTypePerformanceInfo(betTypeData);
+
                     betTypePerformance.AddBetTypeList(data);
                 }
                 else
@@ -56,11 +54,32 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     betTypePerformance.AddBetTypeList(betTypeData, criteria.MarketFilter == Market.Live);
                 }
 
-                betTypePerformance.Total.Margin = CalculateTotalMargin(betTypePerformance.Total.WinLoss, betTypePerformance.Total.Turnover);
+                betTypePerformance.CalculateTotalMargin();
                 SessionManager.Set<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey, betTypePerformance);
             }
 
             return betTypePerformance;
+        }
+
+        private IEnumerable<BetTypePerformanceInfo> SortBetTypePerformanceInfo(IEnumerable<BetTypePerformanceInfo> betTypeData)
+        {
+            return betTypeData.AsEnumerable()
+                              .OrderByDescending(c => c.BetType)
+                              .ThenBy(c => c.IsLive)
+                              .Select(c => new BetTypePerformanceInfo
+                              {
+                                  BetType = c.BetType,                                 
+                                  TypeName = c.TypeName,
+                                  TraderCount = c.TraderCount,
+                                  LeagueCount = c.LeagueCount,
+                                  MatchCount = c.MatchCount,
+                                  Turnover = c.Turnover,
+                                  WinLoss = c.WinLoss,
+                                  BetCount = c.BetCount,
+                                  Margin = c.Margin,
+                                  IsLive = c.IsLive,
+                                  FlagForViewReport = betTypeData.Count(b => b.BetType == c.BetType)
+                              });
         }
 
         /// <summary>
@@ -273,7 +292,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+            string marketString = Enum.GetName(typeof(Market), criteria.MarketFilter);
 
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");

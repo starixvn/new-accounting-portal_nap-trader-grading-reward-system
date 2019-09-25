@@ -37,6 +37,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetCount = Converter.ToInt(betTypeData.BetCount);
                 this.Margin = betTypeData.Margin;
                 this.IsLive = betTypeData.IsLive;
+                this.FlagForViewReport = betTypeData.FlagForViewReport;
             }
         }
 
@@ -59,5 +60,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public decimal? Margin { get; set; }
 
         public bool IsLive { get; set; }
+
+        public int FlagForViewReport { get; set; }
     }
 }
