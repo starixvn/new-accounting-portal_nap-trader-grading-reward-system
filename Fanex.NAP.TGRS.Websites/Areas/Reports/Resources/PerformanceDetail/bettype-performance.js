@@ -24,7 +24,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
     var domElements = {
         divBetTypePerformanceFilter: null,
-        MarketFilter: null,
+        ddlMarket: null,
         divDateRange: null,
         ddlBetType: null,
         txtMarginFrom: null,
@@ -44,7 +44,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         divBetChoicePerformanceGrid: null
     };
     var parameters = {
-        Market: null,
+        MarketFilter: null,
         FromDate: null,
         ToDate: null,
         BetTypes: null,
