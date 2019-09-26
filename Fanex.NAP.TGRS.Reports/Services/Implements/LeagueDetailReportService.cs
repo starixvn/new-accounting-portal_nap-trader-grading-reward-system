@@ -101,6 +101,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                     leaguePerformance.AddLeagueList(leagueData, isLive);
                 }
+
                 leaguePerformance.CalculateTotalMargin();
                 SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
             }
@@ -255,7 +256,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey);
 
-            if ((leagueData != null) && (leagueData.ItemLiveList.Count > 0))
+            if ((leagueData != null) && (leagueData.ItemByOrderList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -328,18 +329,28 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(LeaguePerformanceList contentData, ref ExcelTemplateWriter writer)
         {
             // Content rows
-            int len = contentData.ItemLiveList.Count;
+            int len = contentData.ItemByOrderList.Count;
             LeaguePerformanceItem item;
+
+            var leagueId = contentData.ItemByOrderList[0].LeagueId;
+            var leagueCounter = 1;
 
             for (int i = 0; i < len; i++)
             {
-                int styleIndex = (i % 2 == 0) ? 4 : 5;
-                item = contentData.ItemLiveList[i];
+                item = contentData.ItemByOrderList[i];
+                if(item.LeagueId != leagueId)
+                {
+                    leagueCounter++;
+                    leagueId = item.LeagueId;
+                }
+
+                int styleIndex = leagueCounter % 2 == 0 ? 4 : 5;
 
                 var record = new object[]
                 {
                     i + 1,
                     item.LeagueName,
+                    item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
                     item.NoOfTraders,
                     item.NoOfMatches,
                     item.Turnover,
@@ -348,15 +359,33 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.BetCount,
                     (object)item.Margin ?? ViewLang.NA,
                 };
+
                 writer.WriteRow(styleIndex, record);
             }
 
             // Total row
-            LeaguePerformanceItem total = contentData.Total;
+            LeaguePerformanceItem total = contentData.TotalItemNonLive;
             var totalRecord = new object[]
             {
                 ViewLang.GrandTotal,
                 null,
+                ViewLang.MarketNonLive,
+                total.NoOfTraders,
+                total.NoOfMatches,
+                total.Turnover,
+                total.Turnover / total.NoOfMatches,
+                total.WinLoss,
+                total.BetCount,
+                (object)total.Margin ?? ViewLang.NA
+            };
+            writer.WriteRow(6, totalRecord);
+
+            total = contentData.TotalItemLive;
+            totalRecord = new object[]
+            {
+                null,
+                null,
+                ViewLang.MarketLive,
                 total.NoOfTraders,
                 total.NoOfMatches,
                 total.Turnover,
@@ -413,7 +442,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(int userId,GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(int userId, GetLeaguePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(10, 0);
@@ -473,7 +502,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
-            writer.WriteRow(7, contentRichTextArray);
+            writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
     }

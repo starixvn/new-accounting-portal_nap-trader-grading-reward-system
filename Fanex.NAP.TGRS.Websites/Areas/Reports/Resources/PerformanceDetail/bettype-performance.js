@@ -333,7 +333,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
             if (item.FlagForViewReport == 2 && (betTypeId != item.BetTypeId)) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: index + 1, MergeRowNumber: 2 },
+                    { Name: 'ColNo', Value: (index / 2 + index % 2 + 1), MergeRowNumber: 2 },
                     { Name: 'ColBetType', Value: betTypeCol, MergeRowNumber: 2 },
                 );
                 if (evenClass == 'freegrid-even') {

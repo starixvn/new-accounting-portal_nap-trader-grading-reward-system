@@ -335,7 +335,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             
             if (item.FlagForViewReport == 2 && (leagueId != item.LeagueId)) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: index + 1, MergeRowNumber: 2 },
+                    { Name: 'ColNo', Value: (index/2 + index%2 + 1), MergeRowNumber: 2 },
                     { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name', MergeRowNumber: 2 }
                 );
                 if (evenClass == 'freegrid-even') {
