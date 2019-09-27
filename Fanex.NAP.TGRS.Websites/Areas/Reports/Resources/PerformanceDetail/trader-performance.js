@@ -336,7 +336,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             liveData = addTraderPerformanceToRowsBody(data.ItemLiveList, labels.MarketLive);
         }
 
-        var bodyData = nonLiveData.concat(liveData);
+        var bodyData = liveData.concat(nonLiveData);
 
         return bodyData;
     }
@@ -487,7 +487,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 cachedData.MatchPerformance = result.GroupList;
                 cachedData.GrandTotal = result.GrandTotal;
                 cachedData.TotalItems = result.TotalItems;
-                reloadPage(cachedData.PageIndex, cachedData.PageSize, traderId, traderName);
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -499,7 +499,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
     };
 
     // Customize reloading page.
-    var reloadPage = function (pageIndex, pageSize, traderId, traderName) {
+    var reloadPage = function (pageIndex, pageSize, traderId, traderName, isLive) {
         var pageData = [];
         var startIndex = 0;
         var endIndex = 0;
@@ -542,11 +542,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
 
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
-        renderMatchPerformanceGrid(pageData, traderId, traderName);
+        renderMatchPerformanceGrid(pageData, traderId, traderName, isLive);
     };
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceGrid = function (data, traderId, traderName) {
+    var renderMatchPerformanceGrid = function (data, traderId, traderName, isLive) {
         var bodyData = [];
         var footerData = [];
 
@@ -557,15 +557,15 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
 
         // Hide previous report.
         domElements.divTraderPerformanceContainer.addClass('display-none');
-        var gridOptions = renderMatchPerformanceGridOptions(traderId, traderName);
+        var gridOptions = renderMatchPerformanceGridOptions(traderId, traderName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceGridEvents(traderId, traderName);
     };
 
-    var renderMatchPerformanceGridOptions = function (traderId, traderName) {
-        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+    var renderMatchPerformanceGridOptions = function (traderId, traderName, isLive) {
+        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
             { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
@@ -589,7 +589,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.TraderPerformance, traderName)
+                text: titleFormat.format(labels.TraderPerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, traderName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -697,7 +697,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
             success: function (result) {
-                renderBettypeDetailGrid(result, matchId, matchName, traderId, traderName);
+                renderBettypeDetailGrid(result, matchId, matchName, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -708,10 +708,10 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         });
     };
 
-    var renderBettypeDetailGrid = function (data, matchId, matchName, traderId, traderName) {
+    var renderBettypeDetailGrid = function (data, matchId, matchName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanTraderLink"  class="breadcrumb-link"> {0}</span>' +
-                          '<span id="spanMatchLink"  class="breadcrumb-link"> >> {1}</span>' +
-                          '<span title="{2}"> >> {3}</span>';
+                          '<span id="spanMatchLink"  class="breadcrumb-link"> >> ({1}) {2}</span>' +
+                          '<span title="{3}"> >> {4}</span>';
         //length of >>: 8
         var titleLength = 8 + labels.TraderPerformance.length + traderName.length;
         var gridOptions = {
@@ -742,7 +742,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.TraderPerformance, traderName, matchName, shortenName(common.HasViewScorePermission ? 120 : 100, titleLength, matchName))
+                text: titleFormat.format(labels.TraderPerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, traderName, matchName, shortenName(common.HasViewScorePermission ? 120 : 100, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {

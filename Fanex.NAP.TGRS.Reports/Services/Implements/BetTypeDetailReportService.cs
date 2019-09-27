@@ -65,7 +65,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             return betTypeData.AsEnumerable()
                               .OrderByDescending(c => c.BetType)
-                              .ThenBy(c => c.IsLive)
+                              .ThenByDescending(c => c.IsLive)
                               .Select(c => new BetTypePerformanceInfo
                               {
                                   BetType = c.BetType,                                 
@@ -252,7 +252,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 var record = new object[]
                 {
-                    i + 1,
+                    bettypeCounter,
                     item.BetTypeName,
                     item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
                     item.NoOfTraders,
@@ -269,12 +269,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             // Total row
-            BetTypePerformanceItem total = contentData.TotalItemNonLive;
+            BetTypePerformanceItem total = contentData.TotalItemLive;
             var totalRecord = new object[]
             {
                 ViewLang.GrandTotal,
                 null,
-                ViewLang.MarketNonLive,
+                ViewLang.MarketLive,
                 total.NoOfTraders,
                 total.NoOfLeagues,
                 total.NoOfMatches,
@@ -286,12 +286,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
             };
             writer.WriteRow(6, totalRecord);
 
-            total = contentData.TotalItemLive;
+            total = contentData.TotalItemNonLive;
             totalRecord = new object[]
             {
                 null,
                 null,
-                ViewLang.MarketLive,
+                ViewLang.MarketNonLive,
                 total.NoOfTraders,
                 total.NoOfLeagues,
                 total.NoOfMatches,

@@ -113,6 +113,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.BetTypes = betTypes;
             ViewBag.Markets = GetMarketsPermission();
 
+            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
+
             return View();
         }
 
@@ -228,6 +231,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<BetTypeDetailItem> bettypePerformance = this._detailReportService.GetBettypePerformanceOfLeagueMatch(criteria);
             JsonResult jsonResult = Json(bettypePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
+
             return jsonResult;
         }
 
@@ -273,6 +277,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Markets = GetMarketsPermission();
+
+            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
         }
@@ -360,6 +367,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Markets = GetMarketsPermission();
+
+            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
         }
@@ -497,6 +507,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
 
+            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
+
             return View();
         }
 
@@ -620,6 +633,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.BetTypes = betTypes;
             ViewBag.Markets = GetMarketsPermission();
+
+            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
         }

@@ -613,6 +613,7 @@
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\performance-summary.less" />
     <Content Include="Areas\OSReports\Views\OSTraderReport\Filter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\PerformanceDetail\NoPermission.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

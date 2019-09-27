@@ -113,7 +113,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             return leagueData.AsEnumerable()
                             .OrderBy(c => c.LeagueId)
-                            .ThenBy(c => c.IsLive)
+                            .ThenByDescending(c => c.IsLive)
                             .Select(c => new LeaguePerformanceInfo
                             {
                                 LeagueId = c.LeagueId,
@@ -197,11 +197,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 };
 
                 IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
-                bettypeDetail = bettypeData.Select(b => new BetTypeDetailItem(b)
+                bettypeDetail = scoreByPeriodData.Any() ? bettypeData.Select(b => new BetTypeDetailItem(b)
                 {
                     Score = scoreByPeriodData.Where(s => s.BetType == b.BetType).First().Score,
                     ScoreByPeriod = scoreByPeriodData.Where(s => s.BetType == b.BetType).ToList().Select(i => new ScoreByPeriodItem(i)).ToList()
-                }).ToList();
+                }).ToList() : new List<BetTypeDetailItem>();
             }
 
             return bettypeDetail;
@@ -348,7 +348,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 var record = new object[]
                 {
-                    i + 1,
+                    leagueCounter,
                     item.LeagueName,
                     item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
                     item.NoOfTraders,
@@ -364,12 +364,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             // Total row
-            LeaguePerformanceItem total = contentData.TotalItemNonLive;
+            LeaguePerformanceItem total = contentData.TotalItemLive;
             var totalRecord = new object[]
             {
                 ViewLang.GrandTotal,
                 null,
-                ViewLang.MarketNonLive,
+                ViewLang.MarketLive,
                 total.NoOfTraders,
                 total.NoOfMatches,
                 total.Turnover,
@@ -380,12 +380,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
             };
             writer.WriteRow(6, totalRecord);
 
-            total = contentData.TotalItemLive;
+            total = contentData.TotalItemNonLive;
             totalRecord = new object[]
             {
                 null,
                 null,
-                ViewLang.MarketLive,
+                ViewLang.MarketNonLive,
                 total.NoOfTraders,
                 total.NoOfMatches,
                 total.Turnover,

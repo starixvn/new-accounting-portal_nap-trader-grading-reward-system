@@ -330,7 +330,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             liveData = addGradePerformanceToRowsBody(data.ItemLiveList, labels.MarketLive);
         }
 
-        var bodyData = nonLiveData.concat(liveData);
+        var bodyData = liveData.concat(nonLiveData);
 
         return bodyData;
     }
@@ -350,6 +350,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 item.IsLive,
                 labels.TraderPerformance,
                 numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
+
             noOfLeaguesCol = noOfLeaguesFormat.format(
                 item.Grade,
                 item.IsLive,
@@ -453,7 +454,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(leaguePerformance),
             success: function (result) {
-                renderLeaguePerformanceGrid(result, grade);
+                renderLeaguePerformanceGrid(result, grade, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -465,7 +466,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     };
 
     // Render league performance grid.
-    var renderLeaguePerformanceGrid = function (data, grade) {
+    var renderLeaguePerformanceGrid = function (data, grade, isLive) {
         var bodyData = [];
         var footerData = [];
 
@@ -476,15 +477,15 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         // Hide previous report.
         domElements.divGradePerformanceContainer.addClass('display-none');
-        var gridOptions = renderLeaguePerformanceGridOptions(grade);
+        var gridOptions = renderLeaguePerformanceGridOptions(grade, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeaguePerformanceGridEvents(grade);
     };
 
-    var renderLeaguePerformanceGridOptions = function (grade) {
-        var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span><span> >> {1}: {2}</span>';
+    var renderLeaguePerformanceGridOptions = function (grade, isLive) {
+        var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}: {3}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -517,7 +518,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade)
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -626,7 +627,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(traderPerformance),
             success: function (result) {
-                renderTraderPerformanceByLeagueGrid(result, grade, leagueId, leagueName);
+                renderTraderPerformanceByLeagueGrid(result, grade, leagueId, leagueName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -638,7 +639,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     };
 
     // Render trader performance of a specific league grid.
-    var renderTraderPerformanceByLeagueGrid = function (data, grade, leagueId, leagueName) {
+    var renderTraderPerformanceByLeagueGrid = function (data, grade, leagueId, leagueName, isLive) {
         var bodyData = [];
         var footerData = [];
 
@@ -650,7 +651,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         // Hide previous report.
         domElements.divLeaguePerformanceContainer.addClass('display-none');
 
-        var gridOptions = renderTraderPerformanceByLeagueGridOptions(grade, leagueId, leagueName);
+        var gridOptions = renderTraderPerformanceByLeagueGridOptions(grade, leagueId, leagueName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceByLeagueGrid.fanexGrid(gridOptions);
@@ -662,10 +663,10 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         handleTraderPerformanceByLeagueGridEvents(grade, leagueId, leagueName);
     };
 
-    var renderTraderPerformanceByLeagueGridOptions = function (grade, leagueId, leagueName) {
+    var renderTraderPerformanceByLeagueGridOptions = function (grade, leagueId, leagueName, isLive) {
         var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
-            '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
-            '<span title="{3}"> >> {4}</span>';
+            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}: {3}</span>' +
+            '<span title="{4}"> >> {5}</span>';
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
 
         var gridOptions = {
@@ -705,7 +706,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, leagueName, trimLeagueName)
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, leagueName, trimLeagueName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -828,7 +829,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(traderPerformance),
             success: function (result) {
-                renderTraderPerformanceGrid(result, grade);
+                renderTraderPerformanceGrid(result, grade, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -840,7 +841,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     };
 
     // Render trader performance of a specific grade grid.
-    var renderTraderPerformanceGrid = function (data, grade) {
+    var renderTraderPerformanceGrid = function (data, grade, isLive) {
         var bodyData = [];
         var footerData = [];
 
@@ -851,7 +852,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         // Hide previous report.
         domElements.divGradePerformanceContainer.addClass('display-none');
-        var gridOptions = renderTraderPerformanceGridOptions(grade);
+        var gridOptions = renderTraderPerformanceGridOptions(grade, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
@@ -863,8 +864,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         handleTraderPerformanceGridEvents(grade);
     };
 
-    var renderTraderPerformanceGridOptions = function (grade) {
-        var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span><span> >> {1}: {2}</span>';
+    var renderTraderPerformanceGridOptions = function (grade, isLive) {
+        var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}: {3}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -906,7 +907,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade)
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1034,7 +1035,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 cachedData.MatchPerformance = result.GroupList;
                 cachedData.GrandTotal = result.GrandTotal;
                 cachedData.TotalItems = result.TotalItems;
-                reloadPage(cachedData.PageIndex, cachedData.PageSize, grade, traderId, traderName);
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, grade, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1046,7 +1047,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     };
 
     // Customize reloading page.
-    var reloadPage = function (pageIndex, pageSize, grade, traderId, traderName) {
+    var reloadPage = function (pageIndex, pageSize, grade, traderId, traderName, isLive) {
         var pageData = [];
         var startIndex = 0;
         var endIndex = 0;
@@ -1089,11 +1090,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
-        renderMatchPerformanceGrid(pageData, grade, traderId, traderName);
+        renderMatchPerformanceGrid(pageData, grade, traderId, traderName, isLive);
     };
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceGrid = function (data, grade, traderId, traderName) {
+    var renderMatchPerformanceGrid = function (data, grade, traderId, traderName, isLive) {
         var bodyData = [];
         var footerData = [];        
 
@@ -1104,17 +1105,17 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         // Hide previous report.
         domElements.divTraderPerformanceContainer.addClass('display-none');
-        var gridOptions = renderMatchPerformanceGridOptions(grade, traderId, traderName);
+        var gridOptions = renderMatchPerformanceGridOptions(grade, traderId, traderName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceGridEvents(grade, traderId, traderName);
     };
 
-    var renderMatchPerformanceGridOptions = function (grade, traderId, traderName) {
+    var renderMatchPerformanceGridOptions = function (grade, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
-            '<span id="spanTraderLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
-            '<span> >> {3}</span>';
+            '<span id="spanTraderLink" class="breadcrumb-link"> >> ({1}) {2}: {3}</span>' +
+            '<span> >> {4}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
@@ -1139,7 +1140,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, traderName)
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, traderName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -1249,7 +1250,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
             success: function (result) {
-                renderBettypeDetailGrid(result, matchId, matchName, grade, traderId, traderName);
+                renderBettypeDetailGrid(result, matchId, matchName, grade, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1261,11 +1262,11 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     };
 
     // Render bettype performance grid.
-    var renderBettypeDetailGrid = function (data, matchId, matchName, grade, traderId, traderName) {
+    var renderBettypeDetailGrid = function (data, matchId, matchName, grade, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
-                          '<span id="spanTraderLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
-                          '<span id="spanMatchLink"  class="breadcrumb-link"> >> {3}</span>' +
-                          '<span title="{4}"> >> {5}</span>';
+                          '<span id="spanTraderLink" class="breadcrumb-link"> >> ({1}) {2}: {3}</span>' +
+                          '<span id="spanMatchLink"  class="breadcrumb-link"> >> {4}</span>' +
+                          '<span title="{5}"> >> {6}</span>';
         //length of >>: 14
         var titleLength = 14 + labels.GradePerformance.length + labels.Grade.length + traderName.length + grade.toString().length;
         var gridOptions = {
@@ -1296,7 +1297,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, traderName, matchName, shortenName(common.HasViewScorePermission ? 119 : 99, titleLength, matchName))
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, traderName, matchName, shortenName(common.HasViewScorePermission ? 119 : 99, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1423,7 +1424,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(matchPerformanceParamrters),
             success: function (result) {
-                renderMatchPerformanceOfGradeLeagueTraderGrid(result, grade, leagueId, leagueName, traderId, traderName);
+                renderMatchPerformanceOfGradeLeagueTraderGrid(result, grade, leagueId, leagueName, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1434,7 +1435,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         });
     };
 
-    var renderMatchPerformanceOfGradeLeagueTraderGrid = function (data, grade, leagueId, leagueName, traderId, traderName) {                       
+    var renderMatchPerformanceOfGradeLeagueTraderGrid = function (data, grade, leagueId, leagueName, traderId, traderName, isLive) {                       
         var bodyData = [];
         var footerData = [];    
 
@@ -1445,18 +1446,18 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         // Hide previous report.
         domElements.divTraderPerformanceByLeagueContainer.addClass('display-none');
-        var gridOptions = renderMatchPerformanceOfGradeLeagueTraderGridOptions(grade, leagueId, leagueName, traderId, traderName);
+        var gridOptions = renderMatchPerformanceOfGradeLeagueTraderGridOptions(grade, leagueId, leagueName, traderId, traderName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceOfGradeLeagueTraderGridEvents(grade, leagueId, leagueName, traderId, traderName);
     };
 
-    var renderMatchPerformanceOfGradeLeagueTraderGridOptions = function (grade, leagueId, leagueName, traderId, traderName) {
+    var renderMatchPerformanceOfGradeLeagueTraderGridOptions = function (grade, leagueId, leagueName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
-            '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
-            '<span id="spanTraderLink" class="breadcrumb-link" title="{3}"> >> {4}</span>' +
-            '<span> >> {5}</span>';
+            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}: {3}</span>' +
+            '<span id="spanTraderLink" class="breadcrumb-link" title="{4}"> >> {5}</span>' +
+            '<span> >> {6}</span>';
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
 
         var gridOptions = {
@@ -1483,7 +1484,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade, leagueName, trimLeagueName, traderName)
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, leagueName, trimLeagueName, traderName)
             },
             showPager: true,
             sortOption: {
@@ -1589,7 +1590,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
             success: function (result) {
-                renderBettypeDetailOfGradeLeagueGrid(result, grade, matchId, matchName, leagueId, leagueName, traderId, traderName);
+                renderBettypeDetailOfGradeLeagueGrid(result, grade, matchId, matchName, leagueId, leagueName, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1600,12 +1601,12 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         });
     };
 
-    var renderBettypeDetailOfGradeLeagueGrid = function (data, grade, matchId, matchName, leagueId, leagueName, traderId, traderName) {
+    var renderBettypeDetailOfGradeLeagueGrid = function (data, grade, matchId, matchName, leagueId, leagueName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanGradeLink" class="breadcrumb-link">{0}</span>' +
-                            '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}: {2}</span>' +
-                            '<span id="spanTraderLink" class="breadcrumb-link" title="{3}"> >> {4}</span>' +
-                            '<span id="spanMatchLink"  class="breadcrumb-link"> >> {5}</span>' +
-                            '<span title="{6}"> >> {7}</span>';
+                            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}: {3}</span>' +
+                            '<span id="spanTraderLink" class="breadcrumb-link" title="{4}"> >> {5}</span>' +
+                            '<span id="spanMatchLink"  class="breadcrumb-link"> >> {6}</span>' +
+                            '<span title="{7}"> >> {8}</span>';
 
         //length of >>: 14
         var trimLeagueName = leagueName.length > 40 ? leagueName.substring(0, 41) : leagueName;
@@ -1656,7 +1657,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, labels.Grade, grade,
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade,
                     leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 109 : 89, titleLength, matchName))
             },
             sortOption: {

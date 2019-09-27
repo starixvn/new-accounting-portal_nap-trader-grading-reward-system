@@ -170,10 +170,10 @@ namespace Fanex.NAP.TGRS.User.Controllers
                             var currentFunction =
                                     _functionService.GetByUserAndSiteIncludeGroup(user.Id, NapSettings.Settings.SiteId, NapSettings.Settings.Environment);
                             AppSession.CurrentUser = user;
-                            AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);                           
-                            AppSession.IsSoccerLivePermission = _userService.HasPermissionUserSiteFunctionKey(user.Id, this.SiteId, TGRSFunctionKeys.SoccerLive, Constant.Policy.None);
-                            AppSession.IsSoccerNoneLivePermission = _userService.HasPermissionUserSiteFunctionKey(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive, Constant.Policy.None);
-
+                            AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);
+                            AppSession.IsSoccerLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SoccerLive)) >= (int)Constant.Policy.Read ? true : false;
+                            AppSession.IsSoccerNoneLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive)) >= (int)Constant.Policy.Read ? true : false;
+                            
                             // Config for League Exclusion
                             var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
                             AppSession.IsExcludingLeagues = IsExcludeLeague;

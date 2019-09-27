@@ -197,16 +197,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillRowData(TraderPerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
-            if (contentData.ItemNonLiveList.Any())
-            {
-                FillGroupName(ref writer, ViewLang.MarketNonLive);
-                FillGroupRowData(contentData.ItemNonLiveList, ref writer, isViewScore);
-            }
-
             if (contentData.ItemLiveList.Any())
             {
                 FillGroupName(ref writer, ViewLang.MarketLive);
                 FillGroupRowData(contentData.ItemLiveList, ref writer, isViewScore);
+            }
+
+            if (contentData.ItemNonLiveList.Any())
+            {
+                FillGroupName(ref writer, ViewLang.MarketNonLive);
+                FillGroupRowData(contentData.ItemNonLiveList, ref writer, isViewScore);
             }
 
             // Total row

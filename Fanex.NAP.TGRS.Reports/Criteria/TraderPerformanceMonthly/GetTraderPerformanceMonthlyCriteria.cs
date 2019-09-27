@@ -16,7 +16,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.TraderPerformanceMonthly
 
         public string LeagueName { get; set; }
 
-        public int LiveStatus
+        public int Market
         {
             get
             {

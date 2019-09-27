@@ -313,7 +313,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     }
 
     var renderBetTypePerformanceGridMergeBetTypeToBody = function (data) {
-        var betTypeFormat = '<span class="bettype link bettype-link" data-bettype="{0}">{1}</span>';
+        var betTypeFormat = '<span class="bettype link bettype-link" data-bettype="{0}" data-is-live="{1}" data-bettype-name="{2}">{3}</span>';
         var noOfTradersFormat = '<span class="trader-link link" data-bettype="{0}" data-is-live="{1}" title="{2}">{3}</span>';
         var noOfLeaguesFormat = '<span class="league-link link" data-bettype="{0}" data-is-live="{1}" title="{2}">{3}</span>';
         var noOfTradersCol = '';
@@ -323,18 +323,23 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         var row;
         var betTypeId = '';
         var evenClass = '';
+        var bettypeCounter = 0;
 
         $.each(data.ItemByOrderList, function (index, item) {
-            betTypeCol = betTypeFormat.format(item.BetTypeId, item.BetTypeName);
+            betTypeCol = betTypeFormat.format(item.BetTypeId, item.IsLive, item.BetTypeName, item.IsLive ? labels.MarketLive : labels.MarketNonLive);
             noOfTradersCol = noOfTradersFormat.format(item.BetTypeId, item.IsLive, labels.TraderPerformance, numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
             noOfLeaguesCol = noOfLeaguesFormat.format(item.BetTypeId, item.IsLive, labels.LeaguePerformance, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
             var currentColumms = [];
 
+            if (betTypeId != item.BetTypeId) {
+                bettypeCounter++;
+            }
+
             if (item.FlagForViewReport == 2 && (betTypeId != item.BetTypeId)) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: (index / 2 + index % 2 + 1), MergeRowNumber: 2 },
-                    { Name: 'ColBetType', Value: betTypeCol, MergeRowNumber: 2 },
+                    { Name: 'ColNo', Value: bettypeCounter, MergeRowNumber: 2 },
+                    { Name: 'ColBetType', Value: item.BetTypeName, MergeRowNumber: 2 },
                 );
                 if (evenClass == 'freegrid-even') {
                     evenClass = '';
@@ -345,8 +350,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             }
             else if (item.FlagForViewReport == 1) {
                 currentColumms.push(
-                    { Name: 'ColNo', Value: index + 1 },
-                    { Name: 'ColBetType', Value: betTypeCol },
+                    { Name: 'ColNo', Value: bettypeCounter },
+                    { Name: 'ColBetType', Value: item.BetTypeName },
                 );
                 if (evenClass == 'freegrid-even') {
                     evenClass = '';
@@ -358,7 +363,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             
             row = {                
                 Columns: currentColumms.concat([
-                    { Name: 'ColMarket', Value: item.IsLive ? labels.MarketLive : labels.MarketNonLive },
+                    { Name: 'ColMarket', Value: betTypeCol },
                     { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                     { Name: 'ColNoOfLeagues', Value: noOfLeaguesCol },
                     { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
@@ -382,18 +387,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 Columns: [
                     { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, MergeRowNumber: 2, CellAlign: 'right' },
-                    { Name: 'ColMarket', Value: 'Non - live' },
-                    { Name: 'ColNoOfTraders', Value: numeral(data.TotalItemNonLive.NoOfTraders).format(common.Formats.IntegerFormat) },
-                    { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemNonLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
-                    { Name: 'ColNoOfMatches', Value: data.TotalItemNonLive.NoOfMatches },
-                    { Name: 'ColTurnover', Value: data.TotalItemNonLive.Turnover },
-                    { Name: 'ColAvgTurnoverPerMatch', Value: (data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches) },
-                    { Name: 'ColWinLoss', Value: data.TotalItemNonLive.WinLoss },
-                    { Name: 'ColBetCount', Value: data.TotalItemNonLive.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin, labels.NA) }]
-            },
-            {
-                Columns: [
                     { Name: 'ColMarket', Value: 'Live' },
                     { Name: 'ColNoOfTraders', Value: numeral(data.TotalItemLive.NoOfTraders).format(common.Formats.IntegerFormat) },
                     { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
@@ -403,6 +396,18 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     { Name: 'ColWinLoss', Value: data.TotalItemLive.WinLoss },
                     { Name: 'ColBetCount', Value: data.TotalItemLive.BetCount },
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) }]
+            },
+            {
+                Columns: [
+                    { Name: 'ColMarket', Value: 'Non-Live' },
+                    { Name: 'ColNoOfTraders', Value: numeral(data.TotalItemNonLive.NoOfTraders).format(common.Formats.IntegerFormat) },
+                    { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemNonLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
+                    { Name: 'ColNoOfMatches', Value: data.TotalItemNonLive.NoOfMatches },
+                    { Name: 'ColTurnover', Value: data.TotalItemNonLive.Turnover },
+                    { Name: 'ColAvgTurnoverPerMatch', Value: (data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches) },
+                    { Name: 'ColWinLoss', Value: data.TotalItemNonLive.WinLoss },
+                    { Name: 'ColBetCount', Value: data.TotalItemNonLive.BetCount },
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin, labels.NA) }]
             }
         ];
     }
@@ -491,9 +496,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divBetTypePerformanceGrid.find('span.bettype-link').click(function () {
             var $link = $(this);
             var betTypeId = $link.attr('data-bettype');
-            var betTypeName = $link.text();            
-            
-            getBetChoicePerformanceReport(betTypeId, betTypeName);
+            var isLive = $link.attr('data-is-live');
+            var betTypeName = $link.attr('data-bettype-name');
+            getBetChoicePerformanceReport(betTypeId, betTypeName, isLive);
         });
     };
 
@@ -512,8 +517,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Get betchoice performance on a specific bet type.
-    var getBetChoicePerformanceReport = function (betTypeId, betTypeName) {
+    var getBetChoicePerformanceReport = function (betTypeId, betTypeName, isLive) {
         var betChoicePerformance = {
+            IsLive: isLive,
             BetType: betTypeId,
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate
@@ -527,7 +533,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(betChoicePerformance),
             success: function (result) {
-                renderBetChoicePerformanceGrid(result, betTypeId, betTypeName);
+                renderBetChoicePerformanceGrid(result, betTypeId, betTypeName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -539,8 +545,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render betchoice performance grid.
-    var renderBetChoicePerformanceGrid = function (data, betTypeId, betTypeName) {
-        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+    var renderBetChoicePerformanceGrid = function (data, betTypeId, betTypeName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -573,7 +579,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -673,7 +679,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(traderPerformance),
             success: function (result) {
-                renderTraderPerformanceGrid(result, betTypeId, betTypeName);
+                renderTraderPerformanceGrid(result, betTypeId, betTypeName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -685,7 +691,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render trader performance of a specific bet type grid.
-    var renderTraderPerformanceGrid = function (data, betTypeId, betTypeName) {
+    var renderTraderPerformanceGrid = function (data, betTypeId, betTypeName, isLive) {
         var bodyData = [];
         var footerData = [];       
 
@@ -696,7 +702,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divBetTypePerformanceContainer.addClass('display-none');
-        var gridOptions = renderTraderPerformanceGridOptions(betTypeId, betTypeName);
+        var gridOptions = renderTraderPerformanceGridOptions(betTypeId, betTypeName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
@@ -708,8 +714,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         handleTraderPerformanceGridEvents(betTypeId, betTypeName);
     };
 
-    var renderTraderPerformanceGridOptions = function (betTypeId, betTypeName) {
-        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+    var renderTraderPerformanceGridOptions = function (betTypeId, betTypeName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
@@ -751,7 +757,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -916,7 +922,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 cachedData.MatchPerformance = result.GroupList;
                 cachedData.GrandTotal = result.GrandTotal;
                 cachedData.TotalItems = result.TotalItems;
-                reloadPage(cachedData.PageIndex, cachedData.PageSize, betTypeId, betTypeName, traderId, traderName);
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, betTypeId, betTypeName, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -928,7 +934,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Customize reloading page.
-    var reloadPage = function (pageIndex, pageSize, betTypeId, betTypeName, traderId, traderName) {
+    var reloadPage = function (pageIndex, pageSize, betTypeId, betTypeName, traderId, traderName, isLive) {
         var pageData = [];
         var startIndex = 0;
         var endIndex = 0;
@@ -971,14 +977,14 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
-        renderMatchPerformanceOfTraderGrid(pageData, betTypeId, betTypeName, traderId, traderName);
+        renderMatchPerformanceOfTraderGrid(pageData, betTypeId, betTypeName, traderId, traderName, isLive);
     };
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceOfTraderGrid = function (data, betTypeId, betTypeName, traderId, traderName) {
+    var renderMatchPerformanceOfTraderGrid = function (data, betTypeId, betTypeName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
-                          '<span id="spanTraderLink" class="breadcrumb-link"> >> {1}</span>' +
-                          '<span> >> {2}</span>';
+                          '<span id="spanTraderLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
+                          '<span> >> {3}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
@@ -1007,7 +1013,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName, traderName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, traderName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -1115,7 +1121,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(leaguePerformance),
             success: function (result) {
-                renderLeaguePerformanceGrid(result, betTypeId, betTypeName);
+                renderLeaguePerformanceGrid(result, betTypeId, betTypeName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1127,7 +1133,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render league performance grid.
-    var renderLeaguePerformanceGrid = function (data, betTypeId, betTypeName) {        
+    var renderLeaguePerformanceGrid = function (data, betTypeId, betTypeName, isLive) {        
         var bodyData = [];
         var footerData = [];
 
@@ -1138,15 +1144,15 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divBetTypePerformanceContainer.addClass('display-none');
-        var gridOptions = renderLeaguePerformanceGridOptions(betTypeId, betTypeName);
+        var gridOptions = renderLeaguePerformanceGridOptions(betTypeId, betTypeName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeaguePerformanceGridEvents(betTypeId, betTypeName);
     };
 
-    var renderLeaguePerformanceGridOptions = function (betTypeId, betTypeName) {
-        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+    var renderLeaguePerformanceGridOptions = function (betTypeId, betTypeName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -1178,7 +1184,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1293,7 +1299,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(traderPerformanceParamrters),
             success: function (result) {
-                renderTraderPerformanceOfLeagueGrid(result, betTypeId, betTypeName, leagueId, leagueName);
+                renderTraderPerformanceOfLeagueGrid(result, betTypeId, betTypeName, leagueId, leagueName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1305,7 +1311,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render trader performance of a specific league grid.
-    var renderTraderPerformanceOfLeagueGrid = function (data, betTypeId, betTypeName, leagueId, leagueName) {
+    var renderTraderPerformanceOfLeagueGrid = function (data, betTypeId, betTypeName, leagueId, leagueName, isLive) {
         var bodyData = [];
         var footerData = [];       
 
@@ -1316,7 +1322,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divLeaguePerformanceContainer.addClass('display-none');
-        var gridOptions = renderTraderPerformanceOfLeagueGridOptions(betTypeId, betTypeName, leagueId, leagueName);
+        var gridOptions = renderTraderPerformanceOfLeagueGridOptions(betTypeId, betTypeName, leagueId, leagueName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
@@ -1328,10 +1334,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
     };
 
-    var renderTraderPerformanceOfLeagueGridOptions = function (betTypeId, betTypeName, leagueId, leagueName) {
+    var renderTraderPerformanceOfLeagueGridOptions = function (betTypeId, betTypeName, leagueId, leagueName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
-            '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}</span>' +
-            '<span title="{2}"> >> {3}</span>';
+            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
+            '<span title="{3}"> >> {4}</span>';
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1370,7 +1376,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName, leagueName, trimLeagueName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, trimLeagueName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1529,7 +1535,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(matchPerformanceParamrters),
             success: function (result) {
-                renderMatchPerformanceOfLeagueTraderGrid(result, betTypeId, betTypeName, leagueId, leagueName, traderId, traderName);
+                renderMatchPerformanceOfLeagueTraderGrid(result, betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1541,7 +1547,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceOfLeagueTraderGrid = function (data, betTypeId, betTypeName, leagueId, leagueName, traderId, traderName) {
+    var renderMatchPerformanceOfLeagueTraderGrid = function (data, betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive) {
         var bodyData = [];
         var footerData = [];       
 
@@ -1552,7 +1558,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divTraderPerformanceContainer.addClass('display-none');
-        var gridOptions = renderMatchPerformanceOfLeagueTraderGridOptions(betTypeId, betTypeName, leagueId, leagueName, traderId, traderName);
+        var gridOptions = renderMatchPerformanceOfLeagueTraderGridOptions(betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
@@ -1560,11 +1566,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         handleMatchPerformanceOfLeagueTraderGridEvents();
     };
 
-    var renderMatchPerformanceOfLeagueTraderGridOptions = function (betTypeId, betTypeName, leagueId, leagueName, traderId, traderName) {
+    var renderMatchPerformanceOfLeagueTraderGridOptions = function (betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
-            '<span id="spanLeagueLink" class="breadcrumb-link"> >> {1}</span>' +
-            '<span id="spanTraderLink" class="breadcrumb-link" title="{2}"> >> {3}</span>' +
-            '<span> >> {4}</span>';
+            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
+            '<span id="spanTraderLink" class="breadcrumb-link" title="{3}"> >> {4}</span>' +
+            '<span> >> {5}</span>';
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1594,7 +1600,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, betTypeName, leagueName, trimLeagueName, traderName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, trimLeagueName, traderName)
             },
             showPager: true,
             pagerOption: {

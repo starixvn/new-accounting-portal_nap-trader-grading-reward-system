@@ -163,7 +163,6 @@
   </Function>
   <Function Name="NewDetailReports">
     <Setting Key="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_Grade_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Trader_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype" SpName="TGRS_Rpt_NewPerformanceDetail_League_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_NewPerformanceDetail_BetType" SpName="TGRS_Rpt_NewPerformanceDetail_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

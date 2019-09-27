@@ -153,16 +153,18 @@ Fanex.TGRS.Reports.Trader = function () {
     };
 
     var renderGeneralInfo = function (data) {
-        domElements.divGeneralInfo.css({ display: "block" });
-        domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
-        if (data.Margin != null) {
-            domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat) + "%");
+        if (data != null) {
+            domElements.divGeneralInfo.css({ display: "block" });
+            domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
+            if (data.Margin != null) {
+                domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat) + "%");
+            }
+            else {
+                domElements.lblMargin.text(labels.NA);
+            }
+            domElements.lblTurnOver.text(numeral(data.Turnover).format(common.Formats.DecimalFormat));
+            domElements.lblMatches.text(numeral(data.MatchCount).format(common.Formats.IntegerFormat));
         }
-        else {
-            domElements.lblMargin.text(labels.NA);
-        }
-        domElements.lblTurnOver.text(numeral(data.Turnover).format(common.Formats.DecimalFormat));
-        domElements.lblMatches.text(numeral(data.MatchCount).format(common.Formats.IntegerFormat));
     };
 
     var renderBetTypePerformance = function (data) {
@@ -300,7 +302,7 @@ Fanex.TGRS.Reports.Trader = function () {
         var bodyData = [];
         var footerData = [];
         var row;
-        if (data && data.ItemList.length > 0) {
+        if (data && data.ItemByOrderList.length > 0) {
             $.each(data.ItemList, function (index, item) {
                 var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, labels.MatchPerformance, item.NoOfMatches);
                 row = {

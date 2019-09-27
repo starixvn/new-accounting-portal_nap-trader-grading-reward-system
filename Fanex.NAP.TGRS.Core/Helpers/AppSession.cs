@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         private const string IsExcludingLeaguesKey = "Fanex.NAP.TGRS.Contants.AppSession.IsExcludingLeagues";
         private const string IsSoccerLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerLivePermission";
         private const string IsSoccerNoneLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerNoneLivePermission";
+        private const string CurrentMarketSelectionKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentMarketSelection";
 
         /// <summary>
         ///     Gets or sets current login user.
@@ -130,6 +131,13 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             get { return SessionManager.Get<bool>(IsSoccerNoneLivePermissionKey); }
 
             set { SessionManager.Set(IsSoccerNoneLivePermissionKey, value); }
+        }
+        
+        public static int CurrentMarketSelection
+        {
+            get { return SessionManager.Get<int>(CurrentMarketSelectionKey); }
+
+            set { SessionManager.Set(CurrentMarketSelectionKey, value); }
         }
     }
 }
