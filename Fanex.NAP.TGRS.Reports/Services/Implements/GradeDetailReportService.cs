@@ -172,11 +172,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 };
 
                 IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
-                bettypeDetail = bettypeData.Select(b => new BetTypeDetailItem(b)
+                bettypeDetail = scoreByPeriodData.Any() ? bettypeData.Select(b => new BetTypeDetailItem(b)
                 {
                     Score = scoreByPeriodData.Where(s => s.BetType == b.BetType).First().Score,
                     ScoreByPeriod = scoreByPeriodData.Where(s => s.BetType == b.BetType).ToList().Select(i => new ScoreByPeriodItem(i)).ToList()
-                }).ToList();
+                }).ToList() : new List<BetTypeDetailItem>();
             }
 
             return bettypeDetail;

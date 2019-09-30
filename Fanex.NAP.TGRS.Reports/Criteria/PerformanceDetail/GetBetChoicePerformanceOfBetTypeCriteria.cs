@@ -5,6 +5,22 @@
 
     public class GetBetChoicePerformanceOfBetTypeCriteria : CriteriaBase
     {
+        [SpParam(Ignored = true)]
+        public bool IsLive { get; set; }
+
+        public Int16 Market
+        {
+            get
+            {
+                if (this.IsLive)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
         public short BetType { get; set; }
 
         public DateTime FromDate { get; set; }
