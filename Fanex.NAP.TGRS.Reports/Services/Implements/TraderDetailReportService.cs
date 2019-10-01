@@ -175,7 +175,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             TraderPerformanceList traderData = SessionManager.Get<TraderPerformanceList>(TraderPerformanceDetailReportSessionKey);
 
-            if ((traderData != null) && (traderData.ItemLiveList.Count > 0))
+            if ((traderData != null) && (traderData.ItemLiveList.Count > 0 || traderData.ItemNonLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -188,7 +188,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
-                FillRowData(traderData, ref writer, isViewScore);
+                FillRowData(traderData, criteria.Market, ref writer, isViewScore);
                 writer.SyncColumnsWidth(10);
 
                 if (!isViewScore)
@@ -205,7 +205,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillRowData(TraderPerformanceList contentData, ref ExcelTemplateWriter writer, bool isViewScore)
+        private void FillRowData(TraderPerformanceList contentData, short Market, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
             if (contentData.ItemLiveList.Any())

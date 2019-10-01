@@ -267,7 +267,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             LeaguePerformanceList leagueData = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey);
 
-            if ((leagueData != null) && (leagueData.ItemByOrderList.Count > 0))
+            if ((leagueData != null) && (leagueData.ItemByOrderList.Count > 0 || leagueData.ItemLiveList.Count > 0 || leagueData.ItemNonLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                 ViewLang.PerformanceDetailFileName,
@@ -280,7 +280,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
-                FillRowData(leagueData, ref writer);
+                FillRowData(leagueData, criteria.Market, ref writer);
 
                 writer.SyncColumnsWidth(9);
                 writer.Render();
@@ -337,18 +337,20 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillRowData(LeaguePerformanceList contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(LeaguePerformanceList data, short market, ref ExcelTemplateWriter writer)
         {
             // Content rows
-            int len = contentData.ItemByOrderList.Count;
             LeaguePerformanceItem item;
 
-            var leagueId = contentData.ItemByOrderList[0].LeagueId;
+            var contentData = market == -1 ? data.ItemByOrderList : (market == 1 ? data.ItemLiveList : data.ItemNonLiveList);
+            int len = contentData.Count;
+            var leagueId = contentData[0].LeagueId;
             var leagueCounter = 1;
 
             for (int i = 0; i < len; i++)
             {
-                item = contentData.ItemByOrderList[i];
+                item = contentData[i];
+
                 if(item.LeagueId != leagueId)
                 {
                     leagueCounter++;
@@ -359,7 +361,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 var record = new object[]
                 {
-                    leagueCounter,
+                    i + 1,
                     item.LeagueName,
                     item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
                     item.NoOfTraders,
@@ -374,38 +376,59 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 writer.WriteRow(styleIndex, record);
             }
 
-            // Total row
-            LeaguePerformanceItem total = contentData.TotalItemLive;
-            var totalRecord = new object[]
+            if (market == -1)
             {
-                ViewLang.GrandTotal,
-                null,
-                ViewLang.MarketLive,
-                total.NoOfTraders,
-                total.NoOfMatches,
-                total.Turnover,
-                total.Turnover / total.NoOfMatches,
-                total.WinLoss,
-                total.BetCount,
-                (object)total.Margin ?? ViewLang.NA
-            };
-            writer.WriteRow(6, totalRecord);
+                // Total row
+                LeaguePerformanceItem total = data.TotalItemLive;
+                var totalRecord = new object[]
+                {
+                    ViewLang.GrandTotal,
+                    null,
+                    ViewLang.MarketLive,
+                    total.NoOfTraders,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
 
-            total = contentData.TotalItemNonLive;
-            totalRecord = new object[]
+                total = data.TotalItemNonLive;
+                totalRecord = new object[]
+                {
+                    null,
+                    null,
+                    ViewLang.MarketNonLive,
+                    total.NoOfTraders,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
+            }
+            else
             {
-                null,
-                null,
-                ViewLang.MarketNonLive,
-                total.NoOfTraders,
-                total.NoOfMatches,
-                total.Turnover,
-                total.Turnover / total.NoOfMatches,
-                total.WinLoss,
-                total.BetCount,
-                (object)total.Margin ?? ViewLang.NA
-            };
-            writer.WriteRow(6, totalRecord);
+                LeaguePerformanceItem total = data.Total;
+                var totalRecord = new object[]
+                {
+                    ViewLang.GrandTotal,
+                    null,
+                    market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive,
+                    total.NoOfTraders,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
+            }
         }
 
         /// <summary>

@@ -1009,7 +1009,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         //length of >>: 12
         var trimLeagueName = leagueName.length > 40 ? leagueName.substring(0, 41) : leagueName;
-        var titleLength = 12 + labels.TeamPerformance.length + trimLeagueName.length + traderName.length + teamName.length;
+        var titleLength = 20 + labels.TeamPerformance.length + trimLeagueName.length + traderName.length + teamName.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1057,7 +1057,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.TeamPerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, teamName,
-                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 109 : 89, titleLength, matchName))
+                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 104 : 89, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1721,7 +1721,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {3}</span>' +
                           '<span title="{4}"> >> {5}</span>';
         //length of >>: 12
-        var titleLength = 12 + labels.TeamPerformance.length + teamName.length + traderName.length;
+        var titleLength = 12 + labels.TeamPerformance.length + teamName.length + traderName.length + 20;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
             {

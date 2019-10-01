@@ -205,7 +205,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
 
-            if ((betTypeData != null) && (betTypeData.ItemByOrderList.Count > 0))
+            if ((betTypeData != null) && (betTypeData.ItemByOrderList.Count > 0 || betTypeData.ItemLiveList.Count > 0 || betTypeData.ItemNonLiveList.Count > 0))
             {
                 string reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
@@ -218,7 +218,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 3);
-                FillRowData(betTypeData, ref writer);
+                FillRowData(betTypeData, criteria.Market, ref writer);
                 writer.SyncColumnsWidth(9);
                 writer.Render();
             }
@@ -229,18 +229,19 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="contentData">The content data.</param>
         /// <param name="writer">The writer that is used to write Excel content.</param>
-        private void FillRowData(BetTypePerformanceList contentData, ref ExcelTemplateWriter writer)
+        private void FillRowData(BetTypePerformanceList data, short market, ref ExcelTemplateWriter writer)
         {
             // Content rows
-            int len = contentData.ItemByOrderList.Count;
             BetTypePerformanceItem item;
 
-            var bettypeId = contentData.ItemByOrderList[0].BetTypeId;
+            var contentData = market == -1 ? data.ItemByOrderList : (market == 1 ? data.ItemLiveList : data.ItemNonLiveList);
+            int len = contentData.Count;
+            var bettypeId = contentData[0].BetTypeId;
             var bettypeCounter = 1;
 
             for (int i = 0; i < len; i++)
             {
-                item = contentData.ItemByOrderList[i];
+                item = contentData[i];
 
                 if (item.BetTypeId != bettypeId)
                 {
@@ -252,7 +253,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 var record = new object[]
                 {
-                    bettypeCounter,
+                    i + 1,
                     item.BetTypeName,
                     item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
                     item.NoOfTraders,
@@ -268,40 +269,62 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 writer.WriteRow(styleIndex, record);
             }
 
-            // Total row
-            BetTypePerformanceItem total = contentData.TotalItemLive;
-            var totalRecord = new object[]
+            if (market == -1)
             {
-                ViewLang.GrandTotal,
-                null,
-                ViewLang.MarketLive,
-                total.NoOfTraders,
-                total.NoOfLeagues,
-                total.NoOfMatches,
-                total.Turnover,
-                total.Turnover / total.NoOfMatches,
-                total.WinLoss,
-                total.BetCount,
-                (object)total.Margin ?? ViewLang.NA
-            };
-            writer.WriteRow(6, totalRecord);
+                // Total row
+                BetTypePerformanceItem total = data.TotalItemLive;
+                var totalRecord = new object[]
+                {
+                    ViewLang.GrandTotal,
+                    null,
+                    ViewLang.MarketLive,
+                    total.NoOfTraders,
+                    total.NoOfLeagues,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
 
-            total = contentData.TotalItemNonLive;
-            totalRecord = new object[]
+                total = data.TotalItemNonLive;
+                totalRecord = new object[]
+                {
+                    null,
+                    null,
+                    ViewLang.MarketNonLive,
+                    total.NoOfTraders,
+                    total.NoOfLeagues,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
+            }
+            else
             {
-                null,
-                null,
-                ViewLang.MarketNonLive,
-                total.NoOfTraders,
-                total.NoOfLeagues,
-                total.NoOfMatches,
-                total.Turnover,
-                total.Turnover / total.NoOfMatches,
-                total.WinLoss,
-                total.BetCount,
-                (object)total.Margin ?? ViewLang.NA
-            };
-            writer.WriteRow(6, totalRecord);
+                BetTypePerformanceItem total = data.Total;
+                var totalRecord = new object[]
+                {
+                    ViewLang.GrandTotal,
+                    null,
+                    market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive,
+                    total.NoOfTraders,
+                    total.NoOfLeagues,
+                    total.NoOfMatches,
+                    total.Turnover,
+                    total.Turnover / total.NoOfMatches,
+                    total.WinLoss,
+                    total.BetCount,
+                    (object)total.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
+            }
         }
 
         /// <summary>

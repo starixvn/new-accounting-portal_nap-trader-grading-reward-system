@@ -321,7 +321,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
         var row;    
         var leagueId = '';
         var evenClass = '';
-        var leagueCounter = 0;
+        var rowIndex = 1;
 
 
         $.each(data.ItemByOrderList, function (index, item) {
@@ -336,14 +336,6 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             var currentColumms = [];
 
             if (leagueId != item.LeagueId) {
-                leagueCounter++;
-            }
-            
-            if (item.FlagForViewReport == 2 && (leagueId != item.LeagueId)) {
-                currentColumms.push(
-                    { Name: 'ColNo', Value: leagueCounter, MergeRowNumber: 2 },
-                    { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name', MergeRowNumber: 2 }
-                );
                 if (evenClass == 'freegrid-even') {
                     evenClass = '';
                 }
@@ -351,20 +343,11 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                     evenClass = 'freegrid-even';
                 }
             }
-            else if (item.FlagForViewReport == 1) {
-                currentColumms.push(
-                    { Name: 'ColNo', Value: leagueCounter },
-                    { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' }
-                );
-                if (evenClass == 'freegrid-even') {
-                    evenClass = '';
-                }
-                else {
-                    evenClass = 'freegrid-even';
-                }
-            }
+
             row = {
                 Columns: currentColumms.concat([
+                    { Name: 'ColNo', Value: rowIndex++ },
+                    { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
                     { Name: 'ColMarket', Value: item.IsLive ? labels.MarketLive : labels.MarketNonLive },
                     { Name: 'ColNoOfTraders', Value: noOfTradersCol },
                     { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
@@ -940,7 +923,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {3}</span>' +
                           '<span title="{4}"> >> {5}</span>';
         //length of >>: 12
-        var titleLength = 12 + labels.LeaguePerformance.length + leagueName.length + traderName.length + matchName.length + 20;
+        var titleLength = 12 + labels.LeaguePerformance.length + leagueName.length + traderName.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },

@@ -1268,7 +1268,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> {4}</span>' +
                           '<span title="{5}"> >> {6}</span>';
         //length of >>: 14
-        var titleLength = 14 + labels.GradePerformance.length + labels.Grade.length + traderName.length + grade.toString().length;
+        var titleLength = 14 + labels.GradePerformance.length + labels.Grade.length + traderName.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1610,7 +1610,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         //length of >>: 14
         var trimLeagueName = leagueName.length > 40 ? leagueName.substring(0, 41) : leagueName;
-        var titleLength = 14 + labels.GradePerformance.length + trimLeagueName.length + traderName.length + grade.toString().length + labels.Grade.length;
+        var titleLength = 20 + labels.GradePerformance.length + trimLeagueName.length + traderName.length + grade.toString().length + labels.Grade.length;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1658,7 +1658,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade,
-                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 109 : 89, titleLength, matchName))
+                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 100 : 89, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
