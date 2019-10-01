@@ -302,8 +302,8 @@ Fanex.TGRS.Reports.Trader = function () {
         var bodyData = [];
         var footerData = [];
         var row;
-        if (data && data.ItemByOrderList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
+        if (data && data.ItemLiveList.length > 0) {
+            $.each(data.ItemLiveList, function (index, item) {
                 var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, labels.MatchPerformance, item.NoOfMatches);
                 row = {
                     Columns: [{ Name: 'ColNo' },

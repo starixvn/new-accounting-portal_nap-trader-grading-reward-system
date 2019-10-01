@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetBettypeDetailGrade.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetBettypeDetailGradeCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
     /// <summary>
     /// Getting bet type detail from league detail report.
     /// </summary>
-    public class GetBettypeDetailGrade : CriteriaBase
+    public class GetBettypeDetailGradeCriteria : CriteriaBase
     {
         [SpParam(Ignored = true)]
         public bool IsLive { get; set; }

@@ -123,7 +123,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of bet type detail objects.</returns>
-        IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGrade criteria);
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGradeCriteria criteria);
 
         /// <summary>
         /// Export Grade Performance to excel.
@@ -180,7 +180,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of bet type detail objects.</returns>
-        IEnumerable<BetTypeDetailItem> GetBettypeDetailTeam(GetBettypeDetailTeam criteria);
+        IEnumerable<BetTypeDetailItem> GetBettypeDetailTeam(GetBettypeDetailTeamCriteria criteria);
 
         /// <summary>
         /// Export Team Performance to excel.

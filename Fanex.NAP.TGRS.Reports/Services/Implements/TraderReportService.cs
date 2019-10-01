@@ -37,7 +37,7 @@
             {
                 foreach (LeaguePerformanceInfo item in leagueData)
                 {
-                    leaguePerformance.ItemByOrderList.Add(new LeaguePerformanceItem(item));
+                    leaguePerformance.ItemLiveList.Add(new LeaguePerformanceItem(item));
                 }
 
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
@@ -55,7 +55,7 @@
             {
                 foreach (MatchPerformanceInfo match in matchData)
                 {
-                    //matchPerformance.item(new MatchPerformanceItem(match));
+                    matchPerformance.ItemLiveList.Add(new MatchPerformanceItem(match));
                 }
 
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
