@@ -713,7 +713,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> ({1}) {2}</span>' +
                           '<span title="{3}"> >> {4}</span>';
         //length of >>: 8
-        var titleLength = 8 + labels.TraderPerformance.length + traderName.length;
+        var titleLength = 8 + labels.TraderPerformance.length + traderName.length + 10;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -742,7 +742,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.TraderPerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, traderName, matchName, shortenName(common.HasViewScorePermission ? 120 : 100, titleLength, matchName))
+                text: titleFormat.format(labels.TraderPerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, traderName, matchName, shortenName(common.HasViewScorePermission ? 115 : 100, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {

@@ -1297,7 +1297,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, traderName, matchName, shortenName(common.HasViewScorePermission ? 119 : 99, titleLength, matchName))
+                text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade, traderName, matchName, shortenName(common.HasViewScorePermission ? 100 : 99, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1658,7 +1658,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.GradePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, labels.Grade, grade,
-                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 100 : 89, titleLength, matchName))
+                    leagueName, trimLeagueName, traderName, matchName, shortenName(common.HasViewScorePermission ? 90 : 89, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {

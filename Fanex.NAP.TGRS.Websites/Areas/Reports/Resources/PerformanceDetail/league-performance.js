@@ -1237,7 +1237,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                           '<span id="spanMatchLink"  class="breadcrumb-link"> >> ({1}) {2}</span>' +
                           '<span title="{3}"> >> {4}</span>';
         //length of >>: 8
-        var titleLength = 8 + labels.LeaguePerformance.length + leagueName.length;
+        var titleLength = 8 + labels.LeaguePerformance.length + leagueName.length + 10;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -1280,7 +1280,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, leagueName, matchName, shortenName(98, titleLength, matchName))
+                text: titleFormat.format(labels.LeaguePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, leagueName, matchName, shortenName(90, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
