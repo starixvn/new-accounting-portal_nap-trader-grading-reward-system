@@ -1354,6 +1354,13 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.BetTypePerformance = function () {
             titleInfo: {
                 text: titleFormat.format(labels.BetTypePerformance, betTypeName, leagueName, trimLeagueName, traderName)
             },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleMatchPerformanceOfLeagueTraderGridEvents();
+
+                    return rows;
+                }
+            },
             showPager: true,
             pagerOption: {
                 currentPage: 0,

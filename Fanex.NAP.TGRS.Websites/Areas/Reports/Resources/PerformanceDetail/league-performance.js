@@ -262,23 +262,23 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 },
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true
                 },
                 {
                     HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true
                 },
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
                 },
                 {
                     HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.IntegerFormat
+                    FormatNumber: common.Formats.IntegerFormat, Sort: true
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
                 }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -289,6 +289,17 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 }
             },
             sortOption: {
+                beforeGridSorted: function (rows) {
+                    var rowsCount = rows.length;
+
+                    for (var i = 0; i < rowsCount; i++)
+                    {
+                        rows[i].CssClass = (i % 2 == 0) ? "" : "freegrid-even";
+                    }
+
+                    return rows;
+                },
+
                 afterGridSorted: function (rows) {
                     handleLeaguePerformanceGridEvents();
 

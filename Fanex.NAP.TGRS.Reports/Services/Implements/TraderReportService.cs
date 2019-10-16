@@ -35,11 +35,7 @@
 
             if (leagueData != null && leagueData.Any())
             {
-                foreach (LeaguePerformanceInfo item in leagueData)
-                {
-                    leaguePerformance.ItemLiveList.Add(new LeaguePerformanceItem(item));
-                }
-
+                leaguePerformance.AddLeagueList(leagueData, true);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
             }
 
@@ -53,13 +49,7 @@
 
             if (matchData != null && matchData.Any())
             {
-                foreach (MatchPerformanceInfo match in matchData)
-                {
-                    matchPerformance.ItemLiveList.Add(new MatchPerformanceItem(match));
-                }
-
-                matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
-
+                matchPerformance.AddMatchList(matchData, true);
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
             }
 

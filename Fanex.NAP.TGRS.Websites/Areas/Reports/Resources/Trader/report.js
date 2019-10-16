@@ -501,8 +501,8 @@ Fanex.TGRS.Reports.Trader = function () {
         var footerData = [];
         var row;
 
-        if (data && data.ItemList.length > 0) {
-            $.each(data.ItemList, function (index, item) {
+        if (data && data.ItemLiveList.length > 0) {
+            $.each(data.ItemLiveList, function (index, item) {
                 matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.EventDate, item.MatchName);
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },

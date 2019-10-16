@@ -17,6 +17,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
+    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
@@ -122,6 +123,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
                     var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
                     AppSession.IsExcludingLeagues = IsExcludeLeague;
+                    AppSession.IsSoccerLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SoccerLive)) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsSoccerNoneLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive)) >= (int)Constant.Policy.Read ? true : false;
 
                     if (this.SiteId != 0)
                     {

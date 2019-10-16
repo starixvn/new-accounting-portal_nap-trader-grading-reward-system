@@ -579,6 +579,7 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
 
             getMatchPerformanceReport(leagueId, leagueName, traderId, traderName);
         });
+
         domElements.divTraderPerformanceContainer.find('#spanLeagueLink').click(function () {
             showLeaguePerformanceReport();
         });
@@ -691,6 +692,12 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
             showTitle: true,
             titleInfo: {
                 text: titleFormat.format(labels.LeaguePerformance, leagueName, traderName)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleMatchPerformanceGridEvents(leagueId, leagueName, traderId, traderName);
+                    return rows;
+                }
             },
             showPager: true,
             pagerOption: {
@@ -1117,6 +1124,13 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
             titleInfo: {
                 text: titleFormat.format(labels.LeaguePerformance, leagueName)
             },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleMatchPerformanceOfLeagueGridEvents(leagueId, leagueName);
+
+                    return rows;
+                }
+            },
             showPager: true,
             pagerOption: {
                 currentPage: 0,
@@ -1189,8 +1203,6 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceOfLeagueGrid.fanexGrid(gridOptions);
-        handleMatchPerformanceOfLeagueGridEvents(leagueId, leagueName);
-
         handleMatchPerformanceOfLeagueGridEvents(leagueId, leagueName);
     };
 
@@ -1420,6 +1432,13 @@ Fanex.NAP.TGRS.ActualRatePerformanceDetail.LeaguePerformance = function () {
 
         domElements.divBettypePerformanceOfLeagueMatchContainer.find('#spanMatchLink').click(function () {
             showMatchPerformanceOfLeagueReport();
+        });
+
+        domElements.divMatchPerformanceOfLeagueContainer.find('.bettype-detail-link').click(function () {
+            var $link = $(this);
+            var matchId = $link.attr('data-match-id');
+            var matchName = $link.text();
+            getBettypeOfLeagueMatchDetailReport(leagueId, leagueName, matchId, matchName);
         });
     };
 

@@ -583,6 +583,7 @@ Fanex.TGRS.TraderManagement = function () {
             ddlDiv.append($('<option></option>').attr('value', i).text(i));
         }
         ddlDiv.append($('<option></option>').attr('value', 200).text("200"));
+        ddlDiv.append($('<option></option>').attr('value', 255).text("255"));
 
         //auto select val
         if (isAutoSelect || selectVal !== defaultSelectVal) {
