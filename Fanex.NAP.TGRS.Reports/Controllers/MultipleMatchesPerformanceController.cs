@@ -3,15 +3,13 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
-    using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Configurations;    
     using Fanex.NAP.TGRS.Reports.Services;
+    using Fanex.NAP.TGRS.Reports.Criteria.MultipleMatchesPerformance;
     using Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance;
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using System.Web.Mvc;
-
+  
     public class MultipleMatchesPerformanceController : TGRSBaseController
     {
         private readonly IMultipleMatchesReportService _traderReportService;
@@ -55,23 +53,37 @@
         }
 
         /// <summary>
-        /// Gets initialized data for index page.
+        /// Gets the trader performance.
         /// </summary>
-        /// <returns>List of JSON objects represents the team list and grade list.</returns>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the trader performance data.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Reviewed.")]
-        public JsonResult GetDefaultBettypes()
+        [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
+        public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            IEnumerable<BetTypeItem> betTypes = this._traderReportService.GetBetTypesFromSession(CurrentSession.UserId);
+            var traderPerformance = this._traderReportService.GetTraderPerformance(criteria);
+            var jsonResult = Json(traderPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
 
-            return Json(new
-            {
-                DefaultBettypes = from betType in betTypes where betType.IsDefaultCheck select betType.BetTypeId
-            });
+            return jsonResult;
         }
 
-        #endregion
+        /// <summary>
+        /// Gets the match performance of a trader.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the match performance of a trader data.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
+        {
+            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria);
+            var jsonResult = Json(martchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
 
+            return jsonResult;
+        }
+       
+        #endregion
     }
 }

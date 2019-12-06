@@ -182,7 +182,8 @@
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
-    <Compile Include="Criteria\MultipleMatchesPerformance\GetBetTypesCriteria.cs" />
+    <Compile Include="Criteria\MultipleMatchesPerformance\GetMatchPerformanceOfTraderCriteria.cs" />
+    <Compile Include="Criteria\MultipleMatchesPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailLeagueCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailTeamCriteria.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Models\BettypeMonthlyPerformance\SummaryList.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\MultipleMatchesPerformance\BetTypeInfo.cs" />
+    <Compile Include="Models\MultipleMatchesPerformance\TraderPerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\GradeTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\TeamTraderMatchBettypePerformanceInfo.cs" />
     <Compile Include="Models\NewPerformanceDetail\TeamTraderMatchPerformanceInfo.cs" />
@@ -380,7 +382,12 @@
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
-    <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceGroup.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceInfo.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceItem.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceList.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceItem.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceList.cs" />
