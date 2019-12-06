@@ -2,8 +2,10 @@
 {
     using DataReportService;
     using Fanex.Data;
-    using System.Collections.Generic;
+    using Fanex.NAP.TGRS.WebAPI.InputModel;
+    using System;
     using System.Linq;
+    using System.Net.Http;
 
     internal class Program
     {
@@ -15,6 +17,7 @@
                 .UseDefaultDbSettingProvider(resourcePath: "~/App_Data", enableWatching: true)
                 .Run();
 
+            /*
             var data = DataCaptureSerivce.GetChangedData();
 
             var result = new Queue<string>();
@@ -28,6 +31,29 @@
             System.Console.WriteLine(str);
 
             System.Console.ReadLine();
+            */
+
+            var criteria = new TraderPerformanceParam
+            {
+                FromDate = DateTime.Now,
+                ToDate = DateTime.Now,
+                TraderIds = "",
+                MajorBettypeIds = ""
+            };
+
+            using (var client = new HttpClient())
+            {/*
+                client.GetAsync<TraderPerformanceParam>("http://localhost:57579/TGRS/Trader/GetPerformanceDetails?FromDate");
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<TraderPerformanceParam>("http://localhost:57579/TGRS/Trader/GetPerformanceDetails", criteria);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var a = 1;
+                }*/
+            }
         }
     }
 }
