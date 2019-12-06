@@ -396,6 +396,8 @@
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
+    <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\multiple-matches-performance-helper.js" />
+    <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\grade-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\league-performance.js" />
@@ -617,6 +619,8 @@
     <Content Include="Areas\OSReports\Views\OSTraderReport\Filter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSTraderReport\Index.cshtml" />
     <Content Include="Areas\Reports\Views\PerformanceDetail\NoPermission.cshtml" />
+    <Content Include="Areas\Reports\Views\MultipleMatchesPerformance\TraderPerformance.cshtml" />
+    <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\multiple-matches-performance.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -690,7 +694,9 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Reports\ExcelTemplates\MultipleMatchesPerformance\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

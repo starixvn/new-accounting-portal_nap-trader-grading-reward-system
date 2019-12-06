@@ -1015,6 +1015,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiple Matches.
+        /// </summary>
+        public static string MultipleMatches {
+            get {
+                return ResourceManager.GetString("MultipleMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple Matches Performance.
+        /// </summary>
+        public static string MultipleMatchesPerformance {
+            get {
+                return ResourceManager.GetString("MultipleMatchesPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N/A.
         /// </summary>
         public static string NA {
@@ -1578,6 +1596,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summary.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         

@@ -741,4 +741,13 @@
   <data name="MarketNonLive" xml:space="preserve">
     <value>Non-Live</value>
   </data>
+  <data name="MultipleMatchesPerformance" xml:space="preserve">
+    <value>Multiple Matches Performance</value>
+  </data>
+  <data name="MultipleMatches" xml:space="preserve">
+    <value>Multiple Matches</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
 </root>

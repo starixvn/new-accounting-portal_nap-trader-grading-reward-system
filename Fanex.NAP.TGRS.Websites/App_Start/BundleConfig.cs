@@ -266,6 +266,14 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.Add(new ScriptBundle("~/scripts/bettypeMonthlyPerformance").Include(
                     "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
                     "~/Areas/Reports/Resources/bettypeMonthlyPerformance/*.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/multipleMatchesTraderPerformance",                
+                "~/Areas/Reports/Resources/MultipleMatchesPerformance/multiple-matches-performance.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/multipleMatchesTraderPerformance").Include(
+                "~/Areas/Reports/Resources/MultipleMatchesPerformance/multiple-matches-performance-helper.js",
+                "~/Areas/Reports/Resources/MultipleMatchesPerformance/trader-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

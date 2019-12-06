@@ -24,110 +24,112 @@ public static class TGRSFunctionKeys
 {
     public const string Administration = "Administration";
 
-        public const string AssignFunctionToGroup = "AssignFunctionToGroup";
+    public const string AssignFunctionToGroup = "AssignFunctionToGroup";
 
-        public const string AssignFunctionToUser = "AssignFunctionToUser";
+    public const string AssignFunctionToUser = "AssignFunctionToUser";
 
-        public const string AssignSiteToUser = "AssignSiteToUser";
+    public const string AssignSiteToUser = "AssignSiteToUser";
 
-        public const string BenchmarkManagement = "BenchmarkManagement";
+    public const string BenchmarkManagement = "BenchmarkManagement";
 
-        public const string BettypeManagement = "BettypeManagement";
+    public const string BettypeManagement = "BettypeManagement";
 
-        public const string BettypeMonthlyPerformance = "BettypeMonthlyPerformance";
+    public const string BettypeMonthlyPerformance = "BettypeMonthlyPerformance";
 
-        public const string Configuration = "Configuration";
+    public const string Configuration = "Configuration";
 
-        public const string Dashboard_Majorbettypes = "Dashboard_Majorbettypes";
+    public const string Dashboard_Majorbettypes = "Dashboard_Majorbettypes";
 
-        public const string Dashboard_PHbettypes = "Dashboard_PHbettypes";
+    public const string Dashboard_PHbettypes = "Dashboard_PHbettypes";
 
-        public const string ManageFunction = "ManageFunction";
+    public const string ManageFunction = "ManageFunction";
 
-        public const string ManageGroup = "ManageGroup";
+    public const string ManageGroup = "ManageGroup";
 
-        public const string ManageMenu = "ManageMenu";
+    public const string ManageMenu = "ManageMenu";
 
-        public const string ManageUser = "ManageUser";
+    public const string ManageUser = "ManageUser";
 
-        public const string OSAdministration = "OSAdministration";
+    public const string OSAdministration = "OSAdministration";
 
-        public const string OSConfiguration = "OSConfiguration";
+    public const string OSConfiguration = "OSConfiguration";
 
-        public const string OSEPADeductionManagement = "OSEPADeductionManagement";
+    public const string OSEPADeductionManagement = "OSEPADeductionManagement";
 
-        public const string OSErrorManagement = "OSErrorManagement";
+    public const string OSErrorManagement = "OSErrorManagement";
 
-        public const string OSGradeManagement = "OSGradeManagement";
+    public const string OSGradeManagement = "OSGradeManagement";
 
-        public const string OSLeagueRegionManagement = "OSLeagueRegionManagement";
+    public const string OSLeagueRegionManagement = "OSLeagueRegionManagement";
 
-        public const string OSPerformanceSummary = "OSPerformanceSummary";
+    public const string OSPerformanceSummary = "OSPerformanceSummary";
 
-        public const string OSRegionManagement = "OSRegionManagement";
+    public const string OSRegionManagement = "OSRegionManagement";
 
-        public const string OSReports = "OSReports";
+    public const string OSReports = "OSReports";
 
-        public const string OSScoreConfirmation = "OSScoreConfirmation";
+    public const string OSScoreConfirmation = "OSScoreConfirmation";
 
-        public const string OSScoreHistory = "OSScoreHistory";
+    public const string OSScoreHistory = "OSScoreHistory";
 
-        public const string OSSetting = "OSSetting";
+    public const string OSSetting = "OSSetting";
 
-        public const string OSSportPerformance = "OSSportPerformance";
+    public const string OSSportPerformance = "OSSportPerformance";
 
-        public const string OSTeamManagement = "OSTeamManagement";
+    public const string OSTeamManagement = "OSTeamManagement";
 
-        public const string OSTraderManagement = "OSTraderManagement";
+    public const string OSTraderManagement = "OSTraderManagement";
 
-        public const string OSTraderPerformance = "OSTraderPerformance";
+    public const string OSTraderPerformance = "OSTraderPerformance";
 
-        public const string OSTraderReportAdmin = "OSTraderReportAdmin";
+    public const string OSTraderReportAdmin = "OSTraderReportAdmin";
 
-        public const string OSTraderReport = "OSTraderReport";
+    public const string OSTraderReport = "OSTraderReport";
 
-        public const string PerformanceDetail = "PerformanceDetail";
+    public const string PerformanceDetail = "PerformanceDetail";
 
-        public const string PerformanceDetail_Majorbettypes = "PerformanceDetail_Majorbettypes";
+    public const string PerformanceDetail_Majorbettypes = "PerformanceDetail_Majorbettypes";
 
-        public const string PerformanceDetail_PHbettypes = "PerformanceDetail_PHbettypes";
+    public const string PerformanceDetail_PHbettypes = "PerformanceDetail_PHbettypes";
 
-        public const string PerformanceSummary = "PerformanceSummary";
+    public const string PerformanceSummary = "PerformanceSummary";
 
-        public const string PerformanceSummary_Majorbettypes = "PerformanceSummary_Majorbettypes";
+    public const string PerformanceSummary_Majorbettypes = "PerformanceSummary_Majorbettypes";
 
-        public const string PerformanceSummary_PHbettypes = "PerformanceSummary_PHbettypes";
+    public const string PerformanceSummary_PHbettypes = "PerformanceSummary_PHbettypes";
 
-        public const string PerformanceDetailActualRate = "PerformanceDetailActualRate";
+    public const string PerformanceDetailActualRate = "PerformanceDetailActualRate";
 
-        public const string Reports = "Reports";
+    public const string Reports = "Reports";
 
-        public const string ScoreViewing = "ScoreViewing";
+    public const string ScoreViewing = "ScoreViewing";
 
-        public const string SpreadManagement = "SpreadManagement";
+    public const string SpreadManagement = "SpreadManagement";
 
-        public const string SystemConfiguration = "SystemConfiguration";
+    public const string SystemConfiguration = "SystemConfiguration";
 
-        public const string TargetedMargin = "TargetedMargin";
+    public const string TargetedMargin = "TargetedMargin";
 
-        public const string TeamManagement = "TeamManagement";
+    public const string TeamManagement = "TeamManagement";
 
-        public const string TraderManagement = "TraderManagement";
+    public const string TraderManagement = "TraderManagement";
 
-        public const string TraderPerformanceMonthly = "TraderPerformanceMonthly";
+    public const string TraderPerformanceMonthly = "TraderPerformanceMonthly";
 
-        public const string TraderReport = "TraderReport";
+    public const string TraderReport = "TraderReport";
 
-        public const string TraderReportAdmin = "TraderReportAdmin";
+    public const string TraderReportAdmin = "TraderReportAdmin";
 
-        public const string TraderReportAdmin_Majorbettypes = "TraderReportAdmin_Majorbettypes";
+    public const string TraderReportAdmin_Majorbettypes = "TraderReportAdmin_Majorbettypes";
 
-        public const string TraderReportAdmin_PHbettypes = "TraderReportAdmin_PHbettypes";
+    public const string TraderReportAdmin_PHbettypes = "TraderReportAdmin_PHbettypes";
 
-        public const string LeagueExclusion = "LeagueExclusion";
+    public const string LeagueExclusion = "LeagueExclusion";
 
-        public const string SoccerLive = "SoccerLive";
+    public const string SoccerLive = "SoccerLive";
 
-        public const string SoccerNonLive = "SoccerNonLive";
-    }
+    public const string SoccerNonLive = "SoccerNonLive";
+
+    public const string MultipleMatchesPerformance = "MultipleMatchesPerformance";
+}
  
