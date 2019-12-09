@@ -182,6 +182,7 @@
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
+    <Compile Include="Criteria\MultipleMatchesPerformance\GetBettypeDetailOfTraderCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetMatchPerformanceOfTraderCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\NewPerformanceDetail\GetBettypeDetailGradeCriteria.cs" />
@@ -382,8 +383,10 @@
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />
+    <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeList.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceGroup.cs" />
-    <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceInfo.cs" />
+    <Compile Include="Models\MultipleMatchesPerformance\MatchPerformanceInfo.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\MatchPerformanceList.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceItem.cs" />

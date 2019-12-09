@@ -6,12 +6,13 @@
     using Fanex.NAP.TGRS.Core.Configurations;    
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.Criteria.MultipleMatchesPerformance;
-    using Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance;
     using System;
     using System.Web.Mvc;
-  
+
     public class MultipleMatchesPerformanceController : TGRSBaseController
     {
+        #region Attributes and Constructors
+        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\MultipleMatchesPerformance\TraderPerformance.xls";
         private readonly IMultipleMatchesReportService _traderReportService;
 
         [Simplect.Attribute.InjectObject]
@@ -30,6 +31,7 @@
         {
             this._traderReportService = traderReportService ?? new MultipleMatchesTraderReportService();
         }
+        #endregion Attributes and Constructors
 
         #region Trader Performance
         /// <summary>
@@ -69,12 +71,27 @@
         }
 
         /// <summary>
+        /// Exports the trader performance.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>Excel file.</returns>
+        [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
+        public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
+        {
+            var templatePath = Server.MapPath(TraderPerformanceDetail);
+
+            this._traderReportService.ExportTraderPerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        /// <summary>
         /// Gets the match performance of a trader.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>JSON object contains the match performance of a trader data.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
         {
             var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria);
@@ -83,7 +100,22 @@
 
             return jsonResult;
         }
-       
+
+        /// <summary>
+        /// Gets bet type detail from trader report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>JSON object contains the bet type detail.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
+        public JsonResult GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria)
+        {            
+            var  bettypeDetail = this._traderReportService.GetBettypeTrader(criteria);
+            var jsonResult = Json(bettypeDetail);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
         #endregion
     }
 }

@@ -750,4 +750,7 @@
   <data name="Summary" xml:space="preserve">
     <value>Summary</value>
   </data>
+  <data name="MultipleMatchesPerformanceTraderFileName" xml:space="preserve">
+    <value>Multiple_Matches_Performance_Trader</value>
+  </data>
 </root>

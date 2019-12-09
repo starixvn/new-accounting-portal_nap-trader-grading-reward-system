@@ -21,7 +21,7 @@
                 this.Turnover = 4000;
                 this.WinLoss = 375;
                 this.BetCount = 6200;
-                this.Margin = Converter.ToDecimal(1.25);
+                this.Margin = Converter.ToDecimal(2.5);
                 this.FrequencyCust = traderData.FrequencyCust;
             }
         }

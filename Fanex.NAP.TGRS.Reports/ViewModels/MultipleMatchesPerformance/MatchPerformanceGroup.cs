@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.NAP.TGRS.Core.Helpers;    
+    using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
 
     /// <summary>
     /// Match performance group view model.
@@ -17,13 +17,28 @@
             this.Total = new MatchPerformanceItem();
         }
 
-        public MatchPerformanceGroup(string matchGroup)
+        public MatchPerformanceGroup(string matchGroupKey)
             : this()
         {
-            this.MatchGroup = matchGroup;
+            this.MatchGroupKey = matchGroupKey;
         }
 
-        public string MatchGroup { get; set; }        
+        public string MatchGroupKey { get; set; }
+
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
+
+        public string MatchGroupValue
+        {
+            get
+            {
+                var fromValue = this.FromDate.HasValue ? this.FromDate.Value.ToShortDateString() : string.Empty;
+                var toValue = this.ToDate.HasValue ? this.ToDate.Value.ToShortDateString() : string.Empty;
+
+                return fromValue + " - " + toValue;
+            }
+        }
 
         public ICollection<MatchPerformanceItem> ItemList { get; set; }
 
@@ -35,8 +50,21 @@
             {
                 if (item != null)
                 {
+                    this.ArrangeRangeDate(item);
                     this.AddItem(new MatchPerformanceItem(item));
                 }
+            }
+        }
+
+        private void ArrangeRangeDate(MatchPerformanceInfo item)
+        {
+            if (this.FromDate == null || this.FromDate > item.FromDate)
+            {
+                this.FromDate = item.FromDate;
+            }
+            if (this.ToDate == null || this.ToDate < item.ToDate)
+            {
+                this.ToDate = item.ToDate;
             }
         }
 

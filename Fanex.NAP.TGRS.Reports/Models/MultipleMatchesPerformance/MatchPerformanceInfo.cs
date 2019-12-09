@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance
+﻿namespace Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance
 {
     using System;
 
     public class MatchPerformanceInfo
     {
-        public string MatchGroup { get; set; }
+        public string MatchGroupKey { get; set; }
 
         public int? MatchId { get; set; }
 
@@ -24,6 +24,6 @@
 
         public int? BetCount { get; set; }
 
-        public decimal? Margin { get; set; }        
+        public decimal? Margin { get; set; }
     }
 }
