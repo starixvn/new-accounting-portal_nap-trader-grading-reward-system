@@ -12,6 +12,18 @@
 
         public DateTime ToDate { get; set; }
 
+        public string GradeIds { get; set; }
+
+        public string TeamIds { get; set; }
+
+        public string Bettypes { get; set; }
+
+        public string MultipleMatches { get; set; }
+
+        public bool IsExcludeLeagues { get; set; }
+
+        public bool Market => true;
+
         public override string GetSettingKey()
             => "TGRS_Rpt_MultipleMatches";
 

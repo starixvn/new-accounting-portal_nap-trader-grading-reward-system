@@ -20,49 +20,57 @@
     {
         private const string MultipleMatchesTraderPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.TraderPerformance";
         private const int PointInPixel = 225;
+     
+        public IEnumerable<TeamItem> GetTeams()
+        {
+            var criteria = new GetTeamsCriteria();
+            var teamData = this.GetData<TeamInfo>(criteria);
+            IEnumerable<TeamItem> teams = new List<TeamItem>();
+
+            if (teamData.Any())
+            {
+                teams = teamData.Select(obj => new TeamItem(obj));
+            }
+
+            return teams;
+        }
 
         public TraderPerformanceList GetTraderPerformance(ICriteria criteria)
         {
             var traderPerformance = new TraderPerformanceList();
-            //var rawData = this.GetData<TraderPerformanceInfo>(criteria);
-            var rawData = GenerateSampleTraderPerformance();
-
-            if (rawData != null && rawData.Any())
+            var traderData = this.GetData<TraderPerformanceInfo>(criteria);
+            if (traderData != null && traderData.Any())
             {
-                var traderData = SortTraderPerformanceInfo(rawData);
-                traderPerformance.AddTraderList(traderData);
-                traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
+                var traderGroups = traderData.GroupBy(obj => obj.CustId);
+                TraderPerformanceGroup traderGroup = null;
+
+                foreach (IGrouping<int, TraderPerformanceInfo> group in traderGroups)
+                {
+                    traderGroup = new TraderPerformanceGroup(group.Key);
+                    traderGroup.AddHeader(group);
+                    traderGroup.AddTraderList(group);
+                    traderGroup.Total.Margin = CalculateTotalMargin(traderGroup.Total.WinLoss, traderGroup.Total.Turnover);
+                    traderPerformance.AddItem(traderGroup);
+                }
+                traderPerformance.GroupList = traderPerformance.GroupList.ToList();
+                traderPerformance.GrandTotal.Margin = CalculateTotalMargin(traderPerformance.GrandTotal.WinLoss, traderPerformance.GrandTotal.Turnover);
+                traderPerformance.TotalItems = traderData.Count();
                 SessionManager.Set<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey, traderPerformance);
-            }
+            }            
 
             return traderPerformance;
         }
 
-        private IEnumerable<TraderPerformanceInfo> SortTraderPerformanceInfo(IEnumerable<TraderPerformanceInfo> traderData)
-        {
-            return traderData.AsEnumerable()
-                            .OrderBy(c => c.CustId)
-                            .Select(c => new TraderPerformanceInfo
-                            {
-                                CustId = c.CustId,
-                                MatchCount = c.MatchCount,
-                                MultipleTimes = c.MultipleTimes,
-                                FrequencyCust = traderData.Count(b => b.CustId == c.CustId)
-                            });
-        }       
-
         public MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria)
         {
-            //var matchData = this.GetData<MatchPerformanceInfo>(criteria);
-            var matchData = GenerateSampleMatchPerformance();
-
             var matchPerformance = new MatchPerformanceList();
-            var matchGroups = matchData.GroupBy(obj => obj.MatchGroupKey);
+            var matchData = this.GetData<MatchPerformanceInfo>(criteria);            
+            var matchGroups = matchData.GroupBy(obj => obj.MatchGroup);
             MatchPerformanceGroup matchGroup = null;
 
-            foreach (IGrouping<string, MatchPerformanceInfo> group in matchGroups)
+            foreach (IGrouping<int, MatchPerformanceInfo> group in matchGroups)
             {
-                if (!string.IsNullOrEmpty(group.Key))
+                if (group.Key > 0)
                 {
                     matchGroup = new MatchPerformanceGroup(group.Key);
                     matchGroup.AddMatchList(group);
@@ -106,7 +114,7 @@
         public void ExportTraderPerformance(int userId, GetTraderPerformanceCriteria criteria, string templatePath)
         {
             var traderData = SessionManager.Get<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey);
-            if (traderData != null && traderData.ItemList.Count > 0)
+            if (traderData != null && traderData.TotalItems > 0)
             {
                 string reportName = string.Format(
                                 ViewLang.MultipleMatchesPerformanceTraderFileName,
@@ -120,7 +128,6 @@
                 writer.FreezeRow(0, 3);
                 FillRowData(traderData, ref writer);
                 writer.SyncColumnsWidth(10);
-
                 writer.Render();
             }
         }
@@ -136,16 +143,18 @@
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(10, 0);
             IFont normalFont = writer.GetFont(11, 0);
-            int lineCount = 0;
-
+            int lineCount = 0;            
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            //AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Grade, boldFont, criteria.GradeIds, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Team, boldFont, criteria.TeamIds, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, criteria.Bettypes, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MultipleMatches, boldFont, criteria.MultipleMatches, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
-            writer.WriteRow(8, contentRichTextArray);
+            writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
@@ -180,38 +189,41 @@
 
         private void FillRowData(TraderPerformanceList data, ref ExcelTemplateWriter writer)
         {
-            // Content rows
-            TraderPerformanceItem item;
-            var contentData = data.ItemList;
-            int len = contentData.Count;            
-            var leagueCounter = 1;
-            for (int i = 0; i < len; i++)
+            var index = 1;
+            foreach (var group in data.GroupList)
             {
-                item = contentData[i];
-                int styleIndex = leagueCounter % 2 == 0 ? 4 : 5;
-                var record = new object[]
+                foreach (var item in group.ItemList)
                 {
-                    i + 1,
-                    item.TraderName,
-                    item.Grade,
-                    item.TeamName,
-                    item.NoOfTimes,
-                    item.NoOfMatches,
-                    item.Turnover,
-                    item.WinLoss,
-                    item.BetCount,
-                    (object)item.Margin ?? ViewLang.NA,
-                };
+                    int styleIndex = index % 2 == 0 ? 4 : 5;
+                    var record = new object[]
+                    {
+                        index,
+                        group.TraderName,
+                        group.Grade,
+                        group.TeamName,
+                        item.MultipleMatches,
+                        item.NoOfMatches,
+                        item.Turnover,
+                        item.WinLoss,
+                        item.BetCount,
+                        (object)item.Margin ?? ViewLang.NA,
+                    };
+                    
+                    writer.WriteRow(styleIndex, record);
+                }
+                index++;
+            }           
 
-                writer.WriteRow(styleIndex, record);
-            }
-
-            var total = data.Total;
+            var total = data.GrandTotal;
             var totalRecord = new object[]
                 {
                     ViewLang.GrandTotal,
+                    null,
+                    null,
+                    null,
+                    null,
                     total.NoOfMatches,
-                    total.Turnover,                    
+                    total.Turnover,
                     total.WinLoss,
                     total.BetCount,
                     (object)total.Margin ?? ViewLang.NA
@@ -228,16 +240,14 @@
                 traderPerformances.Add(new TraderPerformanceInfo()
                 {
                     CustId = i,
-                    MatchCount = 1,
-                    MultipleTimes = 1,
-                    FrequencyCust = 2
+                    MultipleMatches = 5,
+                    MultipleTimes = 3                    
                 });
                 traderPerformances.Add(new TraderPerformanceInfo()
                 {
                     CustId = i,
-                    MatchCount = 1,
-                    MultipleTimes = 1,
-                    FrequencyCust = 2
+                    MultipleMatches = 4,
+                    MultipleTimes = 3                   
                 });
             }
 
@@ -249,20 +259,19 @@
             var matchData = new List<MatchPerformanceInfo>();
             var fromDate = new System.DateTime(2019, 10, 20);            
 
-            for (int i = 1; i < 52; i++)
+            for (int i = 1; i < 18; i++)
             {
                 var percent = i % 30;
                 var toDate = new System.DateTime(2019, 10, percent == 0 ? 1 : percent);
 
                 matchData.Add(new MatchPerformanceInfo
                 {
-                    MatchGroupKey = i.ToString(),
-                    AwayId = 370154,
-                    HomeId = 614358,
+                    MatchGroup = i,
+                    AwayId = 1397,
+                    HomeId = 24432,
                     BetCount = 1,
                     EventDate = fromDate,
-                    FromDate = fromDate,
-                    ToDate = toDate,
+                    GlobalShowTime = toDate,
                     Margin = 1,
                     MatchId = i,
                     Turnover = 1,
@@ -270,13 +279,12 @@
                 });
                 matchData.Add(new MatchPerformanceInfo
                 {
-                    MatchGroupKey = i.ToString(),
+                    MatchGroup = i,
                     AwayId = 6574,
                     HomeId = 6262,
                     BetCount = 1,
-                    EventDate = fromDate,
-                    FromDate = fromDate,
-                    ToDate = toDate,
+                    EventDate = fromDate,                    
+                    GlobalShowTime = toDate,
                     Margin = 1,
                     MatchId = i,
                     Turnover = 1,
@@ -284,13 +292,12 @@
                 });
                 matchData.Add(new MatchPerformanceInfo
                 {
-                    MatchGroupKey = i.ToString(),
-                    AwayId = 368485,
-                    HomeId = 368476,
+                    MatchGroup = i,
+                    AwayId = 22611,
+                    HomeId = 1667,
                     BetCount = 1,
-                    EventDate = fromDate,
-                    FromDate = fromDate,
-                    ToDate = toDate,
+                    EventDate = fromDate,                    
+                    GlobalShowTime = toDate,
                     Margin = 1,
                     MatchId = i,
                     Turnover = 1,

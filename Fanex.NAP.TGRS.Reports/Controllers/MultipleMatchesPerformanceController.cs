@@ -8,6 +8,7 @@
     using Fanex.NAP.TGRS.Reports.Criteria.MultipleMatchesPerformance;
     using System;
     using System.Web.Mvc;
+    using Fanex.NAP.TGRS.Core.Helpers;
 
     public class MultipleMatchesPerformanceController : TGRSBaseController
     {
@@ -51,6 +52,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
+            ViewBag.Teams = this._traderReportService.GetTeams();
+
             return View();
         }
 
@@ -63,6 +66,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var traderPerformance = this._traderReportService.GetTraderPerformance(criteria);
             var jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -78,6 +82,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var templatePath = Server.MapPath(TraderPerformanceDetail);
 
             this._traderReportService.ExportTraderPerformance(CurrentSession.UserId, criteria, templatePath);
@@ -94,6 +99,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria);
             var jsonResult = Json(martchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -109,8 +115,9 @@
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public JsonResult GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria)
-        {            
-            var  bettypeDetail = this._traderReportService.GetBettypeTrader(criteria);
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            var bettypeDetail = this._traderReportService.GetBettypeTrader(criteria);
             var jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
 

@@ -396,7 +396,6 @@
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
-    <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\multiple-matches-performance-helper.js" />
     <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\grade-performance.js" />

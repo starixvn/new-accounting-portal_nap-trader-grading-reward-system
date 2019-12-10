@@ -32,7 +32,11 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
     var parameters = {        
         FromDate: null,
-        ToDate: null       
+        ToDate: null,
+        GradeIds: null,
+        TeamIds: null,
+        Bettypes: null,
+        MultipleMatches: null
     };
 
     var cachedData = {
@@ -77,7 +81,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             minWidth: 200,
             height: 200,
             allSelectedText: labels.All
-        }).multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlGrade.next());
             });
 
@@ -86,7 +90,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             minWidth: 200,
             height: 200,
             allSelectedText: labels.All
-        }).multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlTeam.next());
             });
 
@@ -95,7 +99,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             minWidth: 200,
             height: 200,
             allSelectedText: labels.All
-        }).multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
             });
 
@@ -104,26 +108,31 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             minWidth: 200,
             height: 200,
             allSelectedText: labels.All
-        }).multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
             validator.ClearError(domElements.ddlMultipleMatches.next());
             });
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w')) {
+                var selectedGrades = domElements.ddlGrade.val();
+                var selectedTeams = domElements.ddlTeam.val();
                 var selectedBetTypes = domElements.ddlBetType.val();
-                var betTypeOptions = domElements.ddlBetType.find('option');
-                
+                var selectedMultipleMatches = domElements.ddlMultipleMatches.val();
+
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
+                parameters.GradeIds = selectedGrades.join(',');
+                parameters.TeamIds = selectedTeams.join(',');
+                parameters.Bettypes = selectedBetTypes.join(',');
+                parameters.MultipleMatches = selectedMultipleMatches.join(',');
 
-                hideReports();
+                hideAllReports();
                 getTraderPerformanceReport();
             }
         });
     };
 
-    // Hide reports.
-    var hideReports = function () {
+    var hideAllReports = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
@@ -154,7 +163,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         var bodyData = [];
         var footerData = [];
 
-        if (data && data.ItemList.length > 0) {
+        if (data && data.TotalItems > 0) {
             bodyData = renderTraderPerformanceGridBody(data);
             footerData = renderTraderPerformanceGridFooter(data);
         }
@@ -173,7 +182,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
             {
-                HeaderText: labels.MultipleMatches, Width: 100, Name: 'ColNoOfTimes', HeaderAlign: 'center', CellAlign: 'right',
+                HeaderText: labels.MultipleMatches, Width: 100, Name: 'ColMultipleMatches', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
             },
             {
@@ -209,7 +218,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    //handleTraderPerformanceGridEvents();
+                    handleTraderPerformanceGridEvents();
                     return rows;
                 }
             },
@@ -221,7 +230,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
                 afterPagedFunction: function (rows) {
-                    //handleTraderPerformanceGridEvents();
+                    handleTraderPerformanceGridEvents();
                     return rows;
                 }
             },
@@ -230,48 +239,39 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         };
 
         return gridOptions;
-    }
+    }    
 
-    var renderTraderPerformanceGridBody = function (data) {        
-        var multipleMatchesFormat = '<span class="match-link link" data-trader-id="{0}" title="{1}">{2}</span>';     
+    var renderTraderPerformanceGridBody = function (data) {
+        var multipleMatchesFormat = '<span class="match-link link" data-trader-id="{0}" data-trader-name="{1}" data-match-ids="{2}">{3}</span>';
         var bodyData = [];
-        var row;        
-        var traderId = '';
+        var row;
         var multipleMatchesCol = '';
-        var traderIndex = 0;
-       
-        $.each(data.ItemList, function (index, item) {
-            multipleMatchesCol = multipleMatchesFormat.format(item.TraderId, item.NoOfTimes, item.NoOfTimes);
-            var currentColumms = [];
-            traderIndex = traderId !== item.TraderId ? traderIndex + 1 : traderIndex;
-            
-            if (item.FrequencyCust > 1 && (traderId !== item.TraderId)) {
-                currentColumms.push(
-                    { Name: 'ColNo', Value: traderIndex, MergeRowNumber: item.FrequencyCust },
-                    { Name: 'ColTrader', Value: item.TraderName, MergeRowNumber: item.FrequencyCust },
-                    { Name: 'ColGrade', Value: item.Grade, MergeRowNumber: item.FrequencyCust },
-                    { Name: 'ColTeam', Value: item.TeamName, MergeRowNumber: item.FrequencyCust }
-                );                
-            } else if (item.FrequencyCust == 1) {
-                currentColumms.push(
-                    { Name: 'ColNo', Value: traderIndex },
-                    { Name: 'ColTrader', Value: item.TraderName },
-                    { Name: 'ColGrade', Value: item.Grade },
-                    { Name: 'ColTeam', Value: item.TeamName }
-                );              
-            }
-            row = {
-                Columns: currentColumms.concat([
-                    { Name: 'ColNoOfTimes', Value: multipleMatchesCol },
-                    { Name: 'ColNoOfMatches', Value: item.NoOfMatches },                               
-                    { Name: 'ColTurnover', Value: item.Turnover },
-                    { Name: 'ColWinLoss', Value: item.WinLoss },
-                    { Name: 'ColBetCount', Value: item.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]),
-                CssClass: ''
-            };
-            bodyData.push(row);
-            traderId = item.TraderId;
+
+        $.each(data.GroupList, function (groupIndex, group) {
+            var totalItems = group.ItemList.length;
+            var mergeRowColumns = [];
+            mergeRowColumns.push(
+                { Name: 'ColNo', Value: groupIndex + 1, MergeRowNumber: totalItems },
+                { Name: 'ColTrader', Value: group.TraderName, MergeRowNumber: totalItems },
+                { Name: 'ColGrade', Value: group.Grade, MergeRowNumber: totalItems },
+                { Name: 'ColTeam', Value: group.TeamName, MergeRowNumber: totalItems }
+            );
+
+            $.each(group.ItemList, function (itemIndex, item) {
+                var itemColumns = itemIndex == 0 ? mergeRowColumns : [];
+                multipleMatchesCol = multipleMatchesFormat.format(group.TraderId, group.TraderName, item.MatchList, item.MultipleMatches);
+                row = {
+                    Columns: itemColumns.concat([
+                        { Name: 'ColMultipleMatches', Value: multipleMatchesCol },
+                        { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                        { Name: 'ColTurnover', Value: item.Turnover },
+                        { Name: 'ColWinLoss', Value: item.WinLoss },
+                        { Name: 'ColBetCount', Value: item.BetCount },
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]),
+                    CssClass: ''
+                };
+                bodyData.push(row);
+            })
         })
 
         return bodyData;
@@ -281,11 +281,11 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         return [
             {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 5, CellAlign: 'right' },
-                    { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                    { Name: 'ColTurnover', Value: data.Total.Turnover },
-                    { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                    { Name: 'ColBetCount', Value: data.Total.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+                    { Name: 'ColNoOfMatches', Value: data.GrandTotal.NoOfMatches },
+                    { Name: 'ColTurnover', Value: data.GrandTotal.Turnover },
+                    { Name: 'ColWinLoss', Value: data.GrandTotal.WinLoss },
+                    { Name: 'ColBetCount', Value: data.GrandTotal.BetCount },
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.GrandTotal.Margin, labels.NA) }]
             }
         ];
     }
@@ -294,9 +294,12 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
             var link = $(this);
             var trader = link.closest('tr').find('span.trader');
-            var traderId = link.attr('data-trader-id');          
+            var traderId = link.attr('data-trader-id');
+            var traderName = link.attr('data-trader-name');
+            var matchIds = link.attr('data-match-ids');
+            var multipleMatches = link.text();
 
-            getMatchesPerformanceReport(traderId);
+            getMatchesPerformanceReport(traderId, matchIds, traderName, multipleMatches);
         });
     }
 
@@ -305,12 +308,13 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         common.DownloadFile(urls.ExportTraderPerformance, parameters);
     };
 
-    // Get matches performance by trader
-    var getMatchesPerformanceReport = function (traderId) {
+    var getMatchesPerformanceReport = function (traderId, matchIds, traderName, multipleMatches) {
         var matchPerformanceParamrters = {
-            CustId: traderId,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            Bettypes: parameters.Bettypes,
+            CustId: traderId,
+            MatchIds: matchIds
         };
 
         common.DisableInput();
@@ -326,7 +330,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 cachedData.MatchPerformance = result.GroupList;
                 cachedData.GrandTotal = result.GrandTotal;
                 cachedData.TotalItems = result.TotalItems;
-                reloadPage(cachedData.PageIndex, cachedData.PageSize, traderId);
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, traderId, traderName, multipleMatches);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -338,7 +342,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     }
 
     // Customize reloading page.
-    var reloadPage = function (pageIndex, pageSize, traderId) {
+    var reloadPage = function (pageIndex, pageSize, traderId, traderName, multipleMatches) {
         var pageData = [];
         var startIndex = 0;
         var endIndex = 0;
@@ -377,11 +381,11 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         }
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
-        renderMatchPerformanceGrid(pageData, traderId);
+        renderMatchPerformanceGrid(pageData, traderId, traderName, multipleMatches);
     }
 
     // Render match performance of a specific trader grid.
-    var renderMatchPerformanceGrid = function (data, traderId) {
+    var renderMatchPerformanceGrid = function (data, traderId, traderName, multipleMatches) {
         var bodyData = [];
         var footerData = [];
 
@@ -392,15 +396,15 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         // Hide previous report.
         domElements.divTraderPerformanceContainer.addClass('display-none');
-        var gridOptions = renderMatchPerformanceGridOptions(traderId);
+        var gridOptions = renderMatchPerformanceGridOptions(traderId, traderName, multipleMatches);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
         handleMatchPerformanceGridEvents(traderId);
     };
 
-    var renderMatchPerformanceGridOptions = function (traderId) {
-        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+    var renderMatchPerformanceGridOptions = function (traderId, traderName, multipleMatches) {
+        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> Multiple by {1} of {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
             { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
@@ -424,7 +428,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, 'Multiple by 2 of ABC')
+                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -541,6 +545,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         });
     }
 
+    // Render Bettype of grid.
     var renderBettypeDetailGrid = function (data, traderId, matchId) {
         var bodyData = [];
         var footerData = [];

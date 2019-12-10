@@ -17,24 +17,24 @@
             this.Total = new MatchPerformanceItem();
         }
 
-        public MatchPerformanceGroup(string matchGroupKey)
+        public MatchPerformanceGroup(int matchGroup)
             : this()
         {
-            this.MatchGroupKey = matchGroupKey;
+            this.MatchGroupKey = matchGroup;
         }
 
-        public string MatchGroupKey { get; set; }
+        public int MatchGroupKey { get; set; }
 
-        public DateTime? FromDate { get; set; }
+        public DateTime? EventDate { get; set; }
 
-        public DateTime? ToDate { get; set; }
+        public DateTime? GlobalShowTime { get; set; }
 
         public string MatchGroupValue
         {
             get
             {
-                var fromValue = this.FromDate.HasValue ? this.FromDate.Value.ToShortDateString() : string.Empty;
-                var toValue = this.ToDate.HasValue ? this.ToDate.Value.ToShortDateString() : string.Empty;
+                var fromValue = this.EventDate.HasValue ? this.EventDate.Value.ToShortDateString() : string.Empty;
+                var toValue = this.GlobalShowTime.HasValue ? this.GlobalShowTime.Value.ToShortDateString() : string.Empty;
 
                 return fromValue + " - " + toValue;
             }
@@ -44,7 +44,7 @@
 
         public MatchPerformanceItem Total { get; set; }
        
-        public void AddMatchList(IGrouping<string, MatchPerformanceInfo> grouping)
+        public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping)
         {
             foreach (var item in grouping)
             {
@@ -58,13 +58,13 @@
 
         private void ArrangeRangeDate(MatchPerformanceInfo item)
         {
-            if (this.FromDate == null || this.FromDate > item.FromDate)
+            if (this.EventDate == null || this.EventDate > item.EventDate)
             {
-                this.FromDate = item.FromDate;
+                this.EventDate = item.EventDate;
             }
-            if (this.ToDate == null || this.ToDate < item.ToDate)
+            if (this.GlobalShowTime == null || this.GlobalShowTime < item.GlobalShowTime)
             {
-                this.ToDate = item.ToDate;
+                this.GlobalShowTime = item.GlobalShowTime;
             }
         }
 

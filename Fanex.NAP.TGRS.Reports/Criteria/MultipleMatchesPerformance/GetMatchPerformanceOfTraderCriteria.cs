@@ -11,8 +11,16 @@
 
         public int CustId { get; set; }
 
+        public string MatchIds { get; set; }
+
+        public string Bettypes { get; set; }
+
+        public bool IsExcludeLeagues { get; set; }
+
+        public bool Market => true;
+
         public override string GetSettingKey()
-            => "TGRS_Rpt_MultipleMatches";
+            => "TGRS_Rpt_MultipleMatches_Match";
 
         public override bool IsValid()
             => true;

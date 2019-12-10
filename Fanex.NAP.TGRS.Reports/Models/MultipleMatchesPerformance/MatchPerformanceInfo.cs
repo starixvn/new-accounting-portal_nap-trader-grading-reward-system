@@ -4,19 +4,19 @@
 
     public class MatchPerformanceInfo
     {
-        public string MatchGroupKey { get; set; }
-
         public int? MatchId { get; set; }
 
-        public int? HomeId { get; set; }
-
-        public int? AwayId { get; set; }
-
-        public DateTime? FromDate { get; set; }
-
-        public DateTime? ToDate { get; set; }
-
         public DateTime? EventDate { get; set; }
+
+        public DateTime? GlobalShowTime { get; set; }
+
+        public Int16? HomeId { get; set; }
+
+        public Int16? AwayId { get; set; }
+
+        public int MatchGroup { get; set; }
+
+        public string LeagueName { get; set; }
 
         public decimal? Turnover { get; set; }
 

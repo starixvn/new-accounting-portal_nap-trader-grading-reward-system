@@ -190,6 +190,8 @@
   </Function>
   <Function Name="MultipleMatchesReports">
     <Setting Key="TGRS_Rpt_MultipleMatches" SpName="TGRS_Rpt_MultipleMatches" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_MultipleMatches_Match" SpName="TGRS_Rpt_MultipleMatches_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_MultipleMatches_Match_Bettype" SpName="TGRS_Rpt_MultipleMatches_Match_Bettype" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="SpreadManagement">
     <Setting Key="TGRS_League_SelectList" SpName="TGRS_League_SelectList" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

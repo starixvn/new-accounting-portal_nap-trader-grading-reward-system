@@ -12,31 +12,30 @@
     {
         public TraderPerformanceList()
         {
-            ItemList = new List<TraderPerformanceItem>();
-            Total = new TraderPerformanceItem();
+            this.GroupList = new LinkedList<TraderPerformanceGroup>();
+            this.GrandTotal = new TraderPerformanceItem();
         }
 
-        public List<TraderPerformanceItem> ItemList { get; set; }
+        public int TotalItems { get; set; }
 
-        public TraderPerformanceItem Total { get; set; }
+        public ICollection<TraderPerformanceGroup> GroupList { get; set; }
 
-        public void AddTraderList(IEnumerable<TraderPerformanceInfo> traderPerformanceInfos)
+        public TraderPerformanceItem GrandTotal { get; set; }
+
+        /// <summary>
+        /// Adds a group to the list.
+        /// </summary>
+        /// <param name="group">The group that needs to be added.</param>
+        public void AddItem(TraderPerformanceGroup group)
         {
-            foreach (var item in traderPerformanceInfos)
+            if (group != null)
             {
-                var itemTrader = new TraderPerformanceItem(item);
-                this.ItemList.Add(itemTrader);
-
-                CalculateTotal(itemTrader);
+                this.GroupList.Add(group);
+                this.GrandTotal.NoOfMatches += group.Total.NoOfMatches;
+                this.GrandTotal.Turnover += group.Total.Turnover;
+                this.GrandTotal.WinLoss += group.Total.WinLoss;
+                this.GrandTotal.BetCount += group.Total.BetCount;
             }
-        }
-
-        private void CalculateTotal(TraderPerformanceItem item)
-        {
-            this.Total.NoOfMatches += item.NoOfMatches;
-            this.Total.Turnover += item.Turnover;
-            this.Total.WinLoss += item.WinLoss;
-            this.Total.BetCount += item.BetCount;            
         }
     }
 }

@@ -1033,7 +1033,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multiple_Matches_Performance_Trader.
+        ///   Looks up a localized string similar to Multiple_Matches_Performance_{0}_{1}_{2}.
         /// </summary>
         public static string MultipleMatchesPerformanceTraderFileName {
             get {

@@ -11,34 +11,21 @@
         {
             if (traderData != null)
             {
-                this.TraderId = traderData.CustId;
-                this.TraderName = traderData.CustId + " Name";
-                this.Grade = 3;
-                this.TeamId = 0;
-                this.TeamName = "Team Name";
-                this.NoOfTimes = Converter.ToInt(traderData.MultipleTimes);
-                this.NoOfMatches = Converter.ToInt(traderData.MatchCount);
-                this.Turnover = 4000;
-                this.WinLoss = 375;
-                this.BetCount = 6200;
-                this.Margin = Converter.ToDecimal(2.5);
-                this.FrequencyCust = traderData.FrequencyCust;
+                this.MultipleMatches = Converter.ToInt(traderData.MultipleMatches);
+                this.NoOfMatches = Converter.ToInt(traderData.MultipleTimes);
+                this.MatchList = traderData.MatchList;
+                this.Turnover = Converter.ToDecimal(traderData.Turnover);
+                this.WinLoss = Converter.ToDecimal(traderData.Winloss);
+                this.BetCount = Converter.ToInt(traderData.BetCount);
+                this.Margin = Converter.ToDecimal(traderData.Margin);
             }
         }
 
-        public int TraderId { get; set; }
-
-        public string TraderName { get; set; }
-
-        public int Grade { get; set; }
-
-        public int TeamId { get; set; }
-
-        public string TeamName { get; set; }
-
-        public int NoOfTimes { get; set; }
+        public int MultipleMatches { get; set; }
 
         public int NoOfMatches { get; set; }
+
+        public string MatchList { get; set; }
 
         public decimal Turnover { get; set; }
 
@@ -46,8 +33,6 @@
 
         public int BetCount { get; set; }
 
-        public decimal? Margin { get; set; }
-
-        public int FrequencyCust { get; set; }
+        public decimal? Margin { get; set; }        
     }
 }

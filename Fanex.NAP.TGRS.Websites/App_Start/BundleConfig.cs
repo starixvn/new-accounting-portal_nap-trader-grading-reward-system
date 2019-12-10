@@ -271,8 +271,7 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/styles/multipleMatchesTraderPerformance",                
                 "~/Areas/Reports/Resources/MultipleMatchesPerformance/multiple-matches-performance.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/multipleMatchesTraderPerformance").Include(
-                "~/Areas/Reports/Resources/MultipleMatchesPerformance/multiple-matches-performance-helper.js",
+            bundles.Add(new ScriptBundle("~/scripts/multipleMatchesTraderPerformance").Include(              
                 "~/Areas/Reports/Resources/MultipleMatchesPerformance/trader-performance.js"));
         }
 

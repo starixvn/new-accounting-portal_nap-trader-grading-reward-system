@@ -5,18 +5,18 @@
 
     public class GetBettypeDetailOfTraderCriteria : CriteriaBase
     {
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
-
-        public int CustId { get; set; }
-
         public int MatchId { get; set; }
+
+        public DateTime EventDate { get; set; }                
 
         public string Bettypes { get; set; }
 
+        public bool IsExcludeLeagues { get; set; }
+
+        public bool Market => true;
+
         public override string GetSettingKey()
-            => "TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype";
+            => "TGRS_Rpt_MultipleMatches_Match_Bettype";
 
         public override bool IsValid()
             => true;
