@@ -5,9 +5,9 @@
 
     public class GetBettypeDetailOfTraderCriteria : CriteriaBase
     {
-        public int MatchId { get; set; }
+        public int CustId { get; set; }
 
-        public DateTime EventDate { get; set; }                
+        public int MatchId { get; set; }              
 
         public string Bettypes { get; set; }
 

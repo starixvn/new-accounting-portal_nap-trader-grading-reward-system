@@ -23,11 +23,12 @@
             {
                 this.MatchId = matchData.MatchId.Value;
                 this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(matchData.HomeId), ViewLang.Vs, CacheRef.GetTeamName(matchData.AwayId));
-                this.EventDate = Convert.ToDateTime(matchData.EventDate).ToShortFormatedDate();
+                this.EventDate = matchData.EventDate;
+                this.LeagueName = matchData.LeagueName;
                 this.Turnover = Converter.ToDecimal(matchData.Turnover);
                 this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
                 this.BetCount = Converter.ToInt(matchData.BetCount);
-                this.Margin = matchData.Margin;
+                this.Margin = Converter.ToDecimal(matchData.Margin);
             }
         }
 
@@ -35,11 +36,19 @@
 
         public string MatchName { get; set; }
 
-        public string FromDate { get; set; }
+        public string LeagueName { get; set; }
 
-        public string ToDate { get; set; }
+        public DateTime? EventDate { get; set; }
 
-        public string EventDate { get; set; }
+        public string KOTime
+        {
+            get
+            {
+                return this.EventDate.HasValue ?
+                        this.EventDate.Value.ToShortDateString() + " " + this.EventDate.Value.ToShortTimeString()
+                        : string.Empty;
+            }
+        }
 
         public decimal Turnover { get; set; }
 
@@ -47,6 +56,6 @@
 
         public int BetCount { get; set; }
 
-        public decimal? Margin { get; set; }
+        public decimal Margin { get; set; }
     }
 }

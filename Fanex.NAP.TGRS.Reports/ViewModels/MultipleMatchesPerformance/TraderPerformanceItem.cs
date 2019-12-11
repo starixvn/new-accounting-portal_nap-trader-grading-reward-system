@@ -2,7 +2,9 @@
 {
     using Fanex.Common;
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
+    using System;
 
+    [Serializable]
     public class TraderPerformanceItem
     {
         public TraderPerformanceItem() { }
@@ -33,6 +35,6 @@
 
         public int BetCount { get; set; }
 
-        public decimal? Margin { get; set; }        
+        public decimal Margin { get; set; }        
     }
 }

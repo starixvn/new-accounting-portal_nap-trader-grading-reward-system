@@ -763,6 +763,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KO Time.
+        /// </summary>
+        public static string KOTime {
+            get {
+                return ResourceManager.GetString("KOTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League.
         /// </summary>
         public static string League {

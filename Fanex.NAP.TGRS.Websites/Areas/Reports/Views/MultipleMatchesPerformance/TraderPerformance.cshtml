@@ -64,10 +64,10 @@
             </div>
             <div class="edit-field col_9">
                 <select id="ddlBetType" multiple="multiple">
-                    <option value="1">1st HDP</option>
-                    <option value="3">1st O/U</option>
-                    <option value="7">HDP</option>
-                    <option value="8">O/U</option>
+                    @foreach (var item in (IEnumerable<BetTypeDefaultItem>)ViewBag.Bettypes)
+                    {
+                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                    }
                 </select>
             </div>
             <div class="lbl-field col_5">
@@ -129,6 +129,7 @@
             EffectiveDate: '@ViewLang.EffectiveDate',
             NA: '@ViewLang.NA',
             Forecast: '@ViewLang.Forecast',
+            KOTime: '@ViewLang.KOTime',
             TraderPerformance: '@ViewLang.TraderPerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
             MultipleMatches: '@ViewLang.MultipleMatches',

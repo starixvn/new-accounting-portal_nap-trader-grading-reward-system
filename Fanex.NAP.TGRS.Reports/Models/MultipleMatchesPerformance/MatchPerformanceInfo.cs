@@ -10,9 +10,9 @@
 
         public DateTime? GlobalShowTime { get; set; }
 
-        public Int16? HomeId { get; set; }
+        public int? HomeId { get; set; }
 
-        public Int16? AwayId { get; set; }
+        public int? AwayId { get; set; }
 
         public int MatchGroup { get; set; }
 
@@ -24,6 +24,6 @@
 
         public int? BetCount { get; set; }
 
-        public decimal? Margin { get; set; }
+        public decimal? Margin { get; set; }       
     }
 }

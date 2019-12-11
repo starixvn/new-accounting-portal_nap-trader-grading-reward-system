@@ -20,23 +20,39 @@
         public MatchPerformanceGroup(int matchGroup)
             : this()
         {
-            this.MatchGroupKey = matchGroup;
+            this.MatchGroup = matchGroup;
         }
 
-        public int MatchGroupKey { get; set; }
+        public int MatchGroup { get; set; }
 
-        public DateTime? EventDate { get; set; }
+        public DateTime? FromDate { get; set; }
 
-        public DateTime? GlobalShowTime { get; set; }
+        public DateTime? ToDate { get; set; }        
 
-        public string MatchGroupValue
+        public string RangeDateValue
         {
             get
             {
-                var fromValue = this.EventDate.HasValue ? this.EventDate.Value.ToShortDateString() : string.Empty;
-                var toValue = this.GlobalShowTime.HasValue ? this.GlobalShowTime.Value.ToShortDateString() : string.Empty;
+                var fromValue = this.FromDate.HasValue
+                    ? this.FromDate.Value.ToShortDateString() + " " + this.FromDate.Value.ToShortTimeString()
+                    : string.Empty;
+                var toValue = this.ToDate.HasValue
+                    ? this.ToDate.Value.ToShortDateString() + " " + this.ToDate.Value.ToShortTimeString()
+                    : string.Empty;
 
                 return fromValue + " - " + toValue;
+            }
+        }
+
+        private void ArrangeRangeDate(MatchPerformanceInfo item)
+        {
+            if (this.FromDate == null || this.FromDate > item.EventDate)
+            {
+                this.FromDate = item.EventDate;
+            }
+            if (this.ToDate == null || this.ToDate < item.GlobalShowTime)
+            {
+                this.ToDate = item.GlobalShowTime;
             }
         }
 
@@ -54,19 +70,7 @@
                     this.AddItem(new MatchPerformanceItem(item));
                 }
             }
-        }
-
-        private void ArrangeRangeDate(MatchPerformanceInfo item)
-        {
-            if (this.EventDate == null || this.EventDate > item.EventDate)
-            {
-                this.EventDate = item.EventDate;
-            }
-            if (this.GlobalShowTime == null || this.GlobalShowTime < item.GlobalShowTime)
-            {
-                this.GlobalShowTime = item.GlobalShowTime;
-            }
-        }
+        }    
 
         private void AddItem(MatchPerformanceItem item)
         {
@@ -80,6 +84,7 @@
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
             this.Total.BetCount += item.BetCount;
+            this.Total.Margin += item.Margin;
         }
     }
 }

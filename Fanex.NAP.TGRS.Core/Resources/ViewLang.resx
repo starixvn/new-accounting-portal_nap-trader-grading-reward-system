@@ -753,4 +753,7 @@
   <data name="MultipleMatchesPerformanceTraderFileName" xml:space="preserve">
     <value>Multiple_Matches_Performance_{0}_{1}_{2}</value>
   </data>
+  <data name="KOTime" xml:space="preserve">
+    <value>KO Time</value>
+  </data>
 </root>

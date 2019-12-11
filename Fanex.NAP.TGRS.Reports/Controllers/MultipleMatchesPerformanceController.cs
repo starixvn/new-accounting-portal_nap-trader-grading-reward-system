@@ -52,6 +52,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
         public ActionResult TraderPerformance()
         {
+            ViewBag.Bettypes = this._traderReportService.GetBetTypes(CurrentSession.UserId);
             ViewBag.Teams = this._traderReportService.GetTeams();
 
             return View();

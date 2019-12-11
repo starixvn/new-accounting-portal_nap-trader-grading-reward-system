@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance
 {
-    using System;
+    using System;    
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
 
@@ -12,16 +14,17 @@
     {
         public BetTypeItem(){ }
 
-        public BetTypeItem(BetTypeInfo betType)
+        public BetTypeItem(BetTypeInfo betType, List<BetTypeDefaultItem> betTypeDefaultItems)
         {
             if (betType != null)
             {
                 this.BetType = Converter.To<short>(betType.BetType);
-                this.TypeName = betType.TypeName;
+                var typeNames = betTypeDefaultItems.Where(c => c.BetTypeId == this.BetType).Select(c => c.BetTypeName).ToList();
+                this.TypeName = typeNames.Any() ? typeNames[0] : string.Empty;
                 this.Turnover = Converter.ToDecimal(betType.Turnover);
                 this.WinLoss = Converter.ToDecimal(betType.WinLoss);
                 this.BetCount = Converter.ToInt(betType.BetCount);
-                this.Margin = betType.Margin;               
+                this.Margin = Converter.ToDecimal(betType.Margin);
             }
         }
 
@@ -35,6 +38,6 @@
 
         public int BetCount { get; set; }
 
-        public decimal? Margin { get; set; }       
+        public decimal Margin { get; set; }       
     }
 }

@@ -115,16 +115,20 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w')) {
                 var selectedGrades = domElements.ddlGrade.val();
+                var optionGrades = domElements.ddlGrade.find('option');
                 var selectedTeams = domElements.ddlTeam.val();
+                var optionTeams = domElements.ddlTeam.find('option');
                 var selectedBetTypes = domElements.ddlBetType.val();
+                var optionBetTypes = domElements.ddlBetType.find('option');
                 var selectedMultipleMatches = domElements.ddlMultipleMatches.val();
+                var optionMultipleMatches = domElements.ddlMultipleMatches.find('option');
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
-                parameters.GradeIds = selectedGrades.join(',');
-                parameters.TeamIds = selectedTeams.join(',');
-                parameters.Bettypes = selectedBetTypes.join(',');
-                parameters.MultipleMatches = selectedMultipleMatches.join(',');
+                parameters.GradeIds = selectedGrades.length === optionGrades.length ? ' ' : selectedGrades.join(',');
+                parameters.TeamIds = selectedTeams.length === optionTeams.length ? ' ' : selectedTeams.join(',');
+                parameters.Bettypes = selectedBetTypes.length === optionBetTypes.length ? ' ' : selectedBetTypes.join(',');
+                parameters.MultipleMatches = selectedMultipleMatches.length === optionMultipleMatches.length ? ' ' : selectedMultipleMatches.join(',');
 
                 hideAllReports();
                 getTraderPerformanceReport();
@@ -363,8 +367,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                     counter = temCounter + 1;
                 } else {
                     currentGroup = {
-                        MatchGroupKey: group.MatchGroupKey,
-                        MatchGroupValue: group.MatchGroupValue,
+                        RangeDateValue: group.RangeDateValue,
                         Total: group.Total,
                         Items: []
                     };
@@ -390,7 +393,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         var footerData = [];
 
         if (data && data.length > 0) {
-            bodyData = renderMatchPerformanceGridBody(data);
+            bodyData = renderMatchPerformanceGridBody(data, traderId, traderName, multipleMatches);
             footerData = renderMatchPerformanceGridFooter();
         }
 
@@ -407,24 +410,24 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> Multiple by {1} of {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
-            { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
-            {
-                HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat
-            },
-            {
-                HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat
-            },
-            {
-                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            }],
+                { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: labels.KOTime, Width: 140, Name: 'ColKOTime', HeaderAlign: 'center', CellAlign: 'center' },
+                {
+                    HeaderText: labels.Turnover, Width: 100, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat
+                },
+                {
+                    HeaderText: labels.WinLoss, Width: 100, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
+                {
+                    HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.IntegerFormat
+                },
+                {
+                    HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                }],
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
@@ -449,8 +452,10 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         return gridOptions;
     }
 
-    var renderMatchPerformanceGridBody = function (data) {
-        var matchDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-match-id="{1}">{2}</span>';
+    var renderMatchPerformanceGridBody = function (data, traderId, traderName, multipleMatches) {
+        var matchDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-trader-id="{1}" data-trader-name="{2}" data-match-id="{3}"';
+        matchDetailFormat += 'data-multiple-matches="{4}">{5}</span>';
+        matchDetailFormat += '<span class="">{6}</span>';
         var matchDetailCol = '';
         var bodyData = [];
         var subRows;
@@ -462,21 +467,21 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             
             $.each(group.Items, function (index, item) {   
                 counter++;
-                matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, item.MatchId, item.MatchName);
+                matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, traderId, traderName, item.MatchId, multipleMatches, item.MatchName, item.LeagueName);
                 row = {
                     Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
-                    { Name: 'ColMatch', Value: matchDetailCol },
-                    { Name: 'ColEventDate', Value: item.EventDate },
-                    { Name: 'ColTurnover', Value: item.Turnover },
-                    { Name: 'ColWinLoss', Value: item.WinLoss },
-                    { Name: 'ColBetCount', Value: item.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+                        { Name: 'ColMatch', Value: matchDetailCol },
+                        { Name: 'ColKOTime', Value: item.KOTime },
+                        { Name: 'ColTurnover', Value: item.Turnover },
+                        { Name: 'ColWinLoss', Value: item.WinLoss },
+                        { Name: 'ColBetCount', Value: item.BetCount },
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
                 };
                 subRows.push(row);
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: group.MatchGroupValue, MergeColNumber: 3, CellAlign: 'left' },
+                Columns: [{ Name: 'ColNo', Value: group.RangeDateValue, MergeColNumber: 3, CellAlign: 'left' },
                 { Name: 'ColTurnover', Value: group.Total.Turnover },
                 { Name: 'ColWinLoss', Value: group.Total.WinLoss },
                 { Name: 'ColBetCount', Value: group.Total.BetCount },
@@ -506,9 +511,13 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         domElements.divMatchPerformanceContainer.find('.bettype-detail-link').click(function () {
             var link = $(this);
+            var traderId = link.attr('data-trader-id');
+            var traderName = link.attr('data-trader-name');
             var matchId = link.attr('data-match-id');
+            var matchName = link.text();
+            var multipleMatches = link.attr('data-multiple-matches');         
 
-            getBettypeDetailReport();
+            getBettypeDetailReport(traderId, traderName, matchId, matchName, multipleMatches);
         })
     }
 
@@ -518,13 +527,11 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 
-    var getBettypeDetailReport = function (traderId, matchId) {
+    var getBettypeDetailReport = function (traderId, traderName, matchId, matchName, multipleMatches) {
         var bettypeDetailParameters = {
+            Bettypes: parameters.Bettypes,
             CustId: traderId,
-            MatchId: matchId,
-            //BetTypes: parameters.BetTypes,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            MatchId: matchId           
         };
         common.DisableInput();
         $.ajax({
@@ -534,7 +541,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
             success: function (result) {
-                renderBettypeDetailGrid(result, traderId, matchId);
+                renderBettypeDetailGrid(result, traderId, traderName, matchId, matchName, multipleMatches);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -546,7 +553,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     }
 
     // Render Bettype of grid.
-    var renderBettypeDetailGrid = function (data, traderId, matchId) {
+    var renderBettypeDetailGrid = function (data, traderId, traderName, matchId, matchName, multipleMatches) {
         var bodyData = [];
         var footerData = [];
 
@@ -557,17 +564,17 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         // Hide previous report.
         domElements.divMatchPerformanceContainer.addClass('display-none');
-        var gridOptions = renderBettypeDetailGridOptions();
+        var gridOptions = renderBettypeDetailGridOptions(traderName, multipleMatches, matchName);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
         handleBettypeDetailGridEvents(traderId);
     }
 
-    var renderBettypeDetailGridOptions = function () {
+    var renderBettypeDetailGridOptions = function (traderName, multipleMatches, matchName) {
         var titleFormat = '<span id="spanTraderLink"  class="breadcrumb-link"> {0}</span>' +
-            '<span id="spanMatchLink"  class="breadcrumb-link"> >> {1}</span>' +
-            '<span> >> {2}</span>';
+            '<span id="spanMatchLink"  class="breadcrumb-link"> >> Multiple by {1} of {2}</span>' +
+            '<span> >> {3}</span>';
 
         var gridOptions = {
             columns: [
@@ -593,7 +600,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, 'Multiple by 2 of ABC', 'Fullham U23 -vs- Everton U23')
+                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, matchName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {

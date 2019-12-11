@@ -35,6 +35,7 @@
                 this.GrandTotal.Turnover += group.Total.Turnover;
                 this.GrandTotal.WinLoss += group.Total.WinLoss;
                 this.GrandTotal.BetCount += group.Total.BetCount;
+                this.GrandTotal.Margin += group.Total.Margin;
             }
         }
     }

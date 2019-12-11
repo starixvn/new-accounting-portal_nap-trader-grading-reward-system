@@ -1,7 +1,9 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance
 {
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
+    using System;
 
+    [Serializable]
     public class TeamItem
     {
         public TeamItem(TeamInfo teamData)

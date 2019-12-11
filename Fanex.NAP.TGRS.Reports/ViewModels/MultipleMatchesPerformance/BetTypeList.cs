@@ -17,11 +17,11 @@
 
         public BetTypeItem Total { get; set; }
 
-        public void AddBettypeList(IEnumerable<BetTypeInfo> betTypeInfos)
+        public void AddBettypeList(IEnumerable<BetTypeInfo> betTypeInfos, List<BetTypeDefaultItem> betTypeDefaultItems)
         {
             foreach (var item in betTypeInfos)
             {
-                var itemBettype = new BetTypeItem(item);
+                var itemBettype = new BetTypeItem(item, betTypeDefaultItems);
                 this.ItemList.Add(itemBettype);
 
                 CalculateTotal(itemBettype);
@@ -32,7 +32,8 @@
         {
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
-            this.Total.BetCount += item.BetCount;           
+            this.Total.BetCount += item.BetCount;
+            this.Total.Margin += item.Margin;
         }
     }
 }
