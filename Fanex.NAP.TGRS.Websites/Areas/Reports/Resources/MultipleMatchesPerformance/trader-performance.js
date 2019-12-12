@@ -78,37 +78,37 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         domElements.ddlGrade.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            minWidth: 190,
             height: 200,
             allSelectedText: labels.All
-        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
             validator.ClearError(domElements.ddlGrade.next());
             });
 
         domElements.ddlTeam.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            minWidth: 190,
             height: 200,
             allSelectedText: labels.All
-        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
             validator.ClearError(domElements.ddlTeam.next());
             });
 
         domElements.ddlBetType.multiselect({
             selectedList: 2,
-            minWidth: 200,
-            height: 200,
+            minWidth: 190,
+            height: 100,
             allSelectedText: labels.All
-        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
             });
 
         domElements.ddlMultipleMatches.multiselect({
             selectedList: 2,
-            minWidth: 200,
-            height: 200,
+            minWidth: 190,
+            height: 120,
             allSelectedText: labels.All
-        }).multiselect("checkAll").multiselectfilter({ width: 135 }).change(function () {
+        }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
             validator.ClearError(domElements.ddlMultipleMatches.next());
             });
 
