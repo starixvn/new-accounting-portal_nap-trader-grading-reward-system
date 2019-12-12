@@ -20,5 +20,12 @@
         {
             return _traderPerformanceService.GetTraderPerformanceDetails(criteria);
         }
+
+        [HttpPost]
+        public IEnumerable<MultipleMatchesDetails> GetMultipleMatches(GetMultipleMatchesCriteria criteria)
+        {
+            var a = _traderPerformanceService.GetMultipleMatchesDetails(criteria);
+            return _traderPerformanceService.GetMultipleMatchesDetails(criteria);
+        }
     }
 }

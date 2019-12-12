@@ -180,12 +180,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
+    <Compile Include="Criteria\GetMultipleMatchesCriteria.cs" />
     <Compile Include="Criteria\GetPerformanceDetailsCriteria.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\APIInputModel\TraderPerformanceParam.cs" />
     <Compile Include="Model\Common\DBResult.cs" />
+    <Compile Include="Model\DataModel\MultipleMatchesDetails.cs" />
     <Compile Include="Model\DataModel\TraderPerformanceDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\TraderPerformanceService.cs" />

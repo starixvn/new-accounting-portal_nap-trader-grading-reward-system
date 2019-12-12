@@ -2,5 +2,6 @@
 <Functions>
   <Function Name="TraderPerformanceDetails">
     <Setting Key="TGRS_API_TraderPerformance_Get" SpName="TGRS_API_TraderPerformance_Get" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_API_MultipleMatches_Get" SpName="TGRS_API_MultipleMatches_Get" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
 </Functions>

@@ -11,5 +11,10 @@
         {
             return DataService.GetData<TraderPerformanceDetails>(criteria);
         }
+
+        public IEnumerable<MultipleMatchesDetails> GetMultipleMatchesDetails(GetMultipleMatchesCriteria criteria)
+        {
+            return DataService.GetData<MultipleMatchesDetails>(criteria);
+        }
     }
 }
