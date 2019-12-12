@@ -19,9 +19,9 @@
     
     public partial class MultipleMatchesTraderReportService : TGRSBaseService, IMultipleMatchesReportService
     {
-        private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.DefaultBettype";
-        private const string TeamsSessionKey = "Fanex.NAP.TGRS.Reports.Teams";
-        private const string MultipleMatchesTraderPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.TraderPerformance";
+        private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.DefaultBettype";
+        private const string TeamsSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.Teams";
+        private const string MultipleMatchesTraderPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.TraderPerformance";
         private const int PointInPixel = 225;
         private const string SpaceBlank = " ";
 
@@ -72,10 +72,12 @@
                 {
                     traderGroup = new TraderPerformanceGroup(group.Key);
                     traderGroup.AddHeader(group);
-                    traderGroup.AddTraderList(group);                    
+                    traderGroup.AddTraderList(group);
+                    traderGroup.Total.Margin = CalculateTotalMargin(traderGroup.Total.WinLoss, traderGroup.Total.Turnover);
                     traderPerformance.AddItem(traderGroup);
                 }
                 traderPerformance.GroupList = traderPerformance.GroupList.ToList();
+                traderPerformance.GrandTotal.Margin = CalculateTotalMargin(traderPerformance.GrandTotal.WinLoss, traderPerformance.GrandTotal.Turnover);
                 traderPerformance.TotalItems = traderData.Count();
                 SessionManager.Set<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey, traderPerformance);
             }            
@@ -96,10 +98,12 @@
                 {
                     matchGroup = new MatchPerformanceGroup(group.Key);
                     matchGroup.AddMatchList(group);
+                    matchGroup.Total.Margin = CalculateTotalMargin(matchGroup.Total.WinLoss, matchGroup.Total.Turnover);
                     matchPerformance.AddItem(matchGroup);
                 }
             }
             matchPerformance.GroupList = matchPerformance.GroupList.ToList();
+            matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
             matchPerformance.TotalItems = matchData.Count();
 
             return matchPerformance;
@@ -113,11 +117,22 @@
             {
                 var betTypeDefaultItems = SessionManager.Get<List<BetTypeDefaultItem>>(DefaultBettypeSessionKey);
                 betTypes.AddBettypeList(bettypeData, betTypeDefaultItems);
+                betTypes.Total.Margin = CalculateTotalMargin(betTypes.Total.WinLoss, betTypes.Total.Turnover);
             }
 
             return betTypes;
         }
-        
+
+        private decimal CalculateTotalMargin(decimal winLoss, decimal turnover)
+        {
+            if (turnover != 0)
+            {
+                return winLoss / turnover * 100;
+            }
+
+            return 0;
+        }
+
         public void ExportTraderPerformance(int userId, GetTraderPerformanceCriteria criteria, string templatePath)
         {
             var traderData = SessionManager.Get<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey);
