@@ -443,7 +443,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 itemsPerPageArray: common.Constants.PagerRanges,
                 totalItem: cachedData.TotalItems,
                 pagerSelectCallBack: function (pageSize, pageIndex) {
-                    reloadPage(pageSize, pageIndex, traderId);
+                    reloadPage(pageSize, pageIndex, traderId, traderName, multipleMatches);
                 }
             },
             showFooter: true
@@ -575,7 +575,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         var titleFormat = '<span id="spanTraderLink"  class="breadcrumb-link"> {0}</span>' +
             '<span id="spanMatchLink"  class="breadcrumb-link"> >> Multiple by {1} of {2}</span>' +
             '<span> >> {3}</span>';
-
+        var titleLength = labels.MultipleMatchesPerformance.length + traderName.length + 22;
         var gridOptions = {
             columns: [
                 { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -600,7 +600,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, matchName)
+                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, shortenName(100, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -660,6 +660,16 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
         }];
     }
+
+    var shortenName = function (maximumTitleLength, prefixLength, name) {
+        var titleLength = prefixLength + name.length;
+
+        if (titleLength > maximumTitleLength) {
+            name = name.substring(0, maximumTitleLength - prefixLength - 3) + '...';
+        }
+
+        return name;
+    };
 
     var handleBettypeDetailGridEvents = function () {
         domElements.divBettypeDetailContainer.find('#spanTraderLink').click(function () {

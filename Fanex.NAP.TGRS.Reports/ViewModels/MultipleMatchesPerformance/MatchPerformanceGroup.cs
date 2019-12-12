@@ -46,9 +46,9 @@
 
         private void ArrangeRangeDate(MatchPerformanceInfo item)
         {
-            if (this.FromDate == null || this.FromDate > item.EventDate)
+            if (this.FromDate == null || this.FromDate > item.GlobalShowTime)
             {
-                this.FromDate = item.EventDate;
+                this.FromDate = item.GlobalShowTime;
             }
             if (this.ToDate == null || this.ToDate < item.GlobalShowTime)
             {
@@ -62,7 +62,8 @@
        
         public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping)
         {
-            foreach (var item in grouping)
+            var groupOrder = grouping.OrderBy(c => c.GlobalShowTime);
+            foreach (var item in groupOrder)
             {
                 if (item != null)
                 {

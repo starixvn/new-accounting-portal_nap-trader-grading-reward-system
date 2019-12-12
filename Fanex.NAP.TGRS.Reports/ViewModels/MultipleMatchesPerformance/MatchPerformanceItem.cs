@@ -24,6 +24,7 @@
                 this.MatchId = matchData.MatchId.Value;
                 this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(matchData.HomeId), ViewLang.Vs, CacheRef.GetTeamName(matchData.AwayId));
                 this.EventDate = matchData.EventDate;
+                this.GlobalShowTime = matchData.GlobalShowTime;
                 this.LeagueName = matchData.LeagueName;
                 this.Turnover = Converter.ToDecimal(matchData.Turnover);
                 this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
@@ -40,12 +41,14 @@
 
         public DateTime? EventDate { get; set; }
 
+        public DateTime? GlobalShowTime { get; set; }
+
         public string KOTime
         {
             get
             {
-                return this.EventDate.HasValue ?
-                        this.EventDate.Value.ToShortDateString() + " " + this.EventDate.Value.ToShortTimeString()
+                return this.GlobalShowTime.HasValue ?
+                        this.GlobalShowTime.Value.ToShortDateString() + " " + this.GlobalShowTime.Value.ToShortTimeString()
                         : string.Empty;
             }
         }
