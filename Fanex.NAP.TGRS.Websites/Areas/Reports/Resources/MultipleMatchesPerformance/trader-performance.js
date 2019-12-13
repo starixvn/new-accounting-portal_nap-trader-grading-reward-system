@@ -574,7 +574,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     var renderBettypeDetailGridOptions = function (traderName, multipleMatches, matchName) {
         var titleFormat = '<span id="spanTraderLink"  class="breadcrumb-link"> {0}</span>' +
             '<span id="spanMatchLink"  class="breadcrumb-link"> >> Multiple by {1} of {2}</span>' +
-            '<span> >> {3}</span>';
+            '<span title="{3}"> >> {4}</span>';
         var titleLength = labels.MultipleMatchesPerformance.length + traderName.length + 22;
         var gridOptions = {
             columns: [
@@ -600,7 +600,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, shortenName(100, titleLength, matchName))
+                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, matchName, shortenName(95, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
