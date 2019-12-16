@@ -190,7 +190,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 FormatNumber: common.Formats.IntegerFormat
             },
             {
-                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                HeaderText: labels.Count, Width: 100, Name: 'ColCount', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
             },
             {
@@ -267,7 +267,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 row = {
                     Columns: itemColumns.concat([
                         { Name: 'ColMultipleMatches', Value: multipleMatchesCol },
-                        { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                        { Name: 'ColCount', Value: item.Count },
                         { Name: 'ColTurnover', Value: item.Turnover },
                         { Name: 'ColWinLoss', Value: item.WinLoss },
                         { Name: 'ColBetCount', Value: item.BetCount },
@@ -285,7 +285,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         return [
             {
                 Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 5, CellAlign: 'right' },
-                    { Name: 'ColNoOfMatches', Value: data.GrandTotal.NoOfMatches },
+                    { Name: 'ColCount', Value: data.GrandTotal.Count },
                     { Name: 'ColTurnover', Value: data.GrandTotal.Turnover },
                     { Name: 'ColWinLoss', Value: data.GrandTotal.WinLoss },
                     { Name: 'ColBetCount', Value: data.GrandTotal.BetCount },

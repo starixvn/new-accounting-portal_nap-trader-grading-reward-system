@@ -55,7 +55,7 @@
 
         private void CalculateTotal(TraderPerformanceItem item)
         {
-            this.Total.NoOfMatches += item.NoOfMatches;
+            this.Total.Count += item.Count;
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
             this.Total.BetCount += item.BetCount;            

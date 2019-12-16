@@ -14,7 +14,7 @@
             if (traderData != null)
             {
                 this.MultipleMatches = Converter.ToInt(traderData.MultipleMatches);
-                this.NoOfMatches = Converter.ToInt(traderData.MultipleTimes);
+                this.Count = Converter.ToInt(traderData.MultipleTimes);
                 this.MatchList = traderData.MatchList;
                 this.Turnover = Converter.ToDecimal(traderData.Turnover);
                 this.WinLoss = Converter.ToDecimal(traderData.Winloss);
@@ -25,7 +25,7 @@
 
         public int MultipleMatches { get; set; }
 
-        public int NoOfMatches { get; set; }
+        public int Count { get; set; }
 
         public string MatchList { get; set; }
 

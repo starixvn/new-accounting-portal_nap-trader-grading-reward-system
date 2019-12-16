@@ -31,7 +31,7 @@
             if (group != null)
             {
                 this.GroupList.Add(group);
-                this.GrandTotal.NoOfMatches += group.Total.NoOfMatches;
+                this.GrandTotal.Count += group.Total.Count;
                 this.GrandTotal.Turnover += group.Total.Turnover;
                 this.GrandTotal.WinLoss += group.Total.WinLoss;
                 this.GrandTotal.BetCount += group.Total.BetCount;

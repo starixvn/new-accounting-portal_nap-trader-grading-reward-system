@@ -756,4 +756,7 @@
   <data name="KOTime" xml:space="preserve">
     <value>KO Time</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
 </root>
