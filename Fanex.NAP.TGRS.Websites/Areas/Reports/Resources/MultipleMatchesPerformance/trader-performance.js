@@ -469,7 +469,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
                 counter++;
                 matchDetailCol = matchDetailFormat.format(labels.BetTypeDetail, traderId, traderName, item.MatchId, multipleMatches, item.MatchName, item.LeagueName);
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
+                    Columns: [{ Name: 'ColNo', Value: item.Order + 1, CssClass: 'order-column' },
                         { Name: 'ColMatch', Value: matchDetailCol },
                         { Name: 'ColKOTime', Value: item.KOTime },
                         { Name: 'ColTurnover', Value: item.Turnover },

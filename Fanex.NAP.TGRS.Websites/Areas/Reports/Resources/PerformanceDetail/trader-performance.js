@@ -601,7 +601,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 itemsPerPageArray: common.Constants.PagerRanges,
                 totalItem: cachedData.TotalItems,
                 pagerSelectCallBack: function (pageSize, pageIndex) {
-                    reloadPage(pageSize, pageIndex, traderId, traderName);
+                    reloadPage(pageSize, pageIndex, traderId, traderName, isLive);
                 }
             },
             showFooter: true
