@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ActualRatePerformanceDetailController.cs" />
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
+    <Compile Include="Controllers\RT3PerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Controllers\TraderMonthlyReportController.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBettypeDetailLeagueCriteria.cs" />
@@ -361,6 +362,7 @@
     <Compile Include="Services\Implements\BettypeMonthlyService.cs" />
     <Compile Include="Services\Implements\DashboardService.cs" />
     <Compile Include="Services\Implements\GradeDetailReportService.cs" />
+    <Compile Include="Services\Implements\RT3PerformanceDetailService.cs" />
     <Compile Include="Services\Implements\MultipleMatchesTraderReportService.cs" />
     <Compile Include="Services\Implements\NewTeamDetailReportService.cs" />
     <Compile Include="Services\Implements\NewBetTypeDetailReportService.cs" />
@@ -381,6 +383,7 @@
     <Compile Include="Services\Interfaces\IMultipleMatchesReportService.cs" />
     <Compile Include="Services\Interfaces\INewDetailReportService.cs" />
     <Compile Include="Services\Interfaces\IDetailReportService.cs" />
+    <Compile Include="Services\Interfaces\IRT3PerformanceDetailService.cs" />
     <Compile Include="Services\Interfaces\ISummaryReportService.cs" />
     <Compile Include="Services\Interfaces\ITraderManagementService.cs" />
     <Compile Include="Services\Interfaces\ITraderMonthlyReport.cs" />

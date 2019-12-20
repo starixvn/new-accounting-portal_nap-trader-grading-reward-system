@@ -273,6 +273,13 @@ namespace Fanex.NAP.TGRS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/multipleMatchesTraderPerformance").Include(              
                 "~/Areas/Reports/Resources/MultipleMatchesPerformance/trader-performance.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/rt3PerformanceDetail",
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/rt3-performance-detail.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/rt3PerformanceDetail").Include(
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/bettype-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

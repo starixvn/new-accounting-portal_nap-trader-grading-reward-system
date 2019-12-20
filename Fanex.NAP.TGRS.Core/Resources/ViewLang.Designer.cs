@@ -817,6 +817,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to League Group.
+        /// </summary>
+        public static string LeagueGroup {
+            get {
+                return ResourceManager.GetString("LeagueGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to League Name.
         /// </summary>
         public static string LeagueName {
@@ -1425,6 +1434,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string RowsToDisplay {
             get {
                 return ResourceManager.GetString("RowsToDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RT3 Performance Detail Report.
+        /// </summary>
+        public static string RT3PerformanceDetail {
+            get {
+                return ResourceManager.GetString("RT3PerformanceDetail", resourceCulture);
             }
         }
         

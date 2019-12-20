@@ -759,4 +759,10 @@
   <data name="Count" xml:space="preserve">
     <value>Count</value>
   </data>
+  <data name="LeagueGroup" xml:space="preserve">
+    <value>League Group</value>
+  </data>
+  <data name="RT3PerformanceDetail" xml:space="preserve">
+    <value>RT3 Performance Detail Report</value>
+  </data>
 </root>

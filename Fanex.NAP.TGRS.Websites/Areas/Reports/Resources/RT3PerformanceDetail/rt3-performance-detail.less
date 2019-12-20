@@ -1,0 +1,102 @@
+﻿.filter-bar {
+    .filter-form {
+        .filter-row {                      
+            .date-range {
+                display: inline-block;
+                float: left;
+
+                .ui-multiselect {
+                    width: 126px !important;
+                }
+
+                .datepicker {
+                    display: inline-block;
+                    float: left;
+                    width: 150px;
+                    margin: 0 3px;
+
+                    input {
+                        width: 140px;
+                    }
+                }
+            }
+
+            .generate {
+                margin-left: 17px;
+            }            
+        }
+    }
+}
+
+.toggle {
+    display: inline block;
+    cursor: pointer; 
+}
+
+.toggle::before {
+    content: "+";
+    display: inline;   
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 24px;
+    margin: 10px;    
+}
+
+.toggle.expanded::before {
+    content: "-";
+    font-weight: bold;
+}
+
+.info-summary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #fff;
+    border-radius: 3px;
+    float: left;
+    width: 98%;
+    margin: 5px 10px 5px 10px;
+
+    .info-block {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        height: calc(100% - 30px);
+
+        .info-label {
+            background: #B3D2EF;
+
+            label {
+                display: block;
+                padding: 5px;
+                border: 1px solid #fff;
+                font-weight: bold;
+                color: #404040;
+                background: #B3D2EF;
+                min-height: 30px;
+                line-height: 1.3;
+            }
+        }
+
+        .info-text {
+            div {
+                padding: 5px;
+                border: 1px solid #ddd;
+                min-height: 30px;
+                line-height: 1.3;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1350px) {
+        .info-block:nth-child(2) {
+            border-right: 0;
+        }
+
+        .info-block:not(:last-child) {
+            grid-column: span 2;
+        }
+
+        .info-block:last-child {
+            grid-column: span 4;
+        }
+    }
+}
