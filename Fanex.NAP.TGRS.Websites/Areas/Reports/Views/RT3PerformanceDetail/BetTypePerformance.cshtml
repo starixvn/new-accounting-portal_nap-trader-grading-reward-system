@@ -36,9 +36,13 @@
                 <label>@ViewLang.League</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddlLeague" multiple="multiple">                    
+                <select id="ddlLeague" multiple="multiple">
                     <option value="MJ">MJ</option>
                     <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="M3">M3</option>
+                    <option value="M4">M4</option>
+                    <option value="Others">Others</option>
                 </select>
             </div>
             <div class="submit col_3">
@@ -64,43 +68,26 @@
             DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };        
-        var labels = {
-            No: '#',
-            League: '@ViewLang.League',
-            NoOfTraders: '@ViewLang.NoOfTraders',
-            NoOfMatches: '@ViewLang.NoOfMatches',
-            Turnover: '@ViewLang.TurnoverMY',
-            WinLoss: '@ViewLang.WinLoss',
-            Juice: '@ViewLang.Juice',
-            Leftover: '@ViewLang.Leftover',
-            Total: '@ViewLang.Total',
-            EventDate: '@ViewLang.EventDate',
-            BetCount: '@ViewLang.BetCount',
-            Margin: '@ViewLang.Margin',
-            MarginTotal: '@ViewLang.MarginTotal',
-            LeagueBM: '@ViewLang.LeagueBM',
-            BetTypeBM: '@ViewLang.BetTypeBM',
-            BetType: '@ViewLang.BetType',
-            BetTypeDetail: '@ViewLang.BetTypeDetail',
-            Trader: '@ViewLang.Trader',
-            Grade: '@ViewLang.Grade',
-            Team: '@ViewLang.Team',
+        var labels = {           
+            League: '@ViewLang.League',  
             Match: '@ViewLang.Match',
+            Turnover: '@ViewLang.TurnoverMY',
+            WinLoss: '@ViewLang.WinLoss',            
             Total: '@ViewLang.Total',
+            Margin: '@ViewLang.Margin',                      
+            BetType: '@ViewLang.BetType',      
+            BetCount: '@ViewLang.BetCount',
+            VirtualTotal: '@ViewLang.VirtualTotal',
+            Variance: '@ViewLang.Variance',
+            RealTotal: '@ViewLang.RealTotal',
+            Total8RM: '@ViewLang.Total8RM',
+            RealTotal8RMWL: '@ViewLang.RealTotal8RMWL',
             GrandTotal: '@ViewLang.GrandTotal',
             AllBetTypes: '@ViewLang.AllBetTypes',
-            NA: '@ViewLang.NA',
-            Forecast: '@ViewLang.Forecast',
-            EffectiveDate: '@ViewLang.EffectiveDate',
+            NA: '@ViewLang.NA',                
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
-            MatchPerformance: '@ViewLang.MatchPerformance',
-            TeamHistoryDetail: '@ViewLang.TeamHistoryDetail',
-            GradeHistoryDetail: '@ViewLang.GradeHistoryDetail',
-            Score: '@ViewLang.Score',
-            Benchmark: '@ViewLang.BM',
-            ScoreByLatestBenchMark: '@ViewLang.ScoreByLatestBenchMark',
-            ScoreByPeriod: '@ViewLang.ScoreByPeriod',
+            MatchPerformance: '@ViewLang.MatchPerformance',                            
             RT3PerformanceDetail: '@ViewLang.RT3PerformanceDetail'
         };
         var messages = {

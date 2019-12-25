@@ -1384,6 +1384,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Real Total.
+        /// </summary>
+        public static string RealTotal {
+            get {
+                return ResourceManager.GetString("RealTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Real Total - Ex.8RM WL.
+        /// </summary>
+        public static string RealTotal8RMWL {
+            get {
+                return ResourceManager.GetString("RealTotal8RMWL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
         public static string Region {
@@ -1843,6 +1861,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 8RM Total.
+        /// </summary>
+        public static string Total8RM {
+            get {
+                return ResourceManager.GetString("Total8RM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trader.
         /// </summary>
         public static string Trader {
@@ -1965,6 +1992,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variance.
+        /// </summary>
+        public static string Variance {
+            get {
+                return ResourceManager.GetString("Variance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Total.
+        /// </summary>
+        public static string VirtualTotal {
+            get {
+                return ResourceManager.GetString("VirtualTotal", resourceCulture);
             }
         }
         

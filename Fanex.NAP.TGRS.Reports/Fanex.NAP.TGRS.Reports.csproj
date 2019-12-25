@@ -257,6 +257,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfTeamCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetGradeHistoryCriteria.cs" />
     <Compile Include="Criteria\PerformanceSummary\GetTeamHistoryCriteria.cs" />
+    <Compile Include="Criteria\RT3PerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
     <Compile Include="Criteria\TraderPerformanceMonthly\GetTraderPerformanceMonthlyCriteria.cs" />
     <Compile Include="Criteria\TraderPerformanceMonthly\GetAllShiftCriteria.cs" />
@@ -422,6 +423,8 @@
     <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
+    <Compile Include="ViewModels\RT3PerformanceDetail\BetTypePerformanceItem.cs" />
+    <Compile Include="ViewModels\RT3PerformanceDetail\BetTypePerformanceList.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoList.cs" />
     <Compile Include="ViewModels\Trader\BettypeOfMatch.cs" />

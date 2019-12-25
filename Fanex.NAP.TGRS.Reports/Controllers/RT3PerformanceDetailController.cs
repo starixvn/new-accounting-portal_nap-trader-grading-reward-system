@@ -3,7 +3,8 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Reports.Services;
+    using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Services;    
     using System;
     using System.Web.Mvc;
     
@@ -42,9 +43,9 @@
             return View();
         }
 
-        public ActionResult GetBetTypePerformance()
+        public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var bettypes = "";
+            var bettypes = _rt3PerformanceDetailService.GetBetTypePerformance(criteria);
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;
 
