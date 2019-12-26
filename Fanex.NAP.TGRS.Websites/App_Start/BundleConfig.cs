@@ -278,8 +278,11 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/styles/rt3PerformanceDetail",
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/rt3-performance-detail.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/rt3PerformanceDetail").Include(
+            bundles.Add(new ScriptBundle("~/scripts/rt3BetTypePerformanceDetail").Include(
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/bettype-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/rt3MonthPerformanceDetail").Include(
+               "~/Areas/Reports/Resources/RT3PerformanceDetail/month-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

@@ -1,5 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
 {
+    using System;
+
+    [Serializable]
     public class BetTypePerformanceItem
     {
         public short BetTypeId { get; set; }

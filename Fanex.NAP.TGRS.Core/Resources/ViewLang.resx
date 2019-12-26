@@ -780,4 +780,7 @@
   <data name="RealTotal8RMWL" xml:space="preserve">
     <value>Real Total - Ex.8RM WL</value>
   </data>
+  <data name="RT3PerformanceDetailFileName" xml:space="preserve">
+    <value>RT3_Performance_Detail_{0}_{1}_{2}</value>
+  </data>
 </root>

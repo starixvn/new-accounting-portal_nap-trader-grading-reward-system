@@ -11,6 +11,8 @@
     public class RT3PerformanceDetailController : TGRSBaseController
     {
         #region Attributes and Constructors
+        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\BetTypePerformance.xls";
+        private const string MonthPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\MonthPerformance.xls";
         private readonly IRT3PerformanceDetailService _rt3PerformanceDetailService;
 
         [Simplect.Attribute.InjectObject]
@@ -43,6 +45,7 @@
             return View();
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             var bettypes = _rt3PerformanceDetailService.GetBetTypePerformance(criteria);
@@ -50,6 +53,40 @@
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        {
+            var templatePath = Server.MapPath(BetTypePerformanceDetail);
+            _rt3PerformanceDetailService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult MonthPerformance()
+        {
+            return View();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
+        {
+            var bettypes = _rt3PerformanceDetailService.GetMonthPerformance(criteria);
+            var jsonResult = Json(bettypes);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportMonthPerformance(GetMonthPerformanceCriteria criteria)
+        {
+            var templatePath = Server.MapPath(MonthPerformanceDetail);
+            _rt3PerformanceDetailService.ExportMonthPerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
     }
 }

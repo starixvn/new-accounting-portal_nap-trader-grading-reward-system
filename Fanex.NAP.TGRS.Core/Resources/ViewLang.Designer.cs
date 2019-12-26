@@ -1465,6 +1465,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RT3_Performance_Detail_{0}_{1}_{2}.
+        /// </summary>
+        public static string RT3PerformanceDetailFileName {
+            get {
+                return ResourceManager.GetString("RT3PerformanceDetailFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Score.
         /// </summary>
         public static string Score {
