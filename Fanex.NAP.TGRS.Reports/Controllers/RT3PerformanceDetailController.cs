@@ -51,7 +51,7 @@
             var bettypes = _rt3PerformanceDetailService.GetBetTypePerformance(criteria);
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;
-
+ 
             return jsonResult;
         }
 

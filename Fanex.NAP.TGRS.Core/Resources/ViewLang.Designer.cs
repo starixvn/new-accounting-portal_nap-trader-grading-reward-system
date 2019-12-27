@@ -565,6 +565,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EX. 8RM WL.
+        /// </summary>
+        public static string Ex8RMWL {
+            get {
+                return ResourceManager.GetString("Ex8RMWL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First Working Date.
         /// </summary>
         public static string FirstWorkingDate {
@@ -844,6 +853,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leagues.
+        /// </summary>
+        public static string Leagues {
+            get {
+                return ResourceManager.GetString("Leagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leftover.
         /// </summary>
         public static string Leftover {
@@ -894,6 +912,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Margin {
             get {
                 return ResourceManager.GetString("Margin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Margin.
+        /// </summary>
+        public static string MarginRT3 {
+            get {
+                return ResourceManager.GetString("MarginRT3", resourceCulture);
             }
         }
         
@@ -966,6 +993,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string MatchCount {
             get {
                 return ResourceManager.GetString("MatchCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Matches.
+        /// </summary>
+        public static string Matches {
+            get {
+                return ResourceManager.GetString("Matches", resourceCulture);
             }
         }
         

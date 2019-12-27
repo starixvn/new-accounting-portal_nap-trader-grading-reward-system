@@ -39,9 +39,14 @@
                     BetCount = 5156,
                     VirtualTotalTurnover = 3227325,
                     VirtualTotalWinLoss = 11553824,
-                    VirtualTotalMargin = 3227325/ 11553824 * 100
-                });
+                    VirtualTotalMargin = CalculateTotalMargin(3227325, 11553824)
+                });                
             }
+            betTypeList.LeagueTotal = 1;
+            betTypeList.MatchTotal = 5;
+            betTypeList.GrandTotal.VirtualTotalTurnover = 3227325 * 5;
+            betTypeList.GrandTotal.VirtualTotalWinLoss = 11553824 * 5;
+            betTypeList.GrandTotal.VirtualTotalMargin = CalculateTotalMargin(betTypeList.GrandTotal.VirtualTotalTurnover, betTypeList.GrandTotal.VirtualTotalWinLoss);
 
             return betTypeList;
         }
@@ -63,7 +68,7 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowDataBetType(betTypeData, ref writer);
-                writer.SyncColumnsWidth(10);
+                writer.SyncColumnsWidth(16);
                 writer.Render();
             }
         }
@@ -86,7 +91,7 @@
                 BetCount = 11500,
                 VirtualTotalTurnover = 593749,
                 VirtualTotalWinLoss = 1353747,
-                VirtualTotalMargin = 593749 / 1353747 * 100
+                VirtualTotalMargin = CalculateTotalMargin(593749, 1353747)
             });
             monthList.ItemList.Add(new MonthPerformanceItem
             {
@@ -95,11 +100,16 @@
                 BetCount = 15700,
                 VirtualTotalTurnover = 3277325,
                 VirtualTotalWinLoss = 11553842,
-                VirtualTotalMargin = 3277325 / 11553842 * 100
+                VirtualTotalMargin = CalculateTotalMargin(3277325, 11553842)
             });
+            monthList.LeagueTotal = 1;
+            monthList.MatchTotal = 5;
+            monthList.GrandTotal.VirtualTotalTurnover = 3277325 * 5;
+            monthList.GrandTotal.VirtualTotalWinLoss = 11553842 * 5;
+            monthList.GrandTotal.VirtualTotalMargin = CalculateTotalMargin(monthList.GrandTotal.VirtualTotalTurnover, monthList.GrandTotal.VirtualTotalWinLoss);
 
             return monthList;
-        }        
+        }
 
         public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
         {
@@ -118,9 +128,19 @@
                 FillHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowDataMonth(monthData, ref writer);
-                writer.SyncColumnsWidth(10);
+                writer.SyncColumnsWidth(17);
                 writer.Render();
             }
+        }
+
+        private decimal CalculateTotalMargin(decimal winLoss, decimal turnover)
+        {
+            if (turnover != 0)
+            {
+                return winLoss / turnover * 100;
+            }
+
+            return 0;
         }
 
         private void FillHeader(ref ExcelTemplateWriter writer)
@@ -137,7 +157,8 @@
             int lineCount = 0;
             
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");                      
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, criteria.LeagueGroups, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];

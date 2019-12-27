@@ -1,56 +1,56 @@
 ﻿<div id="btnToggle" class="toggle">
-    <span style="font-weight: bold;">719 Leagues / 3,279 Matches</span>
+    <span id="lblLeagueMatches" style="font-weight: bold;"></span>
 </div>
 
 <div id="divInfoSummary" class="info-summary">
     <div class="info-block">
         <div class="info-label">
-            <label>VIRTUAL TOTAL</label>
+            <label>@ViewLang.VirtualTotal.ToUpper()</label>
         </div>
         <div class="info-text">
-            <div><label class="v1">Turnover</label><label class="v4">11,606,220.176</label></div>
-            <div><label class="v2">Win Loss</label><label class="v5">11,606,220.176</label></div>
-            <div><label class="v3">Margin</label><label class="v6">0.20%</label></div>
+            <div><label class="v1">@ViewLang.Turnover</label><label id="lblVirtualTotalTurnover" class="v4"></label></div>
+            <div><label class="v2">@ViewLang.WinLoss</label><label id="lblVirtualTotalWinLoss" class="v5"></label></div>
+            <div><label class="v3">@ViewLang.MarginRT3</label><label id="lblVirtualTotalMargin" class="v6"></label></div>
         </div>
     </div>
     <div class="info-block">
         <div class="info-label">
-            <label>VARIANCE</label>
+            <label>@ViewLang.Variance.ToUpper()</label>
         </div>
         <div class="info-text">
-            <div><label class="v1">Turnover</label><label class="v4">11,606,220.176</label></div>
-            <div><label class="v2">Win Loss</label><label class="v5">11,606,220.176</label></div>
-            <div><label class="v3">Margin</label><label class="v6">0.20%</label></div>            
+            <div><label class="v1">@ViewLang.Turnover</label><label id="lblVarianceTurnover" class="v4"></label></div>
+            <div><label class="v2">@ViewLang.WinLoss</label><label id="lblVarianceWinLoss" class="v5"></label></div>
+            <div><label class="v3">@ViewLang.MarginRT3</label><label id="lblVarianceMargin" class="v6"></label></div>            
         </div>
     </div>
     <div class="info-block">
         <div class="info-label">
-            <label>REAL TOTAL</label>
+            <label>@ViewLang.RealTotal.ToUpper()</label>
         </div>
         <div class="info-text">
-            <div><label class="v1">Turnover</label><label class="v4">11,606,220.176</label></div>
-            <div><label class="v2">Win Loss</label><label class="v5">11,606,220.176</label></div>
-            <div><label class="v3">Margin</label><label class="v6">0.20%</label></div>
+            <div><label class="v1">@ViewLang.Turnover</label><label id="lblRealTotalTurnover" class="v4"></label></div>
+            <div><label class="v2">@ViewLang.WinLoss</label><label id="lblRealTotalWinLoss" class="v5"></label></div>
+            <div><label class="v3">@ViewLang.MarginRT3</label><label id="lblRealTotalMargin" class="v6"></label></div>
         </div>
     </div>
     <div class="info-block">
         <div class="info-label">
-            <label>8RM TOTAL</label>
+            <label>@ViewLang.Total8RM.ToUpper()</label>
         </div>
         <div class="info-text">
-            <div><label class="v1">Turnover</label><label class="v4">11,606,220.176</label></div>
-            <div><label class="v2">Win Loss</label><label class="v5">11,606,220.176</label></div>
-            <div><label class="v3">Margin</label><label class="v6">0.20%</label></div>
+            <div><label class="v1">@ViewLang.Turnover</label><label id="lblTotal8RMTurnover" class="v4"></label></div>
+            <div><label class="v2">@ViewLang.WinLoss</label><label id="lblTotal8RMWinLoss" class="v5"></label></div>
+            <div><label class="v3">@ViewLang.MarginRT3</label><label id="lblTotal8RMMargin" class="v6"></label></div>
         </div>
     </div>
-    <div class="info-block">
+    <div class="info-block" style="margin-right: 0px;">
         <div class="info-label">
-            <label>REAL TOTAL EX. 8RM WL</label>
+            <label>@ViewLang.RealTotal.ToUpper() <br />@ViewLang.Ex8RMWL.ToUpper()</label>
         </div>
         <div class="info-text">
-            <div><label class="v1">Turnover</label><label class="v4">11,606,220.176</label></div>
-            <div><label class="v2">Win Loss</label><label class="v5">11,606,220.176</label></div>
-            <div><label class="v3">Margin</label><label class="v6">0.20%</label></div>
+            <div><label class="v1">@ViewLang.Turnover</label><label id="lblTotal8RMWLTurnover" class="v4">11,606,220.176</label></div>
+            <div><label class="v2">@ViewLang.WinLoss</label><label id="lblTotal8RMWLWinLoss" class="v5">11,606,220.176</label></div>
+            <div><label class="v3">@ViewLang.MarginRT3</label><label id="lblTotal8RMWLMargin" class="v6">0.20%</label></div>
         </div>
     </div>
 </div>

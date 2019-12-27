@@ -22,9 +22,9 @@
         <a href="@Url.Content("~/Reports/RT3PerformanceDetail/MonthPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Month
         </a>
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+        @*<a href="@Url.Content("~/Reports/RT3PerformanceDetail/BetTypePerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.League
-        </a>
+        </a>*@
     </div>
 }
 
@@ -32,11 +32,11 @@
     <div id="divBetTypePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="date-range"><div id="divDateRange"></div></div>
-            <div class="lbl-field col_2">
-                <label>@ViewLang.League</label>
+            <div class="lbl-field col_5">
+                <label>@ViewLang.LeagueGroup</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddlLeague" multiple="multiple">
+                <select id="ddlLeagueGroup" multiple="multiple">
                     <option value="MJ">MJ</option>
                     <option value="M1">M1</option>
                     <option value="M2">M2</option>
@@ -69,9 +69,11 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };        
         var labels = {           
-            League: '@ViewLang.League',  
+            League: '@ViewLang.League',
+            Leagues: '@ViewLang.Leagues',
             Match: '@ViewLang.Match',
-            Turnover: '@ViewLang.TurnoverMY',
+            Matches: '@ViewLang.Matches',
+            Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',            
             Total: '@ViewLang.Total',
             Margin: '@ViewLang.Margin',                      

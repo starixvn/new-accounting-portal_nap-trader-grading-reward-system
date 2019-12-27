@@ -1,6 +1,5 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function () {   
     var betTypePerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance();
-
     betTypePerformance.InitPage();
 });
 
@@ -15,29 +14,28 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
 
     var domElements = {
         divBetTypePerformanceFilter: null,
-        ddlLeague: null,
+        ddlLeagueGroup: null,
         btnGenerate: null,
         divBetTypePerformanceContainer: null,
-        divBetTypePerformanceGrid: null,
-        btnToggle: null,
-        divInfoSummary: null
+        divBetTypePerformanceGrid: null,       
     };
 
     var parameters = {
         FromDate: null,
-        ToDate: null
+        ToDate: null,
+        LeagueGroup: null
     };
 
-    // Cache DOM Elements.
+    var summaryPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance();
+    summaryPerformance.InitPage();
+
     var cacheDOMElements = function () {
         domElements.divBetTypePerformanceFilter = $('#divBetTypePerformanceFilter');
         domElements.divDateRange = domElements.divBetTypePerformanceFilter.find('#divDateRange');
-        domElements.ddlLeague = domElements.divBetTypePerformanceFilter.find('#ddlLeague');
+        domElements.ddlLeagueGroup = domElements.divBetTypePerformanceFilter.find('#ddlLeagueGroup');
         domElements.btnGenerate = domElements.divBetTypePerformanceFilter.find('#btnGenerate');
         domElements.divBetTypePerformanceContainer = $('#divBetTypePerformanceContainer');
-        domElements.divBetTypePerformanceGrid = $('#divBetTypePerformanceGrid');
-        domElements.btnToggle = $('#btnToggle');
-        domElements.divInfoSummary = $('#divInfoSummary');
+        domElements.divBetTypePerformanceGrid = $('#divBetTypePerformanceGrid');     
     };
 
     var initializeFields = function () {
@@ -50,31 +48,25 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
             yearRanges: null,
             labelCss: 'col_5'
         });
-        domElements.ddlLeague.multiselect({
+        domElements.ddlLeagueGroup.multiselect({
             selectedList: 2,
             minWidth: 190,
             height: 140,
             allSelectedText: labels.All
         }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
-            validator.ClearError(domElements.ddlLeague.next());
-            });
-        displayInfoSummary(false);
+            validator.ClearError(domElements.ddlLeagueGroup.next());
+            });        
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {
+                var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
+               
+                parameters.FromDate = domElements.divDateRange.getFrom();
+                parameters.ToDate = domElements.divDateRange.getTo();
+                parameters.LeagueGroups = selectedLeagueGroups.join(',');
+
                 hideAllReports();
                 getBetTypePerformanceReport();
-            }
-        });
-        
-        domElements.btnToggle.click(function () {
-            $(this).toggleClass("expanded");
-            if ($(this).hasClass('expanded')) {
-                setStogeDisplayInfoSummary("true");
-                domElements.divInfoSummary.show();
-            } else {
-                setStogeDisplayInfoSummary("false");
-                domElements.divInfoSummary.hide();
             }
         });
     };
@@ -90,7 +82,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
             url: urls.GetBetTypePerformance,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            //data: JSON.stringify(parameters),
+            data: JSON.stringify(parameters),
             success: function (result) {
                 renderBetTypePerformanceGrid(result);
             },
@@ -115,8 +107,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
-        displayInfoSummary(true);
-        //handleBetTypePerformanceGridEvents();
+        summaryPerformance.BindDataInfoSummary(data.GrandTotal, data.LeagueTotal, data.MatchTotal);
+        summaryPerformance.DisplayInfoSummary(true);        
     }
 
     var renderBetTypePerformanceGridOptions = function () {
@@ -136,23 +128,23 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
                 }
             ],
             columns: [
-                { HeaderText: labels.BetType, Width: 115, Name: "ColBetType", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.BetCount, Width: 115, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Turnover, Width: 115, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.WinLoss, Width: 115, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Margin, Width: 80, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Turnover, Width: 115, Name: "ColVarianceTurnover", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 115, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 80, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.Turnover, Width: 115, Name: "ColRealTotalTurnover", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.WinLoss, Width: 115, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Margin, Width: 80, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Turnover, Width: 115, Name: "ColTotal8RMTurnover", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 115, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 80, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "center", Sort: true, ThClass: 'dim' },
-                { HeaderText: labels.Turnover, Width: 115, Name: "ColRealTotal8RMWLTurnover", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.WinLoss, Width: 115, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "center", Sort: true },
-                { HeaderText: labels.Margin, Width: 80, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "center", Sort: true }
+                { HeaderText: labels.BetType, Width: 115, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.BetCount, Width: 115, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.Turnover, Width: 115, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss, Width: 115, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.Margin, Width: 80, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.Turnover, Width: 115, Name: "ColVarianceTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss, Width: 115, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.Margin, Width: 80, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.Turnover, Width: 115, Name: "ColRealTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss, Width: 115, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.Margin, Width: 80, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat},
+                { HeaderText: labels.Turnover, Width: 115, Name: "ColTotal8RMTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss, Width: 115, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.Margin, Width: 80, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.Turnover, Width: 115, Name: "ColRealTotal8RMWLTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss, Width: 115, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.Margin, Width: 80, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat }
             ],
             gridExpandHeight: 260,
             showTitle: true,
@@ -246,31 +238,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
 
     var exportBetTypePerformance = function () {
         common.DownloadFile(urls.ExportBetTypePerformance, parameters);
-    }
-
-    var displayInfoSummary = function (isShow) {
-        var isStoreDisplay = getStogeDisplayInfoSummary();
-        if (isShow && (isStoreDisplay == null || isStoreDisplay == "true")) {
-            domElements.btnToggle.addClass("expanded");
-            domElements.divInfoSummary.show();
-        } else {
-            domElements.divInfoSummary.hide();
-        }
-    }
-
-    var setStogeDisplayInfoSummary = function (value) {
-        if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("StogeDisplayInfoSummary", value);
-        }
-    }
-
-    var getStogeDisplayInfoSummary = function () {
-        if (typeof (Storage) !== "undefined") {
-            var value = localStorage.getItem("StogeDisplayInfoSummary");
-            return value;
-        }
-        return "false"; 
-    }
+    }    
 
     $this.InitPage = function () {
         cacheDOMElements();

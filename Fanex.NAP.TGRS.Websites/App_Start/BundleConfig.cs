@@ -279,9 +279,11 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/rt3-performance-detail.less");
 
             bundles.Add(new ScriptBundle("~/scripts/rt3BetTypePerformanceDetail").Include(
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/bettype-performance.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/rt3MonthPerformanceDetail").Include(
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",
                "~/Areas/Reports/Resources/RT3PerformanceDetail/month-performance.js"));
         }
 

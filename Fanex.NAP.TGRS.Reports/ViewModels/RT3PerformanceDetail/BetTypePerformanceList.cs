@@ -14,6 +14,10 @@
 
         public List<BetTypePerformanceItem> ItemList { get; set; }
 
+        public int LeagueTotal { get; set; }
+
+        public int MatchTotal { get; set; }
+
         public BetTypePerformanceItem GrandTotal { get; set; }
     }
 }
