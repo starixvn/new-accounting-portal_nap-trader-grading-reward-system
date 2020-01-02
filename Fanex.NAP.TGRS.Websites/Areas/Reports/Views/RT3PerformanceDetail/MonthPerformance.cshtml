@@ -21,10 +21,7 @@
         </a>
         <a href="#" class="green-button change-list disabled">
             <span class="list-icon"></span>@ViewLang.Month
-        </a>
-        @*<a href="@Url.Content("~/Reports/RT3PerformanceDetail/BetTypePerformance")" class="green-button change-list">
-            <span class="list-icon"></span>@ViewLang.League
-        </a>*@
+        </a>      
     </div>
 }
 
@@ -36,13 +33,11 @@
                 <label>@ViewLang.LeagueGroup</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddlLeagueGroup" multiple="multiple">
-                    <option value="MJ">MJ</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="M3">M3</option>
-                    <option value="M4">M4</option>
-                    <option value="Others">Others</option>
+                <select id="ddlLeagueGroup" multiple="multiple">                 
+                    @foreach (KeyValuePair<int, string> entry in ViewBag.LeagueGroups)
+                    {
+                        <option value=@entry.Key>@entry.Value</option>
+                    }
                 </select>
             </div>
             <div class="submit col_3">

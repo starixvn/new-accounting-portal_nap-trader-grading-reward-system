@@ -6,6 +6,7 @@
     using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;    
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     
     public class RT3PerformanceDetailController : TGRSBaseController
@@ -24,12 +25,13 @@
             ViewBag.MinDate = minDate;
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today;
-            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;            
         }
 
         public RT3PerformanceDetailController(IRT3PerformanceDetailService rt3PerformanceDetailService)
         {
             this._rt3PerformanceDetailService = rt3PerformanceDetailService ?? new RT3PerformanceDetailService();
+            ViewBag.LeagueGroups = this._rt3PerformanceDetailService.GetLeagueGroups();
         }
         #endregion Attributes and Constructors
 

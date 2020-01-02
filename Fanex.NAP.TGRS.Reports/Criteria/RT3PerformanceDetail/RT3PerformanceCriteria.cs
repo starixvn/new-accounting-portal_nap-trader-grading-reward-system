@@ -9,6 +9,6 @@
 
         public DateTime ToDate { get; set; }
 
-        public string LeagueGroups { get; set; }
+        public string LeagueGroupIds { get; set; }
     }
 }

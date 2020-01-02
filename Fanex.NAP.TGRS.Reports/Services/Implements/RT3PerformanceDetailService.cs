@@ -1,12 +1,15 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail;
     using NPOI.SS.UserModel;
     using System;
@@ -16,45 +19,60 @@
 
     public class RT3PerformanceDetailService : TGRSBaseService, IRT3PerformanceDetailService
     {
+        private const string RT3LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.LeagueGroups";
+        private const string RT3BetTypePerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypePerformance";
+        private const string RT3MonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.MonthPerformance";
         private const int PointInPixel = 225;
+
+        public Dictionary<int, string> GetLeagueGroups()
+        {
+            var leagueGroups = new Dictionary<int, string>();
+            leagueGroups.Add(1, "MJ");
+            leagueGroups.Add(2, "M1");
+            leagueGroups.Add(3, "M2");
+            leagueGroups.Add(4, "M3");
+            leagueGroups.Add(5, "M4");
+            leagueGroups.Add(6, "Others");
+            SessionManager.Set<Dictionary<int, string>>(RT3LeagueGroupsSessionKey, leagueGroups);
+
+            return leagueGroups;
+        }
 
         public BetTypePerformanceList GetBetTypePerformance(ICriteria criteria)
         {
-            return GenerateSampleBetTypePerformance();
-
-        }
-       
-        public BetTypePerformanceList GenerateSampleBetTypePerformance()
-        {
-            var betTypeList = new BetTypePerformanceList();
-            betTypeList.ItemList = new List<BetTypePerformanceItem>();
-            betTypeList.GrandTotal = new BetTypePerformanceItem();
-
-            for (int i = 0; i < 5; i++)
+            var betTypePerformance = new BetTypePerformanceList();
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()) )
             {
-                betTypeList.ItemList.Add(new BetTypePerformanceItem
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
-                    BetTypeId = 1,
-                    BetTypeName = "1H HDP",
-                    BetCount = 5156,
-                    VirtualTotalTurnover = 3227325,
-                    VirtualTotalWinLoss = 11553824,
-                    VirtualTotalMargin = CalculateTotalMargin(3227325, 11553824)
-                });                
+                    var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
+                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
+                    var betTypeData = multi.Read<BetTypePerformanceInfo>();
+
+                    if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
+                    {
+                        betTypePerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+                    }
+                    
+                    if (totalPerformanceData != null && totalPerformanceData.Any())
+                    {
+                        betTypePerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                    }
+                    
+                    if (betTypeData != null && betTypeData.Any())
+                    {
+                        betTypePerformance.AddBetTypeList(betTypeData);
+                    }
+                    SessionManager.Set<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey, betTypePerformance);
+                }
             }
-            betTypeList.LeagueTotal = 1;
-            betTypeList.MatchTotal = 5;
-            betTypeList.GrandTotal.VirtualTotalTurnover = 3227325 * 5;
-            betTypeList.GrandTotal.VirtualTotalWinLoss = 11553824 * 5;
-            betTypeList.GrandTotal.VirtualTotalMargin = CalculateTotalMargin(betTypeList.GrandTotal.VirtualTotalTurnover, betTypeList.GrandTotal.VirtualTotalWinLoss);
 
-            return betTypeList;
+            return betTypePerformance;
         }
-
+              
         public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
-            var betTypeData = GetBetTypePerformance(criteria);
-
+            var betTypeData = SessionManager.Get<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey);
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -75,46 +93,39 @@
 
         public MonthPerformanceList GetMonthPerformance(ICriteria criteria)
         {
-            return GenerateSampleMonthPerformance();
-        }
-
-        public MonthPerformanceList GenerateSampleMonthPerformance()
-        {
-            var monthList = new MonthPerformanceList();
-            monthList.ItemList = new List<MonthPerformanceItem>();
-            monthList.GrandTotal = new MonthPerformanceItem();
-
-            monthList.ItemList.Add(new MonthPerformanceItem
+            var monthPerformance = new MonthPerformanceList();
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                Month = "Oct-19",
-                Match = 15620,
-                BetCount = 11500,
-                VirtualTotalTurnover = 593749,
-                VirtualTotalWinLoss = 1353747,
-                VirtualTotalMargin = CalculateTotalMargin(593749, 1353747)
-            });
-            monthList.ItemList.Add(new MonthPerformanceItem
-            {
-                Month = "Nov-19",
-                Match = 16708,
-                BetCount = 15700,
-                VirtualTotalTurnover = 3277325,
-                VirtualTotalWinLoss = 11553842,
-                VirtualTotalMargin = CalculateTotalMargin(3277325, 11553842)
-            });
-            monthList.LeagueTotal = 1;
-            monthList.MatchTotal = 5;
-            monthList.GrandTotal.VirtualTotalTurnover = 3277325 * 5;
-            monthList.GrandTotal.VirtualTotalWinLoss = 11553842 * 5;
-            monthList.GrandTotal.VirtualTotalMargin = CalculateTotalMargin(monthList.GrandTotal.VirtualTotalTurnover, monthList.GrandTotal.VirtualTotalWinLoss);
+                using (var multi = objectDb.QueryMultiple(criteria))
+                {
+                    var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
+                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
+                    var monthData = multi.Read<MonthPerformanceInfo>();
 
-            return monthList;
+                    if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
+                    {
+                        monthPerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+                    }
+                    
+                    if (totalPerformanceData != null && totalPerformanceData.Any())
+                    {
+                        monthPerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                    }
+                    
+                    if (monthData != null && monthData.Any())
+                    {
+                        monthPerformance.AddBetTypeList(monthData);
+                    }
+                    SessionManager.Set<MonthPerformanceList>(RT3MonthPerformanceSessionKey, monthPerformance);
+                }
+            }
+
+            return monthPerformance;
         }
 
         public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
-        {
-            var monthData = GetMonthPerformance(criteria);
-
+        {            
+            var monthData = SessionManager.Get<MonthPerformanceList>(RT3MonthPerformanceSessionKey);
             if (monthData != null && monthData.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -155,10 +166,10 @@
             IFont boldFont = writer.GetFont(11, 0);
             IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
-            
+
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, criteria.LeagueGroups, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -298,6 +309,15 @@
                     (object)total.Total8RMWLMargin ?? ViewLang.NA
                 };
             writer.WriteRow(7, totalRecord);
+        }        
+
+        private string GetLeagueGroupNames(string leagueGroupIds)
+        {
+            var leagueGroups = SessionManager.Get<Dictionary<int, string>>(RT3LeagueGroupsSessionKey);
+            var leagueGroupIdList = Array.ConvertAll(leagueGroupIds.Split(','), s => Int16.Parse(s)).ToList();           
+            var leagueGroupNames = leagueGroups.Join(leagueGroupIdList, a => a.Key, b => b, (a, b) => a.Value);
+
+            return string.Join(",", leagueGroupNames);
         }
     }
 }

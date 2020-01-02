@@ -23,7 +23,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
     var parameters = {
         FromDate: null,
         ToDate: null,
-        LeagueGroup: null
+        LeagueGroupIds: null
     };
 
     var summaryPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance();
@@ -63,7 +63,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
                
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
-                parameters.LeagueGroups = selectedLeagueGroups.join(',');
+                parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
 
                 hideAllReports();
                 getBetTypePerformanceReport();
@@ -107,7 +107,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
-        summaryPerformance.BindDataInfoSummary(data.GrandTotal, data.LeagueTotal, data.MatchTotal);
+        summaryPerformance.BindDataInfoSummary(data.GrandTotal, data.LeagueCount, data.MatchCount);
         summaryPerformance.DisplayInfoSummary(true);        
     }
 
@@ -149,7 +149,6 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: labels.RT3PerformanceDetail,
                 showExcelButton: true,
                 exportExcelFunction: function () {
                     exportBetTypePerformance();
