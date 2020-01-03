@@ -77,7 +77,7 @@
             {
                 string reportName = string.Format(
                                 ViewLang.RT3PerformanceDetailFileName,
-                                ViewLang.BetType,
+                                ViewLang.BetTypeExcelFile,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
@@ -130,7 +130,7 @@
             {
                 string reportName = string.Format(
                                 ViewLang.RT3PerformanceDetailFileName,
-                                ViewLang.BetType,
+                                ViewLang.Month,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);

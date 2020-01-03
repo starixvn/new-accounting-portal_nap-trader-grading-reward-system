@@ -4,9 +4,9 @@
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.Services;    
-    using System;
-    using System.Collections.Generic;
+    using Fanex.NAP.TGRS.Reports.Services;
+    using Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail;
+    using System;    
     using System.Web.Mvc;
     
     public class RT3PerformanceDetailController : TGRSBaseController
@@ -50,7 +50,10 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var bettypes = _rt3PerformanceDetailService.GetBetTypePerformance(criteria);
+            var bettypes = criteria.LeagueGroupIds != null 
+                            ? _rt3PerformanceDetailService.GetBetTypePerformance(criteria) 
+                            : new BetTypePerformanceList();
+
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;
  
@@ -75,8 +78,11 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
-            var bettypes = _rt3PerformanceDetailService.GetMonthPerformance(criteria);
-            var jsonResult = Json(bettypes);
+            var months = criteria.LeagueGroupIds != null
+                ? _rt3PerformanceDetailService.GetMonthPerformance(criteria)
+                : new MonthPerformanceList();
+
+            var jsonResult = Json(months);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
