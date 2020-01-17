@@ -41,6 +41,8 @@
             return View("BetTypePerformance");
         }
 
+        #region BetType
+
         [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
@@ -69,6 +71,10 @@
             return new EmptyResult();
         }
 
+        #endregion
+
+        #region Month
+
         [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult MonthPerformance()
         {
@@ -96,5 +102,27 @@
 
             return new EmptyResult();
         }
+
+        #endregion
+
+        #region Model
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ModelPerformance()
+        {
+            return View();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetModelPerformance(GetModelPerformanceCriteria criteria)
+        {
+            var models = _rt3PerformanceDetailService.GetModelPerformance(criteria);
+
+            var jsonResult = Json(models);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        #endregion
     }
 }

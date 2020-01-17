@@ -319,5 +319,99 @@
 
             return string.Join(",", leagueGroupNames);
         }
+
+        public ModelPerformanceList GetModelPerformance(ICriteria criteria)
+        {
+            var modelPerformanceList = new ModelPerformanceList();
+            var totalLeagueMatchData = GenerateSampleTotalLeagueMatch();
+            var totalPerformanceData = GenerateSampleTotalPerformance();
+            var modelData = GenerateSampleModelInfoPerformance();
+
+            modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData);
+            modelPerformanceList.AddGrandTotal(totalPerformanceData);
+            if (modelData != null && modelData.Any())
+            {
+                modelPerformanceList.AddModelList(modelData);
+            }
+
+            return modelPerformanceList;
+        }
+
+        public TotalLeagueMatchInfo GenerateSampleTotalLeagueMatch()
+            => new TotalLeagueMatchInfo
+            {
+                LeagueCount = 1722,
+                MatchCount = 1813
+            };
+
+        public TotalPerformanceInfo GenerateSampleTotalPerformance()
+            => new TotalPerformanceInfo
+            {
+                Total_WinLoss_VR =  new decimal(2453125050.12),
+                Total_Stake_VR = new decimal(2453125050.12),
+                Total_Margin_VR = new decimal(3.58),
+                Total_Winloss_VAR = new decimal(2453125050.12),
+                Total_Stake_VAR = new decimal(2453125050.12),
+                Total_Margin_VAR = new decimal(3.58),
+                Total_Winloss_AR = new decimal(2453125050.12),
+                Total_Stake_AR = new decimal(2453125050.12),
+                Total_Margin_AR = new decimal(3.58),
+                Total_Winloss_8RM = new decimal(2453125050.12),
+                Total_Stake_8RM = new decimal(2453125050.12),
+                Total_Margin_8RM = new decimal(3.58),
+                Total_Winloss_AR8RM = new decimal(2453125050.12),
+                Total_Stake_AR8RM = new decimal(2453125050.12),
+                Total_Margin_AR8RM = new decimal(3.58)
+            };
+
+        public List<ModelPerformanceInfo> GenerateSampleModelInfoPerformance()
+        {
+            var modelInfos = new List<ModelPerformanceInfo>();
+            modelInfos.Add(new ModelPerformanceInfo
+            {
+                Model = ViewLang.RT3WithTraderPerformance,
+                Match = 15620,
+                MatchPercentage = "30%",
+                WinLoss_VR = 1353747,
+                Stake_VR = 593749,
+                Margin_VR = new decimal(2.28),
+                Winloss_VAR = 1353747,
+                Stake_VAR = 593749,
+                Margin_VAR = new decimal(2.28),
+                Winloss_AR = 1353747,
+                Stake_AR = 593749,
+                Margin_AR = new decimal(2.28),
+                Winloss_8RM = 1353747,
+                Stake_8RM = 593749,
+                Margin_8RM = new decimal(2.28),
+                Winloss_AR8RM = 1353747,
+                Stake_AR8RM = 593749,
+                Margin_AR8RM = new decimal(2.28)
+            });
+            modelInfos.Add(new ModelPerformanceInfo
+            {
+                Model = ViewLang.RT3NoTraderPerformance,
+                Match = 16708,
+                MatchPercentage = "35%",
+                WinLoss_VR = 1353747,
+                Stake_VR = 593749,
+                Margin_VR = new decimal(3.58),
+                Winloss_VAR = 1353747,
+                Stake_VAR = 593749,
+                Margin_VAR = new decimal(3.58),
+                Winloss_AR = 1353747,
+                Stake_AR = 593749,
+                Margin_AR = new decimal(3.58),
+                Winloss_8RM = 1353747,
+                Stake_8RM = 593749,
+                Margin_8RM = new decimal(3.58),
+                Winloss_AR8RM = 1353747,
+                Stake_AR8RM = 593749,
+                Margin_AR8RM = new decimal(3.58)
+            });
+
+            return modelInfos;
+        }
+
     }
 }

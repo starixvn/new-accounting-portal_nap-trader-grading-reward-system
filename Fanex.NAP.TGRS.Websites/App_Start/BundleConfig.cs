@@ -285,6 +285,13 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.Add(new ScriptBundle("~/scripts/rt3MonthPerformanceDetail").Include(
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",
                "~/Areas/Reports/Resources/RT3PerformanceDetail/month-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/rt3ModelPerformanceDetail").Include(
+                "~/Scripts/Libraries/Highcharts/highcharts.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",                
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/chart-performance.js",
+                "~/Areas/Reports/Resources/RT3PerformanceDetail/model-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

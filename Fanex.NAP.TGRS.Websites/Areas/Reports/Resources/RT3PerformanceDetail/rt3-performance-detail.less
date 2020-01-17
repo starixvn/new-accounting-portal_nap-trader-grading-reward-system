@@ -52,7 +52,7 @@
 }
 
 .info-summary {
-    display: grid;    
+    display: grid;
     grid-template-columns: repeat(5, 1fr);
     background: #fff;
     border-radius: 3px;
@@ -122,7 +122,7 @@
                 }
             }
         }
-    }    
+    }
 
     @media screen and (max-width: 1350px) {
         .info-block:nth-child(2) {
@@ -144,6 +144,90 @@
     .freegrid {
         .bold {
             font-weight: bold;
+        }       
+    }
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    float: left;
+    margin: 5px 0px 5px 10px;
+    width: 98.1%;
+
+    .chart-content {
+        border: 1px solid #ddd;      
+        margin-right: 20px;
+
+        .highcharts-figure, .highcharts-data-table table {            
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+    }
+
+    @media screen and (max-width: 1500px) {
+        .chart-content:nth-child(2) {
+            border-right: 0;
+            margin-right: 0;
+        }
+
+        .chart-content:not(:last-child) {
+            grid-column: span 1;
+            margin-right: 0;
+        }
+
+        .chart-content:last-child {
+            grid-column: span 2;
+            margin-right: 0;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .chart-content:nth-child(3) {
+            border-right: 0;
+            margin-right: 0;
+        }
+
+        .chart-content:not(:last-child) {
+            grid-column: span 3;
+            margin-right: 0;
+        }
+
+        .chart-content:last-child {
+            grid-column: span 3;
+            margin-right: 0;
         }
     }
 }

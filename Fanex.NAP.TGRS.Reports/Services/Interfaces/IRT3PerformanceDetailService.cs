@@ -16,5 +16,7 @@
         MonthPerformanceList GetMonthPerformance(ICriteria criteria);
 
         void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath);
+
+        ModelPerformanceList GetModelPerformance(ICriteria criteria);
     }
 }

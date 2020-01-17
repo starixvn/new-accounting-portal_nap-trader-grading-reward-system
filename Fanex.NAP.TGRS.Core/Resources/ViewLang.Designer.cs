@@ -448,6 +448,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Type.
+        /// </summary>
+        public static string DataType {
+            get {
+                return ResourceManager.GetString("DataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -1069,6 +1078,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Model.
+        /// </summary>
+        public static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Month.
         /// </summary>
         public static string Month {
@@ -1294,6 +1312,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        public static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number only.
         /// </summary>
         public static string NumberInput {
@@ -1326,6 +1353,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string OtherMarkets {
             get {
                 return ResourceManager.GetString("OtherMarkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage.
+        /// </summary>
+        public static string Percentage {
+            get {
+                return ResourceManager.GetString("Percentage", resourceCulture);
             }
         }
         
@@ -1492,6 +1528,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RT3 No Trader Performance.
+        /// </summary>
+        public static string RT3NoTraderPerformance {
+            get {
+                return ResourceManager.GetString("RT3NoTraderPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RT3 Performance Detail Report.
         /// </summary>
         public static string RT3PerformanceDetail {
@@ -1506,6 +1551,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string RT3PerformanceDetailFileName {
             get {
                 return ResourceManager.GetString("RT3PerformanceDetailFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RT3 w. Trader Performance.
+        /// </summary>
+        public static string RT3WithTraderPerformance {
+            get {
+                return ResourceManager.GetString("RT3WithTraderPerformance", resourceCulture);
             }
         }
         
@@ -1929,6 +1983,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string TraderActualRate {
             get {
                 return ResourceManager.GetString("TraderActualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trader Automation.
+        /// </summary>
+        public static string TraderAutomation {
+            get {
+                return ResourceManager.GetString("TraderAutomation", resourceCulture);
             }
         }
         

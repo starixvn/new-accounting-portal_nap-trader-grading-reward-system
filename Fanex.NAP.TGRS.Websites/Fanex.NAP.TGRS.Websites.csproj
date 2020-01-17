@@ -415,6 +415,8 @@
     <Content Include="Areas\Reports\Resources\PerformanceDetail\grade-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\PerformanceDetail\league-performance.js" />
+    <Content Include="Areas\Reports\Resources\RT3PerformanceDetail\chart-performance.js" />
+    <Content Include="Areas\Reports\Resources\RT3PerformanceDetail\model-performance.js" />
     <Content Include="Areas\Reports\Resources\RT3PerformanceDetail\month-performance.js" />
     <Content Include="Areas\Reports\Resources\RT3PerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\RT3PerformanceDetail\summary-performance.js" />
@@ -630,6 +632,8 @@
     <Content Include="Areas\Reports\Views\RT3PerformanceDetail\MonthPerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\RT3PerformanceDetail\BetTypePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\RT3PerformanceDetail\MonthPerformance.xls" />
+    <Content Include="Areas\Reports\Views\RT3PerformanceDetail\ModelPerformance.cshtml" />
+    <Content Include="Areas\Reports\Views\RT3PerformanceDetail\ChartPerformance.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
