@@ -6,7 +6,7 @@
 
         public int Match { get; set; }
 
-        public string MatchPercentage { get; set; }
+        public string BetCount { get; set; }
 
         public decimal Stake_VR { get; set; }
 

@@ -65,14 +65,10 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
 
-                hideAllReports();
+                domElements.divBetTypePerformanceContainer.addClass('display-none');                
                 getBetTypePerformanceReport();
             }
         });
-    };
-
-    var hideAllReports = function () {
-        domElements.divBetTypePerformanceContainer.addClass('display-none');
     };
 
     var getBetTypePerformanceReport = function () {
@@ -107,8 +103,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
-        summaryPerformance.BindDataInfoSummary(data.GrandTotal, data.LeagueCount, data.MatchCount);
-        summaryPerformance.DisplayInfoSummary(true);        
+        summaryPerformance.BindData(data.GrandTotal, data.LeagueCount, data.MatchCount);
+        summaryPerformance.Display(true);
     }
 
     var renderBetTypePerformanceGridOptions = function () {

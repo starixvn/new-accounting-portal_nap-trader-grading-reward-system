@@ -1528,7 +1528,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RT3 No Trader Performance.
+        ///   Looks up a localized string similar to RT3 No Trader PERF.
         /// </summary>
         public static string RT3NoTraderPerformance {
             get {
@@ -1555,7 +1555,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RT3 w. Trader Performance.
+        ///   Looks up a localized string similar to RT3 With Trader PERF.
         /// </summary>
         public static string RT3WithTraderPerformance {
             get {
@@ -1987,15 +1987,6 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trader Automation.
-        /// </summary>
-        public static string TraderAutomation {
-            get {
-                return ResourceManager.GetString("TraderAutomation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No. Of Trader.
         /// </summary>
         public static string TraderCount {
@@ -2059,6 +2050,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trading Automation.
+        /// </summary>
+        public static string TradingAutomation {
+            get {
+                return ResourceManager.GetString("TradingAutomation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Turnover.
         /// </summary>
         public static string Turnover {
@@ -2109,6 +2109,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Variance {
             get {
                 return ResourceManager.GetString("Variance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual.
+        /// </summary>
+        public static string Virtual {
+            get {
+                return ResourceManager.GetString("Virtual", resourceCulture);
             }
         }
         

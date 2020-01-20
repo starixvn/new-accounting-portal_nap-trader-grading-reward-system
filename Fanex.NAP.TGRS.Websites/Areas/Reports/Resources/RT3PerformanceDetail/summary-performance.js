@@ -20,7 +20,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance = function () {
         lblTotal8RMMargin: null,
         lblTotal8RMWLTurnover: null,
         lblTotal8RMWLWinLoss: null,
-        lblTotal8RMWLMargin: null
+        lblTotal8RMWLMargin: null,
+        divChartContainer: null
     };
 
     var cacheDOMElements = function () {
@@ -42,26 +43,29 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance = function () {
         domElements.lblTotal8RMWLTurnover = $('#lblTotal8RMWLTurnover');
         domElements.lblTotal8RMWLWinLoss = $('#lblTotal8RMWLWinLoss');
         domElements.lblTotal8RMWLMargin = $('#lblTotal8RMWLMargin');
+        domElements.divChartContainer = $('#divChartContainer');
     };
 
     var initializeFields = function () {
         domElements.btnToggle.hide();
-        displayInfoSummary(false);
+        displaySummary(false);
 
         domElements.btnToggle.click(function () {
             $(this).toggleClass("expanded");
             if ($(this).hasClass('expanded')) {
-                setStogeDisplayInfoSummary("true");
+                setStogeDisplaySummary("true");
                 domElements.divInfoSummary.show();
+                domElements.divChartContainer.show();
             } else {
-                setStogeDisplayInfoSummary("false");
+                setStogeDisplaySummary("false");
                 domElements.divInfoSummary.hide();
+                domElements.divChartContainer.hide();
             }
         });
     }
 
-    var displayInfoSummary = function (isShow) {
-        var isStoreDisplay = getStogeDisplayInfoSummary();
+    var displaySummary = function (isShow) {
+        var isStoreDisplay = getStogeDisplaySummary();
         if (isShow && (isStoreDisplay == null || isStoreDisplay == "true")) {
             domElements.btnToggle.addClass("expanded");
             domElements.divInfoSummary.show();
@@ -70,26 +74,26 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance = function () {
         }
     }
 
-    var setStogeDisplayInfoSummary = function (value) {
+    var setStogeDisplaySummary = function (value) {
         if (typeof (Storage) !== "undefined") {
-            localStorage.setItem("StogeDisplayInfoSummary", value);
+            localStorage.setItem("StogeDisplaySummaryAndChart", value);
         }
     }
 
-    var getStogeDisplayInfoSummary = function () {
+    var getStogeDisplaySummary = function () {
         if (typeof (Storage) !== "undefined") {
-            var value = localStorage.getItem("StogeDisplayInfoSummary");
+            var value = localStorage.getItem("StogeDisplaySummaryAndChart");
             return value;
         }
         return "false";
     }
 
-    $this.DisplayInfoSummary = function (isShow) {
+    $this.Display = function (isShow) {
         domElements.btnToggle.show();
-        displayInfoSummary(isShow);
+        displaySummary(isShow);
     }
 
-    $this.BindDataInfoSummary = function (data, leagueTotal, matchTotal) {
+    $this.BindData = function (data, leagueTotal, matchTotal) {
         var leagueMatchesFormat = '{0} {1}/{2} {3}';       
         domElements.lblLeagueMatches.text(
             leagueMatchesFormat.format(

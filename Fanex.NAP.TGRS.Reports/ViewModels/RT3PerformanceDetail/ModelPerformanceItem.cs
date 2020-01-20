@@ -14,7 +14,7 @@
             {
                 this.Model = modelInfo.Model;
                 this.Match = modelInfo.Match;
-                this.MatchPercentage = modelInfo.MatchPercentage;
+                this.BetCount = modelInfo.BetCount;
                 this.VirtualTotalTurnover = modelInfo.Stake_VR;
                 this.VirtualTotalWinLoss = modelInfo.WinLoss_VR;
                 this.VirtualTotalMargin = modelInfo.Margin_VR;
@@ -37,7 +37,7 @@
 
         public int Match { get; set; }
 
-        public string MatchPercentage { get; set; }
+        public string BetCount { get; set; }
 
         public decimal VirtualTotalTurnover { get; set; }
 

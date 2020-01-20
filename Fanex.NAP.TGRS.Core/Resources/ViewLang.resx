@@ -808,12 +808,15 @@
     <value>Percentage</value>
   </data>
   <data name="RT3NoTraderPerformance" xml:space="preserve">
-    <value>RT3 No Trader Performance</value>
+    <value>RT3 No Trader PERF</value>
   </data>
   <data name="RT3WithTraderPerformance" xml:space="preserve">
-    <value>RT3 w. Trader Performance</value>
+    <value>RT3 With Trader PERF</value>
   </data>
-  <data name="TraderAutomation" xml:space="preserve">
-    <value>Trader Automation</value>
+  <data name="TradingAutomation" xml:space="preserve">
+    <value>Trading Automation</value>
+  </data>
+  <data name="Virtual" xml:space="preserve">
+    <value>Virtual</value>
   </data>
 </root>

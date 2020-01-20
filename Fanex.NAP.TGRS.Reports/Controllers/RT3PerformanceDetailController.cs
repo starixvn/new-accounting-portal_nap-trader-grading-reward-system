@@ -14,6 +14,7 @@
         #region Attributes and Constructors
         private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\BetTypePerformance.xls";
         private const string MonthPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\MonthPerformance.xls";
+        private const string ModelPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\ModelPerformance.xls";
         private readonly IRT3PerformanceDetailService _rt3PerformanceDetailService;
 
         [Simplect.Attribute.InjectObject]
@@ -121,6 +122,15 @@
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportModelPerformance(GetModelPerformanceCriteria criteria)
+        {
+            var templatePath = Server.MapPath(ModelPerformanceDetail);
+            _rt3PerformanceDetailService.ExportModelPerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         #endregion

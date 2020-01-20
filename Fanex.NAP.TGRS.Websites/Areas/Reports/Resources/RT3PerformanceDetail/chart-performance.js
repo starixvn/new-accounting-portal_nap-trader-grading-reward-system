@@ -2,13 +2,15 @@
 Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
     var $this = this;
 
-    var domElements = {       
+    var domElements = {
+        divChartContainer: null,
         divChartTurnoverContainer: null,
         divChartWinLossContainer: null,
         divChartMarginContainer: null
     };
 
     var cacheDOMElements = function () {       
+        domElements.divChartContainer = $('#divChartContainer');
         domElements.divChartTurnoverContainer = $('#divChartTurnoverContainer');
         domElements.divChartWinLossContainer = $('#divChartWinLossContainer');
         domElements.divChartMarginContainer = $('#divChartMarginContainer');
@@ -24,7 +26,12 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
             },
             colors: ['#2191db', '#f28f43', '#9b9fa3'],
             xAxis: {
-                categories: ['Virtual', 'Variance', 'Real Total - Ex.8RM WL']
+                categories: [labels.Virtual, labels.Variance, labels.RealTotal8RMWL]
+            },
+            yAxis: {
+                title: {
+                    text: ""
+                }
             },
             plotOptions: {
                 series: {
@@ -40,7 +47,7 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
             },
             series: [
                 {
-                    name: 'RT3 w. Trader Performance',                    
+                    name: labels.RT3WithTraderPerformance,
                     data: [
                         {
                             name: "a",
@@ -56,7 +63,7 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
                         }
                     ]
                 }, {
-                    name: 'RT3 No Trader Performance',                    
+                    name: labels.RT3NoTraderPerformance,
                     data: [
                         {
                             name: "a",
@@ -72,7 +79,7 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
                         }
                     ]
                 }, {
-                    name: 'TA',                    
+                    name: labels.TradingAutomation,
                     data: [
                         {
                             name: "a",
@@ -91,7 +98,24 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
         };
     }
 
-    $this.DisplayChart = function () {
+    var getStogeDisplayChart = function () {
+        if (typeof (Storage) !== "undefined") {
+            var value = localStorage.getItem("StogeDisplaySummaryAndChart");
+            return value;
+        }
+        return "false";
+    }  
+
+    $this.Display = function (isShow) {
+        var isStoreDisplay = getStogeDisplayChart();
+        if (isShow && (isStoreDisplay == null || isStoreDisplay == "true")) {           
+            domElements.divChartContainer.show();
+        } else {
+            domElements.divChartContainer.hide();
+        }
+    }
+
+    $this.BindData = function (data) {
         var optionsTurnover = chartOption('Turnover');
         var optionsWinLoss = chartOption('Win Loss');
         var optionsMargin = chartOption('Margin');

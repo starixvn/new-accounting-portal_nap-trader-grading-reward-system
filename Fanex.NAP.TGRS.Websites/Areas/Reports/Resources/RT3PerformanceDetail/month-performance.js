@@ -71,15 +71,11 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
                 
-                hideAllReports();
+                domElements.divMonthPerformanceContainer.addClass('display-none');
                 getMonthPerformanceReport();
             }
         });           
-    };
-
-    var hideAllReports = function () {
-        domElements.divMonthPerformanceContainer.addClass('display-none');
-    };
+    };   
 
     var getMonthPerformanceReport = function () {
         common.DisableInput();
@@ -113,8 +109,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divMonthPerformanceGrid.fanexGrid(gridOptions);
-        summaryPerformance.BindDataInfoSummary(data.GrandTotal, data.LeagueCount, data.MatchCount);
-        summaryPerformance.DisplayInfoSummary(true);      
+        summaryPerformance.BindData(data.GrandTotal, data.LeagueCount, data.MatchCount);
+        summaryPerformance.Display(true);      
     }
 
     var renderMonthPerformanceGridOptions = function () {

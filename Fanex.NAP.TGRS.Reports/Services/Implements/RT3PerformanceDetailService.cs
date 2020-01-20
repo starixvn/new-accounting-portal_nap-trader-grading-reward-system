@@ -22,6 +22,7 @@
         private const string RT3LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.LeagueGroups";
         private const string RT3BetTypePerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypePerformance";
         private const string RT3MonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.MonthPerformance";
+        private const string RT3ModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.ModelPerformance";
         private const int PointInPixel = 225;
 
         public Dictionary<int, string> GetLeagueGroups()
@@ -144,6 +145,52 @@
             }
         }
 
+        public ModelPerformanceList GetModelPerformance(ICriteria criteria)
+        {
+            var modelPerformanceList = new ModelPerformanceList();
+            var totalLeagueMatchData = GenerateSampleTotalLeagueMatch();
+            var totalPerformanceData = GenerateSampleTotalPerformance();
+            var modelData = GenerateSampleModelInfoPerformance();
+
+            modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData);
+            modelPerformanceList.AddGrandTotal(totalPerformanceData);
+            if (modelData != null && modelData.Any())
+            {
+                modelPerformanceList.AddModelList(modelData);
+            }
+            SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
+
+            return modelPerformanceList;
+        }
+
+        public void ExportModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath)
+        {
+            var modelData = SessionManager.Get<ModelPerformanceList>(RT3ModelPerformanceSessionKey);
+            if (modelData != null && modelData.ItemList.Any())
+            {
+                string reportName = string.Format(
+                        ViewLang.RT3PerformanceDetailFileName,
+                        ViewLang.Model,
+                        criteria.FromDate.ToShortFormatedDateForFileName(),
+                        criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
+                writer.CopyRows(0, 1);
+                FilterBlock(userId, criteria, ref writer);
+                if (criteria.DataType == ViewLang.Number)
+                {
+                    writer.CopyRows(3, 2);
+                }
+                else
+                {
+                    FillHeader(ref writer);
+                }                
+                writer.FreezeRow(0, 4);
+                FillRowDataModel(modelData, ref writer);
+                writer.SyncColumnsWidth(17);
+                writer.Render();
+            }
+        }
+
         private decimal CalculateTotalMargin(decimal winLoss, decimal turnover)
         {
             if (turnover != 0)
@@ -153,29 +200,59 @@
 
             return 0;
         }
-
-        private void FillHeader(ref ExcelTemplateWriter writer)
-        {
-            writer.CopyRows(3, 2);            
-        }
-
+        
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(int userId, RT3PerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlock(int userId, ICriteria rt3criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);
             IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
 
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
+            if (rt3criteria is GetModelPerformanceCriteria)
+            {
+                var criteria = rt3criteria as GetModelPerformanceCriteria;
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.DataType, boldFont, criteria.DataType, normalFont, "\n");
+            }
+            else
+            {
+                var criteria = rt3criteria as RT3PerformanceCriteria;
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        private void FillHeader(ref ExcelTemplateWriter writer)
+        {
+            var rowGroupHeader = writer.CopyRows(3, 1);
+            rowGroupHeader.GetCell(1).SetCellValue(ViewLang.Match + " %");
+            rowGroupHeader.GetCell(2).SetCellValue(ViewLang.BetCount + " %");
+
+            var rowHeader = writer.CopyRows(4, 1);
+            rowHeader.GetCell(3).SetCellValue(ViewLang.Turnover + " %");
+            rowHeader.GetCell(4).SetCellValue(ViewLang.WinLoss + " %");
+            rowHeader.GetCell(5).SetCellValue(ViewLang.Margin);
+            rowHeader.GetCell(6).SetCellValue(ViewLang.Turnover + " %");
+            rowHeader.GetCell(7).SetCellValue(ViewLang.WinLoss + " %");
+            rowHeader.GetCell(8).SetCellValue(ViewLang.Margin);
+            rowHeader.GetCell(9).SetCellValue(ViewLang.Turnover + " %");
+            rowHeader.GetCell(10).SetCellValue(ViewLang.WinLoss + " %");
+            rowHeader.GetCell(11).SetCellValue(ViewLang.Margin);
+            rowHeader.GetCell(12).SetCellValue(ViewLang.Turnover + " %");
+            rowHeader.GetCell(13).SetCellValue(ViewLang.WinLoss + " %");
+            rowHeader.GetCell(14).SetCellValue(ViewLang.Margin);
+            rowHeader.GetCell(15).SetCellValue(ViewLang.Turnover + " %");
+            rowHeader.GetCell(16).SetCellValue(ViewLang.WinLoss + " %");
+            rowHeader.GetCell(17).SetCellValue(ViewLang.Margin);
         }
 
         private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
@@ -311,6 +388,63 @@
             writer.WriteRow(7, totalRecord);
         }        
 
+        private void FillRowDataModel(ModelPerformanceList data, ref ExcelTemplateWriter writer)
+        {
+            var index = 1;
+            foreach (var item in data.ItemList)
+            {
+                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var record = new object[]
+                {
+                    item.Model,
+                    item.Match,
+                    item.BetCount,
+                    item.VirtualTotalTurnover,
+                    item.VirtualTotalWinLoss,
+                    (object)item.VirtualTotalMargin ?? ViewLang.NA,
+                    item.VarianceTurnover,
+                    item.VarianceWinLoss,
+                    (object)item.VarianceMargin ?? ViewLang.NA,
+                    item.RealTotalTurnover,
+                    item.RealTotalWinLoss,
+                    (object)item.RealTotalMargin ?? ViewLang.NA,
+                    item.Total8RMTurnover,
+                    item.Total8RMWinLoss,
+                    (object)item.Total8RMMargin ?? ViewLang.NA,
+                    item.Total8RMWLTurnover,
+                    item.Total8RMWLWinLoss,
+                    (object)item.Total8RMWLMargin ?? ViewLang.NA
+                };
+
+                writer.WriteRow(styleIndex, record);
+                index++;
+            }
+
+            var total = data.GrandTotal;
+            var totalRecord = new object[]
+                {
+                    ViewLang.GrandTotal,
+                    total.Match,
+                    total.BetCount,
+                    total.VirtualTotalTurnover,
+                    total.VirtualTotalWinLoss,
+                    (object)total.VirtualTotalMargin ?? ViewLang.NA,
+                    total.VarianceTurnover,
+                    total.VarianceWinLoss,
+                    (object)total.VarianceMargin ?? ViewLang.NA,
+                    total.RealTotalTurnover,
+                    total.RealTotalWinLoss,
+                    (object)total.RealTotalMargin ?? ViewLang.NA,
+                    total.Total8RMTurnover,
+                    total.Total8RMWinLoss,
+                    (object)total.Total8RMMargin ?? ViewLang.NA,
+                    total.Total8RMWLTurnover,
+                    total.Total8RMWLWinLoss,
+                    (object)total.Total8RMWLMargin ?? ViewLang.NA
+                };
+            writer.WriteRow(7, totalRecord);
+        }
+
         private string GetLeagueGroupNames(string leagueGroupIds)
         {
             var leagueGroups = SessionManager.Get<Dictionary<int, string>>(RT3LeagueGroupsSessionKey);
@@ -318,24 +452,7 @@
             var leagueGroupNames = leagueGroups.Join(leagueGroupIdList, a => a.Key, b => b, (a, b) => a.Value);
 
             return string.Join(",", leagueGroupNames);
-        }
-
-        public ModelPerformanceList GetModelPerformance(ICriteria criteria)
-        {
-            var modelPerformanceList = new ModelPerformanceList();
-            var totalLeagueMatchData = GenerateSampleTotalLeagueMatch();
-            var totalPerformanceData = GenerateSampleTotalPerformance();
-            var modelData = GenerateSampleModelInfoPerformance();
-
-            modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData);
-            modelPerformanceList.AddGrandTotal(totalPerformanceData);
-            if (modelData != null && modelData.Any())
-            {
-                modelPerformanceList.AddModelList(modelData);
-            }
-
-            return modelPerformanceList;
-        }
+        }        
 
         public TotalLeagueMatchInfo GenerateSampleTotalLeagueMatch()
             => new TotalLeagueMatchInfo
@@ -371,7 +488,7 @@
             {
                 Model = ViewLang.RT3WithTraderPerformance,
                 Match = 15620,
-                MatchPercentage = "30%",
+                BetCount = "30%",
                 WinLoss_VR = 1353747,
                 Stake_VR = 593749,
                 Margin_VR = new decimal(2.28),
@@ -392,7 +509,28 @@
             {
                 Model = ViewLang.RT3NoTraderPerformance,
                 Match = 16708,
-                MatchPercentage = "35%",
+                BetCount = "35%",
+                WinLoss_VR = 1353747,
+                Stake_VR = 593749,
+                Margin_VR = new decimal(3.58),
+                Winloss_VAR = 1353747,
+                Stake_VAR = 593749,
+                Margin_VAR = new decimal(3.58),
+                Winloss_AR = 1353747,
+                Stake_AR = 593749,
+                Margin_AR = new decimal(3.58),
+                Winloss_8RM = 1353747,
+                Stake_8RM = 593749,
+                Margin_8RM = new decimal(3.58),
+                Winloss_AR8RM = 1353747,
+                Stake_AR8RM = 593749,
+                Margin_AR8RM = new decimal(3.58)
+            });
+            modelInfos.Add(new ModelPerformanceInfo
+            {
+                Model = ViewLang.TradingAutomation,
+                Match = 16708,
+                BetCount = "35%",
                 WinLoss_VR = 1353747,
                 Stake_VR = 593749,
                 Margin_VR = new decimal(3.58),

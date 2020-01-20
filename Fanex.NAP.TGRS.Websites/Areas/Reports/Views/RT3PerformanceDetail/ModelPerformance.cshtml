@@ -37,8 +37,8 @@
             </div>
             <div class="edit-field col_4">
                 <select id="ddlDataType">
-                    <option value=1>Number</option>
-                    <option value=2>Percentage</option>
+                    <option value=@ViewLang.Number>@ViewLang.Number</option>
+                    <option value=@ViewLang.Percentage>@ViewLang.Percentage</option>
                 </select>
             </div>
             <div class="submit col_3">
@@ -49,6 +49,7 @@
 </div>
 
 @Html.Partial("SummaryPerformance")
+@Html.Partial("ChartPerformance")
 
 <div id="divModelPerformanceContainer" class="content-grid display-none">
     <div id="divModelPerformanceGrid" class="freegrid"></div>
@@ -92,7 +93,8 @@
             RT3PerformanceDetail: '@ViewLang.RT3PerformanceDetail',
             RT3WithTraderPerformance: '@ViewLang.RT3WithTraderPerformance',
             RT3NoTraderPerformance: '@ViewLang.RT3NoTraderPerformance',
-            TraderAutomation: '@ViewLang.TraderAutomation'
+            TradingAutomation: '@ViewLang.TradingAutomation',
+            Virtual: '@ViewLang.Virtual'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',
