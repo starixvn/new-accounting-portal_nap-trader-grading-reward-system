@@ -12,6 +12,7 @@
         {
             if (modelInfo != null)
             {
+                this.ModelName = modelInfo.ModelName;
                 this.Model = modelInfo.Model;
                 this.Match = modelInfo.Match;
                 this.BetCount = modelInfo.BetCount;
@@ -33,11 +34,34 @@
             }
         }
 
+        private decimal ConvertNumberToPercentage(decimal valueItem, decimal valueTotal)
+        {
+            return Math.Round((valueItem / valueTotal) * 100, 2);
+        }
+
+        public void ConvertNumberToPercentage(ModelPerformanceItem total)
+        {
+            this.Match = ConvertNumberToPercentage(this.Match, total.Match);
+            this.BetCount = ConvertNumberToPercentage(this.BetCount, total.BetCount);
+            this.VirtualTotalTurnover = ConvertNumberToPercentage(this.VirtualTotalTurnover, total.VirtualTotalTurnover);
+            this.VirtualTotalWinLoss = ConvertNumberToPercentage(this.VirtualTotalWinLoss, total.VirtualTotalWinLoss);           
+            this.VarianceTurnover = ConvertNumberToPercentage(this.VarianceTurnover, total.VarianceTurnover);
+            this.VarianceWinLoss = ConvertNumberToPercentage(this.VarianceWinLoss, total.VarianceWinLoss);        
+            this.RealTotalTurnover = ConvertNumberToPercentage(this.RealTotalTurnover, total.RealTotalTurnover);
+            this.RealTotalWinLoss = ConvertNumberToPercentage(this.RealTotalWinLoss, total.RealTotalWinLoss);         
+            this.Total8RMTurnover = ConvertNumberToPercentage(this.Total8RMTurnover, total.Total8RMTurnover);
+            this.Total8RMWinLoss = ConvertNumberToPercentage(this.Total8RMWinLoss, total.Total8RMWinLoss);          
+            this.Total8RMWLTurnover = ConvertNumberToPercentage(this.Total8RMWLTurnover, total.Total8RMWLTurnover);
+            this.Total8RMWLWinLoss = ConvertNumberToPercentage(this.Total8RMWLWinLoss, total.Total8RMWLWinLoss);          
+        }
+
+        public RT3PerformanceModel ModelName { get; set; }
+
         public string Model { get; set; }
 
-        public int Match { get; set; }
+        public decimal Match { get; set; }
 
-        public string BetCount { get; set; }
+        public decimal BetCount { get; set; }
 
         public decimal VirtualTotalTurnover { get; set; }
 

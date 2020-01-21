@@ -7,4 +7,11 @@
         Live,
         NonLive
     }
+
+    public enum RT3PerformanceModel
+    {
+        RT3WithTrader,
+        RT3NoTrader,
+        TradingAutomation
+    }
 }

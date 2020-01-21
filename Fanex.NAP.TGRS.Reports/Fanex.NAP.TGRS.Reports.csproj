@@ -433,6 +433,7 @@
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
     <Compile Include="ViewModels\RT3PerformanceDetail\BetTypePerformanceItem.cs" />
     <Compile Include="ViewModels\RT3PerformanceDetail\BetTypePerformanceList.cs" />
+    <Compile Include="ViewModels\RT3PerformanceDetail\ChartPerformanceItem.cs" />
     <Compile Include="ViewModels\RT3PerformanceDetail\ModelPerformanceItem.cs" />
     <Compile Include="ViewModels\RT3PerformanceDetail\ModelPerformanceList.cs" />
     <Compile Include="ViewModels\RT3PerformanceDetail\MonthPerformanceItem.cs" />

@@ -16,29 +16,35 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
         domElements.divChartMarginContainer = $('#divChartMarginContainer');
     };
 
-    var chartOption = function (name) {
+    var chartOptions = function (chartName, rt3WithTraderItems, rt3NoTraderItems, rt3TradingAutoItems) {
         return {
             chart: {
                 type: 'column'
-            },
+            },         
             title: {
-                text: name
+                text: chartName
             },
             colors: ['#2191db', '#f28f43', '#9b9fa3'],
             xAxis: {
                 categories: [labels.Virtual, labels.Variance, labels.RealTotal8RMWL]
             },
             yAxis: {
-                title: {
-                    text: ""
-                }
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
+                title: { text: null },
+                labels: {
+                    formatter: function () { return this.value + " %" }
+                },
+            },          
+            plotOptions: {                
+                series: { 
+                    //pointWidth: 35,
+                    //groupPadding: 0,
                     dataLabels: {
-                        enabled: true,
-                        format: '{point.y:.1f}%'
+                        enabled: true,                       
+                        format: '{point.y}%',
+                        style: {
+                            fontSize: '8px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
                     }
                 }
             },
@@ -48,54 +54,24 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
             series: [
                 {
                     name: labels.RT3WithTraderPerformance,
-                    data: [
-                        {
-                            name: "a",
-                            y: 5
-                        },
-                        {
-                            name: "b",
-                            y: 3
-                        },
-                        {
-                            name: "c",
-                            y: 4
-                        }
-                    ]
+                    data: rt3WithTraderItems                    
                 }, {
                     name: labels.RT3NoTraderPerformance,
-                    data: [
-                        {
-                            name: "a",
-                            y: 6
-                        },
-                        {
-                            name: "b",
-                            y: 2
-                        },
-                        {
-                            name: "c",
-                            y: -1
-                        }
-                    ]
+                    data: rt3NoTraderItems                    
                 }, {
                     name: labels.TradingAutomation,
-                    data: [
-                        {
-                            name: "a",
-                            y: 1
-                        },
-                        {
-                            name: "b",
-                            y: -2
-                        },
-                        {
-                            name: "c",
-                            y: 5
-                        }
-                    ]
+                    data: rt3TradingAutoItems                   
                 }]
         };
+    }
+
+    var displayChart = function(isShow) {
+        var isStoreDisplay = getStogeDisplayChart();
+        if (isShow && (isStoreDisplay == null || isStoreDisplay == "true")) {
+            domElements.divChartContainer.show();
+        } else {
+            domElements.divChartContainer.hide();
+        }
     }
 
     var getStogeDisplayChart = function () {
@@ -107,18 +83,17 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
     }  
 
     $this.Display = function (isShow) {
-        var isStoreDisplay = getStogeDisplayChart();
-        if (isShow && (isStoreDisplay == null || isStoreDisplay == "true")) {           
-            domElements.divChartContainer.show();
-        } else {
-            domElements.divChartContainer.hide();
-        }
+        displayChart(isShow);
     }
 
     $this.BindData = function (data) {
-        var optionsTurnover = chartOption('Turnover');
-        var optionsWinLoss = chartOption('Win Loss');
-        var optionsMargin = chartOption('Margin');
+        var turnover = data.ChartTurnover;
+        var winloss = data.ChartWinLoss;
+        var margin = data.ChartMargin;
+
+        var optionsTurnover = chartOptions(labels.Turnover, turnover.RT3WithTrader, turnover.RT3NoTrader, turnover.TradingAutomation);
+        var optionsWinLoss = chartOptions(labels.WinLoss, winloss.RT3WithTrader, winloss.RT3NoTrader, winloss.TradingAutomation);
+        var optionsMargin = chartOptions(labels.MarginRT3, margin.RT3WithTrader, margin.RT3NoTrader, margin.TradingAutomation);
 
         domElements.divChartTurnoverContainer.highcharts(optionsTurnover);
         domElements.divChartWinLossContainer.highcharts(optionsWinLoss);
@@ -127,5 +102,6 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
+        displayChart(false);
     }
 }

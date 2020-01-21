@@ -2,11 +2,13 @@
 {
     public class ModelPerformanceInfo
     {
+        public RT3PerformanceModel ModelName { get; set; }
+
         public string Model { get; set; }
 
         public int Match { get; set; }
 
-        public string BetCount { get; set; }
+        public decimal BetCount { get; set; }
 
         public decimal Stake_VR { get; set; }
 

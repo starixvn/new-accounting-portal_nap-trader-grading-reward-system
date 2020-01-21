@@ -47,9 +47,10 @@
         </div>
     </div>
 </div>
-
-@Html.Partial("SummaryPerformance")
-@Html.Partial("ChartPerformance")
+<div id="divSummaryContainer" hidden>
+    @Html.Partial("SummaryPerformance")
+    @Html.Partial("ChartPerformance")
+</div>
 
 <div id="divModelPerformanceContainer" class="content-grid display-none">
     <div id="divModelPerformanceGrid" class="freegrid"></div>
@@ -78,6 +79,7 @@
             WinLoss: '@ViewLang.WinLoss',
             Total: '@ViewLang.Total',
             Margin: '@ViewLang.Margin',
+            MarginRT3: '@ViewLang.MarginRT3',
             BetCount: '@ViewLang.BetCount',
             VirtualTotal: '@ViewLang.VirtualTotal',
             Variance: '@ViewLang.Variance',

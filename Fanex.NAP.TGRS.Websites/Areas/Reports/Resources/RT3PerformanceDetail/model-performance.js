@@ -18,6 +18,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         btnGenerate: null,
         divModelPerformanceContainer: null,
         divModelPerformanceGrid: null,
+        divSummaryContainer: null
     };
 
     var parameters = {
@@ -38,6 +39,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         domElements.btnGenerate = domElements.divModelPerformanceFilter.find('#btnGenerate');
         domElements.divModelPerformanceContainer = $('#divModelPerformanceContainer');
         domElements.divModelPerformanceGrid = $('#divModelPerformanceGrid');
+        domElements.divSummaryContainer = $('#divSummaryContainer');
     }
 
     var initializeFields = function () {
@@ -53,6 +55,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divModelPerformanceFilter, 'w')) {
+                domElements.divSummaryContainer.show();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.DataType = domElements.ddlDataType.val();
@@ -255,18 +258,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
             return [{
                 Columns: [{ Name: 'ColModel', Value: labels.GrandTotal, CellAlign: 'right' },
                 { Name: 'ColMatch', Value: data.GrandTotal.Match },
-                { Name: 'ColBetCount', Value: data.GrandTotal.MatchPercentage },
-                { Name: 'ColVirtualTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColVarianceTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VarianceMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColRealTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.RealTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColTotal8RMTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', },
-                { Name: 'ColRealTotal8RMWLTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' }
-                ]}];
-        } else {
-            return [{
-                Columns: [{ Name: 'ColModel', Value: labels.GrandTotal, CellAlign: 'right' },
-                { Name: 'ColMatch', Value: data.GrandTotal.Match },
-                { Name: 'ColBetCount', Value: data.GrandTotal.MatchPercentage },
+                { Name: 'ColBetCount', Value: data.GrandTotal.BetCount },
                 { Name: 'ColVirtualTotalTurnover', Value: data.GrandTotal.VirtualTotalTurnover },
                 { Name: 'ColVirtualTotalWinLoss', Value: data.GrandTotal.VirtualTotalWinLoss },
                 { Name: 'ColVirtualTotalMargin', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA) },
@@ -282,7 +274,20 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
                 { Name: 'ColRealTotal8RMWLTurnover', Value: data.GrandTotal.Total8RMWLTurnover },
                 { Name: 'ColRealTotal8RMWLWinLoss', Value: data.GrandTotal.Total8RMWLWinLoss },
                 { Name: 'ColRealTotal8RMWLMargin', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA) }
-                ]}];
+                ]
+            }];
+        } else {
+            return [{
+                Columns: [{ Name: 'ColModel', Value: labels.GrandTotal, CellAlign: 'right' },
+                { Name: 'ColMatch', Value: '' },
+                { Name: 'ColBetCount', Value: '' },
+                { Name: 'ColVirtualTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
+                { Name: 'ColVarianceTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VarianceMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
+                { Name: 'ColRealTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.RealTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
+                { Name: 'ColTotal8RMTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', },
+                { Name: 'ColRealTotal8RMWLTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' }
+                ]
+            }];
         }
     } 
 

@@ -17,7 +17,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         ddlLeagueGroup: null,
         btnGenerate: null,
         divBetTypePerformanceContainer: null,
-        divBetTypePerformanceGrid: null,       
+        divBetTypePerformanceGrid: null,
+        divSummaryContainer: null
     };
 
     var parameters = {
@@ -35,7 +36,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         domElements.ddlLeagueGroup = domElements.divBetTypePerformanceFilter.find('#ddlLeagueGroup');
         domElements.btnGenerate = domElements.divBetTypePerformanceFilter.find('#btnGenerate');
         domElements.divBetTypePerformanceContainer = $('#divBetTypePerformanceContainer');
-        domElements.divBetTypePerformanceGrid = $('#divBetTypePerformanceGrid');     
+        domElements.divBetTypePerformanceGrid = $('#divBetTypePerformanceGrid');
+        domElements.divSummaryContainer = $('#divSummaryContainer');
     };
 
     var initializeFields = function () {
@@ -57,8 +59,9 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
             validator.ClearError(domElements.ddlLeagueGroup.next());
             });        
 
-        domElements.btnGenerate.click(function () {
+        domElements.btnGenerate.click(function () {            
             if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {
+                domElements.divSummaryContainer.show();
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                
                 parameters.FromDate = domElements.divDateRange.getFrom();

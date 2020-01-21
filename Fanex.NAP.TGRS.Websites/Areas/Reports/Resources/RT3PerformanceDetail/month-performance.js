@@ -18,7 +18,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
         ddlLeagueGroup: null,
         btnGenerate: null,
         divMonthPerformanceContainer: null,
-        divMonthPerformanceGrid: null        
+        divMonthPerformanceGrid: null,
+        divSummaryContainer: null
     };
 
     var parameters = {
@@ -36,7 +37,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
         domElements.ddlLeagueGroup = domElements.divMonthPerformanceFilter.find('#ddlLeagueGroup');
         domElements.btnGenerate = domElements.divMonthPerformanceFilter.find('#btnGenerate');
         domElements.divMonthPerformanceContainer = $('#divMonthPerformanceContainer');
-        domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');      
+        domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');  
+        domElements.divSummaryContainer = $('#divSummaryContainer');
     };
 
     var initializeFields = function () {
@@ -65,6 +67,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divMonthPerformanceFilter, 'w')) {
+                domElements.divSummaryContainer.show();
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();                
 
                 parameters.FromDate = domElements.divDateRange.getFrom();

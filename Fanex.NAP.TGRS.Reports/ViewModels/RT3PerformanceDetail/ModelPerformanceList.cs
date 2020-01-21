@@ -11,11 +11,20 @@
         {
             ItemList = new List<ModelPerformanceItem>();
             GrandTotal = new ModelPerformanceItem();
-        }
+            ChartTurnover = new ChartPerformanceItem();
+            ChartWinLoss = new ChartPerformanceItem();
+            ChartMargin = new ChartPerformanceItem();
+        }      
 
         public int LeagueCount { get; set; }
 
         public int MatchCount { get; set; }
+
+        public ChartPerformanceItem ChartTurnover { get; set; }
+
+        public ChartPerformanceItem ChartWinLoss { get; set; }
+
+        public ChartPerformanceItem ChartMargin { get; set; }
 
         public List<ModelPerformanceItem> ItemList { get; set; }
 
@@ -52,14 +61,40 @@
             {
                 var modelItem = new ModelPerformanceItem(item);
                 ItemList.Add(modelItem);
-
                 CalculateTotal(modelItem);
+
+                var percentageModelItem = new ModelPerformanceItem(item);
+                percentageModelItem.ConvertNumberToPercentage(this.GrandTotal);
+                ChartTurnover.AddTurnover(percentageModelItem);
+                ChartWinLoss.AddWinLoss(percentageModelItem);
+                ChartMargin.AddMargin(percentageModelItem);
+            }
+        }
+
+        public void AddModelPercentageList(IEnumerable<ModelPerformanceInfo> modelInfos)
+        {
+            var itemList = new List<ModelPerformanceItem>();
+            foreach (var item in modelInfos)
+            {
+                var modelItem = new ModelPerformanceItem(item);
+                itemList.Add(modelItem);
+                CalculateTotal(modelItem);
+            }
+
+            foreach (var item in itemList)
+            {
+                item.ConvertNumberToPercentage(this.GrandTotal);
+                ItemList.Add(item);
+                ChartTurnover.AddTurnover(item);
+                ChartWinLoss.AddWinLoss(item);
+                ChartMargin.AddMargin(item);
             }
         }
 
         private void CalculateTotal(ModelPerformanceItem item)
         {
             this.GrandTotal.Match += item.Match;
+            this.GrandTotal.BetCount += item.BetCount;
         }
     }
 }
