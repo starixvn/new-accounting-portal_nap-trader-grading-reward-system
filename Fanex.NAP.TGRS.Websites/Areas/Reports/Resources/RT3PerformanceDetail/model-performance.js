@@ -91,10 +91,10 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         var footerData = [];
 
         if (data && data.ItemList.length > 0) {
-            bodyData = renderModelPerformanceGridBody(data);
-            footerData = renderModelPerformanceGridFooter(data);
+            bodyData = generateModelPerformanceGridBody(data);
+            footerData = generateModelPerformanceGridFooter(data);
         }
-        var gridOptions = renderModelPerformanceGridOptions();
+        var gridOptions = generateModelPerformanceGridOptions();
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divModelPerformanceGrid.fanexGrid(gridOptions);
@@ -106,7 +106,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         chartPerforamnce.Display(true);
     }
 
-    var renderModelPerformanceGridOptions = function () {
+    var generateModelPerformanceGridOptions = function () {
         var gridOptions = {
             customizeHeader: true,
             groupHeaderRows: [
@@ -150,7 +150,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         if (parameters.DataType == labels.Number) {
             return [
                 { HeaderText: labels.Model, Name: "ColModel", MergeRowNumber: 2 },
-                { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
+                { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
                 { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
                 { HeaderText: labels.VirtualTotal, Name: "ColVirtualTotalTurnover", MergeColNumber: 3 },
                 { HeaderText: labels.Variance, Name: "ColVarianceTurnover", MergeColNumber: 3, ThClass: 'dim' },
@@ -161,7 +161,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         } else {
             return [
                 { HeaderText: labels.Model, Name: "ColModel", MergeRowNumber: 2 },
-                { HeaderText: labels.Match + " %", Name: "ColMatch", MergeRowNumber: 2 },
+                { HeaderText: labels.Match + " %", Name: "ColMatchCount", MergeRowNumber: 2 },
                 { HeaderText: labels.BetCount + " %", Name: "ColBetCount", MergeRowNumber: 2 },
                 { HeaderText: labels.VirtualTotal, Name: "ColVirtualTotalTurnover", MergeColNumber: 3 },
                 { HeaderText: labels.Variance, Name: "ColVarianceTurnover", MergeColNumber: 3, ThClass: 'dim' },
@@ -176,57 +176,57 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         if (parameters.DataType == labels.Number) {
             return [
                 { HeaderText: labels.Model, Width: 165, Name: "ColModel", HeaderAlign: "center", CellAlign: "left", Sort: false },
-                { HeaderText: labels.Match, Width: 60, Name: "ColMatch", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.Match, Width: 60, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.BetCount, Width: 70, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.Turnover, Width: 112, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss, Width: 112, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss, Width: 112, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: labels.Turnover, Width: 112, Name: "ColVarianceTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 112, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss, Width: 112, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
                 { HeaderText: labels.Turnover, Width: 112, Name: "ColRealTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss, Width: 112, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss, Width: 112, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: labels.Turnover, Width: 112, Name: "ColTotal8RMTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 112, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss, Width: 112, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
                 { HeaderText: labels.Turnover, Width: 112, Name: "ColRealTotal8RMWLTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss, Width: 112, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat }
+                { HeaderText: labels.WinLoss, Width: 112, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
             ]
         } else {
             return [
                 { HeaderText: labels.Model, Width: 160, Name: "ColModel", HeaderAlign: "center", CellAlign: "left", Sort: false },
-                { HeaderText: labels.Match + " %", Width: 60, Name: "ColMatch", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.Match + " %", Width: 60, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.BetCount + " %", Width: 75, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColVarianceTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColRealTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColTotal8RMTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim' },
+                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColRealTotal8RMWLTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
-                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat }
+                { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
+                { HeaderText: labels.Margin, Width: 72, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
             ]
         }
     }
 
-    var renderModelPerformanceGridBody = function (data) {
+    var generateModelPerformanceGridBody = function (data) {
         var bodyData = [];
         var row;
 
         $.each(data.ItemList, function (index, item) {
             var currentRowData = [];
             currentRowData.push(
-                { Name: 'ColModel', Value: item.Model, CssClass: 'bold' },
-                { Name: 'ColMatch', Value: item.Match },
+                { Name: 'ColModel', Value: item.ModelName, CssClass: 'bold' },
+                { Name: 'ColMatchCount', Value: item.MatchCount },
                 { Name: 'ColBetCount', Value: item.BetCount },
                 { Name: 'ColVirtualTotalTurnover', Value: item.VirtualTotalTurnover },
                 { Name: 'ColVirtualTotalWinLoss', Value: item.VirtualTotalWinLoss },
@@ -253,11 +253,11 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         return bodyData;
     }
 
-    var renderModelPerformanceGridFooter = function (data) {
+    var generateModelPerformanceGridFooter = function (data) {
         if (parameters.DataType == labels.Number) {
             return [{
                 Columns: [{ Name: 'ColModel', Value: labels.GrandTotal, CellAlign: 'right' },
-                { Name: 'ColMatch', Value: data.GrandTotal.Match },
+                { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
                 { Name: 'ColBetCount', Value: data.GrandTotal.BetCount },
                 { Name: 'ColVirtualTotalTurnover', Value: data.GrandTotal.VirtualTotalTurnover },
                 { Name: 'ColVirtualTotalWinLoss', Value: data.GrandTotal.VirtualTotalWinLoss },
@@ -279,13 +279,13 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         } else {
             return [{
                 Columns: [{ Name: 'ColModel', Value: labels.GrandTotal, CellAlign: 'right' },
-                { Name: 'ColMatch', Value: '' },
+                { Name: 'ColMatchCount', Value: '' },
                 { Name: 'ColBetCount', Value: '' },
-                { Name: 'ColVirtualTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColVarianceTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VarianceMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColRealTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.RealTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColTotal8RMTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', },
-                { Name: 'ColRealTotal8RMWLTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right' }
+                { Name: 'ColVirtualTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', FormatNegative: '$' },
+                { Name: 'ColVarianceTurnover', Value: common.GetNumWithLabel(data.GrandTotal.VarianceMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', FormatNegative: '$' },
+                { Name: 'ColRealTotalTurnover', Value: common.GetNumWithLabel(data.GrandTotal.RealTotalMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', FormatNegative: '$' },
+                { Name: 'ColTotal8RMTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', FormatNegative: '$' },
+                { Name: 'ColRealTotal8RMWLTurnover', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA), MergeColNumber: 3, CellAlign: 'right', FormatNegative: '$' }
                 ]
             }];
         }

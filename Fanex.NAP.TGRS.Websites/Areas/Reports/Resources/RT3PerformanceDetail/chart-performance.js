@@ -19,7 +19,9 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
     var chartOptions = function (chartName, rt3WithTraderItems, rt3NoTraderItems, rt3TradingAutoItems) {
         return {
             chart: {
-                type: 'column'
+                type: 'column',
+                height: 415,
+                width: 619
             },         
             title: {
                 text: chartName
@@ -31,13 +33,13 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
             yAxis: {
                 title: { text: null },
                 labels: {
-                    formatter: function () { return this.value + " %" }
+                    formatter: function () {
+                        return this.value + ' %'
+                    }
                 },
             },          
             plotOptions: {                
-                series: { 
-                    //pointWidth: 35,
-                    //groupPadding: 0,
+                series: {                
                     dataLabels: {
                         enabled: true,                       
                         format: '{point.y}%',
@@ -91,9 +93,9 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
         var winloss = data.ChartWinLoss;
         var margin = data.ChartMargin;
 
-        var optionsTurnover = chartOptions(labels.Turnover, turnover.RT3WithTrader, turnover.RT3NoTrader, turnover.TradingAutomation);
-        var optionsWinLoss = chartOptions(labels.WinLoss, winloss.RT3WithTrader, winloss.RT3NoTrader, winloss.TradingAutomation);
-        var optionsMargin = chartOptions(labels.MarginRT3, margin.RT3WithTrader, margin.RT3NoTrader, margin.TradingAutomation);
+        var optionsTurnover = chartOptions(labels.Turnover, turnover.RT3WithTraderList, turnover.RT3NoTraderList, turnover.TradingAutomationList);
+        var optionsWinLoss = chartOptions(labels.WinLoss, winloss.RT3WithTraderList, winloss.RT3NoTraderList, winloss.TradingAutomationList);
+        var optionsMargin = chartOptions(labels.MarginRT3, margin.RT3WithTraderList, margin.RT3NoTraderList, margin.TradingAutomationList);
 
         domElements.divChartTurnoverContainer.highcharts(optionsTurnover);
         domElements.divChartWinLossContainer.highcharts(optionsWinLoss);

@@ -9,10 +9,11 @@
 
         public DateTime ToDate { get; set; }
 
+        [SpParam(Ignored = true)]
         public string DataType { get; set; }
 
         public override string GetSettingKey()
-            => "TGRS_Rpt_RobotTrading_BetType";
+            => "TGRS_Rpt_RobotTrading_Model";
 
         public override bool IsValid()
             => true;

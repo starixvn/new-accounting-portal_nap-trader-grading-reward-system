@@ -634,6 +634,7 @@
     <Content Include="Areas\Reports\ExcelTemplates\RT3PerformanceDetail\MonthPerformance.xls" />
     <Content Include="Areas\Reports\Views\RT3PerformanceDetail\ModelPerformance.cshtml" />
     <Content Include="Areas\Reports\Views\RT3PerformanceDetail\ChartPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\RT3PerformanceDetail\ModelPerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

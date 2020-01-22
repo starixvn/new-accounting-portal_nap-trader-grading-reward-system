@@ -148,24 +148,38 @@
         public ModelPerformanceList GetModelPerformance(GetModelPerformanceCriteria criteria)
         {
             var modelPerformanceList = new ModelPerformanceList();
-            var totalLeagueMatchData = GenerateSampleTotalLeagueMatch();
-            var totalPerformanceData = GenerateSampleTotalPerformance();
-            var modelData = GenerateSampleModelInfoPerformance();
-
-            modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData);
-            modelPerformanceList.AddGrandTotal(totalPerformanceData);
-            if (modelData != null && modelData.Any())
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                if (criteria.DataType == ViewLang.Percentage)
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
-                    modelPerformanceList.AddModelPercentageList(modelData);
+                    var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
+                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
+                    var modelData = multi.Read<ModelPerformanceInfo>();
+
+                    if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
+                    {
+                        modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+                    }
+
+                    if (totalPerformanceData != null && totalPerformanceData.Any())
+                    {
+                        modelPerformanceList.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                    }
+
+                    if (modelData != null && modelData.Any())
+                    {
+                        if (criteria.DataType == ViewLang.Number)
+                        {
+                            modelPerformanceList.AddModelList(modelData);
+                        }
+                        else
+                        {
+                            modelPerformanceList.AddModelPercentageList(modelData);
+                        }
+                    }
+                    SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
                 }
-                else
-                {
-                    modelPerformanceList.AddModelList(modelData);
-                }                
             }
-            SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
 
             return modelPerformanceList;
         }
@@ -183,14 +197,7 @@
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
                 writer.CopyRows(0, 1);
                 FilterBlock(userId, criteria, ref writer);
-                if (criteria.DataType == ViewLang.Number)
-                {
-                    writer.CopyRows(3, 2);
-                }
-                else
-                {
-                    FillHeader(ref writer);
-                }                
+                FillHeader(ref writer, criteria.DataType == ViewLang.Percentage);
                 writer.FreezeRow(0, 4);
                 FillRowDataModel(modelData, ref writer, criteria.DataType);
                 writer.SyncColumnsWidth(17);
@@ -230,26 +237,38 @@
 
         private void FillHeader(ref ExcelTemplateWriter writer)
         {
-            var rowGroupHeader = writer.CopyRows(3, 1);
-            rowGroupHeader.GetCell(1).SetCellValue(ViewLang.Match + " %");
-            rowGroupHeader.GetCell(2).SetCellValue(ViewLang.BetCount + " %");
+            FillHeader(ref writer, false);
+        }
 
-            var rowHeader = writer.CopyRows(4, 1);
-            rowHeader.GetCell(3).SetCellValue(ViewLang.Turnover + " %");
-            rowHeader.GetCell(4).SetCellValue(ViewLang.WinLoss + " %");
-            rowHeader.GetCell(5).SetCellValue(ViewLang.Margin);
-            rowHeader.GetCell(6).SetCellValue(ViewLang.Turnover + " %");
-            rowHeader.GetCell(7).SetCellValue(ViewLang.WinLoss + " %");
-            rowHeader.GetCell(8).SetCellValue(ViewLang.Margin);
-            rowHeader.GetCell(9).SetCellValue(ViewLang.Turnover + " %");
-            rowHeader.GetCell(10).SetCellValue(ViewLang.WinLoss + " %");
-            rowHeader.GetCell(11).SetCellValue(ViewLang.Margin);
-            rowHeader.GetCell(12).SetCellValue(ViewLang.Turnover + " %");
-            rowHeader.GetCell(13).SetCellValue(ViewLang.WinLoss + " %");
-            rowHeader.GetCell(14).SetCellValue(ViewLang.Margin);
-            rowHeader.GetCell(15).SetCellValue(ViewLang.Turnover + " %");
-            rowHeader.GetCell(16).SetCellValue(ViewLang.WinLoss + " %");
-            rowHeader.GetCell(17).SetCellValue(ViewLang.Margin);
+        private void FillHeader(ref ExcelTemplateWriter writer, bool isPercentage)
+        {
+            if (isPercentage)
+            {
+                var rowGroupHeader = writer.CopyRows(3, 1);
+                rowGroupHeader.GetCell(1).SetCellValue(ViewLang.Match + " %");
+                rowGroupHeader.GetCell(2).SetCellValue(ViewLang.BetCount + " %");
+
+                var rowHeader = writer.CopyRows(4, 1);
+                rowHeader.GetCell(3).SetCellValue(ViewLang.Turnover + " %");
+                rowHeader.GetCell(4).SetCellValue(ViewLang.WinLoss + " %");
+                rowHeader.GetCell(5).SetCellValue(ViewLang.Margin);
+                rowHeader.GetCell(6).SetCellValue(ViewLang.Turnover + " %");
+                rowHeader.GetCell(7).SetCellValue(ViewLang.WinLoss + " %");
+                rowHeader.GetCell(8).SetCellValue(ViewLang.Margin);
+                rowHeader.GetCell(9).SetCellValue(ViewLang.Turnover + " %");
+                rowHeader.GetCell(10).SetCellValue(ViewLang.WinLoss + " %");
+                rowHeader.GetCell(11).SetCellValue(ViewLang.Margin);
+                rowHeader.GetCell(12).SetCellValue(ViewLang.Turnover + " %");
+                rowHeader.GetCell(13).SetCellValue(ViewLang.WinLoss + " %");
+                rowHeader.GetCell(14).SetCellValue(ViewLang.Margin);
+                rowHeader.GetCell(15).SetCellValue(ViewLang.Turnover + " %");
+                rowHeader.GetCell(16).SetCellValue(ViewLang.WinLoss + " %");
+                rowHeader.GetCell(17).SetCellValue(ViewLang.Margin);
+            }
+            else
+            {
+                writer.CopyRows(3, 2);
+            }
         }
 
         private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
@@ -393,8 +412,8 @@
                 int styleIndex = index % 2 == 0 ? 6 : 5;
                 var record = new object[]
                 {
-                    item.Model,
-                    item.Match,
+                    item.ModelName,
+                    item.MatchCount,
                     item.BetCount,
                     item.VirtualTotalTurnover,
                     item.VirtualTotalWinLoss,
@@ -423,7 +442,7 @@
                 var totalRecord = new object[]
                 {
                     ViewLang.GrandTotal,
-                    total.Match,
+                    total.MatchCount,
                     total.BetCount,
                     total.VirtualTotalTurnover,
                     total.VirtualTotalWinLoss,
@@ -476,107 +495,6 @@
             var leagueGroupNames = leagueGroups.Join(leagueGroupIdList, a => a.Key, b => b, (a, b) => a.Value);
 
             return string.Join(",", leagueGroupNames);
-        }        
-
-        public TotalLeagueMatchInfo GenerateSampleTotalLeagueMatch()
-            => new TotalLeagueMatchInfo
-            {
-                LeagueCount = 1722,
-                MatchCount = 1813
-            };
-
-        public TotalPerformanceInfo GenerateSampleTotalPerformance()
-            => new TotalPerformanceInfo
-            {
-                Total_WinLoss_VR =  new decimal(24461395),
-                Total_Stake_VR = new decimal(7048399),
-                Total_Margin_VR = new decimal(2.9),
-                Total_Winloss_VAR = new decimal(208467095),
-                Total_Stake_VAR = new decimal(55047175),
-                Total_Margin_VAR = new decimal(2.63),
-                Total_Winloss_AR = new decimal(208467095),
-                Total_Stake_AR = new decimal(6209557407),
-                Total_Margin_AR = new decimal(2.65),
-                Total_Winloss_8RM = new decimal(208467095),
-                Total_Stake_8RM = new decimal(6209557407),
-                Total_Margin_8RM = new decimal(0.03),
-                Total_Winloss_AR8RM = new decimal(208467095),
-                Total_Stake_AR8RM = new decimal(6209557407),
-                Total_Margin_AR8RM = new decimal(0.03)
-            };
-
-        public List<ModelPerformanceInfo> GenerateSampleModelInfoPerformance()
-        {
-            var modelInfos = new List<ModelPerformanceInfo>();
-            modelInfos.Add(new ModelPerformanceInfo
-            {
-                ModelName = RT3PerformanceModel.RT3WithTrader,
-                Model = ViewLang.RT3WithTraderPerformance,
-                Match = 15620,
-                BetCount = 12001,
-                WinLoss_VR = 1353747,
-                Stake_VR = 593749,
-                Margin_VR = new decimal(2.28),
-                Winloss_VAR = 22910820,
-                Stake_VAR = 10048605,
-                Margin_VAR = new decimal(2.28),
-                Winloss_AR = 24264567,
-                Stake_AR = 1064235395,
-                Margin_AR = new decimal(2.28),
-                Winloss_8RM = 24264567,
-                Stake_8RM = 1064235395,
-                Margin_8RM = new decimal(2.28),
-                Winloss_AR8RM = 24264567,
-                Stake_AR8RM = 1064235395,
-                Margin_AR8RM = new decimal(2.28)
-            });
-            modelInfos.Add(new ModelPerformanceInfo
-            {
-                ModelName = RT3PerformanceModel.RT3NoTrader,
-                Model = ViewLang.RT3NoTraderPerformance,
-                Match = 16708,
-                BetCount = 300,
-                WinLoss_VR = 11553824,
-                Stake_VR = 3227325,
-                Margin_VR = new decimal(3.58),
-                Winloss_VAR = 80547440,
-                Stake_VAR = 22499285,
-                Margin_VAR = new decimal(3.58),
-                Winloss_AR = 92101264,
-                Stake_AR = 2572661006,
-                Margin_AR = new decimal(3.58),
-                Winloss_8RM = 92101264,
-                Stake_8RM = 2572661006,
-                Margin_8RM = new decimal(3.58),
-                Winloss_AR8RM = 92101264,
-                Stake_AR8RM = 2572661006,
-                Margin_AR8RM = new decimal(3.58)
-            });
-            modelInfos.Add(new ModelPerformanceInfo
-            {
-                ModelName = RT3PerformanceModel.TradingAutomation,
-                Model = ViewLang.TradingAutomation,
-                Match = 16708,
-                BetCount = 500,
-                WinLoss_VR = 11553824,
-                Stake_VR = 3227325,
-                Margin_VR = new decimal(3.58),
-                Winloss_VAR = 80547440,
-                Stake_VAR = 22499285,
-                Margin_VAR = new decimal(3.58),
-                Winloss_AR = 92101264,
-                Stake_AR = 2572661006,
-                Margin_AR = new decimal(3.58),
-                Winloss_8RM = 92101264,
-                Stake_8RM = 2572661006,
-                Margin_8RM = new decimal(3.58),
-                Winloss_AR8RM = 92101264,
-                Stake_AR8RM = 2572661006,
-                Margin_AR8RM = new decimal(3.58)
-            });
-
-            return modelInfos;
         }
-
     }
 }

@@ -53,47 +53,50 @@
         {
             this.LeagueCount = totalInfo.LeagueCount;
             this.MatchCount = totalInfo.MatchCount;
-        }
+        }       
 
         public void AddModelList(IEnumerable<ModelPerformanceInfo> modelInfos)
         {
+            var chartList = new List<ModelPerformanceItem>();
             foreach (var item in modelInfos)
             {
                 var modelItem = new ModelPerformanceItem(item);
+                chartList.Add(modelItem);
                 ItemList.Add(modelItem);
                 CalculateTotal(modelItem);
+            }
 
-                var percentageModelItem = new ModelPerformanceItem(item);
-                percentageModelItem.ConvertNumberToPercentage(this.GrandTotal);
-                ChartTurnover.AddTurnover(percentageModelItem);
-                ChartWinLoss.AddWinLoss(percentageModelItem);
-                ChartMargin.AddMargin(percentageModelItem);
+            foreach (var item in chartList)
+            {
+                var chartItem = item.ConvertNumberToPercentage(this.GrandTotal);
+                ChartTurnover.AddTurnover(chartItem);
+                ChartWinLoss.AddWinLoss(chartItem);
+                ChartMargin.AddMargin(chartItem);
             }
         }
 
         public void AddModelPercentageList(IEnumerable<ModelPerformanceInfo> modelInfos)
         {
-            var itemList = new List<ModelPerformanceItem>();
+            var chartList = new List<ModelPerformanceItem>();
             foreach (var item in modelInfos)
             {
                 var modelItem = new ModelPerformanceItem(item);
-                itemList.Add(modelItem);
+                chartList.Add(modelItem);
                 CalculateTotal(modelItem);
             }
 
-            foreach (var item in itemList)
+            foreach (var item in chartList)
             {
-                item.ConvertNumberToPercentage(this.GrandTotal);
-                ItemList.Add(item);
-                ChartTurnover.AddTurnover(item);
-                ChartWinLoss.AddWinLoss(item);
-                ChartMargin.AddMargin(item);
+                var chartItem = item.ConvertNumberToPercentage(this.GrandTotal);
+                ItemList.Add(chartItem);
+                ChartTurnover.AddTurnover(chartItem);
+                ChartWinLoss.AddWinLoss(chartItem);
+                ChartMargin.AddMargin(chartItem);
             }
         }
-
         private void CalculateTotal(ModelPerformanceItem item)
         {
-            this.GrandTotal.Match += item.Match;
+            this.GrandTotal.MatchCount += item.MatchCount;
             this.GrandTotal.BetCount += item.BetCount;
         }
     }

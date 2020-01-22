@@ -193,6 +193,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TGRSFunctionKeys.tt</DependentUpon>
     </Compile>
+    <Compile Include="Consts\Consts.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\Column.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\ColumnMappingError.cs" />
     <Compile Include="ExcelUtility\ExcelIOExtensions\DefaultImplementation\HttpExcelMapper.cs" />

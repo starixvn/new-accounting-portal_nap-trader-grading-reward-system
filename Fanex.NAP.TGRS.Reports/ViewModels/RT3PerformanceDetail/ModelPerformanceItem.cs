@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
 {
+    using Fanex.NAP.TGRS.Core.Consts;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
     using System;
 
@@ -12,9 +14,8 @@
         {
             if (modelInfo != null)
             {
-                this.ModelName = modelInfo.ModelName;
                 this.Model = modelInfo.Model;
-                this.Match = modelInfo.Match;
+                this.MatchCount = modelInfo.MatchCount;
                 this.BetCount = modelInfo.BetCount;
                 this.VirtualTotalTurnover = modelInfo.Stake_VR;
                 this.VirtualTotalWinLoss = modelInfo.WinLoss_VR;
@@ -36,30 +37,61 @@
 
         private decimal ConvertNumberToPercentage(decimal valueItem, decimal valueTotal)
         {
-            return Math.Round((valueItem / valueTotal) * 100, 2);
+            if (valueTotal != 0)
+            {
+                return Math.Round((valueItem / valueTotal) * 100, 2);
+            }
+
+            return 0;
         }
 
-        public void ConvertNumberToPercentage(ModelPerformanceItem total)
+        public ModelPerformanceItem ConvertNumberToPercentage(ModelPerformanceItem total)
         {
-            this.Match = ConvertNumberToPercentage(this.Match, total.Match);
-            this.BetCount = ConvertNumberToPercentage(this.BetCount, total.BetCount);
-            this.VirtualTotalTurnover = ConvertNumberToPercentage(this.VirtualTotalTurnover, total.VirtualTotalTurnover);
-            this.VirtualTotalWinLoss = ConvertNumberToPercentage(this.VirtualTotalWinLoss, total.VirtualTotalWinLoss);           
-            this.VarianceTurnover = ConvertNumberToPercentage(this.VarianceTurnover, total.VarianceTurnover);
-            this.VarianceWinLoss = ConvertNumberToPercentage(this.VarianceWinLoss, total.VarianceWinLoss);        
-            this.RealTotalTurnover = ConvertNumberToPercentage(this.RealTotalTurnover, total.RealTotalTurnover);
-            this.RealTotalWinLoss = ConvertNumberToPercentage(this.RealTotalWinLoss, total.RealTotalWinLoss);         
-            this.Total8RMTurnover = ConvertNumberToPercentage(this.Total8RMTurnover, total.Total8RMTurnover);
-            this.Total8RMWinLoss = ConvertNumberToPercentage(this.Total8RMWinLoss, total.Total8RMWinLoss);          
-            this.Total8RMWLTurnover = ConvertNumberToPercentage(this.Total8RMWLTurnover, total.Total8RMWLTurnover);
-            this.Total8RMWLWinLoss = ConvertNumberToPercentage(this.Total8RMWLWinLoss, total.Total8RMWLWinLoss);          
+            var newItem = new ModelPerformanceItem();
+
+            newItem.Model = this.Model;
+            newItem.MatchCount = ConvertNumberToPercentage(this.MatchCount, total.MatchCount);
+            newItem.BetCount = ConvertNumberToPercentage(this.BetCount, total.BetCount);
+            newItem.VirtualTotalTurnover = ConvertNumberToPercentage(this.VirtualTotalTurnover, total.VirtualTotalTurnover);
+            newItem.VirtualTotalWinLoss = ConvertNumberToPercentage(this.VirtualTotalWinLoss, total.VirtualTotalWinLoss);
+            newItem.VirtualTotalMargin = Math.Round(this.VirtualTotalMargin, 2);
+            newItem.VarianceTurnover = ConvertNumberToPercentage(this.VarianceTurnover, total.VarianceTurnover);
+            newItem.VarianceWinLoss = ConvertNumberToPercentage(this.VarianceWinLoss, total.VarianceWinLoss);
+            newItem.VarianceMargin = Math.Round(this.VarianceMargin, 2);
+            newItem.RealTotalTurnover = ConvertNumberToPercentage(this.RealTotalTurnover, total.RealTotalTurnover);
+            newItem.RealTotalWinLoss = ConvertNumberToPercentage(this.RealTotalWinLoss, total.RealTotalWinLoss);
+            newItem.RealTotalMargin = Math.Round(this.RealTotalMargin, 2);
+            newItem.Total8RMTurnover = ConvertNumberToPercentage(this.Total8RMTurnover, total.Total8RMTurnover);
+            newItem.Total8RMWinLoss = ConvertNumberToPercentage(this.Total8RMWinLoss, total.Total8RMWinLoss);
+            newItem.Total8RMMargin = Math.Round(this.Total8RMMargin, 2);
+            newItem.Total8RMWLTurnover = ConvertNumberToPercentage(this.Total8RMWLTurnover, total.Total8RMWLTurnover);
+            newItem.Total8RMWLWinLoss = ConvertNumberToPercentage(this.Total8RMWLWinLoss, total.Total8RMWLWinLoss);
+            newItem.Total8RMWLMargin = Math.Round(this.Total8RMWLMargin, 2);
+
+            return newItem;
         }
 
-        public RT3PerformanceModel ModelName { get; set; }
+        public string ModelName
+        {
+            get
+            {
+                switch (this.Model)
+                {
+                    case Consts.RT3WithTrader:
+                        return ViewLang.RT3WithTraderPerformance;
+                    case Consts.RT3NoTrader:
+                        return ViewLang.RT3NoTraderPerformance;
+                    case Consts.TradingAutomation:
+                        return ViewLang.TradingAutomation;
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
 
         public string Model { get; set; }
 
-        public decimal Match { get; set; }
+        public decimal MatchCount { get; set; }
 
         public decimal BetCount { get; set; }
 
