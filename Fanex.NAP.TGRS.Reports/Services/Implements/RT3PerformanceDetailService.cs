@@ -53,18 +53,21 @@
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
                         betTypePerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+
+                        if (betTypePerformance.MatchCount > 0)
+                        {
+                            if (totalPerformanceData != null && totalPerformanceData.Any())
+                            {
+                                betTypePerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                            }
+
+                            if (betTypeData != null && betTypeData.Any())
+                            {
+                                betTypePerformance.AddBetTypeList(betTypeData);
+                            }
+                            SessionManager.Set<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey, betTypePerformance);
+                        }
                     }
-                    
-                    if (totalPerformanceData != null && totalPerformanceData.Any())
-                    {
-                        betTypePerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
-                    }
-                    
-                    if (betTypeData != null && betTypeData.Any())
-                    {
-                        betTypePerformance.AddBetTypeList(betTypeData);
-                    }
-                    SessionManager.Set<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey, betTypePerformance);
                 }
             }
 
@@ -106,18 +109,21 @@
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
                         monthPerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+
+                        if (monthPerformance.MatchCount > 0)
+                        {
+                            if (totalPerformanceData != null && totalPerformanceData.Any())
+                            {
+                                monthPerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                            }
+
+                            if (monthData != null && monthData.Any())
+                            {
+                                monthPerformance.AddBetTypeList(monthData);
+                            }
+                            SessionManager.Set<MonthPerformanceList>(RT3MonthPerformanceSessionKey, monthPerformance);
+                        }
                     }
-                    
-                    if (totalPerformanceData != null && totalPerformanceData.Any())
-                    {
-                        monthPerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
-                    }
-                    
-                    if (monthData != null && monthData.Any())
-                    {
-                        monthPerformance.AddBetTypeList(monthData);
-                    }
-                    SessionManager.Set<MonthPerformanceList>(RT3MonthPerformanceSessionKey, monthPerformance);
                 }
             }
 
@@ -159,25 +165,22 @@
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
                         modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
-                    }
 
-                    if (totalPerformanceData != null && totalPerformanceData.Any())
-                    {
-                        modelPerformanceList.AddGrandTotal(totalPerformanceData.ToList()[0]);
-                    }
+                        if(modelPerformanceList.MatchCount > 0)
+                        {
+                            if (totalPerformanceData != null && totalPerformanceData.Any())
+                            {
+                                modelPerformanceList.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                            }
 
-                    if (modelData != null && modelData.Any())
-                    {
-                        if (criteria.DataType == ViewLang.Number)
-                        {
-                            modelPerformanceList.AddModelList(modelData);
-                        }
-                        else
-                        {
-                            modelPerformanceList.AddModelPercentageList(modelData);
+                            if (modelData != null && modelData.Any())
+                            {
+                                modelPerformanceList.AddModelList(modelData, criteria.DataType);
+                            }
+
+                            SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
                         }
                     }
-                    SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
                 }
             }
 

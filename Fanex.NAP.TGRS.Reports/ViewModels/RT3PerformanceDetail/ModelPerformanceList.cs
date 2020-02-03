@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
 {
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
     using System;
     using System.Collections.Generic;
@@ -55,7 +56,19 @@
             this.MatchCount = totalInfo.MatchCount;
         }       
 
-        public void AddModelList(IEnumerable<ModelPerformanceInfo> modelInfos)
+        public void AddModelList(IEnumerable<ModelPerformanceInfo> modelInfos, string dataType)
+        {
+            if (dataType == ViewLang.Number)
+            {
+                this.AddModelNumberList(modelInfos);
+            }
+            else
+            {
+                this.AddModelPercentageList(modelInfos);
+            }
+        }
+
+        public void AddModelNumberList(IEnumerable<ModelPerformanceInfo> modelInfos)
         {
             var chartList = new List<ModelPerformanceItem>();
             foreach (var item in modelInfos)

@@ -56,11 +56,13 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divModelPerformanceFilter, 'w')) {
                 domElements.divSummaryContainer.show();
+                chartPerforamnce.Display(false);
+                domElements.divModelPerformanceContainer.addClass('display-none');                
+
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.DataType = domElements.ddlDataType.val();
-
-                domElements.divModelPerformanceContainer.addClass('display-none');
+               
                 getModelPerformanceReport();
             }
         });
@@ -93,7 +95,11 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         if (data && data.ItemList.length > 0) {
             bodyData = generateModelPerformanceGridBody(data);
             footerData = generateModelPerformanceGridFooter(data);
+
+            chartPerforamnce.BindData(data);
+            chartPerforamnce.Display(true);
         }
+
         var gridOptions = generateModelPerformanceGridOptions();
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
@@ -101,9 +107,6 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
 
         summaryPerformance.BindData(data.GrandTotal, data.LeagueCount, data.MatchCount);
         summaryPerformance.Display(true);
-
-        chartPerforamnce.BindData(data);
-        chartPerforamnce.Display(true);
     }
 
     var generateModelPerformanceGridOptions = function () {
