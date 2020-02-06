@@ -200,8 +200,8 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         } else {
             return [
                 { HeaderText: labels.Model, Width: 160, Name: "ColModel", HeaderAlign: "center", CellAlign: "left", Sort: false },
-                { HeaderText: labels.Match + " %", Width: 60, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.BetCount + " %", Width: 75, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.Match + " %", Width: 60, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.DecimalFormat },
+                { HeaderText: labels.BetCount + " %", Width: 75, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: false, FormatNumber: common.Formats.DecimalFormat },
                 { HeaderText: labels.Turnover + " %", Width: 112, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat },
                 { HeaderText: labels.WinLoss + " %", Width: 112, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
                 { HeaderText: labels.Margin, Width: 72, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
