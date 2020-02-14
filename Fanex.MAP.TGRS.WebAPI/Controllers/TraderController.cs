@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Web.Http;
 
+    [AllowAnonymous]
     public class TraderController : ApiController
     {
         private readonly TraderPerformanceService _traderPerformanceService;
@@ -13,6 +14,12 @@
         public TraderController()
         {
             _traderPerformanceService = new TraderPerformanceService();
+        }
+
+        [HttpGet]
+        public string TestTGRSWebAPI()
+        {
+            return "I am here!";
         }
 
         [HttpPost]
@@ -24,7 +31,6 @@
         [HttpPost]
         public IEnumerable<MultipleMatchesDetails> GetMultipleMatches(GetMultipleMatchesCriteria criteria)
         {
-            var a = _traderPerformanceService.GetMultipleMatchesDetails(criteria);
             return _traderPerformanceService.GetMultipleMatchesDetails(criteria);
         }
     }
