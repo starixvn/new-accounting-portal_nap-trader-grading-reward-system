@@ -36,7 +36,7 @@
         }
         #endregion Attributes and Constructors
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View("BetTypePerformance");
@@ -44,18 +44,18 @@
 
         #region BetType
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
             return View();
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             var bettypes = criteria.LeagueGroupIds != null 
                             ? _rt3PerformanceDetailService.GetBetTypePerformance(criteria) 
-                            : new BetTypePerformanceList();
+                            : new BetTypeList();
 
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -63,7 +63,7 @@
             return jsonResult;
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             var templatePath = Server.MapPath(BetTypePerformanceDetail);
@@ -76,13 +76,13 @@
 
         #region Month
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult MonthPerformance()
         {
             return View();
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
             var months = criteria.LeagueGroupIds != null
@@ -95,7 +95,7 @@
             return jsonResult;
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
             var templatePath = Server.MapPath(MonthPerformanceDetail);
@@ -107,13 +107,13 @@
         #endregion
 
         #region Model
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ModelPerformance()
         {
             return View();
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetModelPerformance(GetModelPerformanceCriteria criteria)
         {
             var models = _rt3PerformanceDetailService.GetModelPerformance(criteria);
@@ -124,7 +124,7 @@
             return jsonResult;
         }
 
-        [NapAuth(FunctionKey = TGRSFunctionKeys.RT3PerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportModelPerformance(GetModelPerformanceCriteria criteria)
         {
             var templatePath = Server.MapPath(ModelPerformanceDetail);

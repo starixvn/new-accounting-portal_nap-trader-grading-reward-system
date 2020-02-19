@@ -1,7 +1,23 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail
-{   
-    public class GetBetTypePerformanceCriteria : RT3PerformanceCriteria
+{
+    using Fanex.Data.Repository;
+    using System;
+
+    public class GetBetTypePerformanceCriteria : CriteriaBase
     {
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
+
+        public int Model { get; set; }
+
+        public string LeagueGroupIds { get; set; }
+
+        public string TypeSiteIds { get; set; }
+
+        [SpParam(Ignored = true)]
+        public string Measurements { get; set; }
+
         public override string GetSettingKey()
             => "TGRS_Rpt_RobotTrading_BetType";
 

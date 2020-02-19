@@ -2,7 +2,9 @@
 {
     public class BetTypePerformanceInfo
     {
-        public short BetType { get; set; }        
+        public short BetType { get; set; }
+
+        public int MatchCount { get; set; }
 
         public int BetCount { get; set; }
 
@@ -35,5 +37,9 @@
         public decimal Winloss_AR8RM { get; set; }
 
         public decimal Margin_AR8RM { get; set; }
+
+        public int TypeSiteId { get; set; }
+
+        public string TypeSiteDesc { get; set; }
     }
 }

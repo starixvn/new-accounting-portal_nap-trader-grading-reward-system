@@ -819,4 +819,13 @@
   <data name="Virtual" xml:space="preserve">
     <value>Virtual</value>
   </data>
+  <data name="Measurement" xml:space="preserve">
+    <value>Measurement</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="RobotTradingModelsPerformanceDetail" xml:space="preserve">
+    <value>Robot Trading Models Performance Detail Report</value>
+  </data>
 </root>

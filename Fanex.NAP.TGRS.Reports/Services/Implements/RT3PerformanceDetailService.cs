@@ -20,11 +20,12 @@
     public class RT3PerformanceDetailService : TGRSBaseService, IRT3PerformanceDetailService
     {
         private const string RT3LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.LeagueGroups";
-        private const string RT3BetTypePerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypePerformance";
+        private const string RT3BetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypeList";
         private const string RT3MonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.MonthPerformance";
         private const string RT3ModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.ModelPerformance";
         private const int PointInPixel = 225;
 
+        #region Bet Type
         public Dictionary<int, string> GetLeagueGroups()
         {
             var leagueGroups = new Dictionary<int, string>();
@@ -39,44 +40,55 @@
             return leagueGroups;
         }
 
-        public BetTypePerformanceList GetBetTypePerformance(ICriteria criteria)
+        public BetTypeList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var betTypePerformance = new BetTypePerformanceList();
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()) )
+            var betTypeList = new BetTypeList();
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria))
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
                     var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
-                    var betTypeData = multi.Read<BetTypePerformanceInfo>();
+                    var betTypesData = multi.Read<BetTypePerformanceInfo>();
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        betTypePerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+                        betTypeList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
 
-                        if (betTypePerformance.MatchCount > 0)
+                        if (betTypeList.MatchCount > 0)
                         {
                             if (totalPerformanceData != null && totalPerformanceData.Any())
                             {
-                                betTypePerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                                betTypeList.AddSummary(totalPerformanceData.ToList()[0]);
                             }
 
-                            if (betTypeData != null && betTypeData.Any())
+                            if (betTypesData != null && betTypesData.Any())
                             {
-                                betTypePerformance.AddBetTypeList(betTypeData);
+                                var betTypeIdsDisplay = new List<short> { 1, 3, 7, 8 };                              
+
+                                foreach (var betTypeId in betTypeIdsDisplay)
+                                {
+                                    var infos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
+
+                                    betTypeList.AddBetTypeItem(infos, betTypeId);
+                                }
+
+                                betTypeList.GenerateGrandTotal();
+                                betTypeList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds);
                             }
-                            SessionManager.Set<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey, betTypePerformance);
+                            SessionManager.Set<BetTypeList>(RT3BetTypeListSessionKey, betTypeList);
                         }
                     }
                 }
             }
 
-            return betTypePerformance;
+            return betTypeList;
         }
               
         public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
-            var betTypeData = SessionManager.Get<BetTypePerformanceList>(RT3BetTypePerformanceSessionKey);
+            var betTypeData = SessionManager.Get<BetTypeList>(RT3BetTypeListSessionKey);
+
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -87,7 +99,7 @@
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
                 writer.CopyRows(0, 1);
                 FilterBlock(userId, criteria, ref writer);
-                FillHeader(ref writer);
+                FillBetTypeHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowDataBetType(betTypeData, ref writer);
                 writer.SyncColumnsWidth(16);
@@ -95,7 +107,19 @@
             }
         }
 
-        public MonthPerformanceList GetMonthPerformance(ICriteria criteria)
+        private void FillBetTypeHeader(ref ExcelTemplateWriter writer)
+        {
+
+        }
+
+        private void FillRowDataBetType(BetTypeList data, ref ExcelTemplateWriter writer)
+        {
+            
+        }
+
+        #endregion
+
+        public MonthPerformanceList GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
             var monthPerformance = new MonthPerformanceList();
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -131,7 +155,7 @@
         }
 
         public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
-        {            
+        {
             var monthData = SessionManager.Get<MonthPerformanceList>(RT3MonthPerformanceSessionKey);
             if (monthData != null && monthData.ItemList.Any())
             {
@@ -166,7 +190,7 @@
                     {
                         modelPerformanceList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
 
-                        if(modelPerformanceList.MatchCount > 0)
+                        if (modelPerformanceList.MatchCount > 0)
                         {
                             if (totalPerformanceData != null && totalPerformanceData.Any())
                             {
@@ -206,8 +230,8 @@
                 writer.SyncColumnsWidth(17);
                 writer.Render();
             }
-        }       
-        
+        }
+
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(int userId, ICriteria rt3criteria, ref ExcelTemplateWriter writer)
         {
@@ -225,7 +249,7 @@
             }
             else
             {
-                var criteria = rt3criteria as RT3PerformanceCriteria;
+                var criteria = rt3criteria as GetMonthPerformanceCriteria;
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
@@ -293,62 +317,7 @@
             int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
             var line = name + value;
             lineCount += Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
-        }
-
-        private void FillRowDataBetType(BetTypePerformanceList data, ref ExcelTemplateWriter writer)
-        {
-            var index = 1;
-            foreach (var item in data.ItemList)
-            {
-                int styleIndex = index % 2 == 0 ? 6 : 5;
-                var record = new object[]
-                {
-                        item.BetTypeName,
-                        item.BetCount,
-                        item.VirtualTotalTurnover,
-                        item.VirtualTotalWinLoss,
-                        (object)item.VirtualTotalMargin ?? ViewLang.NA,
-                        item.VarianceTurnover,
-                        item.VarianceWinLoss,
-                        (object)item.VarianceMargin ?? ViewLang.NA,
-                        item.RealTotalTurnover,
-                        item.RealTotalWinLoss,
-                        (object)item.RealTotalMargin ?? ViewLang.NA,
-                        item.Total8RMTurnover,
-                        item.Total8RMWinLoss,
-                        (object)item.Total8RMMargin ?? ViewLang.NA,
-                        item.Total8RMWLTurnover,
-                        item.Total8RMWLWinLoss,
-                        (object)item.Total8RMWLMargin ?? ViewLang.NA
-                };
-
-                writer.WriteRow(styleIndex, record);
-                index++;
-            }
-
-            var total = data.GrandTotal;
-            var totalRecord = new object[]
-                {
-                    ViewLang.GrandTotal,
-                    total.BetCount,
-                    total.VirtualTotalTurnover,
-                    total.VirtualTotalWinLoss,
-                    (object)total.VirtualTotalMargin ?? ViewLang.NA,
-                    total.VarianceTurnover,
-                    total.VarianceWinLoss,
-                    (object)total.VarianceMargin ?? ViewLang.NA,
-                    total.RealTotalTurnover,
-                    total.RealTotalWinLoss,
-                    (object)total.RealTotalMargin ?? ViewLang.NA,
-                    total.Total8RMTurnover,
-                    total.Total8RMWinLoss,
-                    (object)total.Total8RMMargin ?? ViewLang.NA,
-                    total.Total8RMWLTurnover,
-                    total.Total8RMWLWinLoss,
-                    (object)total.Total8RMWLMargin ?? ViewLang.NA
-                };
-            writer.WriteRow(7, totalRecord);
-        }
+        }       
 
         private void FillRowDataMonth(MonthPerformanceList data, ref ExcelTemplateWriter writer)
         {

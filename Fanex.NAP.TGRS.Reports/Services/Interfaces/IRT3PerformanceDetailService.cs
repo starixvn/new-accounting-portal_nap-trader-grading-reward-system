@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
-{
-    using Fanex.Data.Repository;
+{    
     using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail;
     using System.Collections.Generic;
@@ -9,11 +8,11 @@
     {
         Dictionary<int, string> GetLeagueGroups();
 
-        BetTypePerformanceList GetBetTypePerformance(ICriteria criteria);
+        BetTypeList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
 
         void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
 
-        MonthPerformanceList GetMonthPerformance(ICriteria criteria);
+        MonthPerformanceList GetMonthPerformance(GetMonthPerformanceCriteria criteria);
 
         void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath);
 

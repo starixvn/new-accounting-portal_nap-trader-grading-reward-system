@@ -1033,6 +1033,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Measurement.
+        /// </summary>
+        public static string Measurement {
+            get {
+                return ResourceManager.GetString("Measurement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Midnight.
         /// </summary>
         public static string Midnight {
@@ -1519,6 +1528,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Robot Trading Models Performance Detail Report.
+        /// </summary>
+        public static string RobotTradingModelsPerformanceDetail {
+            get {
+                return ResourceManager.GetString("RobotTradingModelsPerformanceDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rows to display.
         /// </summary>
         public static string RowsToDisplay {
@@ -1686,6 +1704,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ShiftHistory {
             get {
                 return ResourceManager.GetString("ShiftHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string Site {
+            get {
+                return ResourceManager.GetString("Site", resourceCulture);
             }
         }
         
