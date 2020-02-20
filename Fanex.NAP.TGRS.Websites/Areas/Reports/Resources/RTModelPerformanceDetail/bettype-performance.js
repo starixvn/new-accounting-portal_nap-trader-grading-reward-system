@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {   
-    var betTypePerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance();
+    var betTypePerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance();
     betTypePerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance');
-Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance');
+Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
     var $this = this;
 
     var urls = {
-        GetBetTypePerformance: common.ResolveRootUrl('RT3PerformanceDetail/GetBetTypePerformance'),
-        ExportBetTypePerformance: common.ResolveRootUrl('RT3PerformanceDetail/ExportBetTypePerformance')
+        GetBetTypePerformance: common.ResolveRootUrl('RTModelPerformanceDetail/GetBetTypePerformance'),
+        ExportBetTypePerformance: common.ResolveRootUrl('RTModelPerformanceDetail/ExportBetTypePerformance')
     };
 
     var domElements = {
@@ -32,7 +32,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
    
     var hideColumns = [];
 
-    var summaryPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance();
+    var summaryPerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.SummaryPerformance();
     summaryPerformance.InitPage();
 
     var cacheDOMElements = function () {

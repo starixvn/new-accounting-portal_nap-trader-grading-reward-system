@@ -275,12 +275,12 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/MultipleMatchesPerformance/trader-performance.js"));
 
             bundles.AddAndInclude(
-                "~/styles/rt3PerformanceDetail",
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/rt3-performance-detail.less");
+                "~/styles/rtModelPerformanceDetail",
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/rtModel-performance-detail.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/rt3BetTypePerformanceDetail").Include(
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/bettype-performance.js"));
+            bundles.Add(new ScriptBundle("~/scripts/rtModelBetTypePerformanceDetail").Include(
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/bettype-performance.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/rt3MonthPerformanceDetail").Include(
                 "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",

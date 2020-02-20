@@ -9,16 +9,16 @@
     using System;    
     using System.Web.Mvc;
     
-    public class RT3PerformanceDetailController : TGRSBaseController
+    public class RTModelPerformanceDetailController : TGRSBaseController
     {
         #region Attributes and Constructors
-        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\BetTypePerformance.xls";
-        private const string MonthPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\MonthPerformance.xls";
-        private const string ModelPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RT3PerformanceDetail\ModelPerformance.xls";
+        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\BetTypePerformance.xls";
+        private const string MonthPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\MonthPerformance.xls";
+        private const string ModelPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\ModelPerformance.xls";
         private readonly IRT3PerformanceDetailService _rt3PerformanceDetailService;
 
         [Simplect.Attribute.InjectObject]
-        public RT3PerformanceDetailController() : this(null)
+        public RTModelPerformanceDetailController() : this(null)
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
@@ -29,7 +29,7 @@
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;            
         }
 
-        public RT3PerformanceDetailController(IRT3PerformanceDetailService rt3PerformanceDetailService)
+        public RTModelPerformanceDetailController(IRT3PerformanceDetailService rt3PerformanceDetailService)
         {
             this._rt3PerformanceDetailService = rt3PerformanceDetailService ?? new RT3PerformanceDetailService();
             ViewBag.LeagueGroups = this._rt3PerformanceDetailService.GetLeagueGroups();

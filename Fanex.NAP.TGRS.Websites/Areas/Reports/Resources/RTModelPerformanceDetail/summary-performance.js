@@ -1,5 +1,5 @@
-﻿Namespace.Register('Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance');
-Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance = function () {
+﻿Namespace.Register('Fanex.NAP.TGRS.RTModelPerformanceDetail.SummaryPerformance');
+Fanex.NAP.TGRS.RTModelPerformanceDetail.SummaryPerformance = function () {
     var $this = this;
 
     var domElements = {

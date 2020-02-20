@@ -150,7 +150,7 @@
     <Compile Include="Controllers\ActualRatePerformanceDetailController.cs" />
     <Compile Include="Controllers\PerformanceSummaryController.cs" />
     <Compile Include="Controllers\PerformanceDetailController.cs" />
-    <Compile Include="Controllers\RT3PerformanceDetailController.cs" />
+    <Compile Include="Controllers\RTModelPerformanceDetailController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Controllers\TraderMonthlyReportController.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateBettypeDetailLeagueCriteria.cs" />
