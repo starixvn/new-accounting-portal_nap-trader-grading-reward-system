@@ -55,29 +55,27 @@
                     {
                         betTypeList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
 
-                        if (betTypeList.MatchCount > 0)
+                        if (totalPerformanceData != null && totalPerformanceData.Any())
                         {
-                            if (totalPerformanceData != null && totalPerformanceData.Any())
-                            {
-                                betTypeList.AddSummary(totalPerformanceData.ToList()[0]);
-                            }
-
-                            if (betTypesData != null && betTypesData.Any())
-                            {
-                                var betTypeIdsDisplay = new List<short> { 1, 3, 7, 8 };                              
-
-                                foreach (var betTypeId in betTypeIdsDisplay)
-                                {
-                                    var infos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
-
-                                    betTypeList.AddBetTypeItem(infos, betTypeId);
-                                }
-
-                                betTypeList.GenerateGrandTotal();
-                                betTypeList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds);
-                            }
-                            SessionManager.Set<BetTypeList>(RT3BetTypeListSessionKey, betTypeList);
+                            betTypeList.AddSummary(totalPerformanceData.ToList()[0]);
                         }
+
+                        if (betTypesData != null && betTypesData.Any())
+                        {
+                            var betTypeIdsDisplay = new List<short> { 1, 3, 7, 8 };
+
+                            foreach (var betTypeId in betTypeIdsDisplay)
+                            {
+                                var infos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
+
+                                betTypeList.AddBetTypeItem(infos, betTypeId);
+                            }
+                        }
+
+                        betTypeList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds);
+                        betTypeList.GenerateGrandTotal();                        
+
+                        SessionManager.Set<BetTypeList>(RT3BetTypeListSessionKey, betTypeList);
                     }
                 }
             }
@@ -102,19 +100,52 @@
                 FillBetTypeHeader(ref writer);
                 writer.FreezeRow(0, 4);
                 FillRowDataBetType(betTypeData, ref writer);
-                writer.SyncColumnsWidth(16);
+                
                 writer.Render();
             }
         }
 
         private void FillBetTypeHeader(ref ExcelTemplateWriter writer)
         {
-
+            writer.CopyRows(3, 2);
         }
 
         private void FillRowDataBetType(BetTypeList data, ref ExcelTemplateWriter writer)
         {
-            
+            var index = 1;
+            foreach (var betTypeItem in data.ItemList)
+            {
+                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var columns = new List<object>();
+               
+                columns.Add(betTypeItem.BetTypeName);
+                columns.Add(betTypeItem.MatchCount);
+                columns.Add(betTypeItem.BetCount);
+
+                foreach (var robotTradingItem in betTypeItem.RobotTradingItemList)
+                {
+                    columns.Add(robotTradingItem.Value.Turnover);
+                    columns.Add(robotTradingItem.Value.WinLoss);
+                    columns.Add(robotTradingItem.Value.Margin);
+                }               
+
+                writer.WriteRow(styleIndex, columns.ToArray());              
+                index++;
+            }
+
+            var columnTotals = new List<object>();
+            columnTotals.Add(ViewLang.GrandTotal);
+            columnTotals.Add(data.GrandTotal.MatchCount);
+            columnTotals.Add(data.GrandTotal.BetCount);
+            foreach (var robotTradingItem in data.GrandTotal.RobotTradingItemList)
+            {
+                columnTotals.Add(robotTradingItem.Value.Turnover);
+                columnTotals.Add(robotTradingItem.Value.WinLoss);
+                columnTotals.Add(robotTradingItem.Value.Margin);
+            }
+            writer.WriteRow(7, columnTotals.ToArray());
+
+            writer.SyncColumnsWidth(columnTotals.Count);
         }
 
         #endregion
@@ -249,7 +280,7 @@
             }
             else
             {
-                var criteria = rt3criteria as GetMonthPerformanceCriteria;
+                var criteria = rt3criteria as GetBetTypePerformanceCriteria;
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");

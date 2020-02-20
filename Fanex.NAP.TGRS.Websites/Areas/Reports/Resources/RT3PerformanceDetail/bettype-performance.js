@@ -98,13 +98,18 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
 
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
-                var selectedMeasurements = domElements.ddlMeasurement.val()
+                var selectedMeasurements = domElements.ddlMeasurement.val();
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Model = domElements.ddlModel.val()
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
                 parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "1,2,3";
+
+                if (selectedMeasurements == null) {
+                    selectedMeasurements = [];                    
+                    domElements.ddlMeasurement.find('option').not(':selected').each(function () { selectedMeasurements.push($(this).val()); })
+                }
                 parameters.Measurements = selectedMeasurements != null ? selectedMeasurements.join(',') : selectedMeasurements;
 
                 domElements.divBetTypePerformanceContainer.addClass('display-none');
@@ -229,38 +234,116 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
     }
 
     var generateColumns = function (data) {
+        if (data.GrandTotal.RobotTradingItemList != null && data.GrandTotal.RobotTradingItemList.length > 0) {
+            var columns = [
+                { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+            ];
+
+            var cssClass = data.GroupHeaderList.length % 2 == 0 ? '' : 'dim';
+            var groupHeaderNameOld = '';
+
+            $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+
+                if (groupHeaderNameOld != robotTradingItem.GroupHeaderName) {
+                    cssClass = cssClass == 'dim' ? '' : 'dim';
+                }
+
+                if (checkExitItem(robotTradingItem, labels.Turnover)) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' T/O', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+
+                if (checkExitItem(robotTradingItem, labels.WinLoss)) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' W/L', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                }
+
+                if (checkExitItem(robotTradingItem, labels.Margin)) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' MAR', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                }
+
+                groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+            })
+
+            return columns;
+
+        } else {
+            return generateColumnsDefault();
+        }
+    }
+
+    var checkExitItem = function (item, itemName) {
+        return hideColumns.findIndex(x => x.GroupHeaderName == item.GroupHeaderName && x.ItemName == itemName) < 0;
+    }
+
+    var generateColumnsDefault = function () {
         var columns = [
             { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
             { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
+               
+        var selectedSites = domElements.ddlSite.find('option:selected');
+        var selectedMeasurements = domElements.ddlMeasurement.val();
+        var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
 
-        var cssClass = data.GroupHeaderList.length % 2 == 0 ? '' : 'dim';
-        var groupHeaderNameOld = '';
+        if (selectedSites.length == 0) {
+            selectedSites = domElements.ddlSite.find('option').not(':selected');
+        }        
+       
+        if (selectedOptionMeasurements.length == 0) {
+            selectedMeasurements = [];            
+            selectedOptionMeasurements = domElements.ddlMeasurement.find('option').not(':selected');
+            selectedOptionMeasurements.each(function () { selectedMeasurements.push($(this).val()); })
+        }
+        var groupOld = '';
+        var groups = [];
 
-        $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+        $.each(selectedOptionMeasurements, function (index, group) {
+            var groupHeader = $(group).attr('group-header');
 
-            if (groupHeaderNameOld != robotTradingItem.GroupHeaderName) {
-                cssClass = cssClass == 'dim' ? '' : 'dim';
+            if (groupOld != groupHeader) {
+                groups.push(groupHeader);
             }
-
-            if (checkExitItem(robotTradingItem, labels.Turnover)) {
-                columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' T/O', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
-            }
-
-            if (checkExitItem(robotTradingItem, labels.WinLoss)) {
-                columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' W/L', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
-            }
-
-            if (checkExitItem(robotTradingItem, labels.Margin)) {
-                columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' MAR', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
-            }
-
-            groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+            groupOld = groupHeader;
         })
+
+        var cssClass = ''; 
+
+        $.each(groups, function (indexGroup, group) {
+            var colTurnover = group + '-' + 'Turnover';
+            var colWinLoss = group + '-' + 'WinLoss';
+            var colMargin = group + '-' + 'Margin';            
+
+            $.each(selectedSites, function (indexSite, site) {
+                var siteName = $(site).text();                
+
+                if (selectedMeasurements.findIndex(x => x == colTurnover) >= 0) {
+                    columns.push({ HeaderText: siteName + ' T/O', Width: 120, Name: 'Col' + group + siteName + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+                if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
+                    columns.push({ HeaderText: siteName + ' W/L', Width: 120, Name: 'Col' + group + siteName + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+                if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
+                    columns.push({ HeaderText: siteName + ' MAR', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+            })
+
+            if (selectedMeasurements.findIndex(x => x == colTurnover) >= 0) {
+                columns.push({ HeaderText: 'T/O', Width: 120, Name: 'Col' + group + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }
+            if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
+                columns.push({ HeaderText: 'W/L', Width: 120, Name: 'Col' + group + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }
+            if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
+                columns.push({ HeaderText: 'MAR', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }  
+
+            cssClass = cssClass == 'dim' ? '' : 'dim';
+        })      
         
         return columns;
-    }
+    }  
 
     var generateHideColumns = function (data) {   
         hideColumns = [];
@@ -331,11 +414,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.BetTypePerformance = function () {
         return [{
             Columns: footerData
         }];
-    } 
-
-    var checkExitItem = function (item, itemName) {
-        return hideColumns.findIndex(x => x.GroupHeaderName == item.GroupHeaderName && x.ItemName == itemName) < 0;
-    }
+    }     
 
     var exportBetTypePerformance = function () {
         common.DownloadFile(urls.ExportBetTypePerformance, parameters);

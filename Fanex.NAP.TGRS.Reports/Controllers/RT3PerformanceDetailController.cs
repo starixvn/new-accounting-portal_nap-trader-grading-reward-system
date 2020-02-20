@@ -53,9 +53,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var bettypes = criteria.LeagueGroupIds != null 
-                            ? _rt3PerformanceDetailService.GetBetTypePerformance(criteria) 
-                            : new BetTypeList();
+            var bettypes = _rt3PerformanceDetailService.GetBetTypePerformance(criteria);
 
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;

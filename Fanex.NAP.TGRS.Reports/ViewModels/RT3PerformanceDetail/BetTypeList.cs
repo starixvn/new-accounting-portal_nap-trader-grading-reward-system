@@ -77,7 +77,7 @@
             {
                 KeyList.AddRange(item.RobotTradingItemList.Select(x => x.Key));
             }
-        }
+        }        
 
         public void GenerateGrandTotal()
         {
