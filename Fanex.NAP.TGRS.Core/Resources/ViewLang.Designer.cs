@@ -1474,7 +1474,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Real Total - Ex.8RM WL.
+        ///   Looks up a localized string similar to Real Total - Ex.8RM WIN LOSS.
         /// </summary>
         public static string RealTotal8RMWL {
             get {
@@ -1555,29 +1555,29 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RT3 Performance Detail Report.
-        /// </summary>
-        public static string RT3PerformanceDetail {
-            get {
-                return ResourceManager.GetString("RT3PerformanceDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RT3_Performance_Detail_{0}_{1}_{2}.
-        /// </summary>
-        public static string RT3PerformanceDetailFileName {
-            get {
-                return ResourceManager.GetString("RT3PerformanceDetailFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to RT3 With Trader PERF.
         /// </summary>
         public static string RT3WithTraderPerformance {
             get {
                 return ResourceManager.GetString("RT3WithTraderPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Robot Trading Models Performance Detail Report.
+        /// </summary>
+        public static string RTModelPerformanceDetail {
+            get {
+                return ResourceManager.GetString("RTModelPerformanceDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Robot_Trading_Models_Performance_Detail_{0}_{1}_{2}.
+        /// </summary>
+        public static string RTModelPerformanceDetailFileName {
+            get {
+                return ResourceManager.GetString("RTModelPerformanceDetailFileName", resourceCulture);
             }
         }
         

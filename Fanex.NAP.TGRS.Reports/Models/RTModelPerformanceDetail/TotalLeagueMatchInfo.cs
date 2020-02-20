@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail
 {
     public class TotalLeagueMatchInfo
     {

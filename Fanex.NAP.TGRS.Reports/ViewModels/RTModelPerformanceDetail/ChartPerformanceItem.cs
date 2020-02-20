@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail
 {
     using Fanex.NAP.TGRS.Core.Consts;
     using System;

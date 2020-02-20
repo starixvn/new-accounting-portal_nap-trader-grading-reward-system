@@ -1,8 +1,8 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail
 {
     using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.Helpers;
-    using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -31,13 +31,13 @@
 
         public IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }
 
-        public BetTypeItem GenerateMatchBetCount(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public BetTypeItem GenerateMatchBetCount(MatchBetCountInfo matchInfo)
         {
-            foreach (var info in betTypeInfos)
+            if (matchInfo != null)
             {
-                this.MatchCount += info.MatchCount;
-                this.BetCount += info.BetCount;
-            }
+                this.MatchCount = matchInfo.MatchCount;
+                this.BetCount = matchInfo.BetCount;
+            }            
 
             return this;
         }

@@ -8,16 +8,16 @@
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
-    using Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
-    using Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Criteria.RTModelPerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail;
     using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    public class RT3PerformanceDetailService : TGRSBaseService, IRT3PerformanceDetailService
+    public class RT3PerformanceDetailService : TGRSBaseService, IRTModelPerformanceDetailService
     {
         private const string RT3LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.LeagueGroups";
         private const string RT3BetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypeList";
@@ -48,7 +48,8 @@
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
-                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
+                    var matchCountData = multi.Read<MatchBetCountInfo>();
+                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();                    
                     var betTypesData = multi.Read<BetTypePerformanceInfo>();
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
@@ -66,9 +67,10 @@
 
                             foreach (var betTypeId in betTypeIdsDisplay)
                             {
-                                var infos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
+                                var matchCountInfo = matchCountData.Where(x => x.BetType == betTypeId).FirstOrDefault();
+                                var betTypeInfos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
 
-                                betTypeList.AddBetTypeItem(infos, betTypeId);
+                                betTypeList.AddBetTypeItem(betTypeInfos, matchCountInfo, betTypeId);
                             }
                         }
 
@@ -83,26 +85,20 @@
             return betTypeList;
         }
               
-        public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
+        public byte[] ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
             var betTypeData = SessionManager.Get<BetTypeList>(RT3BetTypeListSessionKey);
 
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
-                string reportName = string.Format(
-                                ViewLang.RT3PerformanceDetailFileName,
-                                ViewLang.BetTypeExcelFile,
-                                criteria.FromDate.ToShortFormatedDateForFileName(),
-                                criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
-                writer.CopyRows(0, 1);
-                FilterBlock(userId, criteria, ref writer);
-                FillBetTypeHeader(ref writer);
-                writer.FreezeRow(0, 4);
-                FillRowDataBetType(betTypeData, ref writer);
-                
-                writer.Render();
+                var wb = ExcelUtilities.GetWorkbook(templatePath);
+                var excelConfig = new BetTypeExcelConfig();
+                excelConfig.RenderExcel(wb, null, betTypeData.ItemList, betTypeData.GrandTotal);
+
+                return ExcelUtilities.ToBytes(wb);
             }
+
+            return default(byte[]);
         }
 
         private void FillBetTypeHeader(ref ExcelTemplateWriter writer)
@@ -127,9 +123,10 @@
                     columns.Add(robotTradingItem.Value.Turnover);
                     columns.Add(robotTradingItem.Value.WinLoss);
                     columns.Add(robotTradingItem.Value.Margin);
-                }               
+                }
 
-                writer.WriteRow(styleIndex, columns.ToArray());              
+                writer.WriteRow(styleIndex, columns.ToArray());
+
                 index++;
             }
 
@@ -191,11 +188,11 @@
             if (monthData != null && monthData.ItemList.Any())
             {
                 string reportName = string.Format(
-                                ViewLang.RT3PerformanceDetailFileName,
+                                ViewLang.RTModelPerformanceDetailFileName,
                                 ViewLang.Month,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
                 writer.CopyRows(0, 1);
                 FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer);
@@ -248,11 +245,11 @@
             if (modelData != null && modelData.ItemList.Any())
             {
                 string reportName = string.Format(
-                        ViewLang.RT3PerformanceDetailFileName,
+                        ViewLang.RTModelPerformanceDetailFileName,
                         ViewLang.Model,
                         criteria.FromDate.ToShortFormatedDateForFileName(),
                         criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RT3PerformanceDetail);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
                 writer.CopyRows(0, 1);
                 FilterBlock(userId, criteria, ref writer);
                 FillHeader(ref writer, criteria.DataType == ViewLang.Percentage);

@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail
 {
-    using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail;
     using System;
     using System.Collections.Generic;
     using System.Linq;

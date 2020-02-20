@@ -1,9 +1,9 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Criteria.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Criteria.RTModelPerformanceDetail
 {
     using Fanex.Data.Repository;
     using System;
 
-    public class GetMonthPerformanceCriteria : CriteriaBase
+    public class GetBetTypePerformanceCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 
@@ -15,8 +15,11 @@
 
         public string TypeSiteIds { get; set; }
 
+        [SpParam(Ignored = true)]
+        public string Measurements { get; set; }
+
         public override string GetSettingKey()
-            => "TGRS_Rpt_RobotTrading_Monthly";
+            => "TGRS_Rpt_RobotTrading_BetType";
 
         public override bool IsValid()
             => true;

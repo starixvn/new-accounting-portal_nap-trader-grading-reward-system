@@ -1,14 +1,12 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail
 {
-    using System;
-
-    public class MonthPerformanceInfo
-    {        
-        public DateTime RptMonth { get; set; }       
-
-        public int BetCount { get; set; }
+    public class ModelPerformanceInfo
+    {
+        public string Model { get; set; }
 
         public int MatchCount { get; set; }
+
+        public decimal BetCount { get; set; }
 
         public decimal Stake_VR { get; set; }
 

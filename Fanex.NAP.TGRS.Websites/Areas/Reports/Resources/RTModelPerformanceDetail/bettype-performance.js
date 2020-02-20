@@ -58,38 +58,11 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
             yearRanges: null,
             labelCss: 'col_5'
         });
-                       
-        domElements.ddlLeagueGroup.multiselect({
-            selectedList: 2,
-            minWidth: 190,
-            height: 140,
-            allSelectedText: labels.All
-        }).multiselectfilter({ width: 120 }).change(function () {
-            validator.ClearError(domElements.ddlLeagueGroup.next());
-            });     
                 
         setCacheForFilter(domElements.ddlLeagueGroup, getStorageFilter("RTBetTypeSelectedLeagueGroups"));
-       
-        domElements.ddlSite.multiselect({
-            selectedList: 2,
-            minWidth: 190,
-            height: 140,
-            allSelectedText: labels.All
-        }).multiselectfilter({ width: 120 }).change(function () {
-            validator.ClearError(domElements.ddlSite.next());
-            });  
-                          
+                             
         setCacheForFilter(domElements.ddlSite, getStorageFilter("RTBetTypeSelectedSideIds"));
-
-        domElements.ddlMeasurement.multiselect({
-            selectedList: 2,
-            minWidth: 190,
-            height: 140,
-            allSelectedText: labels.All
-        }).multiselectfilter({ width: 120 }).change(function () {
-            validator.ClearError(domElements.ddlMeasurement.next());
-            });
-        
+    
         setCacheForFilter(domElements.ddlMeasurement, getStorageFilter("RTBetTypeSelectedMeasurements"));
 
         domElements.btnGenerate.click(function () {
@@ -106,17 +79,17 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
                 parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "1,2,3";
 
+                setStorageFilter("RTBetTypeSelectedLeagueGroups", selectedLeagueGroups);
+                setStorageFilter("RTBetTypeSelectedSideIds", selectedSideIds);
+                setStorageFilter("RTBetTypeSelectedMeasurements", selectedMeasurements);
+
                 if (selectedMeasurements == null) {
                     selectedMeasurements = [];                    
                     domElements.ddlMeasurement.find('option').not(':selected').each(function () { selectedMeasurements.push($(this).val()); })
                 }
                 parameters.Measurements = selectedMeasurements != null ? selectedMeasurements.join(',') : selectedMeasurements;
 
-                domElements.divBetTypePerformanceContainer.addClass('display-none');
-
-                setStorageFilter("RTBetTypeSelectedLeagueGroups", selectedLeagueGroups);
-                setStorageFilter("RTBetTypeSelectedSideIds", selectedSideIds);
-                setStorageFilter("RTBetTypeSelectedMeasurements", selectedMeasurements);
+                domElements.divBetTypePerformanceContainer.addClass('display-none');                
 
                 getBetTypePerformanceReport();
             }
@@ -124,10 +97,20 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
     };
 
     var setCacheForFilter = function (ddlDomElement, cacheItem) {
+        ddlDomElement.multiselect({
+            selectedList: 1,
+            minWidth: 190,
+            height: 140,
+            allSelectedText: labels.All
+        }).multiselectfilter({ width: 120 }).change(function () {
+            validator.ClearError(ddlDomElement.next());
+            });
+
         if (cacheItem != null) {
             $.each(cacheItem.split(","), function (index, element) {
                 $("option[value='" + element + "']", ddlDomElement).prop("selected", true);
             });
+
             ddlDomElement.multiselect('refresh');
         }
     }
@@ -347,6 +330,13 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
 
     var generateHideColumns = function (data) {   
         hideColumns = [];
+
+        var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
+
+        if (selectedOptionMeasurements.length == 0) {
+            return hideColumns;
+        }
+
         var measurementNotSelecteds = domElements.ddlMeasurement.find('option').not(':selected');     
 
         $.each(measurementNotSelecteds, function (index, option) {

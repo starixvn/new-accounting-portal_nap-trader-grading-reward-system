@@ -1,8 +1,8 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail
 {
     using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.Resources;
-    using Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail;
+    using Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -61,10 +61,10 @@
             };
         }
 
-        public void AddBetTypeItem(IEnumerable<BetTypePerformanceInfo> betTypeInfos, short betTypeId)
+        public void AddBetTypeItem(IEnumerable<BetTypePerformanceInfo> betTypeInfos, MatchBetCountInfo matchCountInfo, short betTypeId)
         {
             var item = new BetTypeItem(betTypeId)
-                .GenerateMatchBetCount(betTypeInfos)
+                .GenerateMatchBetCount(matchCountInfo)
                 .GenereateGroupVirtualTotal(betTypeInfos)
                 .GenereateGroupVariance(betTypeInfos)
                 .GenereateGroupRealTotal(betTypeInfos)
@@ -126,7 +126,7 @@
 
                 this.GroupHeaderList.Add(new GroupHeader
                 {
-                    HeaderText = groupVirtualToal[0],
+                    HeaderText = headerText.ToUpper(),
                     ColumnName = "Col" + groupVirtualToal[0] + groupVirtualToal[1],
                     MergeColumnNumber = mergeCol
                 });

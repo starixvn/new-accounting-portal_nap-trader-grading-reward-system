@@ -1,12 +1,14 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Models.RT3PerformanceDetail
+﻿namespace Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail
 {
-    public class BetTypePerformanceInfo
-    {
-        public short BetType { get; set; }
+    using System;
 
-        public int MatchCount { get; set; }
+    public class MonthPerformanceInfo
+    {        
+        public DateTime RptMonth { get; set; }       
 
         public int BetCount { get; set; }
+
+        public int MatchCount { get; set; }
 
         public decimal Stake_VR { get; set; }
 
@@ -37,9 +39,5 @@
         public decimal Winloss_AR8RM { get; set; }
 
         public decimal Margin_AR8RM { get; set; }
-
-        public int TypeSiteId { get; set; }
-
-        public string TypeSiteDesc { get; set; }
     }
 }
