@@ -219,6 +219,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Web.local.config" />
+    <None Include="Web.pro.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
