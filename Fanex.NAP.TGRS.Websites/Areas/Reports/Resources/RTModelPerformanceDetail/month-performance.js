@@ -1,15 +1,16 @@
 ﻿$(document).ready(function () {
-    var monthPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance();
+    var monthPerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance();
+
     monthPerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance');
-Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance');
+Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
     var $this = this;
 
     var urls = {
-        GetMonthPerformance: common.ResolveRootUrl('RT3PerformanceDetail/GetMonthPerformance'),
-        ExportMonthPerformance: common.ResolveRootUrl('RT3PerformanceDetail/ExportMonthPerformance')
+        GetMonthPerformance: common.ResolveRootUrl('RTModelPerformanceDetail/GetMonthPerformance'),
+        ExportMonthPerformance: common.ResolveRootUrl('RTModelPerformanceDetail/ExportMonthPerformance')
     };
 
     var domElements = {
@@ -25,16 +26,23 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
     var parameters = {
         FromDate: null,
         ToDate: null,
-        LeagueGroupIds: null
+        Model: null,
+        LeagueGroupIds: null,
+        TypeSiteIds: null,
+        Measurements: null,
+        MeasurementHides: null
     };
 
-    var summaryPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance();
+    var summaryPerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.SummaryPerformance();
     summaryPerformance.InitPage();
 
     var cacheDOMElements = function () {
         domElements.divMonthPerformanceFilter = $('#divMonthPerformanceFilter');
-        domElements.divDateRange = domElements.divMonthPerformanceFilter.find('#divDateRange');        
+        domElements.divDateRange = domElements.divMonthPerformanceFilter.find('#divDateRange');
+        domElements.ddlModel = domElements.divMonthPerformanceFilter.find('#ddlModel');
         domElements.ddlLeagueGroup = domElements.divMonthPerformanceFilter.find('#ddlLeagueGroup');
+        domElements.ddlSite = domElements.divMonthPerformanceFilter.find('#ddlSite');
+        domElements.ddlMeasurement = domElements.divMonthPerformanceFilter.find('#ddlMeasurement');
         domElements.btnGenerate = domElements.divMonthPerformanceFilter.find('#btnGenerate');
         domElements.divMonthPerformanceContainer = $('#divMonthPerformanceContainer');
         domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');  
@@ -54,31 +62,84 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
 
         domElements.ddlPeriodType = domElements.divDateRange.find('#ddlPeriodType');
         domElements.divDateRange.find("span:contains('Date')").text('Month');
-        domElements.ddlPeriodType.val(2).change();        
+        domElements.ddlPeriodType.val(2).change();
 
-        domElements.ddlLeagueGroup.multiselect({
-            selectedList: 2,
-            minWidth: 190,
-            height: 140,
-            allSelectedText: labels.All
-        }).multiselect("checkAll").multiselectfilter({ width: 120 }).change(function () {
-            validator.ClearError(domElements.ddlLeagueGroup.next());
-        });
+        setCacheForFilter(domElements.ddlLeagueGroup, getStorageFilter("RTMonthlySelectedLeagueGroups"));
+
+        setCacheForFilter(domElements.ddlSite, getStorageFilter("RTMonthlySelectedSideIds"));
+
+        setCacheForFilter(domElements.ddlMeasurement, getStorageFilter("RTMonthlySelectedMeasurements"));
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divMonthPerformanceFilter, 'w')) {
                 domElements.divSummaryContainer.show();
-                var selectedLeagueGroups = domElements.ddlLeagueGroup.val();                
+                
+                var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
+                var selectedSideIds = domElements.ddlSite.val();
+                var selectedMeasurements = domElements.ddlMeasurement.val();
+
+                setStorageFilter("RTMonthlySelectedLeagueGroups", selectedLeagueGroups);
+                setStorageFilter("RTMonthlySelectedSideIds", selectedSideIds);
+                setStorageFilter("RTMonthlySelectedMeasurements", selectedMeasurements);
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
+                parameters.Model = domElements.ddlModel.val()
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
+                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "1,2,3";                
                 
-                domElements.divMonthPerformanceContainer.addClass('display-none');
+                var notSelectMeasurements = [];
+                domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
+                
+                if (selectedMeasurements != null) {
+                    parameters.Measurements = selectedMeasurements.join(',');
+                    parameters.MeasurementHides = notSelectMeasurements != null ? notSelectMeasurements.join(',') : null;
+                }
+                else {
+                    parameters.Measurements = notSelectMeasurements.join(',');
+                    parameters.MeasurementHides = null;
+                }
+
                 getMonthPerformanceReport();
             }
-        });           
-    };   
+        });
+    };  
+
+    var setCacheForFilter = function (ddlDomElement, cacheItem) {
+        ddlDomElement.multiselect({
+            selectedList: 1,
+            minWidth: 190,
+            height: 140,
+            allSelectedText: labels.All
+        }).multiselectfilter({ width: 120 }).change(function () {
+            validator.ClearError(ddlDomElement.next());
+        });
+
+        if (cacheItem != null) {
+            $.each(cacheItem.split(","), function (index, element) {
+                $("option[value='" + element + "']", ddlDomElement).prop("selected", true);
+            });
+
+            ddlDomElement.multiselect('refresh');
+        } else {
+            ddlDomElement.multiselect('checkAll');
+        }
+    }
+
+    var setStorageFilter = function (key, value) {
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem(key, value);
+        }
+    }
+
+    var getStorageFilter = function (key) {
+        if (typeof (Storage) !== "undefined") {
+            var value = localStorage.getItem(key);
+            return value;
+        }
+
+        return '';
+    }
 
     var getMonthPerformanceReport = function () {
         common.DisableInput();
@@ -102,7 +163,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
 
     var renderMonthPerformanceGrid = function (data) {
         var bodyData = [];
-        var footerData = [];
+        var footerData = [];        
 
         if (data && data.ItemList.length > 0) {
             bodyData = generateMonthPerformanceGridBody(data);
@@ -111,110 +172,214 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
         var gridOptions = generateMonthPerformanceGridOptions();
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
+
+        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data) }];
+        gridOptions.columns = generateColumns(data);
+
         domElements.divMonthPerformanceGrid.fanexGrid(gridOptions);
-        summaryPerformance.BindData(data.GrandTotal, data.LeagueCount, data.MatchCount);
+
+        summaryPerformance.BindData(data.Summary, data.LeagueCount, data.MatchCount);
         summaryPerformance.Display(true);      
+    }   
+
+    var generateHideColumns = function () {
+        hideColumns = [];
+
+        var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
+
+        if (selectedOptionMeasurements.length == 0) {
+            return hideColumns;
+        }
+
+        var measurementNotSelecteds = domElements.ddlMeasurement.find('option').not(':selected');
+
+        $.each(measurementNotSelecteds, function (index, option) {
+            var arrValue = $(option).val().split('-');
+            var groupHeaderName = arrValue[0];
+            var measurement = arrValue[1];
+
+            hideColumns.push({ GroupHeaderName: groupHeaderName, Measurement: measurement });
+        })
+
+        return hideColumns;
     }
 
     var generateMonthPerformanceGridOptions = function () {
-        var gridOptions = {
+        return {
             customizeHeader: true,
-            groupHeaderRows: [
-                {
-                    Columns: [
-                        { HeaderText: labels.Month, Name: "ColMonth", MergeRowNumber: 2 },
-                        { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
-                        { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                        { HeaderText: labels.VirtualTotal, Name: "ColVirtualTotalTurnover", MergeColNumber: 3 },
-                        { HeaderText: labels.Variance, Name: "ColVarianceTurnover", MergeColNumber: 3, ThClass: 'dim' },
-                        { HeaderText: labels.RealTotal, Name: "ColRealTotalTurnover", MergeColNumber: 3 },
-                        { HeaderText: labels.Total8RM, Name: "ColTotal8RMTurnover", MergeColNumber: 3, ThClass: 'dim' },
-                        { HeaderText: labels.RealTotal8RMWL, Name: "ColRealTotal8RMWLTurnover", MergeColNumber: 3 }
-                    ]
-                }
-            ],
-            columns: [
-                { HeaderText: labels.Month, Width: 80, Name: "ColMonth", HeaderAlign: "center", CellAlign: "left", Sort: true },
-                { HeaderText: labels.Match, Width: 85, Name: "ColMatch", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.BetCount, Width: 85, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.Turnover, Width: 120, Name: "ColVirtualTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat  },
-                { HeaderText: labels.WinLoss, Width: 110, Name: "ColVirtualTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: labels.Margin, Width: 75, Name: "ColVirtualTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: labels.Turnover, Width: 120, Name: "ColVarianceTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat , ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 110, Name: "ColVarianceWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
-                { HeaderText: labels.Margin, Width: 75, Name: "ColVarianceMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
-                { HeaderText: labels.Turnover, Width: 120, Name: "ColRealTotalTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat  },
-                { HeaderText: labels.WinLoss, Width: 110, Name: "ColRealTotalWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: labels.Margin, Width: 75, Name: "ColRealTotalMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: labels.Turnover, Width: 120, Name: "ColTotal8RMTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat , ThClass: 'dim' },
-                { HeaderText: labels.WinLoss, Width: 110, Name: "ColTotal8RMWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
-                { HeaderText: labels.Margin, Width: 75, Name: "ColTotal8RMMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: 'dim', FormatNegative: '$' },
-                { HeaderText: labels.Turnover, Width: 120, Name: "ColRealTotal8RMWLTurnover", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat  },
-                { HeaderText: labels.WinLoss, Width: 110, Name: "ColRealTotal8RMWLWinLoss", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' },
-                { HeaderText: labels.Margin, Width: 75, Name: "ColRealTotal8RMWLMargin", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$' }
-            ],
-            gridExpandHeight: 260,
+            showFooter: true,
+            showDistinctRow: false,
+            showTree: true,
             showTitle: true,
             titleInfo: {
-                showExcelButton: true,
+                showExcelButton: false,
                 exportExcelFunction: function () {
-                    exportMonthPerformance();
+                    exportBetTypePerformance();
                 }
             },
-            sortOption: {
-                afterGridSorted: function (rows) {
-                    //handleMonthPerformanceGridEvents();
-                    return rows;
-                }
-            },
-            showPager: false,
-            showTree: true,
-            showDistinctRow: false,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    //handleMonthPerformanceGridEvents();
-                    return rows;
-                }
-            },
-            showNumberColumn: false,
-            showFooter: true
+            showColumnsShowHide: false,
+            autoResizeColumn: false,
+            gridExpandHeight: 230,
+            allowTruncate: true,
+            defaultCollapseAllGroups: true,
+            virtualScroller: true
         };
-
-        return gridOptions;
     }
+
+    var generateColumnGroupHeaders = function (data) {
+        var groupHeaderColumns = [
+            { HeaderText: labels.Monthly, Name: "ColMonthly", MergeRowNumber: 2 },
+            { HeaderText: labels.MatchCount, Name: "ColMatchCount", MergeRowNumber: 2 },
+            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
+        ];
+
+        var cssClass = '';
+
+        $.each(data.GroupHeaderList, function (index, group) {
+            cssClass = index % 2 == 0 ? '' : 'dim';
+
+            groupHeaderColumns.push({ HeaderText: group.HeaderText, HeaderAlign: "center", Name: group.ColumnName, MergeColNumber: group.MergeColumnNumber, ThClass: cssClass });
+        })
+
+        return groupHeaderColumns;
+    }
+
+    var generateColumns = function (data) {
+        if (data.GrandTotal.RobotTradingItemList != null && data.GrandTotal.RobotTradingItemList.length > 0) {
+            var columns = [
+                { HeaderText: labels.Monthly, Width: 120, Name: "ColMonthly", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+                { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+            ];
+
+            var cssClass = data.GroupHeaderList.length % 2 == 0 ? '' : 'dim';
+            var groupHeaderNameOld = '';
+
+            $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+
+                if (groupHeaderNameOld != robotTradingItem.GroupHeaderName) {
+                    cssClass = cssClass == 'dim' ? '' : 'dim';
+                }
+
+                if (!robotTradingItem.IsHideTurnover) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' T/O', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+
+                if (!robotTradingItem.IsHideWinLoss) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' W/L', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                }
+
+                if (!robotTradingItem.IsHideMargin) {
+                    columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' MAR %', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                }
+
+                groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+            })
+
+            return columns;
+
+        } else {
+            return generateColumnsDefault();
+        }
+    }    
+
+    var generateColumnsDefault = function () {
+        var columns = [
+            { HeaderText: labels.Monthly, Width: 120, Name: "ColMonthly", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+        ];
+
+        var selectedSites = domElements.ddlSite.find('option:selected');
+        var selectedMeasurements = domElements.ddlMeasurement.val();
+        var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
+
+        if (selectedSites.length == 0) {
+            selectedSites = domElements.ddlSite.find('option').not(':selected');
+        }
+
+        if (selectedOptionMeasurements.length == 0) {
+            selectedMeasurements = [];
+            selectedOptionMeasurements = domElements.ddlMeasurement.find('option').not(':selected');
+            selectedOptionMeasurements.each(function () { selectedMeasurements.push($(this).val()); })
+        }
+        var groupOld = '';
+        var groups = [];
+
+        $.each(selectedOptionMeasurements, function (index, group) {
+            var groupHeader = $(group).attr('group-header');
+
+            if (groupOld != groupHeader) {
+                groups.push(groupHeader);
+            }
+            groupOld = groupHeader;
+        })
+
+        var cssClass = '';
+
+        $.each(groups, function (indexGroup, group) {
+            var colTurnover = group + '-' + 'Turnover';
+            var colWinLoss = group + '-' + 'WinLoss';
+            var colMargin = group + '-' + 'Margin';
+
+            $.each(selectedSites, function (indexSite, site) {
+                var siteName = $(site).text();
+
+                if (selectedMeasurements.findIndex(x => x == colTurnover) >= 0) {
+                    columns.push({ HeaderText: siteName + ' T/O', Width: 120, Name: 'Col' + group + siteName + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+                if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
+                    columns.push({ HeaderText: siteName + ' W/L', Width: 120, Name: 'Col' + group + siteName + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+                if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
+                    columns.push({ HeaderText: siteName + ' MAR %', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                }
+            })
+
+            if (selectedMeasurements.findIndex(x => x == colTurnover) >= 0) {
+                columns.push({ HeaderText: 'T/O', Width: 120, Name: 'Col' + group + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }
+            if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
+                columns.push({ HeaderText: 'W/L', Width: 120, Name: 'Col' + group + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }
+            if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
+                columns.push({ HeaderText: 'MAR %', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+            }
+
+            cssClass = cssClass == 'dim' ? '' : 'dim';
+        })
+
+        return columns;
+    } 
 
     var generateMonthPerformanceGridBody = function (data) {
         var bodyData = [];
         var row;
 
-        $.each(data.ItemList, function (index, item) {
-            var currentRowData = [];          
-            currentRowData.push(
-                { Name: 'ColMonth', Value: item.Month, CssClass: 'bold' },
-                { Name: 'ColMatch', Value: item.Match },
-                { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColVirtualTotalTurnover', Value: item.VirtualTotalTurnover },                
-                { Name: 'ColVirtualTotalWinLoss', Value: item.VirtualTotalWinLoss },
-                { Name: 'ColVirtualTotalMargin', Value: common.GetNumWithLabel(item.VirtualTotalMargin, labels.NA), CssClass: 'bold' },
-                { Name: 'ColVarianceTurnover', Value: item.VarianceTurnover },
-                { Name: 'ColVarianceWinLoss', Value: item.VarianceWinLoss },
-                { Name: 'ColVarianceMargin', Value: common.GetNumWithLabel(item.VarianceMargin, labels.NA), CssClass: 'bold' },
-                { Name: 'ColRealTotalTurnover', Value: item.RealTotalTurnover },
-                { Name: 'ColRealTotalWinLoss', Value: item.RealTotalWinLoss },
-                { Name: 'ColRealTotalMargin', Value: common.GetNumWithLabel(item.RealTotalMargin, labels.NA), CssClass: 'bold' },
-                { Name: 'ColTotal8RMTurnover', Value: item.Total8RMTurnover },
-                { Name: 'ColTotal8RMWinLoss', Value: item.Total8RMWinLoss },
-                { Name: 'ColTotal8RMMargin', Value: common.GetNumWithLabel(item.Total8RMMargin, labels.NA), CssClass: 'bold' },
-                { Name: 'ColRealTotal8RMWLTurnover', Value: item.Total8RMWLTurnover },
-                { Name: 'ColRealTotal8RMWLWinLoss', Value: item.Total8RMWLWinLoss },
-                { Name: 'ColRealTotal8RMWLMargin', Value: common.GetNumWithLabel(item.Total8RMWLMargin, labels.NA), CssClass: 'bold' }
-            );
+        $.each(data.ItemList, function (indexItem, monthlyItem) {
+            var currentRowData = [
+                { Name: 'ColMonthly', Value: monthlyItem.Monthly, CssClass: 'bold' },
+                { Name: 'ColMatchCount', Value: monthlyItem.MatchCount },
+                { Name: 'ColBetCount', Value: monthlyItem.BetCount }
+            ];
+
+            $.each(monthlyItem.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
+
+                if (!robotTradingItem.IsHideTurnover) {
+                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
+                }
+                if (!robotTradingItem.IsHideWinLoss) {
+                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
+                }
+                if (!robotTradingItem.IsHideMargin) {
+                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
+                }
+            })
+
             row = {
                 Columns: currentRowData
             };
+
             bodyData.push(row);
         })
 
@@ -222,26 +387,28 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
     }
 
     var generateMonthPerformanceGridFooter = function (data) {
+        var footerData = [
+            { Name: 'ColMonthly', Value: labels.GrandTotal, CellAlign: 'right' },
+            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
+            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
+        ];
+
+        $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+
+            if (!robotTradingItem.IsHideTurnover) {
+                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
+            }
+            if (!robotTradingItem.IsHideWinLoss) {
+                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
+            }
+            if (!robotTradingItem.IsHideMargin) {
+                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
+            }
+        })
+
         return [{
-            Columns: [{ Name: 'ColMonth', Value: labels.GrandTotal, CellAlign: 'right' },
-                { Name: 'ColMatch', Value: data.GrandTotal.Match, CellAlign: 'right' },
-                { Name: 'ColBetCount', Value: data.GrandTotal.BetCount },
-                { Name: 'ColVirtualTotalTurnover', Value: data.GrandTotal.VirtualTotalTurnover },                
-                { Name: 'ColVirtualTotalWinLoss', Value: data.GrandTotal.VirtualTotalWinLoss },
-                { Name: 'ColVirtualTotalMargin', Value: common.GetNumWithLabel(data.GrandTotal.VirtualTotalMargin, labels.NA) },
-                { Name: 'ColVarianceTurnover', Value: data.GrandTotal.VarianceTurnover },                
-                { Name: 'ColVarianceWinLoss', Value: data.GrandTotal.VarianceWinLoss },
-                { Name: 'ColVarianceMargin', Value: common.GetNumWithLabel(data.GrandTotal.VarianceMargin, labels.NA) },
-                { Name: 'ColRealTotalTurnover', Value: data.GrandTotal.RealTotalTurnover },                
-                { Name: 'ColRealTotalWinLoss', Value: data.GrandTotal.RealTotalWinLoss },
-                { Name: 'ColRealTotalMargin', Value: common.GetNumWithLabel(data.GrandTotal.RealTotalMargin, labels.NA) },
-                { Name: 'ColTotal8RMTurnover', Value: data.GrandTotal.Total8RMTurnover },                
-                { Name: 'ColTotal8RMWinLoss', Value: data.GrandTotal.Total8RMWinLoss },
-                { Name: 'ColTotal8RMMargin', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMMargin, labels.NA) },
-                { Name: 'ColRealTotal8RMWLTurnover', Value: data.GrandTotal.Total8RMWLTurnover },                
-                { Name: 'ColRealTotal8RMWLWinLoss', Value: data.GrandTotal.Total8RMWLWinLoss },
-                { Name: 'ColRealTotal8RMWLMargin', Value: common.GetNumWithLabel(data.GrandTotal.Total8RMWLMargin, labels.NA) }
-            ]}];
+            Columns: footerData
+        }];
     }
 
     var exportMonthPerformance = function () {
@@ -250,6 +417,7 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.MonthPerformance = function () {
  
     $this.InitPage = function () {
         cacheDOMElements();
+
         initializeFields();
     };
 }

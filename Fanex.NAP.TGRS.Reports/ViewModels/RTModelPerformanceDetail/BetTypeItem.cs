@@ -8,197 +8,63 @@
     using System.Linq;
 
     [Serializable]
-    public class BetTypeItem
+    public class BetTypeItem : RobotTradingModelItem
     {
         public BetTypeItem()
-        {
-            RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
-        }
+        { }
 
-        public BetTypeItem(short betTypeId) : this ()
+        public BetTypeItem(short betTypeId, IDictionary<string, string> siteList, IList<MeasurementItem> measurementHiddenList) : base ()
         {
             this.BetTypeId = betTypeId;
-            this.BetTypeName = CacheRef.GetBetType(betTypeId);           
-        }
+            this.BetTypeName = CacheRef.GetBetType(betTypeId);
+            base.SiteList = siteList;
+            base.MeasurementHiddenList = measurementHiddenList;
+        }        
 
         public short BetTypeId { get; set; }
 
         public string BetTypeName { get; set; }
-
-        public int MatchCount { get; set; }
-
-        public int BetCount { get; set; }
-
-        public IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }
-
-        public BetTypeItem GenerateMatchBetCount(MatchBetCountInfo matchInfo)
+        
+        public new BetTypeItem GenerateMatchBetCount(MatchBetCountInfo matchInfo)
         {
-            if (matchInfo != null)
-            {
-                this.MatchCount = matchInfo.MatchCount;
-                this.BetCount = matchInfo.BetCount;
-            }            
+            base.GenerateMatchBetCount(matchInfo);
 
             return this;
         }
 
-        public BetTypeItem GenereateGroupVirtualTotal(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public new BetTypeItem GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
-            var sumItem = new RobotTradingItem
-            {
-                GroupHeaderName = Consts.RobotTradingGroupHeaderVirtualTotal,
-                TypeSideId = 0,
-                TypeSideDesc = string.Empty,
-                Turnover = betTypeInfos.Sum(x => x.Stake_VR),
-                WinLoss = betTypeInfos.Sum(x => x.WinLoss_VR)                
-            };
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
-
-            foreach (var info in betTypeInfos)
-            {
-                var robotTradingItem = new RobotTradingItem {
-                    GroupHeaderName = Consts.RobotTradingGroupHeaderVirtualTotal,
-                    TypeSideId = info.TypeSiteId,
-                    TypeSideDesc = info.TypeSiteDesc,
-                    Turnover = info.Stake_VR,
-                    WinLoss = info.WinLoss_VR,
-                    Margin = info.Margin_VR
-                };
-              
-                this.RobotTradingItemList.Add(robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc, robotTradingItem);
-            }
-
-            this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderVirtualTotal, sumItem);
+            base.GenereateGroupVirtualTotal(siteIdList, infos);
 
             return this;
         }
 
-        public BetTypeItem GenereateGroupVariance(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public new BetTypeItem GenereateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
-            var sumItem = new RobotTradingItem
-            {
-                GroupHeaderName = Consts.RobotTradingGroupHeaderVariance,
-                TypeSideId = 0,
-                TypeSideDesc = string.Empty,
-                Turnover = betTypeInfos.Sum(x => x.Stake_VAR),
-                WinLoss = betTypeInfos.Sum(x => x.Winloss_VAR)                
-            };
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
-
-            foreach (var info in betTypeInfos)
-            {
-                var robotTradingItem = new RobotTradingItem
-                {
-                    GroupHeaderName = Consts.RobotTradingGroupHeaderVariance,
-                    TypeSideId = info.TypeSiteId,
-                    TypeSideDesc = info.TypeSiteDesc,
-                    Turnover = info.Stake_VAR,
-                    WinLoss = info.Winloss_VAR,
-                    Margin = info.Margin_VAR
-                };              
-
-                this.RobotTradingItemList.Add(robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc, robotTradingItem);
-            }
-
-            this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderVariance, sumItem);
+            base.GenereateGroupVariance(siteIdList, infos);
 
             return this;
         }
 
-        public BetTypeItem GenereateGroupRealTotal(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public new BetTypeItem GenereateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
-            var sumItem = new RobotTradingItem
-            {
-                GroupHeaderName = Consts.RobotTradingGroupHeaderRealTotal,
-                TypeSideId = 0,
-                TypeSideDesc = string.Empty,
-                Turnover = betTypeInfos.Sum(x => x.Stake_AR),
-                WinLoss = betTypeInfos.Sum(x => x.Winloss_AR)               
-            };
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
-
-            foreach (var info in betTypeInfos)
-            {
-                var robotTradingItem = new RobotTradingItem
-                {
-                    GroupHeaderName = Consts.RobotTradingGroupHeaderRealTotal,
-                    TypeSideId = info.TypeSiteId,
-                    TypeSideDesc = info.TypeSiteDesc,
-                    Turnover = info.Stake_AR,
-                    WinLoss = info.Winloss_AR,
-                    Margin = info.Margin_AR
-                };              
-
-                this.RobotTradingItemList.Add(robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc, robotTradingItem);
-            }
-
-            this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderRealTotal, sumItem);
+            base.GenereateGroupRealTotal(siteIdList, infos);
 
             return this;
         }
 
-        public BetTypeItem GenereateGroupTotal8RM(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public new BetTypeItem GenereateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
-            var sumItem = new RobotTradingItem
-            {
-                GroupHeaderName = Consts.RobotTradingGroupHeaderTotal8RM,
-                TypeSideId = 0,
-                TypeSideDesc = string.Empty,
-                Turnover = betTypeInfos.Sum(x => x.Stake_8RM),
-                WinLoss = betTypeInfos.Sum(x => x.Winloss_8RM)
-            };
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
-
-            foreach (var info in betTypeInfos)
-            {
-                var robotTradingItem = new RobotTradingItem
-                {
-                    GroupHeaderName = Consts.RobotTradingGroupHeaderTotal8RM,
-                    TypeSideId = info.TypeSiteId,
-                    TypeSideDesc = info.TypeSiteDesc,
-                    Turnover = info.Stake_8RM,
-                    WinLoss = info.Winloss_8RM,
-                    Margin = info.Margin_8RM
-                };                
-
-                this.RobotTradingItemList.Add(robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc, robotTradingItem);
-            }
-
-            this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderTotal8RM, sumItem);
+            base.GenereateGroupTotal8RM(siteIdList, infos);
 
             return this;
         }
 
-        public BetTypeItem GenereateGroupRealTotal8RMWL(IEnumerable<BetTypePerformanceInfo> betTypeInfos)
+        public new BetTypeItem GenereateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
-            var sumItem = new RobotTradingItem
-            {
-                GroupHeaderName = Consts.RobotTradingGroupHeaderRealTotal8RMWL,
-                TypeSideId = 0,
-                TypeSideDesc = string.Empty,
-                Turnover = betTypeInfos.Sum(x => x.Stake_AR8RM),
-                WinLoss = betTypeInfos.Sum(x => x.Winloss_AR8RM)
-            };
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
-
-            foreach (var info in betTypeInfos)
-            {
-                var robotTradingItem = new RobotTradingItem
-                {
-                    GroupHeaderName = Consts.RobotTradingGroupHeaderRealTotal8RMWL,
-                    TypeSideId = info.TypeSiteId,
-                    TypeSideDesc = info.TypeSiteDesc,
-                    Turnover = info.Stake_AR8RM,
-                    WinLoss = info.Winloss_AR8RM,
-                    Margin = info.Margin_AR8RM
-                };
-
-                this.RobotTradingItemList.Add(robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc, robotTradingItem);
-            }
-
-            this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderRealTotal8RMWL, sumItem);
+            base.GenereateGroupRealTotal8RMWL(siteIdList, infos);
 
             return this;
-        }     
+        }
     }
 }

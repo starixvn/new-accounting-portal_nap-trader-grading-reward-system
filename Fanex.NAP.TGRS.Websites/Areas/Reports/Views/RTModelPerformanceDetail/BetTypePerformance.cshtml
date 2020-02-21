@@ -20,10 +20,10 @@
         <a href="#" class="green-button change-list disabled">
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/MonthPerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/MonthPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Month
         </a>
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/ModelPerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/ModelPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Model
         </a>
     </div>
@@ -68,21 +68,21 @@
             </div>
             <div class="edit-field col_9">
                 <select id="ddlMeasurement" multiple="multiple">
-                    <option value="VirtualTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal" item-name="@ViewLang.Turnover">Virtual Turnover</option>
-                    <option value="VirtualTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal" item-name="@ViewLang.WinLoss">Virtual Win Loss</option>
-                    <option value="VirtualTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal" item-name="@ViewLang.Margin">Virtual Margin</option>
-                    <option value="Variance-Turnover" group-header="@Consts.RobotTradingGroupHeaderVariance" item-name="@ViewLang.Turnover">Variance Turnover</option>
-                    <option value="Variance-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVariance" item-name="@ViewLang.WinLoss">Variance Win Loss</option>
-                    <option value="Variance-Margin" group-header="@Consts.RobotTradingGroupHeaderVariance" item-name="@ViewLang.Margin">Variance Margin</option>
-                    <option value="RealTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal" item-name="@ViewLang.Turnover">Real Turnover</option>
-                    <option value="RealTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal" item-name="@ViewLang.WinLoss">Real Win Loss</option>
-                    <option value="RealTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal" item-name="@ViewLang.Margin">Real Margin</option>
-                    <option value="Total8RM-Turnover" group-header="@Consts.RobotTradingGroupHeaderTotal8RM" item-name="@ViewLang.Turnover">8RM Turnover</option>
-                    <option value="Total8RM-WinLoss" group-header="@Consts.RobotTradingGroupHeaderTotal8RM" item-name="@ViewLang.WinLoss">8RM Win Loss</option>
-                    <option value="Total8RM-Margin" group-header="@Consts.RobotTradingGroupHeaderTotal8RM" item-name="@ViewLang.Margin">8RM Margin</option>
-                    <option value="RealTotal8RMWL-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL" item-name="@ViewLang.Turnover">Real ex.8RM Turnover</option>
-                    <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL" item-name="@ViewLang.WinLoss">Real ex. 8RM Win Loss</option>
-                    <option value="RealTotal8RMWL-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL" item-name="@ViewLang.Margin">Real ex.8RM Margin</option>
+                    <option value="VirtualTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Turnover</option>
+                    <option value="VirtualTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Win Loss</option>
+                    <option value="VirtualTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Margin</option>
+                    <option value="Variance-Turnover" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Turnover</option>
+                    <option value="Variance-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Win Loss</option>
+                    <option value="Variance-Margin" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Margin</option>
+                    <option value="RealTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Turnover</option>
+                    <option value="RealTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Win Loss</option>
+                    <option value="RealTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Margin</option>
+                    <option value="Total8RM-Turnover" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Turnover</option>
+                    <option value="Total8RM-WinLoss" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Win Loss</option>
+                    <option value="Total8RM-Margin" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Margin</option>
+                    <option value="RealTotal8RMWL-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Turnover</option>
+                    <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex. 8RM Win Loss</option>
+                    <option value="RealTotal8RMWL-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Margin</option>
                 </select>
             </div>
 

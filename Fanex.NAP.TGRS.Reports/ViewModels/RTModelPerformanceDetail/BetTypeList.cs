@@ -1,100 +1,44 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail
-{
-    using Fanex.NAP.TGRS.Core.Consts;
-    using Fanex.NAP.TGRS.Core.Resources;
+{   
     using Fanex.NAP.TGRS.Reports.Models.RTModelPerformanceDetail;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     [Serializable]
-    public class BetTypeList
+    public class BetTypeList : RobotTradingModelList
     {
         public BetTypeList()
-        {
-            Summary = new RobotTradingSummary();
-            ItemList = new List<BetTypeItem>();
-            KeyList = new List<string>();
-            GroupHeaderList = new List<GroupHeader>();
+        {      
+            ItemList = new List<BetTypeItem>();          
             GrandTotal = new BetTypeItem();
-        }
+        }   
+      
+        public List<BetTypeItem> ItemList { get; set; }              
 
-        private List<string> KeyList { get; set; }
+        public BetTypeItem GrandTotal { get; set; }      
 
-        private IDictionary<string, string> SiteList
+        public void AddBetTypeItem(List<int> siteIdList, IEnumerable<BetTypePerformanceInfo> betTypeInfos, MatchBetCountInfo matchCountInfo, short betTypeId)
         {
-            get
-            {
-                var sites = new Dictionary<string, string>();
-                sites.Add("1", Consts.SiteCN88);
-                sites.Add("2", Consts.SiteCash);
-                sites.Add("3", Consts.SiteNova);
-
-                return sites;
-            }
-        }
-
-        public int LeagueCount { get; set; }
-
-        public int MatchCount { get; set; }
-
-        public List<BetTypeItem> ItemList { get; set; }        
-
-        public List<GroupHeader> GroupHeaderList { get; set; }
-
-        public RobotTradingSummary Summary { get; set; }
-
-        public BetTypeItem GrandTotal { get; set; }
-
-        public void AddLeagueMacthTotal(TotalLeagueMatchInfo totalInfo)
-        {
-            this.LeagueCount = totalInfo.LeagueCount;
-            this.MatchCount = totalInfo.MatchCount;
-        }
-
-        public void AddSummary(TotalPerformanceInfo totalInfo)
-        {
-            this.Summary = new RobotTradingSummary
-            {
-                VirtualTotalTurnover = totalInfo.Total_Stake_VR,
-                VirtualTotalWinLoss = totalInfo.Total_WinLoss_VR,
-                VirtualTotalMargin = totalInfo.Total_Margin_VR,
-                VarianceTurnover = totalInfo.Total_Stake_VAR,
-                VarianceWinLoss = totalInfo.Total_Winloss_VAR,
-                VarianceMargin = totalInfo.Total_Margin_VAR,
-                RealTotalTurnover = totalInfo.Total_Stake_AR,
-                RealTotalWinLoss = totalInfo.Total_Winloss_AR,
-                RealTotalMargin = totalInfo.Total_Margin_AR,
-                Total8RMTurnover = totalInfo.Total_Stake_8RM,
-                Total8RMWinLoss = totalInfo.Total_Winloss_8RM,
-                Total8RMMargin = totalInfo.Total_Margin_8RM,
-                Total8RMWLTurnover = totalInfo.Total_Stake_AR8RM,
-                Total8RMWLWinLoss = totalInfo.Total_Winloss_AR8RM,
-                Total8RMWLMargin = totalInfo.Total_Margin_AR8RM
-            };
-        }
-
-        public void AddBetTypeItem(IEnumerable<BetTypePerformanceInfo> betTypeInfos, MatchBetCountInfo matchCountInfo, short betTypeId)
-        {
-            var item = new BetTypeItem(betTypeId)
+            var item = new BetTypeItem(betTypeId, this.SiteList, this.MeasurementHiddenList)
                 .GenerateMatchBetCount(matchCountInfo)
-                .GenereateGroupVirtualTotal(betTypeInfos)
-                .GenereateGroupVariance(betTypeInfos)
-                .GenereateGroupRealTotal(betTypeInfos)
-                .GenereateGroupTotal8RM(betTypeInfos)
-                .GenereateGroupRealTotal8RMWL(betTypeInfos);
+                .GenereateGroupVirtualTotal(siteIdList, betTypeInfos)
+                .GenereateGroupVariance(siteIdList, betTypeInfos)
+                .GenereateGroupRealTotal(siteIdList, betTypeInfos)
+                .GenereateGroupTotal8RM(siteIdList, betTypeInfos)
+                .GenereateGroupRealTotal8RMWL(siteIdList, betTypeInfos);
 
-            ItemList.Add(item);
+            this.ItemList.Add(item);
 
-            if (!KeyList.Any())
+            if (!this.KeyList.Any())
             {
-                KeyList.AddRange(item.RobotTradingItemList.Select(x => x.Key));
+                this.KeyList.AddRange(item.RobotTradingItemList.Select(x => x.Key));
             }
         }        
 
         public void GenerateGrandTotal()
         {
-            foreach (var key in KeyList)
+            foreach (var key in this.KeyList)
             {
                 var items = this.ItemList.Select(x => x.RobotTradingItemList.ContainsKey(key) ? x.RobotTradingItemList[key] : null);
                 var value = items.Aggregate<RobotTradingItem, RobotTradingItem>(null, (acc, s) => acc + s);
@@ -107,44 +51,6 @@
 
             this.GrandTotal.MatchCount = this.ItemList.Sum(x => x.MatchCount);
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
-        }
-
-        public void GenerateGroupHeader(string measurements, string typeSiteIds)
-        {
-            if (!string.IsNullOrEmpty(measurements) && !string.IsNullOrEmpty(typeSiteIds))
-            {
-                var arrSite = typeSiteIds.Split(',');
-                var firtSiteName = SiteList[arrSite.Max(x => x)];
-                var arrMeasurement = measurements.Split(',');
-                
-                var listVirtualToal = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderVirtualTotal + "-")).Select(x => x).ToList();
-                var listVariance = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderVariance + "-")).Select(x => x).ToList();
-                var listRealTotal = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderRealTotal + "-")).Select(x => x).ToList();
-                var listTotal8RM = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderTotal8RM + "-")).Select(x => x).ToList();
-                var listRealTotal8RMWL = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderRealTotal8RMWL + "-")).Select(x => x).ToList();
-
-                GenerateGroupHeader(listVirtualToal, firtSiteName, arrSite.Length, ViewLang.VirtualTotal);
-                GenerateGroupHeader(listVariance, firtSiteName, arrSite.Length, ViewLang.Variance);
-                GenerateGroupHeader(listRealTotal, firtSiteName, arrSite.Length, ViewLang.RealTotal);
-                GenerateGroupHeader(listTotal8RM, firtSiteName, arrSite.Length, ViewLang.Total8RM);
-                GenerateGroupHeader(listRealTotal8RMWL, firtSiteName, arrSite.Length, ViewLang.RealTotal8RMWL);
-            }
-        }
-
-        private void GenerateGroupHeader(List<string> listColumn, string firtSiteName, int siteLength, string headerText)
-        {
-            if (listColumn.Any())
-            {
-                var mergeCol = listColumn.Count * 4 - listColumn.Count * (3 - siteLength);
-                var groupVirtualToal = listColumn[0].Split('-');
-
-                this.GroupHeaderList.Add(new GroupHeader
-                {
-                    HeaderText = headerText.ToUpper(),
-                    ColumnName = "Col" + groupVirtualToal[0] + firtSiteName + groupVirtualToal[1],
-                    MergeColumnNumber = mergeCol
-                });
-            }
-        }
+        }       
     }
 }

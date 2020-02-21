@@ -1,13 +1,10 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
-    using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.RTModelPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
-    using Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail;
     using System;    
     using System.Web.Mvc;
     
@@ -33,7 +30,7 @@
 
         public RTModelPerformanceDetailController(IRTModelPerformanceDetailService rt3PerformanceDetailService)
         {
-            this._rtModelService = rt3PerformanceDetailService ?? new RT3PerformanceDetailService();
+            this._rtModelService = rt3PerformanceDetailService ?? new RTModelPerformanceDetailService();
             ViewBag.LeagueGroups = this._rtModelService.GetLeagueGroups();
         }
         #endregion Attributes and Constructors
@@ -97,9 +94,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
-            var months = criteria.LeagueGroupIds != null
-                ? _rtModelService.GetMonthPerformance(criteria)
-                : new MonthPerformanceList();
+            var months = _rtModelService.GetMonthPerformance(criteria);
 
             var jsonResult = Json(months);
             jsonResult.MaxJsonLength = int.MaxValue;

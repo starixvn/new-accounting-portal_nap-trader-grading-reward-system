@@ -1,11 +1,12 @@
-﻿@{
-    ViewBag.Title = ViewLang.RT3PerformanceDetail;
+﻿@using Fanex.NAP.TGRS.Core.Consts
+@{
+    ViewBag.Title = ViewLang.RTModelPerformanceDetail;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Head
 {
-    @Styles.Render("~/styles/rt3PerformanceDetail")
+    @Styles.Render("~/styles/rtModelPerformanceDetail")
 }
 
 @section Headline
@@ -16,13 +17,13 @@
         </div>
     </div>
     <div class="header-button">
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/BetTypePerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
         <a href="#" class="green-button change-list disabled">
             <span class="list-icon"></span>@ViewLang.Month
         </a>
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/ModelPerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/ModelPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Model
         </a>
     </div>
@@ -32,15 +33,56 @@
     <div id="divMonthPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="date-range"><div id="divDateRange"></div></div>
+            <div class="lbl-field col_3">
+                <label>@ViewLang.Model</label>
+            </div>
+            <div class="edit-field col_3">
+                <select id="ddlModel">
+                    <option value="3">TA</option>
+                    <option value="1">RT3</option>
+                </select>
+            </div>
             <div class="lbl-field col_5">
                 <label>@ViewLang.LeagueGroup</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddlLeagueGroup" multiple="multiple">                 
+                <select id="ddlLeagueGroup" multiple="multiple">
                     @foreach (KeyValuePair<int, string> entry in ViewBag.LeagueGroups)
                     {
                         <option value=@entry.Key>@entry.Value</option>
                     }
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label>@ViewLang.Site</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="ddlSite" multiple="multiple">
+                    <option value="3">@Consts.SiteNova</option>
+                    <option value="2">@Consts.SiteCash</option>
+                    <option value="1">@Consts.SiteCN88</option>
+                </select>
+            </div>
+            <div class="lbl-field col_4">
+                <label>@ViewLang.Measurement</label>
+            </div>
+            <div class="edit-field col_9">
+                <select id="ddlMeasurement" multiple="multiple">
+                    <option value="VirtualTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Turnover</option>
+                    <option value="VirtualTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Win Loss</option>
+                    <option value="VirtualTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Margin</option>
+                    <option value="Variance-Turnover" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Turnover</option>
+                    <option value="Variance-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Win Loss</option>
+                    <option value="Variance-Margin" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Margin</option>
+                    <option value="RealTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Turnover</option>
+                    <option value="RealTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Win Loss</option>
+                    <option value="RealTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Margin</option>
+                    <option value="Total8RM-Turnover" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Turnover</option>
+                    <option value="Total8RM-WinLoss" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Win Loss</option>
+                    <option value="Total8RM-Margin" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Margin</option>
+                    <option value="RealTotal8RMWL-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Turnover</option>
+                    <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex. 8RM Win Loss</option>
+                    <option value="RealTotal8RMWL-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Margin</option>
                 </select>
             </div>
             <div class="submit col_3">
@@ -58,7 +100,7 @@
 
 @section Foot
 {
-    @Scripts.Render("~/scripts/rt3MonthPerformanceDetail")
+    @Scripts.Render("~/scripts/rtModelMonthPerformanceDetail")
     <script type="text/javascript">
        var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
@@ -67,11 +109,11 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var labels = {
-            League: '@ViewLang.League', 
+            League: '@ViewLang.League',
             Leagues: '@ViewLang.Leagues',
-            Match: '@ViewLang.Match',
+            MatchCount: '@ViewLang.Match',
             Matches: '@ViewLang.Matches',
-            Month: '@ViewLang.Month',
+            Monthly: '@ViewLang.Month',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             Total: '@ViewLang.Total',
@@ -83,13 +125,18 @@
             RealTotal: '@ViewLang.RealTotal',
             Total8RM: '@ViewLang.Total8RM',
             RealTotal8RMWL: '@ViewLang.RealTotal8RMWL',
-            GrandTotal: '@ViewLang.GrandTotal',
-            AllBetTypes: '@ViewLang.AllBetTypes',
+            GrandTotal: '@ViewLang.GrandTotal',            
+            All: '@ViewLang.All',
             NA: '@ViewLang.NA',
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
-            RT3PerformanceDetail: '@ViewLang.RT3PerformanceDetail'
+            RT3PerformanceDetail: '@ViewLang.RTModelPerformanceDetail',
+            RobotTradingGroupHeaderVirtualTotal: '@Consts.RobotTradingGroupHeaderVirtualTotal',
+            RobotTradingGroupHeaderVariance: '@Consts.RobotTradingGroupHeaderVariance',
+            RobotTradingGroupHeaderRealTotal: '@Consts.RobotTradingGroupHeaderRealTotal',
+            RobotTradingGroupHeaderTotal8RM: '@Consts.RobotTradingGroupHeaderTotal8RM',
+            RobotTradingGroupHeaderRealTotal8RMWL: '@Consts.RobotTradingGroupHeaderRealTotal8RMWL'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',

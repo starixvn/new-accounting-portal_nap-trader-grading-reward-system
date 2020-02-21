@@ -9,12 +9,10 @@
         Dictionary<int, string> GetLeagueGroups();
 
         BetTypeList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
-
-        //byte[] ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
-
+       
         void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
 
-        MonthPerformanceList GetMonthPerformance(GetMonthPerformanceCriteria criteria);
+        MonthlyList GetMonthPerformance(GetMonthPerformanceCriteria criteria);
 
         void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath);
 

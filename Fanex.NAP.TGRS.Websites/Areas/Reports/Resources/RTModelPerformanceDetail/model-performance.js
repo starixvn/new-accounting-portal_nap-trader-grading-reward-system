@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
-    var modelPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance();
+    var modelPerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.ModelPerformance();
     modelPerformance.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance');
-Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.RTModelPerformanceDetail.ModelPerformance');
+Fanex.NAP.TGRS.RTModelPerformanceDetail.ModelPerformance = function () {
     var $this = this;
 
     var urls = {
-        GetModelPerformance: common.ResolveRootUrl('RT3PerformanceDetail/GetModelPerformance'),
-        ExportModelPerformance: common.ResolveRootUrl('RT3PerformanceDetail/ExportModelPerformance')
+        GetModelPerformance: common.ResolveRootUrl('RTModelPerformanceDetail/GetModelPerformance'),
+        ExportModelPerformance: common.ResolveRootUrl('RTModelPerformanceDetail/ExportModelPerformance')
     };
 
     var domElements = {
@@ -27,9 +27,9 @@ Fanex.NAP.TGRS.RT3PerformanceDetail.ModelPerformance = function () {
         DataType: null
     };
 
-    var summaryPerformance = new Fanex.NAP.TGRS.RT3PerformanceDetail.SummaryPerformance();
+    var summaryPerformance = new Fanex.NAP.TGRS.RTModelPerformanceDetail.SummaryPerformance();
     summaryPerformance.InitPage();
-    var chartPerforamnce = new Fanex.TGRS.RT3PerformanceDetail.ChartPerformance();
+    var chartPerforamnce = new Fanex.TGRS.RTModelPerformanceDetail.ChartPerformance();
     chartPerforamnce.InitPage();
 
     var cacheDOMElements = function () {

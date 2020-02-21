@@ -4,6 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
@@ -17,25 +18,27 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    public class RT3PerformanceDetailService : TGRSBaseService, IRTModelPerformanceDetailService
+    public class RTModelPerformanceDetailService : TGRSBaseService, IRTModelPerformanceDetailService
     {
-        private const string RT3LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.LeagueGroups";
-        private const string RT3BetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.BetTypeList";
-        private const string RT3MonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.MonthPerformance";
-        private const string RT3ModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RT3PerformanceDetail.ModelPerformance";
+        #region Consts
+        private const string RTModelLeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.RTModelPerformanceDetail.LeagueGroups";
+        private const string RTModelBetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.RTModelPerformanceDetail.BetTypeList";
+        private const string RTModelMonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RTModelPerformanceDetail.MonthlyList";
+        private const string RTModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.RTModelPerformanceDetail.ModelList";
         private const int PointInPixel = 225;
+        #endregion
 
         #region Bet Type
         public Dictionary<int, string> GetLeagueGroups()
         {
             var leagueGroups = new Dictionary<int, string>();
-            leagueGroups.Add(1, "MJ");
-            leagueGroups.Add(2, "M1");
-            leagueGroups.Add(3, "M2");
-            leagueGroups.Add(4, "M3");
-            leagueGroups.Add(5, "M4");
-            leagueGroups.Add(6, "Others");
-            SessionManager.Set<Dictionary<int, string>>(RT3LeagueGroupsSessionKey, leagueGroups);
+            leagueGroups.Add(1, Consts.RobotTradingLeagueGroupMJ);
+            leagueGroups.Add(2, Consts.RobotTradingLeagueGroupM2);
+            leagueGroups.Add(3, Consts.RobotTradingLeagueGroupM3);
+            leagueGroups.Add(4, Consts.RobotTradingLeagueGroupM4);
+            leagueGroups.Add(5, Consts.RobotTradingLeagueGroupM5);
+            leagueGroups.Add(6, Consts.RobotTradingLeagueGroupOthers);
+            SessionManager.Set<Dictionary<int, string>>(RTModelLeagueGroupsSessionKey, leagueGroups);
 
             return leagueGroups;
         }
@@ -54,30 +57,29 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        betTypeList.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
-
-                        if (totalPerformanceData != null && totalPerformanceData.Any())
-                        {
-                            betTypeList.AddSummary(totalPerformanceData.ToList()[0]);
-                        }
+                        betTypeList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                                   .GenerateSummary(totalPerformanceData)
+                                   .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
+                                   .GenerateMeasurementHidden(criteria.MeasurementHides);
 
                         if (betTypesData != null && betTypesData.Any())
                         {
                             var betTypeIdsDisplay = new List<short> { 1, 3, 7, 8 };
+
+                            var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
 
                             foreach (var betTypeId in betTypeIdsDisplay)
                             {
                                 var matchCountInfo = matchCountData.Where(x => x.BetType == betTypeId).FirstOrDefault();
                                 var betTypeInfos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
 
-                                betTypeList.AddBetTypeItem(betTypeInfos, matchCountInfo, betTypeId);
+                                betTypeList.AddBetTypeItem(siteIdList, betTypeInfos, matchCountInfo, betTypeId);
                             }
                         }
-
-                        betTypeList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds);
+                        
                         betTypeList.GenerateGrandTotal();                        
 
-                        SessionManager.Set<BetTypeList>(RT3BetTypeListSessionKey, betTypeList);
+                        SessionManager.Set<BetTypeList>(RTModelBetTypeListSessionKey, betTypeList);
                     }
                 }
             }
@@ -87,7 +89,7 @@
 
         public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
-            var betTypeData = SessionManager.Get<BetTypeList>(RT3BetTypeListSessionKey);
+            var betTypeData = SessionManager.Get<BetTypeList>(RTModelBetTypeListSessionKey);
 
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
@@ -118,61 +120,75 @@
 
         #endregion
 
-        public MonthPerformanceList GetMonthPerformance(GetMonthPerformanceCriteria criteria)
+        #region Monthly
+
+        public MonthlyList GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
-            var monthPerformance = new MonthPerformanceList();
+            var monthlyList = new MonthlyList();
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria))
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
+                    var matchCountData = multi.Read<MatchBetCountInfo>();
                     var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
-                    var monthData = multi.Read<MonthPerformanceInfo>();
+                    var monthlyData = multi.Read<MonthPerformanceInfo>();
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        monthPerformance.AddLeagueMacthTotal(totalLeagueMatchData.ToList()[0]);
+                        monthlyList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                                   .GenerateSummary(totalPerformanceData)
+                                   .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
+                                   .GenerateMeasurementHidden(criteria.MeasurementHides);
 
-                        if (monthPerformance.MatchCount > 0)
+                        if (monthlyData != null && monthlyData.Any())
                         {
-                            if (totalPerformanceData != null && totalPerformanceData.Any())
+                            var groupInfos = monthlyData
+                                .OrderBy(x => x.RptMonth)
+                                .GroupBy(x => x.RptMonth, (key, g) => new { RptMonth = key, Items = g.ToList() });
+
+                            foreach (var group in groupInfos)
                             {
-                                monthPerformance.AddGrandTotal(totalPerformanceData.ToList()[0]);
+                                var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
+
+                                var matchCountInfo = matchCountData.Where(x => x.RptMonth == group.RptMonth).FirstOrDefault();
+
+                                monthlyList.AddMonthlyItem(siteIdList, group.Items, matchCountInfo, group.RptMonth);
                             }
 
-                            if (monthData != null && monthData.Any())
-                            {
-                                monthPerformance.AddBetTypeList(monthData);
-                            }
-                            SessionManager.Set<MonthPerformanceList>(RT3MonthPerformanceSessionKey, monthPerformance);
+                            monthlyList.GenerateGrandTotal();
                         }
+
+                        SessionManager.Set<MonthlyList>(RTModelMonthPerformanceSessionKey, monthlyList);
                     }
                 }
             }
 
-            return monthPerformance;
+            return monthlyList;
         }
 
         public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
         {
-            var monthData = SessionManager.Get<MonthPerformanceList>(RT3MonthPerformanceSessionKey);
-            if (monthData != null && monthData.ItemList.Any())
-            {
-                string reportName = string.Format(
-                                ViewLang.RTModelPerformanceDetailFileName,
-                                ViewLang.Month,
-                                criteria.FromDate.ToShortFormatedDateForFileName(),
-                                criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
-                writer.CopyRows(0, 1);
-                FilterBlock(userId, criteria, ref writer);
-                FillHeader(ref writer);
-                writer.FreezeRow(0, 4);
-                FillRowDataMonth(monthData, ref writer);
-                writer.SyncColumnsWidth(17);
-                writer.Render();
-            }
+            //var monthData = SessionManager.Get<MonthPerformanceList>(RTModelMonthPerformanceSessionKey);
+            //if (monthData != null && monthData.ItemList.Any())
+            //{
+            //    string reportName = string.Format(
+            //                    ViewLang.RTModelPerformanceDetailFileName,
+            //                    ViewLang.Month,
+            //                    criteria.FromDate.ToShortFormatedDateForFileName(),
+            //                    criteria.ToDate.ToShortFormatedDateForFileName());
+            //    var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
+            //    writer.CopyRows(0, 1);
+            //    FilterBlock(userId, criteria, ref writer);
+            //    FillHeader(ref writer);
+            //    writer.FreezeRow(0, 4);
+            //    FillRowDataMonth(monthData, ref writer);
+            //    writer.SyncColumnsWidth(17);
+            //    writer.Render();
+            //}
         }
+
+        #endregion
 
         public ModelPerformanceList GetModelPerformance(GetModelPerformanceCriteria criteria)
         {
@@ -201,7 +217,7 @@
                                 modelPerformanceList.AddModelList(modelData, criteria.DataType);
                             }
 
-                            SessionManager.Set<ModelPerformanceList>(RT3ModelPerformanceSessionKey, modelPerformanceList);
+                            SessionManager.Set<ModelPerformanceList>(RTModelPerformanceSessionKey, modelPerformanceList);
                         }
                     }
                 }
@@ -212,7 +228,7 @@
 
         public void ExportModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath)
         {
-            var modelData = SessionManager.Get<ModelPerformanceList>(RT3ModelPerformanceSessionKey);
+            var modelData = SessionManager.Get<ModelPerformanceList>(RTModelPerformanceSessionKey);
             if (modelData != null && modelData.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -318,61 +334,9 @@
             lineCount += Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }       
 
-        private void FillRowDataMonth(MonthPerformanceList data, ref ExcelTemplateWriter writer)
+        private void FillRowDataMonth(MonthlyList data, ref ExcelTemplateWriter writer)
         {
-            var index = 1;
-            foreach (var item in data.ItemList)
-            {
-                int styleIndex = index % 2 == 0 ? 6 : 5;
-                var record = new object[]
-                {
-                    item.Month,
-                    item.Match,
-                    item.BetCount,
-                    item.VirtualTotalTurnover,
-                    item.VirtualTotalWinLoss,
-                    (object)item.VirtualTotalMargin ?? ViewLang.NA,
-                    item.VarianceTurnover,
-                    item.VarianceWinLoss,
-                    (object)item.VarianceMargin ?? ViewLang.NA,
-                    item.RealTotalTurnover,
-                    item.RealTotalWinLoss,
-                    (object)item.RealTotalMargin ?? ViewLang.NA,
-                    item.Total8RMTurnover,
-                    item.Total8RMWinLoss,
-                    (object)item.Total8RMMargin ?? ViewLang.NA,
-                    item.Total8RMWLTurnover,
-                    item.Total8RMWLWinLoss,
-                    (object)item.Total8RMWLMargin ?? ViewLang.NA
-                };
-
-                writer.WriteRow(styleIndex, record);
-                index++;
-            }
-
-            var total = data.GrandTotal;
-            var totalRecord = new object[]
-                {
-                    ViewLang.GrandTotal,                    
-                    total.Match,
-                    total.BetCount,
-                    total.VirtualTotalTurnover,
-                    total.VirtualTotalWinLoss,
-                    (object)total.VirtualTotalMargin ?? ViewLang.NA,
-                    total.VarianceTurnover,
-                    total.VarianceWinLoss,
-                    (object)total.VarianceMargin ?? ViewLang.NA,
-                    total.RealTotalTurnover,
-                    total.RealTotalWinLoss,
-                    (object)total.RealTotalMargin ?? ViewLang.NA,
-                    total.Total8RMTurnover,
-                    total.Total8RMWinLoss,
-                    (object)total.Total8RMMargin ?? ViewLang.NA,
-                    total.Total8RMWLTurnover,
-                    total.Total8RMWLWinLoss,
-                    (object)total.Total8RMWLMargin ?? ViewLang.NA
-                };
-            writer.WriteRow(7, totalRecord);
+            
         }        
 
         private void FillRowDataModel(ModelPerformanceList data, ref ExcelTemplateWriter writer, string dataType)
@@ -461,7 +425,7 @@
 
         private string GetLeagueGroupNames(string leagueGroupIds)
         {
-            var leagueGroups = SessionManager.Get<Dictionary<int, string>>(RT3LeagueGroupsSessionKey);
+            var leagueGroups = SessionManager.Get<Dictionary<int, string>>(RTModelLeagueGroupsSessionKey);
             var leagueGroupIdList = Array.ConvertAll(leagueGroupIds.Split(','), s => Int16.Parse(s)).ToList();           
             var leagueGroupNames = leagueGroups.Join(leagueGroupIdList, a => a.Key, b => b, (a, b) => a.Value);
 

@@ -282,16 +282,16 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
                 "~/Areas/Reports/Resources/RTModelPerformanceDetail/bettype-performance.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/rt3MonthPerformanceDetail").Include(
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",
-               "~/Areas/Reports/Resources/RT3PerformanceDetail/month-performance.js"));
+            bundles.Add(new ScriptBundle("~/scripts/rtModelMonthPerformanceDetail").Include(
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
+               "~/Areas/Reports/Resources/RTModelPerformanceDetail/month-performance.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/rt3ModelPerformanceDetail").Include(
+            bundles.Add(new ScriptBundle("~/scripts/rtModelPerformanceDetail").Include(
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/summary-performance.js",                
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/chart-performance.js",
-                "~/Areas/Reports/Resources/RT3PerformanceDetail/model-performance.js"));
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/chart-performance.js",
+                "~/Areas/Reports/Resources/RTModelPerformanceDetail/model-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

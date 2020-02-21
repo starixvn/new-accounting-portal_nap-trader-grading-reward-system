@@ -1,5 +1,5 @@
-﻿Namespace.Register("Fanex.TGRS.RT3PerformanceDetail.ChartPerformance");
-Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
+﻿Namespace.Register("Fanex.TGRS.RTModelPerformanceDetail.ChartPerformance");
+Fanex.TGRS.RTModelPerformanceDetail.ChartPerformance = function () {
     var $this = this;
 
     var domElements = {
@@ -104,6 +104,7 @@ Fanex.TGRS.RT3PerformanceDetail.ChartPerformance = function () {
 
     $this.InitPage = function () {
         cacheDOMElements();
+
         displayChart(false);
     }
 }

@@ -343,6 +343,7 @@
     <Compile Include="Models\RTModelPerformanceDetail\BetTypePerformanceInfo.cs" />
     <Compile Include="Models\RTModelPerformanceDetail\MatchBetCountInfo.cs" />
     <Compile Include="Models\RTModelPerformanceDetail\ModelPerformanceInfo.cs" />
+    <Compile Include="Models\RTModelPerformanceDetail\RTModelPerformanceInfo.cs" />
     <Compile Include="Models\RTModelPerformanceDetail\TotalPerformanceInfo.cs" />
     <Compile Include="Models\RTModelPerformanceDetail\TotalLeagueMatchInfo.cs" />
     <Compile Include="Models\RTModelPerformanceDetail\MonthPerformanceInfo.cs" />
@@ -435,12 +436,15 @@
     <Compile Include="ViewModels\RTModelPerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\BetTypeList.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\GroupHeader.cs" />
+    <Compile Include="ViewModels\RTModelPerformanceDetail\MeasurementItem.cs" />
+    <Compile Include="ViewModels\RTModelPerformanceDetail\MonthlyItem.cs" />
+    <Compile Include="ViewModels\RTModelPerformanceDetail\MonthlyList.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\RobotTradingItem.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\ChartPerformanceItem.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\ModelPerformanceItem.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\ModelPerformanceList.cs" />
-    <Compile Include="ViewModels\RTModelPerformanceDetail\MonthPerformanceItem.cs" />
-    <Compile Include="ViewModels\RTModelPerformanceDetail\MonthPerformanceList.cs" />
+    <Compile Include="ViewModels\RTModelPerformanceDetail\RobotTradingModelItem.cs" />
+    <Compile Include="ViewModels\RTModelPerformanceDetail\RobotTradingModelList.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\RobotTradingSummary.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoList.cs" />

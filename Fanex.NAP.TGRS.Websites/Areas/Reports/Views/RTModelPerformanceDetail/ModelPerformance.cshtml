@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = ViewLang.RT3PerformanceDetail;
+    ViewBag.Title = ViewLang.RTModelPerformanceDetail;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Head
 {
-    @Styles.Render("~/styles/rt3PerformanceDetail")
+    @Styles.Render("~/styles/rtModelPerformanceDetail")
 }
 
 @section Headline
@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="header-button">
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/BetTypePerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/BetTypePerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
-        <a href="@Url.Content("~/Reports/RT3PerformanceDetail/MonthPerformance")" class="green-button change-list">
+        <a href="@Url.Content("~/Reports/RTModelPerformanceDetail/MonthPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Month
         </a>
         <a href="#" class="green-button change-list disabled">
@@ -58,7 +58,7 @@
 
 @section Foot
 {
-    @Scripts.Render("~/scripts/rt3ModelPerformanceDetail")
+    @Scripts.Render("~/scripts/rtModelPerformanceDetail")
 
     <script type="text/javascript">
         var datepickerSetting = {
@@ -92,7 +92,7 @@
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
-            RT3PerformanceDetail: '@ViewLang.RT3PerformanceDetail',
+            RT3PerformanceDetail: '@ViewLang.RTModelPerformanceDetail',
             RT3WithTraderPerformance: '@ViewLang.RT3WithTraderPerformance',
             RT3NoTraderPerformance: '@ViewLang.RT3NoTraderPerformance',
             TradingAutomation: '@ViewLang.TradingAutomation',
