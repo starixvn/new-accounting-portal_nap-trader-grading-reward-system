@@ -1,8 +1,10 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.Reports.Criteria.RTModelPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.RTModelPerformanceDetail;
@@ -64,6 +66,17 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
+            //var templatePath = Server.MapPath(BetTypePerformanceDetail);
+            //var fileName = string.Format(
+            //                    ViewLang.RTModelPerformanceDetailFileName,
+            //                    ViewLang.Month,
+            //                    criteria.FromDate.ToShortFormatedDateForFileName(),
+            //                    criteria.ToDate.ToShortFormatedDateForFileName()) + ".xlsx";
+
+            //var file = _rtModelService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            //return File(file, "application/vnd.ms-excel", fileName);
+
             var templatePath = Server.MapPath(BetTypePerformanceDetail);
 
             _rtModelService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);

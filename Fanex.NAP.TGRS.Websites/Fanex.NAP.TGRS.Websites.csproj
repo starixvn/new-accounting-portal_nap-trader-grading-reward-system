@@ -630,11 +630,11 @@
     <Content Include="Areas\Reports\Views\RTModelPerformanceDetail\SummaryPerformance.cshtml" />
     <Content Include="Areas\Reports\Resources\RTModelPerformanceDetail\rtModel-performance-detail.less" />
     <Content Include="Areas\Reports\Views\RTModelPerformanceDetail\MonthPerformance.cshtml" />
-    <Content Include="Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\BetTypePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\MonthPerformance.xls" />
     <Content Include="Areas\Reports\Views\RTModelPerformanceDetail\ModelPerformance.cshtml" />
     <Content Include="Areas\Reports\Views\RTModelPerformanceDetail\ChartPerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\ModelPerformance.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\RTModelPerformanceDetail\BetTypePerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

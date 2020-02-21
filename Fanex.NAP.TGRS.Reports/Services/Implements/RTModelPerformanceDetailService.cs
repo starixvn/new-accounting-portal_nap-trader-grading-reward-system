@@ -83,22 +83,28 @@
             }
 
             return betTypeList;
-        }
-              
-        public byte[] ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
+        }      
+
+        public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
             var betTypeData = SessionManager.Get<BetTypeList>(RT3BetTypeListSessionKey);
 
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
-                var wb = ExcelUtilities.GetWorkbook(templatePath);
-                var excelConfig = new BetTypeExcelConfig();
-                excelConfig.RenderExcel(wb, null, betTypeData.ItemList, betTypeData.GrandTotal);
+                string reportName = string.Format(
+                                ViewLang.RTModelPerformanceDetailFileName,
+                                ViewLang.BetTypeExcelFile,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
+                writer.CopyRows(0, 1);
+                FilterBlock(userId, criteria, ref writer);
+                FillBetTypeHeader(ref writer);
+                writer.FreezeRow(0, 4);
+                FillRowDataBetType(betTypeData, ref writer);
 
-                return ExcelUtilities.ToBytes(wb);
+                writer.Render();
             }
-
-            return default(byte[]);
         }
 
         private void FillBetTypeHeader(ref ExcelTemplateWriter writer)
@@ -107,42 +113,7 @@
         }
 
         private void FillRowDataBetType(BetTypeList data, ref ExcelTemplateWriter writer)
-        {
-            var index = 1;
-            foreach (var betTypeItem in data.ItemList)
-            {
-                int styleIndex = index % 2 == 0 ? 6 : 5;
-                var columns = new List<object>();
-               
-                columns.Add(betTypeItem.BetTypeName);
-                columns.Add(betTypeItem.MatchCount);
-                columns.Add(betTypeItem.BetCount);
-
-                foreach (var robotTradingItem in betTypeItem.RobotTradingItemList)
-                {
-                    columns.Add(robotTradingItem.Value.Turnover);
-                    columns.Add(robotTradingItem.Value.WinLoss);
-                    columns.Add(robotTradingItem.Value.Margin);
-                }
-
-                writer.WriteRow(styleIndex, columns.ToArray());
-
-                index++;
-            }
-
-            var columnTotals = new List<object>();
-            columnTotals.Add(ViewLang.GrandTotal);
-            columnTotals.Add(data.GrandTotal.MatchCount);
-            columnTotals.Add(data.GrandTotal.BetCount);
-            foreach (var robotTradingItem in data.GrandTotal.RobotTradingItemList)
-            {
-                columnTotals.Add(robotTradingItem.Value.Turnover);
-                columnTotals.Add(robotTradingItem.Value.WinLoss);
-                columnTotals.Add(robotTradingItem.Value.Margin);
-            }
-            writer.WriteRow(7, columnTotals.ToArray());
-
-            writer.SyncColumnsWidth(columnTotals.Count);
+        {            
         }
 
         #endregion

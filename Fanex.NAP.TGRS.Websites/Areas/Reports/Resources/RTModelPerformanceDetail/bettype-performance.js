@@ -178,17 +178,16 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
             customizeHeader: true,
             showFooter: true,          
             showDistinctRow: false,
-            showTree: true,
+            showTree: true,           
             showTitle: true,
             titleInfo: {
-                showExcelButton: true,
+                showExcelButton: false,
                 exportExcelFunction: function () {
                     exportBetTypePerformance();
                 }
             },
             showColumnsShowHide: false,
-            autoResizeColumn: true,
-            columnsNeedHide: [],
+            autoResizeColumn: false,         
             gridExpandHeight: 230,
             allowTruncate: true,
             defaultCollapseAllGroups: true,
@@ -242,7 +241,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                 }
 
                 if (checkExitItem(robotTradingItem, labels.Margin)) {
-                    columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' MAR', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                    columns.push({ HeaderText: robotTradingItem.TypeSideDesc + ' MAR %', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSideDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
                 }
 
                 groupHeaderNameOld = robotTradingItem.GroupHeaderName;
@@ -308,7 +307,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                     columns.push({ HeaderText: siteName + ' W/L', Width: 120, Name: 'Col' + group + siteName + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
                 }
                 if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
-                    columns.push({ HeaderText: siteName + ' MAR', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                    columns.push({ HeaderText: siteName + ' MAR %', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
                 }
             })
 
@@ -319,7 +318,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                 columns.push({ HeaderText: 'W/L', Width: 120, Name: 'Col' + group + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
             }
             if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
-                columns.push({ HeaderText: 'MAR', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                columns.push({ HeaderText: 'MAR %', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
             }  
 
             cssClass = cssClass == 'dim' ? '' : 'dim';
@@ -383,8 +382,8 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
 
     var generateBetTypePerformanceGridFooter = function (data) {
         var footerData = [
-            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right' },
-            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
+            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right', MergeColNumber: 2 },
+            //{ Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
             { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
         ];
        

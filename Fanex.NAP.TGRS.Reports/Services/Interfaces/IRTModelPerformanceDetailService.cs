@@ -10,7 +10,9 @@
 
         BetTypeList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria);
 
-        byte[] ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
+        //byte[] ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
+
+        void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
 
         MonthPerformanceList GetMonthPerformance(GetMonthPerformanceCriteria criteria);
 

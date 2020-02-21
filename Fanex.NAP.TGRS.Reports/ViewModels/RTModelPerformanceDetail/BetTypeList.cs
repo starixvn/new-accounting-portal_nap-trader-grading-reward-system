@@ -19,13 +19,26 @@
             GrandTotal = new BetTypeItem();
         }
 
+        private List<string> KeyList { get; set; }
+
+        private IDictionary<string, string> SiteList
+        {
+            get
+            {
+                var sites = new Dictionary<string, string>();
+                sites.Add("1", Consts.SiteCN88);
+                sites.Add("2", Consts.SiteCash);
+                sites.Add("3", Consts.SiteNova);
+
+                return sites;
+            }
+        }
+
         public int LeagueCount { get; set; }
 
         public int MatchCount { get; set; }
 
-        public List<BetTypeItem> ItemList { get; set; }
-
-        public List<string> KeyList { get; set; }
+        public List<BetTypeItem> ItemList { get; set; }        
 
         public List<GroupHeader> GroupHeaderList { get; set; }
 
@@ -100,37 +113,38 @@
         {
             if (!string.IsNullOrEmpty(measurements) && !string.IsNullOrEmpty(typeSiteIds))
             {
-                var siteLength = typeSiteIds.Split(',').Length;
+                var arrSite = typeSiteIds.Split(',');
+                var firtSiteName = SiteList[arrSite.Max(x => x)];
                 var arrMeasurement = measurements.Split(',');
-
+                
                 var listVirtualToal = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderVirtualTotal + "-")).Select(x => x).ToList();
                 var listVariance = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderVariance + "-")).Select(x => x).ToList();
                 var listRealTotal = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderRealTotal + "-")).Select(x => x).ToList();
                 var listTotal8RM = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderTotal8RM + "-")).Select(x => x).ToList();
                 var listRealTotal8RMWL = arrMeasurement.Where(x => x.Contains(Consts.RobotTradingGroupHeaderRealTotal8RMWL + "-")).Select(x => x).ToList();
 
-                GenerateGroupHeader(listVirtualToal, siteLength, ViewLang.VirtualTotal);
-                GenerateGroupHeader(listVariance, siteLength, ViewLang.Variance);
-                GenerateGroupHeader(listRealTotal, siteLength, ViewLang.RealTotal);
-                GenerateGroupHeader(listTotal8RM, siteLength, ViewLang.Total8RM);
-                GenerateGroupHeader(listRealTotal8RMWL, siteLength, ViewLang.RealTotal8RMWL);
+                GenerateGroupHeader(listVirtualToal, firtSiteName, arrSite.Length, ViewLang.VirtualTotal);
+                GenerateGroupHeader(listVariance, firtSiteName, arrSite.Length, ViewLang.Variance);
+                GenerateGroupHeader(listRealTotal, firtSiteName, arrSite.Length, ViewLang.RealTotal);
+                GenerateGroupHeader(listTotal8RM, firtSiteName, arrSite.Length, ViewLang.Total8RM);
+                GenerateGroupHeader(listRealTotal8RMWL, firtSiteName, arrSite.Length, ViewLang.RealTotal8RMWL);
             }
         }
 
-        private void GenerateGroupHeader(List<string> listColumn, int siteLength, string headerText)
+        private void GenerateGroupHeader(List<string> listColumn, string firtSiteName, int siteLength, string headerText)
         {
             if (listColumn.Any())
             {
-                var mergeCol = listColumn.Count * 4 - (3 - siteLength) * 3;
+                var mergeCol = listColumn.Count * 4 - listColumn.Count * (3 - siteLength);
                 var groupVirtualToal = listColumn[0].Split('-');
 
                 this.GroupHeaderList.Add(new GroupHeader
                 {
                     HeaderText = headerText.ToUpper(),
-                    ColumnName = "Col" + groupVirtualToal[0] + groupVirtualToal[1],
+                    ColumnName = "Col" + groupVirtualToal[0] + firtSiteName + groupVirtualToal[1],
                     MergeColumnNumber = mergeCol
                 });
-            }            
+            }
         }
     }
 }
