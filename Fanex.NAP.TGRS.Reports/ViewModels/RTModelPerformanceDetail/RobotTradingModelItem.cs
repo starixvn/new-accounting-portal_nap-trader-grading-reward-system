@@ -66,7 +66,7 @@
             var sumItem = new RobotTradingItem(Consts.RobotTradingGroupHeaderVirtualTotal, 0, string.Empty, mesurementHides);
             sumItem.Turnover = infos.Sum(x => x.Stake_VR);
             sumItem.WinLoss = infos.Sum(x => x.WinLoss_VR);
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderVirtualTotal, sumItem);           
         }
@@ -104,7 +104,7 @@
             var sumItem = new RobotTradingItem(Consts.RobotTradingGroupHeaderVariance, 0, string.Empty, mesurementHides);
             sumItem.Turnover = infos.Sum(x => x.Stake_VAR);
             sumItem.WinLoss = infos.Sum(x => x.Winloss_VAR);
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderVariance, sumItem);
         }
@@ -142,7 +142,7 @@
             var sumItem = new RobotTradingItem(Consts.RobotTradingGroupHeaderRealTotal, 0, string.Empty, mesurementHides);
             sumItem.Turnover = infos.Sum(x => x.Stake_AR);
             sumItem.WinLoss = infos.Sum(x => x.Winloss_AR);
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderRealTotal, sumItem);
         }
@@ -180,7 +180,7 @@
             var sumItem = new RobotTradingItem(Consts.RobotTradingGroupHeaderTotal8RM, 0, string.Empty, mesurementHides);
             sumItem.Turnover = infos.Sum(x => x.Stake_8RM);
             sumItem.WinLoss = infos.Sum(x => x.Winloss_8RM);
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderTotal8RM, sumItem);
         }
@@ -218,7 +218,7 @@
             var sumItem = new RobotTradingItem(Consts.RobotTradingGroupHeaderRealTotal8RMWL, 0, string.Empty, mesurementHides);
             sumItem.Turnover = infos.Sum(x => x.Stake_AR8RM);
             sumItem.WinLoss = infos.Sum(x => x.Winloss_AR8RM);
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.RobotTradingGroupHeaderRealTotal8RMWL, sumItem);
         }

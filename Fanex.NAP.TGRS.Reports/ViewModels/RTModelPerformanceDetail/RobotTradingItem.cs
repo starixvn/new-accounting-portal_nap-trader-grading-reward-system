@@ -59,7 +59,7 @@
                 IsHideMargin = item1.IsHideMargin
             };
 
-            sumItem.Margin = sumItem.Turnover == 0 ? 0 : sumItem.WinLoss / sumItem.Turnover;
+            sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             return sumItem;
         }
