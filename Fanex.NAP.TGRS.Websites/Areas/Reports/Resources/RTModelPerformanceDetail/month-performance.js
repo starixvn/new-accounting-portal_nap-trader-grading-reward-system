@@ -245,7 +245,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
     }
 
     var generateColumns = function (data) {
-        if (data.GrandTotal.RobotTradingItemList != null && data.GrandTotal.RobotTradingItemList.length > 0) {
+        if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
             var columns = [
                 { HeaderText: labels.Monthly, Width: 120, Name: "ColMonthly", HeaderAlign: "center", CellAlign: "left", Sort: true },
                 { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
@@ -329,10 +329,10 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
                     columns.push({ HeaderText: siteName + ' T/O', Width: 120, Name: 'Col' + group + siteName + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
                 }
                 if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
-                    columns.push({ HeaderText: siteName + ' W/L', Width: 120, Name: 'Col' + group + siteName + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                    columns.push({ HeaderText: siteName + ' W/L', Width: 120, Name: 'Col' + group + siteName + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
                 }
                 if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
-                    columns.push({ HeaderText: siteName + ' MAR %', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                    columns.push({ HeaderText: siteName + ' MAR %', Width: 120, Name: 'Col' + group + siteName + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
                 }
             })
 
@@ -340,10 +340,10 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
                 columns.push({ HeaderText: 'T/O', Width: 120, Name: 'Col' + group + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
             }
             if (selectedMeasurements.findIndex(x => x == colWinLoss) >= 0) {
-                columns.push({ HeaderText: 'W/L', Width: 120, Name: 'Col' + group + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                columns.push({ HeaderText: 'W/L', Width: 120, Name: 'Col' + group + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
             }
             if (selectedMeasurements.findIndex(x => x == colMargin) >= 0) {
-                columns.push({ HeaderText: 'MAR %', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                columns.push({ HeaderText: 'MAR %', Width: 120, Name: 'Col' + group + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
             }
 
             cssClass = cssClass == 'dim' ? '' : 'dim';
