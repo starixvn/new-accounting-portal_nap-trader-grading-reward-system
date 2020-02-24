@@ -1,6 +1,12 @@
 ﻿.filter-bar {
     .filter-form {
-        .filter-row {                      
+        .filter-row {
+            .filter-block {
+                display: inline-block;
+                float: left;
+                margin-top: 5px;
+            }
+
             .date-range {
                 display: inline-block;
                 float: left;
@@ -23,7 +29,7 @@
 
             .generate {
                 margin-left: 17px;
-            }            
+            }
         }
     }
 }
@@ -53,6 +59,7 @@
 
 @supports
 (display: grid) {
+
     .info-summary {
         display: grid;
         grid-template-columns: repeat(5, 1fr);

@@ -33,61 +33,72 @@
     <div id="divMonthPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="date-range"><div id="divDateRange"></div></div>
-            <div class="lbl-field col_3">
-                <label>@ViewLang.Model</label>
+            <div class="filter-block">
+                <div class="lbl-field col_3">
+                    <label>@ViewLang.Model</label>
+                </div>
+                <div class="edit-field col_3">
+                    <select id="ddlModel">
+                        <option value="3">TA</option>
+                        <option value="1">RT3</option>
+                    </select>
+                </div>
             </div>
-            <div class="edit-field col_3">
-                <select id="ddlModel">
-                    <option value="3">TA</option>
-                    <option value="1">RT3</option>
-                </select>
+
+            <div class="filter-block">
+                <div class="lbl-field col_5">
+                    <label>@ViewLang.LeagueGroup</label>
+                </div>
+                <div class="edit-field col_8">
+                    <select id="ddlLeagueGroup" multiple="multiple">
+                        @foreach (KeyValuePair<int, string> entry in ViewBag.LeagueGroups)
+                        {
+                            <option value=@entry.Key>@entry.Value</option>
+                        }
+                    </select>
+                </div>
             </div>
-            <div class="lbl-field col_5">
-                <label>@ViewLang.LeagueGroup</label>
+            
+            <div class="filter-block">
+                <div class="lbl-field col_3">
+                    <label>@ViewLang.Site</label>
+                </div>
+                <div class="edit-field col_8">
+                    <select id="ddlSite" multiple="multiple">
+                        <option value="3">@Consts.SiteNova</option>
+                        <option value="2">@Consts.SiteCash</option>
+                        <option value="1">@Consts.SiteCN88</option>
+                    </select>
+                </div>
             </div>
-            <div class="edit-field col_8">
-                <select id="ddlLeagueGroup" multiple="multiple">
-                    @foreach (KeyValuePair<int, string> entry in ViewBag.LeagueGroups)
-                    {
-                        <option value=@entry.Key>@entry.Value</option>
-                    }
-                </select>
-            </div>
-            <div class="lbl-field col_3">
-                <label>@ViewLang.Site</label>
-            </div>
-            <div class="edit-field col_8">
-                <select id="ddlSite" multiple="multiple">
-                    <option value="3">@Consts.SiteNova</option>
-                    <option value="2">@Consts.SiteCash</option>
-                    <option value="1">@Consts.SiteCN88</option>
-                </select>
-            </div>
-            <div class="lbl-field col_4">
-                <label>@ViewLang.Measurement</label>
-            </div>
-            <div class="edit-field col_9">
-                <select id="ddlMeasurement" multiple="multiple">
-                    <option value="VirtualTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Turnover</option>
-                    <option value="VirtualTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Win Loss</option>
-                    <option value="VirtualTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Margin</option>
-                    <option value="Variance-Turnover" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Turnover</option>
-                    <option value="Variance-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Win Loss</option>
-                    <option value="Variance-Margin" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Margin</option>
-                    <option value="RealTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Turnover</option>
-                    <option value="RealTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Win Loss</option>
-                    <option value="RealTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Margin</option>
-                    <option value="Total8RM-Turnover" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Turnover</option>
-                    <option value="Total8RM-WinLoss" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Win Loss</option>
-                    <option value="Total8RM-Margin" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Margin</option>
-                    <option value="RealTotal8RMWL-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Turnover</option>
-                    <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex. 8RM Win Loss</option>
-                    <option value="RealTotal8RMWL-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Margin</option>
-                </select>
-            </div>
-            <div class="submit col_3">
-                <input id="btnGenerate" type="button" class="blue-button bettype-generate" value="@ViewLang.Generate" />
-            </div>
+           
+            <div class="filter-block">
+                <div class="lbl-field col_4">
+                    <label>@ViewLang.Measurement</label>
+                </div>
+                <div class="edit-field col_9">
+                    <select id="ddlMeasurement" multiple="multiple">
+                        <option value="VirtualTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Turnover</option>
+                        <option value="VirtualTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Win Loss</option>
+                        <option value="VirtualTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderVirtualTotal">Virtual Margin</option>
+                        <option value="Variance-Turnover" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Turnover</option>
+                        <option value="Variance-WinLoss" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Win Loss</option>
+                        <option value="Variance-Margin" group-header="@Consts.RobotTradingGroupHeaderVariance">Variance Margin</option>
+                        <option value="RealTotal-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Turnover</option>
+                        <option value="RealTotal-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Win Loss</option>
+                        <option value="RealTotal-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal">Real Margin</option>
+                        <option value="Total8RM-Turnover" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Turnover</option>
+                        <option value="Total8RM-WinLoss" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Win Loss</option>
+                        <option value="Total8RM-Margin" group-header="@Consts.RobotTradingGroupHeaderTotal8RM">8RM Margin</option>
+                        <option value="RealTotal8RMWL-Turnover" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Turnover</option>
+                        <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex. 8RM Win Loss</option>
+                        <option value="RealTotal8RMWL-Margin" group-header="@Consts.RobotTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Margin</option>
+                    </select>
+                </div>
+                <div class="submit col_3">
+                    <input id="btnGenerate" type="button" class="blue-button bettype-generate" value="@ViewLang.Generate" />
+                </div>
+            </div>            
         </div>
     </div>
 </div>
