@@ -14,7 +14,7 @@
             GrandTotal = new BetTypeItem();
         }   
       
-        public List<BetTypeItem> ItemList { get; set; }              
+        public IList<BetTypeItem> ItemList { get; set; }              
 
         public BetTypeItem GrandTotal { get; set; }      
 

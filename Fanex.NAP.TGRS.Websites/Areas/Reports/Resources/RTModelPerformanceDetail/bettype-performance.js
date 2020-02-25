@@ -28,6 +28,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
         LeagueGroupIds: null,
         TypeSiteIds: null,
         Measurements: null,
+        MeasurementDescs: null,
         MeasurementHides: null
     }; 
 
@@ -71,6 +72,8 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
                 var selectedMeasurements = domElements.ddlMeasurement.val();
+                var selectedMeasurementDescs = [];
+                domElements.ddlMeasurement.find('option:selected').each(function () { selectedMeasurementDescs.push($(this).text()); })
 
                 setStorageFilter("RTBetTypeSelectedLeagueGroups", selectedLeagueGroups);
                 setStorageFilter("RTBetTypeSelectedSideIds", selectedSideIds);
@@ -80,8 +83,8 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Model = domElements.ddlModel.val()
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
-                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "1,2,3";
-              
+                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";                
+
                 var notSelectMeasurements = [];
                 domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
 
@@ -93,8 +96,9 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
                     parameters.Measurements = notSelectMeasurements.join(',');
                     parameters.MeasurementHides = null;
                 }
+                parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
 
-                domElements.divBetTypePerformanceContainer.addClass('display-none');                
+                domElements.divBetTypePerformanceContainer.addClass('display-none');
 
                 getBetTypePerformanceReport();
             }
@@ -186,7 +190,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.BetTypePerformance = function () {
             showTree: true,           
             showTitle: true,
             titleInfo: {
-                showExcelButton: false,
+                showExcelButton: true,
                 exportExcelFunction: function () {
                     exportBetTypePerformance();
                 }

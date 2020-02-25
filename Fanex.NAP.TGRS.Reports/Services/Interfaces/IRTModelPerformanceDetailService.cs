@@ -19,5 +19,6 @@
         ModelPerformanceList GetModelPerformance(GetModelPerformanceCriteria criteria);
 
         void ExportModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath);
+
     }
 }

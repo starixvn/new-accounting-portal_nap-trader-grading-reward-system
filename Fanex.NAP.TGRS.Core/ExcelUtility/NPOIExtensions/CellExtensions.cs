@@ -178,6 +178,7 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
 
             // Copy style
             cell.CellStyle = sourceCell.CellStyle;
+            
         }
     }
 }

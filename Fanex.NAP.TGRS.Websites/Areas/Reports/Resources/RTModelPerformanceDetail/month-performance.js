@@ -30,6 +30,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
         LeagueGroupIds: null,
         TypeSiteIds: null,
         Measurements: null,
+        MeasurementDescs: null,
         MeasurementHides: null
     };
 
@@ -77,6 +78,8 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
                 var selectedMeasurements = domElements.ddlMeasurement.val();
+                var selectedMeasurementDescs = [];
+                domElements.ddlMeasurement.find('option:selected').each(function () { selectedMeasurementDescs.push($(this).text()); })
 
                 setStorageFilter("RTMonthlySelectedLeagueGroups", selectedLeagueGroups);
                 setStorageFilter("RTMonthlySelectedSideIds", selectedSideIds);
@@ -86,8 +89,8 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Model = domElements.ddlModel.val()
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
-                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "1,2,3";                
-                
+                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
+
                 var notSelectMeasurements = [];
                 domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
                 
@@ -99,6 +102,7 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
                     parameters.Measurements = notSelectMeasurements.join(',');
                     parameters.MeasurementHides = null;
                 }
+                parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
 
                 getMonthPerformanceReport();
             }
@@ -212,9 +216,9 @@ Fanex.NAP.TGRS.RTModelPerformanceDetail.MonthPerformance = function () {
             showTree: true,
             showTitle: true,
             titleInfo: {
-                showExcelButton: false,
+                showExcelButton: true,
                 exportExcelFunction: function () {
-                    exportBetTypePerformance();
+                    exportMonthPerformance();
                 }
             },
             showColumnsShowHide: false,

@@ -1,11 +1,11 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using Fanex.Data;
-    using Fanex.Data.Repository;
+    using Fanex.Data;   
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
@@ -98,24 +98,194 @@
                                 ViewLang.BetTypeExcelFile,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
-                writer.CopyRows(0, 1);
-                FilterBlock(userId, criteria, ref writer);
-                FillBetTypeHeader(ref writer);
+
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetType);
+
+                var sheet = writer.CopyRows(0, 1).Sheet;
+                FilterBlockBetType(userId, criteria, ref writer);
+
                 writer.FreezeRow(0, 4);
-                FillRowDataBetType(betTypeData, ref writer);
+                var columns = GenerateBetTypeColumns();
+
+                FillGroupHeader(betTypeData.GroupHeaderList, betTypeData.GrandTotal.RobotTradingItemList, columns, ref writer);
+                FillRowDataBetType(betTypeData.ItemList, ref writer);
+                FillGrandTotalBetType(betTypeData.GrandTotal, ref writer);
+
+                // Set column with for sheet
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    sheet.SetColumnWidth(i, 4096);
+                }
 
                 writer.Render();
             }
         }
 
-        private void FillBetTypeHeader(ref ExcelTemplateWriter writer)
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        private void FilterBlockBetType(int userId, GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            writer.CopyRows(3, 2);
+            RichTextRender contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(11, 0);
+            IFont normalFont = writer.GetFont(12, 0);
+            int lineCount = 0;           
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Model, boldFont, criteria.Model == 1 ? "RT3" : "TA", normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Site, boldFont, GetSiteName(criteria.TypeSiteIds), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
+
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(8, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
-        private void FillRowDataBetType(BetTypeList data, ref ExcelTemplateWriter writer)
-        {            
+        private List<object> GenerateBetTypeColumns()
+        {
+            return new List<object>
+            {
+                ViewLang.BetType,
+                ViewLang.Match,
+                ViewLang.BetCount
+            };
+        }
+
+        private void FillGroupHeader(IList<GroupHeader> groupHeaderList, 
+            IDictionary<string, RobotTradingItem> robotTradingItemList,
+            List<object> columns,
+            ref ExcelTemplateWriter writer)
+        {
+            var rowGroupHeader = writer.CopyRows(3, 1);
+            var rowHeader = FillHeader(robotTradingItemList, ref writer);
+
+            var cellMergeStartIndex = 3;
+            var cellMergeEndIndex = 3;
+            var cellStyle = writer.GetCellStyle(13, 0);
+
+            // Fill Group Header
+            foreach (var groupHeader in groupHeaderList)
+            {
+                columns.Add(groupHeader.HeaderText);
+
+                for (int i = 0; i < groupHeader.MergeColumnNumber - 1; i++)
+                {
+                    columns.Add(string.Empty);
+                }
+            }
+
+            writer.SetRowValue(rowGroupHeader, columns.ToArray(), 3);
+
+            // Merge range Group Header
+            for (int i = 0; i < groupHeaderList.Count; i++)
+            {
+                cellMergeEndIndex = cellMergeStartIndex + groupHeaderList[i].MergeColumnNumber - 1;
+                SheetExtensions.MergeCells(rowGroupHeader.Sheet, 2, cellMergeStartIndex, 2, cellMergeEndIndex);                
+
+                if (i % 2 != 0)
+                {
+                    writer.SetCellStyle(rowGroupHeader, cellStyle, cellMergeStartIndex, cellMergeEndIndex);
+                    writer.SetCellStyle(rowHeader, cellStyle, cellMergeStartIndex, cellMergeEndIndex + 1);
+                }
+
+                cellMergeStartIndex = cellMergeEndIndex + 1;
+            }            
+        }        
+
+        private IRow FillHeader(IDictionary<string, RobotTradingItem> robotTradingItemList, ref ExcelTemplateWriter writer)
+        {
+            var row = writer.CopyRows(4, 1);
+
+            var columns = new List<object> { string.Empty, string.Empty, string.Empty };
+           
+            foreach (var robotTradingItem in robotTradingItemList)
+            {
+                if (!robotTradingItem.Value.IsHideTurnover)
+                {
+                    columns.Add(robotTradingItem.Value.TypeSiteDesc + " T/O");
+                }
+                if (!robotTradingItem.Value.IsHideWinLoss)
+                {
+                    columns.Add(robotTradingItem.Value.TypeSiteDesc + " W/L");
+                }
+                if (!robotTradingItem.Value.IsHideMargin)
+                {
+                    columns.Add(robotTradingItem.Value.TypeSiteDesc + " MAR %");
+                }
+            }
+
+            writer.SetRowValue(row, columns.ToArray(), 3);
+
+            SheetExtensions.MergeCells(row.Sheet, 2, 0, 3, 0);
+            SheetExtensions.MergeCells(row.Sheet, 2, 1, 3, 1);
+            SheetExtensions.MergeCells(row.Sheet, 2, 2, 3, 2);
+
+            return row;
+        }
+
+        private void FillRowDataBetType(IList<BetTypeItem> itemList, ref ExcelTemplateWriter writer)
+        {
+            var index = 1;
+
+            foreach (var betTypeItem in itemList)
+            {
+                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var columns = new List<object>
+                {
+                    betTypeItem.BetTypeName,
+                    betTypeItem.MatchCount,
+                    betTypeItem.BetCount
+                };              
+
+                FillRowData(betTypeItem.RobotTradingItemList, columns, styleIndex, ref writer);
+
+                index++;
+            }
+        }
+
+        private void FillGrandTotalBetType(BetTypeItem grandTotal, ref ExcelTemplateWriter writer)
+        {
+            var columns = new List<object>
+            {
+                ViewLang.GrandTotal,
+                grandTotal.MatchCount,
+                grandTotal.BetCount
+            };            
+
+            FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);          
+        }
+
+        private void FillRowData(IDictionary<string, RobotTradingItem> robotTradingItemList,
+           List<object> columns,
+           int styleIndex,
+           ref ExcelTemplateWriter writer)
+        {
+            var i = 3;
+            var marginListIndex = new List<int>();
+
+            foreach (var robotTradingItem in robotTradingItemList)
+            {
+                if (!robotTradingItem.Value.IsHideTurnover)
+                {
+                    columns.Add(robotTradingItem.Value.Turnover);
+                    i++;
+                }
+                if (!robotTradingItem.Value.IsHideWinLoss)
+                {
+                    columns.Add(robotTradingItem.Value.WinLoss);
+                    i++;
+                }
+                if (!robotTradingItem.Value.IsHideMargin)
+                {
+                    columns.Add(robotTradingItem.Value.Margin);                    
+                    marginListIndex.Add(i);
+                    i++;
+                }
+            }
+         
+            var row = writer.CreateRow(styleIndex, columns.ToArray(), 3);
         }
 
         #endregion
@@ -169,27 +339,105 @@
 
         public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
         {
-            //var monthData = SessionManager.Get<MonthPerformanceList>(RTModelMonthPerformanceSessionKey);
-            //if (monthData != null && monthData.ItemList.Any())
-            //{
-            //    string reportName = string.Format(
-            //                    ViewLang.RTModelPerformanceDetailFileName,
-            //                    ViewLang.Month,
-            //                    criteria.FromDate.ToShortFormatedDateForFileName(),
-            //                    criteria.ToDate.ToShortFormatedDateForFileName());
-            //    var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
-            //    writer.CopyRows(0, 1);
-            //    FilterBlock(userId, criteria, ref writer);
-            //    FillHeader(ref writer);
-            //    writer.FreezeRow(0, 4);
-            //    FillRowDataMonth(monthData, ref writer);
-            //    writer.SyncColumnsWidth(17);
-            //    writer.Render();
-            //}
+            var monthData = SessionManager.Get<MonthlyList>(RTModelMonthPerformanceSessionKey);
+
+            if (monthData != null && monthData.ItemList.Any())
+            {
+                string reportName = string.Format(
+                                ViewLang.RTModelPerformanceDetailFileName,
+                                ViewLang.Month,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Month);
+                var sheet = writer.CopyRows(0, 1).Sheet;
+
+                FilterBlockMonth(userId, criteria, ref writer);
+
+                writer.FreezeRow(0, 4);
+                var columns = GenerateMonthlyColumns();
+
+                FillGroupHeader(monthData.GroupHeaderList, monthData.GrandTotal.RobotTradingItemList, columns, ref writer);
+                FillRowDataMonth(monthData.ItemList, ref writer);
+                FillGrandTotalMonth(monthData.GrandTotal, ref writer);
+
+                // Set column with for sheet
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    sheet.SetColumnWidth(i, 4096);
+                }
+
+                writer.Render();
+            }
         }
+
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
+        private void FilterBlockMonth(int userId, GetMonthPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            RichTextRender contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(11, 0);
+            IFont normalFont = writer.GetFont(12, 0);
+            int lineCount = 0;
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Model, boldFont, criteria.Model == 1 ? "RT3" : "TA", normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Site, boldFont, GetSiteName(criteria.TypeSiteIds), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
+
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(8, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        private List<object> GenerateMonthlyColumns()
+        {
+            return new List<object>
+            {
+                ViewLang.Month,
+                ViewLang.Match,
+                ViewLang.BetCount
+            };
+        }
+
+        private void FillRowDataMonth(IList<MonthlyItem> itemList, ref ExcelTemplateWriter writer)
+        {
+            var index = 1;
+
+            foreach (var monthlyItem in itemList)
+            {
+                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var columns = new List<object>
+                {
+                    monthlyItem.Monthly,
+                    monthlyItem.MatchCount,
+                    monthlyItem.BetCount
+                };
+               
+                FillRowData(monthlyItem.RobotTradingItemList, columns, styleIndex, ref writer);
+
+                index++;
+            }
+        }
+
+        private void FillGrandTotalMonth(MonthlyItem grandTotal, ref ExcelTemplateWriter writer)
+        {
+            var columns = new List<object>
+            {
+                ViewLang.GrandTotal,
+                grandTotal.MatchCount,
+                grandTotal.BetCount
+            };
+
+            FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);
+        }       
 
         #endregion
 
+        #region Model
         public ModelPerformanceList GetModelPerformance(GetModelPerformanceCriteria criteria)
         {
             var modelPerformanceList = new ModelPerformanceList();
@@ -229,6 +477,7 @@
         public void ExportModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath)
         {
             var modelData = SessionManager.Get<ModelPerformanceList>(RTModelPerformanceSessionKey);
+
             if (modelData != null && modelData.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -236,51 +485,41 @@
                         ViewLang.Model,
                         criteria.FromDate.ToShortFormatedDateForFileName(),
                         criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.RTModelPerformanceDetail);
+
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Model);
+
                 writer.CopyRows(0, 1);
-                FilterBlock(userId, criteria, ref writer);
+
+                FilterBlockModel(userId, criteria, ref writer);
                 FillHeader(ref writer, criteria.DataType == ViewLang.Percentage);
+
                 writer.FreezeRow(0, 4);
+
                 FillRowDataModel(modelData, ref writer, criteria.DataType);
+
                 writer.SyncColumnsWidth(17);
                 writer.Render();
             }
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlock(int userId, ICriteria rt3criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlockModel(int userId, GetModelPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);
             IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
 
-            if (rt3criteria is GetModelPerformanceCriteria)
-            {
-                var criteria = rt3criteria as GetModelPerformanceCriteria;
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.DataType, boldFont, criteria.DataType, normalFont, "\n");
-            }
-            else
-            {
-                var criteria = rt3criteria as GetBetTypePerformanceCriteria;
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupNames(criteria.LeagueGroupIds), normalFont, "\n");
-            }
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.DataType, boldFont, criteria.DataType, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
-        }
-
-        private void FillHeader(ref ExcelTemplateWriter writer)
-        {
-            FillHeader(ref writer, false);
-        }
+        }     
 
         private void FillHeader(ref ExcelTemplateWriter writer, bool isPercentage)
         {
@@ -312,32 +551,6 @@
                 writer.CopyRows(3, 2);
             }
         }
-
-        private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return;
-            }
-            // Name
-            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
-            content = content.AddText(nameBlock);
-            // Value
-            TextBlock valueBlock = new TextBlock(value, valueFont);
-            content = content.AddText(valueBlock);
-            if (!string.IsNullOrEmpty(endString))
-            {
-                content = content.AddText(endString);
-            }            
-            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
-            var line = name + value;
-            lineCount += Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
-        }       
-
-        private void FillRowDataMonth(MonthlyList data, ref ExcelTemplateWriter writer)
-        {
-            
-        }        
 
         private void FillRowDataModel(ModelPerformanceList data, ref ExcelTemplateWriter writer, string dataType)
         {
@@ -396,7 +609,8 @@
                     (object)total.Total8RMWLMargin ?? ViewLang.NA
                 };
                 writer.WriteRow(7, totalRecord);
-            } else
+            }
+            else
             {
                 var totalRecord = new object[]
                 {
@@ -420,16 +634,74 @@
                     (object)total.Total8RMWLMargin ?? ViewLang.NA
                 };
                 writer.WriteRow(7, totalRecord);
-            }            
+            }
         }
 
+        private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+            // Name
+            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            content = content.AddText(nameBlock);
+            // Value
+            TextBlock valueBlock = new TextBlock(value, valueFont);
+            content = content.AddText(valueBlock);
+            if (!string.IsNullOrEmpty(endString))
+            {
+                content = content.AddText(endString);
+            }            
+            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
+            var line = name + value;
+            lineCount += Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
+        }       
+          
         private string GetLeagueGroupNames(string leagueGroupIds)
         {
             var leagueGroups = SessionManager.Get<Dictionary<int, string>>(RTModelLeagueGroupsSessionKey);
-            var leagueGroupIdList = Array.ConvertAll(leagueGroupIds.Split(','), s => Int16.Parse(s)).ToList();           
+            var leagueGroupIdList = Array.ConvertAll(leagueGroupIds.Split(','), s => Int16.Parse(s)).ToList();            
+
+            if (leagueGroups.Count == leagueGroupIdList.Count)
+            {
+                return ViewLang.All;
+            }
+
             var leagueGroupNames = leagueGroups.Join(leagueGroupIdList, a => a.Key, b => b, (a, b) => a.Value);
 
             return string.Join(",", leagueGroupNames);
         }
+
+        private string GetSiteName(string siteIds)
+        {
+            var siteIdList = Array.ConvertAll(siteIds.Split(','), s => Int16.Parse(s)).ToList();
+            var siteNames = new List<string>();
+
+            foreach (var siteId in siteIdList)
+            {
+                switch (siteId)
+                {
+                    case 1:
+                        siteNames.Add(Consts.SiteCN88);
+                        break;
+                    case 2:
+                        siteNames.Add(Consts.SiteCash);
+                        break;
+                    case 3:
+                        siteNames.Add(Consts.SiteNova);
+                        break;
+                }
+            }
+
+            if (siteNames.Count == 3)
+            {
+                return ViewLang.All;
+            }
+
+            return string.Join(",", siteNames);
+        }
+
+        #endregion
     }
 }

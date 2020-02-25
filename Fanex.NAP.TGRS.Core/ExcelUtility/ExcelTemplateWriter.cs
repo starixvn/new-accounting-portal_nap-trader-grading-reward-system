@@ -315,6 +315,49 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             return this._sheet.GetRow(this._rowId - total);
         }
 
+        public IRow CreateRow(int rowIndex, object[] values, int cellCopyIndex)
+        {
+            IRow row = this.CreateRow(rowIndex);
+
+            return SetRowValue(row, values, cellCopyIndex);
+        }
+
+        public IRow SetRowValue(IRow row, object[] values, int cellCopyIndex)
+        {
+            var cellCopy = row.GetCell(cellCopyIndex);
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                var cell = row.GetCell(i);
+
+                if (cell == null)
+                {
+                    cell = row.CreateCell(i);
+                }
+
+                if (i > cellCopyIndex)
+                {
+                    CellExtensions.CopyFrom(cell, cellCopy);
+                }
+
+                cell.SetCellValue(values[i]);
+            }
+
+            return row;
+        }
+
+        public void SetCellStyle(IRow row, ICellStyle cellStyle, int cellStartIndex, int cellEndIndex)
+        {
+            for (int j = cellStartIndex; j < cellEndIndex; j++)
+            {
+                var cell = row.GetCell(j);
+                if (cell != null)
+                {
+                    cell.CellStyle = cellStyle;
+                }
+            }
+        }
+
         #endregion Row related methods
     }
 }

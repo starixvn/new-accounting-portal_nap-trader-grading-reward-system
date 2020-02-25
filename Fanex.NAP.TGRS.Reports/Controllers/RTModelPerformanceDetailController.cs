@@ -63,17 +63,6 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.RobotTradingModelsPerformanceDetail, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            //var templatePath = Server.MapPath(BetTypePerformanceDetail);
-            //var fileName = string.Format(
-            //                    ViewLang.RTModelPerformanceDetailFileName,
-            //                    ViewLang.Month,
-            //                    criteria.FromDate.ToShortFormatedDateForFileName(),
-            //                    criteria.ToDate.ToShortFormatedDateForFileName()) + ".xlsx";
-
-            //var file = _rtModelService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
-
-            //return File(file, "application/vnd.ms-excel", fileName);
-
             var templatePath = Server.MapPath(BetTypePerformanceDetail);
 
             _rtModelService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);

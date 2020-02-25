@@ -21,6 +21,9 @@
         [SpParam(Ignored = true)]
         public string MeasurementHides { get; set; }
 
+        [SpParam(Ignored = true)]
+        public string MeasurementDescs { get; set; }
+
         public override string GetSettingKey()
             => "TGRS_Rpt_RobotTrading_BetType";
 

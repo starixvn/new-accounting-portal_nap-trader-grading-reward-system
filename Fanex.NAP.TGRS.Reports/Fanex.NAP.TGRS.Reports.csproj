@@ -432,7 +432,6 @@
     <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
-    <Compile Include="ViewModels\RTModelPerformanceDetail\BetTypeExcelConfig.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\BetTypeList.cs" />
     <Compile Include="ViewModels\RTModelPerformanceDetail\GroupHeader.cs" />
