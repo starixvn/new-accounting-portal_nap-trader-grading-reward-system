@@ -275,23 +275,23 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/MultipleMatchesPerformance/trader-performance.js"));
 
             bundles.AddAndInclude(
-                "~/styles/rtModelPerformanceDetail",
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/rtModel-performance-detail.less");
+                "~/styles/automationTrading",
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/automation-trading-performance.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/rtModelBetTypePerformanceDetail").Include(
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/bettype-performance.js"));
+            bundles.Add(new ScriptBundle("~/scripts/automationTradingBetTypePerformance").Include(
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/bettype-performance.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/rtModelMonthPerformanceDetail").Include(
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
-               "~/Areas/Reports/Resources/RTModelPerformanceDetail/month-performance.js"));
+            bundles.Add(new ScriptBundle("~/scripts/automationTradingMonthPerformance").Include(
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
+               "~/Areas/Reports/Resources/AutomationTradingPerformance/month-performance.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/rtModelPerformanceDetail").Include(
+            bundles.Add(new ScriptBundle("~/scripts/automationTradingModelPerformance").Include(
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/summary-performance.js",
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/chart-performance.js",
-                "~/Areas/Reports/Resources/RTModelPerformanceDetail/model-performance.js"));
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/chart-performance.js",
+                "~/Areas/Reports/Resources/AutomationTradingPerformance/model-performance.js"));
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

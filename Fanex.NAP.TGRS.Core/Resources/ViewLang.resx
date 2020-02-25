@@ -762,9 +762,6 @@
   <data name="LeagueGroup" xml:space="preserve">
     <value>League Group</value>
   </data>
-  <data name="RTModelPerformanceDetail" xml:space="preserve">
-    <value>Robot Trading Models Performance Detail Report</value>
-  </data>
   <data name="Total8RM" xml:space="preserve">
     <value>8RM Total</value>
   </data>
@@ -780,8 +777,8 @@
   <data name="RealTotal8RMWL" xml:space="preserve">
     <value>Real Total - Ex.8RM WIN LOSS</value>
   </data>
-  <data name="RTModelPerformanceDetailFileName" xml:space="preserve">
-    <value>Robot_Trading_Models_Performance_Detail_{0}_{1}_{2}</value>
+  <data name="AutomationTradingPerformanceFileName" xml:space="preserve">
+    <value>Automation_Trading_Performance_{0}_{1}_{2}</value>
   </data>
   <data name="Leagues" xml:space="preserve">
     <value>Leagues</value>
@@ -825,7 +822,7 @@
   <data name="Site" xml:space="preserve">
     <value>Site</value>
   </data>
-  <data name="RobotTradingModelsPerformanceDetail" xml:space="preserve">
-    <value>Robot Trading Models Performance Detail Report</value>
+  <data name="AutomationTradingPerformance" xml:space="preserve">
+    <value>Automation Trading Performance Report</value>
   </data>
 </root>

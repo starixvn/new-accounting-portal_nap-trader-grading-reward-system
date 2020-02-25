@@ -132,5 +132,5 @@ public static class TGRSFunctionKeys
 
     public const string MultipleMatchesPerformance = "MultipleMatchesPerformance";
 
-    public const string RobotTradingModelsPerformanceDetail = "RobotTradingModelsPerformanceDetail";
+    public const string AutomationTradingPerformance = "AutomationTradingPerformance";
 }

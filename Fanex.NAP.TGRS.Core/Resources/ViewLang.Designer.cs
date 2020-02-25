@@ -196,6 +196,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automation Trading Performance Report.
+        /// </summary>
+        public static string AutomationTradingPerformance {
+            get {
+                return ResourceManager.GetString("AutomationTradingPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automation_Trading_Performance_{0}_{1}_{2}.
+        /// </summary>
+        public static string AutomationTradingPerformanceFileName {
+            get {
+                return ResourceManager.GetString("AutomationTradingPerformanceFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average Grade.
         /// </summary>
         public static string AvgGrade {
@@ -1528,15 +1546,6 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Robot Trading Models Performance Detail Report.
-        /// </summary>
-        public static string RobotTradingModelsPerformanceDetail {
-            get {
-                return ResourceManager.GetString("RobotTradingModelsPerformanceDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rows to display.
         /// </summary>
         public static string RowsToDisplay {
@@ -1560,24 +1569,6 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string RT3WithTraderPerformance {
             get {
                 return ResourceManager.GetString("RT3WithTraderPerformance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Robot Trading Models Performance Detail Report.
-        /// </summary>
-        public static string RTModelPerformanceDetail {
-            get {
-                return ResourceManager.GetString("RTModelPerformanceDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Robot_Trading_Models_Performance_Detail_{0}_{1}_{2}.
-        /// </summary>
-        public static string RTModelPerformanceDetailFileName {
-            get {
-                return ResourceManager.GetString("RTModelPerformanceDetailFileName", resourceCulture);
             }
         }
         
