@@ -250,14 +250,16 @@
             var columns = new List<object>
             {
                 ViewLang.GrandTotal,
-                grandTotal.MatchCount,
+                string.Empty,
                 grandTotal.BetCount
-            };            
+            };
 
-            FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);          
+            var row = FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);
+
+            SheetExtensions.MergeCells(row.Sheet, 8, 0, 8, 1);
         }
 
-        private void FillRowData(IDictionary<string, RobotTradingItem> robotTradingItemList,
+        private IRow FillRowData(IDictionary<string, RobotTradingItem> robotTradingItemList,
            List<object> columns,
            int styleIndex,
            ref ExcelTemplateWriter writer)
@@ -285,7 +287,7 @@
                 }
             }
          
-            var row = writer.CreateRow(styleIndex, columns.ToArray(), 3);
+            return writer.CreateRow(styleIndex, columns.ToArray(), 3);
         }
 
         #endregion
