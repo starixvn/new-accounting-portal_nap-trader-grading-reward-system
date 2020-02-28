@@ -13,11 +13,11 @@
         public const string AutomationTradingGroupHeaderRealTotal = "RealTotal";
         public const string AutomationTradingGroupHeaderTotal8RM = "Total8RM";
         public const string AutomationTradingGroupHeaderRealTotal8RMWL = "RealTotal8RMWL";
-        public const string AutomationTradingLeagueGroupMJ = "MJ";        
+        public const string AutomationTradingLeagueGroupMJ = "MJ";
+        public const string AutomationTradingLeagueGroupM1 = "M1";
         public const string AutomationTradingLeagueGroupM2 = "M2";
         public const string AutomationTradingLeagueGroupM3 = "M3";
         public const string AutomationTradingLeagueGroupM4 = "M4";
-        public const string AutomationTradingLeagueGroupM5 = "M5";
         public const string AutomationTradingLeagueGroupOthers = "Others";
     }
 }
