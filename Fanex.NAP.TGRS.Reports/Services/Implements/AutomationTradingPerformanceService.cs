@@ -33,10 +33,10 @@
         {
             var leagueGroups = new Dictionary<int, string>();
             leagueGroups.Add(1, Consts.AutomationTradingLeagueGroupMJ);
-            leagueGroups.Add(2, Consts.AutomationTradingLeagueGroupM2);
-            leagueGroups.Add(3, Consts.AutomationTradingLeagueGroupM3);
-            leagueGroups.Add(4, Consts.AutomationTradingLeagueGroupM4);
-            leagueGroups.Add(5, Consts.AutomationTradingLeagueGroupM5);
+            leagueGroups.Add(2, Consts.AutomationTradingLeagueGroupM1);
+            leagueGroups.Add(3, Consts.AutomationTradingLeagueGroupM2);
+            leagueGroups.Add(4, Consts.AutomationTradingLeagueGroupM3);
+            leagueGroups.Add(5, Consts.AutomationTradingLeagueGroupM4);
             leagueGroups.Add(6, Consts.AutomationTradingLeagueGroupOthers);
             SessionManager.Set<Dictionary<int, string>>(AutomationTradingLeagueGroupsSessionKey, leagueGroups);
 

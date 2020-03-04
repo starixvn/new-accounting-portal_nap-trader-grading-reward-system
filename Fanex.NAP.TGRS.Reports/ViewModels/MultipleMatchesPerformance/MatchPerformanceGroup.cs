@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Common;
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
 
     /// <summary>
@@ -60,24 +61,48 @@
 
         public MatchPerformanceItem Total { get; set; }
        
-        public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping)
+        public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping, bool isViewMatchDetail)
         {
             var groupOrder = grouping.OrderBy(c => c.GlobalShowTime);
-            foreach (var item in groupOrder)
+
+            foreach (var info in groupOrder)
             {
-                if (item != null)
+                if (!isViewMatchDetail && info.ParentId > 0)
                 {
-                    this.ArrangeRangeDate(item);
-                    this.AddItem(new MatchPerformanceItem(item));
+                    var subMatch = this.ItemList.FirstOrDefault(x => x.ParentId == info.ParentId);
+
+                    if (subMatch == null)
+                    {
+                        var matchItem = AddMatchItem(info);
+                        matchItem.GenerateMatchNameDisplay();
+
+                        continue;
+                    }
+
+                    subMatch.ChildMatchIdList.Add(Converter.ToInt(info.MatchId));
+                    subMatch.BetCount += Converter.ToInt(info.BetCount);
+                    subMatch.Turnover += Converter.ToDecimal(info.Turnover);
+                    subMatch.WinLoss += Converter.ToDecimal(info.WinLoss);
+                    subMatch.Margin = CalculateMargin(subMatch.WinLoss, subMatch.Turnover);
+
+                    continue;
                 }
+
+                AddMatchItem(info);
             }
-        }    
+        }
 
-        private void AddItem(MatchPerformanceItem item)
+        private MatchPerformanceItem AddMatchItem(MatchPerformanceInfo info)
         {
-            this.ItemList.Add(item);
+            this.ArrangeRangeDate(info);
 
-            CalculateTotal(item);
+            var matchItem = new MatchPerformanceItem(info);
+
+            this.ItemList.Add(matchItem);
+
+            CalculateTotal(matchItem);
+
+            return matchItem;
         }
 
         private void CalculateTotal(MatchPerformanceItem item)
@@ -85,7 +110,16 @@
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
             this.Total.BetCount += item.BetCount;
-            this.Total.Margin += item.Margin;
+        }
+
+        private decimal CalculateMargin(decimal winLoss, decimal turnover)
+        {
+            if (turnover != 0)
+            {
+                return winLoss / turnover * 100;
+            }
+
+            return 0;
         }
     }
 }

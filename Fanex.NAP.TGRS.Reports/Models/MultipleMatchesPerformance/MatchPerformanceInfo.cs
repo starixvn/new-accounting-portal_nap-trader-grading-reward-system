@@ -16,6 +16,8 @@
 
         public int MatchGroup { get; set; }
 
+        public int? ParentId { get; set; }
+
         public string LeagueName { get; set; }
 
         public decimal? Turnover { get; set; }

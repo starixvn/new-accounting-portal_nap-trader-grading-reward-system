@@ -12,13 +12,13 @@
     {
         public TraderPerformanceList()
         {
-            this.GroupList = new LinkedList<TraderPerformanceGroup>();
+            this.GroupTraderList = new LinkedList<TraderPerformanceGroup>();
             this.GrandTotal = new TraderPerformanceItem();
         }
 
         public int TotalItems { get; set; }
 
-        public ICollection<TraderPerformanceGroup> GroupList { get; set; }
+        public ICollection<TraderPerformanceGroup> GroupTraderList { get; set; }
 
         public TraderPerformanceItem GrandTotal { get; set; }
 
@@ -30,7 +30,7 @@
         {
             if (group != null)
             {
-                this.GroupList.Add(group);
+                this.GroupTraderList.Add(group);
                 this.GrandTotal.Count += group.Total.Count;
                 this.GrandTotal.Turnover += group.Total.Turnover;
                 this.GrandTotal.WinLoss += group.Total.WinLoss;

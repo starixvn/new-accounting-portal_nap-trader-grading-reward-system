@@ -9,6 +9,7 @@
     using System;
     using System.Web.Mvc;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance;
 
     public class MultipleMatchesPerformanceController : TGRSBaseController
     {
@@ -101,7 +102,21 @@
         public JsonResult GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria);
+
+            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, false);
+            var jsonResult = Json(martchPerformance);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchDetailPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, true);
             var jsonResult = Json(martchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
 

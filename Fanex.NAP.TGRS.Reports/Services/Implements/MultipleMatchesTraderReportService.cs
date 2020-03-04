@@ -19,11 +19,13 @@
     
     public partial class MultipleMatchesTraderReportService : TGRSBaseService, IMultipleMatchesReportService
     {
+        #region Consts
         private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.DefaultBettype";
         private const string TeamsSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.Teams";
         private const string MultipleMatchesTraderPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.MultipleMatchesTrader.TraderPerformance";
         private const int PointInPixel = 225;
         private const string SpaceBlank = " ";
+        #endregion
 
         public IEnumerable<BetTypeDefaultItem> GetBetTypes(int userId, BettypeViewPermission permission = BettypeViewPermission.All)
         {
@@ -74,18 +76,21 @@
                     traderGroup.AddHeader(group);
                     traderGroup.AddTraderList(group);
                     traderGroup.Total.Margin = CalculateTotalMargin(traderGroup.Total.WinLoss, traderGroup.Total.Turnover);
+
                     traderPerformance.AddItem(traderGroup);
                 }
-                traderPerformance.GroupList = traderPerformance.GroupList.ToList();
+
+                traderPerformance.GroupTraderList = traderPerformance.GroupTraderList.ToList();
                 traderPerformance.GrandTotal.Margin = CalculateTotalMargin(traderPerformance.GrandTotal.WinLoss, traderPerformance.GrandTotal.Turnover);
                 traderPerformance.TotalItems = traderData.Count();
+
                 SessionManager.Set<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey, traderPerformance);
             }            
 
             return traderPerformance;
         }
 
-        public MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria)
+        public MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria, bool isViewMatchDetail)
         {
             var matchPerformance = new MatchPerformanceList();
             var matchData = this.GetData<MatchPerformanceInfo>(criteria);
@@ -94,15 +99,14 @@
 
             foreach (IGrouping<int, MatchPerformanceInfo> group in matchGroups)
             {
-                if (group.Key > 0)
-                {
-                    matchGroup = new MatchPerformanceGroup(group.Key);
-                    matchGroup.AddMatchList(group);
-                    matchGroup.Total.Margin = CalculateTotalMargin(matchGroup.Total.WinLoss, matchGroup.Total.Turnover);
-                    matchPerformance.AddItem(matchGroup);
-                }
+                matchGroup = new MatchPerformanceGroup(group.Key);
+                matchGroup.AddMatchList(group, isViewMatchDetail);
+                matchGroup.Total.Margin = CalculateTotalMargin(matchGroup.Total.WinLoss, matchGroup.Total.Turnover);
+
+                matchPerformance.AddItem(matchGroup);
             }
-            matchPerformance.GroupList = matchPerformance.GroupList.ToList();
+
+            matchPerformance.GroupMatchList = matchPerformance.GroupMatchList.ToList();
             matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
             matchPerformance.TotalItems = matchData.Count();
 
@@ -241,7 +245,7 @@
         private void FillRowData(TraderPerformanceList data, ref ExcelTemplateWriter writer)
         {
             var index = 1;
-            foreach (var group in data.GroupList)
+            foreach (var group in data.GroupTraderList)
             {
                 foreach (var item in group.ItemList)
                 {

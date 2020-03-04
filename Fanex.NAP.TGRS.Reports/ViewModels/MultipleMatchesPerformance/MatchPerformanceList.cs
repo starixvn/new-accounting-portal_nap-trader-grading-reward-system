@@ -11,13 +11,13 @@
     {
         public MatchPerformanceList()
         {
-            this.GroupList = new LinkedList<MatchPerformanceGroup>();
+            this.GroupMatchList = new LinkedList<MatchPerformanceGroup>();
             this.GrandTotal = new MatchPerformanceItem();
         }
 
         public int TotalItems { get; set; }
 
-        public ICollection<MatchPerformanceGroup> GroupList { get; set; }
+        public ICollection<MatchPerformanceGroup> GroupMatchList { get; set; }
 
         public MatchPerformanceItem GrandTotal { get; set; }
 
@@ -29,7 +29,7 @@
         {
             if (group != null)
             {
-                this.GroupList.Add(group);
+                this.GroupMatchList.Add(group);
                 this.GrandTotal.Turnover += group.Total.Turnover;
                 this.GrandTotal.WinLoss += group.Total.WinLoss;
                 this.GrandTotal.BetCount += group.Total.BetCount;
