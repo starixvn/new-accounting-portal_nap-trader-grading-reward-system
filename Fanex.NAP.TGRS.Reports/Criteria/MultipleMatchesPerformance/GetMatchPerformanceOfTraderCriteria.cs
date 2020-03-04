@@ -10,7 +10,7 @@
         public DateTime ToDate { get; set; }
 
         public int CustId { get; set; }
-
+        
         public string MatchIds { get; set; }
 
         public string Bettypes { get; set; }

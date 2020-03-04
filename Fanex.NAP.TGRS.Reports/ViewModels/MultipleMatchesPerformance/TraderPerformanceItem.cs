@@ -14,16 +14,20 @@
             if (traderData != null)
             {
                 this.MultipleMatches = Converter.ToInt(traderData.MultipleMatches);
+                this.MultipleTimes = Converter.ToInt(traderData.MultipleTimes);
                 this.Count = Converter.ToInt(traderData.MultipleTimes);
                 this.MatchList = traderData.MatchList;
                 this.Turnover = Converter.ToDecimal(traderData.Turnover);
                 this.WinLoss = Converter.ToDecimal(traderData.Winloss);
                 this.BetCount = Converter.ToInt(traderData.BetCount);
                 this.Margin = Converter.ToDecimal(traderData.Margin);
+                this.GroupList = traderData.GroupList;
             }
         }
 
         public int MultipleMatches { get; set; }
+
+        public int MultipleTimes { get; set; }
 
         public int Count { get; set; }
 
@@ -35,6 +39,8 @@
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }        
+        public decimal Margin { get; set; }
+
+        public string GroupList { get; set; }
     }
 }

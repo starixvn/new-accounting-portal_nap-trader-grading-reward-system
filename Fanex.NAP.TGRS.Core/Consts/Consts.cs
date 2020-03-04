@@ -17,7 +17,20 @@
         public const string AutomationTradingLeagueGroupM1 = "M1";
         public const string AutomationTradingLeagueGroupM2 = "M2";
         public const string AutomationTradingLeagueGroupM3 = "M3";
-        public const string AutomationTradingLeagueGroupM4 = "M4";
+        public const string AutomationTradingLeagueGroupM4 = "M4";        
         public const string AutomationTradingLeagueGroupOthers = "Others";
+
+        public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
+        public const string MultipleMatchesMatchKeyConner = "Conner";
+        public const string MultipleMatchesMatchKeyTotalBookings = "Total Bookings";
+        public const string MultipleMatchesMatchKeyBooking = "Booking";
+        public const string MultipleMatchesMatchKeyGoalKick = "Goal Kick";
+        public const string MultipleMatchesMatchKeyGoal = "Goal";
+        public const string MultipleMatchesMatchKeyPenalty = "Penalty";
+        public const string MultipleMatchesMatchKeyET = "(ET)";
+        public const string MultipleMatchesMatchKeyPEN = "(PEN)";
+        public const string MultipleMatchesLeagueKey10MINS = "10MINs";
+        public const string MultipleMatchesLeagueKey15MINS = "15MINs";
+        public const string MultipleMatchesTextNext = "Next";
     }
 }

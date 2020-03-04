@@ -16,7 +16,7 @@
 
         void ExportTraderPerformance(int userId, GetTraderPerformanceCriteria criteria, string templatePath);
 
-        MatchPerformanceList GetMatchPerformanceOfTrader(ICriteria criteria);
+        MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria, bool isViewMatchDetail);
 
         BetTypeList GetBettypeTrader(ICriteria criteria);
     }
