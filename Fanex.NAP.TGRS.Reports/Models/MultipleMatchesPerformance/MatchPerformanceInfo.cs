@@ -6,6 +6,8 @@
     {
         public int? MatchId { get; set; }
 
+        public string MatchCode { get; set; }
+        
         public DateTime? EventDate { get; set; }
 
         public DateTime? GlobalShowTime { get; set; }

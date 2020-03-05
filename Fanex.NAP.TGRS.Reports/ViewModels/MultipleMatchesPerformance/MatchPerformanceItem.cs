@@ -15,6 +15,8 @@
     [Serializable]
     public class MatchPerformanceItem
     {
+        private const char CharacterSplit = ' ';
+
         public MatchPerformanceItem()
         {}
 
@@ -80,10 +82,18 @@
 
         public void GenerateMatchNameDisplay()
         {
-            var teamNameHome = GetTeamName(this.TeamHomeName);
-            var teamNameAway = GetTeamName(this.TeamAwayName);
+            var teamHomeName = GetTeamName(this.TeamHomeName);
+            var teamAwayName = GetTeamName(this.TeamAwayName);
 
-            this.MatchNameDisplay = string.Format("{0} {1} {2}", teamNameHome, ViewLang.Vs, teamNameAway);
+            this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
+        }
+
+        public void GenerateMatchNameDisplayETOrPEN(string subHomeName, string subAwayName)
+        {
+            var teamHomeName = GetNameETOrPEN(this.TeamHomeName, subHomeName);
+            var teamAwayName = GetNameETOrPEN(this.TeamAwayName, subAwayName);
+
+            this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
         }
 
         private string GetTeamName(string teamName)
@@ -115,15 +125,7 @@
             else if (teamName.Contains(Consts.MultipleMatchesMatchKeyPenalty))
             {
                 return GetNameXth(teamName, Consts.MultipleMatchesMatchKeyPenalty);
-            }
-            else if (teamName.Contains(Consts.MultipleMatchesMatchKeyET))
-            {
-                return GetNameETOrPEN(teamName, Consts.MultipleMatchesMatchKeyET);
-            } 
-            else if(teamName.Contains(Consts.MultipleMatchesMatchKeyPEN))
-            {
-                return GetNameETOrPEN(teamName, Consts.MultipleMatchesMatchKeyPEN);
-            }
+            }            
 
             return teamName;
         }
@@ -146,10 +148,9 @@
         }
 
         private string GetNameXth(string teamName, string matchKey)
-        {
-            var result = string.Empty;
-            var characterSplit = ' ';
-            var arrTeam = teamName.Split(characterSplit);
+        {               
+            var arrTeam = teamName.Split(CharacterSplit);
+
             var index = Array.FindIndex(arrTeam, x => x == matchKey);
 
             if (index >= 1)
@@ -157,29 +158,17 @@
                 arrTeam[index - 1] = Consts.MultipleMatchesTextNext;
             }
 
-            foreach (var item in arrTeam)
-            {
-                result += item + characterSplit;
-            }
-
-            return result;
-        }
-
-        private string GetNameETOrPEN(string teamName, string matchKey)
-        {
-            return teamName;
-        }
+            return ConvertToString(arrTeam);
+        }        
        
         private string GetNameGoalKick(string teamName)
         {
-            var result = string.Empty;
-            var characterSplit = ' ';
             var indexReplace = 0;
-            var arrTeam = teamName.Split(characterSplit);
+            var arrTeam = teamName.Split(CharacterSplit);
 
             for (int i = 0; i < arrTeam.Length - 1; i++)
             {
-                var nextText = arrTeam[i] + characterSplit + arrTeam[i + 1];
+                var nextText = arrTeam[i] + CharacterSplit + arrTeam[i + 1];
 
                 if (nextText.ToUpper().Equals(Consts.MultipleMatchesMatchKeyGoalKick.ToUpper()))
                 {
@@ -190,10 +179,41 @@
                     break;
                 }
             }
+      
+            return ConvertToString(arrTeam);
+        }
 
-            foreach (var item in arrTeam)
+        private string GetNameETOrPEN(string parnetTeamName, string teamName)
+        {
+            if (parnetTeamName == teamName)
             {
-                result += item + characterSplit;
+                return parnetTeamName;
+            }
+
+            var arrTeam = parnetTeamName.Split(CharacterSplit);
+
+            var index = Array.FindIndex(arrTeam, x => x == Consts.MultipleMatchesMatchKeyET);
+
+            if (index < 0)
+            {
+                index = Array.FindIndex(arrTeam, x => x == Consts.MultipleMatchesMatchKeyPEN);
+            }
+
+            if (index >= 1)
+            {
+                arrTeam[index] = Consts.MultipleMatchesTextETPEN;
+            }
+
+            return ConvertToString(arrTeam);
+        }
+
+        private string ConvertToString(string [] array)
+        {
+            var result = string.Empty;
+
+            foreach (var item in array)
+            {
+                result += item + CharacterSplit;
             }
 
             return result;
