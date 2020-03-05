@@ -25,12 +25,16 @@
             if (matchData != null && matchData.MatchId.HasValue)
             {
                 this.MatchId = Converter.ToInt(matchData.MatchId);
-                this.ChildMatchIdList = new List<int>();
-                this.ChildMatchIdList.Add(Converter.ToInt(matchData.MatchId));
+                this.MatchCode = matchData.MatchCode;
+                this.SubMatchIdList = new List<int>();
+                this.SubMatchIdList.Add(Converter.ToInt(matchData.MatchId));
+                this.HomeId = Converter.ToInt(matchData.HomeId);
                 this.TeamHomeName = CacheRef.GetTeamName(matchData.HomeId);
+                this.AwayId = Converter.ToInt(matchData.AwayId);
                 this.TeamAwayName = CacheRef.GetTeamName(matchData.AwayId);
                 this.MatchName = string.Format("{0} {1} {2}", this.TeamHomeName, ViewLang.Vs, this.TeamAwayName);
                 this.MatchNameDisplay = this.MatchName;
+                this.MatchGroup = Converter.ToInt(matchData.MatchGroup);
                 this.EventDate = matchData.EventDate;
                 this.GlobalShowTime = matchData.GlobalShowTime;
                 this.LeagueName = matchData.LeagueName;
@@ -39,18 +43,27 @@
                 this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
                 this.BetCount = Converter.ToInt(matchData.BetCount);
                 this.Margin = Converter.ToDecimal(matchData.Margin);
+                this.IsBetdaq = false;
             }
         }
 
         public int MatchId { get; set; }
 
+        public string MatchCode { get; set; }
+
         public string MatchName { get; set; }
 
         public string MatchNameDisplay { get; set; }
 
-        public List<int> ChildMatchIdList { get; set; }
+        public int MatchGroup { get; set; }
+
+        public List<int> SubMatchIdList { get; set; }
+
+        public int HomeId { get; set; }
 
         public string TeamHomeName { get; set; }
+
+        public int AwayId { get; set; }
 
         public string TeamAwayName { get; set; }
 
@@ -79,6 +92,8 @@
         public int BetCount { get; set; }
 
         public decimal Margin { get; set; }
+
+        public bool IsBetdaq { get; set; }
 
         public void GenerateMatchNameDisplay()
         {

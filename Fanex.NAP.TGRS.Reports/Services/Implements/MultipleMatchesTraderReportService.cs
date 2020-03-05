@@ -113,18 +113,32 @@
             return matchPerformance;
         }
 
-        public BetTypeList GetBettypeTrader(ICriteria criteria)
+        public BetTypeList GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria, string subMatchIds)
         {
-            var betTypes = new BetTypeList();
-            var bettypeData = this.GetData<BetTypeInfo>(criteria);
-            if (bettypeData != null && bettypeData.Any())
+            var betTypeList = new BetTypeList();
+            var betTypeInfos = new List<BetTypeInfo>();
+            var betTypeDefaultItems = SessionManager.Get<List<BetTypeDefaultItem>>(DefaultBettypeSessionKey);
+
+            if (!string.IsNullOrEmpty(subMatchIds))
             {
-                var betTypeDefaultItems = SessionManager.Get<List<BetTypeDefaultItem>>(DefaultBettypeSessionKey);
-                betTypes.AddBettypeList(bettypeData, betTypeDefaultItems);
-                betTypes.Total.Margin = CalculateTotalMargin(betTypes.Total.WinLoss, betTypes.Total.Turnover);
+                var arrSubMatchId = subMatchIds.Split(',');
+
+                foreach (var subMatchId in arrSubMatchId)
+                {
+                    criteria.MatchId = int.Parse(subMatchId);
+
+                    betTypeInfos.AddRange(this.GetData<BetTypeInfo>(criteria));
+                }                
+            }
+            else
+            {
+                betTypeInfos.AddRange(this.GetData<BetTypeInfo>(criteria));
             }
 
-            return betTypes;
+            betTypeList.AddBettypeList(betTypeInfos, betTypeDefaultItems);
+            betTypeList.Total.Margin = CalculateTotalMargin(betTypeList.Total.WinLoss, betTypeList.Total.Turnover);
+
+            return betTypeList;
         }
 
         private decimal CalculateTotalMargin(decimal winLoss, decimal turnover)

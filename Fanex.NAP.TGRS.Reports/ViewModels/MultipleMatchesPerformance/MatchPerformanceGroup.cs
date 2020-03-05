@@ -62,41 +62,78 @@
         public ICollection<MatchPerformanceItem> ItemList { get; set; }
 
         public MatchPerformanceItem Total { get; set; }
-       
+
         public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping, bool isGroupingMatchDetail)
         {
-            var groupOrder = grouping.OrderBy(c => c.GlobalShowTime);
+            if (isGroupingMatchDetail)
+            {
+                AddMatchListAndGroupingMatch(grouping);
+            }
+            else
+            {
+                AddMatchList(grouping);
+            }
+        }        
+
+        private void AddMatchListAndGroupingMatch(IGrouping<int, MatchPerformanceInfo> grouping)
+        {
+            var groupOrder = grouping.OrderBy(x => x.GlobalShowTime);
+         
+            foreach (var info in groupOrder)
+            {
+                if (info.ParentId > 0)
+                {
+                    // check match is sub-match
+                    var subMatchItem = this.ItemList.FirstOrDefault(x => x.MatchGroup.Equals(info.MatchGroup)
+                                                            && x.ParentId.Equals(info.ParentId)
+                                                            && x.LeagueName.Equals(info.LeagueName));
+                    AddSubMatchItem(subMatchItem, info);
+                }
+                else
+                {
+                    // check match is Betdaq
+                    var subMatchItem = this.ItemList.FirstOrDefault(x => x.MatchGroup.Equals(info.MatchGroup)
+                                                            && x.HomeId.Equals(info.HomeId)
+                                                            && x.AwayId.Equals(info.AwayId));
+                    if (subMatchItem != null)
+                    {
+                        subMatchItem.IsBetdaq = true;
+                    }
+
+                    AddSubMatchItem(subMatchItem, info);
+                }
+            }
+        }
+
+        private void AddSubMatchItem(MatchPerformanceItem subMatchItem, MatchPerformanceInfo info)
+        {
+            if (subMatchItem == null)
+            {
+                var matchItem = AddMatchItem(info);
+                matchItem.GenerateMatchNameDisplay();
+
+                return;
+            }
+
+            if (subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyET)
+                || subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyPEN))
+            {
+                subMatchItem.GenerateMatchNameDisplayETOrPEN(CacheRef.GetTeamName(info.HomeId), CacheRef.GetTeamName(info.AwayId));
+            }
+
+            subMatchItem.SubMatchIdList.Add(Converter.ToInt(info.MatchId));
+            subMatchItem.BetCount += Converter.ToInt(info.BetCount);
+            subMatchItem.Turnover += Converter.ToDecimal(info.Turnover);
+            subMatchItem.WinLoss += Converter.ToDecimal(info.WinLoss);
+            subMatchItem.Margin = CalculateMargin(subMatchItem.WinLoss, subMatchItem.Turnover);
+        }
+
+        private void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping)
+        {
+            var groupOrder = grouping.OrderBy(x => x.GlobalShowTime);
 
             foreach (var info in groupOrder)
             {
-                if (!isGroupingMatchDetail && info.ParentId > 0)
-                {
-                    var subMatchItem = this.ItemList.FirstOrDefault(x => x.ParentId.Equals(info.ParentId) 
-                                                            && x.LeagueName.Equals(info.LeagueName));
-
-                    if (subMatchItem == null)
-                    {
-                        var matchItem = AddMatchItem(info);
-                        matchItem.GenerateMatchNameDisplay();
-
-                        continue;
-                    }
-                   
-                    if (subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyET) 
-                        || subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyPEN))
-                    {
-                        subMatchItem.GenerateMatchNameDisplayETOrPEN(CacheRef.GetTeamName(info.HomeId), CacheRef.GetTeamName(info.AwayId));
-                    }
-
-                    subMatchItem.ChildMatchIdList.Add(Converter.ToInt(info.MatchId));
-                    subMatchItem.BetCount += Converter.ToInt(info.BetCount);
-                    subMatchItem.Turnover += Converter.ToDecimal(info.Turnover);
-                    subMatchItem.WinLoss += Converter.ToDecimal(info.WinLoss);
-                    subMatchItem.Margin = CalculateMargin(subMatchItem.WinLoss, subMatchItem.Turnover);
-
-                    continue;
-                }
-
                 AddMatchItem(info);
             }
         }
