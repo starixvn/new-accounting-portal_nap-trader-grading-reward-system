@@ -790,6 +790,9 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
     var generateBettypeDetailGridOptions = function (traderName, multipleMatches, matchName, isBreadCrumbSubMatchLink) {
         var spanBreadcrumbMatchLink = domElements.divSubMatchPerformanceContainer.find("#spanSubMatchLink");
+        var textBreadcrumbMatchLink = $(spanBreadcrumbMatchLink).text();
+        textBreadcrumbMatchLink = textBreadcrumbMatchLink != '' ? textBreadcrumbMatchLink.substr(3, textBreadcrumbMatchLink.length) : '';
+
         var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link"> {0}</span>';
         titleFormat += '<span id="spanMatchLink" class="breadcrumb-link"> >> Multiple {1} of {2}</span>';
 
@@ -826,7 +829,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName, $(spanBreadcrumbMatchLink).text(), matchName, shortenName(95, titleLength, matchName))
+                text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName, textBreadcrumbMatchLink, matchName, shortenName(95, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {

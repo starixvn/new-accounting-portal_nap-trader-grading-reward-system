@@ -29,8 +29,10 @@
         public const string MultipleMatchesMatchKeyPenalty = "Penalty";
         public const string MultipleMatchesMatchKeyET = "(ET)";
         public const string MultipleMatchesMatchKeyPEN = "(PEN)";
-        public const string MultipleMatchesLeagueKey10MINS = "10MINs";
-        public const string MultipleMatchesLeagueKey15MINS = "15MINs";
+        public const string MultipleMatchesLeagueKey10MINS = "10 MINs";
+        public const string MultipleMatchesLeagueKey10MINS2 = "10MINs";
+        public const string MultipleMatchesLeagueKey15MINS = "15 MINs";
+        public const string MultipleMatchesLeagueKey15MINS2 = "15MINs";
         public const string MultipleMatchesTextNext = "Next";
         public const string MultipleMatchesTextETPEN = "(ET, PEN)";
     }

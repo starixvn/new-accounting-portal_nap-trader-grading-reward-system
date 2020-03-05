@@ -150,11 +150,13 @@
             var startText = teamName.IndexOf(matchKey);
             var middleText = string.Empty;
 
-            if (this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey10MINS.ToUpper()))
+            if (this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey10MINS.ToUpper())
+                || this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey10MINS2.ToUpper()))
             {
                 middleText = Consts.MultipleMatchesLeagueKey10MINS;
             }
-            else if (this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey15MINS.ToUpper()))
+            else if (this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey15MINS.ToUpper())
+                || this.LeagueName.ToUpper().Contains(Consts.MultipleMatchesLeagueKey15MINS2.ToUpper()))
             {
                 middleText = Consts.MultipleMatchesLeagueKey15MINS;
             }            
