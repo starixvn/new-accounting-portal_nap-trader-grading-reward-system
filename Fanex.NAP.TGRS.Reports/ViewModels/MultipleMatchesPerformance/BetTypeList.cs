@@ -35,10 +35,11 @@
                     this.Total.BetCount += item.BetCount;
                 }
                 else
-                {
+                {                    
                     item.Turnover += Converter.ToDecimal(info.Turnover);
                     item.WinLoss += Converter.ToDecimal(info.WinLoss);
                     item.Margin = item.Turnover == 0 ? 0 : (item.WinLoss / item.Turnover) * 100;
+                    item.BetCount += Converter.ToInt(info.BetCount);
 
                     this.Total.Turnover += Converter.ToDecimal(info.Turnover);
                     this.Total.WinLoss += Converter.ToDecimal(info.WinLoss);
