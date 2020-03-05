@@ -19,7 +19,7 @@
         public const string AutomationTradingLeagueGroupM3 = "M3";
         public const string AutomationTradingLeagueGroupM4 = "M4";        
         public const string AutomationTradingLeagueGroupOthers = "Others";
-
+       
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";
         public const string MultipleMatchesMatchKeyTotalBookings = "Total Bookings";
@@ -32,5 +32,6 @@
         public const string MultipleMatchesLeagueKey10MINS = "10MINs";
         public const string MultipleMatchesLeagueKey15MINS = "15MINs";
         public const string MultipleMatchesTextNext = "Next";
+        public const string MultipleMatchesTextETPEN = "(ET, PEN)";
     }
 }

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Common;
+    using Fanex.NAP.TGRS.Core.Consts;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
 
     /// <summary>
@@ -61,29 +63,36 @@
 
         public MatchPerformanceItem Total { get; set; }
        
-        public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping, bool isViewMatchDetail)
+        public void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping, bool isGroupingMatchDetail)
         {
             var groupOrder = grouping.OrderBy(c => c.GlobalShowTime);
 
             foreach (var info in groupOrder)
             {
-                if (!isViewMatchDetail && info.ParentId > 0)
+                if (!isGroupingMatchDetail && info.ParentId > 0)
                 {
-                    var subMatch = this.ItemList.FirstOrDefault(x => x.ParentId == info.ParentId);
+                    var subMatchItem = this.ItemList.FirstOrDefault(x => x.ParentId.Equals(info.ParentId) 
+                                                            && x.LeagueName.Equals(info.LeagueName));
 
-                    if (subMatch == null)
+                    if (subMatchItem == null)
                     {
                         var matchItem = AddMatchItem(info);
                         matchItem.GenerateMatchNameDisplay();
 
                         continue;
                     }
+                   
+                    if (subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyET) 
+                        || subMatchItem.TeamHomeName.Contains(Consts.MultipleMatchesMatchKeyPEN))
+                    {
+                        subMatchItem.GenerateMatchNameDisplayETOrPEN(CacheRef.GetTeamName(info.HomeId), CacheRef.GetTeamName(info.AwayId));
+                    }
 
-                    subMatch.ChildMatchIdList.Add(Converter.ToInt(info.MatchId));
-                    subMatch.BetCount += Converter.ToInt(info.BetCount);
-                    subMatch.Turnover += Converter.ToDecimal(info.Turnover);
-                    subMatch.WinLoss += Converter.ToDecimal(info.WinLoss);
-                    subMatch.Margin = CalculateMargin(subMatch.WinLoss, subMatch.Turnover);
+                    subMatchItem.ChildMatchIdList.Add(Converter.ToInt(info.MatchId));
+                    subMatchItem.BetCount += Converter.ToInt(info.BetCount);
+                    subMatchItem.Turnover += Converter.ToDecimal(info.Turnover);
+                    subMatchItem.WinLoss += Converter.ToDecimal(info.WinLoss);
+                    subMatchItem.Margin = CalculateMargin(subMatchItem.WinLoss, subMatchItem.Turnover);
 
                     continue;
                 }

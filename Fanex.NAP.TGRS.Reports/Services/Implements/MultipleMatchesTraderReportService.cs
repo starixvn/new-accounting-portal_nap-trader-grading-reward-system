@@ -90,7 +90,7 @@
             return traderPerformance;
         }
 
-        public MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria, bool isViewMatchDetail)
+        public MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria, bool isGroupingMatchDetail)
         {
             var matchPerformance = new MatchPerformanceList();
             var matchData = this.GetData<MatchPerformanceInfo>(criteria);
@@ -100,7 +100,7 @@
             foreach (IGrouping<int, MatchPerformanceInfo> group in matchGroups)
             {
                 matchGroup = new MatchPerformanceGroup(group.Key);
-                matchGroup.AddMatchList(group, isViewMatchDetail);
+                matchGroup.AddMatchList(group, isGroupingMatchDetail);
                 matchGroup.Total.Margin = CalculateTotalMargin(matchGroup.Total.WinLoss, matchGroup.Total.Turnover);
 
                 matchPerformance.AddItem(matchGroup);
