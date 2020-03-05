@@ -20,8 +20,8 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         divTraderPerformanceGrid: null,
         divMatchPerformanceContainer: null,
         divMatchPerformanceGrid: null,
-        divMatchBetdaqPerformanceContainer: null,
-        divMatchBetdaqPerformanceGrid: null,
+        divSubMatchPerformanceContainer: null,
+        divSubMatchPerformanceGrid: null,
         divBettypeDetailContainer: null,
         divBettypeDetailGrid: null
     };
@@ -63,8 +63,8 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
         domElements.divMatchPerformanceContainer = $('#divMatchPerformanceContainer');
         domElements.divMatchPerformanceGrid = $('#divMatchPerformanceGrid');
-        domElements.divMatchBetdaqPerformanceContainer = $('#divMatchBetdaqPerformanceContainer');
-        domElements.divMatchBetdaqPerformanceGrid = $('#divMatchBetdaqPerformanceGrid');
+        domElements.divSubMatchPerformanceContainer = $('#divSubMatchPerformanceContainer');
+        domElements.divSubMatchPerformanceGrid = $('#divSubMatchPerformanceGrid');
         domElements.divBettypeDetailContainer = $('#divBettypeDetailContainer');
         domElements.divBettypeDetailGrid = $('#divBettypeDetailGrid');
     };
@@ -144,7 +144,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     var hideAllReports = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
-        domElements.divMatchBetdaqPerformanceContainer.addClass('display-none');
+        domElements.divSubMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 
@@ -220,7 +220,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: labels.MultipleMatchesPerformance,
+                text: labels.MultipleMatches,
                 showExcelButton: true,
                 exportExcelFunction: function () {
                     exportTraderPerformance();
@@ -416,11 +416,11 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
 
-        handleMatchPerformanceGridEvents(traderId);
+        handleMatchPerformanceGridEvents(multipleMatches);
     };
 
     var generateMatchPerformanceGridOptions = function (traderId, traderName, multipleMatches, ) {
-        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> Multiple by {1} of {2}</span>';
+        var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span><span> >> Multiple {1} of {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
                 { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
@@ -444,7 +444,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName)
+                text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -469,11 +469,12 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         var betTypeDetailFormat = '<span class="bettype-detail-link link" title="{0}" data-trader-id="{1}" data-trader-name="{2}" data-match-id="{3}">{4}</span>';
         betTypeDetailFormat += '<span class="">{5}</span>';
         
-        var matchBetDaqFormat = '<span class="match-betdaq-link link" title="{0}"';
-        matchBetDaqFormat += 'data-trader-id="{1}"';
-        matchBetDaqFormat += 'data-trader-name="{2}"';
-        matchBetDaqFormat += 'data-match-ids="{3}">{4}</span>';
-        matchBetDaqFormat += '<span class="">{5}</span>';
+        var subMatchFormat = '<span class="sub-match-link link" title="{0}"';
+        subMatchFormat += 'data-trader-id="{1}"';
+        subMatchFormat += 'data-trader-name="{2}"';
+        subMatchFormat += 'data-match-ids="{3}"';
+        subMatchFormat += 'data-is-bet-daq="{4}">{5}</span>';
+        subMatchFormat += '<span class="">{6}</span>';
 
         var detailCol = '';
         var bodyData = [];
@@ -484,8 +485,8 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             subRows = [];
             
             $.each(group.Items, function (index, item) {
-                if (item.ChildMatchIdList.length > 1) {
-                    detailCol = matchBetDaqFormat.format(labels.MultipleMatches, traderId, traderName, item.ChildMatchIdList.join(','), item.MatchNameDisplay, item.LeagueName);
+                if (item.SubMatchIdList.length > 1) {
+                    detailCol = subMatchFormat.format(labels.MultipleMatches, traderId, traderName, item.SubMatchIdList.join(','), item.IsBetdaq, item.MatchNameDisplay, item.LeagueName);
                 } else {
                     detailCol = betTypeDetailFormat.format(labels.BetTypeDetail, traderId, traderName, item.MatchId, item.MatchNameDisplay, item.LeagueName);
                 }
@@ -527,20 +528,26 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         }];
     }
 
-    var handleMatchPerformanceGridEvents = function (traderId) {
+    var handleMatchPerformanceGridEvents = function (multipleMatches) {
         domElements.divMatchPerformanceContainer.find('#spanTraderLink').click(function () {
             showTraderPerformanceReport();
         })
 
-        domElements.divMatchPerformanceContainer.find('.match-betdaq-link').click(function () {
+        domElements.divMatchPerformanceContainer.find('.sub-match-link').click(function () {
             var link = $(this);
             var traderId = link.attr('data-trader-id');
             var traderName = link.attr('data-trader-name');
-            var matchIds = link.attr('data-match-ids');
-            var matchName = link.text();
-            var multipleMatches = matchIds != null ? matchIds.split(',').length : 1;
+            var subMatchIds = link.attr('data-match-ids');
+            var matchName = link.text();            
+            var isBetdaq = link.attr('data-is-bet-daq');
 
-            getMatchBetdaqReport(traderId, traderName, matchIds, matchName, multipleMatches);
+            if (isBetdaq == "true") {
+                var isBreadCrumbSubMatchLink = subMatchIds == '' ? true : false;
+
+                getBettypeDetailReport(traderId, traderName, -1, matchName, multipleMatches, isBreadCrumbSubMatchLink, subMatchIds);
+            } else {
+                getSubMatchReport(traderId, traderName, subMatchIds, matchName, multipleMatches);
+            }
         })
 
         domElements.divMatchPerformanceContainer.find('.bettype-detail-link').click(function () {
@@ -548,22 +555,21 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             var traderId = link.attr('data-trader-id');
             var traderName = link.attr('data-trader-name');
             var matchId = link.attr('data-match-id');
-            var matchName = link.text();
-            var multipleMatches = matchId != null ? matchId.split(',').length : 1;  
+            var matchName = link.text();            
 
-            getBettypeDetailReport(traderId, traderName, matchId, matchName, multipleMatches);
+            getBettypeDetailReport(traderId, traderName, matchId, matchName, multipleMatches, false);
         })      
     }
 
     var showTraderPerformanceReport = function () {
         domElements.divTraderPerformanceContainer.removeClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
-        domElements.divMatchBetdaqPerformanceContainer.addClass('display-none');
+        domElements.divSubMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 
-    var getMatchBetdaqReport = function (traderId, traderName, matchIds, matchName, multipleMatches) {
-        var matchBetdaqParams = {
+    var getSubMatchReport = function (traderId, traderName, matchIds, matchName, multipleMatches) {
+        var matchSubMatchParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             Bettypes: parameters.Bettypes,
@@ -578,9 +584,9 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             url: urls.GetMatchDetailPerformanceOfTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(matchBetdaqParams),
+            data: JSON.stringify(matchSubMatchParams),
             success: function (result) {
-                generateMatchBetdaqGrid(result, traderId, traderName, matchName, multipleMatches);
+                generateSubMatchGrid(result, traderId, traderName, matchName, multipleMatches);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -591,32 +597,32 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         });
     }
 
-    var generateMatchBetdaqGrid = function (data, traderId, traderName, matchName, multipleMatches) {
+    var generateSubMatchGrid = function (data, traderId, traderName, matchName, multipleMatches) {
         var bodyData = [];
         var footerData = [];
 
         if (data && data.GroupMatchList.length > 0) {
-            bodyData = generateMatchBetdaqGridBody(data, traderId, traderName, multipleMatches);
-            footerData = generateMatchBetdaqGridFooter(data.GrandTotal);
+            bodyData = generateSubMatchGridBody(data, traderId, traderName, multipleMatches);
+            footerData = generateSubMatchGridFooter(data.GrandTotal);
         }
 
         // Hide previous report.
         domElements.divMatchPerformanceContainer.addClass('display-none');
 
-        var gridOptions = generateMatchBetdaqGridOptions(traderId, traderName, matchName, multipleMatches);
+        var gridOptions = generateSubMatchGridOptions(traderId, traderName, matchName, multipleMatches);
 
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
 
-        domElements.divMatchBetdaqPerformanceGrid.fanexGrid(gridOptions);
+        domElements.divSubMatchPerformanceGrid.fanexGrid(gridOptions);
 
-        handleMatchBetdaqGridEvents(traderId);
+        handleSubMatchGridEvents();
     }
 
-    var generateMatchBetdaqGridOptions = function (traderId, traderName, matchName, multipleMatches) {
+    var generateSubMatchGridOptions = function (traderId, traderName, matchName, multipleMatches) {
         var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link">{0}</span>';
-        titleFormat += '<span id = "spanMatchLink" class="breadcrumb-link" > >> Multiple by {1} of {2} </span>';
-        titleFormat += '<span> >> {3} </span >';
+        titleFormat += '<span id ="spanMatchLink" class="breadcrumb-link" > >> Multiple {1} of {2} </span>';
+        titleFormat += '<span id ="spanSubMatchLink" > >> {3} </span >';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
@@ -641,7 +647,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, matchName)
+                text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName, matchName)
             },
             showTree: true,
             showDistinctRow: false,
@@ -653,7 +659,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         return gridOptions;
     }
 
-    var generateMatchBetdaqGridBody = function (data, traderId, traderName, multipleMatches) {
+    var generateSubMatchGridBody = function (data, traderId, traderName, multipleMatches) {
         var betTypeDetailFormat = '<span class="bettype-detail-link link" title="{0}"';
         betTypeDetailFormat += 'data-trader-id="{1}"';
         betTypeDetailFormat += 'data-trader-name="{2}"';
@@ -703,7 +709,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         return bodyData;
     }
 
-    var generateMatchBetdaqGridFooter = function (total) {
+    var generateSubMatchGridFooter = function (total) {
         return [{
             Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
                 { Name: 'ColTurnover', Value: total.Turnover },
@@ -713,16 +719,16 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         }];
     }
 
-    var handleMatchBetdaqGridEvents = function (traderId) {
-        domElements.divMatchBetdaqPerformanceContainer.find('#spanTraderLink').click(function () {
+    var handleSubMatchGridEvents = function () {
+        domElements.divSubMatchPerformanceContainer.find('#spanTraderLink').click(function () {
             showTraderPerformanceReport();
         })
 
-        domElements.divMatchBetdaqPerformanceContainer.find('#spanMatchLink').click(function () {
+        domElements.divSubMatchPerformanceContainer.find('#spanMatchLink').click(function () {
             showMatchPerformanceReport();
         })
 
-        domElements.divMatchBetdaqPerformanceContainer.find('.bettype-detail-link').click(function () {
+        domElements.divSubMatchPerformanceContainer.find('.bettype-detail-link').click(function () {
             var link = $(this);
             var traderId = link.attr('data-trader-id');
             var traderName = link.attr('data-trader-name');
@@ -734,11 +740,12 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         })      
     }    
 
-    var getBettypeDetailReport = function (traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbBetdaqLink) {        
+    var getBettypeDetailReport = function (traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbSubMatchLink, subMatchIds) {        
         var bettypeDetailParameters = {
             Bettypes: parameters.Bettypes,
             CustId: traderId,
-            MatchId: matchId           
+            MatchId: matchId,
+            SubMatchIds: subMatchIds
         };
         common.DisableInput();
         $.ajax({
@@ -748,7 +755,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(bettypeDetailParameters),
             success: function (result) {
-                generateBettypeDetailGrid(result, traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbBetdaqLink);
+                generateBettypeDetailGrid(result, traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbSubMatchLink);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -760,7 +767,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     }
 
     // generate Bettype of grid.
-    var generateBettypeDetailGrid = function (data, traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbBetdaqLink) {
+    var generateBettypeDetailGrid = function (data, traderId, traderName, matchId, matchName, multipleMatches, isBreadCrumbSubMatchLink) {
         var bodyData = [];
         var footerData = [];
 
@@ -771,9 +778,9 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
 
         // Hide previous report.
         domElements.divMatchPerformanceContainer.addClass('display-none');
-        domElements.divMatchBetdaqPerformanceContainer.addClass('display-none');
+        domElements.divSubMatchPerformanceContainer.addClass('display-none');
 
-        var gridOptions = generateBettypeDetailGridOptions(traderName, multipleMatches, matchName, isBreadCrumbBetdaqLink);
+        var gridOptions = generateBettypeDetailGridOptions(traderName, multipleMatches, matchName, isBreadCrumbSubMatchLink);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divBettypeDetailGrid.fanexGrid(gridOptions);
@@ -781,17 +788,19 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         handleBettypeDetailGridEvents();
     }
 
-    var generateBettypeDetailGridOptions = function (traderName, multipleMatches, matchName, isBreadCrumbBetdaqLink) {
+    var generateBettypeDetailGridOptions = function (traderName, multipleMatches, matchName, isBreadCrumbSubMatchLink) {
+        var spanBreadcrumbMatchLink = domElements.divSubMatchPerformanceContainer.find("#spanSubMatchLink");
         var titleFormat = '<span id="spanTraderLink" class="breadcrumb-link"> {0}</span>';
-        titleFormat += '<span id="spanMatchLink" class="breadcrumb-link"> >> Multiple by {1} of {2}</span>';
+        titleFormat += '<span id="spanMatchLink" class="breadcrumb-link"> >> Multiple {1} of {2}</span>';
 
-        if (isBreadCrumbBetdaqLink) {
-            titleFormat += '<span id="spanMatchBetdaqLink" class="breadcrumb-link" title="{3}"> >> {4}</span>';
+        if (isBreadCrumbSubMatchLink) {
+            titleFormat += '<span id="spanMatchSubMatchLink" title="{3}" class="breadcrumb-link"> >> ... </span>';
+            titleFormat += '<span title="{4}"> >> {5}</span>';
         } else {
-            titleFormat += '<span title="{3}"> >> {4}</span>';
+            titleFormat += '<span title="{4}"> >> {5}</span>';
         }
 
-        var titleLength = labels.MultipleMatchesPerformance.length + traderName.length + 22;
+        var titleLength = labels.MultipleMatches.length + traderName.length + 22;
 
         var gridOptions = {
             columns: [
@@ -817,7 +826,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.MultipleMatchesPerformance, multipleMatches, traderName, matchName, shortenName(95, titleLength, matchName))
+                text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName, $(spanBreadcrumbMatchLink).text(), matchName, shortenName(95, titleLength, matchName))
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -897,22 +906,22 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             showMatchPerformanceReport();
         })
 
-        domElements.divBettypeDetailContainer.find('#spanMatchBetdaqLink').click(function () {
-            showMatchBetdaqReport();
+        domElements.divBettypeDetailContainer.find('#spanMatchSubMatchLink').click(function () {
+            showMatchSubMatchReport();
         })
     }
 
     var showMatchPerformanceReport = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');        
         domElements.divMatchPerformanceContainer.removeClass('display-none');
-        domElements.divMatchBetdaqPerformanceContainer.addClass('display-none');
+        domElements.divSubMatchPerformanceContainer.addClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 
-    var showMatchBetdaqReport = function () {
+    var showMatchSubMatchReport = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
-        domElements.divMatchBetdaqPerformanceContainer.removeClass('display-none');
+        domElements.divSubMatchPerformanceContainer.removeClass('display-none');
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 

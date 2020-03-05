@@ -103,7 +103,7 @@
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
-            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, false);
+            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, true);
             var jsonResult = Json(martchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
 
@@ -116,7 +116,7 @@
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
-            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, true);
+            var martchPerformance = this._traderReportService.GetMatchPerformanceOfTrader(criteria, false);
             var jsonResult = Json(martchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
 
@@ -130,10 +130,10 @@
         /// <returns>JSON object contains the bet type detail.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.MultipleMatchesPerformance, Policy = Constant.Policy.Read)]
-        public JsonResult GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria)
+        public JsonResult GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria, string subMatchIds)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var bettypeDetail = this._traderReportService.GetBettypeTrader(criteria);
+            var bettypeDetail = this._traderReportService.GetBettypeTrader(criteria, subMatchIds);
             var jsonResult = Json(bettypeDetail);
             jsonResult.MaxJsonLength = int.MaxValue;
 

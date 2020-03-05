@@ -18,6 +18,6 @@
 
         MatchPerformanceList GetMatchPerformanceOfTrader(GetMatchPerformanceOfTraderCriteria criteria, bool isViewMatchDetail);
 
-        BetTypeList GetBettypeTrader(ICriteria criteria);
+        BetTypeList GetBettypeTrader(GetBettypeDetailOfTraderCriteria criteria, string subMatchIds);
     }
 }
