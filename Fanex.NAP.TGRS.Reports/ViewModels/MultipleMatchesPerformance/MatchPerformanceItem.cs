@@ -97,21 +97,27 @@
 
         public void GenerateMatchNameDisplay()
         {
-            var teamHomeName = GetTeamName(this.TeamHomeName);
-            var teamAwayName = GetTeamName(this.TeamAwayName);
+            if (this.ParentId > 0)
+            {
+                var teamHomeName = GetTeamName(this.TeamHomeName, this.LeagueName.ToUpper());
+                var teamAwayName = GetTeamName(this.TeamAwayName, this.LeagueName.ToUpper());
 
-            this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
+                this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
+            }
         }
 
         public void GenerateMatchNameDisplayETOrPEN(string subHomeName, string subAwayName)
         {
-            var teamHomeName = GetNameETOrPEN(this.TeamHomeName, subHomeName);
-            var teamAwayName = GetNameETOrPEN(this.TeamAwayName, subAwayName);
+            if (this.ParentId > 0)
+            {
+                var teamHomeName = GetNameETOrPEN(this.TeamHomeName, subHomeName);
+                var teamAwayName = GetNameETOrPEN(this.TeamAwayName, subAwayName);
 
-            this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
+                this.MatchNameDisplay = string.Format("{0} {1} {2}", teamHomeName, ViewLang.Vs, teamAwayName);
+            }            
         }
 
-        private string GetTeamName(string teamName)
+        private string GetTeamName(string teamName, string leagueName)
         {
             if (teamName.Contains(Consts.MultipleMatchesMatchKeyNoOfConners))
             {
@@ -133,14 +139,14 @@
             {
                 return GetNameGoalKick(teamName);
             }
-            else if (teamName.Contains(Consts.MultipleMatchesMatchKeyGoal))
+            else if (leagueName.Contains(Consts.MultipleMatchesLeagueKeyPENALTYSHOOTOUT))
+            {
+                return GetNameXth(teamName, Consts.MultipleMatchesMatchKeyPenalty);
+            }
+            else if (leagueName.Contains(Consts.MultipleMatchesLeagueKeySPECIALSGOAL))
             {
                 return GetNameXth(teamName, Consts.MultipleMatchesMatchKeyGoal);
             }
-            else if (teamName.Contains(Consts.MultipleMatchesMatchKeyPenalty))
-            {
-                return GetNameXth(teamName, Consts.MultipleMatchesMatchKeyPenalty);
-            }            
 
             return teamName;
         }
