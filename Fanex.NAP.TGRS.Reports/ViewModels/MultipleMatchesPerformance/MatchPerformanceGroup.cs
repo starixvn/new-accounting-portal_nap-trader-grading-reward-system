@@ -94,7 +94,11 @@
                     // check match is Betdaq
                     var subMatchItem = this.ItemList.FirstOrDefault(x => x.MatchGroup.Equals(info.MatchGroup)
                                                             && x.HomeId.Equals(info.HomeId)
-                                                            && x.AwayId.Equals(info.AwayId));
+                                                            && x.AwayId.Equals(info.AwayId)
+                                                            && (
+                                                                x.MatchCode.ToUpper().Contains(Consts.MultipleMatchesMatchCodeKeyBETDAQ) 
+                                                                || info.MatchCode.ToUpper().Contains(Consts.MultipleMatchesMatchCodeKeyBETDAQ)
+                                                            ));
                     if (subMatchItem != null)
                     {
                         subMatchItem.IsBetdaq = true;

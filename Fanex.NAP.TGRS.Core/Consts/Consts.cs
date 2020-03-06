@@ -25,7 +25,9 @@
         public const string MultipleMatchesMatchKeyTotalBookings = "Total Bookings";
         public const string MultipleMatchesMatchKeyBooking = "Booking";
         public const string MultipleMatchesMatchKeyGoalKick = "Goal Kick";
+        public const string MultipleMatchesLeagueKeySPECIALSGOAL = "SPECIALS GOAL";
         public const string MultipleMatchesMatchKeyGoal = "Goal";
+        public const string MultipleMatchesLeagueKeyPENALTYSHOOTOUT = "PENALTY SHOOT-OUT";
         public const string MultipleMatchesMatchKeyPenalty = "Penalty";
         public const string MultipleMatchesMatchKeyET = "(ET)";
         public const string MultipleMatchesMatchKeyPEN = "(PEN)";
@@ -35,5 +37,7 @@
         public const string MultipleMatchesLeagueKey15MINS2 = "15MINs";
         public const string MultipleMatchesTextNext = "Next";
         public const string MultipleMatchesTextETPEN = "(ET, PEN)";
+        public const string MultipleMatchesMatchCodeKeyBETDAQ = "BETDAQ";
+
     }
 }
