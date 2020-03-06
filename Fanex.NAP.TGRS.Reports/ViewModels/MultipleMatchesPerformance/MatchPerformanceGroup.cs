@@ -109,8 +109,8 @@
         {
             if (subMatchItem == null)
             {
-                var matchItem = AddMatchItem(info);
-                matchItem.GenerateMatchNameDisplay();
+                subMatchItem = AddMatchItem(info);
+                subMatchItem.GenerateMatchNameDisplay();
 
                 return;
             }
@@ -126,6 +126,11 @@
             subMatchItem.Turnover += Converter.ToDecimal(info.Turnover);
             subMatchItem.WinLoss += Converter.ToDecimal(info.WinLoss);
             subMatchItem.Margin = CalculateMargin(subMatchItem.WinLoss, subMatchItem.Turnover);
+
+            this.Total.Turnover += Converter.ToDecimal(info.Turnover);
+            this.Total.WinLoss += Converter.ToDecimal(info.WinLoss);
+            this.Total.Margin = this.Total.Turnover == 0 ? 0 : (this.Total.WinLoss / this.Total.Turnover) * 100;
+            this.Total.BetCount += Converter.ToInt(info.BetCount);
         }
 
         private void AddMatchList(IGrouping<int, MatchPerformanceInfo> grouping)
@@ -146,17 +151,12 @@
 
             this.ItemList.Add(matchItem);
 
-            CalculateTotal(matchItem);
+            this.Total.Turnover += matchItem.Turnover;
+            this.Total.WinLoss += matchItem.WinLoss;
+            this.Total.BetCount += matchItem.BetCount;
 
             return matchItem;
-        }
-
-        private void CalculateTotal(MatchPerformanceItem item)
-        {
-            this.Total.Turnover += item.Turnover;
-            this.Total.WinLoss += item.WinLoss;
-            this.Total.BetCount += item.BetCount;
-        }
+        }       
 
         private decimal CalculateMargin(decimal winLoss, decimal turnover)
         {
