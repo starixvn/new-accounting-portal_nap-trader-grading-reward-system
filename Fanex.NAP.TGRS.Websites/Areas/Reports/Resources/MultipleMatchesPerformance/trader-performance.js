@@ -569,7 +569,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
     };
 
     var getSubMatchReport = function (traderId, traderName, matchIds, matchName, multipleMatches) {
-        var matchSubMatchParams = {
+        var subMatchParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             Bettypes: parameters.Bettypes,
@@ -584,7 +584,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             url: urls.GetMatchDetailPerformanceOfTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(matchSubMatchParams),
+            data: JSON.stringify(subMatchParams),
             success: function (result) {
                 generateSubMatchGrid(result, traderId, traderName, matchName, multipleMatches);
             },
@@ -797,7 +797,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         titleFormat += '<span id="spanMatchLink" class="breadcrumb-link"> >> Multiple {1} of {2}</span>';
 
         if (isBreadCrumbSubMatchLink) {
-            titleFormat += '<span id="spanMatchSubMatchLink" title="{3}" class="breadcrumb-link"> >> ... </span>';
+            titleFormat += '<span id="spanSubMatchLink" title="{3}" class="breadcrumb-link"> >> ... </span>';
             titleFormat += '<span title="{4}"> >> {5}</span>';
         } else {
             titleFormat += '<span title="{4}"> >> {5}</span>';
@@ -909,8 +909,8 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             showMatchPerformanceReport();
         })
 
-        domElements.divBettypeDetailContainer.find('#spanMatchSubMatchLink').click(function () {
-            showMatchSubMatchReport();
+        domElements.divBettypeDetailContainer.find('#spanSubMatchLink').click(function () {
+            showSubMatchReport();
         })
     }
 
@@ -921,7 +921,7 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
         domElements.divBettypeDetailContainer.addClass('display-none');
     };
 
-    var showMatchSubMatchReport = function () {
+    var showSubMatchReport = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divSubMatchPerformanceContainer.removeClass('display-none');
