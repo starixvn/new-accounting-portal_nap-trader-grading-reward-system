@@ -649,10 +649,9 @@ Fanex.NAP.TGRS.MultipleMatchesPerformance.TraderPerformance = function () {
             titleInfo: {
                 text: titleFormat.format(labels.MultipleMatches, multipleMatches, traderName, matchName)
             },
-            showTree: true,
-            showDistinctRow: false,
-            showPager: true,
-            customPager: true,
+            showTree: true,            
+            showPager: false,            
+            showDistinctRow: false,            
             showFooter: true
         };
 

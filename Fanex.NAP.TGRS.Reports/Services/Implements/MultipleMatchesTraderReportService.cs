@@ -96,6 +96,7 @@
             var matchData = this.GetData<MatchPerformanceInfo>(criteria);
             var matchGroups = matchData.GroupBy(obj => obj.MatchGroup);
             MatchPerformanceGroup matchGroup = null;
+            var totalItems = 0;
 
             foreach (IGrouping<int, MatchPerformanceInfo> group in matchGroups)
             {
@@ -104,11 +105,12 @@
                 matchGroup.Total.Margin = CalculateTotalMargin(matchGroup.Total.WinLoss, matchGroup.Total.Turnover);
 
                 matchPerformance.AddItem(matchGroup);
+                totalItems += matchGroup.ItemList.Count;
             }
 
             matchPerformance.GroupMatchList = matchPerformance.GroupMatchList.ToList();
             matchPerformance.GrandTotal.Margin = CalculateTotalMargin(matchPerformance.GrandTotal.WinLoss, matchPerformance.GrandTotal.Turnover);
-            matchPerformance.TotalItems = matchData.Count();
+            matchPerformance.TotalItems = totalItems;
 
             return matchPerformance;
         }
