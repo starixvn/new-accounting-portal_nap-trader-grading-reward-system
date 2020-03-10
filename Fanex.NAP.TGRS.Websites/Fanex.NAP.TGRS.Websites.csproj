@@ -680,6 +680,7 @@
     <Content Include="Scripts\Libraries\jQuery\jquery.blockUI.2.66.min.js" />
     <Content Include="Scripts\Libraries\MonthPicker\monPickr-0.0.3.js" />
     <Content Include="Scripts\Libraries\MultipleSelect\jquery.multiselect.js" />
+    <Content Include="Scripts\Libraries\WeekPicker\jquery.nexWeekPicker.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\layout.js" />

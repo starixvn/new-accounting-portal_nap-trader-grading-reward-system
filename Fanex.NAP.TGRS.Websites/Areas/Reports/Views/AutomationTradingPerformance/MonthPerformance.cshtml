@@ -21,7 +21,7 @@
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
         <a href="#" class="green-button change-list disabled">
-            <span class="list-icon"></span>@ViewLang.Month
+            <span class="list-icon"></span>@ViewLang.PeriodType
         </a>
         <a href="@Url.Content("~/Reports/AutomationTradingPerformance/ModelPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Model
@@ -30,12 +30,23 @@
 }
 
 <div class="filter-bar">
-    <div id="divMonthPerformanceFilter" class="filter-form">
+    <div id="divMonthPerformanceFilter" class="filter-form">       
         <div class="filter-row">
+            <div class="filter-block">
+                <div class="lbl-field col_4">
+                    <label>@ViewLang.ViewBy</label>
+                </div>
+                <div class="edit-field col_3">
+                    <select id="ddlViewBy">
+                        <option value=@ViewLang.Month>@ViewLang.Month</option>
+                        <option value=@ViewLang.Week>@ViewLang.Week</option>
+                    </select>
+                </div>
+            </div>
             <div class="filter-block">
                 <div class="date-range"><div id="divDateRange"></div></div>
             </div>
-            
+
             <div class="filter-block">
                 <div class="lbl-field col_3">
                     <label>@ViewLang.Model</label>
@@ -61,7 +72,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="filter-block">
                 <div class="lbl-field col_2">
                     <label>@ViewLang.Site</label>
@@ -74,7 +85,7 @@
                     </select>
                 </div>
             </div>
-           
+
             <div class="filter-block">
                 <div class="lbl-field col_4">
                     <label>@ViewLang.Measurement</label>
@@ -101,7 +112,7 @@
                 <div class="submit col_3">
                     <input id="btnGenerate" type="button" class="blue-button bettype-generate" value="@ViewLang.Generate" />
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
@@ -144,7 +155,8 @@
             NA: '@ViewLang.NA',
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
-            MatchPerformance: '@ViewLang.MatchPerformance'            
+            MatchPerformance: '@ViewLang.MatchPerformance',
+            Week: '@ViewLang.Week'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',

@@ -825,4 +825,10 @@
   <data name="AutomationTradingPerformance" xml:space="preserve">
     <value>Automation Trading Performance Report</value>
   </data>
+  <data name="ViewBy" xml:space="preserve">
+    <value>View By</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+  </data>
 </root>

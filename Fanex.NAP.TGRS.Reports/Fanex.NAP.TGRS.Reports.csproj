@@ -180,6 +180,7 @@
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfLeagueTeam.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfTeamCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
@@ -399,6 +400,7 @@
     <Compile Include="Services\Interfaces\ITraderMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\WeekRange.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />

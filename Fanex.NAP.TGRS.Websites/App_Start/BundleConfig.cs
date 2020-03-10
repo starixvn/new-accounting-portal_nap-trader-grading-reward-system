@@ -91,6 +91,7 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Scripts/Libraries/Fanex.Grid/Fanex.Pagination.js",
                 "~/Scripts/Libraries/Others/namespace.js",
                 "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
+                "~/Scripts/Libraries/WeekPicker/jquery.nexWeekPicker.js",
                 "~/Scripts/Libraries/MonthPicker/monPickr-0.0.3.js",
                 "~/Scripts/Libraries/MultipleSelect/jquery.multiselect.js",
                 "~/Scripts/Libraries/Cookie/jquery.cookie.js",

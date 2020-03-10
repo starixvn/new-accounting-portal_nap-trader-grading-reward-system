@@ -9,12 +9,15 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
     var $this = this;
 
     var urls = {
-        GetMonthPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetMonthPerformance'),
+        GetWeekPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetWeekPerformance'),
+        GetMonthPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetMonthPerformance'),        
+        ExportWeekPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportWeekPerformance'),
         ExportMonthPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportMonthPerformance')
     };
 
     var domElements = {
         divMonthPerformanceFilter: null,
+        ddlViewBy: null,
         ddlPeriodType: null,
         ddlLeagueGroup: null,
         btnGenerate: null,
@@ -26,6 +29,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
     var parameters = {
         FromDate: null,
         ToDate: null,
+        WeekRangeFrom: null,
+        WeekRangeTo: null,
         Model: null,
         LeagueGroupIds: null,
         TypeSiteIds: null,
@@ -39,6 +44,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
 
     var cacheDOMElements = function () {
         domElements.divMonthPerformanceFilter = $('#divMonthPerformanceFilter');
+        domElements.ddlViewBy = $('#ddlViewBy');
         domElements.divDateRange = domElements.divMonthPerformanceFilter.find('#divDateRange');
         domElements.ddlModel = domElements.divMonthPerformanceFilter.find('#ddlModel');
         domElements.ddlLeagueGroup = domElements.divMonthPerformanceFilter.find('#ddlLeagueGroup');
@@ -46,7 +52,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         domElements.ddlMeasurement = domElements.divMonthPerformanceFilter.find('#ddlMeasurement');
         domElements.btnGenerate = domElements.divMonthPerformanceFilter.find('#btnGenerate');
         domElements.divMonthPerformanceContainer = $('#divMonthPerformanceContainer');
-        domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');  
+        domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');
         domElements.divSummaryContainer = $('#divSummaryContainer');
     };
 
@@ -58,7 +64,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
             defaultToDate: datepickerSetting.DefaultToDate,
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
-            labelCss: 'col_5'
+            labelCss: 'col_5',
+            isGenerateOptionWeek: true
         });
 
         domElements.ddlPeriodType = domElements.divDateRange.find('#ddlPeriodType');
@@ -74,7 +81,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divMonthPerformanceFilter, 'w')) {
                 domElements.divSummaryContainer.show();
-                
+
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
                 var selectedMeasurements = domElements.ddlMeasurement.val();
@@ -85,15 +92,21 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
                 setStorageFilter("RTMonthlySelectedSideIds", selectedSideIds);
                 setStorageFilter("RTMonthlySelectedMeasurements", selectedMeasurements);
 
-                parameters.FromDate = domElements.divDateRange.getFrom();
-                parameters.ToDate = domElements.divDateRange.getTo();
+                if (domElements.ddlViewBy.val() == labels.Week) {
+                    parameters.WeekRangeFrom = domElements.divDateRange.getFrom();
+                    parameters.WeekRangeTo = domElements.divDateRange.getTo();
+                } else {
+                    parameters.FromDate = domElements.divDateRange.getFrom();
+                    parameters.ToDate = domElements.divDateRange.getTo();
+                }
+                
                 parameters.Model = domElements.ddlModel.val()
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
                 parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
 
                 var notSelectMeasurements = [];
                 domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
-                
+
                 if (selectedMeasurements != null) {
                     parameters.Measurements = selectedMeasurements.join(',');
                     parameters.MeasurementHides = notSelectMeasurements != null ? notSelectMeasurements.join(',') : null;
@@ -107,7 +120,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
                 getMonthPerformanceReport();
             }
         });
-    };  
+    };
 
     var setCacheForFilter = function (ddlDomElement, cacheItem) {
         ddlDomElement.multiselect({
@@ -147,9 +160,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
 
     var getMonthPerformanceReport = function () {
         common.DisableInput();
+
+        var url = domElements.ddlViewBy.val() == labels.Week ? urls.GetWeekPerformance : urls.GetMonthPerformance;
+
         $.ajax({
             type: 'POST',
-            url: urls.GetMonthPerformance,
+            url: url,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
@@ -167,7 +183,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
 
     var renderMonthPerformanceGrid = function (data) {
         var bodyData = [];
-        var footerData = [];        
+        var footerData = [];
 
         if (data && data.ItemList.length > 0) {
             bodyData = generateMonthPerformanceGridBody(data);
@@ -183,29 +199,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         domElements.divMonthPerformanceGrid.fanexGrid(gridOptions);
 
         summaryPerformance.BindData(data.Summary, data.LeagueCount, data.MatchCount);
-        summaryPerformance.Display(true);      
-    }   
-
-    var generateHideColumns = function () {
-        hideColumns = [];
-
-        var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
-
-        if (selectedOptionMeasurements.length == 0) {
-            return hideColumns;
-        }
-
-        var measurementNotSelecteds = domElements.ddlMeasurement.find('option').not(':selected');
-
-        $.each(measurementNotSelecteds, function (index, option) {
-            var arrValue = $(option).val().split('-');
-            var groupHeaderName = arrValue[0];
-            var measurement = arrValue[1];
-
-            hideColumns.push({ GroupHeaderName: groupHeaderName, Measurement: measurement });
-        })
-
-        return hideColumns;
+        summaryPerformance.Display(true);
     }
 
     var generateMonthPerformanceGridOptions = function () {
@@ -285,7 +279,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         } else {
             return generateColumnsDefault();
         }
-    }    
+    }
 
     var generateColumnsDefault = function () {
         var columns = [
@@ -354,7 +348,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         })
 
         return columns;
-    } 
+    }
 
     var generateMonthPerformanceGridBody = function (data) {
         var bodyData = [];
@@ -415,10 +409,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         }];
     }
 
-    var exportMonthPerformance = function () {
+    var exportMonthPerformance = function () {        
         common.DownloadFile(urls.ExportMonthPerformance, parameters);
-    }    
- 
+    }
+
     $this.InitPage = function () {
         cacheDOMElements();
 

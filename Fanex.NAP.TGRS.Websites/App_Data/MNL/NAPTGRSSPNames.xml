@@ -224,6 +224,7 @@
   </Function>
   <Function Name="RobotTradingPerformance">
     <Setting Key="TGRS_Rpt_RobotTrading_BetType" SpName="TGRS_Rpt_RobotTrading_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_Week" SpName="TGRS_Rpt_RobotTrading_Week" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Monthly" SpName="TGRS_Rpt_RobotTrading_Monthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Model" SpName="TGRS_Rpt_RobotTrading_Model" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>

@@ -5,6 +5,7 @@
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Reports.Criteria.AutomationTradingPerformance;
     using Fanex.NAP.TGRS.Reports.Services;
+    using Fanex.NAP.TGRS.Reports.ViewModels.AutomationTradingPerformance;
     using System;    
     using System.Web.Mvc;
     
@@ -81,6 +82,20 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetWeekPerformance(GetWeekPerformanceCriteria criteria, WeekRange weekRange)
+        {
+            criteria.FromDate = weekRange.GetFromDate();
+            criteria.ToDate = weekRange.GetToDate();
+
+            var months = _automationTradingService.GetMonthPerformance(criteria);
+
+            var jsonResult = Json(months);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
             var months = _automationTradingService.GetMonthPerformance(criteria);
@@ -89,6 +104,15 @@
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }       
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportWeekPerformance(GetWeekPerformanceCriteria criteria, WeekRange weekRange)
+        {
+            var templatePath = Server.MapPath(MonthPerformanceDetail);
+            _automationTradingService.ExportMonthPerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]

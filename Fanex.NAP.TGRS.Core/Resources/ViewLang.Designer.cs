@@ -2131,6 +2131,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View By.
+        /// </summary>
+        public static string ViewBy {
+            get {
+                return ResourceManager.GetString("ViewBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Virtual.
         /// </summary>
         public static string Virtual {
@@ -2154,6 +2163,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Vs {
             get {
                 return ResourceManager.GetString("Vs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Week.
+        /// </summary>
+        public static string Week {
+            get {
+                return ResourceManager.GetString("Week", resourceCulture);
             }
         }
         

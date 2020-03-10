@@ -45,7 +45,7 @@
             }
         };
 
-        var getSelectedText = function(element) {
+        var getSelectedText = function (element) {
             var ctrl = element.get(0);
             var value = ctrl.value;
 
@@ -221,7 +221,7 @@
 
                     if (counter === 0) {
                         callbackFunction();
-                        
+
                         if (auto) {
                             counter = refreshTime;
                         } else {
@@ -231,10 +231,10 @@
                 }, 1000);
             }
         };
-        
+
         refreshTime = defaultValue || 0;
         defaultValue = refreshTime === 0 ? 'Not Refresh' : refreshTime;
-        callbackFunction = callbackFunction || function () {};
+        callbackFunction = callbackFunction || function () { };
         auto = auto === undefined ? true : auto;
 
         // Add not refresh value.
@@ -291,7 +291,8 @@
             defaultToDate: currentDate,
             allowYearRange: null,
             yearRanges: null,
-            labelCss: 'col_3'
+            labelCss: 'col_3',
+            isGenerateOptionWeek: false
         };
         var elements = {
             ddlPeriodTypes: null,
@@ -302,36 +303,53 @@
             divMonthPickers: null,
             divMonthFrom: null,
             divMonthTo: null,
+            divWeekPickers: null,            
+            divWeekFrom: null,
+            divWeekTo: null,
             divYearPicker: null,
             ddlYear: null
         };
         var options = $.extend(defaultOptions, opts);
 
         var template = $('<div class="lbl-field ' + options.labelCss + '"><label>Period Type</label></div>' +
-                         '<div class="edit-field"><select id="ddlPeriodType" class="col_3"></select></div>' +
-                         '<div class="edit-field"><div></div></div>' +
-                         '<div class="edit-field">' +
-                            '<div class="ui-separate-label-small"></div>' +
-                            '<div class="ui-month-picker"><div id="divMonthFrom"></div></div>' +
-                            '<div class="ui-separate-label month-label">-</div>' +
-                            '<div class="ui-month-picker second-month"><div id="divMonthTo"></div></div>' +
-                         '</div>');
-                         //'<div class="edit-field"><select id="ddlYear"></select></div>');
+            '<div class="edit-field"><select id="ddlPeriodType" class="col_3"></select></div>' +
+            '<div class="edit-field"><div></div></div>' +
+            '<div class="edit-field">' +
+            '<div class="ui-separate-label-small"></div>' +
+            '<div class="ui-month-picker"><div id="divWeekFrom"><input type="text" /><span hide></span></div></div>' +
+            '<div class="ui-separate-label month-label">-</div>' +
+            '<div class="ui-month-picker second-month"><div id="divWeekTo"><input type="text" /><span hide></span></div></div>' +
+            '</div>' +
+            '<div class="edit-field">' +
+            '<div class="ui-separate-label-small"></div>' +
+            '<div class="ui-month-picker"><div id="divMonthFrom"></div></div>' +
+            '<div class="ui-separate-label month-label">-</div>' +
+            '<div class="ui-month-picker second-month"><div id="divMonthTo"></div></div>' +
+            '</div>'
+        );
+        //'<div class="edit-field"><select id="ddlYear"></select></div>');
 
         var queryElements = function () {
             elements.ddlPeriodTypes = template.find('#ddlPeriodType');
             elements.divDatePickers = $(template.get(2));
             elements.divDatePickersInner = elements.divDatePickers.find('div');
-            elements.divMonthPickers = $(template.get(3));
+            elements.divWeekPickers = $(template.get(3));            
+            elements.divWeekFrom = elements.divWeekPickers.find('#divWeekFrom');
+            elements.divWeekTo = elements.divWeekPickers.find('#divWeekTo');
+            elements.divMonthPickers = $(template.get(4));
             elements.divMonthFrom = elements.divMonthPickers.find('#divMonthFrom');
             elements.divMonthTo = elements.divMonthPickers.find('#divMonthTo');
-            elements.divYearPicker = $(template.get(4));
+            elements.divYearPicker = $(template.get(5));
             elements.ddlYear = elements.divYearPicker.find('#ddlYear');
         };
 
         var initializePeriodTypes = function () {
             elements.ddlPeriodTypes.append($('<option value="1" selected>Date</option>'));
+            if (opts.isGenerateOptionWeek == true) {
+                elements.ddlPeriodTypes.append($('<option value="4">Week</option>'));
+            }
             elements.ddlPeriodTypes.append($('<option value="2">Month</option>'));
+            
             //elements.ddlPeriodTypes.append($('<option value="3">Year</option>'));
 
             elements.ddlPeriodTypes.on('change', function () {
@@ -340,33 +358,44 @@
                 switch (selectedValue) {
                     case 1:
                         elements.divDatePickers.show();
+                        elements.divWeekPickers.hide();
                         elements.divMonthPickers.hide();
                         elements.divYearPicker.hide();
                         break;
 
                     case 2:
                         elements.divDatePickers.hide();
+                        elements.divWeekPickers.hide();
                         elements.divMonthPickers.show();
                         elements.divYearPicker.hide();
                         break;
 
                     case 3:
                         elements.divDatePickers.hide();
+                        elements.divWeekPickers.hide();
                         elements.divMonthPickers.hide();
                         elements.divYearPicker.show();
                         break;
+
+                    case 4:
+                        elements.divDatePickers.hide();
+                        elements.divWeekPickers.show();
+                        elements.divMonthPickers.hide();
+                        elements.divYearPicker.hide();
+                        break;
                 }
             });
+
             elements.ddlPeriodTypes.multiselect({
                 multiple: false,
                 selectedList: 1,
                 header: false,
                 minWidth: 70,
-                height: 47
+                height: opts.isGenerateOptionWeek == true ? 70 : 47
             }).change();
         };
 
-        var intializeDatePickers = function () {
+        var initializeDatePickers = function () {
             var configuration = null;
             var fromDateChangeHandler = function (selectedDate) {
                 var limitedDate = moment(selectedDate).add('year', options.allowYearRange).add('day', -1);
@@ -426,7 +455,21 @@
             elements.dpkToDate = elements.divDatePickers.find('#dpkToDate');
         };
 
-        var intializeMonthPickers = function () {
+        var initializeWeekPickers = function () {
+            elements.divWeekFrom.nexWeekPicker({
+                minDate: new Date(options.minDate),
+                maxDate: new Date(options.maxDate),
+                initDate: new Date(options.defaultFromDate)
+            });
+
+            elements.divWeekTo.nexWeekPicker({
+                minDate: new Date(options.minDate),
+                maxDate: new Date(options.maxDate),
+                initDate: new Date(options.defaultToDate)
+            });
+        };
+
+        var initializeMonthPickers = function () {
             var changeMonthFromHandler = function () {
                 var selectedDate = elements.divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
                 var limitedDate = moment(selectedDate).add('year', options.allowYearRange).add('month', -1);
@@ -473,7 +516,7 @@
             });
         };
 
-        var initalizeYearPicker = function () {
+        var initializeYearPicker = function () {
             var maxYear = (new Date(options.maxDate)).getFullYear();
             var minYear = (new Date(options.minDate)).getFullYear();
 
@@ -486,17 +529,21 @@
             }
 
             $.each(options.yearRanges, function (index, item) {
-                elements.ddlYear.append($('<option value="' + item + '" selected>' + item +'</option>'));
+                elements.ddlYear.append($('<option value="' + item + '" selected>' + item + '</option>'));
             });
         };
 
         //options = $.extend(defaultOptions, options);
         $obj.hide().after(template);
         queryElements();
-        initializePeriodTypes();
-        intializeDatePickers();
-        intializeMonthPickers();
-        //initalizeYearPicker();
+
+        initializePeriodTypes();      
+        initializeDatePickers();
+        initializeMonthPickers();
+        //initializeYearPicker();
+        if (opts.isGenerateOptionWeek == true) {
+            initializeWeekPickers();
+        }
 
         template.getFrom = function () {
             var selectedValue = parseInt(elements.ddlPeriodTypes.val());
@@ -513,6 +560,9 @@
 
                 case 3:
                     fromDate = '01/01/' + elements.ddlYear.val();
+                    break;
+                case 4:                    
+                    fromDate = elements.divWeekFrom.find('span').val();
                     break;
             }
 
@@ -535,16 +585,19 @@
                 case 3:
                     toDate = '12/31/' + elements.ddlYear.val();
                     break;
+                case 4:
+                    toDate = elements.divWeekTo.find('span').val();
+                    break;
             }
 
             return toDate;
         };
 
-        template.getPeriodType = function() {
+        template.getPeriodType = function () {
             return parseInt(elements.ddlPeriodTypes.val());
         };
 
-    return template;
+        return template;
     };
 
     // Clear field.
