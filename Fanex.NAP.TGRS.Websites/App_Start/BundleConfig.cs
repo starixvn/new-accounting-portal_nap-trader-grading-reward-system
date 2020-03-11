@@ -283,9 +283,9 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
                 "~/Areas/Reports/Resources/AutomationTradingPerformance/bettype-performance.js"));
 
-            bundles.Add(new ScriptBundle("~/scripts/automationTradingMonthPerformance").Include(
+            bundles.Add(new ScriptBundle("~/scripts/automationTradingPeriodPerformance").Include(
                 "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
-               "~/Areas/Reports/Resources/AutomationTradingPerformance/month-performance.js"));
+               "~/Areas/Reports/Resources/AutomationTradingPerformance/period-performance.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/automationTradingModelPerformance").Include(
                 "~/Scripts/Libraries/Highcharts/highcharts.js",

@@ -316,9 +316,9 @@
             '<div class="edit-field"><div></div></div>' +
             '<div class="edit-field">' +
             '<div class="ui-separate-label-small"></div>' +
-            '<div class="ui-month-picker"><div id="divWeekFrom"><input type="text" /><span hide></span></div></div>' +
+            '<div class="ui-month-picker"><div id="divWeekFrom"><input type="text" name="input-from" /></div></div>' +
             '<div class="ui-separate-label month-label">-</div>' +
-            '<div class="ui-month-picker second-month"><div id="divWeekTo"><input type="text" /><span hide></span></div></div>' +
+            '<div class="ui-month-picker second-month"><div id="divWeekTo"><input type="text" name="input-to" /></div></div>' +
             '</div>' +
             '<div class="edit-field">' +
             '<div class="ui-separate-label-small"></div>' +
@@ -462,10 +462,22 @@
                 initDate: new Date(options.defaultFromDate)
             });
 
+            var minDateWeekTo = new Date(options.defaultFromDate);           
+            var day = minDateWeekTo.getDay() == 0 ? 7 : minDateWeekTo.getDay();
+            minDateWeekTo.setDate(minDateWeekTo.getDate() - day + 1);
+
             elements.divWeekTo.nexWeekPicker({
-                minDate: new Date(options.minDate),
+                minDate: new Date(minDateWeekTo),
                 maxDate: new Date(options.maxDate),
                 initDate: new Date(options.defaultToDate)
+            });
+                      
+            elements.divWeekFrom.nexWeekPicker("onSelect", function (startDateFrom, endDateFrom, instance) {     
+                elements.divWeekTo.nexWeekPicker("setMinDate", startDateFrom);
+            });
+
+            elements.divWeekTo.nexWeekPicker("onSelect", function (startDateTo, endDateTo, instance) {
+                elements.divWeekFrom.nexWeekPicker("setMaxDate", endDateTo);               
             });
         };
 
@@ -561,8 +573,9 @@
                 case 3:
                     fromDate = '01/01/' + elements.ddlYear.val();
                     break;
-                case 4:                    
-                    fromDate = elements.divWeekFrom.find('span').val();
+                case 4:                                        
+                    fromDate = moment(elements.divWeekFrom.nexWeekPicker("getDates").start).format('MM/DD/YYYY');
+
                     break;
             }
 
@@ -585,8 +598,8 @@
                 case 3:
                     toDate = '12/31/' + elements.ddlYear.val();
                     break;
-                case 4:
-                    toDate = elements.divWeekTo.find('span').val();
+                case 4:                   
+                    toDate = moment(elements.divWeekTo.nexWeekPicker("getDates").end).format('MM/DD/YYYY');
                     break;
             }
 

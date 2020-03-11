@@ -1,18 +1,17 @@
 ﻿$(document).ready(function () {
-    var monthPerformance = new Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance();
+    var period = new Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance();
 
-    monthPerformance.InitPage();
+    period.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance');
-Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
+Namespace.Register('Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance');
+Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
     var $this = this;
 
     var urls = {
         GetWeekPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetWeekPerformance'),
         GetMonthPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetMonthPerformance'),        
-        ExportWeekPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportWeekPerformance'),
-        ExportMonthPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportMonthPerformance')
+        ExportPeriodPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportPeriodPerformance')        
     };
 
     var domElements = {
@@ -21,17 +20,16 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         ddlPeriodType: null,
         ddlLeagueGroup: null,
         btnGenerate: null,
-        divMonthPerformanceContainer: null,
-        divMonthPerformanceGrid: null,
+        divPeriodPerformanceContainer: null,
+        divPeriodPerformanceGrid: null,
         divSummaryContainer: null
     };
 
     var parameters = {
         FromDate: null,
-        ToDate: null,
-        WeekRangeFrom: null,
-        WeekRangeTo: null,
+        ToDate: null,    
         Model: null,
+        ViewBy: null,
         LeagueGroupIds: null,
         TypeSiteIds: null,
         Measurements: null,
@@ -51,8 +49,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         domElements.ddlSite = domElements.divMonthPerformanceFilter.find('#ddlSite');
         domElements.ddlMeasurement = domElements.divMonthPerformanceFilter.find('#ddlMeasurement');
         domElements.btnGenerate = domElements.divMonthPerformanceFilter.find('#btnGenerate');
-        domElements.divMonthPerformanceContainer = $('#divMonthPerformanceContainer');
-        domElements.divMonthPerformanceGrid = $('#divMonthPerformanceGrid');
+        domElements.divPeriodPerformanceContainer = $('#divPeriodPerformanceContainer');
+        domElements.divPeriodPerformanceGrid = $('#divPeriodPerformanceGrid');
         domElements.divSummaryContainer = $('#divSummaryContainer');
     };
 
@@ -69,7 +67,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         });
 
         domElements.ddlPeriodType = domElements.divDateRange.find('#ddlPeriodType');
-        domElements.divDateRange.find("span:contains('Date')").text('Month');
+        domElements.divDateRange.find("span:contains('" + labels.Date + "')").text('Month');
         domElements.ddlPeriodType.val(2).change();
 
         setCacheForFilter(domElements.ddlLeagueGroup, getStorageFilter("RTMonthlySelectedLeagueGroups"));
@@ -77,6 +75,29 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         setCacheForFilter(domElements.ddlSite, getStorageFilter("RTMonthlySelectedSideIds"));
 
         setCacheForFilter(domElements.ddlMeasurement, getStorageFilter("RTMonthlySelectedMeasurements"));
+
+        domElements.ddlViewBy.change(function () {
+            domElements.ddlPeriodType = domElements.divDateRange.find('#ddlPeriodType');
+            var instance = domElements.divDateRange.find("span:contains('" + labels.Date + "')");
+
+            if (domElements.ddlViewBy.val() == labels.Week) {
+                if (instance.length == 0) {
+                    instance = domElements.divDateRange.find("span:contains('" + labels.Month + "')");
+                }
+                if (instance.length > 0) {
+                    instance.text(labels.Week);
+                }
+                domElements.ddlPeriodType.val(4).change();
+            } else {
+                if (instance.length == 0) {
+                    instance = domElements.divDateRange.find("span:contains('" + labels.Week + "')");
+                }  
+                if (instance.length > 0) {
+                    instance.text(labels.Month);
+                }
+                domElements.ddlPeriodType.val(2).change();
+            }
+        });
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divMonthPerformanceFilter, 'w')) {
@@ -92,15 +113,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
                 setStorageFilter("RTMonthlySelectedSideIds", selectedSideIds);
                 setStorageFilter("RTMonthlySelectedMeasurements", selectedMeasurements);
 
-                if (domElements.ddlViewBy.val() == labels.Week) {
-                    parameters.WeekRangeFrom = domElements.divDateRange.getFrom();
-                    parameters.WeekRangeTo = domElements.divDateRange.getTo();
-                } else {
-                    parameters.FromDate = domElements.divDateRange.getFrom();
-                    parameters.ToDate = domElements.divDateRange.getTo();
-                }
-                
-                parameters.Model = domElements.ddlModel.val()
+                parameters.ViewBy = domElements.ddlViewBy.val();
+                parameters.FromDate = domElements.divDateRange.getFrom();
+                parameters.ToDate = domElements.divDateRange.getTo();                
+                parameters.Model = domElements.ddlModel.val();                
                 parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
                 parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
 
@@ -117,9 +133,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
                 }
                 parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
 
-                getMonthPerformanceReport();
+                getPeriodPerformanceReport();
             }
-        });
+        });        
     };
 
     var setCacheForFilter = function (ddlDomElement, cacheItem) {
@@ -158,7 +174,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         return '';
     }
 
-    var getMonthPerformanceReport = function () {
+    var getPeriodPerformanceReport = function () {
         common.DisableInput();
 
         var url = domElements.ddlViewBy.val() == labels.Week ? urls.GetWeekPerformance : urls.GetMonthPerformance;
@@ -170,7 +186,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
-                renderMonthPerformanceGrid(result);
+                renderPeriodPerformanceGrid(result);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -181,28 +197,28 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         });
     }
 
-    var renderMonthPerformanceGrid = function (data) {
+    var renderPeriodPerformanceGrid = function (data) {
         var bodyData = [];
         var footerData = [];
 
         if (data && data.ItemList.length > 0) {
-            bodyData = generateMonthPerformanceGridBody(data);
-            footerData = generateMonthPerformanceGridFooter(data);
+            bodyData = generatePeriodPerformanceGridBody(data);
+            footerData = generatePeriodPerformanceGridFooter(data);
         }
-        var gridOptions = generateMonthPerformanceGridOptions();
+        var gridOptions = generatePeriodPerformanceGridOptions();
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
 
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data) }];
         gridOptions.columns = generateColumns(data);
 
-        domElements.divMonthPerformanceGrid.fanexGrid(gridOptions);
+        domElements.divPeriodPerformanceGrid.fanexGrid(gridOptions);
 
         summaryPerformance.BindData(data.Summary, data.LeagueCount, data.MatchCount);
         summaryPerformance.Display(true);
     }
 
-    var generateMonthPerformanceGridOptions = function () {
+    var generatePeriodPerformanceGridOptions = function () {
         return {
             customizeHeader: true,
             showFooter: true,
@@ -212,7 +228,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
             titleInfo: {
                 showExcelButton: true,
                 exportExcelFunction: function () {
-                    exportMonthPerformance();
+                    exportPeriodPerformance();
                 }
             },
             showColumnsShowHide: false,
@@ -226,7 +242,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
 
     var generateColumnGroupHeaders = function (data) {
         var groupHeaderColumns = [
-            { HeaderText: labels.Monthly, Name: "ColMonthly", MergeRowNumber: 2 },
+            { HeaderText: labels.Period, Name: "ColPeriod", MergeRowNumber: 2 },
+            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
             { HeaderText: labels.MatchCount, Name: "ColMatchCount", MergeRowNumber: 2 },
             { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
         ];
@@ -245,7 +262,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
     var generateColumns = function (data) {
         if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
             var columns = [
-                { HeaderText: labels.Monthly, Width: 120, Name: "ColMonthly", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.Period, Width: 190, Name: "ColPeriod", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
             ];
@@ -283,7 +301,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
 
     var generateColumnsDefault = function () {
         var columns = [
-            { HeaderText: labels.Monthly, Width: 120, Name: "ColMonthly", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.Period, Width: 120, Name: "ColPeriod", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
@@ -350,18 +369,19 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         return columns;
     }
 
-    var generateMonthPerformanceGridBody = function (data) {
+    var generatePeriodPerformanceGridBody = function (data) {
         var bodyData = [];
         var row;
 
-        $.each(data.ItemList, function (indexItem, monthlyItem) {
+        $.each(data.ItemList, function (indexItem, periodItem) {
             var currentRowData = [
-                { Name: 'ColMonthly', Value: monthlyItem.Monthly, CssClass: 'bold' },
-                { Name: 'ColMatchCount', Value: monthlyItem.MatchCount },
-                { Name: 'ColBetCount', Value: monthlyItem.BetCount }
+                { Name: 'ColPeriod', Value: periodItem.Period, CssClass: 'bold' },
+                { Name: 'ColLeagueCount', Value: periodItem.LeagueCount },
+                { Name: 'ColMatchCount', Value: periodItem.MatchCount },
+                { Name: 'ColBetCount', Value: periodItem.BetCount }
             ];
 
-            $.each(monthlyItem.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
+            $.each(periodItem.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
 
                 if (!robotTradingItem.IsHideTurnover) {
                     currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
@@ -384,9 +404,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         return bodyData;
     }
 
-    var generateMonthPerformanceGridFooter = function (data) {
+    var generatePeriodPerformanceGridFooter = function (data) {
         var footerData = [
-            { Name: 'ColMonthly', Value: labels.GrandTotal, CellAlign: 'right' },
+            { Name: 'ColPeriod', Value: labels.GrandTotal, CellAlign: 'right' },
+            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
             { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
             { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
         ];
@@ -409,8 +430,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.MonthPerformance = function () {
         }];
     }
 
-    var exportMonthPerformance = function () {        
-        common.DownloadFile(urls.ExportMonthPerformance, parameters);
+    var exportPeriodPerformance = function () {
+        common.DownloadFile(urls.ExportPeriodPerformance, parameters);
     }
 
     $this.InitPage = function () {

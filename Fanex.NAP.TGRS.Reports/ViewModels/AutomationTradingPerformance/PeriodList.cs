@@ -6,21 +6,21 @@
     using System.Linq;
 
     [Serializable]
-    public class MonthlyList : RobotTradingModelList
+    public class PeriodList : RobotTradingModelList
     {
-        public MonthlyList ()
+        public PeriodList ()
         {
-            ItemList = new List<MonthlyItem>();
-            GrandTotal = new MonthlyItem();
+            ItemList = new List<PeriodItem>();
+            GrandTotal = new PeriodItem();
         }                    
 
-        public IList<MonthlyItem> ItemList { get; set; }        
+        public IList<PeriodItem> ItemList { get; set; }        
 
-        public MonthlyItem GrandTotal { get; set; }             
+        public PeriodItem GrandTotal { get; set; }             
 
-        public void AddMonthlyItem(List<int> siteIdList, IEnumerable<MonthPerformanceInfo> infos, MatchBetCountInfo matchCountInfo, DateTime month)
+        public void AddPeriodItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, MatchBetCountInfo matchCountInfo, string period)
         {
-            var item = new MonthlyItem(month.ToString("yyyy-MM-dd"), this.SiteList, this.MeasurementHiddenList)
+            var item = new PeriodItem(period, this.SiteList, this.MeasurementHiddenList)
                 .GenerateMatchBetCount(matchCountInfo)
                 .GenereateGroupVirtualTotal(siteIdList, infos)
                 .GenereateGroupVariance(siteIdList, infos)
@@ -49,7 +49,8 @@
                 }
             }
 
-            this.GrandTotal.MatchCount = this.ItemList.Sum(x => x.MatchCount);
+            this.GrandTotal.LeagueCount = this.LeagueCount;
+            this.GrandTotal.MatchCount = this.MatchCount;
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
         }              
 

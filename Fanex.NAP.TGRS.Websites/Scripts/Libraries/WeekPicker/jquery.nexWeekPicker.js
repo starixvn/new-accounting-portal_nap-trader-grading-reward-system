@@ -2,20 +2,20 @@
  * jQueryUI Weekpicker
  */
 (function () {    
-    var configs = {};
+    var configs = {};    
 
     $.fn.nexWeekPicker = function (options, func) {
         var $this = $(this);
         var $calendar = $this.nextAll("div:first");
-        
+
         var id = $this.attr("id");
 
         // create a new property to store config data
         if (!configs[id]) {
             configs[id] = { date: new Date() };
-        }            
+        }
 
-        var defaults = configs[id];
+        var defaults = configs[id];        
 
         var displayYear = defaults.date.getFullYear();
 
@@ -35,30 +35,42 @@
             }            
 
             var day = date.getDay() == 0 ? 7 : date.getDay();
+            var startDate = date.getDate() - day + 1;
+
+            
             
             defaults.startDate = new Date(date.getFullYear(), date.getMonth(), 1);
-            defaults.startDate.setDate(date.getDate() - day + 1); 
+            defaults.startDate.setDate(startDate);
+
+            var instance = $this.find('input');
+            if (instance.attr('name') == 'input-from') {
+                if (defaults.startDate < defaults.minDate) {
+                    defaults.startDate.setDate(defaults.minDate.getDate());
+                    defaults.startDate.setMonth(defaults.minDate.getMonth());
+                    defaults.startDate.setFullYear(defaults.minDate.getFullYear());
+                }
+            }
             
             defaults.endDate = new Date(date.getFullYear(), date.getMonth(), 1);
             defaults.endDate.setDate(date.getDate() - day + 7);
             if (defaults.endDate > defaults.maxDate) {
                 defaults.endDate.setDate(defaults.maxDate.getDate());
+                defaults.endDate.setMonth(defaults.maxDate.getMonth());
+                defaults.endDate.setFullYear(defaults.maxDate.getFullYear());
             }
 
-            if (date) {
-                var inputText = (defaults.startDate.getMonth() + 1) + "/" + defaults.startDate.getDate();
-                inputText += ' - ' + (defaults.endDate.getMonth() + 1) + "/" + defaults.endDate.getDate();
-
-                var spanText = (defaults.startDate.getMonth() + 1) + "/" + defaults.startDate.getDate() + "/" + defaults.startDate.getFullYear();
-                spanText += ' - ' + (defaults.endDate.getMonth() + 1) + "/" + defaults.endDate.getDate() + "/" + defaults.endDate.getFullYear();
-
-                $this.find('input').val(inputText);
-                $this.find('span').val(spanText);
+            if (date) {               
+                if (instance.attr('name') == 'input-from') {
+                    instance.val(moment(defaults.startDate).format('MM/DD/YYYY'));
+                } else {
+                    instance.val(moment(defaults.endDate).format('MM/DD/YYYY'));
+                }                                                              
             }
 
             if (defaults.selectHandlers) {
                 for (var i in defaults.selectHandlers) {
                     defaults.selectHandlers[i](defaults.startDate, defaults.endDate, $this[0]);
+                    break;
                 }
             }
 
@@ -71,7 +83,7 @@
             selectCurrentWeek();
 
             displayYear = defaults.startDate.getFullYear();
-        };
+        };       
 
         // nexWeekPicker methods
         if (typeof options == "string") {
@@ -79,16 +91,31 @@
                 $calendar.fadeOut("fast");
             }
             else if (options == "show") {
-                if ($calendar.is(":visible"))
+                if ($calendar.is(":visible")) {
                     return;
+                }
+                selectWeek(defaults.startDate);                
                 $calendar.css("left", $this.position().left).show();
             }
             else if (options == "onSelect") {
                 if (!defaults.selectHandlers) {
                     defaults.selectHandlers = [];
-                }                
+                }
                 defaults.selectHandlers.push(func);
             }
+            else if (options == "getLimitDate") {
+                return { minDate: defaults.minDate, maxDate: defaults.maxDate };
+            } 
+            else if (options == "setMinDate") {               
+                $calendar.datepicker("option", {
+                    minDate: func
+                })                
+            } 
+            else if (options == "setMaxDate") {
+                $calendar.datepicker("option", {
+                    maxDate: func
+                })               
+            } 
             else if (options == "getDates") {
                 return { start: defaults.startDate, end: defaults.endDate };
             }
@@ -136,19 +163,18 @@
                     }
 
                     return week;
-                },
-                onSelect: function (dateText, inst) {
-                    selectWeek(null, true);
-                },
+                },                
                 beforeShowDay: function (date) {
                     var cssClass = '';
                     if (date >= defaults.startDate && date <= defaults.endDate) {
                         cssClass = 'ui-datepicker-current-day';
                     }                        
                     return [true, cssClass];
+                },                
+                onSelect: function (dateText, instance) {
+                    selectWeek(null, true);
                 },
-                onChangeMonthYear: function (year, month, inst) {
-
+                onChangeMonthYear: function (year, month, instance) {
                     selectCurrentWeek();
 
                     displayYear = year;
@@ -182,7 +208,6 @@
                 if (!ishover) {
                     $this.nexWeekPicker("hide");
                 }
-
             });
 
             $this.nextAll("button.ui-state-default:first").mouseenter(enter).mouseleave(leave).click(function () {

@@ -12,9 +12,9 @@
     public class AutomationTradingPerformanceController : TGRSBaseController
     {
         #region Attributes and Constructors
-        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls";
-        private const string MonthPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MonthPerformance.xls";
-        private const string ModelPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
+        private const string FileBetTypePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls";
+        private const string FilePeriodPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\PeriodPerformance.xls";
+        private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
         private readonly IAutomationTradingPerformanceService _automationTradingService;
 
         [Simplect.Attribute.InjectObject]
@@ -53,7 +53,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var bettypes = _automationTradingService.GetBetTypePerformance(criteria);
+            var bettypes = _automationTradingService.GetAutoTradingBetTypePerformance(criteria);
 
             var jsonResult = Json(bettypes);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -64,30 +64,27 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
-            var templatePath = Server.MapPath(BetTypePerformanceDetail);
+            var templatePath = Server.MapPath(FileBetTypePerformance);
 
-            _automationTradingService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }
 
         #endregion
 
-        #region Month
+        #region Period
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult MonthPerformance()
+        public ActionResult PeriodPerformance()
         {
             return View();
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult GetWeekPerformance(GetWeekPerformanceCriteria criteria, WeekRange weekRange)
-        {
-            criteria.FromDate = weekRange.GetFromDate();
-            criteria.ToDate = weekRange.GetToDate();
-
-            var months = _automationTradingService.GetMonthPerformance(criteria);
+        public ActionResult GetWeekPerformance(GetWeekPerformanceCriteria criteria)
+        {         
+            var months = _automationTradingService.GetAutoTradingWeekPerformance(criteria);
 
             var jsonResult = Json(months);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -98,7 +95,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMonthPerformance(GetMonthPerformanceCriteria criteria)
         {
-            var months = _automationTradingService.GetMonthPerformance(criteria);
+            var months = _automationTradingService.GetAutoTradingMonthPerformance(criteria);
 
             var jsonResult = Json(months);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -107,22 +104,13 @@
         }       
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportWeekPerformance(GetWeekPerformanceCriteria criteria, WeekRange weekRange)
-        {
-            var templatePath = Server.MapPath(MonthPerformanceDetail);
-            _automationTradingService.ExportMonthPerformance(CurrentSession.UserId, criteria, templatePath);
+        public ActionResult ExportPeriodPerformance(GetMonthPerformanceCriteria criteria)
+        {         
+            var templatePath = Server.MapPath(FilePeriodPerformance);
+            _automationTradingService.ExportAutoTradingPeriodPerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
-        }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportMonthPerformance(GetMonthPerformanceCriteria criteria)
-        {
-            var templatePath = Server.MapPath(MonthPerformanceDetail);
-            _automationTradingService.ExportMonthPerformance(CurrentSession.UserId, criteria, templatePath);
-
-            return new EmptyResult();
-        }
+        }      
 
         #endregion
 
@@ -136,7 +124,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetModelPerformance(GetModelPerformanceCriteria criteria)
         {
-            var models = _automationTradingService.GetModelPerformance(criteria);
+            var models = _automationTradingService.GetAutoTradingModelPerformance(criteria);
 
             var jsonResult = Json(models);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -147,8 +135,8 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportModelPerformance(GetModelPerformanceCriteria criteria)
         {
-            var templatePath = Server.MapPath(ModelPerformanceDetail);
-            _automationTradingService.ExportModelPerformance(CurrentSession.UserId, criteria, templatePath);
+            var templatePath = Server.MapPath(FileModelPerformance);
+            _automationTradingService.ExportAutoTradingModelPerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }

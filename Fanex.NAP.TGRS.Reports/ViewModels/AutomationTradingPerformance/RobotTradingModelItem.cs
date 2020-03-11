@@ -18,6 +18,8 @@
 
         protected IList<MeasurementItem> MeasurementHiddenList { get; set; }
 
+        public int LeagueCount { get; set; }
+
         public int MatchCount { get; set; }
 
         public int BetCount { get; set; }
@@ -28,6 +30,7 @@
         {
             if (matchInfo != null)
             {
+                this.LeagueCount = matchInfo.LeagueCount;
                 this.MatchCount = matchInfo.MatchCount;
                 this.BetCount = matchInfo.BetCount;
             }

@@ -203,6 +203,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
     var generateColumnGroupHeaders = function (data) {
         var groupHeaderColumns = [
             { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
+            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
             { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
             { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
         ];
@@ -222,6 +223,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
             var columns = [
                 { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
+                { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
                 { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
             ];
@@ -260,6 +262,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
     var generateColumnsDefault = function () {
         var columns = [
             { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
@@ -333,6 +336,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         $.each(data.ItemList, function (indexItem, betTypeItem) {
             var currentRowData = [
                 { Name: 'ColBetType', Value: betTypeItem.BetTypeName, CssClass: 'bold' },
+                { Name: 'ColLeagueCount', Value: betTypeItem.LeagueCount },
                 { Name: 'ColMatchCount', Value: betTypeItem.MatchCount },
                 { Name: 'ColBetCount', Value: betTypeItem.BetCount }                
             ];
@@ -362,7 +366,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
 
     var generateBetTypePerformanceGridFooter = function (data) {
         var footerData = [
-            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right', MergeColNumber: 2 },        
+            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right'},     
+            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
+            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
             { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
         ];
        

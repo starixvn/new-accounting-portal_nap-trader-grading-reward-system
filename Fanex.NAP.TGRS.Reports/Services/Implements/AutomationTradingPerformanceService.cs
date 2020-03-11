@@ -23,8 +23,8 @@
         #region Consts
         private const string AutomationTradingLeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueGroups";
         private const string AutomationTradingBetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.BetTypeList";
-        private const string AutomationTradingMonthPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MonthlyList";
-        private const string AutomationTradingPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.ModelList";
+        private const string AutomationTradingPeriodPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.PeriodList";
+        private const string AutomationTradingModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.ModelList";
         private const int PointInPixel = 225;
         #endregion
 
@@ -43,7 +43,7 @@
             return leagueGroups;
         }
 
-        public BetTypeList GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
+        public BetTypeList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             var betTypeList = new BetTypeList();
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -87,7 +87,7 @@
             return betTypeList;
         }
 
-        public void ExportBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
+        public void ExportAutoTradingBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
             var betTypeData = SessionManager.Get<BetTypeList>(AutomationTradingBetTypeListSessionKey);
 
@@ -105,7 +105,13 @@
                 FilterBlockBetType(userId, criteria, ref writer);
 
                 writer.FreezeRow(0, 4);
-                var columns = GenerateBetTypeColumns();
+                var columns = new List<object>
+                {
+                    ViewLang.BetType,
+                    ViewLang.League,
+                    ViewLang.Match,
+                    ViewLang.BetCount
+                };
 
                 FillGroupHeader(betTypeData.GroupHeaderList, betTypeData.GrandTotal.RobotTradingItemList, columns, ref writer);
                 FillRowDataBetType(betTypeData.ItemList, ref writer);
@@ -141,17 +147,7 @@
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
-        }
-
-        private List<object> GenerateBetTypeColumns()
-        {
-            return new List<object>
-            {
-                ViewLang.BetType,
-                ViewLang.Match,
-                ViewLang.BetCount
-            };
-        }
+        }       
 
         private void FillGroupHeader(IList<GroupHeader> groupHeaderList,
             IDictionary<string, RobotTradingItem> robotTradingItemList,
@@ -161,8 +157,8 @@
             var rowGroupHeader = writer.CopyRows(3, 1);
             var rowHeader = FillHeader(robotTradingItemList, ref writer);
 
-            var cellMergeStartIndex = 3;
-            var cellMergeEndIndex = 3;
+            var cellMergeStartIndex = 4;
+            var cellMergeEndIndex = 4;
             var cellStyle = writer.GetCellStyle(13, 0);
 
             // Fill Group Header
@@ -176,7 +172,7 @@
                 }
             }
 
-            writer.SetRowValue(rowGroupHeader, columns.ToArray(), 3);
+            writer.SetRowValue(rowGroupHeader, columns.ToArray(), 4);
 
             // Merge range Group Header
             for (int i = 0; i < groupHeaderList.Count; i++)
@@ -198,7 +194,7 @@
         {
             var row = writer.CopyRows(4, 1);
 
-            var columns = new List<object> { string.Empty, string.Empty, string.Empty };
+            var columns = new List<object> { string.Empty, string.Empty, string.Empty, string.Empty };
 
             foreach (var robotTradingItem in robotTradingItemList)
             {
@@ -216,11 +212,12 @@
                 }
             }
 
-            writer.SetRowValue(row, columns.ToArray(), 3);
+            writer.SetRowValue(row, columns.ToArray(), 4);
 
             SheetExtensions.MergeCells(row.Sheet, 2, 0, 3, 0);
             SheetExtensions.MergeCells(row.Sheet, 2, 1, 3, 1);
             SheetExtensions.MergeCells(row.Sheet, 2, 2, 3, 2);
+            SheetExtensions.MergeCells(row.Sheet, 2, 3, 3, 3);
 
             return row;
         }
@@ -235,6 +232,7 @@
                 var columns = new List<object>
                 {
                     betTypeItem.BetTypeName,
+                    betTypeItem.LeagueCount,
                     betTypeItem.MatchCount,
                     betTypeItem.BetCount
                 };
@@ -250,53 +248,108 @@
             var columns = new List<object>
             {
                 ViewLang.GrandTotal,
-                string.Empty,
+                grandTotal.LeagueCount,
+                grandTotal.MatchCount,                
                 grandTotal.BetCount
             };
 
-            var row = FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);
-
-            SheetExtensions.MergeCells(row.Sheet, 8, 0, 8, 1);
+            FillRowData(grandTotal.RobotTradingItemList, columns, 7, ref writer);
         }
 
         private IRow FillRowData(IDictionary<string, RobotTradingItem> robotTradingItemList,
            List<object> columns,
            int styleIndex,
            ref ExcelTemplateWriter writer)
-        {
-            var i = 3;
-            var marginListIndex = new List<int>();
-
+        {           
             foreach (var robotTradingItem in robotTradingItemList)
             {
                 if (!robotTradingItem.Value.IsHideTurnover)
                 {
-                    columns.Add(robotTradingItem.Value.Turnover);
-                    i++;
+                    columns.Add(robotTradingItem.Value.Turnover);                 
                 }
                 if (!robotTradingItem.Value.IsHideWinLoss)
                 {
-                    columns.Add(robotTradingItem.Value.WinLoss);
-                    i++;
+                    columns.Add(robotTradingItem.Value.WinLoss);                   
                 }
                 if (!robotTradingItem.Value.IsHideMargin)
                 {
-                    columns.Add(robotTradingItem.Value.Margin);
-                    marginListIndex.Add(i);
-                    i++;
+                    columns.Add(robotTradingItem.Value.Margin);                  
                 }
             }
 
-            return writer.CreateRow(styleIndex, columns.ToArray(), 3);
+            return writer.CreateRow(styleIndex, columns.ToArray(), 4);
         }
 
         #endregion
 
-        #region Monthly
-
-        public MonthlyList GetMonthPerformance(GetMonthPerformanceCriteria criteria)
+        #region Period
+        public PeriodList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria)
         {
-            var monthlyList = new MonthlyList();
+            var weekList = new PeriodList();
+
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
+                    var matchCountData = multi.Read<MatchBetCountInfo>();
+                    var totalPerformanceData = multi.Read<TotalPerformanceInfo>();
+                    var weekData = multi.Read<WeekPerformanceInfo>();
+
+                    if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
+                    {
+                        weekList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                                .GenerateSummary(totalPerformanceData)
+                                .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
+                                .GenerateMeasurementHidden(criteria.MeasurementHides);
+
+                        if (weekData != null && weekData.Any())
+                        {
+                            var groupInfos = weekData
+                                .OrderBy(x => x.StartDate)
+                                .GroupBy(x => x.WeekDays, (key, g) => new { WeekDays = key, Items = g.ToList() });
+
+                            foreach (var group in groupInfos)
+                            {
+                                var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
+
+                                var matchCountInfo = matchCountData.Where(x => x.WeekDays == group.WeekDays).FirstOrDefault();
+
+                                weekList.AddPeriodItem(siteIdList, group.Items, matchCountInfo, GeneratePeriod(group.Items[0]));
+                            }
+
+                            weekList.GenerateGrandTotal();
+                        }
+
+                        SessionManager.Set<PeriodList>(AutomationTradingPeriodPerformanceSessionKey, weekList);
+                    }
+                }
+            }
+
+            return weekList;
+        }
+
+        private string GeneratePeriod(WeekPerformanceInfo info)
+        {
+            var period = string.Empty;
+
+            if (info.StartDate != null && info.StartDate != DateTime.MinValue)
+            {
+                period = info.StartDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy);
+            }
+
+            if (info.EndDate != null && info.EndDate != DateTime.MinValue)
+            {
+                period += " - " + info.EndDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy);
+            }           
+
+            return period;
+        }
+
+        public PeriodList GetAutoTradingMonthPerformance(GetMonthPerformanceCriteria criteria)
+        {
+            var monthlyList = new PeriodList();
+
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
@@ -325,13 +378,13 @@
 
                                 var matchCountInfo = matchCountData.Where(x => x.RptMonth == group.RptMonth).FirstOrDefault();
 
-                                monthlyList.AddMonthlyItem(siteIdList, group.Items, matchCountInfo, group.RptMonth);
+                                monthlyList.AddPeriodItem(siteIdList, group.Items, matchCountInfo, group.RptMonth.ToString("yyyy-MM-dd"));
                             }
 
                             monthlyList.GenerateGrandTotal();
                         }
 
-                        SessionManager.Set<MonthlyList>(AutomationTradingMonthPerformanceSessionKey, monthlyList);
+                        SessionManager.Set<PeriodList>(AutomationTradingPeriodPerformanceSessionKey, monthlyList);
                     }
                 }
             }
@@ -339,35 +392,43 @@
             return monthlyList;
         }
 
-        public void ExportMonthPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
+        public void ExportAutoTradingPeriodPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
         {
-            var monthData = SessionManager.Get<MonthlyList>(AutomationTradingMonthPerformanceSessionKey);
+            var periodData = SessionManager.Get<PeriodList>(AutomationTradingPeriodPerformanceSessionKey);
 
-            if (monthData != null && monthData.ItemList.Any())
+            if (periodData != null && periodData.ItemList.Any())
             {
                 string reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
-                                ViewLang.Month,
+                                ViewLang.Period,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Month);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Period);
                 var sheet = writer.CopyRows(0, 1).Sheet;
 
                 FilterBlockMonth(userId, criteria, ref writer);
 
                 writer.FreezeRow(0, 4);
-                var columns = GenerateMonthlyColumns();
 
-                FillGroupHeader(monthData.GroupHeaderList, monthData.GrandTotal.RobotTradingItemList, columns, ref writer);
-                FillRowDataMonth(monthData.ItemList, ref writer);
-                FillGrandTotalMonth(monthData.GrandTotal, ref writer);
+                var columns = new List<object>
+                {
+                    ViewLang.Period,
+                    ViewLang.League,
+                    ViewLang.Match,
+                    ViewLang.BetCount
+                };
+
+                FillGroupHeader(periodData.GroupHeaderList, periodData.GrandTotal.RobotTradingItemList, columns, ref writer);
+                FillRowDataPeriod(periodData.ItemList, ref writer);
+                FillGrandTotalPeriod(periodData.GrandTotal, ref writer);
 
                 // Adjust column width for sheet
-                for (int i = 0; i < columns.Count; i++)
+                sheet.SetColumnWidth(0, 6144);
+                for (int i = 1; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
-                }
+                }                
 
                 writer.Render();
             }
@@ -381,6 +442,7 @@
             IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
 
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ViewBy, boldFont, criteria.ViewBy, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Model, boldFont, criteria.Model == 1 ? "RT3" : "TA", normalFont, "\n");
@@ -393,43 +455,35 @@
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
-        }
+        }        
 
-        private List<object> GenerateMonthlyColumns()
-        {
-            return new List<object>
-            {
-                ViewLang.Month,
-                ViewLang.Match,
-                ViewLang.BetCount
-            };
-        }
-
-        private void FillRowDataMonth(IList<MonthlyItem> itemList, ref ExcelTemplateWriter writer)
+        private void FillRowDataPeriod(IList<PeriodItem> itemList, ref ExcelTemplateWriter writer)
         {
             var index = 1;
 
-            foreach (var monthlyItem in itemList)
+            foreach (var periodItem in itemList)
             {
                 int styleIndex = index % 2 == 0 ? 6 : 5;
                 var columns = new List<object>
                 {
-                    monthlyItem.Monthly,
-                    monthlyItem.MatchCount,
-                    monthlyItem.BetCount
+                    periodItem.Period,
+                    periodItem.LeagueCount,
+                    periodItem.MatchCount,
+                    periodItem.BetCount
                 };
 
-                FillRowData(monthlyItem.RobotTradingItemList, columns, styleIndex, ref writer);
+                FillRowData(periodItem.RobotTradingItemList, columns, styleIndex, ref writer);
 
                 index++;
             }
         }
 
-        private void FillGrandTotalMonth(MonthlyItem grandTotal, ref ExcelTemplateWriter writer)
+        private void FillGrandTotalPeriod(PeriodItem grandTotal, ref ExcelTemplateWriter writer)
         {
             var columns = new List<object>
             {
                 ViewLang.GrandTotal,
+                grandTotal.LeagueCount,
                 grandTotal.MatchCount,
                 grandTotal.BetCount
             };
@@ -440,7 +494,7 @@
         #endregion
 
         #region Model
-        public ModelPerformanceList GetModelPerformance(GetModelPerformanceCriteria criteria)
+        public ModelPerformanceList GetAutoTradingModelPerformance(GetModelPerformanceCriteria criteria)
         {
             var modelPerformanceList = new ModelPerformanceList();
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -467,7 +521,7 @@
                                 modelPerformanceList.AddModelList(modelData, criteria.DataType);
                             }
 
-                            SessionManager.Set<ModelPerformanceList>(AutomationTradingPerformanceSessionKey, modelPerformanceList);
+                            SessionManager.Set<ModelPerformanceList>(AutomationTradingModelPerformanceSessionKey, modelPerformanceList);
                         }
                     }
                 }
@@ -476,9 +530,9 @@
             return modelPerformanceList;
         }
 
-        public void ExportModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath)
+        public void ExportAutoTradingModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath)
         {
-            var modelData = SessionManager.Get<ModelPerformanceList>(AutomationTradingPerformanceSessionKey);
+            var modelData = SessionManager.Get<ModelPerformanceList>(AutomationTradingModelPerformanceSessionKey);
 
             if (modelData != null && modelData.ItemList.Any())
             {

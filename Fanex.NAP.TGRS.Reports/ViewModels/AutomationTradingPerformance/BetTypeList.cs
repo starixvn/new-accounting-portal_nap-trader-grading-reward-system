@@ -49,7 +49,8 @@
                 }
             }
 
-            this.GrandTotal.MatchCount = this.ItemList.Sum(x => x.MatchCount);
+            this.GrandTotal.LeagueCount = this.LeagueCount;
+            this.GrandTotal.MatchCount = this.MatchCount;
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
         }       
     }

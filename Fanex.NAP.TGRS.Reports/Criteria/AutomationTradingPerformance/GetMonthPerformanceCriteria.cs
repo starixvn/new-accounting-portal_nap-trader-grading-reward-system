@@ -16,6 +16,9 @@
         public string TypeSiteIds { get; set; }
 
         [SpParam(Ignored = true)]
+        public string ViewBy { get; set; }
+
+        [SpParam(Ignored = true)]
         public string Measurements { get; set; }
 
         [SpParam(Ignored = true)]

@@ -21,7 +21,7 @@
             <span class="list-icon"></span>@ViewLang.BetType
         </a>
         <a href="#" class="green-button change-list disabled">
-            <span class="list-icon"></span>@ViewLang.PeriodType
+            <span class="list-icon"></span>@ViewLang.Period
         </a>
         <a href="@Url.Content("~/Reports/AutomationTradingPerformance/ModelPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Model
@@ -119,13 +119,13 @@
 <div id="divSummaryContainer" hidden>
     @Html.Partial("SummaryPerformance")
 </div>
-<div id="divMonthPerformanceContainer" class="content-grid display-none">
-    <div id="divMonthPerformanceGrid" class="freegrid"></div>
+<div id="divPeriodPerformanceContainer" class="content-grid display-none">
+    <div id="divPeriodPerformanceGrid" class="freegrid"></div>
 </div>
 
 @section Foot
 {
-    @Scripts.Render("~/scripts/automationTradingMonthPerformance")
+    @Scripts.Render("~/scripts/automationTradingPeriodPerformance")
     <script type="text/javascript">
        var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
@@ -138,7 +138,7 @@
             Leagues: '@ViewLang.Leagues',
             MatchCount: '@ViewLang.Match',
             Matches: '@ViewLang.Matches',
-            Monthly: '@ViewLang.Month',
+            Month: '@ViewLang.Month',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             Total: '@ViewLang.Total',
@@ -156,7 +156,9 @@
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
-            Week: '@ViewLang.Week'
+            Week: '@ViewLang.Week',
+            Period: '@ViewLang.Period',
+            Date: '@ViewLang.Date'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',

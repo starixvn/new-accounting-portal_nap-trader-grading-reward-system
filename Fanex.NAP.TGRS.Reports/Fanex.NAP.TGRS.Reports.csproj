@@ -271,6 +271,7 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\WeekPerformanceInfo.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeSummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\ExcelConfig.cs" />
@@ -400,7 +401,6 @@
     <Compile Include="Services\Interfaces\ITraderMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\WeekRange.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />
@@ -438,8 +438,8 @@
     <Compile Include="ViewModels\AutomationTradingPerformance\BetTypeList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\GroupHeader.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\MeasurementItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\MonthlyItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\MonthlyList.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\PeriodItem.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\PeriodList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\RobotTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\ChartPerformanceItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\ModelPerformanceItem.cs" />

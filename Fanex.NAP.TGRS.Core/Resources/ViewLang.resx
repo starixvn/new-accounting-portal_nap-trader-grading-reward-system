@@ -831,4 +831,7 @@
   <data name="Week" xml:space="preserve">
     <value>Week</value>
   </data>
+  <data name="Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
 </root>
