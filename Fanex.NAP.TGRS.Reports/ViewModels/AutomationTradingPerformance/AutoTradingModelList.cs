@@ -8,9 +8,9 @@
     using System.Linq;
 
     [Serializable]
-    public class RobotTradingModelList
+    public class AutoTradingModelList
     {
-        public RobotTradingModelList()
+        public AutoTradingModelList()
         {
             KeyList = new List<string>();
             GroupHeaderList = new List<GroupHeader>();
@@ -42,7 +42,7 @@
 
         public IList<MeasurementItem> MeasurementHiddenList { get; set; }
 
-        public RobotTradingModelList GenerateLeagueMacthTotal(TotalLeagueMatchInfo totalInfo)
+        public AutoTradingModelList GenerateLeagueMacthTotal(TotalLeagueMatchInfo totalInfo)
         {
             this.LeagueCount = totalInfo.LeagueCount;
             this.MatchCount = totalInfo.MatchCount;
@@ -50,7 +50,7 @@
             return this;
         }
 
-        public RobotTradingModelList GenerateSummary(IEnumerable<TotalPerformanceInfo> infos)
+        public AutoTradingModelList GenerateSummary(IEnumerable<TotalPerformanceInfo> infos)
         {
             if (infos.Any())
             {
@@ -79,7 +79,7 @@
             return this;
         }
 
-        public RobotTradingModelList GenerateGroupHeader(string measurements, string typeSiteIds)
+        public AutoTradingModelList GenerateGroupHeader(string measurements, string typeSiteIds)
         {
             if (!string.IsNullOrEmpty(measurements) && !string.IsNullOrEmpty(typeSiteIds))
             {
@@ -119,7 +119,7 @@
             }
         }
 
-        public RobotTradingModelList GenerateMeasurementHidden(string measurementHides)
+        public AutoTradingModelList GenerateMeasurementHidden(string measurementHides)
         {
             if (!string.IsNullOrEmpty(measurementHides))
             {
@@ -140,6 +140,6 @@
             }            
 
             return this;
-        }
+        }       
     }
 }

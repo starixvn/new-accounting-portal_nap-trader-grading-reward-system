@@ -1,27 +1,27 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.AutomationTradingPerformance
-{   
+{
     using Fanex.NAP.TGRS.Reports.Models.AutomationTradingPerformance;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     [Serializable]
-    public class PeriodList : RobotTradingModelList
+    public class AutoTradingList : AutoTradingModelList
     {
-        public PeriodList ()
+        public AutoTradingList() : base()
         {
-            ItemList = new List<PeriodItem>();
-            GrandTotal = new PeriodItem();
-        }                    
+            ItemList = new List<AutoTradingItem>();
+            GrandTotal = new AutoTradingItem();
+        }
 
-        public IList<PeriodItem> ItemList { get; set; }        
+        public IList<AutoTradingItem> ItemList { get; set; }
 
-        public PeriodItem GrandTotal { get; set; }             
+        public AutoTradingItem GrandTotal { get; set; }
 
-        public void AddPeriodItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, MatchBetCountInfo matchCountInfo, string period)
+        public void AddAutoTradingItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, LeagueMatchBetCountInfo leagueMatchCountInfo, string eventName)
         {
-            var item = new PeriodItem(period, this.SiteList, this.MeasurementHiddenList)
-                .GenerateMatchBetCount(matchCountInfo)
+            var item = new AutoTradingItem(eventName, this.SiteList, this.MeasurementHiddenList)
+                .GenerateLeagueMatchBetCount(leagueMatchCountInfo)
                 .GenereateGroupVirtualTotal(siteIdList, infos)
                 .GenereateGroupVariance(siteIdList, infos)
                 .GenereateGroupRealTotal(siteIdList, infos)
@@ -52,7 +52,6 @@
             this.GrandTotal.LeagueCount = this.LeagueCount;
             this.GrandTotal.MatchCount = this.MatchCount;
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
-        }              
-
+        }
     }
 }

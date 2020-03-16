@@ -3,6 +3,7 @@
     public class Consts
     {
         public const string FormatDateTimeToString_ddMMMyyyy = "dd/MMM/yyyy";
+        public const string FormatDateTimeToString_yyyyMMdd = "yyyy-MM-dd";
 
         public const string RT3WithTrader = "RT3 wTP";
         public const string RT3NoTrader = "RT3 NoTP";

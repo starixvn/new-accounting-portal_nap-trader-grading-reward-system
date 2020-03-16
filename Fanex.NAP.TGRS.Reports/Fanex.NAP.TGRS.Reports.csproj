@@ -180,6 +180,7 @@
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfLeagueTeam.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfTeamCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetEventPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
@@ -271,6 +272,8 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\EventPerformanceInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\LeagueMatchBetCountInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\WeekPerformanceInfo.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeSummary.cs" />
@@ -343,7 +346,7 @@
     <Compile Include="Models\PerformanceSummary\TeamPerformance.cs" />
     <Compile Include="Models\Permission\BettypeViewPermission.cs" />
     <Compile Include="Models\AutomationTradingPerformance\BetTypePerformanceInfo.cs" />
-    <Compile Include="Models\AutomationTradingPerformance\MatchBetCountInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryLeagueMatchBetCountInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\ModelPerformanceInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\RTModelPerformanceInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\TotalPerformanceInfo.cs" />
@@ -401,6 +404,9 @@
     <Compile Include="Services\Interfaces\ITraderMonthlyReport.cs" />
     <Compile Include="Services\Interfaces\ITraderReportService.cs" />
     <Compile Include="ReportUtil.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingItem.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\IAutoTradingItem.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />
@@ -434,18 +440,13 @@
     <Compile Include="ViewModels\PerformanceSummary\Reports.cs" />
     <Compile Include="ViewModels\PerformanceSummary\GradeHistoryDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceSummary\TeamHistoryDetailItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\BetTypeItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\BetTypeList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\GroupHeader.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\MeasurementItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\PeriodItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\PeriodList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\RobotTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\ChartPerformanceItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\ModelPerformanceItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\ModelPerformanceList.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\RobotTradingModelItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\RobotTradingModelList.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingModelList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\RobotTradingSummary.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoItem.cs" />
     <Compile Include="ViewModels\TraderManagement\TraderInfoList.cs" />

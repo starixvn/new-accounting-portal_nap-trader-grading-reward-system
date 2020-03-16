@@ -7,16 +7,26 @@
     using System.Linq;
 
     [Serializable]
-    public class RobotTradingModelItem
+    public class AutoTradingItem : IAutoTradingItem
     {
-        public RobotTradingModelItem()
+        public AutoTradingItem()
         {
-            RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
+            this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
+        }
+
+        public AutoTradingItem(string autoTradingName, IDictionary<string, string> siteList, IList<MeasurementItem> measurementHiddenList)
+        {
+            this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
+            this.AutoTradingName = autoTradingName;
+            this.SiteList = siteList;
+            this.MeasurementHiddenList = measurementHiddenList;
         }
 
         protected IDictionary<string, string> SiteList { get; set; }
 
         protected IList<MeasurementItem> MeasurementHiddenList { get; set; }
+
+        public string AutoTradingName { get; set; }
 
         public int LeagueCount { get; set; }
 
@@ -26,7 +36,7 @@
 
         public IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }
 
-        protected void GenerateMatchBetCount(MatchBetCountInfo matchInfo)
+        public AutoTradingItem GenerateLeagueMatchBetCount(LeagueMatchBetCountInfo matchInfo)
         {
             if (matchInfo != null)
             {
@@ -34,9 +44,11 @@
                 this.MatchCount = matchInfo.MatchCount;
                 this.BetCount = matchInfo.BetCount;
             }
+
+            return this;
         }
 
-        protected void GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderVirtualTotal);
 
@@ -71,10 +83,12 @@
             sumItem.WinLoss = infos.Sum(x => x.WinLoss_VR);
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
-            this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderVirtualTotal, sumItem);           
+            this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderVirtualTotal, sumItem);
+
+            return this;
         }
 
-        protected void GenereateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenereateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderVariance);
 
@@ -110,9 +124,11 @@
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderVariance, sumItem);
+
+            return this;
         }
 
-        protected void GenereateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenereateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderRealTotal);
 
@@ -148,9 +164,11 @@
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderRealTotal, sumItem);
+
+            return this;
         }
 
-        protected void GenereateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenereateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderTotal8RM);
 
@@ -186,9 +204,11 @@
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderTotal8RM, sumItem);
+
+            return this;
         }
 
-        protected void GenereateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenereateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderRealTotal8RMWL);
 
@@ -224,6 +244,9 @@
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
 
             this.RobotTradingItemList.Add(Consts.AutomationTradingGroupHeaderRealTotal8RMWL, sumItem);
+
+            return this;
         }
+
     }
 }

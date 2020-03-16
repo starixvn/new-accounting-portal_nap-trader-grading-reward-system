@@ -8,13 +8,13 @@
     {
         Dictionary<int, string> GetLeagueGroups();
 
-        BetTypeList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria);
        
         void ExportAutoTradingBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
 
-        PeriodList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria);
 
-        PeriodList GetAutoTradingMonthPerformance(GetMonthPerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingMonthPerformance(GetMonthPerformanceCriteria criteria);
 
         void ExportAutoTradingPeriodPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath);
 
@@ -22,5 +22,8 @@
 
         void ExportAutoTradingModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath);
 
+        AutoTradingList GetAutoTradingEventPerformance(GetEventPerformanceCriteria criteria);        
+
+        void ExportAutoTradingEventLeagueGroupPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath);
     }
 }

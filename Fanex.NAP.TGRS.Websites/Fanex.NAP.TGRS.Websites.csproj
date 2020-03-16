@@ -393,6 +393,7 @@
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\grade-performance.js" />
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\team-performance.js" />
+    <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\event-performance.js" />
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
@@ -635,6 +636,8 @@
     <Content Include="Areas\Reports\Views\AutomationTradingPerformance\ChartPerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls" />
+    <Content Include="Areas\Reports\Views\AutomationTradingPerformance\EventPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

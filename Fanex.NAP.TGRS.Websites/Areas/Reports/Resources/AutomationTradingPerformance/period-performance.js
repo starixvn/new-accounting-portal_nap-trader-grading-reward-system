@@ -186,7 +186,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
-                renderPeriodPerformanceGrid(result);
+                generatePeriodPerformanceGrid(result);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -197,7 +197,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         });
     }
 
-    var renderPeriodPerformanceGrid = function (data) {
+    var generatePeriodPerformanceGrid = function (data) {
         var bodyData = [];
         var footerData = [];
 
@@ -268,7 +268,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
                 { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
             ];
 
-            var cssClass = data.GroupHeaderList.length % 2 == 0 ? '' : 'dim';
+            var cssClass = 'dim';
             var groupHeaderNameOld = '';
 
             $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
@@ -279,17 +279,18 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
 
                 if (!robotTradingItem.IsHideTurnover) {
                     columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' T/O', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass });
+                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
                 }
 
                 if (!robotTradingItem.IsHideWinLoss) {
                     columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' W/L', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
+                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
                 }
 
                 if (!robotTradingItem.IsHideMargin) {
                     columns.push({ HeaderText: robotTradingItem.TypeSiteDesc + ' MAR %', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass });
-                }
-
-                groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+                }                
             })
 
             return columns;
@@ -373,15 +374,15 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         var bodyData = [];
         var row;
 
-        $.each(data.ItemList, function (indexItem, periodItem) {
+        $.each(data.ItemList, function (indexItem, item) {
             var currentRowData = [
-                { Name: 'ColPeriod', Value: periodItem.Period, CssClass: 'bold' },
-                { Name: 'ColLeagueCount', Value: periodItem.LeagueCount },
-                { Name: 'ColMatchCount', Value: periodItem.MatchCount },
-                { Name: 'ColBetCount', Value: periodItem.BetCount }
+                { Name: 'ColPeriod', Value: item.AutoTradingName, CssClass: 'bold' },
+                { Name: 'ColLeagueCount', Value: item.LeagueCount },
+                { Name: 'ColMatchCount', Value: item.MatchCount },
+                { Name: 'ColBetCount', Value: item.BetCount }
             ];
 
-            $.each(periodItem.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
+            $.each(item.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
 
                 if (!robotTradingItem.IsHideTurnover) {
                     currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });

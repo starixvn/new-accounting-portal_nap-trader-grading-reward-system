@@ -2,10 +2,12 @@
 {
     using System;
 
-    public class MatchBetCountInfo
+    public class SummaryLeagueMatchBetCountInfo : LeagueMatchBetCountInfo
     {
+        // BetType
         public int BetType { get; set; }
 
+        // Period
         public DateTime RptMonth { get; set; }
 
         public string WeekDays { get; set; }
@@ -14,11 +16,9 @@
 
         public DateTime EndDate { get; set; }
 
-        public int LeagueCount { get; set; }
+        // Event
+        public int LeagueGroupId { get; set; }
 
-        public int BetCount { get; set; }
-
-        public int MatchCount { get; set; }
-
+        public string LeagueIdList { get; set; }        
     }
 }

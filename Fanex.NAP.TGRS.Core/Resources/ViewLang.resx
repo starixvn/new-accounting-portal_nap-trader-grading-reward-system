@@ -834,4 +834,10 @@
   <data name="Period" xml:space="preserve">
     <value>Period</value>
   </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
 </root>

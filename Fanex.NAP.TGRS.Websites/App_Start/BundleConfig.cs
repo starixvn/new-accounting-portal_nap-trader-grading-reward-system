@@ -287,6 +287,10 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
                "~/Areas/Reports/Resources/AutomationTradingPerformance/period-performance.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/automationTradingEventPerformance").Include(
+               "~/Areas/Reports/Resources/AutomationTradingPerformance/summary-performance.js",
+              "~/Areas/Reports/Resources/AutomationTradingPerformance/event-performance.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/automationTradingModelPerformance").Include(
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
