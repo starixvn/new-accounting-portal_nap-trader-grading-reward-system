@@ -11,7 +11,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         GetEventPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetEventPerformance'),
         GetLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/GetLeaguePerformanceOfEvent'),
         ExportEventPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventPerformance'),
-        ExportEventLeagueGroupPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventLeagueGroupPerformance')
+        ExportEventLeagueGroupPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventLeagueGroupPerformance'),
+        ExportLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/ExportLeaguePerformanceOfEvent')
     };
 
     var domElements = {
@@ -36,6 +37,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         MeasurementDescs: null,
         MeasurementHides: null
     };
+
+    var leagueParameters = {};
 
     var summaryPerformance = new Fanex.NAP.TGRS.AutomationTradingPerformance.SummaryPerformance();
     summaryPerformance.InitPage();
@@ -104,6 +107,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
 
                 domElements.divEventPerformanceContainer.addClass('display-none');
 
+                hideAllReports();
                 getEventPerformanceReport();
             }
         });
@@ -149,6 +153,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         return '';
     }
 
+    var hideAllReports = function () {
+        domElements.divEventPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');        
+    };
+
     var getEventPerformanceReport = function () {
         common.DisableInput();
         $.ajax({
@@ -172,17 +182,41 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
     var generateEventPerformanceGrid = function (data) {
         var bodyData = [];
         var footerData = [];
+        var groupHeaderColumns = [
+            { HeaderText: labels.Event, Name: "ColEventName", MergeRowNumber: 2 },
+            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
+            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
+            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
+        ];
+        var headerColumns = [
+            { HeaderText: labels.Event, Width: 120, Name: "ColEventName", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+        ];
+        var footerColumns = [
+            { Name: 'ColEventName', Value: labels.GrandTotal, CellAlign: 'right' },
+            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
+            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
+            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
+        ];
 
         if (data && data.ItemList.length > 0) {
             bodyData = generateEventPerformanceGridBody(data);
-            footerData = generateEventPerformanceGridFooter(data);
+            footerData = generateEventPerformanceGridFooter(data, footerColumns);
         }
+
         var gridOptions = generateEventPerformanceGridOptions(data);
+        gridOptions.titleInfo = {         
+            showExcelButton: true,
+            exportExcelFunction: function () {
+                common.DownloadFile(urls.ExportEventLeagueGroupPerformance, parameters);
+            }
+        }
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
-
-        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data) }];
-        gridOptions.columns = generateColumns(data);
+        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
+        gridOptions.columns = generateColumns(data, headerColumns);
 
         domElements.divEventPerformanceGrid.fanexGrid(gridOptions);
 
@@ -198,26 +232,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             showFooter: true,
             showDistinctRow: false,
             showTree: true,
-            showTitle: true,
-            titleInfo: {
-                showExcelButton: true,
-                exportExcelFunction: function () {
-                    exportEventPerformance();
-                }
-            },
+            showTitle: true,           
             showNumberColumn: false,
-            showFooter: true
         };
     }
 
-    var generateColumnGroupHeaders = function (data) {
-        var groupHeaderColumns = [
-            { HeaderText: labels.Event, Name: "ColEventName", MergeRowNumber: 2 },
-            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
-            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
-            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
-        ];
-
+    var generateColumnGroupHeaders = function (data, groupHeaderColumns) {      
         var cssClass = '';
 
         $.each(data.GroupHeaderList, function (index, group) {
@@ -229,15 +249,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         return groupHeaderColumns;
     }
 
-    var generateColumns = function (data) {
-        if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
-            var columns = [
-                { HeaderText: labels.BetType, Width: 120, Name: "ColEventName", HeaderAlign: "center", CellAlign: "left", Sort: true },
-                { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
-            ];
-
+    var generateColumns = function (data, columns) {
+        if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {           
             var cssClass = 'dim';
             var groupHeaderNameOld = '';
 
@@ -266,18 +279,11 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             return columns;
 
         } else {
-            return generateColumnsDefault();
+            return generateColumnsDefault(columns);
         }
     }
 
-    var generateColumnsDefault = function () {
-        var columns = [
-            { HeaderText: labels.BetType, Width: 120, Name: "ColEventName", HeaderAlign: "center", CellAlign: "left", Sort: true },
-            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
-        ];
-
+    var generateColumnsDefault = function (columns) {
         var selectedSites = domElements.ddlSite.find('option:selected');
         var selectedMeasurements = domElements.ddlMeasurement.val();
         var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
@@ -341,12 +347,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
     }
 
     var generateEventPerformanceGridBody = function (data) {
-        var leagueFormat = '<span class="league-link link" title="{0}" data-league-group-id="{1}">{2}</span>';
+        var leagueFormat = '<span class="league-link link" title="{0}" data-league-ids="{1}" data-league-group-name="{2}">{3}</span>';
         var bodyData = [];
         var row;
 
         $.each(data.ItemList, function (indexItem, item) {
-            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, 1, item.LeagueCount);
+            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, item.LeagueIdList, item.AutoTradingName, item.LeagueCount);
 
             var currentRowData = [
                 { Name: 'ColEventName', Value: item.AutoTradingName, CssClass: 'bold' },
@@ -354,22 +360,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
                 { Name: 'ColMatchCount', Value: item.MatchCount },
                 { Name: 'ColBetCount', Value: item.BetCount }
             ];
-
-            $.each(item.RobotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
-
-                if (!robotTradingItem.IsHideTurnover) {
-                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
-                }
-                if (!robotTradingItem.IsHideWinLoss) {
-                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
-                }
-                if (!robotTradingItem.IsHideMargin) {
-                    currentRowData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
-                }
-            })
-
+            
             row = {
-                Columns: currentRowData
+                Columns: generateRobotTradingItemList(item.RobotTradingItemList, currentRowData)
             };
 
             bodyData.push(row);
@@ -378,49 +371,50 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         return bodyData;
     }
 
-    var generateEventPerformanceGridFooter = function (data) {
-        var footerData = [
-            { Name: 'ColEventName', Value: labels.GrandTotal, CellAlign: 'right' },
-            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
-            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
-            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
-        ];
-
-        $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+    var generateRobotTradingItemList = function (robotTradingItemList, columns) {
+        $.each(robotTradingItemList, function (indexRobotTradingItem, robotTradingItem) {
 
             if (!robotTradingItem.IsHideTurnover) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
+                columns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
             }
             if (!robotTradingItem.IsHideWinLoss) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
+                columns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
             }
             if (!robotTradingItem.IsHideMargin) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
+                columns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
             }
         })
 
-        return [{
-            Columns: footerData
-        }];
+        return columns;
     }
 
-    var exportEventPerformance = function () {
-        common.DownloadFile(urls.ExportEventLeagueGroupPerformance, parameters);
-    }
+    var generateEventPerformanceGridFooter = function (data, columns) {        
+        return [{
+            Columns: generateRobotTradingItemList(data.GrandTotal.RobotTradingItemList, columns)
+        }];
+    }   
 
     var handleEventPerformanceGridEvents = function () {
         domElements.divEventPerformanceContainer.find('.league-link').click(function () {
             var link = $(this);
-            var leagueGroupId = link.attr('data-league-group-id');
+            var leagueIdList = link.attr('data-league-ids');
+            var leagueGroupName = link.attr('data-league-group-name');
 
-            getLeaguePerformanceReport(leagueGroupId);
+            getLeaguePerformanceReport(leagueIdList, leagueGroupName);
         })
     }
 
-    var getLeaguePerformanceReport = function (leagueGroupId) {
-        var leagueParameters = {
-            LeagueGroupId: leagueGroupId
-        }
+    var getLeaguePerformanceReport = function (leagueIdList, leagueGroupName) {
+        leagueParameters = {
+            LeagueIdList: leagueIdList,
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,
+            Model: parameters.Model,
+            TypeSiteIds: parameters.TypeSiteIds,
+            Measurements: parameters.Measurements,
+            MeasurementHides: parameters.MeasurementHides,
+            MeasurementDescs: parameters.MeasurementDescs
+        };
 
         common.DisableInput();
         $.ajax({
@@ -428,9 +422,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             url: urls.GetLeaguePerformanceOfEvent,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(parameters),
+            data: JSON.stringify(leagueParameters),
             success: function (result) {
-                generateLeagueGrid(result);
+                generateLeagueOfEventGrid(result, leagueGroupName);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -441,34 +435,102 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         });
     }
 
-    var generateLeagueGrid = function (data) {
+    var generateLeagueOfEventGrid = function (data, leagueGroupName) {
         var bodyData = [];
         var footerData = [];
+        var groupHeaderColumns = [
+            { HeaderText: labels.League, Name: "ColLeagueName", MergeRowNumber: 2 },            
+            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
+            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
+        ];
+        var headerColumns = [
+            { HeaderText: labels.League, Width: 240, Name: "ColLeagueName", HeaderAlign: "center", CellAlign: "left", Sort: true },            
+            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+        ];
+        var footerColumns = [
+            { Name: 'ColLeagueName', Value: labels.GrandTotal, CellAlign: 'right' },            
+            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
+            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
+        ];
 
         if (data && data.ItemList.length > 0) {
-            bodyData = generateEventPerformanceGridBody(data);
-            footerData = generateEventPerformanceGridFooter(data);
+            bodyData = generateLeagueOfEventGridBody(data);
+            footerData = generateLeagueOfEventGridFooter(data, footerColumns);
         }
 
+        var titleFormat = '<span id="spanEventLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
         var gridOptions = generateEventPerformanceGridOptions(data);
+        gridOptions.titleInfo = {
+            text: titleFormat.format(labels.Event, leagueGroupName),
+            showExcelButton: true,
+            exportExcelFunction: function () {
+                common.DownloadFile(urls.ExportLeaguePerformanceOfEvent, leagueParameters);
+            }
+        }
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
-
-        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data) }];
-        gridOptions.columns = generateColumns(data);
+        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
+        gridOptions.columns = generateColumns(data, headerColumns);
 
         // Hide previous report.
         domElements.divEventPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
+
+        handleLeaguePerformanceOfEventGridEvents();
+    }
+
+    var generateLeagueOfEventGridBody = function (data) {
+        var matchCountFormat = '<span class="match-link link" title="{0}" data-match-ids="{1}">{2}</span>';
+        var bodyData = [];
+        var row;
+
+        $.each(data.ItemList, function (indexItem, item) {
+            var matchCountCol = matchCountFormat.format(labels.MatchPerformance, item.MatchIdList, item.MatchCount);
+
+            var currentRowData = [
+                { Name: 'ColLeagueName', Value: item.AutoTradingName, CssClass: 'bold' },                
+                { Name: 'ColMatchCount', Value: matchCountCol },
+                { Name: 'ColBetCount', Value: item.BetCount }
+            ];
+
+            row = {
+                Columns: generateRobotTradingItemList(item.RobotTradingItemList, currentRowData)
+            };
+
+            bodyData.push(row);
+        })
+
+        return bodyData;
+    }
+
+    var generateLeagueOfEventGridFooter = function (data, columns) {
+        return [{
+            Columns: generateRobotTradingItemList(data.GrandTotal.RobotTradingItemList, columns)
+        }];
     }   
 
-    var generateLeagueGridBody = function () {
+    var handleLeaguePerformanceOfEventGridEvents = function () {
+        domElements.divLeaguePerformanceContainer.find('#spanEventLink').click(function () {
+            showEventPerformanceReport();
+        });
 
-    }
+        domElements.divLeaguePerformanceContainer.find('.match-link').click(function () {
+            var link = $(this);
+            
+        });
+    }   
+
+    var showEventPerformanceReport = function () {
+        domElements.divEventPerformanceContainer.removeClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');     
+    };
 
     $this.InitPage = function () {
         cacheDOMElements();
 
         initializeFields();
     };
+
 }

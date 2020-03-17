@@ -7,7 +7,7 @@
     {
         IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }
 
-        AutoTradingItem GenerateLeagueMatchBetCount(LeagueMatchBetCountInfo matchInfo);
+        AutoTradingItem GenerateSummary(SummaryLeagueMatchBetCountInfo matchInfo);
 
         AutoTradingItem GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
 

@@ -15,6 +15,7 @@
         private const string FileBetTypePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls";
         private const string FilePeriodPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\PeriodPerformance.xls";
         private const string FileEventPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls";
+        private const string FileLeaguePerformanceOfEvent = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
         private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
         private readonly IAutomationTradingPerformanceService _automationTradingService;
 
@@ -125,9 +126,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetEventPerformance(GetEventPerformanceCriteria criteria)
         {
-            var events = _automationTradingService.GetAutoTradingEventPerformance(criteria);
+            var eventList = _automationTradingService.GetAutoTradingEventPerformance(criteria);
 
-            var jsonResult = Json(events);
+            var jsonResult = Json(eventList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
@@ -154,14 +155,24 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult GetLeaguePerformanceOfEvent(GetEventPerformanceCriteria criteria)
+        public ActionResult GetLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria)
         {
-            var events = _automationTradingService.GetAutoTradingEventPerformance(criteria);
+            var leagueList = _automationTradingService.GetAutoTradingLeaguePerformanceOfEvent(criteria);
 
-            var jsonResult = Json(events);
+            var jsonResult = Json(leagueList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria)
+        {
+            var templatePath = Server.MapPath(FileLeaguePerformanceOfEvent);
+
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfEvent(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         #endregion
@@ -194,5 +205,6 @@
         }
 
         #endregion
+
     }
 }

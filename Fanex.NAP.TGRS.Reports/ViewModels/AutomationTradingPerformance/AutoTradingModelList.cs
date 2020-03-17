@@ -24,9 +24,9 @@
             get
             {
                 var sites = new Dictionary<string, string>();
-                sites.Add("1", Consts.SiteCN88);
-                sites.Add("2", Consts.SiteCash);
-                sites.Add("3", Consts.SiteNova);
+                sites.Add("1", Consts.AutomationTradingSiteCN88);
+                sites.Add("2", Consts.AutomationTradingSiteCash);
+                sites.Add("3", Consts.AutomationTradingSiteNova);
 
                 return sites;
             }
@@ -48,7 +48,7 @@
             this.MatchCount = totalInfo.MatchCount;
 
             return this;
-        }
+        }        
 
         public AutoTradingModelList GenerateSummary(IEnumerable<TotalPerformanceInfo> infos)
         {

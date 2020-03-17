@@ -77,11 +77,11 @@
             {
                 switch (this.Model)
                 {
-                    case Consts.RT3WithTrader:
+                    case Consts.AutomationTradingRT3WithTrader:
                         return ViewLang.RT3WithTraderPerformance;
-                    case Consts.RT3NoTrader:
+                    case Consts.AutomationTradingRT3NoTrader:
                         return ViewLang.RT3NoTraderPerformance;
-                    case Consts.TradingAutomation:
+                    case Consts.AutomationTradingTradingAutomation:
                         return ViewLang.TradingAutomation;
                     default:
                         return string.Empty;

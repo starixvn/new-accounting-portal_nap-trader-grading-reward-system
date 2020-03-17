@@ -180,7 +180,9 @@
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfLeagueTeam.cs" />
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfTeamCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\AutoTradingPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetEventPerformanceCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetLeaguePerformanceOfEventCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
@@ -273,7 +275,11 @@
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Models\AutomationTradingPerformance\EventPerformanceInfo.cs" />
-    <Compile Include="Models\AutomationTradingPerformance\LeagueMatchBetCountInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\LeaguePerformanceOfEventInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryBetTypeInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryEventInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryLeagueOfEventInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryPeriodInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\WeekPerformanceInfo.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeSummary.cs" />
@@ -407,6 +413,7 @@
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\IAutoTradingItem.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\LeagueGroup.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />

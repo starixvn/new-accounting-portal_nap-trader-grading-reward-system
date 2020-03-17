@@ -18,10 +18,10 @@
 
         public AutoTradingItem GrandTotal { get; set; }
 
-        public void AddAutoTradingItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, LeagueMatchBetCountInfo leagueMatchCountInfo, string eventName)
+        public void AddAutoTradingItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, SummaryLeagueMatchBetCountInfo leagueMatchCountInfo, string autoTradingName)
         {
-            var item = new AutoTradingItem(eventName, this.SiteList, this.MeasurementHiddenList)
-                .GenerateLeagueMatchBetCount(leagueMatchCountInfo)
+            var item = new AutoTradingItem(autoTradingName, this.SiteList, this.MeasurementHiddenList)
+                .GenerateSummary(leagueMatchCountInfo)
                 .GenereateGroupVirtualTotal(siteIdList, infos)
                 .GenereateGroupVariance(siteIdList, infos)
                 .GenereateGroupRealTotal(siteIdList, infos)
@@ -36,7 +36,7 @@
             }
         }
 
-        public void GenerateGrandTotal()
+        public void GenerateGrandTotal(bool isRecalculateMatchCount = false)
         {
             foreach (var key in this.KeyList)
             {
@@ -50,7 +50,7 @@
             }
 
             this.GrandTotal.LeagueCount = this.LeagueCount;
-            this.GrandTotal.MatchCount = this.MatchCount;
+            this.GrandTotal.MatchCount = isRecalculateMatchCount ? this.ItemList.Sum(x=>x.MatchCount) : this.MatchCount;
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
         }
     }

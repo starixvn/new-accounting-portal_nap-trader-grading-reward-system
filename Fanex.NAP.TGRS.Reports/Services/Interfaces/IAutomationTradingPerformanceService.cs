@@ -6,7 +6,7 @@
 
     public interface IAutomationTradingPerformanceService
     {
-        Dictionary<int, string> GetLeagueGroups();
+        Dictionary<int, LeagueGroup> GetLeagueGroups();
 
         AutoTradingList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria);
        
@@ -25,5 +25,9 @@
         AutoTradingList GetAutoTradingEventPerformance(GetEventPerformanceCriteria criteria);        
 
         void ExportAutoTradingEventLeagueGroupPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria);
+
+        void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
     }
 }

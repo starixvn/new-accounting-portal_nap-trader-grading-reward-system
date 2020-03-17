@@ -24,17 +24,17 @@
         {
             switch (item.Model)
             {
-                case Consts.RT3WithTrader:
+                case Consts.AutomationTradingRT3WithTrader:
                     RT3WithTraderList.Add(item.VirtualTotalTurnover);
                     RT3WithTraderList.Add(item.VarianceTurnover);
                     RT3WithTraderList.Add(item.Total8RMWLTurnover);
                     break;
-                case Consts.RT3NoTrader:
+                case Consts.AutomationTradingRT3NoTrader:
                     RT3NoTraderList.Add(item.VirtualTotalTurnover);
                     RT3NoTraderList.Add(item.VarianceTurnover);
                     RT3NoTraderList.Add(item.Total8RMWLTurnover);
                     break;
-                case Consts.TradingAutomation:
+                case Consts.AutomationTradingTradingAutomation:
                     TradingAutomationList.Add(item.VirtualTotalTurnover);
                     TradingAutomationList.Add(item.VarianceTurnover);
                     TradingAutomationList.Add(item.Total8RMWLTurnover);
@@ -46,17 +46,17 @@
         {
             switch (item.Model)
             {
-                case Consts.RT3WithTrader:
+                case Consts.AutomationTradingRT3WithTrader:
                     RT3WithTraderList.Add(item.VirtualTotalWinLoss);
                     RT3WithTraderList.Add(item.VarianceWinLoss);
                     RT3WithTraderList.Add(item.Total8RMWLWinLoss);
                     break;
-                case Consts.RT3NoTrader:
+                case Consts.AutomationTradingRT3NoTrader:
                     RT3NoTraderList.Add(item.VirtualTotalWinLoss);
                     RT3NoTraderList.Add(item.VarianceWinLoss);
                     RT3NoTraderList.Add(item.Total8RMWLWinLoss);
                     break;
-                case Consts.TradingAutomation:
+                case Consts.AutomationTradingTradingAutomation:
                     TradingAutomationList.Add(item.VirtualTotalWinLoss);
                     TradingAutomationList.Add(item.VarianceWinLoss);
                     TradingAutomationList.Add(item.Total8RMWLWinLoss);
@@ -68,17 +68,17 @@
         {
             switch (item.Model)
             {
-                case Consts.RT3WithTrader:
+                case Consts.AutomationTradingRT3WithTrader:
                     RT3WithTraderList.Add(item.VirtualTotalMargin);
                     RT3WithTraderList.Add(item.VarianceMargin);
                     RT3WithTraderList.Add(item.Total8RMWLMargin);
                     break;
-                case Consts.RT3NoTrader:
+                case Consts.AutomationTradingRT3NoTrader:
                     RT3NoTraderList.Add(item.VirtualTotalMargin);
                     RT3NoTraderList.Add(item.VarianceMargin);
                     RT3NoTraderList.Add(item.Total8RMWLMargin);
                     break;
-                case Consts.TradingAutomation:
+                case Consts.AutomationTradingTradingAutomation:
                     TradingAutomationList.Add(item.VirtualTotalMargin);
                     TradingAutomationList.Add(item.VarianceMargin);
                     TradingAutomationList.Add(item.Total8RMWLMargin);

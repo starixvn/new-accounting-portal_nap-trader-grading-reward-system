@@ -28,21 +28,27 @@
 
         public string AutoTradingName { get; set; }
 
+        public string LeagueIdList { get; set; }
+
         public int LeagueCount { get; set; }
+
+        public string MatchIdList { get; set; }
 
         public int MatchCount { get; set; }
 
         public int BetCount { get; set; }
 
-        public IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }
+        public IDictionary<string, RobotTradingItem> RobotTradingItemList { get; set; }        
 
-        public AutoTradingItem GenerateLeagueMatchBetCount(LeagueMatchBetCountInfo matchInfo)
+        public AutoTradingItem GenerateSummary(SummaryLeagueMatchBetCountInfo matchInfo)
         {
             if (matchInfo != null)
             {
+                this.LeagueIdList = matchInfo.LeagueIdList;
                 this.LeagueCount = matchInfo.LeagueCount;
+                this.MatchIdList = matchInfo.MatchIdList;
                 this.MatchCount = matchInfo.MatchCount;
-                this.BetCount = matchInfo.BetCount;
+                this.BetCount = matchInfo.BetCount;                                
             }
 
             return this;

@@ -195,8 +195,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
                     exportBetTypePerformance();
                 }
             },
-            showNumberColumn: false,
-            showFooter: true
+            showNumberColumn: false,         
         };        
     }
 
