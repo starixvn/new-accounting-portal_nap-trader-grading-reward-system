@@ -24,10 +24,19 @@
 
         AutoTradingList GetAutoTradingEventPerformance(GetEventPerformanceCriteria criteria);        
 
-        void ExportAutoTradingEventLeagueGroupPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath);
+        void ExportAutoTradingEventPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath);
 
         AutoTradingList GetAutoTradingLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria);
 
         void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingEventLeaguePerformance(GetLeaguePerformanceOfEventCriteria criteria);
+
+        void ExportAutoTradingEventLeaguePerformance(AutoTradingList eventLeagueList, int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria);
+
+        void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath);
+
     }
 }

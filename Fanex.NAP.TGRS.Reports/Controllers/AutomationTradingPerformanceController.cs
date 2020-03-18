@@ -15,7 +15,9 @@
         private const string FileBetTypePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls";
         private const string FilePeriodPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\PeriodPerformance.xls";
         private const string FileEventPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls";
+        private const string FileEventLeaguePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls";
         private const string FileLeaguePerformanceOfEvent = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
+        private const string FileMatchPerformanceOfEventLeague = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
         private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
         private readonly IAutomationTradingPerformanceService _automationTradingService;
 
@@ -132,24 +134,14 @@
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
-        }
+        }       
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult ExportEventPerformance(GetEventPerformanceCriteria criteria)
         {
-            //var templatePath = Server.MapPath(FileEventPerformance);
-
-            //_automationTradingService.ExportAutoTradingEventLeagueGroupPerformance(CurrentSession.UserId, criteria, templatePath);
-
-            return new EmptyResult();
-        }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportEventLeagueGroupPerformance(GetEventPerformanceCriteria criteria)
-        {
             var templatePath = Server.MapPath(FileEventPerformance);
 
-            _automationTradingService.ExportAutoTradingEventLeagueGroupPerformance(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingEventPerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }
@@ -171,6 +163,41 @@
             var templatePath = Server.MapPath(FileLeaguePerformanceOfEvent);
 
             _automationTradingService.ExportAutoTradingLeaguePerformanceOfEvent(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportEventLeaguePerformance(GetLeaguePerformanceOfEventCriteria criteria)
+        {
+            criteria.IsExportEventLeague = true;
+
+            var templatePath = Server.MapPath(FileEventLeaguePerformance);
+
+            var eventLeagueList = _automationTradingService.GetAutoTradingEventLeaguePerformance(criteria);
+
+            _automationTradingService.ExportAutoTradingEventLeaguePerformance(eventLeagueList, CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria)
+        {
+            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfEventLeague(criteria);
+
+            var jsonResult = Json(matchList);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria)
+        {
+            var templatePath = Server.MapPath(FileMatchPerformanceOfEventLeague);
+
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfEventLeague(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
         }

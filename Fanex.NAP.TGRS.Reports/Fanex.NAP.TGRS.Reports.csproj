@@ -183,6 +183,7 @@
     <Compile Include="Criteria\AutomationTradingPerformance\AutoTradingPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetEventPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetLeaguePerformanceOfEventCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetMatchPerformanceOfEventLeagueCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="ReportUtil.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
+    <Compile Include="ViewModels\AutomationTradingPerformance\GroupingLeagueItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\IAutoTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\LeagueGroup.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />

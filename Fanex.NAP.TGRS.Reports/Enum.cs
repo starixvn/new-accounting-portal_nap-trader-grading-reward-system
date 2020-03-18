@@ -6,5 +6,14 @@
         All,
         Live,
         NonLive
-    }   
+    }
+
+    public enum AutoTradingType
+    {
+        BetType,
+        LeagueGroup,
+        League,
+        PeriodWeek,
+        PeriodMonth
+    }
 }

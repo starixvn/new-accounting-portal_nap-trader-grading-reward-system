@@ -14,17 +14,20 @@
             this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
         }
 
-        public AutoTradingItem(string autoTradingName, IDictionary<string, string> siteList, IList<MeasurementItem> measurementHiddenList)
+        public AutoTradingItem(string autoTradingName, IDictionary<string, string> siteList, IList<MeasurementItem> measurementHiddenList, AutoTradingType type)
         {
             this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
             this.AutoTradingName = autoTradingName;
             this.SiteList = siteList;
             this.MeasurementHiddenList = measurementHiddenList;
+            this.Type = type;
         }
 
         protected IDictionary<string, string> SiteList { get; set; }
 
         protected IList<MeasurementItem> MeasurementHiddenList { get; set; }
+
+        public AutoTradingType Type { get; set; }
 
         public string AutoTradingName { get; set; }
 
@@ -54,7 +57,7 @@
             return this;
         }
 
-        public AutoTradingItem GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenerateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderVirtualTotal);
 
@@ -94,7 +97,7 @@
             return this;
         }
 
-        public AutoTradingItem GenereateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenerateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderVariance);
 
@@ -134,7 +137,7 @@
             return this;
         }
 
-        public AutoTradingItem GenereateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenerateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderRealTotal);
 
@@ -174,7 +177,7 @@
             return this;
         }
 
-        public AutoTradingItem GenereateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenerateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderTotal8RM);
 
@@ -214,7 +217,7 @@
             return this;
         }
 
-        public AutoTradingItem GenereateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
+        public AutoTradingItem GenerateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos)
         {
             var mesurementHides = this.MeasurementHiddenList.Where(x => x.GroupHeaderName == Consts.AutomationTradingGroupHeaderRealTotal8RMWL);
 

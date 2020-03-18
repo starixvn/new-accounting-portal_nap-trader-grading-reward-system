@@ -9,14 +9,15 @@
 
         AutoTradingItem GenerateSummary(SummaryLeagueMatchBetCountInfo matchInfo);
 
-        AutoTradingItem GenereateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+        AutoTradingItem GenerateGroupVirtualTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
 
-        AutoTradingItem GenereateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+        AutoTradingItem GenerateGroupVariance(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
 
-        AutoTradingItem GenereateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+        AutoTradingItem GenerateGroupRealTotal(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
 
-        AutoTradingItem GenereateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+        AutoTradingItem GenerateGroupTotal8RM(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
 
-        AutoTradingItem GenereateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+        AutoTradingItem GenerateGroupRealTotal8RMWL(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos);
+
     }
 }

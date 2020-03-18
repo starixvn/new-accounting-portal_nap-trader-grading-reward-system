@@ -18,15 +18,19 @@
 
         public AutoTradingItem GrandTotal { get; set; }
 
-        public void AddAutoTradingItem(List<int> siteIdList, IEnumerable<RTModelPerformanceInfo> infos, SummaryLeagueMatchBetCountInfo leagueMatchCountInfo, string autoTradingName)
+        public void AddAutoTradingItem(List<int> siteIdList, 
+            IEnumerable<RTModelPerformanceInfo> infos, 
+            SummaryLeagueMatchBetCountInfo leagueMatchCountInfo, 
+            string autoTradingName, 
+            AutoTradingType type)
         {
-            var item = new AutoTradingItem(autoTradingName, this.SiteList, this.MeasurementHiddenList)
+            var item = new AutoTradingItem(autoTradingName, this.SiteList, this.MeasurementHiddenList, type)
                 .GenerateSummary(leagueMatchCountInfo)
-                .GenereateGroupVirtualTotal(siteIdList, infos)
-                .GenereateGroupVariance(siteIdList, infos)
-                .GenereateGroupRealTotal(siteIdList, infos)
-                .GenereateGroupTotal8RM(siteIdList, infos)
-                .GenereateGroupRealTotal8RMWL(siteIdList, infos);
+                .GenerateGroupVirtualTotal(siteIdList, infos)
+                .GenerateGroupVariance(siteIdList, infos)
+                .GenerateGroupRealTotal(siteIdList, infos)
+                .GenerateGroupTotal8RM(siteIdList, infos)
+                .GenerateGroupRealTotal8RMWL(siteIdList, infos);
 
             this.ItemList.Add(item);
 
@@ -40,7 +44,10 @@
         {
             foreach (var key in this.KeyList)
             {
-                var items = this.ItemList.Select(x => x.RobotTradingItemList.ContainsKey(key) ? x.RobotTradingItemList[key] : null);
+                var items = this.ItemList.Select(x => x.RobotTradingItemList.ContainsKey(key) 
+                                                ? x.RobotTradingItemList[key] 
+                                                : null);
+
                 var value = items.Aggregate<RobotTradingItem, RobotTradingItem>(null, (acc, s) => acc + s);
 
                 if (value != null)
@@ -52,6 +59,33 @@
             this.GrandTotal.LeagueCount = this.LeagueCount;
             this.GrandTotal.MatchCount = isRecalculateMatchCount ? this.ItemList.Sum(x=>x.MatchCount) : this.MatchCount;
             this.GrandTotal.BetCount = this.ItemList.Sum(x => x.BetCount);
+        }
+
+        public void GenerateGrandTotal(AutoTradingType type, bool isRecalculateMatchCount = false)
+        {
+            foreach (var key in this.KeyList)
+            {
+                var items = this.ItemList.Where(x => x.Type.Equals(type))
+                                         .Select(x => x.RobotTradingItemList.ContainsKey(key)
+                                                ? x.RobotTradingItemList[key]
+                                                : null);
+
+                var value = items.Aggregate<RobotTradingItem, RobotTradingItem>(null, (acc, s) => acc + s);
+
+                if (value != null)
+                {
+                    this.GrandTotal.RobotTradingItemList.Add(key, value);
+                }
+            }
+
+            this.GrandTotal.LeagueCount = this.LeagueCount;
+            this.GrandTotal.MatchCount = isRecalculateMatchCount 
+                                                            ? this.ItemList.Where(x=>x.Type.Equals(type))
+                                                                           .Sum(x => x.MatchCount) 
+                                                            : this.MatchCount;
+
+            this.GrandTotal.BetCount = this.ItemList.Where(x=>x.Type.Equals(type))
+                                                    .Sum(x => x.BetCount);
         }
     }
 }

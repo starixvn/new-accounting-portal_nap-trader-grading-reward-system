@@ -9,10 +9,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
 
     var urls = {
         GetEventPerformance: common.ResolveRootUrl('AutomationTradingPerformance/GetEventPerformance'),
-        GetLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/GetLeaguePerformanceOfEvent'),
         ExportEventPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventPerformance'),
-        ExportEventLeagueGroupPerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventLeagueGroupPerformance'),
-        ExportLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/ExportLeaguePerformanceOfEvent')
+        GetLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/GetLeaguePerformanceOfEvent'),        
+        ExportLeaguePerformanceOfEvent: common.ResolveRootUrl('AutomationTradingPerformance/ExportLeaguePerformanceOfEvent'),
+        ExportEventLeaguePerformance: common.ResolveRootUrl('AutomationTradingPerformance/ExportEventLeaguePerformance'),
+        GetMatchPerformanceOfEventLeague: common.ResolveRootUrl('AutomationTradingPerformance/GetMatchPerformanceOfEventLeague'),
+        ExportMatchPerformanceOfEventLeague: common.ResolveRootUrl('AutomationTradingPerformance/ExportMatchPerformanceOfEventLeague')        
     };
 
     var domElements = {
@@ -39,6 +41,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
     };
 
     var leagueParameters = {};
+
+    var matchParameters = {};
 
     var summaryPerformance = new Fanex.NAP.TGRS.AutomationTradingPerformance.SummaryPerformance();
     summaryPerformance.InitPage();
@@ -113,7 +117,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         });
 
         domElements.btnExport.click(function () {
-            common.DownloadFile(urls.ExportEventPerformance, parameters);
+            common.DownloadFile(urls.ExportEventLeaguePerformance, parameters);
         })
     }
 
@@ -210,7 +214,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         gridOptions.titleInfo = {         
             showExcelButton: true,
             exportExcelFunction: function () {
-                common.DownloadFile(urls.ExportEventLeagueGroupPerformance, parameters);
+                common.DownloadFile(urls.ExportEventPerformance, parameters);
             }
         }
         gridOptions.bodyRows = bodyData;
@@ -400,11 +404,11 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             var leagueIdList = link.attr('data-league-ids');
             var leagueGroupName = link.attr('data-league-group-name');
 
-            getLeaguePerformanceReport(leagueIdList, leagueGroupName);
+            getLeaguePerformanceOfEventReport(leagueIdList, leagueGroupName);
         })
     }
 
-    var getLeaguePerformanceReport = function (leagueIdList, leagueGroupName) {
+    var getLeaguePerformanceOfEventReport = function (leagueIdList, leagueGroupName) {
         leagueParameters = {
             LeagueIdList: leagueIdList,
             FromDate: parameters.FromDate,
@@ -477,19 +481,19 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         domElements.divEventPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
 
-        handleLeaguePerformanceOfEventGridEvents();
+        handleLeaguePerformanceOfEventGridEvents(leagueGroupName);
     }
 
     var generateLeagueOfEventGridBody = function (data) {
-        var matchCountFormat = '<span class="match-link link" title="{0}" data-match-ids="{1}">{2}</span>';
+        var matchCountFormat = '<span class="match-link link" title="{0}" data-match-ids="{1}" data-league-name="{2}">{3}</span>';
         var bodyData = [];
         var row;
 
         $.each(data.ItemList, function (indexItem, item) {
-            var matchCountCol = matchCountFormat.format(labels.MatchPerformance, item.MatchIdList, item.MatchCount);
+            var matchCountCol = matchCountFormat.format(labels.MatchPerformance, item.MatchIdList, item.AutoTradingName, item.MatchCount);
 
             var currentRowData = [
-                { Name: 'ColLeagueName', Value: item.AutoTradingName, CssClass: 'bold' },                
+                { Name: 'ColLeagueName', Value: item.AutoTradingName, CssClass: 'bold' },
                 { Name: 'ColMatchCount', Value: matchCountCol },
                 { Name: 'ColBetCount', Value: item.BetCount }
             ];
@@ -510,22 +514,142 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         }];
     }   
 
-    var handleLeaguePerformanceOfEventGridEvents = function () {
+    var handleLeaguePerformanceOfEventGridEvents = function (leagueGroupName) {
         domElements.divLeaguePerformanceContainer.find('#spanEventLink').click(function () {
             showEventPerformanceReport();
         });
 
         domElements.divLeaguePerformanceContainer.find('.match-link').click(function () {
             var link = $(this);
-            
+            var matchIdList = link.attr('data-match-ids');
+            var leagueName = link.attr('data-league-name');
+
+            getMatchPerformanceOfEventLeagueReport(matchIdList, leagueGroupName, leagueName);
         });
-    }   
+    }
 
     var showEventPerformanceReport = function () {
         domElements.divEventPerformanceContainer.removeClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');     
     };
+
+    var getMatchPerformanceOfEventLeagueReport = function (matchIdList, leagueGroupName, leagueName) {
+        matchParameters = {
+            MatchIdList: matchIdList,
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,
+            Model: parameters.Model,
+            TypeSiteIds: parameters.TypeSiteIds,
+            Measurements: parameters.Measurements,
+            MeasurementHides: parameters.MeasurementHides,
+            MeasurementDescs: parameters.MeasurementDescs
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetMatchPerformanceOfEventLeague,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(matchParameters),
+            success: function (result) {
+                generateMatchOfEventLeagueGrid(result, leagueGroupName, leagueName);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    }
+
+    var generateMatchOfEventLeagueGrid = function (data, leagueGroupName, leagueName) {
+        var bodyData = [];
+        var footerData = [];
+        var groupHeaderColumns = [
+            { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
+            { HeaderText: labels.Match, Name: "ColMatchName", MergeRowNumber: 2 },
+            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
+        ];
+        var headerColumns = [
+            { HeaderText: labels.EventDate, Width: 240, Name: "ColEventDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: labels.Match, Width: 120, Name: "ColMatchName", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+        ];
+        var footerColumns = [
+            { Name: 'ColEventDate', Value: labels.GrandTotal, CellAlign: 'right', MergeColNumber: 2  },            
+            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
+        ];
+
+        if (data && data.ItemList.length > 0) {
+            bodyData = generateMatchOfEventLeagueGridBody(data);
+            footerData = generateMatchOfEventLeagueGridFooter(data, footerColumns);
+        }
+
+        var titleFormat = '<span id="spanEventLink" class="breadcrumb-link">{0}</span><span id="spanLeagueOfEventLink" class="breadcrumb-link"> >> {1}</span><span> >> {2}</span>';
+        var gridOptions = generateEventPerformanceGridOptions(data);
+        gridOptions.titleInfo = {
+            text: titleFormat.format(labels.Event, leagueGroupName, leagueName),
+            showExcelButton: true,
+            exportExcelFunction: function () {
+                common.DownloadFile(urls.ExportMatchPerformanceOfEventLeague, matchParameters);
+            }
+        }
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
+        gridOptions.columns = generateColumns(data, headerColumns);
+        
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+
+        handleMatchRerformanceOfEventLeagueGridEvents();
+    }
+
+    var generateMatchOfEventLeagueGridBody = function (data) {     
+        var bodyData = [];
+        var row;
+
+        $.each(data.ItemList, function (indexItem, item) {           
+            var currentRowData = [
+                { Name: 'ColEventDate', Value: item.AutoTradingName },
+                { Name: 'ColMatchName', Value: item.MatchName },
+                { Name: 'ColBetCount', Value: item.BetCount }
+            ];
+
+            row = {
+                Columns: generateRobotTradingItemList(item.RobotTradingItemList, currentRowData)
+            };
+
+            bodyData.push(row);
+        })
+
+        return bodyData;
+    }
+
+    var generateMatchOfEventLeagueGridFooter = function (data, columns) {
+        return [{
+            Columns: generateRobotTradingItemList(data.GrandTotal.RobotTradingItemList, columns)
+        }];
+    }
+
+    var handleMatchRerformanceOfEventLeagueGridEvents = function () {
+        domElements.divMatchPerformanceContainer.find('#spanEventLink').click(function () {
+            showEventPerformanceReport();
+        });  
+
+        domElements.divMatchPerformanceContainer.find('#spanLeagueOfEventLink').click(function () {
+            showLeaguePerformanceOfEventReport();
+        });
+    }
+
+    var showLeaguePerformanceOfEventReport = function () {
+        domElements.divEventPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.removeClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+    }
 
     $this.InitPage = function () {
         cacheDOMElements();
