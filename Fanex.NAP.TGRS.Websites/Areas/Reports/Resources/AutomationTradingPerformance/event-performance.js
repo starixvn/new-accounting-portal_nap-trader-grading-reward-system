@@ -75,6 +75,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             labelCss: 'col_5'
         });
 
+        domElements.btnExport.addClass('display-none');
+
         setCacheForFilter(domElements.ddlSite, getStorageFilter("RTBetTypeSelectedSideIds"));
 
         setCacheForFilter(domElements.ddlMeasurement, getStorageFilter("RTBetTypeSelectedMeasurements"));
@@ -110,6 +112,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
                 parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
 
                 domElements.divEventPerformanceContainer.addClass('display-none');
+                domElements.btnExport.addClass('display-none');
 
                 hideAllReports();
                 getEventPerformanceReport();
@@ -208,6 +211,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         if (data && data.ItemList.length > 0) {
             bodyData = generateEventPerformanceGridBody(data);
             footerData = generateEventPerformanceGridFooter(data, footerColumns);
+
+            domElements.btnExport.removeClass('display-none');
         }
 
         var gridOptions = generateEventPerformanceGridOptions(data);
@@ -574,8 +579,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
         ];
         var headerColumns = [
-            { HeaderText: labels.EventDate, Width: 240, Name: "ColEventDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
-            { HeaderText: labels.Match, Width: 120, Name: "ColMatchName", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: labels.EventDate, Width: 120, Name: "ColEventDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: labels.Match, Width: 240, Name: "ColMatchName", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
         var footerColumns = [
@@ -615,7 +620,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         $.each(data.ItemList, function (indexItem, item) {           
             var currentRowData = [
                 { Name: 'ColEventDate', Value: item.AutoTradingName },
-                { Name: 'ColMatchName', Value: item.MatchName },
+                { Name: 'ColMatchName', Value: item.AutoTradingName2 },
                 { Name: 'ColBetCount', Value: item.BetCount }
             ];
 

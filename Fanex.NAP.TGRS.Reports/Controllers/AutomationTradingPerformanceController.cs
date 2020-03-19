@@ -17,7 +17,7 @@
         private const string FileEventPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls";
         private const string FileEventLeaguePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls";
         private const string FileLeaguePerformanceOfEvent = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
-        private const string FileMatchPerformanceOfEventLeague = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
+        private const string FileMatchPerformanceOfEventLeague = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MacthPerformanceOfEventLeague.xls";
         private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
         private readonly IAutomationTradingPerformanceService _automationTradingService;
 

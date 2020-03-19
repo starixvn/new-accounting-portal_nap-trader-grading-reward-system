@@ -235,6 +235,7 @@
     <Setting Key="TGRS_Rpt_RobotTrading_Monthly" SpName="TGRS_Rpt_RobotTrading_Monthly_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Event" SpName="TGRS_Rpt_RobotTrading_Event_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Event_League" SpName="TGRS_Rpt_RobotTrading_Event_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_Event_League_Match" SpName="TGRS_Rpt_RobotTrading_Event_League_Match_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Model" SpName="TGRS_Rpt_RobotTrading_Model_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="SpreadManagement">

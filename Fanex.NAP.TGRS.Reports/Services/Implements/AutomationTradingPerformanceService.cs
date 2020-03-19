@@ -26,6 +26,7 @@
         private const string AutomationTradingPeriodPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.PeriodList";
         private const string AutomationTradingEventPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.EventList";
         private const string AutomationTradingLeaguePerformanceOfEventSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfEventList";
+        private const string AutomationTradingMatchPerformanceOfEventLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfEventLeagueList";
         private const string AutomationTradingModelPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.ModelList";
         private const int PointInPixel = 225;
         #endregion
@@ -106,9 +107,7 @@
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetType);
 
                 var sheet = writer.CopyRows(0, 1).Sheet;
-                FilterBlockBetType(userId, criteria, ref writer);
-
-                writer.FreezeRow(0, 4);
+                
                 var columns = new List<object>
                 {
                     ViewLang.BetType,
@@ -116,6 +115,10 @@
                     ViewLang.Match,
                     ViewLang.BetCount
                 };
+
+                FilterBlockBetType(userId, criteria, ref writer);
+
+                writer.FreezeRow(0, 4);
 
                 FillGroupHeader(betTypeData.GroupHeaderList, betTypeData.GrandTotal.RobotTradingItemList, columns, 4, ref writer);
                 FillRowData(betTypeData.ItemList, 4, ref writer);
@@ -228,36 +231,47 @@
             for (int i = 0; i < cellCopyIndex; i++)
             {
                 SheetExtensions.MergeCells(row.Sheet, 2, i, 3, i);
-            }            
+            }
 
             return row;
         }
 
-        private void FillRowData(IList<AutoTradingItem> itemList, 
+        private void FillRowData(IList<AutoTradingItem> itemList,
             int cellCopyIndex,
             ref ExcelTemplateWriter writer)
         {
-            var index = 1;
-
+            var index = 1;            
             foreach (var item in itemList)
             {
                 int styleIndex = index % 2 == 0 ? 6 : 5;
-                var columns = cellCopyIndex == 4 
-                    ? new List<object>
+                var columns = new List<object>();
+                
+                if (item.Type.Equals(AutoTradingType.Match))
+                {
+                    columns = new List<object>()
                     {
                         item.AutoTradingName,
-                        item.LeagueCount,
-                        item.MatchCount,
-                        item.BetCount
-                    }
-                    : new List<object>()
-                    {
-                        item.AutoTradingName,
-                        item.MatchCount,
+                        item.AutoTradingName2,
                         item.BetCount
                     };
-
-                FillRowData(item.RobotTradingItemList, columns, styleIndex, cellCopyIndex, ref writer);
+                }
+                else
+                {
+                    columns = cellCopyIndex.Equals(4)
+                        ? new List<object>() {
+                            item.AutoTradingName,
+                            item.LeagueCount,
+                            item.MatchCount,
+                            item.BetCount
+                        }
+                        : new List<object>() {
+                            item.AutoTradingName,
+                            item.MatchCount,
+                            item.BetCount
+                        };
+                }
+                
+                FillRowData(item.RobotTradingItemList, columns, styleIndex, columns.Count, ref writer);
 
                 index++;
             }
@@ -436,10 +450,6 @@
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Period);
                 var sheet = writer.CopyRows(0, 1).Sheet;
 
-                FilterBlockMonth(userId, criteria, ref writer);
-
-                writer.FreezeRow(0, 4);
-
                 var columns = new List<object>
                 {
                     ViewLang.Period,
@@ -447,6 +457,10 @@
                     ViewLang.Match,
                     ViewLang.BetCount
                 };
+
+                FilterBlockPeriod(userId, criteria, ref writer);
+
+                writer.FreezeRow(0, 4);
 
                 FillGroupHeader(periodData.GroupHeaderList, periodData.GrandTotal.RobotTradingItemList, columns, 4, ref writer);
                 FillRowData(periodData.ItemList, 4, ref writer);
@@ -464,7 +478,7 @@
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlockMonth(int userId, GetMonthPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlockPeriod(int userId, GetMonthPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);
@@ -562,9 +576,9 @@
 
         public void ExportAutoTradingEventPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath)
         {
-            var eventData = SessionManager.Get<AutoTradingList>(AutomationTradingEventPerformanceSessionKey);
+            var eventList = SessionManager.Get<AutoTradingList>(AutomationTradingEventPerformanceSessionKey);
 
-            if (eventData != null && eventData.ItemList.Any())
+            if (eventList != null && eventList.ItemList.Any())
             {
                 string reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
@@ -573,11 +587,7 @@
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Event);
-                var sheet = writer.CopyRows(0, 1).Sheet;
-
-                FilterBlockEvent(userId, criteria, ref writer);
-
-                writer.FreezeRow(0, 4);
+                var sheet = writer.CopyRows(0, 1).Sheet;                
 
                 var columns = new List<object>
                 {
@@ -587,9 +597,7 @@
                     ViewLang.BetCount
                 };
 
-                FillGroupHeader(eventData.GroupHeaderList, eventData.GrandTotal.RobotTradingItemList, columns, 4, ref writer);
-                FillRowData(eventData.ItemList, 4, ref writer);
-                FillGrandTotal(eventData.GrandTotal, 4, ref writer);
+                FillDataReport(eventList, criteria, userId, columns, ref writer);
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 6144);
@@ -675,11 +683,7 @@
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.League);
-                var sheet = writer.CopyRows(0, 1).Sheet;
-
-                FilterBlockEvent(userId, criteria, ref writer);
-
-                writer.FreezeRow(0, 4);
+                var sheet = writer.CopyRows(0, 1).Sheet;               
 
                 var columns = new List<object>
                 {
@@ -688,9 +692,7 @@
                     ViewLang.BetCount
                 };
 
-                FillGroupHeader(leagueList.GroupHeaderList, leagueList.GrandTotal.RobotTradingItemList, columns, 3, ref writer);
-                FillRowData(leagueList.ItemList, 3, ref writer);
-                FillGrandTotal(leagueList.GrandTotal, 3, ref writer);
+                FillDataReport(leagueList, criteria, userId, columns, ref writer);
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 8192);
@@ -827,16 +829,16 @@
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.AutomationTradingPerformance);
                 var sheet = writer.CopyRows(0, 1).Sheet;
 
-                FilterBlockEvent(userId, criteria, ref writer);
-
-                writer.FreezeRow(0, 4);
-
                 var columns = new List<object>
                 {
                     ViewLang.Event,                  
                     ViewLang.Match,
                     ViewLang.BetCount
                 };
+                
+                FilterBlockEvent(userId, criteria, ref writer);
+
+                writer.FreezeRow(0, 4);
 
                 FillGroupHeader(eventLeagueList.GroupHeaderList, eventLeagueList.GrandTotal.RobotTradingItemList, columns, 3, ref writer);
                 FillRowDataEventLeague(eventLeagueList.ItemList, 3, ref writer);
@@ -890,12 +892,99 @@
 
         public AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria)
         {
-            return new AutoTradingList();
+            var matchList = new AutoTradingList();
+
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    var summaryMatchOfEventLeague = multi.Read<SummaryMatchOfEventLeagueInfo>();
+                    var matchData = multi.Read<MatchPerformanceOfEventLeagueInfo>();
+
+                    if (matchData != null && matchData.Any())
+                    {
+                        matchList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
+                                  .GenerateMeasurementHidden(criteria.MeasurementHides);
+
+                        var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
+
+                        var groupInfos = matchData.GroupBy(x => x.MatchId, (key, g) => new { MatchId = key, Items = g.ToList() });
+
+                        foreach (var grouping in groupInfos)
+                        {
+                            var summaryMatchOfEventLeagueInfo = summaryMatchOfEventLeague.FirstOrDefault(x => x.MatchId.Equals(grouping.MatchId));
+                            var matchName = CacheRef.GetTeamName(summaryMatchOfEventLeagueInfo.HomeId) + " " + ViewLang.Vs + " " + CacheRef.GetTeamName(summaryMatchOfEventLeagueInfo.AwayId);
+
+                            matchList.AddAutoTradingItem(
+                                                siteIdList, 
+                                                grouping.Items, 
+                                                summaryMatchOfEventLeagueInfo, 
+                                                summaryMatchOfEventLeagueInfo.EventDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd), 
+                                                AutoTradingType.Match,
+                                                matchName);
+                        }
+
+                        matchList.GenerateGrandTotal(true);
+                    }
+
+                    SessionManager.Set<AutoTradingList>(AutomationTradingMatchPerformanceOfEventLeagueSessionKey, matchList);
+                }
+            }
+
+            return matchList;
         }
 
         public void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath)
         {
+            var matchList = SessionManager.Get<AutoTradingList>(AutomationTradingMatchPerformanceOfEventLeagueSessionKey);
 
+            if (matchList != null && matchList.ItemList.Any())
+            {
+                string reportName = string.Format(
+                                ViewLang.AutomationTradingPerformanceFileName,
+                                ViewLang.Match,
+                                criteria.FromDate.ToShortFormatedDateForFileName(),
+                                criteria.ToDate.ToShortFormatedDateForFileName());
+
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Match);
+                var sheet = writer.CopyRows(0, 1).Sheet;
+               
+                var columns = new List<object>
+                {
+                    ViewLang.EventDate,
+                    ViewLang.Match,
+                    ViewLang.BetCount
+                };
+
+                FillDataReport(matchList, criteria, userId, columns, ref writer);
+
+                // Adjust column width for sheet   
+                sheet.SetColumnWidth(0, 4096);
+                sheet.SetColumnWidth(1, 8192);
+                for (int i = 2; i < columns.Count; i++)
+                {
+                    sheet.SetColumnWidth(i, 4096);
+                }                
+
+                writer.Render();
+            }
+        }
+
+        private void FillDataReport(AutoTradingList autoTradingList, 
+            AutoTradingPerformanceCriteria criteria,
+            int userId,
+            List<object> columns,
+            ref ExcelTemplateWriter writer)
+        {
+            var cellCopyIndex = columns.Count;
+
+            FilterBlockEvent(userId, criteria, ref writer);
+
+            writer.FreezeRow(0, 4);
+
+            FillGroupHeader(autoTradingList.GroupHeaderList, autoTradingList.GrandTotal.RobotTradingItemList, columns, cellCopyIndex, ref writer);
+            FillRowData(autoTradingList.ItemList, cellCopyIndex, ref writer);
+            FillGrandTotal(autoTradingList.GrandTotal, cellCopyIndex, ref writer);
         }
 
         #endregion

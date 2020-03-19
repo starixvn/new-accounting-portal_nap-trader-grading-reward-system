@@ -14,6 +14,7 @@
         LeagueGroup,
         League,
         PeriodWeek,
-        PeriodMonth
+        PeriodMonth,
+        Match
     }
 }

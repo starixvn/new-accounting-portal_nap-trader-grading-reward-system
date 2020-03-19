@@ -8,7 +8,7 @@
         public string MatchIdList { get; set; }
 
         public override string GetSettingKey()
-            => "TGRS_Rpt_RobotTrading_Event_League";
+            => "TGRS_Rpt_RobotTrading_Event_League_Match";
 
     }
 }

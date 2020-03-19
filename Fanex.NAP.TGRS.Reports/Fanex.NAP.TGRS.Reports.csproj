@@ -277,9 +277,11 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Models\AutomationTradingPerformance\EventPerformanceInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\LeaguePerformanceOfEventInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\MatchPerformanceOfEventLeagueInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\SummaryBetTypeInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\SummaryEventInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\SummaryLeagueOfEventInfo.cs" />
+    <Compile Include="Models\AutomationTradingPerformance\SummaryMatchOfEventLeagueInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\SummaryPeriodInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\WeekPerformanceInfo.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\BettypeMonthlySummary.cs" />
@@ -414,7 +416,6 @@
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\GroupingLeagueItem.cs" />
-    <Compile Include="ViewModels\AutomationTradingPerformance\IAutoTradingItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\LeagueGroup.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />

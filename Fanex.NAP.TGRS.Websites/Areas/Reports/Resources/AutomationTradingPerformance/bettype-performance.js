@@ -163,18 +163,42 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
 
     var generateBetTypePerformanceGrid = function (data) {
         var bodyData = [];
-        var footerData = [];     
-
+        var footerData = [];
+        var groupHeaderColumns = [
+            { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
+            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
+            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
+            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
+        ];
+        var headerColumns = [
+            { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
+            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
+        ];
+        var footerColumns = [
+            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right' },
+            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
+            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
+            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
+        ];
+        
         if (data && data.ItemList.length > 0) {
             bodyData = generateBetTypePerformanceGridBody(data);
-            footerData = generateBetTypePerformanceGridFooter(data);
+            footerData = generateBetTypePerformanceGridFooter(data, footerColumns);
         }
+        
         var gridOptions = generateBetTypePerformanceGridOptions(data);
+        gridOptions.titleInfo = {
+            showExcelButton: true,
+            exportExcelFunction: function () {
+                common.DownloadFile(urls.ExportBetTypePerformance, parameters);
+            }
+        }
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
-
-        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data) }];
-        gridOptions.columns = generateColumns(data);
+        gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
+        gridOptions.columns = generateColumns(data, headerColumns);
 
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
 
@@ -188,25 +212,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             showFooter: true,          
             showDistinctRow: false,
             showTree: true,           
-            showTitle: true,
-            titleInfo: {
-                showExcelButton: true,
-                exportExcelFunction: function () {
-                    exportBetTypePerformance();
-                }
-            },
+            showTitle: true,            
             showNumberColumn: false,         
         };        
     }
 
-    var generateColumnGroupHeaders = function (data) {
-        var groupHeaderColumns = [
-            { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
-            { HeaderText: labels.League, Name: "ColLeagueCount", MergeRowNumber: 2 },
-            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
-            { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
-        ];
-
+    var generateColumnGroupHeaders = function (data, groupHeaderColumns) {        
         var cssClass = '';
 
         $.each(data.GroupHeaderList, function (index, group) {
@@ -218,15 +229,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         return groupHeaderColumns;
     }
 
-    var generateColumns = function (data) {
+    var generateColumns = function (data, columns) {
         if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
-            var columns = [
-                { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
-                { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-                { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
-            ];
-
             var cssClass = 'dim';
             var groupHeaderNameOld = '';
 
@@ -255,11 +259,11 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             return columns;
 
         } else {
-            return generateColumnsDefault();
+            return generateColumnsDefault(columns);
         }
     }
     
-    var generateColumnsDefault = function () {
+    var generateColumnsDefault = function (columns) {
         var columns = [
             { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
             { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
@@ -364,35 +368,24 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         return bodyData;
     }
 
-    var generateBetTypePerformanceGridFooter = function (data) {
-        var footerData = [
-            { Name: 'ColBetType', Value: labels.GrandTotal, CellAlign: 'right'},     
-            { Name: 'ColLeagueCount', Value: data.GrandTotal.LeagueCount },
-            { Name: 'ColMatchCount', Value: data.GrandTotal.MatchCount },
-            { Name: 'ColBetCount', Value: data.GrandTotal.BetCount }
-        ];
-       
+    var generateBetTypePerformanceGridFooter = function (data, footerColumns) {
         $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
 
             if (!robotTradingItem.IsHideTurnover) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
+                footerColumns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover });
             }   
             if (!robotTradingItem.IsHideWinLoss) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
+                footerColumns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss });
             }
             if (!robotTradingItem.IsHideMargin) {
-                footerData.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
+                footerColumns.push({ Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold' });
             }            
         })
         
         return [{
-            Columns: footerData
+            Columns: footerColumns
         }];
     }     
-
-    var exportBetTypePerformance = function () {
-        common.DownloadFile(urls.ExportBetTypePerformance, parameters);
-    }
 
     $this.InitPage = function () {
         cacheDOMElements();

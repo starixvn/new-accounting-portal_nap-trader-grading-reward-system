@@ -7,20 +7,25 @@
     using System.Linq;
 
     [Serializable]
-    public class AutoTradingItem : IAutoTradingItem
+    public class AutoTradingItem
     {
         public AutoTradingItem()
         {
             this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
         }
 
-        public AutoTradingItem(string autoTradingName, IDictionary<string, string> siteList, IList<MeasurementItem> measurementHiddenList, AutoTradingType type)
+        public AutoTradingItem(string autoTradingName, 
+            IDictionary<string, string> siteList, 
+            IList<MeasurementItem> measurementHiddenList, 
+            AutoTradingType type,
+            string autoTradingName2 = null)
         {
             this.RobotTradingItemList = new Dictionary<string, RobotTradingItem>();
             this.AutoTradingName = autoTradingName;
             this.SiteList = siteList;
             this.MeasurementHiddenList = measurementHiddenList;
             this.Type = type;
+            this.AutoTradingName2 = autoTradingName2;
         }
 
         protected IDictionary<string, string> SiteList { get; set; }
@@ -30,6 +35,8 @@
         public AutoTradingType Type { get; set; }
 
         public string AutoTradingName { get; set; }
+
+        public string AutoTradingName2 { get; set; }
 
         public string LeagueIdList { get; set; }
 

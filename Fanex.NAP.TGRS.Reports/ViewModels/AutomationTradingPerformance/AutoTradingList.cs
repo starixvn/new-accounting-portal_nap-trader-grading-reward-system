@@ -22,9 +22,10 @@
             IEnumerable<RTModelPerformanceInfo> infos, 
             SummaryLeagueMatchBetCountInfo leagueMatchCountInfo, 
             string autoTradingName, 
-            AutoTradingType type)
+            AutoTradingType type,
+            string autoTradingName2 = null)
         {
-            var item = new AutoTradingItem(autoTradingName, this.SiteList, this.MeasurementHiddenList, type)
+            var item = new AutoTradingItem(autoTradingName, this.SiteList, this.MeasurementHiddenList, type, autoTradingName2)
                 .GenerateSummary(leagueMatchCountInfo)
                 .GenerateGroupVirtualTotal(siteIdList, infos)
                 .GenerateGroupVariance(siteIdList, infos)
@@ -87,5 +88,6 @@
             this.GrandTotal.BetCount = this.ItemList.Where(x=>x.Type.Equals(type))
                                                     .Sum(x => x.BetCount);
         }
+
     }
 }
