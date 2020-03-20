@@ -421,6 +421,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no data.
+        /// </summary>
+        public static string ThereIsNoData {
+            get {
+                return ResourceManager.GetString("ThereIsNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to update benchmark of {0}?.
         /// </summary>
         public static string UpdateBenchmarkConfirmMessage {

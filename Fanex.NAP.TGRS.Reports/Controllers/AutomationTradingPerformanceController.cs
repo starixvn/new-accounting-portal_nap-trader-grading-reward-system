@@ -5,7 +5,6 @@
     using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Reports.Criteria.AutomationTradingPerformance;
     using Fanex.NAP.TGRS.Reports.Services;
-    using Fanex.NAP.TGRS.Reports.ViewModels.AutomationTradingPerformance;
     using System;    
     using System.Web.Mvc;
     

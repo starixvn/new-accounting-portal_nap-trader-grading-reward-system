@@ -534,13 +534,13 @@
                                 .OrderBy(x => x.LeagueGroupId)
                                 .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, Items = g.ToList() });                            
 
-                            foreach (var group in groupInfos)
+                            foreach (var grouping in groupInfos)
                             {
-                                var groupId = group.LeagueGroupId > 6 ? 6 : group.LeagueGroupId;
+                                var groupId = grouping.LeagueGroupId > 6 ? 6 : grouping.LeagueGroupId;
                                 var leagueGroup = leagueGroupList.FirstOrDefault(x => x.Value.Id == groupId);
-                                var summaryEventInfo = summaryEventData.FirstOrDefault(x => x.LeagueGroupId == group.LeagueGroupId);
+                                var summaryEventInfo = summaryEventData.FirstOrDefault(x => x.LeagueGroupId == grouping.LeagueGroupId);
 
-                                eventList.AddAutoTradingItem(siteIdList, group.Items, summaryEventInfo, leagueGroup.Value.Name, AutoTradingType.LeagueGroup);
+                                eventList.AddAutoTradingItem(siteIdList, grouping.Items, summaryEventInfo, leagueGroup.Value.Name, AutoTradingType.LeagueGroup);
                             }
 
                             // Select league group Others
@@ -551,6 +551,7 @@
                                 var summaryEventInfoOther = summaryEventData.Where(x => x.LeagueGroupId >= 6)
                                     .Aggregate<SummaryEventInfo, SummaryEventInfo>(null, (acc, s) => acc + s);
 
+                                var newGroupOtherInfos = new List<RTModelPerformanceInfo>();
                                 foreach (var siteId in siteIdList)
                                 {
                                     var groupOtherBySiteInfo = groupOtherInfos.Where(x => x.TypeSiteId == siteId)
@@ -558,9 +559,11 @@
 
                                     if (groupOtherBySiteInfo != null)
                                     {
-                                        eventList.AddAutoTradingItem(siteIdList, new List<RTModelPerformanceInfo> { groupOtherBySiteInfo }, summaryEventInfoOther, Consts.AutomationTradingLeagueGroupOthers, AutoTradingType.LeagueGroup);
-                                    }                                    
+                                        newGroupOtherInfos.Add(groupOtherBySiteInfo);                                        
+                                    }
                                 }
+                                
+                                eventList.AddAutoTradingItem(siteIdList, newGroupOtherInfos, summaryEventInfoOther, Consts.AutomationTradingLeagueGroupOthers, AutoTradingType.LeagueGroup);
                             }
 
                             eventList.GenerateGrandTotal();
@@ -748,7 +751,7 @@
         private void GenerateLeagueGroup(IEnumerable<GroupingLeagueItem> groupInfos,           
             IEnumerable<LeaguePerformanceOfEventInfo> eventLeagueData,
             IEnumerable<SummaryLeagueOfEventInfo> summaryEventLeagueData,
-             List<int> siteIdList,
+            List<int> siteIdList,
             ref AutoTradingList eventLeagueList
             )
         {
@@ -818,41 +821,75 @@
             GetLeaguePerformanceOfEventCriteria criteria, 
             string templatePath)
         {
-            if (eventLeagueList != null && eventLeagueList.ItemList.Any())
-            {
-                string reportName = string.Format(
+            string reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
-                                ViewLang.League,
+                                ViewLang.Event,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
                                 criteria.ToDate.ToShortFormatedDateForFileName());
 
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.AutomationTradingPerformance);
-                var sheet = writer.CopyRows(0, 1).Sheet;
+            var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.Event);
+            var sheet = writer.CopyRows(0, 1).Sheet;
 
-                var columns = new List<object>
+            var columns = new List<object>
                 {
-                    ViewLang.Event,                  
+                    ViewLang.Event,
                     ViewLang.Match,
                     ViewLang.BetCount
                 };
-                
-                FilterBlockEvent(userId, criteria, ref writer);
 
-                writer.FreezeRow(0, 4);
+            FilterBlockEvent(userId, criteria, ref writer);
 
+            writer.FreezeRow(0, 4);
+
+            if (eventLeagueList.ItemList.Any())
+            {
                 FillGroupHeader(eventLeagueList.GroupHeaderList, eventLeagueList.GrandTotal.RobotTradingItemList, columns, 3, ref writer);
                 FillRowDataEventLeague(eventLeagueList.ItemList, 3, ref writer);
                 FillGrandTotal(eventLeagueList.GrandTotal, 3, ref writer);
-
-                // Adjust column width for sheet
-                sheet.SetColumnWidth(0, 9216);
-                for (int i = 1; i < columns.Count; i++)
-                {
-                    sheet.SetColumnWidth(i, 4096);
-                }
-
-                writer.Render();
             }
+            else
+            {
+                GenerateEventLeagueListDefault(criteria, ref eventLeagueList);
+
+                FillGroupHeader(eventLeagueList.GroupHeaderList, eventLeagueList.GrandTotal.RobotTradingItemList, columns, 3, ref writer);
+                FillRowDataEmpty(eventLeagueList.GrandTotal.RobotTradingItemList, 3, ref writer);
+            }
+
+            // Adjust column width for sheet
+            sheet.SetColumnWidth(0, 9216);
+            for (int i = 1; i < columns.Count; i++)
+            {
+                sheet.SetColumnWidth(i, 4096);
+            }
+
+            writer.Render();
+        }
+
+        private void GenerateEventLeagueListDefault(GetLeaguePerformanceOfEventCriteria criteria, ref AutoTradingList eventLeagueList)
+        {
+            var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
+
+            eventLeagueList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
+                           .GenerateMeasurementHidden(criteria.MeasurementHides);
+
+            eventLeagueList.AddAutoTradingItem(siteIdList,
+                            new List<RTModelPerformanceInfo>(), 
+                            new SummaryLeagueMatchBetCountInfo(), 
+                            string.Empty, 
+                            AutoTradingType.LeagueGroup);
+
+            eventLeagueList.GenerateGrandTotal(AutoTradingType.LeagueGroup, false);
+        }
+
+        private void FillRowDataEmpty(IDictionary<string, RobotTradingItem> robotTradingItemList, int columnCount, ref ExcelTemplateWriter writer)
+        {
+            columnCount += robotTradingItemList.Count(x => !x.Value.IsHideMargin);
+            columnCount += robotTradingItemList.Count(x => !x.Value.IsHideTurnover);
+            columnCount += robotTradingItemList.Count(x => !x.Value.IsHideWinLoss);
+
+            var row = writer.CopyRows(14, 1);           
+            SheetExtensions.MergeCells(row.Sheet, 4, 0, 4, columnCount-1);
+            row.GetCell(0).SetCellValue(Messages.ThereIsNoData);
         }
 
         private void FillRowDataEventLeague(IList<AutoTradingItem> itemList,

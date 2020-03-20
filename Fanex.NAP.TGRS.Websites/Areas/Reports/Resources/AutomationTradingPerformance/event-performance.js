@@ -73,9 +73,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
             labelCss: 'col_5'
-        });
-
-        domElements.btnExport.addClass('display-none');
+        });        
 
         setCacheForFilter(domElements.ddlSite, getStorageFilter("RTBetTypeSelectedSideIds"));
 
@@ -85,34 +83,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             if (validator.ValidateForm(domElements.divEventPerformanceFilter, 'w')) {
                 domElements.divSummaryContainer.show();
 
-                var selectedSideIds = domElements.ddlSite.val();
-                var selectedMeasurements = domElements.ddlMeasurement.val();
-                var selectedMeasurementDescs = [];
-                domElements.ddlMeasurement.find('option:selected').each(function () { selectedMeasurementDescs.push($(this).text()); })
+                getParammeters();
 
-                setStorageFilter("RTBetTypeSelectedSideIds", selectedSideIds);
-                setStorageFilter("RTBetTypeSelectedMeasurements", selectedMeasurements);
-
-                parameters.FromDate = domElements.divDateRange.getFrom();
-                parameters.ToDate = domElements.divDateRange.getTo();
-                parameters.Model = domElements.ddlModel.val()
-                parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
-
-                var notSelectMeasurements = [];
-                domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
-
-                if (selectedMeasurements != null) {
-                    parameters.Measurements = selectedMeasurements.join(',');
-                    parameters.MeasurementHides = notSelectMeasurements != null ? notSelectMeasurements.join(',') : null;
-                }
-                else {
-                    parameters.Measurements = notSelectMeasurements.join(',');
-                    parameters.MeasurementHides = null;
-                }
-                parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
-
-                domElements.divEventPerformanceContainer.addClass('display-none');
-                domElements.btnExport.addClass('display-none');
+                domElements.divEventPerformanceContainer.addClass('display-none');               
 
                 hideAllReports();
                 getEventPerformanceReport();
@@ -120,8 +93,39 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         });
 
         domElements.btnExport.click(function () {
+            getParammeters();
             common.DownloadFile(urls.ExportEventLeaguePerformance, parameters);
         })
+    }
+
+    var getParammeters = function () {
+        if (validator.ValidateForm(domElements.divEventPerformanceFilter, 'w')) {           
+            var selectedSideIds = domElements.ddlSite.val();
+            var selectedMeasurements = domElements.ddlMeasurement.val();
+            var selectedMeasurementDescs = [];
+            domElements.ddlMeasurement.find('option:selected').each(function () { selectedMeasurementDescs.push($(this).text()); })
+
+            setStorageFilter("RTBetTypeSelectedSideIds", selectedSideIds);
+            setStorageFilter("RTBetTypeSelectedMeasurements", selectedMeasurements);
+
+            parameters.FromDate = domElements.divDateRange.getFrom();
+            parameters.ToDate = domElements.divDateRange.getTo();
+            parameters.Model = domElements.ddlModel.val()
+            parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
+
+            var notSelectMeasurements = [];
+            domElements.ddlMeasurement.find('option').not(':selected').each(function () { notSelectMeasurements.push($(this).val()); })
+
+            if (selectedMeasurements != null) {
+                parameters.Measurements = selectedMeasurements.join(',');
+                parameters.MeasurementHides = notSelectMeasurements != null ? notSelectMeasurements.join(',') : null;
+            }
+            else {
+                parameters.Measurements = notSelectMeasurements.join(',');
+                parameters.MeasurementHides = null;
+            }
+            parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;
+        }
     }
 
     var setCacheForFilter = function (ddlDomElement, cacheItem) {
@@ -211,12 +215,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         if (data && data.ItemList.length > 0) {
             bodyData = generateEventPerformanceGridBody(data);
             footerData = generateEventPerformanceGridFooter(data, footerColumns);
-
-            domElements.btnExport.removeClass('display-none');
         }
 
         var gridOptions = generateEventPerformanceGridOptions(data);
-        gridOptions.titleInfo = {         
+        gridOptions.titleInfo = {
             showExcelButton: true,
             exportExcelFunction: function () {
                 common.DownloadFile(urls.ExportEventPerformance, parameters);
