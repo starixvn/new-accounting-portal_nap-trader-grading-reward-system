@@ -288,7 +288,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         }
     }
 
-    var generateColumnsDefault = function (columns) {
+    var generateColumnsDefault = function (columns) {      
         var selectedSites = domElements.ddlSite.find('option:selected');
         var selectedMeasurements = domElements.ddlMeasurement.val();
         var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');
