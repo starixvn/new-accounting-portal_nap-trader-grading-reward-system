@@ -281,19 +281,31 @@
             int cellCopyIndex,
             ref ExcelTemplateWriter writer)
         {
-            var columns = cellCopyIndex == 4 
-                ? new List<object>()
-                {
-                    ViewLang.GrandTotal,
-                    grandTotal.LeagueCount,
-                    grandTotal.MatchCount,
-                    grandTotal.BetCount
-                } 
-                : new List<object>() {
-                    ViewLang.GrandTotal,
-                    grandTotal.MatchCount,
-                    grandTotal.BetCount
-                };
+            var columns = new List<object>();
+            if (grandTotal.Type.Equals(AutoTradingType.Match))
+            {
+                columns = new List<object>()
+                    {
+                        ViewLang.GrandTotal,
+                        grandTotal.BetCount
+                    };
+            }
+            else
+            {
+                columns = cellCopyIndex == 4
+                   ? new List<object>()
+                   {
+                        ViewLang.GrandTotal,
+                        grandTotal.LeagueCount,
+                        grandTotal.MatchCount,
+                        grandTotal.BetCount
+                   }
+                   : new List<object>() {
+                        ViewLang.GrandTotal,
+                        grandTotal.MatchCount,
+                        grandTotal.BetCount
+                   };
+            }            
         
             FillRowData(grandTotal.RobotTradingItemList, columns, 7, cellCopyIndex, ref writer);
         }
