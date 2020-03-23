@@ -182,7 +182,9 @@
     <Compile Include="Criteria\ActualRatePerformanceDetail\GetActualRateTraderPerformanceOfTeamCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\AutoTradingPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetEventPerformanceCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetLeaguePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetLeaguePerformanceOfEventCriteria.cs" />
+    <Compile Include="Criteria\AutomationTradingPerformance\GetMatchPerformanceOfBetTypeLeagueCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetMatchPerformanceOfEventLeagueCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
