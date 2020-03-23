@@ -127,6 +127,14 @@
     <div id="divPeriodPerformanceGrid" class="freegrid"></div>
 </div>
 
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
+</div>
+
 @section Foot
 {
     @Scripts.Render("~/scripts/automationTradingPeriodPerformance")
@@ -157,7 +165,7 @@
             GrandTotal: '@ViewLang.GrandTotal',
             All: '@ViewLang.All',
             NA: '@ViewLang.NA',
-            LeaguePerformance: '@ViewLang.LeaguePerformance',         
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
             MatchPerformance: '@ViewLang.MatchPerformance',
             Week: '@ViewLang.Week',
             Period: '@ViewLang.Period',

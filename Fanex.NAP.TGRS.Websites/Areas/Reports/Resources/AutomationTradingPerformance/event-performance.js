@@ -81,9 +81,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             if (validator.ValidateForm(domElements.divEventPerformanceFilter, 'w')) {
                 domElements.divSummaryContainer.show();
 
-                getParammeters();
-
-                domElements.divEventPerformanceContainer.addClass('display-none');               
+                getParammeters();                             
 
                 hideAllReports();
                 getEventPerformanceReport();

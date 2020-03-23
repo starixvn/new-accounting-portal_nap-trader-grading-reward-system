@@ -161,6 +161,52 @@
             return new EmptyResult();
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria)
+        {
+            var criteria2 = new GetLeaguePerformanceOfEventCriteria
+            {
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate,
+                Model = criteria.Model,
+                LeagueIdList = "1837,53006",
+                MeasurementDescs = criteria.MeasurementDescs,
+                MeasurementHides = criteria.MeasurementHides,
+                Measurements = criteria.Measurements,
+                TypeSiteIds = criteria.TypeSiteIds
+            };
+
+            var bettypes = _automationTradingService.GetAutoTradingLeaguePerformanceOfEvent(criteria2);
+
+            var jsonResult = Json(bettypes);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult GetMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria)
+        {
+            var criteria2 = new GetMatchPerformanceOfEventLeagueCriteria
+            {
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate,
+                Model = criteria.Model,
+                MatchIdList = "34791146,34791171",
+                MeasurementDescs = criteria.MeasurementDescs,
+                MeasurementHides = criteria.MeasurementHides,
+                Measurements = criteria.Measurements,
+                TypeSiteIds = criteria.TypeSiteIds
+            };
+
+            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfEventLeague(criteria2);
+
+            var jsonResult = Json(matchList);
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
         #endregion
 
         #region Event
