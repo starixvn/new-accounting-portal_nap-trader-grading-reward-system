@@ -18,7 +18,7 @@
         private const string FileLeaguePerformanceOfEvent = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
         private const string FileMatchPerformanceOfEventLeague = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformanceOfEventLeague.xls";
         private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
-        private readonly IAutomationTradingPerformanceService _automationTradingService;
+        private readonly IAutomationTradingReportService _automationTradingService;
 
         [Simplect.Attribute.InjectObject]
         public AutomationTradingPerformanceController() : this(null)
@@ -32,9 +32,9 @@
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;            
         }
 
-        public AutomationTradingPerformanceController(IAutomationTradingPerformanceService automationTradingService)
+        public AutomationTradingPerformanceController(IAutomationTradingReportService automationTradingService)
         {
-            this._automationTradingService = automationTradingService ?? new AutomationTradingPerformanceService();
+            this._automationTradingService = automationTradingService ?? new AutomationTradingReportService();
             ViewBag.LeagueGroups = this._automationTradingService.GetLeagueGroups();
         }
         #endregion Attributes and Constructors

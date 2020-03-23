@@ -4,7 +4,7 @@
     using Fanex.NAP.TGRS.Reports.ViewModels.AutomationTradingPerformance;
     using System.Collections.Generic;
 
-    public interface IAutomationTradingPerformanceService
+    public interface IAutomationTradingReportService
     {
         Dictionary<int, LeagueGroup> GetLeagueGroups();
 
