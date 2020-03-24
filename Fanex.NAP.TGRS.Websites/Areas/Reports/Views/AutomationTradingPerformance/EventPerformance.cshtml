@@ -1,0 +1,159 @@
+﻿@using Fanex.NAP.TGRS.Core.Consts
+@{
+    ViewBag.Title = ViewLang.AutomationTradingPerformance;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render("~/styles/automationTrading")
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="header-button">
+        <a href="@Url.Content("~/Reports/AutomationTradingPerformance/BetTypePerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.BetType
+        </a>
+        <a href="@Url.Content("~/Reports/AutomationTradingPerformance/PeriodPerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.Period
+        </a>
+        <a href="#" class="green-button change-list disabled">
+            <span class="list-icon"></span>@ViewLang.Event
+        </a>
+        <a href="@Url.Content("~/Reports/AutomationTradingPerformance/ModelPerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.Model
+        </a>
+    </div>
+}
+
+<div class="filter-bar">
+    <div id="divEventPerformanceFilter" class="filter-form">
+        <div class="filter-row">
+            <div class="filter-block">
+                <div class="date-range"><div id="divDateRange"></div></div>
+            </div>
+
+            <div class="filter-block">
+                <div class="lbl-field col_3">
+                    <label>@ViewLang.Model</label>
+                </div>
+                <div class="edit-field col_3">
+                    <select id="ddlModel">
+                        <option value="3">TA</option>
+                        <option value="1">RT3</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-block">
+                <div class="lbl-field col_2">
+                    <label>@ViewLang.Site</label>
+                </div>
+                <div class="edit-field col_8">
+                    <select id="ddlSite" multiple="multiple">
+                        <option value="3">@Consts.AutomationTradingSiteNova</option>
+                        <option value="2">@Consts.AutomationTradingSiteCash</option>
+                        <option value="1">@Consts.AutomationTradingSiteCN88</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-block">
+                <div class="lbl-field col_4">
+                    <label>@ViewLang.Measurement</label>
+                </div>
+                <div class="edit-field col_9">
+                    <select id="ddlMeasurement" multiple="multiple">
+                        <option value="VirtualTotal-Turnover" group-header="@Consts.AutomationTradingGroupHeaderVirtualTotal">Virtual Turnover</option>
+                        <option value="VirtualTotal-WinLoss" group-header="@Consts.AutomationTradingGroupHeaderVirtualTotal">Virtual Win Loss</option>
+                        <option value="VirtualTotal-Margin" group-header="@Consts.AutomationTradingGroupHeaderVirtualTotal">Virtual Margin</option>
+                        <option value="Variance-Turnover" group-header="@Consts.AutomationTradingGroupHeaderVariance">Variance Turnover</option>
+                        <option value="Variance-WinLoss" group-header="@Consts.AutomationTradingGroupHeaderVariance">Variance Win Loss</option>
+                        <option value="Variance-Margin" group-header="@Consts.AutomationTradingGroupHeaderVariance">Variance Margin</option>
+                        <option value="RealTotal-Turnover" group-header="@Consts.AutomationTradingGroupHeaderRealTotal">Real Turnover</option>
+                        <option value="RealTotal-WinLoss" group-header="@Consts.AutomationTradingGroupHeaderRealTotal">Real Win Loss</option>
+                        <option value="RealTotal-Margin" group-header="@Consts.AutomationTradingGroupHeaderRealTotal">Real Margin</option>
+                        <option value="Total8RM-Turnover" group-header="@Consts.AutomationTradingGroupHeaderTotal8RM">8RM Turnover</option>
+                        <option value="Total8RM-WinLoss" group-header="@Consts.AutomationTradingGroupHeaderTotal8RM">8RM Win Loss</option>
+                        <option value="Total8RM-Margin" group-header="@Consts.AutomationTradingGroupHeaderTotal8RM">8RM Margin</option>
+                        <option value="RealTotal8RMWL-Turnover" group-header="@Consts.AutomationTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Turnover</option>
+                        <option value="RealTotal8RMWL-WinLoss" group-header="@Consts.AutomationTradingGroupHeaderRealTotal8RMWL">Real ex. 8RM Win Loss</option>
+                        <option value="RealTotal8RMWL-Margin" group-header="@Consts.AutomationTradingGroupHeaderRealTotal8RMWL">Real ex.8RM Margin</option>
+                    </select>
+                </div>
+                <div class="submit col_4">
+                    <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+                </div>
+                <div class="submit col_3">
+                    <input id="btnExport" type="button" class="green-button" value="@ViewLang.Export" />
+                </div>                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="divSummaryContainer" hidden>
+    @Html.Partial("SummaryPerformance")
+</div>
+
+<div id="divEventPerformanceContainer" class="content-grid display-none">
+    <div id="divEventPerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+</div>
+
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/automationTradingEventPerformance")
+    <script type="text/javascript">
+         var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+
+        var labels = {
+            League: '@ViewLang.League',
+            Leagues: '@ViewLang.Leagues',
+            Match: '@ViewLang.Match',
+            Matches: '@ViewLang.Matches',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Total: '@ViewLang.Total',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            BetCount: '@ViewLang.BetCount',
+            VirtualTotal: '@ViewLang.VirtualTotal',
+            Variance: '@ViewLang.Variance',
+            RealTotal: '@ViewLang.RealTotal',
+            Total8RM: '@ViewLang.Total8RM',
+            RealTotal8RMWL: '@ViewLang.RealTotal8RMWL',
+            GrandTotal: '@ViewLang.GrandTotal',
+            All: '@ViewLang.All',
+            NA: '@ViewLang.NA',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
+            MatchPerformance: '@ViewLang.MatchPerformance',
+            Event: '@ViewLang.Event',
+            EventDate: '@ViewLang.EventDate'
+        };
+
+        var messages = {
+            InvalidValue: '@Messages.InvalidValueError',
+            RequiredField: '@Messages.RequiredFieldError'
+        };
+    </script>
+}

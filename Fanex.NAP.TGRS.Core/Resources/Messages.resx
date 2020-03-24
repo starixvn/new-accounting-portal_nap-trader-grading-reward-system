@@ -291,4 +291,7 @@
   <data name="InsertBettypeSuccessfully" xml:space="preserve">
     <value>Inserted new bettype successfully</value>
   </data>
+  <data name="ThereIsNoData" xml:space="preserve">
+    <value>There is no data</value>
+  </data>
 </root>

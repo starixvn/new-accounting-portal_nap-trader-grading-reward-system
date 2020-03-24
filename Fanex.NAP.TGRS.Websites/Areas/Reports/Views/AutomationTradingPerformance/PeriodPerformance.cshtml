@@ -1,4 +1,5 @@
 ﻿@using Fanex.NAP.TGRS.Core.Consts
+@using Fanex.NAP.TGRS.Reports.ViewModels.AutomationTradingPerformance
 @{
     ViewBag.Title = ViewLang.AutomationTradingPerformance;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,6 +24,9 @@
         <a href="#" class="green-button change-list disabled">
             <span class="list-icon"></span>@ViewLang.Period
         </a>
+        <a href="@Url.Content("~/Reports/AutomationTradingPerformance/EventPerformance")" class="green-button change-list">
+            <span class="list-icon"></span>@ViewLang.Event
+        </a>
         <a href="@Url.Content("~/Reports/AutomationTradingPerformance/ModelPerformance")" class="green-button change-list">
             <span class="list-icon"></span>@ViewLang.Model
         </a>
@@ -30,7 +34,7 @@
 }
 
 <div class="filter-bar">
-    <div id="divMonthPerformanceFilter" class="filter-form">       
+    <div id="divMonthPerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="filter-block">
                 <div class="lbl-field col_4">
@@ -65,9 +69,9 @@
                 </div>
                 <div class="edit-field col_8">
                     <select id="ddlLeagueGroup" multiple="multiple">
-                        @foreach (KeyValuePair<int, string> entry in ViewBag.LeagueGroups)
+                        @foreach (KeyValuePair<int, LeagueGroup> entry in ViewBag.LeagueGroups)
                         {
-                            <option value=@entry.Key>@entry.Value</option>
+                            <option value=@entry.Value.Id>@entry.Value.Code</option>
                         }
                     </select>
                 </div>
@@ -79,9 +83,9 @@
                 </div>
                 <div class="edit-field col_8">
                     <select id="ddlSite" multiple="multiple">
-                        <option value="3">@Consts.SiteNova</option>
-                        <option value="2">@Consts.SiteCash</option>
-                        <option value="1">@Consts.SiteCN88</option>
+                        <option value="3">@Consts.AutomationTradingSiteNova</option>
+                        <option value="2">@Consts.AutomationTradingSiteCash</option>
+                        <option value="1">@Consts.AutomationTradingSiteCN88</option>
                     </select>
                 </div>
             </div>
@@ -150,11 +154,10 @@
             RealTotal: '@ViewLang.RealTotal',
             Total8RM: '@ViewLang.Total8RM',
             RealTotal8RMWL: '@ViewLang.RealTotal8RMWL',
-            GrandTotal: '@ViewLang.GrandTotal',            
+            GrandTotal: '@ViewLang.GrandTotal',
             All: '@ViewLang.All',
             NA: '@ViewLang.NA',
-            LeaguePerformance: '@ViewLang.LeaguePerformance',
-            TraderPerformance: '@ViewLang.TraderPerformance',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',         
             MatchPerformance: '@ViewLang.MatchPerformance',
             Week: '@ViewLang.Week',
             Period: '@ViewLang.Period',

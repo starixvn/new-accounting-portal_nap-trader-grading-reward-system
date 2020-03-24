@@ -3,13 +3,14 @@
     public class Consts
     {
         public const string FormatDateTimeToString_ddMMMyyyy = "dd/MMM/yyyy";
+        public const string FormatDateTimeToString_yyyyMMdd = "yyyy-MM-dd";
 
-        public const string RT3WithTrader = "RT3 wTP";
-        public const string RT3NoTrader = "RT3 NoTP";
-        public const string TradingAutomation = "TA";
-        public const string SiteNova = "Nova";
-        public const string SiteCash = "Cash";
-        public const string SiteCN88 = "CN88";
+        public const string AutomationTradingRT3WithTrader = "RT3 wTP";
+        public const string AutomationTradingRT3NoTrader = "RT3 NoTP";
+        public const string AutomationTradingTradingAutomation = "TA";
+        public const string AutomationTradingSiteNova = "Nova";
+        public const string AutomationTradingSiteCash = "Cash";
+        public const string AutomationTradingSiteCN88 = "CN88";
         public const string AutomationTradingGroupHeaderVirtualTotal = "VirtualTotal";
         public const string AutomationTradingGroupHeaderVariance = "Variance";
         public const string AutomationTradingGroupHeaderRealTotal = "RealTotal";
@@ -21,7 +22,12 @@
         public const string AutomationTradingLeagueGroupM3 = "M3";
         public const string AutomationTradingLeagueGroupM4 = "M4";        
         public const string AutomationTradingLeagueGroupOthers = "Others";
-       
+        public const string AutomationTradingLeagueGroupMajor = "Major";
+        public const string AutomationTradingLeagueGroupMinor1 = "Minor 1";
+        public const string AutomationTradingLeagueGroupMinor2 = "Minor 2";
+        public const string AutomationTradingLeagueGroupMinor3 = "Minor 3";
+        public const string AutomationTradingLeagueGroupMinor4 = "Minor 4";        
+
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";
         public const string MultipleMatchesMatchKeyTotalBookings = "Total Bookings";

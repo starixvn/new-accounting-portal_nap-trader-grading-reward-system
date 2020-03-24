@@ -6,21 +6,41 @@
 
     public interface IAutomationTradingPerformanceService
     {
-        Dictionary<int, string> GetLeagueGroups();
+        Dictionary<int, LeagueGroup> GetLeagueGroups();
 
-        BetTypeList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria);
        
         void ExportAutoTradingBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath);
 
-        PeriodList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria);
 
-        PeriodList GetAutoTradingMonthPerformance(GetMonthPerformanceCriteria criteria);
+        AutoTradingList GetAutoTradingMonthPerformance(GetMonthPerformanceCriteria criteria);
 
         void ExportAutoTradingPeriodPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath);
 
         ModelPerformanceList GetAutoTradingModelPerformance(GetModelPerformanceCriteria criteria);
 
         void ExportAutoTradingModelPerformance(int userId, GetModelPerformanceCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingEventPerformance(GetEventPerformanceCriteria criteria);        
+
+        void ExportAutoTradingEventPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria);
+
+        string GetLeagueIdListFromEventListCache(string cacheKey);
+
+        void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingEventLeaguePerformance(GetLeaguePerformanceOfEventCriteria criteria);
+
+        void ExportAutoTradingEventLeaguePerformance(AutoTradingList eventLeagueList, int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
+
+        AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria);
+
+        string GetMatchIdListFromMatchListCache(string cacheKey);
+
+        void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath);
 
     }
 }
