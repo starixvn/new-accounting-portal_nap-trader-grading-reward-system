@@ -39,9 +39,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         MeasurementDescs: null,
         MeasurementHides: null
     };
-
     var leagueParameters = {};
-
     var matchParameters = {};
 
     var summaryPerformance = new Fanex.NAP.TGRS.AutomationTradingPerformance.SummaryPerformance();
@@ -476,6 +474,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             text: titleFormat.format(labels.Event, leagueGroupName),
             showExcelButton: true,
             exportExcelFunction: function () {
+                leagueParameters.LeagueIdList = '';
+                leagueParameters.CacheKey = leagueGroupName;
                 common.DownloadFile(urls.ExportLeaguePerformanceOfEvent, leagueParameters);
             }
         }
@@ -601,6 +601,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             text: titleFormat.format(labels.Event, leagueGroupName, leagueName),
             showExcelButton: true,
             exportExcelFunction: function () {
+                matchParameters.MatchIdList = '';
+                matchParameters.CacheKey = leagueName;
                 common.DownloadFile(urls.ExportMatchPerformanceOfEventLeague, matchParameters);
             }
         }

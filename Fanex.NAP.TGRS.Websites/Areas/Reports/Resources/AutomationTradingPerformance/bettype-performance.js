@@ -263,14 +263,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         }
     }
     
-    var generateColumnsDefault = function (columns) {
-        var columns = [
-            { HeaderText: labels.BetType, Width: 120, Name: "ColBetType", HeaderAlign: "center", CellAlign: "left", Sort: true },
-            { HeaderText: labels.League, Width: 120, Name: "ColLeagueCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
-            { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
-        ];
-               
+    var generateColumnsDefault = function (columns) {       
         var selectedSites = domElements.ddlSite.find('option:selected');
         var selectedMeasurements = domElements.ddlMeasurement.val();
         var selectedOptionMeasurements = domElements.ddlMeasurement.find('option:selected');

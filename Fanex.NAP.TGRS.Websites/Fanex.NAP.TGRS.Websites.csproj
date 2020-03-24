@@ -640,7 +640,7 @@
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MacthPerformanceOfEventLeague.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformanceOfEventLeague.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

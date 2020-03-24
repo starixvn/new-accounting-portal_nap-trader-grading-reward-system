@@ -685,6 +685,18 @@
             return leagueList;
         }
 
+        public string GetLeagueIdListFromEventListCache(string cacheKey)
+        {
+            var leagueList = SessionManager.Get<AutoTradingList>(AutomationTradingEventPerformanceSessionKey);
+
+            if (leagueList != null)
+            {
+                return leagueList.ItemList.FirstOrDefault(x => x.AutoTradingName.Equals(cacheKey)).LeagueIdList;
+            }
+
+            return string.Empty;
+        }
+
         public void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath)
         {
             var leagueList = SessionManager.Get<AutoTradingList>(AutomationTradingLeaguePerformanceOfEventSessionKey);
@@ -981,6 +993,18 @@
             }
 
             return matchList;
+        }
+
+        public string GetMatchIdListFromMatchListCache(string cacheKey)
+        {
+            var matchList = SessionManager.Get<AutoTradingList>(AutomationTradingLeaguePerformanceOfEventSessionKey);
+
+            if (matchList != null)
+            {
+                return matchList.ItemList.FirstOrDefault(x => x.AutoTradingName.Equals(cacheKey)).MatchIdList;
+            }
+
+            return string.Empty;
         }
 
         public void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath)
