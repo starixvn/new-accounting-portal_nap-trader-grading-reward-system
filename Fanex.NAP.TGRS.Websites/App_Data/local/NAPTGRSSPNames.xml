@@ -231,8 +231,12 @@
   </Function>
   <Function Name="AutomationTradingPerformance">
     <Setting Key="TGRS_Rpt_RobotTrading_BetType" SpName="TGRS_Rpt_RobotTrading_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_BetType_League" SpName="TGRS_Rpt_RobotTrading_BetType_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_BetType_League_Match" SpName="TGRS_Rpt_RobotTrading_BetType_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
     <Setting Key="TGRS_Rpt_RobotTrading_Week" SpName="TGRS_Rpt_RobotTrading_Week" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Monthly" SpName="TGRS_Rpt_RobotTrading_Monthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_Period_League" SpName="TGRS_Rpt_RobotTrading_Period_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_Period_League_Match" SpName="TGRS_Rpt_RobotTrading_Period_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Event" SpName="TGRS_Rpt_RobotTrading_Event" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Event_League" SpName="TGRS_Rpt_RobotTrading_Event_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Event_League_Match" SpName="TGRS_Rpt_RobotTrading_Event_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

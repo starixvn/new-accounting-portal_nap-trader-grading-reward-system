@@ -20,9 +20,7 @@
 
     public partial class AutomationTradingReportService : TGRSBaseService, IAutomationTradingReportService
     {
-        #region Consts        
-        private const string AutomationTradingLeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueGroups";
-        private const string AutomationTradingBetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.BetTypeList";                        
+        #region Consts
         private const int PointInPixel = 225;
         #endregion
 
@@ -37,7 +35,7 @@
             leagueGroups.Add(5, new LeagueGroup { Id = 5, Code = Consts.AutomationTradingLeagueGroupM4, Name = Consts.AutomationTradingLeagueGroupMinor4 });
             leagueGroups.Add(6, new LeagueGroup { Id = 6, Code = Consts.AutomationTradingLeagueGroupOthers, Name = Consts.AutomationTradingLeagueGroupOthers });
 
-            SessionManager.Set<Dictionary<int, LeagueGroup>>(AutomationTradingLeagueGroupsSessionKey, leagueGroups);
+            SessionManager.Set<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey, leagueGroups);
 
             return leagueGroups;
         }
@@ -56,7 +54,7 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        betTypeList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                        betTypeList.GenerateLeagueMatchTotal(totalLeagueMatchData.ToList()[0])
                                    .GenerateSummary(totalBetTypeData)
                                    .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                    .GenerateMeasurementHidden(criteria.MeasurementHides);
@@ -73,13 +71,13 @@
                                 var betTypeInfos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
                                 var betTypeName = CacheRef.GetBetType(betTypeId);
 
-                                betTypeList.AddAutoTradingItem(siteIdList, betTypeInfos, summaryBetType, betTypeName, AutoTradingType.BetType);
+                                betTypeList.AddAutoTradingItem(siteIdList, betTypeInfos, summaryBetType, betTypeName, AutoTradingType.BetType, betTypeId.ToString());
                             }
                         }
 
                         betTypeList.GenerateGrandTotal();
 
-                        SessionManager.Set<AutoTradingList>(AutomationTradingBetTypeListSessionKey, betTypeList);
+                        SessionManager.Set<AutoTradingList>(Consts.AutomationTradingBetTypeListSessionKey, betTypeList);
                     }
                 }
             }
@@ -89,7 +87,7 @@
 
         public void ExportAutoTradingBetTypePerformance(int userId, GetBetTypePerformanceCriteria criteria, string templatePath)
         {
-            var betTypeData = SessionManager.Get<AutoTradingList>(AutomationTradingBetTypeListSessionKey);
+            var betTypeData = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingBetTypeListSessionKey);
 
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
@@ -127,6 +125,38 @@
 
                 writer.Render();
             }
+        }
+
+        public AutoTradingList GetAutoTradingLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
+        {
+            var leagueList = GetAutoTradingLeaguePerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfBetTypeSessionKey, leagueList);
+
+            return leagueList;
+        }
+
+        public void ExportAutoTradingLeaguePerformanceOfBetType(int userId, GetLeaguePerformanceOfBetTypeCriteria criteria, string templatePath)
+        {
+            var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfBetTypeSessionKey);
+
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+        }
+
+        public AutoTradingList GetAutoTradingMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria)
+        {
+            var matchList = GetAutoTradingMatchPerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfBetTypeLeagueSessionKey, matchList);
+
+            return matchList;
+        }
+
+        public void ExportAutoTradingMatchPerformanceOfBetTypeLeague(int userId, GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string templatePath)
+        {
+            var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfBetTypeLeagueSessionKey);
+
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

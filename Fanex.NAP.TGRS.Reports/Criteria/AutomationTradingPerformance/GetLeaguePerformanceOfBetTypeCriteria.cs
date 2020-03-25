@@ -7,11 +7,11 @@
         [SpParam(SqlParamName = "LeagueIds")]
         public string LeagueIdList { get; set; }
 
-        [SpParam(SqlParamName = "IsExportExcel")]
-        public bool IsExportEventLeague { get; set; }
+        [SpParam(SqlParamName = "BettypeId")]
+        public int BetTypeId { get; set; }
 
         public override string GetSettingKey()
-            => "TGRS_Rpt_RobotTrading_Event_League";
+            => "TGRS_Rpt_RobotTrading_BetType_League";
 
     }
 }

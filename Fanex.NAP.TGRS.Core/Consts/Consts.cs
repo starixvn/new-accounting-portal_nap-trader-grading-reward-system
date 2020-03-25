@@ -4,6 +4,7 @@
     {
         public const string FormatDateTimeToString_ddMMMyyyy = "dd/MMM/yyyy";
         public const string FormatDateTimeToString_yyyyMMdd = "yyyy-MM-dd";
+        public const string FormatDateTimeToString_MMMyyyy = "MMM yyyy";
 
         public const string AutomationTradingRT3WithTrader = "RT3 wTP";
         public const string AutomationTradingRT3NoTrader = "RT3 NoTP";
@@ -26,7 +27,17 @@
         public const string AutomationTradingLeagueGroupMinor1 = "Minor 1";
         public const string AutomationTradingLeagueGroupMinor2 = "Minor 2";
         public const string AutomationTradingLeagueGroupMinor3 = "Minor 3";
-        public const string AutomationTradingLeagueGroupMinor4 = "Minor 4";        
+        public const string AutomationTradingLeagueGroupMinor4 = "Minor 4";
+        public const string AutomationTradingLeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueGroups";
+        public const string AutomationTradingBetTypeListSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.BetTypeList";
+        public const string AutomationTradingLeaguePerformanceOfBetTypeSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfBetTypeList";
+        public const string AutomationTradingMatchPerformanceOfBetTypeLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfBetTypeLeagueList";
+        public const string AutomationTradingPeriodPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.PeriodList";
+        public const string AutomationTradingLeaguePerformanceOfPeriodSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfPeriodList";
+        public const string AutomationTradingMatchPerformanceOfPeriodLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfPeriodLeagueList";
+        public const string AutomationTradingEventPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.EventList";
+        public const string AutomationTradingLeaguePerformanceOfEventSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfEventList";
+        public const string AutomationTradingMatchPerformanceOfEventLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfEventLeagueList";
 
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";

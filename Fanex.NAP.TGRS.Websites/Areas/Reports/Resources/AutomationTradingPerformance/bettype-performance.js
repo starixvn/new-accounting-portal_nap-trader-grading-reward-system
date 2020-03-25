@@ -350,12 +350,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
     }
 
     var generateBetTypePerformanceGridBody = function (data) {
-        var leagueFormat = '<span class="league-link link" title="{0}" data-league-ids="{1}" data-bettype-name="{2}">{3}</span>';
+        var leagueFormat = '<span class="league-link link" title="{0}" data-league-ids="{1}" data-bettype-id="{2}" data-bettype-name="{3}">{4}</span>';
         var bodyData = [];
         var row;
 
         $.each(data.ItemList, function (indexItem, item) {
-            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, item.LeagueIdList, item.AutoTradingName, item.LeagueCount);
+            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, item.LeagueIdList, item.AutoTradingName2, item.AutoTradingName, item.LeagueCount);
             var currentRowData = [
                 { Name: 'ColBetType', Value: item.AutoTradingName, CssClass: 'bold' },
                 { Name: 'ColLeagueCount', Value: leagueCountCol },
@@ -400,15 +400,17 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         domElements.divBetTypePerformanceContainer.find('.league-link').click(function () {
             var link = $(this);
             var leagueIdList = link.attr('data-league-ids');
+            var betTypeId = link.attr('data-bettype-id');
             var betTypeName = link.attr('data-bettype-name');
 
-            getLeaguePerformanceOfBetTypeReport(leagueIdList, betTypeName);
+            getLeaguePerformanceOfBetTypeReport(leagueIdList, betTypeId, betTypeName);
         })
     }
 
-    var getLeaguePerformanceOfBetTypeReport = function (leagueIdList, betTypeName) {
+    var getLeaguePerformanceOfBetTypeReport = function (leagueIdList, betTypeId, betTypeName) {
         leagueParameters = {
             LeagueIdList: leagueIdList,
+            BetTypeId: betTypeId,
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             Model: parameters.Model,
@@ -427,7 +429,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(leagueParameters),
             success: function (result) {
-                generateLeagueOfBetTypeGrid(result, betTypeName);
+                generateLeagueOfBetTypeGrid(result, betTypeId, betTypeName);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -438,7 +440,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         });
     }
 
-    var generateLeagueOfBetTypeGrid = function (data, betTypeName) {
+    var generateLeagueOfBetTypeGrid = function (data, betTypeId, betTypeName) {
         var bodyData = [];
         var footerData = [];
         var groupHeaderColumns = [
@@ -468,6 +470,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             text: titleFormat.format(labels.BetType, betTypeName),
             showExcelButton: true,
             exportExcelFunction: function () {
+                leagueParameters.LeagueIdList = '';
+                leagueParameters.ConditionKey = betTypeName;
                 common.DownloadFile(urls.ExportLeaguePerformanceOfBetType, leagueParameters);
             }
         }
@@ -480,7 +484,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         domElements.divBetTypePerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
 
-        handleLeaguePerformanceOfBetTypeGridEvents(betTypeName);
+        handleLeaguePerformanceOfBetTypeGridEvents(betTypeId, betTypeName);
     }
 
     var generateLeagueOfBetTypeGridBody = function (data) {
@@ -513,7 +517,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         }];
     }   
 
-    var handleLeaguePerformanceOfBetTypeGridEvents = function (betTypeName) {
+    var handleLeaguePerformanceOfBetTypeGridEvents = function (betTypeId, betTypeName) {
         domElements.divLeaguePerformanceContainer.find('#spanBetTypeLink').click(function () {
             showBetTypePerformanceReport();
         });
@@ -523,7 +527,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             var matchIdList = link.attr('data-match-ids');
             var leagueName = link.attr('data-league-name');
 
-            getMatchPerformanceOfBetTypeLeagueReport(matchIdList, betTypeName, leagueName);
+            getMatchPerformanceOfBetTypeLeagueReport(matchIdList, betTypeId, betTypeName, leagueName);
         });
     }
 
@@ -533,9 +537,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
     };
 
-    var getMatchPerformanceOfBetTypeLeagueReport = function (matchIdList, betTypeName, leagueName) {
+    var getMatchPerformanceOfBetTypeLeagueReport = function (matchIdList, betTypeId, betTypeName, leagueName) {
         matchParameters = {
             MatchIdList: matchIdList,
+            BetTypeId: betTypeId,
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             Model: parameters.Model,
@@ -594,6 +599,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             text: titleFormat.format(labels.BetType, betTypeName, leagueName),
             showExcelButton: true,
             exportExcelFunction: function () {
+                matchParameters.MatchIdList = '';
+                matchParameters.ConditionKey = leagueName;
                 common.DownloadFile(urls.ExportMatchPerformanceOfBetTypeLeague, matchParameters);
             }
         }

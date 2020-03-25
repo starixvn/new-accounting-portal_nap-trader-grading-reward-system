@@ -3,6 +3,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Reports.Criteria.AutomationTradingPerformance;
     using Fanex.NAP.TGRS.Reports.Services;
     using System;    
@@ -15,7 +16,7 @@
         private const string FilePeriodPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\PeriodPerformance.xls";
         private const string FileEventPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls";
         private const string FileEventLeaguePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls";
-        private const string FileLeaguePerformanceOfEvent = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls";
+        private const string FileLeaguePerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformance.xls";
         private const string FileMatchPerformanceOfEventLeague = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformanceOfEventLeague.xls";
         private const string FileModelPerformance = @"~\Areas\Reports\ExcelTemplates\AutomationTradingPerformance\ModelPerformance.xls";
         private readonly IAutomationTradingReportService _automationTradingService;
@@ -77,47 +78,47 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
-            var criteria2 = new GetLeaguePerformanceOfEventCriteria
-            {
-                FromDate = criteria.FromDate,
-                ToDate = criteria.ToDate,
-                Model = criteria.Model,
-                LeagueIdList = "1837,53006",
-                MeasurementDescs = criteria.MeasurementDescs,
-                MeasurementHides = criteria.MeasurementHides,
-                Measurements = criteria.Measurements,
-                TypeSiteIds = criteria.TypeSiteIds                
-            };
+            var leagueList = _automationTradingService.GetAutoTradingLeaguePerformanceOfBetType(criteria);
 
-            var bettypes = _automationTradingService.GetAutoTradingLeaguePerformanceOfEvent(criteria2);
-
-            var jsonResult = Json(bettypes);
+            var jsonResult = Json(leagueList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria, string conditionKey)
+        {
+            var templatePath = Server.MapPath(FileLeaguePerformance);
+
+            criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingBetTypeListSessionKey);
+
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfBetType(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria)
         {
-            var criteria2 = new GetMatchPerformanceOfEventLeagueCriteria
-            {
-                FromDate = criteria.FromDate,
-                ToDate = criteria.ToDate,
-                Model = criteria.Model,
-                MatchIdList = "34791146,34791171",
-                MeasurementDescs = criteria.MeasurementDescs,
-                MeasurementHides = criteria.MeasurementHides,
-                Measurements = criteria.Measurements,
-                TypeSiteIds = criteria.TypeSiteIds
-            };
-
-            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfEventLeague(criteria2);
+            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfBetTypeLeague(criteria);
 
             var jsonResult = Json(matchList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string conditionKey)
+        {
+            var templatePath = Server.MapPath(FileMatchPerformance);
+
+            criteria.MatchIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfBetTypeSessionKey);
+
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfBetTypeLeague(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         #endregion
@@ -163,48 +164,48 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria)
-        {
-            var criteria2 = new GetLeaguePerformanceOfEventCriteria
-            {
-                FromDate = criteria.FromDate,
-                ToDate = criteria.ToDate,
-                Model = criteria.Model,
-                LeagueIdList = "1837,53006",
-                MeasurementDescs = criteria.MeasurementDescs,
-                MeasurementHides = criteria.MeasurementHides,
-                Measurements = criteria.Measurements,
-                TypeSiteIds = criteria.TypeSiteIds
-            };
+        {           
+            var leagueList = _automationTradingService.GetAutoTradingLeaguePerformanceOfPeriod(criteria);
 
-            var bettypes = _automationTradingService.GetAutoTradingLeaguePerformanceOfEvent(criteria2);
-
-            var jsonResult = Json(bettypes);
+            var jsonResult = Json(leagueList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria, string conditionKey)
+        {
+            var templatePath = Server.MapPath(FileLeaguePerformance);
+
+            criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingPeriodPerformanceSessionKey);
+
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfPeriod(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
         public ActionResult GetMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria)
         {
-            var criteria2 = new GetMatchPerformanceOfEventLeagueCriteria
-            {
-                FromDate = criteria.FromDate,
-                ToDate = criteria.ToDate,
-                Model = criteria.Model,
-                MatchIdList = "34791146,34791171",
-                MeasurementDescs = criteria.MeasurementDescs,
-                MeasurementHides = criteria.MeasurementHides,
-                Measurements = criteria.Measurements,
-                TypeSiteIds = criteria.TypeSiteIds
-            };
-
-            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfEventLeague(criteria2);
+            var matchList = _automationTradingService.GetAutoTradingMatchPerformanceOfPeriodLeague(criteria);
 
             var jsonResult = Json(matchList);
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
+        public ActionResult ExportMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria, string conditionKey)
+        {
+            var templatePath = Server.MapPath(FileMatchPerformance);
+
+            criteria.MatchIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfPeriodSessionKey);
+
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfPeriodLeague(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         #endregion
@@ -249,11 +250,11 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]        
-        public ActionResult ExportLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria, string cacheKey)
+        public ActionResult ExportLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria, string conditionKey)
         {
-            var templatePath = Server.MapPath(FileLeaguePerformanceOfEvent);
+            var templatePath = Server.MapPath(FileLeaguePerformance);
 
-            criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromEventListCache(cacheKey);
+            criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingEventPerformanceSessionKey);
 
             _automationTradingService.ExportAutoTradingLeaguePerformanceOfEvent(CurrentSession.UserId, criteria, templatePath);
 
@@ -286,11 +287,11 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria, string cacheKey)
+        public ActionResult ExportMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria, string conditionKey)
         {
-            var templatePath = Server.MapPath(FileMatchPerformanceOfEventLeague);
+            var templatePath = Server.MapPath(FileMatchPerformance);
 
-            criteria.MatchIdList = _automationTradingService.GetMatchIdListFromMatchListCache(cacheKey);
+            criteria.MatchIdList = _automationTradingService.GetMatchIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfEventSessionKey);
 
             _automationTradingService.ExportAutoTradingMatchPerformanceOfEventLeague(CurrentSession.UserId, criteria, templatePath);
 

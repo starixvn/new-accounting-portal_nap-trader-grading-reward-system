@@ -20,12 +20,6 @@
 
     public partial class AutomationTradingReportService : TGRSBaseService, IAutomationTradingReportService
     {
-        #region Consts
-        private const string AutomationTradingEventPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.EventList";
-        private const string AutomationTradingLeaguePerformanceOfEventSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfEventList";
-        private const string AutomationTradingMatchPerformanceOfEventLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfEventLeagueList";
-        #endregion
-
         #region Event
         public AutoTradingList GetAutoTradingEventPerformance(GetEventPerformanceCriteria criteria)
         {
@@ -42,14 +36,14 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        eventList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                        eventList.GenerateLeagueMatchTotal(totalLeagueMatchData.ToList()[0])
                                  .GenerateSummary(totalEventData)
                                  .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                  .GenerateMeasurementHidden(criteria.MeasurementHides);
 
                         if (eventData != null && eventData.Any())
                         {
-                            var leagueGroupList = SessionManager.Get<Dictionary<int, LeagueGroup>>(AutomationTradingLeagueGroupsSessionKey);
+                            var leagueGroupList = SessionManager.Get<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey);
                             var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
 
                             // Select league group MJ,M1,M2,M3,M4
@@ -93,7 +87,7 @@
                             eventList.GenerateGrandTotal();
                         }
 
-                        SessionManager.Set<AutoTradingList>(AutomationTradingEventPerformanceSessionKey, eventList);
+                        SessionManager.Set<AutoTradingList>(Consts.AutomationTradingEventPerformanceSessionKey, eventList);
                     }
                 }
             }
@@ -103,7 +97,7 @@
 
         public void ExportAutoTradingEventPerformance(int userId, GetEventPerformanceCriteria criteria, string templatePath)
         {
-            var eventList = SessionManager.Get<AutoTradingList>(AutomationTradingEventPerformanceSessionKey);
+            var eventList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingEventPerformanceSessionKey);
 
             if (eventList != null && eventList.ItemList.Any())
             {
@@ -160,6 +154,15 @@
 
         public AutoTradingList GetAutoTradingLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria)
         {
+            var leagueList = GetAutoTradingLeaguePerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfEventSessionKey, leagueList);
+
+            return leagueList;
+        }
+
+        private AutoTradingList GetAutoTradingLeaguePerformance(AutoTradingPerformanceCriteria criteria)
+        {
             var leagueList = new AutoTradingList();
 
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -189,18 +192,33 @@
 
                         leagueList.GenerateGrandTotal(true);
                     }
-
-                    SessionManager.Set<AutoTradingList>(AutomationTradingLeaguePerformanceOfEventSessionKey, leagueList);
                 }
             }
 
             return leagueList;
         }
 
+        public string GetLeagueIdListFromSession(string conditionKey, string sessionKey)
+        {
+            var autoTradingList = SessionManager.Get<AutoTradingList>(sessionKey);
+
+            if (autoTradingList != null)
+            {
+                return autoTradingList.ItemList.FirstOrDefault(x => x.AutoTradingName.Equals(conditionKey)).LeagueIdList;
+            }
+
+            return string.Empty;
+        }
+
         public void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath)
         {
-            var leagueList = SessionManager.Get<AutoTradingList>(AutomationTradingLeaguePerformanceOfEventSessionKey);
+            var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfEventSessionKey);
 
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+        }
+
+        private void ExportAutoTradingLeaguePerformance(AutoTradingList leagueList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath)
+        {
             if (leagueList != null && leagueList.ItemList.Any())
             {
                 string reportName = string.Format(
@@ -279,7 +297,7 @@
             ref AutoTradingList eventLeagueList
             )
         {
-            var leagueGroupList = SessionManager.Get<Dictionary<int, LeagueGroup>>(AutomationTradingLeagueGroupsSessionKey);
+            var leagueGroupList = SessionManager.Get<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey);
 
             foreach (var grouping in groupInfos)
             {
@@ -453,6 +471,15 @@
 
         public AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria)
         {
+            var matchList = GetAutoTradingMatchPerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfEventLeagueSessionKey, matchList);
+
+            return matchList;
+        }
+
+        private AutoTradingList GetAutoTradingMatchPerformance(AutoTradingPerformanceCriteria criteria)
+        {
             var matchList = new AutoTradingList();
 
             using (var objectDb = new Data.ObjectDb(criteria.GetSettingKey()))
@@ -487,18 +514,33 @@
 
                         matchList.GenerateGrandTotal(true);
                     }
-
-                    SessionManager.Set<AutoTradingList>(AutomationTradingMatchPerformanceOfEventLeagueSessionKey, matchList);
                 }
             }
 
             return matchList;
         }
 
+        public string GetMatchIdListFromSession(string conditionKey, string sessionKey)
+        {
+            var autoTradingList = SessionManager.Get<AutoTradingList>(sessionKey);
+
+            if (autoTradingList != null)
+            {
+                return autoTradingList.ItemList.FirstOrDefault(x => x.AutoTradingName.Equals(conditionKey)).MatchIdList;
+            }
+
+            return string.Empty;
+        }
+
         public void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath)
         {
-            var matchList = SessionManager.Get<AutoTradingList>(AutomationTradingMatchPerformanceOfEventLeagueSessionKey);
+            var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfEventLeagueSessionKey);
 
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
+        }
+
+        private void ExportAutoTradingMatchPerformance(AutoTradingList matchList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath)
+        {
             if (matchList != null && matchList.ItemList.Any())
             {
                 string reportName = string.Format(

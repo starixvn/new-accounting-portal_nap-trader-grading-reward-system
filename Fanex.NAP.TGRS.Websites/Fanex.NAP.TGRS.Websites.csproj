@@ -638,9 +638,9 @@
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\BetTypePerformance.xls" />
     <Content Include="Areas\Reports\Views\AutomationTradingPerformance\EventPerformance.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventPerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformanceOfEvent.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformanceOfEventLeague.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

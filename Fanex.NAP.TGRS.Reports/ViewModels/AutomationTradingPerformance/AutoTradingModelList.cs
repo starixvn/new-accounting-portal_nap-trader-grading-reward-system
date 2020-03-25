@@ -42,7 +42,7 @@
 
         public IList<MeasurementItem> MeasurementHiddenList { get; set; }
 
-        public AutoTradingModelList GenerateLeagueMacthTotal(TotalLeagueMatchInfo totalInfo)
+        public AutoTradingModelList GenerateLeagueMatchTotal(TotalLeagueMatchInfo totalInfo)
         {
             this.LeagueCount = totalInfo.LeagueCount;
             this.MatchCount = totalInfo.MatchCount;

@@ -19,10 +19,6 @@
 
     public partial class AutomationTradingReportService : TGRSBaseService, IAutomationTradingReportService
     {
-        #region Consts
-        private const string AutomationTradingPeriodPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.PeriodList";
-        #endregion
-
         #region Period
         public AutoTradingList GetAutoTradingWeekPerformance(GetWeekPerformanceCriteria criteria)
         {
@@ -39,7 +35,7 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        weekList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                        weekList.GenerateLeagueMatchTotal(totalLeagueMatchData.ToList()[0])
                                 .GenerateSummary(totalWeekData)
                                 .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                 .GenerateMeasurementHidden(criteria.MeasurementHides);
@@ -55,14 +51,17 @@
                             foreach (var group in groupInfos)
                             {
                                 var summaryPeriodInfo = summaryWeekData.FirstOrDefault(x => x.WeekDays == group.WeekDays);
+                                var period = GeneratePeriod(group.Items[0]);
+                                var rangeDate = group.Items[0].StartDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
+                                              + group.Items[0].EndDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
 
-                                weekList.AddAutoTradingItem(siteIdList, group.Items, summaryPeriodInfo, GeneratePeriod(group.Items[0]), AutoTradingType.PeriodWeek);
+                                weekList.AddAutoTradingItem(siteIdList, group.Items, summaryPeriodInfo, GeneratePeriod(group.Items[0]), AutoTradingType.PeriodWeek, rangeDate);
                             }
 
                             weekList.GenerateGrandTotal();
                         }
 
-                        SessionManager.Set<AutoTradingList>(AutomationTradingPeriodPerformanceSessionKey, weekList);
+                        SessionManager.Set<AutoTradingList>(Consts.AutomationTradingPeriodPerformanceSessionKey, weekList);
                     }
                 }
             }
@@ -102,7 +101,7 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        monthlyList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                        monthlyList.GenerateLeagueMatchTotal(totalLeagueMatchData.ToList()[0])
                                    .GenerateSummary(totalMonthData)
                                    .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                    .GenerateMeasurementHidden(criteria.MeasurementHides);
@@ -118,14 +117,15 @@
                             foreach (var group in groupInfos)
                             {
                                 var summaryPeriodInfo = summaryMonthData.FirstOrDefault(x => x.RptMonth == group.RptMonth);
+                                var rangeDate = GenerateRangeDateInMonth(group.RptMonth, criteria.FromDate, criteria.ToDate);
 
-                                monthlyList.AddAutoTradingItem(siteIdList, group.Items, summaryPeriodInfo, group.RptMonth.ToString(Consts.FormatDateTimeToString_yyyyMMdd), AutoTradingType.PeriodMonth);
+                                monthlyList.AddAutoTradingItem(siteIdList, group.Items, summaryPeriodInfo, group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy), AutoTradingType.PeriodMonth, rangeDate);
                             }
 
                             monthlyList.GenerateGrandTotal();
                         }
 
-                        SessionManager.Set<AutoTradingList>(AutomationTradingPeriodPerformanceSessionKey, monthlyList);
+                        SessionManager.Set<AutoTradingList>(Consts.AutomationTradingPeriodPerformanceSessionKey, monthlyList);
                     }
                 }
             }
@@ -133,9 +133,35 @@
             return monthlyList;
         }
 
+        private string GenerateRangeDateInMonth(DateTime currentDate, DateTime fromDate, DateTime toDate)
+        {
+            int days = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            var fromDateInMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+            var toDateInMonth = new DateTime(currentDate.Year, currentDate.Month, days);
+
+            if (fromDate.Month == toDate.Month)
+            {
+                return fromDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
+                           + toDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
+            }          
+            if (currentDate.Month == fromDate.Month)
+            {
+                return fromDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
+                            + toDateInMonth.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
+            }
+            if (currentDate.Month == toDate.Month)
+            {
+                return currentDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
+                            + toDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
+            }            
+            
+            return fromDateInMonth.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
+                            + toDateInMonth.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
+        }
+
         public void ExportAutoTradingPeriodPerformance(int userId, GetMonthPerformanceCriteria criteria, string templatePath)
         {
-            var periodData = SessionManager.Get<AutoTradingList>(AutomationTradingPeriodPerformanceSessionKey);
+            var periodData = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingPeriodPerformanceSessionKey);
 
             if (periodData != null && periodData.ItemList.Any())
             {
@@ -198,6 +224,39 @@
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
+        public AutoTradingList GetAutoTradingLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria)
+        {
+            var leagueList = GetAutoTradingLeaguePerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfPeriodSessionKey, leagueList);
+
+            return leagueList;
+        }
+
+        public void ExportAutoTradingLeaguePerformanceOfPeriod(int userId, GetLeaguePerformanceOfPeriodCriteria criteria, string templatePath)
+        {
+            var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfPeriodSessionKey);
+
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+        }
+
+        public AutoTradingList GetAutoTradingMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria)
+        {
+            var matchList = GetAutoTradingMatchPerformance(criteria);
+
+            SessionManager.Set<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfPeriodLeagueSessionKey, matchList);
+
+            return matchList;
+        }
+
+        public void ExportAutoTradingMatchPerformanceOfPeriodLeague(int userId, GetMatchPerformanceOfPeriodLeagueCriteria criteria, string templatePath)
+        {
+            var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfPeriodLeagueSessionKey);
+
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
+        }
+
         #endregion
+
     }
 }

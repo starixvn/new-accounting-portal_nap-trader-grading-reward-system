@@ -270,13 +270,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
             showFooter: true,
             showDistinctRow: false,
             showTree: true,
-            showTitle: true,           
-            showColumnsShowHide: false,
-            autoResizeColumn: false,
-            gridExpandHeight: 230,
-            allowTruncate: true,
-            defaultCollapseAllGroups: true,
-            virtualScroller: true
+            showTitle: true,
+            showNumberColumn: false
         };
     }
 
@@ -390,16 +385,16 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
     }
 
     var generatePeriodPerformanceGridBody = function (data) {
-        var leagueFormat = '<span class="league-link link" title="{0}" data-league-ids="{1}" data-league-group-name="{2}">{3}</span>';
+        var leagueFormat = '<span class="league-link link" title="{0}" data-league-ids="{1}" data-period="{2}" data-range-date="{3}">{4}</span>';       
         var bodyData = [];
         var row;
 
         $.each(data.ItemList, function (indexItem, item) {
-            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, item.LeagueIdList, item.AutoTradingName, item.LeagueCount);
+            var leagueCountCol = leagueFormat.format(labels.LeaguePerformance, item.LeagueIdList, item.AutoTradingName, item.AutoTradingName2, item.LeagueCount);
 
             var currentRowData = [
                 { Name: 'ColPeriod', Value: item.AutoTradingName, CssClass: 'bold' },
-                { Name: 'ColLeagueCount', Value: item.LeagueCount },
+                { Name: 'ColLeagueCount', Value: leagueCountCol },
                 { Name: 'ColMatchCount', Value: item.MatchCount },
                 { Name: 'ColBetCount', Value: item.BetCount }
             ];
@@ -440,18 +435,21 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
     var handlePeriodPerformanceGridEvents = function () {
         domElements.divPeriodPerformanceContainer.find('.league-link').click(function () {
             var link = $(this);
-            var leagueIdList = link.attr('data-league-ids');
+            var leagueIdList = link.attr('data-league-ids');            
             var period = link.attr('data-period');
+            var rangeDate = link.attr('data-range-date');
 
-            getLeaguePerformanceOfPeriodReport(leagueIdList, period);
+            getLeaguePerformanceOfPeriodReport(leagueIdList, rangeDate, period);
         })
     }
 
-    var getLeaguePerformanceOfPeriodReport = function (leagueIdList, period) {
+    var getLeaguePerformanceOfPeriodReport = function (leagueIdList, rangeDate, period) {
+        var arrRangeDate = rangeDate.split(';');
+
         leagueParameters = {
             LeagueIdList: leagueIdList,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate,
+            FromDate: arrRangeDate[0],
+            ToDate: arrRangeDate[1],
             Model: parameters.Model,
             TypeSiteIds: parameters.TypeSiteIds,
             Measurements: parameters.Measurements,
@@ -462,12 +460,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetLeaguePerformanceOfEvent,
+            url: urls.GetLeaguePerformanceOfPeriod,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(leagueParameters),
             success: function (result) {
-                generateLeagueOfPeriodGrid(result, leagueGroupName);
+                generateLeagueOfPeriodGrid(result, period);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -483,12 +481,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         var footerData = [];
         var groupHeaderColumns = [
             { HeaderText: labels.League, Name: "ColLeagueName", MergeRowNumber: 2 },
-            { HeaderText: labels.Match, Name: "ColMatchCount", MergeRowNumber: 2 },
+            { HeaderText: labels.MatchCount, Name: "ColMatchCount", MergeRowNumber: 2 },
             { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
         ];
         var headerColumns = [
             { HeaderText: labels.League, Width: 240, Name: "ColLeagueName", HeaderAlign: "center", CellAlign: "left", Sort: true },
-            { HeaderText: labels.Match, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
+            { HeaderText: labels.MatchCount, Width: 120, Name: "ColMatchCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
         var footerColumns = [
@@ -553,7 +551,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         }];
     }   
 
-    var handleLeaguePerformanceOfPeriodGridEvents = function (leagueGroupName) {
+    var handleLeaguePerformanceOfPeriodGridEvents = function (period) {
         domElements.divLeaguePerformanceContainer.find('#spanPeriodLink').click(function () {
             showPeriodPerformanceReport();
         });
@@ -563,7 +561,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
             var matchIdList = link.attr('data-match-ids');
             var leagueName = link.attr('data-league-name');
 
-            getMatchPerformanceOfEventLeagueReport(matchIdList, leagueGroupName, leagueName);
+            getMatchPerformanceOfPeriodLeagueReport(matchIdList, period, leagueName);
         });
     }
 
@@ -576,13 +574,13 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
     var getMatchPerformanceOfPeriodLeagueReport = function (matchIdList, period, leagueName) {
         matchParameters = {
             MatchIdList: matchIdList,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate,
-            Model: parameters.Model,
-            TypeSiteIds: parameters.TypeSiteIds,
-            Measurements: parameters.Measurements,
-            MeasurementHides: parameters.MeasurementHides,
-            MeasurementDescs: parameters.MeasurementDescs
+            FromDate: leagueParameters.FromDate,
+            ToDate: leagueParameters.ToDate,
+            Model: leagueParameters.Model,
+            TypeSiteIds: leagueParameters.TypeSiteIds,
+            Measurements: leagueParameters.Measurements,
+            MeasurementHides: leagueParameters.MeasurementHides,
+            MeasurementDescs: leagueParameters.MeasurementDescs
         };
 
         common.DisableInput();
@@ -609,12 +607,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         var footerData = [];
         var groupHeaderColumns = [
             { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
-            { HeaderText: labels.Match, Name: "ColMatchName", MergeRowNumber: 2 },
+            { HeaderText: labels.MatchCount, Name: "ColMatchName", MergeRowNumber: 2 },
             { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 }
         ];
         var headerColumns = [
             { HeaderText: labels.EventDate, Width: 120, Name: "ColEventDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
-            { HeaderText: labels.Match, Width: 240, Name: "ColMatchName", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: labels.MatchCount, Width: 240, Name: "ColMatchName", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: labels.BetCount, Width: 120, Name: "ColBetCount", HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.IntegerFormat }
         ];
         var footerColumns = [
@@ -630,7 +628,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         var titleFormat = '<span id="spanPeriodLink" class="breadcrumb-link">{0}</span><span id="spanLeagueOfPeriodLink" class="breadcrumb-link"> >> {1}</span><span> >> {2}</span>';
         var gridOptions = generatePeriodPerformanceGridOptions(data);
         gridOptions.titleInfo = {
-            text: titleFormat.format(labels.Event, period, leagueName),
+            text: titleFormat.format(labels.Period, period, leagueName),
             showExcelButton: true,
             exportExcelFunction: function () {
                 common.DownloadFile(urls.ExportMatchPerformanceOfPeriodLeague, matchParameters);
