@@ -136,11 +136,11 @@
             return leagueList;
         }
 
-        public void ExportAutoTradingLeaguePerformanceOfBetType(int userId, GetLeaguePerformanceOfBetTypeCriteria criteria, string templatePath)
+        public void ExportAutoTradingLeaguePerformanceOfBetType(int userId, GetLeaguePerformanceOfBetTypeCriteria criteria, string templatePath, string breadcrumb)
         {
             var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfBetTypeSessionKey);
 
-            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath, breadcrumb);
         }
 
         public AutoTradingList GetAutoTradingMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria)
@@ -152,11 +152,11 @@
             return matchList;
         }
 
-        public void ExportAutoTradingMatchPerformanceOfBetTypeLeague(int userId, GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string templatePath)
+        public void ExportAutoTradingMatchPerformanceOfBetTypeLeague(int userId, GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string templatePath, string breadcrumb)
         {
             var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfBetTypeLeagueSessionKey);
 
-            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath, breadcrumb);
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

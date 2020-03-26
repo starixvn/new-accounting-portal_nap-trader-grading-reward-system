@@ -118,7 +118,7 @@
                     ViewLang.BetCount
                 };
 
-                FillDataReport(eventList, criteria, userId, columns, ref writer);
+                FillDataReport(eventList, criteria, userId, columns, string.Empty, ref writer);
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 6144);
@@ -132,7 +132,7 @@
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        public void FilterBlockEvent(int userId, AutoTradingPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        public void FilterBlock(int userId, AutoTradingPerformanceCriteria criteria, string breadcrumb, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);
@@ -144,6 +144,22 @@
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Model, boldFont, criteria.Model == 1 ? "RT3" : "TA", normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Site, boldFont, GetSiteName(criteria.TypeSiteIds), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
+
+            if (!string.IsNullOrEmpty(breadcrumb))
+            {
+                var arrDrilldownTab = breadcrumb.Split(';');
+                if (arrDrilldownTab.Length > 0)
+                {
+                    for (int i = 0; i < arrDrilldownTab.Length; i++)
+                    {
+                        var arrDrilldownLeague = arrDrilldownTab[i].Split(':');
+                        if (arrDrilldownLeague.Length == 2)
+                        {
+                            AppendBlockContent(ref contentRender, ref lineCount, arrDrilldownLeague[0], boldFont, arrDrilldownLeague[1], normalFont, "\n");
+                        }
+                    }
+                }
+            }
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -210,14 +226,14 @@
             return string.Empty;
         }
 
-        public void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath)
+        public void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath, string breadcrumb)
         {
             var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfEventSessionKey);
 
-            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath, breadcrumb);
         }
 
-        private void ExportAutoTradingLeaguePerformance(AutoTradingList leagueList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath)
+        private void ExportAutoTradingLeaguePerformance(AutoTradingList leagueList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath, string breadcrumb)
         {
             if (leagueList != null && leagueList.ItemList.Any())
             {
@@ -237,7 +253,7 @@
                     ViewLang.BetCount
                 };
 
-                FillDataReport(leagueList, criteria, userId, columns, ref writer);
+                FillDataReport(leagueList, criteria, userId, columns, breadcrumb, ref writer);
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 8192);
@@ -379,7 +395,7 @@
                     ViewLang.BetCount
                 };
 
-            FilterBlockEvent(userId, criteria, ref writer);
+            FilterBlock(userId, criteria, string.Empty, ref writer);
 
             writer.FreezeRow(0, 4);
 
@@ -532,14 +548,14 @@
             return string.Empty;
         }
 
-        public void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath)
+        public void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath, string breadcrumb)
         {
             var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfEventLeagueSessionKey);
 
-            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath, breadcrumb);
         }
 
-        private void ExportAutoTradingMatchPerformance(AutoTradingList matchList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath)
+        private void ExportAutoTradingMatchPerformance(AutoTradingList matchList, int userId, AutoTradingPerformanceCriteria criteria, string templatePath, string breadcrumb)
         {
             if (matchList != null && matchList.ItemList.Any())
             {
@@ -559,7 +575,7 @@
                     ViewLang.BetCount
                 };
 
-                FillDataReport(matchList, criteria, userId, columns, ref writer);
+                FillDataReport(matchList, criteria, userId, columns, breadcrumb, ref writer);
 
                 // Adjust column width for sheet   
                 sheet.SetColumnWidth(0, 4096);
@@ -577,11 +593,12 @@
             AutoTradingPerformanceCriteria criteria,
             int userId,
             List<object> columns,
+            string breadcrumb,
             ref ExcelTemplateWriter writer)
         {
             var cellCopyIndex = columns.Count;
 
-            FilterBlockEvent(userId, criteria, ref writer);
+            FilterBlock(userId, criteria, breadcrumb, ref writer);
 
             writer.FreezeRow(0, 4);
 

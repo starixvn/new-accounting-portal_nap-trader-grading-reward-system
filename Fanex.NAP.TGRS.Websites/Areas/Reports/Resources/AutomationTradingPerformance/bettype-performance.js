@@ -80,9 +80,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         setCacheForFilter(domElements.ddlMeasurement, getStorageFilter("RTBetTypeSelectedMeasurements"));
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {
-                domElements.divSummaryContainer.show();
-
+            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {                
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
                 var selectedMeasurements = domElements.ddlMeasurement.val();
@@ -115,7 +113,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
                 domElements.divBetTypePerformanceContainer.addClass('display-none');
 
                 hideAllReports();
+
                 getBetTypePerformanceReport();
+
+                domElements.divSummaryContainer.removeClass('display-none');
             }
         });
     };
@@ -157,10 +158,11 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
     }
 
     var hideAllReports = function () {
+        domElements.divSummaryContainer.addClass('display-none');
         domElements.divBetTypePerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
-    };
+    }
 
     var getBetTypePerformanceReport = function () {
         common.DisableInput();
@@ -233,7 +235,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         return {
             customizeHeader: true,
             showFooter: true,
-            showDistinctRow: false,
+            showDistinctRow: true,
             showTree: true,
             showTitle: true,
             showNumberColumn: false,
@@ -472,6 +474,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             exportExcelFunction: function () {
                 leagueParameters.LeagueIdList = '';
                 leagueParameters.ConditionKey = betTypeName;
+                leagueParameters.Breadcrumb = labels.BetType + ':' + betTypeName;
                 common.DownloadFile(urls.ExportLeaguePerformanceOfBetType, leagueParameters);
             }
         }
@@ -535,7 +538,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         domElements.divBetTypePerformanceContainer.removeClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
-    };
+    }
 
     var getMatchPerformanceOfBetTypeLeagueReport = function (matchIdList, betTypeId, betTypeName, leagueName) {
         matchParameters = {
@@ -601,6 +604,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             exportExcelFunction: function () {
                 matchParameters.MatchIdList = '';
                 matchParameters.ConditionKey = leagueName;
+                matchParameters.Breadcrumb = labels.BetType + ":" + betTypeName + ";" + labels.League + ":" + leagueName;
                 common.DownloadFile(urls.ExportMatchPerformanceOfBetTypeLeague, matchParameters);
             }
         }

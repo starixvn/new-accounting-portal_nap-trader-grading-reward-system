@@ -79,14 +79,13 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divEventPerformanceFilter, 'w')) {
-                domElements.divSummaryContainer.show();
-
-                getParammeters();
-
-                domElements.divEventPerformanceContainer.addClass('display-none');
+                getParammeters();                
 
                 hideAllReports();
+
                 getEventPerformanceReport();
+
+                domElements.divSummaryContainer.removeClass('display-none');
             }
         });
 
@@ -163,6 +162,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
     }
 
     var hideAllReports = function () {
+        domElements.divSummaryContainer.addClass('display-none');
         domElements.divEventPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
@@ -239,7 +239,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         return {
             customizeHeader: true,
             showFooter: true,
-            showDistinctRow: false,
+            showDistinctRow: true,
             showTree: true,
             showTitle: true,
             showNumberColumn: false
@@ -476,6 +476,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             exportExcelFunction: function () {
                 leagueParameters.LeagueIdList = '';
                 leagueParameters.ConditionKey = leagueGroupName;
+                leagueParameters.Breadcrumb = labels.Event + ':' + leagueGroupName;
                 common.DownloadFile(urls.ExportLeaguePerformanceOfEvent, leagueParameters);
             }
         }
@@ -603,6 +604,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
             exportExcelFunction: function () {
                 matchParameters.MatchIdList = '';
                 matchParameters.ConditionKey = leagueName;
+                matchParameters.Breadcrumb = labels.Event + ":" + leagueGroupName + ";" + labels.League + ":" + leagueName;
                 common.DownloadFile(urls.ExportMatchPerformanceOfEventLeague, matchParameters);
             }
         }

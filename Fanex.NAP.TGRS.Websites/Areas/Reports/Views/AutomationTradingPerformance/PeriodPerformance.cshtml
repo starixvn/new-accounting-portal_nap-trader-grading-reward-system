@@ -120,7 +120,7 @@
         </div>
     </div>
 </div>
-<div id="divSummaryContainer" hidden>
+<div id="divSummaryContainer">
     @Html.Partial("SummaryPerformance")
 </div>
 <div id="divPeriodPerformanceContainer" class="content-grid display-none">
@@ -170,7 +170,8 @@
             Week: '@ViewLang.Week',
             Period: '@ViewLang.Period',
             Date: '@ViewLang.Date',
-            EventDate: '@ViewLang.EventDate'
+            EventDate: '@ViewLang.EventDate',
+            ViewBy: '@ViewLang.ViewBy'
         };
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',

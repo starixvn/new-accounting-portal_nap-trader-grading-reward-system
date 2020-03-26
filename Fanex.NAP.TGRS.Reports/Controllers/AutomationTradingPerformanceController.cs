@@ -87,13 +87,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria, string conditionKey)
+        public ActionResult ExportLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileLeaguePerformance);
 
             criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingBetTypeListSessionKey);
 
-            _automationTradingService.ExportAutoTradingLeaguePerformanceOfBetType(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfBetType(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }
@@ -110,13 +110,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string conditionKey)
+        public ActionResult ExportMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileMatchPerformance);
 
             criteria.MatchIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfBetTypeSessionKey);
 
-            _automationTradingService.ExportAutoTradingMatchPerformanceOfBetTypeLeague(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfBetTypeLeague(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }
@@ -174,13 +174,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria, string conditionKey)
+        public ActionResult ExportLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileLeaguePerformance);
 
             criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingPeriodPerformanceSessionKey);
 
-            _automationTradingService.ExportAutoTradingLeaguePerformanceOfPeriod(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfPeriod(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }
@@ -197,13 +197,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria, string conditionKey)
+        public ActionResult ExportMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileMatchPerformance);
 
             criteria.MatchIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfPeriodSessionKey);
 
-            _automationTradingService.ExportAutoTradingMatchPerformanceOfPeriodLeague(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfPeriodLeague(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }
@@ -250,13 +250,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]        
-        public ActionResult ExportLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria, string conditionKey)
+        public ActionResult ExportLeaguePerformanceOfEvent(GetLeaguePerformanceOfEventCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileLeaguePerformance);
 
             criteria.LeagueIdList = _automationTradingService.GetLeagueIdListFromSession(conditionKey, Consts.AutomationTradingEventPerformanceSessionKey);
 
-            _automationTradingService.ExportAutoTradingLeaguePerformanceOfEvent(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingLeaguePerformanceOfEvent(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }
@@ -287,13 +287,13 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.AutomationTradingPerformance, Policy = NAP.Core.Business.Constant.Policy.Read)]
-        public ActionResult ExportMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria, string conditionKey)
+        public ActionResult ExportMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria, string conditionKey, string breadcrumb)
         {
             var templatePath = Server.MapPath(FileMatchPerformance);
 
             criteria.MatchIdList = _automationTradingService.GetMatchIdListFromSession(conditionKey, Consts.AutomationTradingLeaguePerformanceOfEventSessionKey);
 
-            _automationTradingService.ExportAutoTradingMatchPerformanceOfEventLeague(CurrentSession.UserId, criteria, templatePath);
+            _automationTradingService.ExportAutoTradingMatchPerformanceOfEventLeague(CurrentSession.UserId, criteria, templatePath, breadcrumb);
 
             return new EmptyResult();
         }

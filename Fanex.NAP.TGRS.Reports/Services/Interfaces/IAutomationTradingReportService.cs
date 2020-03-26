@@ -15,11 +15,11 @@
 
         AutoTradingList GetAutoTradingLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria);
 
-        void ExportAutoTradingLeaguePerformanceOfBetType(int userId, GetLeaguePerformanceOfBetTypeCriteria criteria, string templatePath);
+        void ExportAutoTradingLeaguePerformanceOfBetType(int userId, GetLeaguePerformanceOfBetTypeCriteria criteria, string templatePath, string breadcrumb);
 
         AutoTradingList GetAutoTradingMatchPerformanceOfBetTypeLeague(GetMatchPerformanceOfBetTypeLeagueCriteria criteria);
 
-        void ExportAutoTradingMatchPerformanceOfBetTypeLeague(int userId, GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string templatePath);
+        void ExportAutoTradingMatchPerformanceOfBetTypeLeague(int userId, GetMatchPerformanceOfBetTypeLeagueCriteria criteria, string templatePath, string breadcrumb);
 
         #endregion
 
@@ -32,11 +32,11 @@
 
         AutoTradingList GetAutoTradingLeaguePerformanceOfPeriod(GetLeaguePerformanceOfPeriodCriteria criteria);
 
-        void ExportAutoTradingLeaguePerformanceOfPeriod(int userId, GetLeaguePerformanceOfPeriodCriteria criteria, string templatePath);
+        void ExportAutoTradingLeaguePerformanceOfPeriod(int userId, GetLeaguePerformanceOfPeriodCriteria criteria, string templatePath, string breadcrumb);
 
         AutoTradingList GetAutoTradingMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria);
 
-        void ExportAutoTradingMatchPerformanceOfPeriodLeague(int userId, GetMatchPerformanceOfPeriodLeagueCriteria criteria, string templatePath);
+        void ExportAutoTradingMatchPerformanceOfPeriodLeague(int userId, GetMatchPerformanceOfPeriodLeagueCriteria criteria, string templatePath, string breadcrumb);
         #endregion
 
         #region Event
@@ -48,7 +48,7 @@
 
         string GetLeagueIdListFromSession(string conditionKey, string sessionKey);
 
-        void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
+        void ExportAutoTradingLeaguePerformanceOfEvent(int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath, string breadcrumb);
 
         AutoTradingList GetAutoTradingEventLeaguePerformance(GetLeaguePerformanceOfEventCriteria criteria);
 
@@ -60,7 +60,7 @@
 
         string GetMatchIdListFromSession(string conditionKey, string sessionKey);
 
-        void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath);
+        void ExportAutoTradingMatchPerformanceOfEventLeague(int userId, GetMatchPerformanceOfEventLeagueCriteria criteria, string templatePath, string breadcrumb);
 
         #endregion
 

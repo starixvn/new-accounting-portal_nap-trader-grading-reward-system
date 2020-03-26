@@ -18,7 +18,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
         btnGenerate: null,
         divModelPerformanceContainer: null,
         divModelPerformanceGrid: null,
-        divSummaryContainer: null
+        divSummaryContainer: null,
+        divChartContainer: null
     };
 
     var parameters = {
@@ -40,6 +41,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
         domElements.divModelPerformanceContainer = $('#divModelPerformanceContainer');
         domElements.divModelPerformanceGrid = $('#divModelPerformanceGrid');
         domElements.divSummaryContainer = $('#divSummaryContainer');
+        domElements.divChartContainer = $('#divChartContainer');
     }
 
     var initializeFields = function () {
@@ -55,8 +57,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
         
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divModelPerformanceFilter, 'w')) {
-                domElements.divSummaryContainer.show();
+                
                 chartPerforamnce.Display(false);
+
+                domElements.divSummaryContainer.addClass('display-none');
                 domElements.divModelPerformanceContainer.addClass('display-none');                
 
                 parameters.FromDate = domElements.divDateRange.getFrom();
@@ -64,6 +68,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
                 parameters.DataType = domElements.ddlDataType.val();
                
                 getModelPerformanceReport();
+
+                domElements.divSummaryContainer.removeClass('display-none');
             }
         });
     }
@@ -77,7 +83,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
-                renderModelPerformanceGrid(result);
+                generateModelPerformanceGrid(result);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -88,7 +94,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
         });
     }
 
-    var renderModelPerformanceGrid = function (data) {
+    var generateModelPerformanceGrid = function (data) {
         var bodyData = [];
         var footerData = [];
 
@@ -98,6 +104,8 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
 
             chartPerforamnce.BindData(data);
             chartPerforamnce.Display(true);
+        } else {
+            domElements.divChartContainer.addClass('display-none');
         }
 
         var gridOptions = generateModelPerformanceGridOptions();
@@ -133,7 +141,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.ModelPerformance = function () {
             },
             showPager: false,
             showTree: true,
-            showDistinctRow: false,
+            showDistinctRow: true,
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,

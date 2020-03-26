@@ -115,8 +115,6 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divMonthPerformanceFilter, 'w')) {
-                domElements.divSummaryContainer.show();
-
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 var selectedSideIds = domElements.ddlSite.val();
                 var selectedMeasurements = domElements.ddlMeasurement.val();
@@ -148,7 +146,10 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
                 parameters.MeasurementDescs = notSelectMeasurements.length > 0 && selectedMeasurementDescs.length > 0 ? selectedMeasurementDescs.join(',') : labels.All;                
 
                 hideAllReports();
+
                 getPeriodPerformanceReport();
+
+                domElements.divSummaryContainer.removeClass('display-none');
             }
         });        
     };
@@ -190,6 +191,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
     }
 
     var hideAllReports = function () {
+        domElements.divSummaryContainer.addClass('display-none');
         domElements.divPeriodPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
@@ -247,7 +249,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         var gridOptions = generatePeriodPerformanceGridOptions();
         gridOptions.titleInfo = {
             showExcelButton: true,
-            exportExcelFunction: function () {
+            exportExcelFunction: function () {               
                 common.DownloadFile(urls.ExportPeriodPerformance, parameters);
             }
         }
@@ -268,7 +270,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
         return {
             customizeHeader: true,
             showFooter: true,
-            showDistinctRow: false,
+            showDistinctRow: true,
             showTree: true,
             showTitle: true,
             showNumberColumn: false
@@ -506,6 +508,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
             text: titleFormat.format(labels.Period, period),
             showExcelButton: true,
             exportExcelFunction: function () {
+                leagueParameters.LeagueIdList = '';
+                leagueParameters.ConditionKey = period;
+                leagueParameters.Breadcrumb = labels.ViewBy + ':' + parameters.ViewBy;
                 common.DownloadFile(urls.ExportLeaguePerformanceOfPeriod, leagueParameters);
             }
         }
@@ -631,6 +636,9 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.PeriodPerformance = function () {
             text: titleFormat.format(labels.Period, period, leagueName),
             showExcelButton: true,
             exportExcelFunction: function () {
+                matchParameters.MatchIdList = '';
+                matchParameters.ConditionKey = leagueName;
+                matchParameters.Breadcrumb = labels.ViewBy + ":" + parameters.ViewBy + ";" + labels.League + ":" + leagueName;
                 common.DownloadFile(urls.ExportMatchPerformanceOfPeriodLeague, matchParameters);
             }
         }

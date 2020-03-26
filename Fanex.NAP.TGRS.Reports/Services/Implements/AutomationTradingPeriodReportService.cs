@@ -182,7 +182,7 @@
                     ViewLang.BetCount
                 };
 
-                FilterBlockPeriod(userId, criteria, ref writer);
+                FilterBlockPeriod(userId, criteria, ref writer);                
 
                 writer.FreezeRow(0, 4);
 
@@ -208,14 +208,14 @@
             IFont boldFont = writer.GetFont(11, 0);
             IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
-
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ViewBy, boldFont, criteria.ViewBy, normalFont, "\n");
+            
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Model, boldFont, criteria.Model == 1 ? "RT3" : "TA", normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetLeagueGroupCodes(criteria.LeagueGroupIds), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Site, boldFont, GetSiteName(criteria.TypeSiteIds), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ViewBy, boldFont, criteria.ViewBy, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -233,11 +233,11 @@
             return leagueList;
         }
 
-        public void ExportAutoTradingLeaguePerformanceOfPeriod(int userId, GetLeaguePerformanceOfPeriodCriteria criteria, string templatePath)
+        public void ExportAutoTradingLeaguePerformanceOfPeriod(int userId, GetLeaguePerformanceOfPeriodCriteria criteria, string templatePath, string breadcrumb)
         {
             var leagueList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingLeaguePerformanceOfPeriodSessionKey);
 
-            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath);
+            ExportAutoTradingLeaguePerformance(leagueList, userId, criteria, templatePath, breadcrumb);
         }
 
         public AutoTradingList GetAutoTradingMatchPerformanceOfPeriodLeague(GetMatchPerformanceOfPeriodLeagueCriteria criteria)
@@ -249,11 +249,11 @@
             return matchList;
         }
 
-        public void ExportAutoTradingMatchPerformanceOfPeriodLeague(int userId, GetMatchPerformanceOfPeriodLeagueCriteria criteria, string templatePath)
+        public void ExportAutoTradingMatchPerformanceOfPeriodLeague(int userId, GetMatchPerformanceOfPeriodLeagueCriteria criteria, string templatePath, string breadcrumb)
         {
             var matchList = SessionManager.Get<AutoTradingList>(Consts.AutomationTradingMatchPerformanceOfPeriodLeagueSessionKey);
 
-            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath);
+            ExportAutoTradingMatchPerformance(matchList, userId, criteria, templatePath, breadcrumb);
         }
 
         #endregion
