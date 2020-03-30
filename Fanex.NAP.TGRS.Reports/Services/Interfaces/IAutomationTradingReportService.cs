@@ -54,9 +54,7 @@
 
         void ExportAutoTradingEventLeaguePerformance(AutoTradingList eventLeagueList, int userId, GetLeaguePerformanceOfEventCriteria criteria, string templatePath);
 
-        AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria);
-
-        string GetMatchIdListFromMatchListCache(string cacheKey);
+        AutoTradingList GetAutoTradingMatchPerformanceOfEventLeague(GetMatchPerformanceOfEventLeagueCriteria criteria);        
 
         string GetMatchIdListFromSession(string conditionKey, string sessionKey);
 
