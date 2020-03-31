@@ -255,46 +255,54 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
     }
 
     var generateColumns = function (data, columns) {
-        if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {            
-            var cssClassForSum = 'dim';
-            var groupHeaderNameOld = '';
+        if (data.GrandTotal.RobotTradingItemList != null && data.LeagueCount > 0) {
+            var cssClass = '';
+            var cssClassForSum = '';
+            var groupHeaderNameCurrent = '';
+            var groupHeaderNameOld = '';            
 
             $.each(data.GrandTotal.RobotTradingItemList, function (index, robotTradingItem) {
+                cssClass = robotTradingItem.CssClassHeader; 
 
-                if (robotTradingItem.TypeSiteId > 0) {
-                    cssClass = robotTradingItem.CssClass;
-                } else {                    
-                    if (groupHeaderNameOld != robotTradingItem.GroupHeaderName) {
-                        cssClassForSum = cssClassForSum == 'dim' ? '' : 'dim';                   
-                    }
-                    
+                if (!robotTradingItem.IsHideTurnover
+                    || !robotTradingItem.IsHideWinLoss
+                    || !robotTradingItem.IsHideMargin) {
+
+                    groupHeaderNameCurrent = robotTradingItem.GroupHeaderName;
+                }
+
+                if (groupHeaderNameOld != ''
+                    && groupHeaderNameOld != groupHeaderNameCurrent
+                    && robotTradingItem.TypeSiteId == 0) {
+
                     cssClass = cssClassForSum == 'dim' ? '' : 'dim';
                     cssClassForSum = cssClass;
                 }
-               
+
                 if (!robotTradingItem.IsHideTurnover) {
                     columns.push({
                         HeaderText: robotTradingItem.TypeSiteDesc + ' T/O', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover',
                         HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, ThClass: cssClass
-                    });
-                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+                    });                    
                 }
 
                 if (!robotTradingItem.IsHideWinLoss) {
                     columns.push({
                         HeaderText: robotTradingItem.TypeSiteDesc + ' W/L', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss',
                         HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass
-                    });
-                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+                    });                    
                 }
 
                 if (!robotTradingItem.IsHideMargin) {
                     columns.push({
                         HeaderText: robotTradingItem.TypeSiteDesc + ' MAR %', Width: 120, Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin',
                         HeaderAlign: "center", CellAlign: "right", Sort: true, FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', ThClass: cssClass
-                    });
-                    groupHeaderNameOld = robotTradingItem.GroupHeaderName;
+                    });                   
                 }
+
+                if (robotTradingItem.TypeSiteId == 0) {
+                    groupHeaderNameOld = groupHeaderNameCurrent;
+                }                
             })
 
             return columns;
@@ -343,13 +351,13 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
                 var siteName = $(site).text();
                 switch (siteId) {
                     case "1":
-                        cssClass = labels.CssClassDimNova;
+                        cssClass = labels.CssClassHeaderCn88;
                         break;
                     case "2":
-                        cssClass = labels.CssClassDimCash;
+                        cssClass = labels.CssClassHeaderCash;
                         break;
                     case "3":
-                        cssClass = labels.CssClassDimCn88;
+                        cssClass = labels.CssClassHeaderNova;
                         break;
                 }
 
@@ -420,19 +428,19 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
             if (!robotTradingItem.IsHideTurnover) {
                 columns.push({
                     Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Turnover', Value: robotTradingItem.Turnover,
-                    TdClass: robotTradingItem.CssClassTOWL
+                    TdClass: robotTradingItem.CssClassBodyTOWL
                 });
             }
             if (!robotTradingItem.IsHideWinLoss) {
                 columns.push({
                     Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'WinLoss', Value: robotTradingItem.WinLoss,
-                    TdClass: robotTradingItem.CssClassTOWL
+                    TdClass: robotTradingItem.CssClassBodyTOWL
                 });
             }
             if (!robotTradingItem.IsHideMargin) {
                 columns.push({
-                    Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA),
-                    TdClass: robotTradingItem.CssClassMargin, CssClass: 'bold'
+                    Name: 'Col' + robotTradingItem.GroupHeaderName + robotTradingItem.TypeSiteDesc + 'Margin', Value: common.GetNumWithLabel(robotTradingItem.Margin, labels.NA), CssClass: 'bold',
+                    TdClass: robotTradingItem.CssClassBodyMargin
                 });
             }
         })

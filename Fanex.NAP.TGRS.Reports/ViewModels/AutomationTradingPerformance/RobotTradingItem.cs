@@ -41,31 +41,35 @@
 
         public bool IsHideMargin { get; set; }
 
-        public string CssClass { get; set; }
+        public string CssClassHeader { get; set; }
 
-        public string CssClassTOWL { get; set; }
+        public string CssClassBodyTOWL { get; set; }
 
-        public string CssClassMargin { get; set; }
+        public string CssClassBodyMargin { get; set; }
 
         public void SetCssClass()
         {
             switch (this.TypeSiteId)
             {
                 case 1:
-                    this.CssClassTOWL = Consts.AutomationTradingCssClassBodyCn88TOWL;
-                    this.CssClassMargin = Consts.AutomationTradingCssClassBodyNovaMargin;
+                    this.CssClassHeader = Consts.AutomationTradingCssClassHeaderCn88;
+                    this.CssClassBodyTOWL = Consts.AutomationTradingCssClassBodyCn88TOWL;
+                    this.CssClassBodyMargin = Consts.AutomationTradingCssClassBodyCn88Margin;
                     break;
                 case 2:
-                    this.CssClassTOWL = Consts.AutomationTradingCssClassBodyCashTOWL;
-                    this.CssClassMargin = Consts.AutomationTradingCssClassBodyCashMargin;
+                    this.CssClassHeader = Consts.AutomationTradingCssClassHeaderCash;
+                    this.CssClassBodyTOWL = Consts.AutomationTradingCssClassBodyCashTOWL;
+                    this.CssClassBodyMargin = Consts.AutomationTradingCssClassBodyCashMargin;
                     break;
                 case 3:
-                    this.CssClassTOWL = Consts.AutomationTradingCssClassBodyNovaTOWL;
-                    this.CssClassMargin = Consts.AutomationTradingCssClassBodyNovaMargin;
+                    this.CssClassHeader = Consts.AutomationTradingCssClassHeaderNova;
+                    this.CssClassBodyTOWL = Consts.AutomationTradingCssClassBodyNovaTOWL;
+                    this.CssClassBodyMargin = Consts.AutomationTradingCssClassBodyNovaMargin;
                     break;
                 default:
-                    this.CssClassTOWL = string.Empty;
-                    this.CssClassMargin = string.Empty;
+                    this.CssClassHeader = Consts.AutomationTradingCssClassHeaderSum;
+                    this.CssClassBodyTOWL = Consts.AutomationTradingCssClassBodySumTOWL;
+                    this.CssClassBodyMargin = Consts.AutomationTradingCssClassBodySumMargin;
                     break;
             }
         }
@@ -87,8 +91,7 @@
                 WinLoss = item1.WinLoss + item2.WinLoss,
                 IsHideTurnover = item1.IsHideTurnover,
                 IsHideWinLoss = item1.IsHideWinLoss,
-                IsHideMargin = item1.IsHideMargin,
-                CssClass = item1.CssClass
+                IsHideMargin = item1.IsHideMargin
             };            
 
             sumItem.Margin = sumItem.Turnover == 0 ? 0 : (sumItem.WinLoss / sumItem.Turnover) * 100;
@@ -96,16 +99,16 @@
             switch (sumItem.TypeSiteId)
             {
                 case 1:
-                    sumItem.CssClass = Consts.AutomationTradingCssClassDimCn88;
+                    sumItem.CssClassHeader = Consts.AutomationTradingCssClassHeaderCn88;
                     break;
                 case 2:
-                    sumItem.CssClass = Consts.AutomationTradingCssClassDimCash;
+                    sumItem.CssClassHeader = Consts.AutomationTradingCssClassHeaderCash;
                     break;
                 case 3:
-                    sumItem.CssClass = Consts.AutomationTradingCssClassDimNova;
+                    sumItem.CssClassHeader = Consts.AutomationTradingCssClassHeaderNova;
                     break;
                 default:
-                    sumItem.CssClass = Consts.AutomationTradingCssClassDim;
+                    sumItem.CssClassHeader = Consts.AutomationTradingCssClassHeaderSum;
                     break;
             }
 

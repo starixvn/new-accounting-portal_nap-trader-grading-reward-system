@@ -68,10 +68,14 @@
                             foreach (var betTypeId in betTypeIdsDisplay)
                             {
                                 var summaryBetType = summaryBetTypeData.Where(x => x.BetType == betTypeId).FirstOrDefault();
-                                var betTypeInfos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
-                                var betTypeName = CacheRef.GetBetType(betTypeId);
 
-                                betTypeList.AddAutoTradingItem(siteIdList, betTypeInfos, summaryBetType, betTypeName, AutoTradingType.BetType, betTypeId.ToString());
+                                if (summaryBetType != null)
+                                {
+                                    var betTypeInfos = betTypesData.Where(x => x.BetType == betTypeId).OrderByDescending(x => x.TypeSiteId);
+                                    var betTypeName = CacheRef.GetBetType(betTypeId);
+
+                                    betTypeList.AddAutoTradingItem(siteIdList, betTypeInfos, summaryBetType, betTypeName, AutoTradingType.BetType, betTypeId.ToString());
+                                }                                
                             }
                         }
 

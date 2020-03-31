@@ -37,18 +37,19 @@
         public const string AutomationTradingMatchPerformanceOfPeriodLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfPeriodLeagueList";
         public const string AutomationTradingEventPerformanceSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.EventList";
         public const string AutomationTradingLeaguePerformanceOfEventSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.LeagueOfEventList";
-        public const string AutomationTradingMatchPerformanceOfEventLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfEventLeagueList";
-        public const string AutomationTradingCssClassDim = "dim";
-        public const string AutomationTradingCssClassDimNova = "dim-nova";
-        public const string AutomationTradingCssClassDimCash = "dim-cash";
-        public const string AutomationTradingCssClassDimCn88 = "dim-cn88";
-        public const string AutomationTradingCssClassBodySiteSum = "body-site-sum";
+        public const string AutomationTradingMatchPerformanceOfEventLeagueSessionKey = "Fanex.NAP.TGRS.Reports.AutomationTradingPerformance.MatchOfEventLeagueList";        
+        public const string AutomationTradingCssClassHeaderNova = "header-nova";
+        public const string AutomationTradingCssClassHeaderCash = "header-cash";
+        public const string AutomationTradingCssClassHeaderCn88 = "header-cn88";
+        public const string AutomationTradingCssClassHeaderSum = "header-sum";
         public const string AutomationTradingCssClassBodyNovaTOWL = "body-nova-to-wl";
         public const string AutomationTradingCssClassBodyNovaMargin = "body-nova-margin";
         public const string AutomationTradingCssClassBodyCashTOWL = "body-cash-to-wl";
         public const string AutomationTradingCssClassBodyCashMargin = "body-cash-margin";
         public const string AutomationTradingCssClassBodyCn88TOWL = "body-cn88-to-wl";
         public const string AutomationTradingCssClassBodyCn88Margin = "body-cn88-margin";
+        public const string AutomationTradingCssClassBodySumTOWL = "body-sum-to-wl";
+        public const string AutomationTradingCssClassBodySumMargin = "body-sum-margin";
 
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";
