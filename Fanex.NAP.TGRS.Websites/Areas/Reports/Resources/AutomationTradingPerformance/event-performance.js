@@ -226,6 +226,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleEventPerformanceGridEvents();
+                return rows;
+            }
+        };
 
         domElements.divEventPerformanceGrid.fanexGrid(gridOptions);
 
@@ -540,6 +546,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleLeaguePerformanceOfEventGridEvents(leagueGroupName);
+                return rows;
+            }
+        };
 
         // Hide previous report.
         domElements.divEventPerformanceContainer.addClass('display-none');
@@ -668,6 +680,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.EventPerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleMatchRerformanceOfEventLeagueGridEvents();
+                return rows;
+            }
+        };
 
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);

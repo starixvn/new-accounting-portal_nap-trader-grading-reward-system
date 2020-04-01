@@ -222,6 +222,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleBetTypePerformanceGridEvents();
+                return rows;
+            }
+        };
 
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
 
@@ -538,6 +544,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleLeaguePerformanceOfBetTypeGridEvents(betTypeId, betTypeName);
+                return rows;
+            }
+        };
 
         // Hide previous report.
         domElements.divBetTypePerformanceContainer.addClass('display-none');
@@ -668,6 +680,12 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
         gridOptions.footerRows = footerData;
         gridOptions.groupHeaderRows = [{ Columns: generateColumnGroupHeaders(data, groupHeaderColumns) }];
         gridOptions.columns = generateColumns(data, headerColumns);
+        gridOptions.sortOption = {
+            afterGridSorted: function (rows) {
+                handleMatchRerformanceOfBetTypeLeagueGridEvents();
+                return rows;
+            }
+        };
 
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
