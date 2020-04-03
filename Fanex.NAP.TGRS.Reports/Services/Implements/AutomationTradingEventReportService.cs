@@ -36,7 +36,7 @@
 
                     if (totalLeagueMatchData != null && totalLeagueMatchData.Any())
                     {
-                        eventList.GenerateLeagueMacthTotal(totalLeagueMatchData.ToList()[0])
+                        eventList.GenerateLeagueMatchTotal(totalLeagueMatchData.ToList()[0])
                                  .GenerateSummary(totalEventData)
                                  .GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                  .GenerateMeasurementHidden(criteria.MeasurementHides);
