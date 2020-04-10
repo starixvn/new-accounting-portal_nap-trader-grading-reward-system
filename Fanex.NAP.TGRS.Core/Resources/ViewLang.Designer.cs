@@ -196,6 +196,24 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automation Trading.
+        /// </summary>
+        public static string AutomationTradingJobGroup {
+            get {
+                return ResourceManager.GetString("AutomationTradingJobGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automation Trading.
+        /// </summary>
+        public static string AutomationTradingJobName {
+            get {
+                return ResourceManager.GetString("AutomationTradingJobName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automation Trading Performance Report.
         /// </summary>
         public static string AutomationTradingPerformance {

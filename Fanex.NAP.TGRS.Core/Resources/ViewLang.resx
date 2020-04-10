@@ -840,4 +840,10 @@
   <data name="Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="AutomationTradingJobGroup" xml:space="preserve">
+    <value>Automation Trading</value>
+  </data>
+  <data name="AutomationTradingJobName" xml:space="preserve">
+    <value>Automation Trading</value>
+  </data>
 </root>

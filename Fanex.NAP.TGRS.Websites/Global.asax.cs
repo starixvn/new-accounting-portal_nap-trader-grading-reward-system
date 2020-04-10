@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Websites
 {
     using Fanex.Data.Configuration;
     using Fanex.Logging;
+    using Fanex.NAP.TGRS.Reports.JobWorks;
     using Infrastructure;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Configuration;
@@ -58,6 +59,8 @@ namespace Fanex.NAP.TGRS.Websites
                 .UseConfig(umConfig)
                 .UseRestClient(new RestClient(umConfig))
                 .UseHttpContext(new HttpContextHelper());
+
+            JobManager.State();
         }
 
         /// <summary>

@@ -102,6 +102,9 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz, Version=3.0.7.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.3.0.7\lib\net452\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="Simplect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
@@ -115,6 +118,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -279,6 +283,12 @@
     <Compile Include="Criteria\Trader\GetTraderLeaguePerformanceMatchDetailCriteria.cs" />
     <Compile Include="Criteria\Trader\GetTraderWinLossTurnoverCriteria.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="JobWorks\Executions\ExecutionJobAutomationTrading.cs" />
+    <Compile Include="JobWorks\JobBases\ConsoleLogProvider.cs" />
+    <Compile Include="JobWorks\JobBases\JobBase.cs" />
+    <Compile Include="JobWorks\JobBases\JobServer.cs" />
+    <Compile Include="JobWorks\JobManager.cs" />
+    <Compile Include="JobWorks\Triggers\AutomationTradingTrigger.cs" />
     <Compile Include="Models\AutomationTradingPerformance\EventPerformanceInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\LeaguePerformanceOfEventInfo.cs" />
     <Compile Include="Models\AutomationTradingPerformance\MatchPerformanceOfEventLeagueInfo.cs" />
