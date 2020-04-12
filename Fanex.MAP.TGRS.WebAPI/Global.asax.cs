@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.WebAPI
 {
     using Fanex.Data;
+    using Fanex.MAP.TGRS.WebAPI.JobWorks;
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;
@@ -22,6 +23,8 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            JobManager.State();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace Fanex.NAP.TGRS.Reports.JobWorks
+﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
     using Quartz.Logging;
-    using System;
+    using System;  
 
     public class ConsoleLogProvider : ILogProvider
     {

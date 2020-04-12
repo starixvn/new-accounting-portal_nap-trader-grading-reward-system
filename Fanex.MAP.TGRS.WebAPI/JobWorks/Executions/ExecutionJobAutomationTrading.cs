@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.TGRS.Reports.JobWorks
+﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
-    using System.Threading.Tasks;
+    using System.Threading.Tasks;    
     using Quartz;
 
     [PersistJobDataAfterExecution]
@@ -8,7 +8,7 @@
     public class ExecutionJobAutomationTrading : IJob
     {
         public Task Execute(IJobExecutionContext context)
-        {
+        {         
 
             return Task.CompletedTask;
         }

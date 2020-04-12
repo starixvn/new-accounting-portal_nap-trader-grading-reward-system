@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.JobWorks
+﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
     using Quartz;
 

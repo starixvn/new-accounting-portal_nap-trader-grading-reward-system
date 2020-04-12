@@ -1,12 +1,12 @@
-﻿namespace Fanex.NAP.TGRS.Reports.JobWorks
-{    
+﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
+{
     using Quartz;
-    using Quartz.Impl;   
-    using System.Collections.Specialized;   
-    using System.Threading;    
+    using Quartz.Impl;
+    using System.Collections.Specialized;
+    using System.Threading;
 
     public class JobBase
-    {     
+    {
         public static IScheduler Scheduler
         {
             get
@@ -42,6 +42,5 @@
 
             Scheduler.ScheduleJob(jobServer.CreateJob(), trigger);
         }
-
-    }   
+    }
 }

@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.TGRS.Reports.JobWorks
+﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
-    using Quartz;   
+    using Quartz;
 
     public class AutomationTradingTrigger
     {
@@ -8,12 +8,13 @@
         {
             var trigger = TriggerBuilder.Create()
                 .WithIdentity("Add messages to logs", "Job Trigger")
-                .WithSimpleSchedule(x => x                   
+                .WithSimpleSchedule(x => x
                     .WithIntervalInMinutes(1) //Execute every 1 minutes
                     .RepeatForever())
                 .Build();
 
             return trigger;
         }
+
     }
 }
