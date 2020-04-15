@@ -235,5 +235,45 @@
                 return this.StyleTableTd;
             }
         }
+
+        public Dictionary<string, string> StyleTimelinePTTableTd
+        {
+            get
+            {
+                var attributeList = new Dictionary<string, string>();
+                attributeList.Add("background-color", "#d6dce4");
+                attributeList.Add("line-height", "inherit");
+                attributeList.Add("vertical-align", "middle");
+                attributeList.Add("white-space", "normal");
+                attributeList.Add("border-color", "#c5c5c5");
+                attributeList.Add("border-style", "solid");
+                attributeList.Add("border-width", "0 1px 1px 0");
+                attributeList.Add("padding", "2px");
+                attributeList.Add("font-size", "1.0em");
+                attributeList.Add("font-style", "italic");
+
+                return attributeList;
+            }
+        }
+
+        public Dictionary<string, string> StyleTimelinePTTableTdSum
+        {
+            get
+            {
+                var attributeList = new Dictionary<string, string>();
+                attributeList.Add("background-color", "#bbc5d3");
+                attributeList.Add("line-height", "inherit");
+                attributeList.Add("vertical-align", "middle");
+                attributeList.Add("white-space", "normal");
+                attributeList.Add("border-color", "#c5c5c5");
+                attributeList.Add("border-style", "solid");
+                attributeList.Add("border-width", "0 1px 1px 0");
+                attributeList.Add("padding", "2px");
+                attributeList.Add("font-size", "1.0em");
+                attributeList.Add("font-style", "italic");
+
+                return attributeList;
+            }
+        }
     }
 }

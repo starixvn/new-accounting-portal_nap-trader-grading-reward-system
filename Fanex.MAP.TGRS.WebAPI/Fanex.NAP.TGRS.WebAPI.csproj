@@ -528,6 +528,8 @@
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryMonthlyInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryWeeklyInfo.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingTimelineInfo.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingPTPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingWeeklyPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\MultipleMatchesDetails.cs" />
     <Compile Include="Model\DataModel\TraderPerformanceDetails.cs" />
@@ -537,6 +539,7 @@
     <Compile Include="Model\HtmlModel\AutoTrading\IAutoTradingHtmlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AutoTradingPerformanceService.cs" />
+    <Compile Include="Service\IAutoTradingPerformanceService.cs" />
     <Compile Include="Service\LetstalkService.cs" />
     <Compile Include="Service\TraderPerformanceService.cs" />
     <Compile Include="Utilities\DataService.cs" />
@@ -568,6 +571,7 @@
   <ItemGroup>
     <Content Include="JobWorks\Settings\AutoTradingSetting_Local.json" />
     <Content Include="JobWorks\Settings\AutoTradingSetting_Pro.json" />
+    <Content Include="JobWorks\Settings\AutoTradingTimeline.json" />
     <None Include="packages.config" />
     <Content Include="Web.local.config" />
     <None Include="Web.pro.config" />

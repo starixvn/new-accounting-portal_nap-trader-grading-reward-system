@@ -3,47 +3,67 @@
     using Fanex.Data;
     using Fanex.MAP.TGRS.WebAPI.Consts;
     using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;
+    using Fanex.MAP.TGRS.WebAPI.JobWorks;
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
 
-    public class AutoTradingPerformanceService
+    public class AutoTradingPerformanceService : IAutoTradingPerformanceService
     {
-        private const string SaveImagePath1 = @"C:\TGR Test\Test1.Png";
-        private const string SaveImagePath2 = @"C:\TGR Test\Test2.Png";
-        private const string SaveImagePath3 = @"C:\TGR Test\Test3.Png";
-      
-        public void WriteAutoTradingTAMonthly()
+        public Task WriteAutoTradingTAMonthly()
         {
+            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
+                                + JobSettings.AutoTradingConfig.FolderImagePath 
+                                + @"\" + Consts.AutoTradingSaveImageTaMonthly;
+
             IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+
             GetAutoTradingMonthlyPerformance(GenerateMonthlyPerformanceCriteria(), writer);
-            writer.RenderHtmlToImage(SaveImagePath1);
+
+            writer.RenderHtmlToImage(saveImagePath);
+
+            return Task.CompletedTask;
         }
 
-        public void WriteAutoTradingPTAndAfterVRAdjustment()
+        public Task WriteAutoTradingPTAndAfterVRAdjustment()
         {
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
             var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
+            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
+                                + JobSettings.AutoTradingConfig.FolderImagePath 
+                                + @"\" + Consts.AutoTradingSaveImagePTAndAfterVRAdjustment;
 
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+            
             writer.GenerateBeginTagHtmlBody();
             var criteriaWeekly = GenerateWeeklyPerformanceCriteria();
             GetAutoTradingTimelinePerformance(criteriaWeekly, titleTaNoTrader, writer);
+
             writer.GenerateEmptyRows();
             GetAutoTradingWeeklyPerformance(criteriaWeekly, titleLastWeeks, writer);
-            writer.GenerateEndTagHtmlBody();
-            writer.RenderHtmlToImage(SaveImagePath2);
+
+            writer.GenerateEndTagHtmlBody()
+                  .RenderHtmlToImage(saveImagePath);
+
+            return Task.CompletedTask;
         }
 
-        public void WriteAutoTradingRT3AndTAComparition()
+        public Task WriteAutoTradingRT3AndTAComparition()
         {
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
             var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";
-            var leagueGroupList = GetLeagueGroupList();
+            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
+                                + JobSettings.AutoTradingConfig.FolderImagePath 
+                                + @"\" + Consts.AutoTradingSaveImageRT3AndTAComparition;
 
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+            
+            var leagueGroupList = GetLeagueGroupList();
             writer.GenerateBeginTagHtmlBody();
 
             var criteriaEvent = GenerateEventPerformanceCriteria();
@@ -54,8 +74,10 @@
             criteriaEvent.Model = 3;
             GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelTA, writer);
 
-            writer.GenerateEndTagHtmlBody();
-            writer.RenderHtmlToImage(SaveImagePath3);
+            writer.GenerateEndTagHtmlBody()
+                  .RenderHtmlToImage(saveImagePath);
+
+            return Task.CompletedTask;
         }
 
         private void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria, IAutoTradingHtmlWriter writer)
@@ -103,6 +125,8 @@
 
         private void GetAutoTradingTimelinePerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)
         {
+            var autoTradingTimelineInfo = GetAutoTradingTimelineInfos();
+
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
@@ -119,15 +143,32 @@
                                                .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
 
                         writer.GenerateBeginTagHtmlBody()
-                               .GenerateTable(title, "Week", true);
+                              .GenerateTable(title, "Timeline", true);
+
+                        if (autoTradingTimelineInfo != null)
+                        {
+                            var timelinePTInfoList = new List<AutoTradingPTPerformanceInfo>
+                            {
+                                autoTradingTimelineInfo.RT3BeforePT85,
+                                autoTradingTimelineInfo.RT3AfterPT85,
+                                autoTradingTimelineInfo.RT3IncreaseVariancePT
+                            };
+                            writer.GenerateTimelinePTTableTr(timelinePTInfoList);                            
+                        }
 
                         var autoTradingName = "TA After PT 85 & increase Variance PT";
-                        writer.GenerateHeaderEmptyGrandTotalTableTr(weeklyData, grandTotalSummary, autoTradingName);
-
-                        writer.RenderControlTable();
+                        writer.GenerateHeaderEmptyGrandTotalTableTr(weeklyData, grandTotalSummary, autoTradingName)
+                              .RenderControlTable();
                     }
                 }
             }
+        }
+
+        private AutoTradingTimelineInfo GetAutoTradingTimelineInfos()
+        {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            var json = File.ReadAllText("JobWorks/Settings/AutoTradingTimeline.json");
+            return JsonConvert.DeserializeObject<AutoTradingTimelineInfo>(json);
         }
 
         private void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)
@@ -144,7 +185,7 @@
 
                     if (summaryWeeklyData != null && summaryWeeklyData.Any())
                     {
-                        writer.GenerateTable(title, string.Empty, true);
+                        writer.GenerateTable(title, "Week", true);
 
                         var groupInfos = weeklyData
                            .OrderBy(x => x.StartDate)
@@ -272,5 +313,6 @@
 
             return leagueGroupList;
         }
+
     }
 }

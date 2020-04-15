@@ -11,7 +11,7 @@
     {
         public Task Execute(IJobExecutionContext context)
         {
-            var service = new AutoTradingPerformanceService();
+            IAutoTradingPerformanceService service = new AutoTradingPerformanceService();
             var tasks = new List<Task>();
 
             tasks.Add(Task.Run(() => service.WriteAutoTradingTAMonthly()));

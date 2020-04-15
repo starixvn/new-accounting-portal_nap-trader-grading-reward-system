@@ -1,0 +1,41 @@
+{
+  "RT3BeforePT85": {
+    "PTName": "RT3 Before PT 85",
+    "MatchCount": "26564",
+    "VirtualCreditMargin": "0.05",
+    "VirtualCashMargin": "3.56",
+    "VirtualTotalMargin": "0.18",
+    "VarianceCreditMargin": "2.4",
+    "VarianceCashMargin": "4.0",
+    "VarianceTotalMargin": "2.66",
+    "RealCreditMargin": "1.35",
+    "RealCashMargin": "3.9",
+    "RealTotalMargin":  "1.64"
+  },
+  "RT3AfterPT85": {
+    "PTName": "RT3 After PT 85",
+    "MatchCount": "14431",
+    "VirtualCreditMargin": "0.59",
+    "VirtualCashMargin": "3.98",
+    "VirtualTotalMargin": "0.6",
+    "VarianceCreditMargin": "2.83",
+    "VarianceCashMargin": "4.54",
+    "VarianceTotalMargin": "3.1",
+    "RealCreditMargin": "2.07",
+    "RealCashMargin": "4.43",
+    "RealTotalMargin": "2.32"
+  },
+  "RT3IncreaseVariancePT": {
+    "PTName": "RT3 After PT 85 & Increase Variance PT",
+    "MatchCount": "2897",
+    "VirtualCreditMargin": "0.31",
+    "VirtualCashMargin": "4.01",
+    "VirtualTotalMargin": "0.60",
+    "VarianceCreditMargin": "3.39",
+    "VarianceCashMargin": "4.66",
+    "VarianceTotalMargin": "3.6",
+    "RealCreditMargin": "2.4",
+    "RealCashMargin": "4.54",
+    "RealTotalMargin": "2.74"
+  }
+}
