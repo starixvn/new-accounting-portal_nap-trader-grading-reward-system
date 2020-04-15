@@ -14,50 +14,51 @@
         private const string SaveImagePath1 = @"C:\TGR Test\Test1.Png";
         private const string SaveImagePath2 = @"C:\TGR Test\Test2.Png";
         private const string SaveImagePath3 = @"C:\TGR Test\Test3.Png";
-
-        private IAutoTradingHtmlWriter _writer;
-
-        public void GetAutoTradingPerformance()
+      
+        public void WriteAutoTradingTAMonthly()
         {
-            _writer = new AutoTradingHtmlWriter();
-            GetAutoTradingMonthlyPerformance(GenerateMonthlyPerformanceCriteria());
-            _writer.RenderHtmlToImage(SaveImagePath1);
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+            GetAutoTradingMonthlyPerformance(GenerateMonthlyPerformanceCriteria(), writer);
+            writer.RenderHtmlToImage(SaveImagePath1);
+        }
 
-
-            _writer = new AutoTradingHtmlWriter();
+        public void WriteAutoTradingPTAndAfterVRAdjustment()
+        {
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
             var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
 
-            _writer.GenerateBeginTagHtmlBody();
+            writer.GenerateBeginTagHtmlBody();
             var criteriaWeekly = GenerateWeeklyPerformanceCriteria();
-            GetAutoTradingTimelinePerformance(criteriaWeekly, titleTaNoTrader);
-            _writer.GenerateEmptyRows();
-            GetAutoTradingWeeklyPerformance(criteriaWeekly, titleLastWeeks); 
-            _writer.GenerateEndTagHtmlBody();
-            _writer.RenderHtmlToImage(SaveImagePath2);            
-            
+            GetAutoTradingTimelinePerformance(criteriaWeekly, titleTaNoTrader, writer);
+            writer.GenerateEmptyRows();
+            GetAutoTradingWeeklyPerformance(criteriaWeekly, titleLastWeeks, writer);
+            writer.GenerateEndTagHtmlBody();
+            writer.RenderHtmlToImage(SaveImagePath2);
+        }
 
-            _writer = new AutoTradingHtmlWriter();
+        public void WriteAutoTradingRT3AndTAComparition()
+        {
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
             var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";
             var leagueGroupList = GetLeagueGroupList();
 
-            _writer.GenerateBeginTagHtmlBody();
+            writer.GenerateBeginTagHtmlBody();
 
             var criteriaEvent = GenerateEventPerformanceCriteria();
-            criteriaEvent.Model = 1;           
-            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelRT3);
+            criteriaEvent.Model = 1;
+            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelRT3, writer);
 
-            _writer.GenerateEmptyRows();
+            writer.GenerateEmptyRows();
             criteriaEvent.Model = 3;
-            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelTA);
+            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelTA, writer);
 
-            _writer.GenerateEndTagHtmlBody();
-            _writer.RenderHtmlToImage(SaveImagePath3);
-
+            writer.GenerateEndTagHtmlBody();
+            writer.RenderHtmlToImage(SaveImagePath3);
         }
 
-        public void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria)
+        private void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria, IAutoTradingHtmlWriter writer)
         {
             var title = "TA NO TRADER PERFORMANCE MONTHLY REPORT";
 
@@ -76,7 +77,7 @@
                         var grandTotalSummary = summaryMonthlyData
                                                .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
 
-                        _writer.GenerateBeginTagHtmlBody()
+                        writer.GenerateBeginTagHtmlBody()
                                .GenerateTable(title, "Month");
 
                         var groupInfos = monthlyData
@@ -89,10 +90,10 @@
                             
                             var autoTradingName = "TA - " + group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy);
 
-                            _writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
+                            writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
                         }
 
-                        _writer.GenerateGrandTotalTableTr(monthlyData, grandTotalSummary, "TA - Total")
+                        writer.GenerateGrandTotalTableTr(monthlyData, grandTotalSummary, "TA - Total")
                                .RenderControlTable()
                                .GenerateEndTagHtmlBody();
                     }
@@ -100,7 +101,7 @@
             }
         }
 
-        public void GetAutoTradingTimelinePerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title)
+        private void GetAutoTradingTimelinePerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -117,19 +118,19 @@
                         var grandTotalSummary = summaryWeeklyData
                                                .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
 
-                        _writer.GenerateBeginTagHtmlBody()
+                        writer.GenerateBeginTagHtmlBody()
                                .GenerateTable(title, "Week", true);
 
                         var autoTradingName = "TA After PT 85 & increase Variance PT";
-                        _writer.GenerateHeaderEmptyGrandTotalTableTr(weeklyData, grandTotalSummary, autoTradingName);
+                        writer.GenerateHeaderEmptyGrandTotalTableTr(weeklyData, grandTotalSummary, autoTradingName);
 
-                        _writer.RenderControlTable();
+                        writer.RenderControlTable();
                     }
                 }
             }
         }
 
-        public void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title)
+        private void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -143,7 +144,7 @@
 
                     if (summaryWeeklyData != null && summaryWeeklyData.Any())
                     {
-                        _writer.GenerateTable(title, string.Empty, true);
+                        writer.GenerateTable(title, string.Empty, true);
 
                         var groupInfos = weeklyData
                            .OrderBy(x => x.StartDate)
@@ -154,10 +155,10 @@
                             var summaryWeeklyInfo = summaryWeeklyData.FirstOrDefault(x => x.WeekDays == group.WeekDays);
                             var autoTradingName = "TA - " + GenerateWeekly(group.Items[0]);
 
-                            _writer.GenerateHeaderEmptyTableTr(group.Items, summaryWeeklyInfo, autoTradingName);
+                            writer.GenerateHeaderEmptyTableTr(group.Items, summaryWeeklyInfo, autoTradingName);
                         }
 
-                        _writer.RenderControlTable();
+                        writer.RenderControlTable();
                     }
                 }
             }
@@ -180,7 +181,7 @@
             return weekly;
         }
 
-        public void GetAutoTradingEventPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title)
+        private void GetAutoTradingEventPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title, IAutoTradingHtmlWriter writer)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -197,7 +198,7 @@
                         var grandTotalSummary = summaryEventData
                                     .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
 
-                        _writer.GenerateTable(title, "Group");
+                        writer.GenerateTable(title, "Group");
 
                         var groupInfos = eventData
                                 .OrderBy(x => x.LeagueGroupId)
@@ -209,10 +210,10 @@
                             
                             var autoTradingName = leagueGroupList[group.LeagueGroupId];
 
-                            _writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
+                            writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
                         }
 
-                        _writer.GenerateGrandTotalTableTr(eventData, grandTotalSummary, "Total")
+                        writer.GenerateGrandTotalTableTr(eventData, grandTotalSummary, "Total")
                                .RenderControlTable();                              
                     }
                 }

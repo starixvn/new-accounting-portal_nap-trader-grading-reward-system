@@ -516,6 +516,8 @@
     <Compile Include="JobWorks\JobBases\JobBase.cs" />
     <Compile Include="JobWorks\JobBases\JobServer.cs" />
     <Compile Include="JobWorks\JobManager.cs" />
+    <Compile Include="JobWorks\Settings\Config.cs" />
+    <Compile Include="JobWorks\Settings\JobSettings.cs" />
     <Compile Include="JobWorks\Triggers\AutomationTradingTrigger.cs" />
     <Compile Include="Model\APIInputModel\TraderPerformanceParam.cs" />
     <Compile Include="Model\Common\DBResult.cs" />
@@ -560,9 +562,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="JobWorks\Images\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JobWorks\Settings\AutoTradingSetting_Local.json" />
+    <Content Include="JobWorks\Settings\AutoTradingSetting_Pro.json" />
     <None Include="packages.config" />
     <Content Include="Web.local.config" />
     <None Include="Web.pro.config" />

@@ -1,6 +1,9 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
-{   
+{
+    using Newtonsoft.Json;
     using Quartz.Logging;
+    using System;
+    using System.IO;
 
     public class JobManager
     {
@@ -24,6 +27,13 @@
         public static void Shutdown()
         {
             JobBase.Scheduler.Shutdown();
+        }
+
+        public static void LoadSettings()
+        {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            var json = File.ReadAllText("JobWorks/Settings/AutoTradingSetting_Local.json");
+            JobSettings.AutoTradingConfig = JsonConvert.DeserializeObject<Config>(json);
         }
     }
 }

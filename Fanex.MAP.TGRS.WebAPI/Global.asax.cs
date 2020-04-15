@@ -24,6 +24,7 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            JobManager.LoadSettings();
             JobManager.State();
         }
     }

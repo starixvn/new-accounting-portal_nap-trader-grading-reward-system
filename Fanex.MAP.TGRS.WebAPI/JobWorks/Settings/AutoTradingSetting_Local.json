@@ -1,0 +1,6 @@
+{
+  "JobCronEveryDay": "0 15 0 * * ?",
+  "TargetName": "TGR-Auto-Trading",
+  "Group": "TGR-Auto-Trading-Test",
+  "FolderImagePath": "JobWorks\\Images"
+}

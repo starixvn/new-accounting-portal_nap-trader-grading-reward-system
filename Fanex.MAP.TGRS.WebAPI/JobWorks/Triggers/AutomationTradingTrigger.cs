@@ -6,12 +6,19 @@
     {
         public ITrigger GenerateTrigger()
         {
+            var cron = JobSettings.AutoTradingConfig.JobCronEveryDay;
+
             var trigger = TriggerBuilder.Create()
                 .WithIdentity("Add messages to logs", "Job Trigger")
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInMinutes(5) //Execute every 1 minutes
-                    .RepeatForever())
-                .Build();
+                .WithDailyTimeIntervalSchedule(s => s
+                  .OnEveryDay()
+                  .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(13, 00))
+                  .EndingDailyAfterCount(10))
+                  .Build();
+                //.WithSimpleSchedule(x => x
+                //    .WithIntervalInMinutes(5) //Execute every 1 minutes
+                //    .RepeatForever())
+                //.Build();
 
             return trigger;
         }
