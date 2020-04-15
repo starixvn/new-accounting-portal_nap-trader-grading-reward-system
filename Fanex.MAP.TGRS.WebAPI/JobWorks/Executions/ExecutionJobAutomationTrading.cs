@@ -13,8 +13,10 @@
             var service = new AutoTradingPerformanceService();
             service.GetAutoTradingPerformance();
 
+            //var letstalkService = new LetstalkService();
+            //letstalkService.Info("Auto Trading test");
+
             return Task.CompletedTask;
-        }
-        
+        }        
     }
 }

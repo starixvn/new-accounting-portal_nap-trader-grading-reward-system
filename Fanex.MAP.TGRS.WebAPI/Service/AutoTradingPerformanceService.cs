@@ -11,30 +11,50 @@
 
     public class AutoTradingPerformanceService
     {
-        private const string SaveImagePath = @"C:\TGR Test\Test.Png";
-        private IAutoTradingHtmlWriter writer;
+        private const string SaveImagePath1 = @"C:\TGR Test\Test1.Png";
+        private const string SaveImagePath2 = @"C:\TGR Test\Test2.Png";
+        private const string SaveImagePath3 = @"C:\TGR Test\Test3.Png";
+
+        private IAutoTradingHtmlWriter _writer;
 
         public void GetAutoTradingPerformance()
         {
-            writer = new AutoTradingHtmlWriter();
-
+            _writer = new AutoTradingHtmlWriter();
             GetAutoTradingMonthlyPerformance(GenerateMonthlyPerformanceCriteria());
-            //GetAutoTradingWeeklyPerformance(GenerateWeeklyPerformanceCriteria());
-            //GetAutoTradingEventPerformance(GenerateEventPerformanceCriteria());
+            _writer.RenderHtmlToImage(SaveImagePath1);
 
-            writer.RenderHtmlToImage(SaveImagePath);
-        }
 
-        private GetAutoTradingMonthlyPerformanceCriteria GenerateMonthlyPerformanceCriteria()
-        {
-            return new GetAutoTradingMonthlyPerformanceCriteria
-            {
-                FromDate = new DateTime(2020, 01, 01),
-                ToDate = new DateTime(2020, 04, 01),
-                LeagueGroupIds = "1, 2, 3, 4, 5, 6",
-                TypeSiteIds = "2, 3",
-                Model = 3
-            };
+            _writer = new AutoTradingHtmlWriter();
+            var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
+            var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
+
+            _writer.GenerateBeginTagHtmlBody();
+            var criteriaWeekly = GenerateWeeklyPerformanceCriteria();
+            GetAutoTradingTimelinePerformance(criteriaWeekly, titleTaNoTrader);
+            _writer.GenerateEmptyRows();
+            GetAutoTradingWeeklyPerformance(criteriaWeekly, titleLastWeeks); 
+            _writer.GenerateEndTagHtmlBody();
+            _writer.RenderHtmlToImage(SaveImagePath2);            
+            
+
+            _writer = new AutoTradingHtmlWriter();
+            var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
+            var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";
+            var leagueGroupList = GetLeagueGroupList();
+
+            _writer.GenerateBeginTagHtmlBody();
+
+            var criteriaEvent = GenerateEventPerformanceCriteria();
+            criteriaEvent.Model = 1;           
+            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelRT3);
+
+            _writer.GenerateEmptyRows();
+            criteriaEvent.Model = 3;
+            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelTA);
+
+            _writer.GenerateEndTagHtmlBody();
+            _writer.RenderHtmlToImage(SaveImagePath3);
+
         }
 
         public void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria)
@@ -54,10 +74,10 @@
                     if (summaryMonthlyData != null && summaryMonthlyData.Any())
                     {
                         var grandTotalSummary = summaryMonthlyData
-                                               .Aggregate<AutoTradingSummaryMonthlyInfo, AutoTradingSummaryMonthlyInfo>(null, (acc, s) => acc + s);                        
+                                               .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
 
-                        writer.GenerateBeginTagHtmlBody()
-                              .GenerateTable(title);
+                        _writer.GenerateBeginTagHtmlBody()
+                               .GenerateTable(title, "Month");
 
                         var groupInfos = monthlyData
                                 .OrderBy(x => x.RptMonth)
@@ -69,15 +89,146 @@
                             
                             var autoTradingName = "TA - " + group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy);
 
-                            writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
+                            _writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
                         }
 
-                        writer.GenerateGrandTotalTableTr(monthlyData, grandTotalSummary, "TA - Total")
-                              .RenderControlTable()
-                              .GenerateEndTagHtmlBody();
+                        _writer.GenerateGrandTotalTableTr(monthlyData, grandTotalSummary, "TA - Total")
+                               .RenderControlTable()
+                               .GenerateEndTagHtmlBody();
                     }
                 }
             }
+        }
+
+        public void GetAutoTradingTimelinePerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title)
+        {
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    multi.Read<object>();
+                    var summaryWeeklyData = multi.Read<AutoTradingSummaryWeeklyInfo>();
+
+                    multi.Read<object>();
+                    var weeklyData = multi.Read<AutoTradingWeeklyPerformanceInfo>();
+
+                    if (summaryWeeklyData != null && summaryWeeklyData.Any())
+                    {
+                        var grandTotalSummary = summaryWeeklyData
+                                               .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
+
+                        _writer.GenerateBeginTagHtmlBody()
+                               .GenerateTable(title, "Week", true);
+
+                        var autoTradingName = "TA After PT 85 & increase Variance PT";
+                        _writer.GenerateHeaderEmptyGrandTotalTableTr(weeklyData, grandTotalSummary, autoTradingName);
+
+                        _writer.RenderControlTable();
+                    }
+                }
+            }
+        }
+
+        public void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title)
+        {
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    multi.Read<object>();
+                    var summaryWeeklyData = multi.Read<AutoTradingSummaryWeeklyInfo>();
+
+                    multi.Read<object>();
+                    var weeklyData = multi.Read<AutoTradingWeeklyPerformanceInfo>();
+
+                    if (summaryWeeklyData != null && summaryWeeklyData.Any())
+                    {
+                        _writer.GenerateTable(title, string.Empty, true);
+
+                        var groupInfos = weeklyData
+                           .OrderBy(x => x.StartDate)
+                           .GroupBy(x => x.WeekDays, (key, g) => new { WeekDays = key, Items = g.ToList() });
+
+                        foreach (var group in groupInfos)
+                        {
+                            var summaryWeeklyInfo = summaryWeeklyData.FirstOrDefault(x => x.WeekDays == group.WeekDays);
+                            var autoTradingName = "TA - " + GenerateWeekly(group.Items[0]);
+
+                            _writer.GenerateHeaderEmptyTableTr(group.Items, summaryWeeklyInfo, autoTradingName);
+                        }
+
+                        _writer.RenderControlTable();
+                    }
+                }
+            }
+        }        
+
+        private string GenerateWeekly(AutoTradingWeeklyPerformanceInfo info)
+        {
+            var weekly = string.Empty;
+
+            if (info.StartDate != null && info.StartDate != DateTime.MinValue)
+            {
+                weekly = info.StartDate.ToString(Consts.FormatDateTimeToString_ddMMM);
+            }
+
+            if (info.EndDate != null && info.EndDate != DateTime.MinValue)
+            {
+                weekly += " - " + info.EndDate.ToString(Consts.FormatDateTimeToString_ddMMM);
+            }
+
+            return weekly;
+        }
+
+        public void GetAutoTradingEventPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title)
+        {
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    multi.Read<object>();
+                    var summaryEventData = multi.Read<AutoTradingSummaryEventInfo>();
+
+                    multi.Read<object>();
+                    var eventData = multi.Read<AutoTradingEventPerformanceInfo>();
+
+                    if (summaryEventData != null && summaryEventData.Any())
+                    {
+                        var grandTotalSummary = summaryEventData
+                                    .Aggregate<AutoTradingSummaryInfo, AutoTradingSummaryInfo>(null, (acc, s) => acc + s);
+
+                        _writer.GenerateTable(title, "Group");
+
+                        var groupInfos = eventData
+                                .OrderBy(x => x.LeagueGroupId)
+                                .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, Items = g.ToList() });
+
+                        foreach (var group in groupInfos)
+                        {
+                            var summaryMonthlyInfo = summaryEventData.FirstOrDefault(x => x.LeagueGroupId == group.LeagueGroupId);
+                            
+                            var autoTradingName = leagueGroupList[group.LeagueGroupId];
+
+                            _writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
+                        }
+
+                        _writer.GenerateGrandTotalTableTr(eventData, grandTotalSummary, "Total")
+                               .RenderControlTable();                              
+                    }
+                }
+            }
+        }
+
+        private GetAutoTradingMonthlyPerformanceCriteria GenerateMonthlyPerformanceCriteria()
+        {
+            return new GetAutoTradingMonthlyPerformanceCriteria
+            {
+                FromDate = new DateTime(2020, 01, 01),
+                ToDate = new DateTime(2020, 04, 01),
+                LeagueGroupIds = "1, 2, 3, 4, 5, 6",
+                TypeSiteIds = "2, 3",
+                Model = 3
+            };
         }
 
         private GetAutoTradingWeeklyPerformanceCriteria GenerateWeeklyPerformanceCriteria()
@@ -92,28 +243,6 @@
             };
         }
 
-        public void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria)
-        {
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
-                {
-                    multi.Read<object>();
-                    var summaryWeeklyData = multi.Read< AutoTradingSummaryWeeklyInfo>();
-
-                    multi.Read<object>();
-                    var weeklyData = multi.Read<AutoTradingWeeklyPerformanceInfo>();
-
-                    if (summaryWeeklyData != null && summaryWeeklyData.Any())
-                    {
-                        var title = "TA NO TRADER PERFORMANCE WEEKLY REPORT";
-
-                       // writer.GenerateTable(title);
-                    }
-                }
-            }
-        }
-       
         private GetAutoTradingEventPerformanceCriteria GenerateEventPerformanceCriteria()
         {
             return new GetAutoTradingEventPerformanceCriteria
@@ -121,13 +250,26 @@
                 FromDate = new DateTime(2020, 01, 01),
                 ToDate = new DateTime(2020, 04, 01),
                 TypeSiteIds = "2, 3",
-                Model = 3
+                Model = 1
             };
         }
 
-        public void GetAutoTradingEventPerformance(GetAutoTradingEventPerformanceCriteria criteria)
+        private Dictionary<int, string> GetLeagueGroupList()
         {
+            var leagueGroupList = new Dictionary<int, string>();
+            leagueGroupList.Add(1, "Major League");
+            leagueGroupList.Add(2, "Minor 1");
+            leagueGroupList.Add(3, "Minor 2");
+            leagueGroupList.Add(4, "Minor 3");
+            leagueGroupList.Add(5, "Minor 4");
+            leagueGroupList.Add(6, "Others");
+            leagueGroupList.Add(7, "Others 1");
+            leagueGroupList.Add(8, "Others 2");
+            leagueGroupList.Add(9, "Others 3");
+            leagueGroupList.Add(10, "Others 4");
+            leagueGroupList.Add(11, "Others 5");
 
+            return leagueGroupList;
         }
     }
 }

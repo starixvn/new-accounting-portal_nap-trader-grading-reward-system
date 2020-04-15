@@ -142,7 +142,7 @@
         {
             get
             {
-                var attributeList = new Dictionary<string, string>();            
+                var attributeList = new Dictionary<string, string>();
                 attributeList.Add("background-color", "#fff");
                 attributeList.Add("line-height", "inherit");
                 attributeList.Add("vertical-align", "middle");
@@ -172,6 +172,7 @@
                 attributeList.Add("border-width", "0 1px 1px 0");
                 attributeList.Add("padding", "2px");
                 attributeList.Add("font-size", "1.0em");
+                attributeList.Add("width", "90px");
 
                 return attributeList;
             }
@@ -182,7 +183,6 @@
             get
             {
                 var attributeList = new Dictionary<string, string>();
-
                 attributeList.Add("background-color", "#fed966");
                 attributeList.Add("line-height", "inherit");
                 attributeList.Add("vertical-align", "middle");
@@ -193,6 +193,7 @@
                 attributeList.Add("padding", "2px");
                 attributeList.Add("font-size", "1.0em");
                 attributeList.Add("font-weight", "bold");
+                attributeList.Add("width", "90px");
 
                 return attributeList;
             }
@@ -224,6 +225,14 @@
             get
             {
                 return this.StyleTableTdSiteSum;
+            }
+        }       
+
+        public Dictionary<string, string> StyleHeaderEmptyTableTd
+        {
+            get
+            {
+                return this.StyleTableTd;
             }
         }
     }

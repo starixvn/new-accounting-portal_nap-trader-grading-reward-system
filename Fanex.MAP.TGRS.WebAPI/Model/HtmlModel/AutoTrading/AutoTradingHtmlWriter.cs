@@ -8,7 +8,8 @@
     using System.IO;
     using System.Text;
     using System.Web.UI;    
-    using System.Web.UI.WebControls;   
+    using System.Web.UI.WebControls;
+    using System;
 
     public class AutoTradingHtmlWriter : IAutoTradingHtmlWriter
     {        
@@ -16,7 +17,7 @@
         private AutoTradingStyleCss _css;
         private Table _table;
         private List<int> _siteIdList;
-
+     
         public AutoTradingHtmlWriter()
         {
             _siteIdList = new List<int> { 3, 2 };
@@ -26,14 +27,140 @@
                 new StringBuilder()));
         }
 
-        private TableRow GenerateRangeHeaderColumns()
+        public IAutoTradingHtmlWriter GenerateBeginTagHtmlBody()
+        {
+            _writer.RenderBeginTag(HtmlTextWriterTag.Html);
+            _writer.RenderBeginTag(HtmlTextWriterTag.Head);
+            _writer.RenderEndTag();
+            _writer.RenderBeginTag(HtmlTextWriterTag.Body);
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateEndTagHtmlBody()
+        {
+            _writer.RenderEndTag();
+            _writer.RenderEndTag();
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateTable(string title, string autoTradingName, bool isGenerateTableHeaderTh = true)
+        {
+            GenerateBodyDivTitle(title);
+
+            _table = new Table();
+
+            foreach (var style in _css.StyleTable)
+            {
+                _table.Style.Add(style.Key, style.Value);
+            }
+
+            if (isGenerateTableHeaderTh)
+            {
+                _table.Rows.Add(GenerateRangeHeaderColumns(autoTradingName));
+                _table.Rows.Add(GenerateHeaderColumns());
+            }            
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
+            , AutoTradingSummaryInfo summaryInfo
+            , string autoTradingName)
+        {
+            var row = InitTableRow(summaryInfo, autoTradingName);
+
+            GenerateGroupVirtualTotal(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGroupVariance(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGroupRealTotal8RMWL(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+
+            _table.Rows.Add(row);
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateGrandTotalTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
+            , AutoTradingSummaryInfo summaryInfo
+            , string autoTradingName)
+        {
+            var row = InitTableRow(summaryInfo, autoTradingName, _css.StyleTableTdGrandTotalSite);
+
+            GenerateGrandTotalGroupVirtualTotal(row, autoTradingInfos, _css.StyleTableTdGrandTotalSite, _css.StyleTableTdGrandTotalSiteSum);
+            GenerateGrandTotalGroupVariance(row, autoTradingInfos, _css.StyleTableTdGrandTotalSite, _css.StyleTableTdGrandTotalSiteSum);
+            GenerateGrandTotalGroupRealTotal8RMWL(row, autoTradingInfos, _css.StyleTableTdGrandTotalSite, _css.StyleTableTdGrandTotalSiteSum);
+
+            _table.Rows.Add(row);
+
+            return this;
+        }       
+
+        public IAutoTradingHtmlWriter GenerateHeaderEmptyTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
+            , AutoTradingSummaryInfo summaryInfo
+            , string autoTradingName)
+        {
+            var row = InitHeaderEmptyTableRow(summaryInfo, autoTradingName, _css.StyleHeaderEmptyTableTd);
+
+            GenerateGroupVirtualTotal(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGroupVariance(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGroupRealTotal8RMWL(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+
+            _table.Rows.Add(row);
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateHeaderEmptyGrandTotalTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
+            , AutoTradingSummaryInfo summaryInfo
+            , string autoTradingName)
+        {
+            var row = InitHeaderEmptyTableRow(summaryInfo, autoTradingName, _css.StyleHeaderEmptyTableTd);
+
+            GenerateGrandTotalGroupVirtualTotal(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGrandTotalGroupVariance(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+            GenerateGrandTotalGroupRealTotal8RMWL(row, autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+
+            _table.Rows.Add(row);
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter RenderControlTable()
+        {
+            _table.RenderControl(_writer);
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter GenerateEmptyRows()
+        {
+            _writer.RenderBeginTag(HtmlTextWriterTag.Br);
+            _writer.RenderEndTag();
+
+            return this;
+        }
+
+        public IAutoTradingHtmlWriter RenderHtmlToImage(string savePath)
+        {
+            var converter = new HtmlToImageConverter();
+            var jpegBytes = converter.GenerateImage(_writer.InnerWriter.ToString(), ImageFormat.Jpeg);
+
+            var stream = new MemoryStream(jpegBytes);
+            var image = System.Drawing.Image.FromStream(stream, true, true);
+
+            image.Save(savePath);
+
+            return this;
+        }
+
+        private TableRow GenerateRangeHeaderColumns(string autoTradingName)
         {
             TableRow row = new TableHeaderRow();            
             row.TableSection = TableRowSection.TableHeader;
 
             var rangeHeaderList = new List<AutoTradingRangeHeader>()
             {
-                new AutoTradingRangeHeader("Month", 2, 1, 180),
+                new AutoTradingRangeHeader(autoTradingName, 2, 1, 180),
                 new AutoTradingRangeHeader("Match", 2, 1, 90),
                 new AutoTradingRangeHeader("Virtual - Grand Total", 1, 3, 270),
                 new AutoTradingRangeHeader("Variance - Grand Total", 1, 3, 270),
@@ -104,114 +231,7 @@
             return row;
         }
 
-        private TableCell GenerateBodyTableCell(decimal margin, Dictionary<string, string> styleTableTd = null)
-        {
-            var cell = new TableCell
-            {
-                Text = margin.ToString(Consts.FormatDecimalToString_Place2),
-                HorizontalAlign = HorizontalAlign.Right
-            };
-
-            if (styleTableTd == null)
-            {
-                styleTableTd = _css.StyleTableTd;
-            }
-
-            foreach (var style in styleTableTd)
-            {
-                cell.Style.Add(style.Key, style.Value);
-            }
-
-            return cell;
-        }
-
-        private void GenerateBodyDivTitle(string title)
-        {
-            AddStyleAttribute(_css.StyleDivTitle);
-            _writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
-            AddStyleAttribute(_css.StyleDivTitleLable);
-            _writer.RenderBeginTag(HtmlTextWriterTag.Label);
-            _writer.Write(title);
-
-            _writer.RenderEndTag();
-            _writer.RenderEndTag();
-        }
-
-        private void AddStyleAttribute(Dictionary<string, string> attributeList)
-        {
-            foreach (var style in attributeList)
-            {
-                _writer.AddStyleAttribute(style.Key, style.Value);
-            }
-        }
-
-        public IAutoTradingHtmlWriter GenerateBeginTagHtmlBody()
-        {
-            _writer.RenderBeginTag(HtmlTextWriterTag.Html);
-            _writer.RenderBeginTag(HtmlTextWriterTag.Head);
-            _writer.RenderEndTag();
-            _writer.RenderBeginTag(HtmlTextWriterTag.Body);
-
-            return this;
-        }
-
-        public IAutoTradingHtmlWriter GenerateEndTagHtmlBody()
-        {
-            _writer.RenderEndTag();
-            _writer.RenderEndTag();
-
-            return this;
-        }
-
-        public IAutoTradingHtmlWriter GenerateTable(string title)
-        {
-            GenerateBodyDivTitle(title);            
-
-            _table = new Table();            
-
-            foreach (var style in _css.StyleTable)
-            {
-                _table.Style.Add(style.Key, style.Value);
-            }
-
-            _table.Rows.Add(GenerateRangeHeaderColumns());
-            _table.Rows.Add(GenerateHeaderColumns());            
-
-            return this;
-        }        
-
-        public IAutoTradingHtmlWriter GenerateTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
-            , AutoTradingSummaryMonthlyInfo summaryInfo
-            , string autoTradingName)
-        {
-            var row = InitTableRow(summaryInfo, autoTradingName);
-
-            GenerateGroupVirtualTotal(row, autoTradingInfos);
-            GenerateGroupVariance(row, autoTradingInfos);
-            GenerateGroupRealTotal8RMWL(row, autoTradingInfos);
-
-            _table.Rows.Add(row);
-
-            return this;
-        }
-
-        public IAutoTradingHtmlWriter GenerateGrandTotalTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos
-            , AutoTradingSummaryMonthlyInfo summaryInfo
-            , string autoTradingName)
-        {
-            var row = InitTableRow(summaryInfo, autoTradingName, _css.StyleTableTdGrandTotalSite);
-
-            GenerateGrandTotalGroupVirtualTotal(row, autoTradingInfos);
-            GenerateGrandTotalGroupVariance(row, autoTradingInfos);
-            GenerateGrandTotalGroupRealTotal8RMWL(row, autoTradingInfos);
-
-            _table.Rows.Add(row);
-
-            return this;
-        }
-
-        private TableRow InitTableRow(AutoTradingSummaryMonthlyInfo summaryInfo, string autoTradingName, Dictionary<string, string> styleTableTd = null)
+        private TableRow InitTableRow(AutoTradingSummaryInfo summaryInfo, string autoTradingName, Dictionary<string, string> styleTableTd = null)
         {
             var cellAutoTradingName = new TableCell
             {
@@ -241,7 +261,91 @@
             return row;
         }
 
-        private void GenerateGroupVirtualTotal(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private TableRow InitHeaderEmptyTableRow(AutoTradingSummaryInfo summaryInfo, string autoTradingName, Dictionary<string, string> styleTableTd = null)
+        {
+            var cellAutoTradingName = new TableCell
+            {
+                Text = autoTradingName,
+                HorizontalAlign = HorizontalAlign.Center,
+                Width = 300
+            };
+            var cellMatch = new TableCell
+            {
+                Text = summaryInfo != null ? summaryInfo.MatchCount.ToString() : "0",
+                HorizontalAlign = HorizontalAlign.Right,
+                Width = 90
+            };
+
+            if (styleTableTd == null)
+            {
+                styleTableTd = _css.StyleTableTd;
+            }
+            foreach (var style in styleTableTd)
+            {
+                cellAutoTradingName.Style.Add(style.Key, style.Value);
+                cellMatch.Style.Add(style.Key, style.Value);
+            }
+
+            var row = GenerateBodyTableRow();
+            row.Cells.Add(cellAutoTradingName);
+            row.Cells.Add(cellMatch);
+
+            return row;
+        }
+
+        private TableCell GenerateBodyTableCell(decimal margin, Dictionary<string, string> styleTableTd = null)
+        {
+            if (styleTableTd == null)
+            {
+                styleTableTd = _css.StyleTableTd;
+            }
+            if (margin < 0)
+            {
+                styleTableTd["color"] = "red";
+            }
+
+            var cell = new TableCell
+            {
+                Text = margin >= 0 
+                    ? margin.ToString(Consts.FormatDecimalToString_Place2)
+                    : "(" + Math.Abs(margin).ToString(Consts.FormatDecimalToString_Place2) + ")",
+                HorizontalAlign = HorizontalAlign.Right,
+                Width = 90
+            };
+
+            foreach (var style in styleTableTd)
+            {
+                cell.Style.Add(style.Key, style.Value);
+            }            
+
+            return cell;
+        }
+
+        private void GenerateBodyDivTitle(string title)
+        {
+            AddStyleAttribute(_css.StyleDivTitle);
+            _writer.RenderBeginTag(HtmlTextWriterTag.Div);
+
+            AddStyleAttribute(_css.StyleDivTitleLable);
+            _writer.RenderBeginTag(HtmlTextWriterTag.Label);
+            _writer.Write(title);
+
+            _writer.RenderEndTag();
+            _writer.RenderEndTag();
+        }
+
+        private void AddStyleAttribute(Dictionary<string, string> attributeList)
+        {
+            foreach (var style in attributeList)
+            {
+                _writer.AddStyleAttribute(style.Key, style.Value);
+            }
+        }        
+               
+        private void GenerateGroupVirtualTotal(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {           
             foreach (var siteId in _siteIdList)
             {
@@ -249,11 +353,11 @@
 
                 if (info != null)
                 {
-                    row.Cells.Add(GenerateBodyTableCell(info.Margin_VR, _css.StyleTableTdSite));
+                    row.Cells.Add(GenerateBodyTableCell(info.Margin_VR, styleTableTd));
                 }
                 else
                 {
-                    row.Cells.Add(GenerateBodyTableCell(0, _css.StyleTableTdSite));
+                    row.Cells.Add(GenerateBodyTableCell(0, styleTableTd));
                 }
             }
 
@@ -261,10 +365,13 @@
             var winLoss = infos.Sum(x => x.WinLoss_VR);
             var margin = turnover == 0 ? 0 : (winLoss / turnover) * 100;
 
-            row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdSiteSum));
+            row.Cells.Add(GenerateBodyTableCell(margin, styleTableTdSum));
         }        
 
-        private void GenerateGroupVariance(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private void GenerateGroupVariance(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {
             foreach (var siteId in _siteIdList)
             {
@@ -272,11 +379,11 @@
 
                 if (info != null)
                 {
-                    row.Cells.Add(GenerateBodyTableCell(info.Margin_VAR, _css.StyleTableTdSite));
+                    row.Cells.Add(GenerateBodyTableCell(info.Margin_VAR, styleTableTd));
                 }
                 else
                 {
-                    row.Cells.Add(GenerateBodyTableCell(0));
+                    row.Cells.Add(GenerateBodyTableCell(0, styleTableTd));
                 }
             }
 
@@ -284,10 +391,13 @@
             var winLoss = infos.Sum(x => x.Winloss_VAR);
             var margin = turnover == 0 ? 0 : (winLoss / turnover) * 100;
 
-            row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdSiteSum));
+            row.Cells.Add(GenerateBodyTableCell(margin, styleTableTdSum));
         }
 
-        private void GenerateGroupRealTotal8RMWL(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private void GenerateGroupRealTotal8RMWL(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {
             foreach (var siteId in _siteIdList)
             {
@@ -295,11 +405,11 @@
 
                 if (info != null)
                 {
-                    row.Cells.Add(GenerateBodyTableCell(info.Margin_AR8RM, _css.StyleTableTdSite));
+                    row.Cells.Add(GenerateBodyTableCell(info.Margin_AR8RM, styleTableTd));
                 }
                 else
                 {
-                    row.Cells.Add(GenerateBodyTableCell(0));
+                    row.Cells.Add(GenerateBodyTableCell(0, styleTableTd));
                 }
             }
 
@@ -307,10 +417,13 @@
             var winLoss = infos.Sum(x => x.Winloss_AR8RM);
             var margin = turnover == 0 ? 0 : (winLoss / turnover) * 100;
 
-            row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdSiteSum));
+            row.Cells.Add(GenerateBodyTableCell(margin, styleTableTdSum));
         }
 
-        private void GenerateGrandTotalGroupVirtualTotal(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private void GenerateGrandTotalGroupVirtualTotal(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {
             foreach (var siteId in _siteIdList)
             {
@@ -335,7 +448,10 @@
             row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdGrandTotalSiteSum));
         }
 
-        private void GenerateGrandTotalGroupVariance(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private void GenerateGrandTotalGroupVariance(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {
             foreach (var siteId in _siteIdList)
             {
@@ -345,7 +461,7 @@
                 {
                     var sumInfo = grandTotalInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                    row.Cells.Add(GenerateBodyTableCell(sumInfo.Margin_VAR, _css.StyleTableTdGrandTotalSite));
+                    row.Cells.Add(GenerateBodyTableCell(sumInfo.Margin_VAR, styleTableTd));
                 }
                 else
                 {
@@ -357,10 +473,13 @@
             var winLoss = infos.Sum(x => x.Winloss_VAR);
             var margin = turnover == 0 ? 0 : (winLoss / turnover) * 100;
 
-            row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdGrandTotalSiteSum));
+            row.Cells.Add(GenerateBodyTableCell(margin, styleTableTdSum));
         }
 
-        private void GenerateGrandTotalGroupRealTotal8RMWL(TableRow row, IEnumerable<AutoTradingModelPerformanceInfo> infos)
+        private void GenerateGrandTotalGroupRealTotal8RMWL(TableRow row
+            , IEnumerable<AutoTradingModelPerformanceInfo> infos
+            , Dictionary<string, string> styleTableTd
+            , Dictionary<string, string> styleTableTdSum)
         {
             foreach (var siteId in _siteIdList)
             {
@@ -370,11 +489,11 @@
                 {
                     var sumInfo = grandTotalInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                    row.Cells.Add(GenerateBodyTableCell(sumInfo.Margin_AR8RM, _css.StyleTableTdGrandTotalSite));
+                    row.Cells.Add(GenerateBodyTableCell(sumInfo.Margin_AR8RM, styleTableTd));
                 }
                 else
                 {
-                    row.Cells.Add(GenerateBodyTableCell(0, _css.StyleTableTdGrandTotalSite));
+                    row.Cells.Add(GenerateBodyTableCell(0, styleTableTdSum));
                 }
             }
 
@@ -384,25 +503,6 @@
 
             row.Cells.Add(GenerateBodyTableCell(margin, _css.StyleTableTdGrandTotalSiteSum));
         }
-
-        public IAutoTradingHtmlWriter RenderControlTable()
-        {
-            _table.RenderControl(_writer);
-
-            return this;
-        }
-
-        public IAutoTradingHtmlWriter RenderHtmlToImage(string savePath)
-        {
-            var converter = new HtmlToImageConverter();
-            var jpegBytes = converter.GenerateImage(_writer.InnerWriter.ToString(), ImageFormat.Jpeg);
-           
-            var stream = new MemoryStream(jpegBytes);
-            var image = System.Drawing.Image.FromStream(stream, true, true);
-
-            image.Save(savePath);
-
-            return this;
-        }
+        
     }
 }
