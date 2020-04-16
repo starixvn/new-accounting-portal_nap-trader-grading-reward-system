@@ -16,7 +16,7 @@
             //  .EndingDailyAfterCount(3))
             //  .Build();
             .WithSimpleSchedule(x => x
-                .WithIntervalInMinutes(30) //Execute every 1 minutes
+                .WithIntervalInMinutes(2) //Execute every 1 minutes
                 .RepeatForever())
             .Build();
 

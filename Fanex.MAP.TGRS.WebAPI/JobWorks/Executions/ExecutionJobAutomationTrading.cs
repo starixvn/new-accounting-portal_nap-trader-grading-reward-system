@@ -16,6 +16,9 @@
     {
         public Task Execute(IJobExecutionContext context)
         {
+            var letstalkServiceTest = new LetstalkService();
+            letstalkServiceTest.Info("Begin Test");
+
             IAutoTradingPerformanceService service = new AutoTradingPerformanceService();
             var tasks = new List<Task>();
 
