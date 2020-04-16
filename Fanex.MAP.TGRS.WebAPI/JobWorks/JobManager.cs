@@ -9,6 +9,8 @@
     {
         public static void State()
         {
+            LoadSettings();
+
             // When LibLog does not detect any other logging framework to be present, it will be silent. 
             // We can configure a custom logger provider that just logs to console show the output if you don’t have logging framework setup ready yet.
             LogProvider.SetCurrentLogProvider(new ConsoleLogProvider());

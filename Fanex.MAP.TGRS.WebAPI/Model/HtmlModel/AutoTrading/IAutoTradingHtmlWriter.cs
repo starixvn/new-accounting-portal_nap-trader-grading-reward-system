@@ -19,7 +19,9 @@
 
         IAutoTradingHtmlWriter GenerateHeaderEmptyGrandTotalTableTr(IEnumerable<AutoTradingModelPerformanceInfo> autoTradingInfos, AutoTradingSummaryInfo summaryInfo, string autoTradingName);
 
-        IAutoTradingHtmlWriter GenerateTimelinePTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos);
+        IAutoTradingHtmlWriter GenerateRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos);
+
+        IAutoTradingHtmlWriter GenerateEventRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos);
 
         IAutoTradingHtmlWriter RenderControlTable();
 

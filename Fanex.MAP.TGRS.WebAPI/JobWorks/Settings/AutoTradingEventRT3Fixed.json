@@ -1,0 +1,93 @@
+{
+  "MajorLeague": {
+    "PTName": "Major League",
+    "MatchCount": "1153",
+    "VirtualCreditMargin": "0.07",
+    "VirtualCashMargin": "2.58",
+    "VirtualTotalMargin": "0.04",
+    "VarianceCreditMargin": "1.86",
+    "VarianceCashMargin": "2.99",
+    "VarianceTotalMargin": "1.97",
+    "RealCreditMargin": "1.06",
+    "RealCashMargin": "2.9",
+    "RealTotalMargin": "1.14"
+  },
+  "Minor1": {
+    "PTName": "Minor 1",
+    "MatchCount": "3573",
+    "VirtualCreditMargin": "0.05",
+    "VirtualCashMargin": "2.89",
+    "VirtualTotalMargin": "0.13",
+    "VarianceCreditMargin": "2.24",
+    "VarianceCashMargin": "3.64",
+    "VarianceTotalMargin": "2.43",
+    "RealCreditMargin": "1.26",
+    "RealCashMargin": "3.47",
+    "RealTotalMargin": "1.46"
+  },
+  "Minor2": {
+    "PTName": "Minor 2",
+    "MatchCount": "3096",
+    "VirtualCreditMargin": "0.19",
+    "VirtualCashMargin": "3.05",
+    "VirtualTotalMargin": "0.36",
+    "VarianceCreditMargin": "2.06",
+    "VarianceCashMargin": "2.77",
+    "VarianceTotalMargin": "2.19",
+    "RealCreditMargin": "1.28",
+    "RealCashMargin": "2.84",
+    "RealTotalMargin": "1.49"
+  },
+  "Minor3": {
+    "PTName": "Minor 3",
+    "MatchCount": "18741",
+    "VirtualCreditMargin": "0.21",
+    "VirtualCashMargin": "4.36",
+    "VirtualTotalMargin": "0.47",
+    "VarianceCreditMargin": "3.07",
+    "VarianceCashMargin": "4.52",
+    "VarianceTotalMargin": "3.35",
+    "RealCreditMargin": "1.95",
+    "RealCashMargin": "4.49",
+    "RealTotalMargin": "2.34"
+  },
+  "Minor4": {
+    "PTName": "Minor 4",
+    "MatchCount": "17275",
+    "VirtualCreditMargin": "0.72",
+    "VirtualCashMargin": "4.86",
+    "VirtualTotalMargin": "0.89",
+    "VarianceCreditMargin": "3.79",
+    "VarianceCashMargin": "5.48",
+    "VarianceTotalMargin": "4.15",
+    "RealCreditMargin": "2.83",
+    "RealCashMargin": "5.37",
+    "RealTotalMargin": "3.24"
+  },
+  "Ohter1": {
+    "PTName": "Other 1",
+    "MatchCount": "260",
+    "VirtualCreditMargin": "-0.08",
+    "VirtualCashMargin": "3.39",
+    "VirtualTotalMargin": "0.14",
+    "VarianceCreditMargin": "2.75",
+    "VarianceCashMargin": "5.7",
+    "VarianceTotalMargin": "3.04",
+    "RealCreditMargin": "1.55",
+    "RealCashMargin": "5.13",
+    "RealTotalMargin": "1.89"
+  },
+  "Total": {
+    "PTName": "Total",
+    "MatchCount": "44098",
+    "VirtualCreditMargin": "0.19",
+    "VirtualCashMargin": "3.7",
+    "VirtualTotalMargin": "0.31",
+    "VarianceCreditMargin": "2.61",
+    "VarianceCashMargin": "4.21",
+    "VarianceTotalMargin": "2.87",
+    "RealCreditMargin": "1.62",
+    "RealCashMargin": "4.1",
+    "RealTotalMargin": "1.9"
+  }
+}

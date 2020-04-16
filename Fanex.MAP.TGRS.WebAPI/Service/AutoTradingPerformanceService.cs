@@ -15,15 +15,29 @@
 
     public class AutoTradingPerformanceService : IAutoTradingPerformanceService
     {
+        private string _leagueGroupIds = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11";
+        private string _typeSiteIds = "2, 3";
+        private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
+        private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
+
         public Task WriteAutoTradingTAMonthly()
         {
             var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
                                 + JobSettings.AutoTradingConfig.FolderImagePath 
                                 + @"\" + Consts.AutoTradingSaveImageTaMonthly;
 
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+            var criteria = new GetAutoTradingMonthlyPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                LeagueGroupIds = _leagueGroupIds,
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
 
-            GetAutoTradingMonthlyPerformance(GenerateMonthlyPerformanceCriteria(), writer);
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();            
+
+            GetAutoTradingMonthlyPerformance(criteria, writer);
 
             writer.RenderHtmlToImage(saveImagePath);
 
@@ -37,15 +51,24 @@
             var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
                                 + JobSettings.AutoTradingConfig.FolderImagePath 
                                 + @"\" + Consts.AutoTradingSaveImagePTAndAfterVRAdjustment;
+            var criteria = new GetAutoTradingWeeklyPerformanceCriteria
+            {
+                FromDate = _ptAfterIncreaseVarianceDate,
+                ToDate = GetSundayOfLastWeek(),
+                LeagueGroupIds = _leagueGroupIds,
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
 
             IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             
-            writer.GenerateBeginTagHtmlBody();
-            var criteriaWeekly = GenerateWeeklyPerformanceCriteria();
-            GetAutoTradingTimelinePerformance(criteriaWeekly, titleTaNoTrader, writer);
+            writer.GenerateBeginTagHtmlBody();           
+            GetAutoTradingTimelinePerformance(criteria, titleTaNoTrader, writer);
 
             writer.GenerateEmptyRows();
-            GetAutoTradingWeeklyPerformance(criteriaWeekly, titleLastWeeks, writer);
+            criteria.FromDate = GetDateOfFourLastWeek();
+            criteria.ToDate = GetSundayOfLastWeek();
+            GetAutoTradingWeeklyPerformance(criteria, titleLastWeeks, writer);
 
             writer.GenerateEndTagHtmlBody()
                   .RenderHtmlToImage(saveImagePath);
@@ -60,19 +83,23 @@
             var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
                                 + JobSettings.AutoTradingConfig.FolderImagePath 
                                 + @"\" + Consts.AutoTradingSaveImageRT3AndTAComparition;
+            var criteria = new GetAutoTradingEventPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
 
             IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
             
             var leagueGroupList = GetLeagueGroupList();
             writer.GenerateBeginTagHtmlBody();
-
-            var criteriaEvent = GenerateEventPerformanceCriteria();
-            criteriaEvent.Model = 1;
-            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelRT3, writer);
+            
+            GetAutoTradingEventRT3Performance(titleModelRT3, writer);
 
             writer.GenerateEmptyRows();
-            criteriaEvent.Model = 3;
-            GetAutoTradingEventPerformance(criteriaEvent, leagueGroupList, titleModelTA, writer);
+            GetAutoTradingEventTAPerformance(criteria, leagueGroupList, titleModelTA, writer);
 
             writer.GenerateEndTagHtmlBody()
                   .RenderHtmlToImage(saveImagePath);
@@ -153,7 +180,7 @@
                                 autoTradingTimelineInfo.RT3AfterPT85,
                                 autoTradingTimelineInfo.RT3IncreaseVariancePT
                             };
-                            writer.GenerateTimelinePTTableTr(timelinePTInfoList);                            
+                            writer.GenerateRT3PTTableTr(timelinePTInfoList);                            
                         }
 
                         var autoTradingName = "TA After PT 85 & increase Variance PT";
@@ -167,7 +194,7 @@
         private AutoTradingTimelineInfo GetAutoTradingTimelineInfos()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            var json = File.ReadAllText("JobWorks/Settings/AutoTradingTimeline.json");
+            var json = File.ReadAllText("JobWorks/Settings/AutoTradingTimelineFixed.json");
             return JsonConvert.DeserializeObject<AutoTradingTimelineInfo>(json);
         }
 
@@ -222,7 +249,32 @@
             return weekly;
         }
 
-        private void GetAutoTradingEventPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title, IAutoTradingHtmlWriter writer)
+        private void GetAutoTradingEventRT3Performance(string title, IAutoTradingHtmlWriter writer)
+        {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            var json = File.ReadAllText("JobWorks/Settings/AutoTradingEventRT3Fixed.json");
+            var eventRT3Info = JsonConvert.DeserializeObject<AutoTradingEventRT3Info>(json);
+
+            if (eventRT3Info != null)
+            {
+                var eventRT3List = new List<AutoTradingPTPerformanceInfo>
+                            {
+                                eventRT3Info.MajorLeague,
+                                eventRT3Info.Minor1,
+                                eventRT3Info.Minor2,
+                                eventRT3Info.Minor3,
+                                eventRT3Info.Minor4,
+                                eventRT3Info.Total
+                            };
+
+                writer.GenerateBeginTagHtmlBody()
+                      .GenerateTable(title, "Group", true)
+                      .GenerateEventRT3PTTableTr(eventRT3List)
+                      .RenderControlTable();
+            }
+        }
+
+        private void GetAutoTradingEventTAPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title, IAutoTradingHtmlWriter writer)
         {
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -255,45 +307,22 @@
                         }
 
                         writer.GenerateGrandTotalTableTr(eventData, grandTotalSummary, "Total")
-                               .RenderControlTable();                              
+                               .RenderControlTable();
                     }
                 }
             }
+        }    
+
+        private DateTime GetDateOfFourLastWeek()
+        {
+            var sundayOfLastWeek = GetSundayOfLastWeek();
+
+            return sundayOfLastWeek.AddDays(-28);
         }
 
-        private GetAutoTradingMonthlyPerformanceCriteria GenerateMonthlyPerformanceCriteria()
+        private DateTime GetSundayOfLastWeek()
         {
-            return new GetAutoTradingMonthlyPerformanceCriteria
-            {
-                FromDate = new DateTime(2020, 01, 01),
-                ToDate = new DateTime(2020, 04, 01),
-                LeagueGroupIds = "1, 2, 3, 4, 5, 6",
-                TypeSiteIds = "2, 3",
-                Model = 3
-            };
-        }
-
-        private GetAutoTradingWeeklyPerformanceCriteria GenerateWeeklyPerformanceCriteria()
-        {
-            return new GetAutoTradingWeeklyPerformanceCriteria
-            {
-                FromDate = new DateTime(2020, 01, 01),
-                ToDate = new DateTime(2020, 04, 01),
-                LeagueGroupIds = "1, 2, 3, 4, 5, 6",
-                TypeSiteIds = "2, 3",
-                Model = 3
-            };
-        }
-
-        private GetAutoTradingEventPerformanceCriteria GenerateEventPerformanceCriteria()
-        {
-            return new GetAutoTradingEventPerformanceCriteria
-            {
-                FromDate = new DateTime(2020, 01, 01),
-                ToDate = new DateTime(2020, 04, 01),
-                TypeSiteIds = "2, 3",
-                Model = 1
-            };
+            return DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
         }
 
         private Dictionary<int, string> GetLeagueGroupList()

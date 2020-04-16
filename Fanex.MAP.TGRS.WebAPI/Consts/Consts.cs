@@ -12,5 +12,6 @@
         public const string AutoTradingSaveImageTaMonthly = "AutoTrading_TaMonthly.Png";
         public const string AutoTradingSaveImagePTAndAfterVRAdjustment = "AutoTrading_PTAndAfterVRAdjustment.Png";
         public const string AutoTradingSaveImageRT3AndTAComparition = "AutoTrading_RT3AndTAComparition.Png";
+        public const string AutoTradingTOTAL = "TOTAL";
     }
 }

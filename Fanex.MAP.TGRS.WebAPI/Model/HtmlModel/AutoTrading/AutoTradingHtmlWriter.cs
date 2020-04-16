@@ -125,41 +125,20 @@
             return this;
         }
 
-        public IAutoTradingHtmlWriter GenerateTimelinePTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos)
+        public IAutoTradingHtmlWriter GenerateRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos)
         {
-            var styleTableTd = _css.StyleTimelinePTTableTd;
-            var styleTableTdSum = _css.StyleTimelinePTTableTdSum;
-
-            foreach (var info in autoTradingInfos)
-            {
-                var cellAutoTradingName = new TableCell { Text = info.PTName, HorizontalAlign = HorizontalAlign.Center };
-                var cellMatch = new TableCell { Text = info.MatchCount.ToString(Consts.FormatIntToString), HorizontalAlign = HorizontalAlign.Right };
-
-                foreach (var style in styleTableTd)
-                {
-                    cellAutoTradingName.Style.Add(style.Key, style.Value);
-                    cellMatch.Style.Add(style.Key, style.Value);
-                }
-
-                var row = GenerateBodyTableRow();
-                row.Cells.Add(cellAutoTradingName);
-                row.Cells.Add(cellMatch);
-                row.Cells.Add(GenerateBodyTableCell(info.VirtualCreditMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.VirtualCashMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.VirtualTotalMargin, styleTableTdSum));
-                row.Cells.Add(GenerateBodyTableCell(info.VarianceCreditMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.VarianceCashMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.VarianceTotalMargin, styleTableTdSum));
-                row.Cells.Add(GenerateBodyTableCell(info.RealCreditMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.RealCashMargin, styleTableTd));
-                row.Cells.Add(GenerateBodyTableCell(info.RealTotalMargin, styleTableTdSum));
-
-                _table.Rows.Add(row);
-            }
+            GenerateRT3PTTableTr(autoTradingInfos, null, null);
 
             return this;
         }
 
+        public IAutoTradingHtmlWriter GenerateEventRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos)
+        {
+            GenerateRT3PTTableTr(autoTradingInfos, _css.StyleTableTdSite, _css.StyleTableTdSiteSum);
+
+            return this;
+        }
+       
         public IAutoTradingHtmlWriter RenderControlTable()
         {
             _table.RenderControl(_writer);
@@ -186,6 +165,55 @@
             image.Save(savePath);
 
             return this;
+        }
+
+        private void GenerateRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos
+           , Dictionary<string, string> styleTableTd
+           , Dictionary<string, string> styleTableTdSum)
+        {
+            var isStyleDefault = false;
+
+            if (styleTableTd == null)
+            {
+                isStyleDefault = true;
+                styleTableTd = _css.StyleTimelinePTTableTd;
+                styleTableTdSum = _css.StyleTimelinePTTableTdSum;
+            }
+
+            foreach (var info in autoTradingInfos)
+            {
+                var cellAutoTradingName = new TableCell { Text = info.PTName, HorizontalAlign = HorizontalAlign.Center };
+                var cellMatch = new TableCell { Text = info.MatchCount.ToString(Consts.FormatIntToString), HorizontalAlign = HorizontalAlign.Right };
+                var styles = isStyleDefault ? _css.StyleTimelinePTTableTd : _css.StyleTableTd;
+
+                if (info.PTName.ToUpper().Equals(Consts.AutoTradingTOTAL))
+                {
+                    styles = _css.StyleTableTdGrandTotalSite;
+                    styleTableTd = _css.StyleTableTdGrandTotalSite;
+                    styleTableTdSum = _css.StyleTableTdGrandTotalSiteSum;
+                }
+
+                foreach (var style in styles)
+                {
+                    cellAutoTradingName.Style.Add(style.Key, style.Value);
+                    cellMatch.Style.Add(style.Key, style.Value);
+                }
+
+                var row = GenerateBodyTableRow();
+                row.Cells.Add(cellAutoTradingName);
+                row.Cells.Add(cellMatch);
+                row.Cells.Add(GenerateBodyTableCell(info.VirtualCreditMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.VirtualCashMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.VirtualTotalMargin, styleTableTdSum));
+                row.Cells.Add(GenerateBodyTableCell(info.VarianceCreditMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.VarianceCashMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.VarianceTotalMargin, styleTableTdSum));
+                row.Cells.Add(GenerateBodyTableCell(info.RealCreditMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.RealCashMargin, styleTableTd));
+                row.Cells.Add(GenerateBodyTableCell(info.RealTotalMargin, styleTableTdSum));
+
+                _table.Rows.Add(row);
+            }
         }
 
         private TableRow GenerateRangeHeaderColumns(string autoTradingName)

@@ -522,6 +522,7 @@
     <Compile Include="Model\APIInputModel\TraderPerformanceParam.cs" />
     <Compile Include="Model\Common\DBResult.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventPerformanceInfo.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Info.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingModelPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingMonthlyPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryEventInfo.cs" />
@@ -571,7 +572,8 @@
   <ItemGroup>
     <Content Include="JobWorks\Settings\AutoTradingSetting_Local.json" />
     <Content Include="JobWorks\Settings\AutoTradingSetting_Pro.json" />
-    <Content Include="JobWorks\Settings\AutoTradingTimeline.json" />
+    <Content Include="JobWorks\Settings\AutoTradingTimelineFixed.json" />
+    <Content Include="JobWorks\Settings\AutoTradingEventRT3Fixed.json" />
     <None Include="packages.config" />
     <Content Include="Web.local.config" />
     <None Include="Web.pro.config" />
