@@ -1,6 +1,8 @@
 {
-  "JobCronEveryDay": "0 15 0 * * ?",
-  "TargetName": "TGR-Auto-Trading",
-  "Group": "TGR-Auto-Trading-Test",
-  "FolderImagePath": "JobWorks\\Images"
+  "JobEveryDayRunningHour": "17",
+  "JobEveryDayRunningMinute": "15",
+  "JobExecuteDayOfWeek": "1",  // Monday
+  "TargetName": "TGR-Auto-Trading", // letstalk TargetName
+  "Group": "TGR-Auto-Trading-Test", // letstalk Group
+  "FolderImagePath": "JobWorks\\Images\\" // letstalk attachment path
 }

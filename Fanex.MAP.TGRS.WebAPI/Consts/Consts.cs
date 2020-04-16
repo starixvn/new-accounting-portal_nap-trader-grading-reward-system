@@ -2,6 +2,7 @@
 {
     public class Consts
     {
+        public const string Environment = "Environment";
         public const string FormatDateTimeToString_ddMMMyyyy = "dd/MMM/yyyy";
         public const string FormatDateTimeToString_yyyyMMdd = "yyyy-MM-dd";
         public const string FormatDateTimeToString_MMMyyyy = "MMM yyyy";

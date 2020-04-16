@@ -1,9 +1,14 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.IO;
     using System.Threading.Tasks;
+    using Fanex.LetstalkService.Core.Models;
     using Fanex.MAP.TGRS.WebAPI.Service;
-    using Quartz;    
+    using Quartz;
+    using Fanex.LetstalkService.Core.Services;
 
     [PersistJobDataAfterExecution]
     [DisallowConcurrentExecution]
@@ -20,10 +25,30 @@
 
             Task.WhenAll(tasks.ToArray()).Wait();
 
-            //var letstalkService = new LetstalkService();
-            //letstalkService.Info("Auto Trading test");
+            var attachmentList = GetAttachmentList();
+            var letstalkService = new LetstalkService(attachmentList);           
+            var success = letstalkService.Info("Auto Trading Test");           
 
             return Task.CompletedTask;
+        }
+
+        private List<LetstalkAttachment> GetAttachmentList()
+        {
+            var attatchment = new List<LetstalkAttachment>();
+            var path = AppDomain.CurrentDomain.BaseDirectory + JobSettings.AutoTradingConfig.FolderImagePath;
+
+            var filePaths = Directory.GetFiles(path).ToList();
+
+            filePaths.ForEach(fileName =>
+            {
+                attatchment.Add(new LetstalkAttachment
+                {
+                    FileName = fileName,
+                    Bytes = FileBinaryService.ConvertFileToBinary(fileName)
+                });
+            });
+
+            return attatchment;
         }
     }
 }

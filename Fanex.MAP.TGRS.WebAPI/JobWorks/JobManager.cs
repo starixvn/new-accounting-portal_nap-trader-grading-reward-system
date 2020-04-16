@@ -1,9 +1,11 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
+    using Fanex.MAP.TGRS.WebAPI.Consts;
     using Newtonsoft.Json;
     using Quartz.Logging;
     using System;
-    using System.IO;
+    using System.Configuration;
+    using System.IO;    
 
     public class JobManager
     {
@@ -33,8 +35,11 @@
 
         public static void LoadSettings()
         {
+            var enviroment =  ConfigurationManager.AppSettings[Consts.Environment];
+            var fileName = enviroment == "3" ? "AutoTradingSetting_pro.json" : "AutoTradingSetting_local.json";
+
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            var json = File.ReadAllText("JobWorks/Settings/AutoTradingSetting_Local.json");
+            var json = File.ReadAllText("JobWorks/Settings/" + fileName);
             JobSettings.AutoTradingConfig = JsonConvert.DeserializeObject<Config>(json);
         }
     }

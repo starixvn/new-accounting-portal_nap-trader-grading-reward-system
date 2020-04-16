@@ -1,8 +1,14 @@
-﻿namespace Fanex.MAP.TGRS.WebAPI.JobWorks
+﻿using System;
+
+namespace Fanex.MAP.TGRS.WebAPI.JobWorks
 {
     public class Config
     {
-        public string JobCronEveryDay { get; set; }
+        public int JobEveryDayRunningHour { get; set; }
+
+        public int JobEveryDayRunningMinute { get; set; }
+
+        public DayOfWeek JobExecuteDayOfWeek { get; set; }
 
         public string TargetName { get; set; }
 

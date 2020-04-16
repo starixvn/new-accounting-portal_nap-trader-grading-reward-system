@@ -1,108 +1,74 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Service
 {
+    using Fanex.MAP.TGRS.WebAPI.Consts;
     using Fanex.LetstalkService.Client;
     using Fanex.LetstalkService.Core.Models;
     using Fanex.LetstalkService.Core.Services;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
+    using System.Configuration;  
+    using Fanex.MAP.TGRS.WebAPI.JobWorks;
 
     public class LetstalkService
     {
-        private LetstalkClientService letstalkService;
+        private LetstalkClientService _service;
+        private List<LetstalkAttachment> _attachmentList;
 
         public LetstalkService()
         {
             var letstalkApi = new ApplicationSettingServiceImp();
             var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
-            letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+            _service = new LetstalkClientServiceImp(webAPIClientService);
+            _attachmentList = new List<LetstalkAttachment>();
         }
 
-        public void Info(string message)
+        public LetstalkService(List<LetstalkAttachment> attachmentList)
+        {
+            var letstalkApi = new ApplicationSettingServiceImp();
+            var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
+            _service = new LetstalkClientServiceImp(webAPIClientService);
+            _attachmentList = attachmentList;
+        }
+
+        public bool Info(string message)
         {
             var subject = "Info";
 
-            SendMessage(subject, message);
-
+            return SendMessage(subject, message);
         }
 
-        public void Info(string serviceName, string message)
+        public bool Info(string serviceName, string message)
         {
             var subject = "Info - " + serviceName;
 
-            SendMessage(subject, message);
-
+            return SendMessage(subject, message);
         }
 
-        public void Error(string message)
+        public bool Error(string message)
         {
             var subject = "Error";
 
-            SendMessage(subject, message);
+            return SendMessage(subject, message);
+        }      
 
-        }
-
-        public void Error(string serviceName, string message)
+        private bool SendMessage(string subject, string content)
         {
-            var subject = "Error - " + serviceName;
+            var enviroment = ConfigurationManager.AppSettings[Consts.Environment];
+            var enviromentText = enviroment == "3" ? "PRO" : (enviroment == "2" ? "UAT" : "LOCAL");
 
-            SendMessage(subject, message);
-
-        }
-
-        private void SendMessage(string subject, string content)
-        {
-            var env = string.Empty;
-            env = "LOCAL";
-            //switch (AppSettings.Environment)
-            //{
-            //    case 3:
-            //        env = "PRO";
-            //        break;
-            //    case 2:
-            //        env = "UAT";
-            //        break;
-            //    default:
-            //        env = "LOCAL";
-            //        break;
-            //}
-
-            //LetstalkModel message = new LetstalkModel()
-            //{
-            //    TargetName = AppSettings.LetstalkTarget,
-            //    Subject = subject + " - " + env,
-            //    Content = content,
-            //    Group = AppSettings.LetstalkGroup,
-            //    LetstalkAttachments = new List<LetstalkAttachment>()
-            //};
-
+            if (_attachmentList == null)
+            {
+                _attachmentList = new List<LetstalkAttachment>();
+            }
             var message = new LetstalkModel
             {
-                TargetName = "TGR-Auto-Trading",
-                Subject = subject + " - " + env,
+                TargetName = JobSettings.AutoTradingConfig.TargetName,
+                Subject = subject + " - " + enviromentText,
                 Content = content,
-                Group = "TGR-Auto-Trading-Test",
-                LetstalkAttachments = GetAttachmentList()
+                Group = JobSettings.AutoTradingConfig.Group,
+                LetstalkAttachments = _attachmentList
             };
 
-            letstalkService.SendMessage(message);
-        }
-
-        private List<LetstalkAttachment> GetAttachmentList()
-        {
-            var attatchment = new List<LetstalkAttachment>();
-            var filePaths = Directory.GetFiles(@"C:\TGR Test\").ToList();
-
-            filePaths.ForEach(fileName =>
-            {
-                attatchment.Add(new LetstalkAttachment
-                {
-                    FileName = fileName,
-                    Bytes = FileBinaryService.ConvertFileToBinary(fileName)
-                });
-            });
-
-            return attatchment;
-        }
+            return _service.SendMessage(message);
+        }        
     }
 }
