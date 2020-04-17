@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.WebAPI
 {
-    using Fanex.Data;
-    using Fanex.MAP.TGRS.WebAPI.JobWorks;
+    using Fanex.Data;    
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;

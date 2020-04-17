@@ -2,17 +2,14 @@
 {
     using Fanex.Data;
     using Fanex.MAP.TGRS.WebAPI.Consts;
-    using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;
-    using Fanex.MAP.TGRS.WebAPI.JobWorks;
+    using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;    
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
-    using System.Drawing;
+    using System.Collections.Generic;    
     using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.Linq;    
 
     public class AutoTradingPerformanceService : IAutoTradingPerformanceService
     {
@@ -41,9 +38,12 @@
 
         public byte[] GetAutoTradingPTAndAfterVRAdjustment()
         {
-            var criteria = new GetAutoTradingMonthlyPerformanceCriteria
+            var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
+            var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
+            
+            var criteria = new GetAutoTradingWeeklyPerformanceCriteria
             {
-                FromDate = _taLauchedDate,
+                FromDate = _ptAfterIncreaseVarianceDate,
                 ToDate = GetSundayOfLastWeek(),
                 LeagueGroupIds = _leagueGroupIds,
                 TypeSiteIds = _typeSiteIds,
@@ -52,7 +52,15 @@
 
             IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
 
-            GetAutoTradingMonthlyPerformance(criteria, writer);
+            writer.GenerateBeginTagHtmlBody();
+            GetAutoTradingTimelinePerformance(criteria, titleTaNoTrader, writer);
+
+            writer.GenerateEmptyRows();
+            criteria.FromDate = GetDateOfFourLastWeek();
+            criteria.ToDate = GetSundayOfLastWeek();
+            GetAutoTradingWeeklyPerformance(criteria, titleLastWeeks, writer);
+
+            writer.GenerateEndTagHtmlBody();
 
             return writer.ConvertHtmlToBytes();
         }
@@ -83,94 +91,7 @@
 
             return writer.ConvertHtmlToBytes();
         }
-
-        public Task WriteAutoTradingTAMonthly()
-        {
-            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
-                                + JobSettings.AutoTradingConfig.FolderImagePath 
-                                + @"\" + Consts.AutoTradingSaveImageTaMonthly;
-
-            var criteria = new GetAutoTradingMonthlyPerformanceCriteria
-            {
-                FromDate = _taLauchedDate,
-                ToDate = GetSundayOfLastWeek(),
-                LeagueGroupIds = _leagueGroupIds,
-                TypeSiteIds = _typeSiteIds,
-                Model = 3 // TA
-            };
-
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();            
-
-            GetAutoTradingMonthlyPerformance(criteria, writer);
-
-            writer.RenderHtmlToImage(saveImagePath);
-
-            return Task.CompletedTask;
-        }        
-
-        public Task WriteAutoTradingPTAndAfterVRAdjustment()
-        {
-            var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
-            var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
-            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
-                                + JobSettings.AutoTradingConfig.FolderImagePath 
-                                + @"\" + Consts.AutoTradingSaveImagePTAndAfterVRAdjustment;
-            var criteria = new GetAutoTradingWeeklyPerformanceCriteria
-            {
-                FromDate = _ptAfterIncreaseVarianceDate,
-                ToDate = GetSundayOfLastWeek(),
-                LeagueGroupIds = _leagueGroupIds,
-                TypeSiteIds = _typeSiteIds,
-                Model = 3 // TA
-            };
-
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
-            
-            writer.GenerateBeginTagHtmlBody();           
-            GetAutoTradingTimelinePerformance(criteria, titleTaNoTrader, writer);
-
-            writer.GenerateEmptyRows();
-            criteria.FromDate = GetDateOfFourLastWeek();
-            criteria.ToDate = GetSundayOfLastWeek();
-            GetAutoTradingWeeklyPerformance(criteria, titleLastWeeks, writer);
-
-            writer.GenerateEndTagHtmlBody()
-                  .RenderHtmlToImage(saveImagePath);
-
-            return Task.CompletedTask;
-        }
-
-        public Task WriteAutoTradingRT3AndTAComparition()
-        {
-            var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
-            var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";
-            var saveImagePath = AppDomain.CurrentDomain.BaseDirectory 
-                                + JobSettings.AutoTradingConfig.FolderImagePath 
-                                + @"\" + Consts.AutoTradingSaveImageRT3AndTAComparition;
-            var criteria = new GetAutoTradingEventPerformanceCriteria
-            {
-                FromDate = _taLauchedDate,
-                ToDate = GetSundayOfLastWeek(),
-                TypeSiteIds = _typeSiteIds,
-                Model = 3 // TA
-            };
-
-            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
-            
-            var leagueGroupList = GetLeagueGroupList();
-            writer.GenerateBeginTagHtmlBody();
-            
-            GetAutoTradingEventRT3Performance(titleModelRT3, writer);
-
-            writer.GenerateEmptyRows();
-            GetAutoTradingEventTAPerformance(criteria, leagueGroupList, titleModelTA, writer);
-
-            writer.GenerateEndTagHtmlBody()
-                  .RenderHtmlToImage(saveImagePath);
-
-            return Task.CompletedTask;
-        }
-
+    
         private void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria, IAutoTradingHtmlWriter writer)
         {
             var title = "TA NO TRADER PERFORMANCE MONTHLY REPORT";
@@ -258,7 +179,8 @@
         private AutoTradingTimelineInfo GetAutoTradingTimelineInfos()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            var json = File.ReadAllText("JobWorks/Settings/AutoTradingTimelineFixed.json");
+            var json = File.ReadAllText("Model/DataModel/AutoTrading/AutoTradingTimelineFixed.json");
+
             return JsonConvert.DeserializeObject<AutoTradingTimelineInfo>(json);
         }
 
@@ -316,7 +238,7 @@
         private void GetAutoTradingEventRT3Performance(string title, IAutoTradingHtmlWriter writer)
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            var json = File.ReadAllText("JobWorks/Settings/AutoTradingEventRT3Fixed.json");
+            var json = File.ReadAllText("Model/DataModel/AutoTrading/AutoTradingEventRT3Fixed.json");
             var eventRT3Info = JsonConvert.DeserializeObject<AutoTradingEventRT3Info>(json);
 
             if (eventRT3Info != null)
