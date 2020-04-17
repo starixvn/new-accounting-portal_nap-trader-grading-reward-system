@@ -15,22 +15,19 @@
     public class ExecutionJobAutomationTrading : IJob
     {
         public Task Execute(IJobExecutionContext context)
-        {
-            var letstalkServiceTest = new LetstalkService();
-            letstalkServiceTest.Info("Begin Test");
+        {          
+            //IAutoTradingPerformanceService service = new AutoTradingPerformanceService();
+            //var tasks = new List<Task>();
 
-            IAutoTradingPerformanceService service = new AutoTradingPerformanceService();
-            var tasks = new List<Task>();
+            //tasks.Add(Task.Run(() => service.WriteAutoTradingTAMonthly()));
+            //tasks.Add(Task.Run(() => service.WriteAutoTradingPTAndAfterVRAdjustment()));
+            //tasks.Add(Task.Run(() => service.WriteAutoTradingRT3AndTAComparition()));
 
-            tasks.Add(Task.Run(() => service.WriteAutoTradingTAMonthly()));
-            tasks.Add(Task.Run(() => service.WriteAutoTradingPTAndAfterVRAdjustment()));
-            tasks.Add(Task.Run(() => service.WriteAutoTradingRT3AndTAComparition()));
+            //Task.WhenAll(tasks.ToArray()).Wait();
 
-            Task.WhenAll(tasks.ToArray()).Wait();
-
-            var attachmentList = GetAttachmentList();
-            var letstalkService = new LetstalkService(attachmentList);           
-            var success = letstalkService.Info("Auto Trading Test");           
+            //var attachmentList = GetAttachmentList();
+            //var letstalkService = new LetstalkService(attachmentList);           
+            //var success = letstalkService.Info("Auto Trading Test");           
 
             return Task.CompletedTask;
         }

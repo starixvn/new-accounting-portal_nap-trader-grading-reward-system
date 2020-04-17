@@ -146,9 +146,6 @@
     <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.4.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
@@ -287,9 +284,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http.Owin, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.2\lib\net45\System.Web.Http.Owin.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -412,6 +406,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Consts\Consts.cs" />
+    <Compile Include="Controllers\AutoTradingController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Criteria\AutoTrading\AutoTradingPerformanceCriteria.cs" />
@@ -456,7 +451,6 @@
     <Compile Include="Service\IAutoTradingPerformanceService.cs" />
     <Compile Include="Service\LetstalkService.cs" />
     <Compile Include="Service\TraderPerformanceService.cs" />
-    <Compile Include="Startup.cs" />
     <Compile Include="Utilities\DataService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +475,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="JobWorks\Images\" />
+    <Folder Include="Views\AutoTrading\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

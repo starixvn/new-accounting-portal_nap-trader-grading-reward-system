@@ -2,7 +2,9 @@
 {
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using System.Collections.Generic;
-    
+    using System.Drawing;
+    using System.IO;
+
     public interface IAutoTradingHtmlWriter
     {
         IAutoTradingHtmlWriter GenerateBeginTagHtmlBody();
@@ -28,6 +30,8 @@
         IAutoTradingHtmlWriter GenerateEmptyRows();
 
         IAutoTradingHtmlWriter RenderHtmlToImage(string savePath);
+
+        byte[] ConvertHtmlToBytes();
 
     }
 }

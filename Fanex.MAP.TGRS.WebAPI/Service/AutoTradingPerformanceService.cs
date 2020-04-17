@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -19,6 +20,69 @@
         private string _typeSiteIds = "2, 3";
         private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
         private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
+
+        public byte[] GetAutoTradingTAMonthly()
+        {
+            var criteria = new GetAutoTradingMonthlyPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                LeagueGroupIds = _leagueGroupIds,
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
+
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+
+            GetAutoTradingMonthlyPerformance(criteria, writer);
+
+            return writer.ConvertHtmlToBytes();
+        }
+
+        public byte[] GetAutoTradingPTAndAfterVRAdjustment()
+        {
+            var criteria = new GetAutoTradingMonthlyPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                LeagueGroupIds = _leagueGroupIds,
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
+
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+
+            GetAutoTradingMonthlyPerformance(criteria, writer);
+
+            return writer.ConvertHtmlToBytes();
+        }
+
+        public byte[] GetAutoTradingRT3AndTAComparition()
+        {
+            var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
+            var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";          
+            var criteria = new GetAutoTradingEventPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                TypeSiteIds = _typeSiteIds,
+                Model = 3 // TA
+            };
+
+            IAutoTradingHtmlWriter writer = new AutoTradingHtmlWriter();
+
+            var leagueGroupList = GetLeagueGroupList();
+            writer.GenerateBeginTagHtmlBody();
+
+            GetAutoTradingEventRT3Performance(titleModelRT3, writer);
+
+            writer.GenerateEmptyRows();
+            GetAutoTradingEventTAPerformance(criteria, leagueGroupList, titleModelTA, writer);
+
+            writer.GenerateEndTagHtmlBody();
+
+            return writer.ConvertHtmlToBytes();
+        }
 
         public Task WriteAutoTradingTAMonthly()
         {
@@ -42,7 +106,7 @@
             writer.RenderHtmlToImage(saveImagePath);
 
             return Task.CompletedTask;
-        }
+        }        
 
         public Task WriteAutoTradingPTAndAfterVRAdjustment()
         {

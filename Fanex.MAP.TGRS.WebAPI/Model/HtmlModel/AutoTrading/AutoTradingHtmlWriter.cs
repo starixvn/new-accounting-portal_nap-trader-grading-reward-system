@@ -167,6 +167,15 @@
             return this;
         }
 
+        public byte[] ConvertHtmlToBytes()
+        {
+            var converter = new HtmlToImageConverter();
+
+            var jpegBytes = converter.GenerateImage(_writer.InnerWriter.ToString(), ImageFormat.Jpeg);
+            
+            return jpegBytes;
+        }
+
         private void GenerateRT3PTTableTr(List<AutoTradingPTPerformanceInfo> autoTradingInfos
            , Dictionary<string, string> styleTableTd
            , Dictionary<string, string> styleTableTdSum)

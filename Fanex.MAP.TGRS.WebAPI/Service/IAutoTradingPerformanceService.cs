@@ -1,9 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿namespace Fanex.MAP.TGRS.WebAPI.Service
+{    
+    using System.Threading.Tasks;
 
-namespace Fanex.MAP.TGRS.WebAPI.Service
-{
     public interface IAutoTradingPerformanceService
     {
+        byte[] GetAutoTradingTAMonthly();
+
+        byte[] GetAutoTradingPTAndAfterVRAdjustment();
+
+        byte[] GetAutoTradingRT3AndTAComparition();
+
         Task WriteAutoTradingTAMonthly();
 
         Task WriteAutoTradingPTAndAfterVRAdjustment();
