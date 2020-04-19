@@ -45,44 +45,18 @@
                         {
                             var leagueGroupList = SessionManager.Get<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey);
                             var siteIdList = Array.ConvertAll(criteria.TypeSiteIds.Split(','), x => int.Parse(x)).ToList();
-
-                            // Select league group MJ,M1,M2,M3,M4
-                            var groupInfos = eventData
-                                .Where(x => x.LeagueGroupId < 6)
+                            
+                            var groupInfos = eventData                             
                                 .OrderBy(x => x.LeagueGroupId)
                                 .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, Items = g.ToList() });
 
                             foreach (var grouping in groupInfos)
-                            {
-                                var groupId = grouping.LeagueGroupId > 6 ? 6 : grouping.LeagueGroupId;
-                                var leagueGroup = leagueGroupList.FirstOrDefault(x => x.Value.Id == groupId);
+                            {                               
+                                var leagueGroup = leagueGroupList.FirstOrDefault(x => x.Value.Id == grouping.LeagueGroupId);
                                 var summaryEventInfo = summaryEventData.FirstOrDefault(x => x.LeagueGroupId == grouping.LeagueGroupId);
 
                                 eventList.AddAutoTradingItem(siteIdList, grouping.Items, summaryEventInfo, leagueGroup.Value.Name, AutoTradingType.LeagueGroup);
-                            }
-
-                            // Select league group Others
-                            var groupOtherInfos = eventData.Where(x => x.LeagueGroupId >= 6);
-
-                            if (groupOtherInfos.Any())
-                            {
-                                var summaryEventInfoOther = summaryEventData.Where(x => x.LeagueGroupId >= 6)
-                                    .Aggregate<SummaryEventInfo, SummaryEventInfo>(null, (acc, s) => acc + s);
-
-                                var newGroupOtherInfos = new List<RTModelPerformanceInfo>();
-                                foreach (var siteId in siteIdList)
-                                {
-                                    var groupOtherBySiteInfo = groupOtherInfos.Where(x => x.TypeSiteId == siteId)
-                                        .Aggregate<RTModelPerformanceInfo, RTModelPerformanceInfo>(null, (acc, s) => acc + s);
-
-                                    if (groupOtherBySiteInfo != null)
-                                    {
-                                        newGroupOtherInfos.Add(groupOtherBySiteInfo);
-                                    }
-                                }
-
-                                eventList.AddAutoTradingItem(siteIdList, newGroupOtherInfos, summaryEventInfoOther, Consts.AutomationTradingLeagueGroupOthers, AutoTradingType.LeagueGroup);
-                            }
+                            }                           
 
                             eventList.GenerateGrandTotal();
                         }
@@ -283,20 +257,11 @@
 
                         eventLeagueList.GenerateGroupHeader(criteria.Measurements, criteria.TypeSiteIds)
                                        .GenerateMeasurementHidden(criteria.MeasurementHides);
-
-                        // Get league group MJ,M1,M2,M3,M4
-                        var groupInfos = summaryEventLeagueData
-                               .Where(x => x.LeagueGroupId < 6)
+                      
+                        var groupInfos = summaryEventLeagueData                           
                                .GroupBy(x => x.LeagueGroupId, (key, g) => new GroupingLeagueItem { LeagueGroupId = key, ItemList = g.ToList() });
 
                         GenerateLeagueGroup(groupInfos, eventLeagueData, summaryEventLeagueData, siteIdList, ref eventLeagueList);
-
-                        // Get league group Others
-                        var groupOtherInfos = summaryEventLeagueData
-                              .Where(x => x.LeagueGroupId >= 6)
-                              .GroupBy(x => x.LeagueGroupId, (key, g) => new GroupingLeagueItem { LeagueGroupId = key, ItemList = g.ToList() });
-
-                        GenerateLeagueGroupOther(groupOtherInfos, eventLeagueData, summaryEventLeagueData, siteIdList, ref eventLeagueList);
 
                         eventLeagueList.GenerateGrandTotal(AutoTradingType.LeagueGroup, true);
                     }

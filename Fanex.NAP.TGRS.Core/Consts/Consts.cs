@@ -23,6 +23,11 @@
         public const string AutomationTradingLeagueGroupM3 = "M3";
         public const string AutomationTradingLeagueGroupM4 = "M4";        
         public const string AutomationTradingLeagueGroupOthers = "Others";
+        public const string AutomationTradingLeagueGroupOthers1 = "Others 1";
+        public const string AutomationTradingLeagueGroupOthers2 = "Others 2";
+        public const string AutomationTradingLeagueGroupOthers3 = "Others 3";
+        public const string AutomationTradingLeagueGroupOthers4 = "Others 4";
+        public const string AutomationTradingLeagueGroupOthers5 = "Others 5";
         public const string AutomationTradingLeagueGroupMajor = "Major";
         public const string AutomationTradingLeagueGroupMinor1 = "Minor 1";
         public const string AutomationTradingLeagueGroupMinor2 = "Minor 2";

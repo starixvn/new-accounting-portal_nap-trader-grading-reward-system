@@ -34,6 +34,11 @@
             leagueGroups.Add(4, new LeagueGroup { Id = 4, Code = Consts.AutomationTradingLeagueGroupM3, Name = Consts.AutomationTradingLeagueGroupMinor3 });
             leagueGroups.Add(5, new LeagueGroup { Id = 5, Code = Consts.AutomationTradingLeagueGroupM4, Name = Consts.AutomationTradingLeagueGroupMinor4 });
             leagueGroups.Add(6, new LeagueGroup { Id = 6, Code = Consts.AutomationTradingLeagueGroupOthers, Name = Consts.AutomationTradingLeagueGroupOthers });
+            leagueGroups.Add(7, new LeagueGroup { Id = 7, Code = Consts.AutomationTradingLeagueGroupOthers1, Name = Consts.AutomationTradingLeagueGroupOthers1 });
+            leagueGroups.Add(8, new LeagueGroup { Id = 8, Code = Consts.AutomationTradingLeagueGroupOthers2, Name = Consts.AutomationTradingLeagueGroupOthers2 });
+            leagueGroups.Add(9, new LeagueGroup { Id = 9, Code = Consts.AutomationTradingLeagueGroupOthers3, Name = Consts.AutomationTradingLeagueGroupOthers3 });
+            leagueGroups.Add(10, new LeagueGroup { Id = 10, Code = Consts.AutomationTradingLeagueGroupOthers4, Name = Consts.AutomationTradingLeagueGroupOthers4 });
+            leagueGroups.Add(11, new LeagueGroup { Id = 11, Code = Consts.AutomationTradingLeagueGroupOthers5, Name = Consts.AutomationTradingLeagueGroupOthers5 });
 
             SessionManager.Set<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey, leagueGroups);
 

@@ -246,6 +246,10 @@
 
         private string GetLeagueGroupCodes(string leagueGroupIds)
         {
+            if (string.IsNullOrEmpty(leagueGroupIds))
+            {
+                return ViewLang.All;
+            }
             var leagueGroups = SessionManager.Get<Dictionary<int, LeagueGroup>>(Consts.AutomationTradingLeagueGroupsSessionKey);
             var leagueGroupIdList = Array.ConvertAll(leagueGroupIds.Split(','), s => Int16.Parse(s)).ToList();
 
