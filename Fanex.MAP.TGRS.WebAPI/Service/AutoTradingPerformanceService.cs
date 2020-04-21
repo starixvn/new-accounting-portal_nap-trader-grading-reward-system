@@ -82,7 +82,7 @@
             var leagueGroupList = GetLeagueGroupList();
             writer.GenerateBeginTagHtmlBody();
 
-            GetAutoTradingEventRT3Performance(titleModelRT3, writer);
+            GetAutoTradingEventRT3PerformanceFixed(titleModelRT3, writer);
 
             writer.GenerateEmptyRows();
             GetAutoTradingEventTAPerformance(criteria, leagueGroupList, titleModelTA, writer);
@@ -235,7 +235,7 @@
             return weekly;
         }
 
-        private void GetAutoTradingEventRT3Performance(string title, IAutoTradingHtmlWriter writer)
+        private void GetAutoTradingEventRT3PerformanceFixed(string title, IAutoTradingHtmlWriter writer)
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             var json = File.ReadAllText("Model/DataModel/AutoTrading/AutoTradingEventRT3Fixed.json");
@@ -250,6 +250,7 @@
                                 eventRT3Info.Minor2,
                                 eventRT3Info.Minor3,
                                 eventRT3Info.Minor4,
+                                eventRT3Info.Other1,
                                 eventRT3Info.Total
                             };
 

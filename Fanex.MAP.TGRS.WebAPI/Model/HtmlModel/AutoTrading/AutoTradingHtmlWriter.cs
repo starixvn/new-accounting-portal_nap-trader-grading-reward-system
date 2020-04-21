@@ -371,10 +371,8 @@
             {
                 styleTableTd = _css.StyleTableTd;
             }
-            if (margin < 0)
-            {
-                styleTableTd["color"] = "red";
-            }
+           
+            styleTableTd["color"] = margin >= 0 ? "black" : "red";
 
             var cell = new TableCell
             {
