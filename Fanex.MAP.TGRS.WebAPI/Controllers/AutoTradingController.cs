@@ -2,12 +2,9 @@
 {
     using Fanex.MAP.TGRS.WebAPI.Service;
     using System;
-    using System.Drawing;
-    using System.IO;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
-    using System.Text;
     using System.Web.Http;
 
     public class AutoTradingController : ApiController
@@ -22,37 +19,66 @@
         [HttpGet]
         public HttpResponseMessage GetAutoTradingTAMonthly()
         {
-            var byteImages = _service.GetAutoTradingTAMonthly();
+            try
+            {               
+                var byteImages = _service.GetAutoTradingTAMonthly();
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new ByteArrayContent(byteImages);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ByteArrayContent(byteImages);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return ResponseException(ex);
+            }           
         }
 
         [HttpGet]
         public HttpResponseMessage GetAutoTradingPTAndAfterVRAdjustment()
         {
-            var byteImages = _service.GetAutoTradingPTAndAfterVRAdjustment();
+            try
+            {
+                var byteImages = _service.GetAutoTradingPTAndAfterVRAdjustment();
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new ByteArrayContent(byteImages);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ByteArrayContent(byteImages);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return ResponseException(ex);
+            }
         }
 
         [HttpGet]
         public HttpResponseMessage GetAutoTradingRT3AndTAComparition()
         {
-            var byteImages = _service.GetAutoTradingRT3AndTAComparition();
+            try
+            {                
+                var byteImages = _service.GetAutoTradingRT3AndTAComparition();
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new ByteArrayContent(byteImages);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new ByteArrayContent(byteImages);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return ResponseException(ex);
+            }            
+        }
+
+        private HttpResponseMessage ResponseException(Exception ex)
+        {
+            var responseException = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            responseException.Content = new StringContent(ex.Message + ex.StackTrace);
+
+            return responseException;
         }
     }
 }
