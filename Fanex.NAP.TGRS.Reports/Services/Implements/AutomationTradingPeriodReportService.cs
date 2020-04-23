@@ -116,7 +116,10 @@
 
                             foreach (var group in groupInfos)
                             {
-                                var summaryPeriodInfo = summaryMonthData.FirstOrDefault(x => x.RptMonth == group.RptMonth);
+                                var rptMonth = BackToBeginningOfTheMonth(group.RptMonth);
+
+                                var summaryPeriodInfo = summaryMonthData.FirstOrDefault(x => x.RptMonth.Equals(rptMonth));
+
                                 var rangeDate = GenerateRangeDateInMonth(group.RptMonth, criteria.FromDate, criteria.ToDate);
 
                                 monthlyList.AddAutoTradingItem(siteIdList, group.Items, summaryPeriodInfo, group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy), AutoTradingType.PeriodMonth, rangeDate);
@@ -131,6 +134,16 @@
             }
 
             return monthlyList;
+        }
+
+        private DateTime BackToBeginningOfTheMonth(DateTime rptMonth)
+        {
+            if (rptMonth.Day.Equals(1))
+            {
+                return rptMonth;
+            }
+
+            return new DateTime(rptMonth.Year, rptMonth.Month, 1);
         }
 
         private string GenerateRangeDateInMonth(DateTime currentDate, DateTime fromDate, DateTime toDate)

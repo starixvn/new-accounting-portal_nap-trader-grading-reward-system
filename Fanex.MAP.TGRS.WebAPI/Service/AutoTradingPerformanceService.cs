@@ -120,7 +120,9 @@
 
                         foreach (var group in groupInfos)
                         {
-                            var summaryMonthlyInfo = summaryMonthlyData.FirstOrDefault(x => x.RptMonth == group.RptMonth);
+                            var rptMonth = BackToBeginningOfTheMonth(group.RptMonth);
+
+                            var summaryMonthlyInfo = summaryMonthlyData.FirstOrDefault(x => x.RptMonth.Equals(rptMonth));
                             
                             var autoTradingName = "TA - " + group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy);
 
@@ -133,6 +135,16 @@
                     }
                 }
             }
+        }
+
+        private DateTime BackToBeginningOfTheMonth(DateTime rptMonth)
+        {
+            if (rptMonth.Day.Equals(1))
+            {
+                return rptMonth;
+            }
+
+            return new DateTime(rptMonth.Year, rptMonth.Month, 1);
         }
 
         private void GetAutoTradingTimelinePerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)

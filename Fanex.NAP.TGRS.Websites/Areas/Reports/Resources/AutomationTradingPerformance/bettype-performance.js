@@ -94,7 +94,7 @@ Fanex.NAP.TGRS.AutomationTradingPerformance.BetTypePerformance = function () {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Model = domElements.ddlModel.val()
-                parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : selectedLeagueGroups;
+                parameters.LeagueGroupIds = selectedLeagueGroups != null ? selectedLeagueGroups.join(',') : '1,2,3,4,5,6,7,8,9,10,11';
                 parameters.TypeSiteIds = selectedSideIds != null ? selectedSideIds.join(',') : "3,2,1";
 
                 var notSelectMeasurements = [];
