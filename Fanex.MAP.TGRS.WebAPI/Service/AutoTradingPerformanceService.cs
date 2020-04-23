@@ -304,7 +304,7 @@
         {
             var sundayOfLastWeek = GetSundayOfLastWeek();
 
-            return sundayOfLastWeek.AddDays(-28);
+            return sundayOfLastWeek.AddDays(-27);
         }
 
         private DateTime GetSundayOfLastWeek()
