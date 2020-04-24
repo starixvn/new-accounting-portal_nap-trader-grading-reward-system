@@ -192,7 +192,7 @@
             foreach (var info in autoTradingInfos)
             {
                 var cellAutoTradingName = new TableCell { Text = info.PTName, HorizontalAlign = HorizontalAlign.Center };
-                var cellMatch = new TableCell { Text = info.MatchCount.ToString(Consts.FormatIntToString), HorizontalAlign = HorizontalAlign.Right };
+                var cellMatch = new TableCell { Text = info.MatchCount.ToString(Consts.FormatIntToString), HorizontalAlign = HorizontalAlign.Center };
                 var styles = isStyleDefault ? _css.StyleTimelinePTTableTd : _css.StyleTableTd;
 
                 if (info.PTName.ToUpper().Equals(Consts.AutoTradingTOTAL))
@@ -313,7 +313,7 @@
             var cellMatch = new TableCell
             {
                 Text = summaryInfo != null ? summaryInfo.MatchCount.ToString(Consts.FormatIntToString) : "0",
-                HorizontalAlign = HorizontalAlign.Right
+                HorizontalAlign = HorizontalAlign.Center
             };
 
             if (styleTableTd == null)
@@ -344,7 +344,7 @@
             var cellMatch = new TableCell
             {
                 Text = summaryInfo != null ? summaryInfo.MatchCount.ToString(Consts.FormatIntToString) : "0",
-                HorizontalAlign = HorizontalAlign.Right,
+                HorizontalAlign = HorizontalAlign.Center,
                 Width = 90
             };
 
@@ -377,9 +377,9 @@
             var cell = new TableCell
             {
                 Text = margin >= 0 
-                    ? margin.ToString(Consts.FormatDecimalToString_Place2)
-                    : "(" + Math.Abs(margin).ToString(Consts.FormatDecimalToString_Place2) + ")",
-                HorizontalAlign = HorizontalAlign.Right,
+                    ? margin.ToString(Consts.FormatDecimalToString_Place2) + "%"
+                    : "(" + Math.Abs(margin).ToString(Consts.FormatDecimalToString_Place2) + "%)",
+                HorizontalAlign = HorizontalAlign.Center,
                 Width = 90
             };
 
