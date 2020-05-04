@@ -35,5 +35,14 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility.NPOIExtensions
 
             workbook.Write(response.OutputStream);
         }
+
+        public static byte[] ToResponseBytes(this IWorkbook workbook)
+        {
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+
+            workbook.Write(memoryStream);
+
+            return memoryStream.ToArray();
+        }
     }
 }

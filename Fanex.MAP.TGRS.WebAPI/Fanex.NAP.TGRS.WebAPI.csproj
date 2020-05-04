@@ -137,6 +137,7 @@
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.1\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1" />
     <Reference Include="NReco.ImageGenerator, Version=1.1.3.0, Culture=neutral, PublicKeyToken=0ef6c878974c90ac, processorArchitecture=MSIL">
       <HintPath>..\packages\NReco.ImageGenerator.1.1.3\lib\net45\NReco.ImageGenerator.dll</HintPath>
     </Reference>
@@ -389,6 +390,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Criteria\AutoTrading\AutoTradingPerformanceCriteria.cs" />
+    <Compile Include="Criteria\AutoTrading\GetAutoTradingEventLeaguesPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingEventPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingTimelinePerformanceCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingWeeklyPerformanceCriteria.cs" />
@@ -400,11 +402,13 @@
     </Compile>
     <Compile Include="Model\APIInputModel\TraderPerformanceParam.cs" />
     <Compile Include="Model\Common\DBResult.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventLeaguesPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Info.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingModelPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingMonthlyPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryEventInfo.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryEventLeaguesInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryMonthlyInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryWeeklyInfo.cs" />
@@ -450,6 +454,7 @@
   <ItemGroup>
     <Content Include="Model\DataModel\AutoTrading\AutoTradingTimelineFixed.json" />
     <Content Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Fixed.json" />
+    <Content Include="ExcelTemplate\AutoTrading\EventLeaguePerformance.xls" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -459,6 +464,12 @@
     <Content Include="Web.pro.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
+      <Project>{c4051c15-1655-42e1-a071-a943bc29b37c}</Project>
+      <Name>Fanex.NAP.TGRS.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

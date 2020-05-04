@@ -5,6 +5,7 @@
     using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;    
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;    
@@ -13,10 +14,34 @@
 
     public class AutoTradingPerformanceService : IAutoTradingPerformanceService
     {
+        #region properties
         private string _leagueGroupIds = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11";
         private string _typeSiteIds = "2, 3";
         private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
         private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
+
+        public Dictionary<int, string> LeagueGroupList
+        {
+            get
+            {
+                var leagueGroups = new Dictionary<int, string>();
+                leagueGroups.Add(1, "Major League");
+                leagueGroups.Add(2, "Minor 1");
+                leagueGroups.Add(3, "Minor 2");
+                leagueGroups.Add(4, "Minor 3");
+                leagueGroups.Add(5, "Minor 4");
+                leagueGroups.Add(6, "Other");
+                leagueGroups.Add(7, "Other 1");
+                leagueGroups.Add(8, "Other 2");
+                leagueGroups.Add(9, "Other 3");
+                leagueGroups.Add(10, "Other 4");
+                leagueGroups.Add(11, "Other 5");
+
+                return leagueGroups;
+            }
+        }
+
+        #endregion
 
         public byte[] GetAutoTradingTAMonthly()
         {
@@ -91,7 +116,105 @@
 
             return writer.ConvertHtmlToBytes();
         }
+
+        public byte[] GetAutoTradingEventLeaguesExcel(string templatePath)
+        {
+            var criteria = new GetAutoTradingEventLeaguesPerformanceCriteria
+            {
+                FromDate = _taLauchedDate,
+                ToDate = GetSundayOfLastWeek(),
+                TypeSiteIds = _typeSiteIds,
+                Model = 3, // TA
+                IsExportExcel = true
+            };
+
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {                    
+                    var summaryLeagueData = multi.Read<AutoTradingSummaryEventLeaguesInfo>();
+                    
+                    var leagueData = multi.Read<AutoTradingEventLeaguesPerformanceInfo>();
+
+                    if (summaryLeagueData != null && summaryLeagueData.Any())
+                    {
+                        return GenerateAutoTradingEventLeaguesExcel(summaryLeagueData, leagueData, criteria, templatePath);
+                    }
+                }
+            }
+
+            return new byte[0];
+        }
+
+        public byte[] GenerateAutoTradingEventLeaguesExcel(IEnumerable<AutoTradingSummaryEventLeaguesInfo> summaryEventLeagueList
+            , IEnumerable<AutoTradingEventLeaguesPerformanceInfo> eventLeagueList
+            , GetAutoTradingEventLeaguesPerformanceCriteria criteria
+            , string templatePath)
+        {
+            var writer = new ExcelTemplateWriter(templatePath, "", "TA Report");
+            var sheet = writer.CopyRows(0, 1).Sheet;
+            var rangeDate = "TA Performance - Event Details "
+                            + criteria.FromDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy)
+                            + " - "
+                            + criteria.ToDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy);
+
+            writer.WriteRow(1, new object[] { rangeDate });
+            writer.CopyRows(2, 2);
+
+            var eventGroupInfos = summaryEventLeagueList
+                                    .OrderBy(x=>x.LeagueGroupId)
+                                    .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });
+
+            foreach (var grouping in eventGroupInfos)
+            {
+                var eventLeague = LeagueGroupList.FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
+
+                var groupTotalLeagueInfo = eventLeagueList
+                                        .Where(x=>x.LeagueGroupId.Equals(grouping.LeagueGroupId))
+                                        .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+                FillRowDataEventLeague(eventLeague.Value, groupTotalLeagueInfo, 5, ref writer);
+
+                foreach (var leagueList in grouping.ItemList)
+                {
+                    var leagueInfo = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId))
+                                                    .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+                    FillRowDataEventLeague(leagueList.LeagueName, leagueInfo, 4, ref writer);
+                }
+            }
+
+            var grandTotalInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+            
+            FillRowDataEventLeague("Overall", grandTotalInfo, 6, ref writer);
+
+            writer.SyncColumnsWidth(17);
+
+            return writer.ToBytes();
+        }
     
+        private void FillRowDataEventLeague(string autoTradingName, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
+        {
+            var record = new object[]
+               {
+                    autoTradingName,
+                    info.MatchCount,
+                    // Variance
+                    info.Stake_VAR, info.Winloss_VAR, info.Margin_VAR/100,
+                    // Real total
+                    info.Stake_AR, info.Winloss_AR, info.Margin_AR/100,
+                    // Virtual total
+                    info.Stake_VR, info.WinLoss_VR, info.Margin_VR/100,
+                    // 8RM total
+                    string.Empty, info.Winloss_8RM, string.Empty,
+                    // Real total 8RM WL
+                    info.Stake_AR8RM, info.Winloss_AR8RM, info.Margin_AR8RM/100,
+                    info.BetCount
+                };
+
+            writer.WriteRow(styleIndex, record);
+        }
+
         private void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria, IAutoTradingHtmlWriter writer)
         {
             var title = "TA NO TRADER PERFORMANCE MONTHLY REPORT";

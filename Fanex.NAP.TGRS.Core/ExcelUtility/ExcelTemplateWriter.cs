@@ -86,6 +86,11 @@ namespace Fanex.NAP.TGRS.Core.ExcelUtility
             this._sheet.Workbook.ToReponseStream(this._fileName, _isXlsx);
         }
 
+        public byte[] ToBytes()
+        {
+            return this._sheet.Workbook.ToResponseBytes();
+        }
+
         /// <summary>
         /// Freeze excel's pane by column index and row index.
         /// </summary>

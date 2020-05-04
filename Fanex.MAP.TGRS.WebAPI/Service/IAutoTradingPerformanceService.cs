@@ -6,6 +6,9 @@
 
         byte[] GetAutoTradingPTAndAfterVRAdjustment();
 
-        byte[] GetAutoTradingRT3AndTAComparition();    
+        byte[] GetAutoTradingRT3AndTAComparition();
+
+        byte[] GetAutoTradingEventLeaguesExcel(string templatePath);
+
     }
 }
