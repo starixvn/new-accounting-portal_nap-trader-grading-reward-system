@@ -385,7 +385,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Consts\Consts.cs" />
     <Compile Include="Controllers\AutoTradingController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />

@@ -1,10 +1,10 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Service
 {
     using Fanex.Data;
-    using Fanex.MAP.TGRS.WebAPI.Consts;
     using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;    
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
+    using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Newtonsoft.Json;
     using System;
@@ -18,29 +18,7 @@
         private string _leagueGroupIds = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11";
         private string _typeSiteIds = "2, 3";
         private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
-        private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
-
-        public Dictionary<int, string> LeagueGroupList
-        {
-            get
-            {
-                var leagueGroups = new Dictionary<int, string>();
-                leagueGroups.Add(1, "Major League");
-                leagueGroups.Add(2, "Minor 1");
-                leagueGroups.Add(3, "Minor 2");
-                leagueGroups.Add(4, "Minor 3");
-                leagueGroups.Add(5, "Minor 4");
-                leagueGroups.Add(6, "Other");
-                leagueGroups.Add(7, "Other 1");
-                leagueGroups.Add(8, "Other 2");
-                leagueGroups.Add(9, "Other 3");
-                leagueGroups.Add(10, "Other 4");
-                leagueGroups.Add(11, "Other 5");
-
-                return leagueGroups;
-            }
-        }
-
+        private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);       
         #endregion
 
         public byte[] GetAutoTradingTAMonthly()
@@ -167,38 +145,43 @@
 
             foreach (var grouping in eventGroupInfos)
             {
-                var eventLeague = LeagueGroupList.FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
+                var eventLeague = GetLeagueGroupList().FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
 
                 var groupTotalLeagueInfo = eventLeagueList
                                         .Where(x=>x.LeagueGroupId.Equals(grouping.LeagueGroupId))
                                         .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                FillRowDataEventLeague(eventLeague.Value, groupTotalLeagueInfo, 5, ref writer);
+                var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
+
+                FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, 5, ref writer);
 
                 foreach (var leagueList in grouping.ItemList)
                 {
+                    var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueList.LeagueId)).MatchCount;
                     var leagueInfo = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId))
                                                     .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                    FillRowDataEventLeague(leagueList.LeagueName, leagueInfo, 4, ref writer);
+                    FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, 4, ref writer);
                 }
             }
 
             var grandTotalInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
-            
-            FillRowDataEventLeague("Overall", grandTotalInfo, 6, ref writer);
+
+            var grandTotalMatchCount = summaryEventLeagueList.Sum(x => x.MatchCount);
+
+            FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, 6, ref writer);
 
             writer.SyncColumnsWidth(17);
 
             return writer.ToBytes();
         }
     
-        private void FillRowDataEventLeague(string autoTradingName, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
+        private void FillRowDataEventLeague(string autoTradingName, int matchCount, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
         {
             var record = new object[]
                {
                     autoTradingName,
-                    info.MatchCount,
+                    matchCount,
                     // Variance
                     info.Stake_VAR, info.Winloss_VAR, info.Margin_VAR/100,
                     // Real total

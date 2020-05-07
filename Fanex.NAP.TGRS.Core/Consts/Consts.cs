@@ -5,6 +5,9 @@
         public const string FormatDateTimeToString_ddMMMyyyy = "dd/MMM/yyyy";
         public const string FormatDateTimeToString_yyyyMMdd = "yyyy-MM-dd";
         public const string FormatDateTimeToString_MMMyyyy = "MMM yyyy";
+        public const string FormatDateTimeToString_ddMMM = "dd/MMM";
+        public const string FormatDecimalToString_Place2 = "#,##0.00";
+        public const string FormatIntToString = "#,##0";
 
         public const string AutomationTradingRT3WithTrader = "RT3 wTP";
         public const string AutomationTradingRT3NoTrader = "RT3 NoTP";
@@ -55,6 +58,7 @@
         public const string AutomationTradingCssClassBodyCn88Margin = "body-cn88-margin";
         public const string AutomationTradingCssClassBodySumTOWL = "body-sum-to-wl";
         public const string AutomationTradingCssClassBodySumMargin = "body-sum-margin";
+        public const string AutomationTradingTOTAL = "TOTAL";
 
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";

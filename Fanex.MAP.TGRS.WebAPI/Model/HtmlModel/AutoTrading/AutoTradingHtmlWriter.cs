@@ -1,6 +1,5 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading
 {
-    using Fanex.MAP.TGRS.WebAPI.Consts;
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;    
     using NReco.ImageGenerator;
     using System.Collections.Generic;
@@ -10,6 +9,7 @@
     using System.Web.UI;    
     using System.Web.UI.WebControls;
     using System;
+    using Fanex.NAP.TGRS.Core.Consts;
 
     public class AutoTradingHtmlWriter : IAutoTradingHtmlWriter
     {        
@@ -195,7 +195,7 @@
                 var cellMatch = new TableCell { Text = info.MatchCount.ToString(Consts.FormatIntToString), HorizontalAlign = HorizontalAlign.Center };
                 var styles = isStyleDefault ? _css.StyleTimelinePTTableTd : _css.StyleTableTd;
 
-                if (info.PTName.ToUpper().Equals(Consts.AutoTradingTOTAL))
+                if (info.PTName.ToUpper().Equals(Consts.AutomationTradingTOTAL))
                 {
                     styles = _css.StyleTableTdGrandTotalSite;
                     styleTableTd = _css.StyleTableTdGrandTotalSite;
