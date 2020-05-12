@@ -11,7 +11,7 @@
 
     public class AutoTradingController : ApiController
     {
-        private const string FileEventLeaguePerformance = @"~\ExcelTemplate\AutoTrading\EventLeaguePerformance.xls";
+        private const string FileEventLeaguePerformance = @"~\ExcelTemplate\AutoTrading\EventLeaguePerformance.xlsx";
         private readonly IAutoTradingPerformanceService _service;
 
         public AutoTradingController()

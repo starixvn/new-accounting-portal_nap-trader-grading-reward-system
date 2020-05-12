@@ -453,7 +453,7 @@
   <ItemGroup>
     <Content Include="Model\DataModel\AutoTrading\AutoTradingTimelineFixed.json" />
     <Content Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Fixed.json" />
-    <Content Include="ExcelTemplate\AutoTrading\EventLeaguePerformance.xls" />
+    <Content Include="ExcelTemplate\AutoTrading\EventLeaguePerformance.xlsx" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
