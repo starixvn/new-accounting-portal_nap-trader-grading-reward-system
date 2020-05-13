@@ -137,14 +137,16 @@
                             + criteria.ToDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy);
 
             writer.WriteRow(1, new object[] { rangeDate });
-            writer.CopyRows(2, 2);
+            writer.CopyRows(2, 2);            
+            var rowStartNum = 5;
+            var rowEndNum = 5;
 
             var eventGroupInfos = summaryEventLeagueList
                                     .OrderBy(x=>x.LeagueGroupId)
                                     .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });
-
+            
             foreach (var grouping in eventGroupInfos)
-            {
+            {                
                 var eventLeague = GetLeagueGroupList().FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
 
                 var groupTotalLeagueInfo = eventLeagueList
@@ -162,7 +164,13 @@
                                                     .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
                     FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, 4, ref writer);
-                }
+                }             
+
+                rowEndNum = rowStartNum + grouping.ItemList.Count - 1;
+                sheet.GroupRow(rowStartNum, rowEndNum);
+                sheet.SetRowGroupCollapsed(rowStartNum, true);
+
+                rowStartNum = rowEndNum + 2;
             }
 
             var grandTotalInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
@@ -171,7 +179,7 @@
 
             FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, 6, ref writer);
 
-            writer.SyncColumnsWidth(17);
+            writer.SyncColumnsWidth(18);
 
             return writer.ToBytes();
         }
