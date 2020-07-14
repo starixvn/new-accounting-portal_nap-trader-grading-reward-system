@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
     using System.Web.Mvc;
 
     /// <summary>
-    /// Trader controller.
+    /// Bettype Management Controller
     /// </summary>
     public class BettypeManagementController : TGRSBaseController
     {
@@ -48,15 +48,15 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         {
             ViewBag.BettypeColumns = ViewModelHelper.GetColumns<Bettype>();
             return View();
-        }
+        }       
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.BettypeManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetAllBettype()
+        public ActionResult GetGroupBetTypes()
         {
-            var bt = _bettypeManagementService.GetBettypes();
-            var json = JArray.FromObject(bt);
-            return Content(json.ToString(), "application/json");
+            var groupBetTypes = _bettypeManagementService.GetGroupBetTypes();
+
+            return Json(groupBetTypes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

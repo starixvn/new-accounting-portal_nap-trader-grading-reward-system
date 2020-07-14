@@ -12,11 +12,12 @@ namespace Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Configuration.Criteria.BettypeManagement;
     using Fanex.NAP.TGRS.Configuration.Models.BettypeManagement;
+    using Fanex.NAP.TGRS.Configuration.ViewModel.BettypeManagement;
     using System.Collections.Generic;
 
     public interface IBettypeManagement
     {
-        IEnumerable<Bettype> GetBettypes();
+        GroupBetType GetGroupBetTypes();
 
         ICommandResult InsertNewBettype(InsertNewBettypeCriteria criteria);
 

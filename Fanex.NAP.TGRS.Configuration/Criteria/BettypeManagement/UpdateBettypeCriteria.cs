@@ -12,6 +12,8 @@
 
         public int? Group { get; set; }
 
+        public int? GroupBettypeId { get; set; }
+
         public int? OperatorType { get; set; }
 
         public int? AssignmentBetType { get; set; }

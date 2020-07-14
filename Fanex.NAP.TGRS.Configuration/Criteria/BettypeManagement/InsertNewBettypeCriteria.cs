@@ -10,6 +10,8 @@
 
         public int Group { get; set; }
 
+        public int GroupBettypeId { get; set; }
+
         public int OperatorType { get; set; }
 
         public int AssignmentType { get; set; }

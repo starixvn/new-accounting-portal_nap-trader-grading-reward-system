@@ -349,6 +349,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Type Group.
+        /// </summary>
+        public static string BetTypeGroup {
+            get {
+                return ResourceManager.GetString("BetTypeGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Type Id.
         /// </summary>
         public static string BettypeId {

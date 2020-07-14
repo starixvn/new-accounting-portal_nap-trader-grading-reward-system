@@ -14,7 +14,7 @@
                 <label>@ViewLang.BettypeId</label>
             </div>
             <div class="edit-field">
-                <input name="BettypeId" class="width-200" type="text"  data-max-length="200" data-val-required="@Messages.RequiredFieldError" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput"/>
+                <input name="BettypeId" class="width-200" type="text" data-max-length="200" data-val-required="@Messages.RequiredFieldError" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput" />
             </div>
         </div>
         <div class="form-row">
@@ -23,8 +23,22 @@
             </div>
             <div class="edit-field">
                 <select name="Group" class="ui-multiselect ui-widget ui-state-default" aria-haspopup="true" style="width: 206px">
-                    <option value="1"  selected>Major</option>
+                    <option value="1" selected>Major</option>
                     <option value="2">PH</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field width-80">
+                <label>@ViewLang.BetTypeGroup</label>
+            </div>
+            <div class="edit-field">
+                <select name="GroupBettypeId" class="ui-multiselect ui-widget ui-state-default" aria-haspopup="true" style="width: 206px">
+                    <option value="1" selected>Major</option>
+                    <option value="2">1x2</option>
+                    <option value="3">Corner AIO</option>
+                    <option value="4">ET&PEN AIO</option>
+                    <option value="5">PH AIO</option>
                 </select>
             </div>
         </div>
@@ -33,7 +47,7 @@
                 <label>@ViewLang.OperatorType</label>
             </div>
             <div class="edit-field">
-                <input name="OperatorType" class="width-200" type="text" data-max-length="200" data-val-required="@Messages.RequiredFieldError" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput"/>
+                <input name="OperatorType" class="width-200" type="text" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput" />
             </div>
         </div>
         <div class="form-row">
@@ -41,13 +55,13 @@
                 <label>@ViewLang.AssignmentType</label>
             </div>
             <div class="edit-field">
-                <input name="AssignmentType" class="width-200" type="text" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput"data-val-required="@Messages.RequiredFieldError" />
+                <input name="AssignmentType" class="width-200" type="text" data-max-length="200" data-val-length="@Messages.FieldMaxLengthError200" data-val-number="@ViewLang.NumberInput" />
             </div>
         </div>
         <div class="form-row">
             <div class="lbl-field width-80"></div>
             <div class="edit-field">
-                <input name="IsUsedForJuice"  type="checkbox" /> Is Used For Juice    
+                <input name="IsUsedForJuice" type="checkbox" /> Is Used For Juice
             </div>
         </div>
         <div class="form-row">

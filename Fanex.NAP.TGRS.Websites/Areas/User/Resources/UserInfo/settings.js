@@ -72,11 +72,13 @@ eSchool.SystemConfiguration = function () {
             height: 200,
             allSelectedText: labels.AllBetTypes,
             autoOpen: true,
+            groupsCollapsable: true,
+            optGroupChecked: true,
             beforeclose: function () {
                 return false;
             },
             create: function () {
-                var defaultBt = $("[data-default='1']", domElements.ddlBetType).map((idx, elem) => $(elem).val()).get();
+                var defaultBt = $("[data-default='True']", domElements.ddlBetType).map((idx, elem) => $(elem).val()).get();
                 selectDefaultBettypes(domElements.ddlBetType, defaultBt);
             }
         });

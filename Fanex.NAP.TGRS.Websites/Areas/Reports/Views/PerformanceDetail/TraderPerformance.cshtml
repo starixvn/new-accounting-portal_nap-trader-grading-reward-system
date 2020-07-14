@@ -56,10 +56,21 @@
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
             <div class="edit-field col_9">
-                <select id="ddlBetType" multiple="multiple">
-                    @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                <select id="ddlBetType" multiple="multiple">                   
+                    @foreach (var group in (IEnumerable<GroupBetTypes>)ViewBag.GroupBetTypes)
                     {
-                        <option value="@item.BetTypeId">@item.BetTypeName</option>
+                        var check = false;
+                        if (group.TotalDefaultCheckOfBetTypeList == group.BetTypeList.Count())
+                        {
+                            check = true;
+                        }
+                        <optgroup label="@group.GroupName" checked =@check>
+                            @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
+                            {
+                                <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
+                            }
+
+                        </optgroup>
                     }
                 </select>
             </div>

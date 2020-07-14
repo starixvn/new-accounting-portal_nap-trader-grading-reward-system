@@ -92,9 +92,19 @@
             <div class="filter-row bettype-filter-row">
                 <div class="edit-field col_9">
                     <select id="ddlBetType" multiple="multiple" style="height:700px;">
-                        @foreach (var item in (IEnumerable<BetTypeItem>)ViewBag.BetTypes)
+                        @foreach (var group in (IEnumerable<GroupBetTypes>)ViewBag.GroupBetTypes)
                         {
-                            <option value="@item.BetTypeId" data-default="@(item.IsDefaultCheck? 1 : 0)">@item.BetTypeName</option>
+                            var check = false;
+                            if (group.TotalDefaultCheckOfBetTypeList == group.BetTypeList.Count())
+                            {
+                                check = true;
+                            }
+                            <optgroup label="@group.GroupName" checked =@check>
+                                @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
+                                {
+                                    <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
+                                }
+                            </optgroup>
                         }
                     </select>
                 </div>

@@ -21,7 +21,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Diagnostics.CodeAnalysis;   
     using System.Linq;
     using System.Web.Mvc;
 
@@ -93,9 +93,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypesFromSession(CurrentSession.UserId);
 
+            var betTypeList = from betType in betTypes
+                              where betType.IsDefaultCheck
+                              select betType.BetTypeId;
+
             return Json(new
             {
-                DefaultBettypes = from betType in betTypes where betType.IsDefaultCheck select betType.BetTypeId
+                DefaultBettypes = betTypeList
             });
         }
 
@@ -107,10 +111,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult LeaguePerformance()
         {
             var permission = ReportUtil.GetBettypePermission(HasRight);
-
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
-
-            ViewBag.BetTypes = betTypes;
+            IEnumerable<GroupBetTypes> groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
+           
+            ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
@@ -275,9 +278,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             var permission = ReportUtil.GetBettypePermission(HasRight);
 
-            var betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
+            var groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, permission);
 
-            ViewBag.BetTypes = betTypes;
+            ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
@@ -364,10 +367,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         /// <returns>Return GradePerformance View.</returns>
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult GradePerformance()
-        {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
+        {            
+            var groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));            
 
-            ViewBag.BetTypes = betTypes;
+            ViewBag.groupBetTypes = groupBetTypes;
+            ViewBag.Markets = GetMarketsPermission();
+
+            ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
@@ -502,10 +508,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult TeamPerformance()
         {
             IEnumerable<TeamItem> teams = this._detailReportService.GetTeams();
-            var permission = ReportUtil.GetBettypePermission(HasRight);
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, permission);
+            var permission = ReportUtil.GetBettypePermission(HasRight);            
+            var groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, permission);
 
-            ViewBag.BetTypes = betTypes;
+            ViewBag.groupBetTypes = groupBetTypes;
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
 
@@ -631,9 +637,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult BetTypePerformance()
         {
-            IEnumerable<BetTypeItem> betTypes = this._detailReportService.GetBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
+            var groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
 
-            ViewBag.BetTypes = betTypes;
+            ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)

@@ -846,4 +846,7 @@
   <data name="AutomationTradingJobName" xml:space="preserve">
     <value>Automation Trading</value>
   </data>
+  <data name="BetTypeGroup" xml:space="preserve">
+    <value>Bet Type Group</value>
+  </data>
 </root>

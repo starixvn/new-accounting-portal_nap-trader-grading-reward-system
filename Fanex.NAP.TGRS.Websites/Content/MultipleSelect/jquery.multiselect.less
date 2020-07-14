@@ -90,7 +90,7 @@
         a {
             text-decoration: none;
             font-weight: bold;
-            
+
             &:hover {
                 text-decoration: underline;
             }
@@ -137,6 +137,7 @@
 
             span {
                 margin-left: 5px;
+                cursor:pointer;
             }
 
             &.ui-state-hover {
@@ -164,7 +165,6 @@
             clear: both;
             font-size: 0.9em;
             /*padding-right:1px;*/
-
             &.ui-multiselect-optgroup-label {
                 text-align: center;
                 font-weight: bold;
@@ -175,6 +175,48 @@
                     padding: 3px;
                     margin: 1px 0;
                     text-decoration: none;
+                }
+            }
+
+            .optgroup-span {
+                margin-top: 10px;
+                padding-top: 10px;
+
+                .optgroup-title {
+                    cursor: pointer;
+                    margin-left: 5px;
+                }
+            }
+
+            button {
+                float: right;
+                padding: 0 1px;
+                margin: 0;
+                background: #fff;
+                border: none;
+
+                span.ui-icon-collapse {
+                    background-image: url("images/drop-down.svg");
+                    width: 24px;
+                    height: 24px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-top: -.50em;
+                }
+
+                span.ui-icon-expand {
+                    background-image: url("images/drop-up.svg");
+                    width: 24px;
+                    height: 24px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-top: -.50em;
+                }
+            }
+
+            ul li {
+                .hide {
+                    overflow: hidden;
                 }
             }
         }

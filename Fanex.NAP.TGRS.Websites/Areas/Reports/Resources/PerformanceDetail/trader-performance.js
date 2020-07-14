@@ -98,6 +98,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             minWidth: 200,
             height: 200,
             allSelectedText: labels.AllBetTypes,
+            groupsCollapsable: true,
+            optGroupChecked: true,
             create: function () {
                 performanceDetailHelper.SelectDefaultBettypes(domElements.ddlBetType, performanceDetailHelper.GetDefaultBettypes());
             }

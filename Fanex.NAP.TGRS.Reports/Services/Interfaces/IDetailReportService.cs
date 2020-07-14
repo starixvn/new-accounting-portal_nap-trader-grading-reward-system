@@ -27,6 +27,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns></returns>
         IEnumerable<BetTypeItem> GetBetTypes(int userid, BettypeViewPermission permission = BettypeViewPermission.All);
 
+        IEnumerable<GroupBetTypes> GetGroupBetTypes(int userid, BettypeViewPermission permission = BettypeViewPermission.All);
+
         /// <summary>
         /// Gets the bet types from session.
         /// </summary>

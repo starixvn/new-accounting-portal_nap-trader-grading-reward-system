@@ -444,6 +444,7 @@
     <Compile Include="ViewModels\PerformanceDetail\BetTypeDetailItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\GradePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\GradePerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\GroupBetTypes.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceGroup.cs" />

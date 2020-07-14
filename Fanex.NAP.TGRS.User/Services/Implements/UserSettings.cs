@@ -12,7 +12,7 @@
 
     public class UserSettings : TGRSBaseService, IUserSetting
     {
-        public IEnumerable<BetTypeItem> GetDefaultBettypes(int userid, BettypeViewPermission permission)
+        public IEnumerable<BetTypeInfo> GetDefaultBettypes(int userid, BettypeViewPermission permission)
         {
             var criteria = new GetDefaultBettypeCriteria()
             {
@@ -20,7 +20,7 @@
                 BettypePermission = (int)permission
             };
 
-            return GetData<BetTypeInfo>(criteria).Select(bt => new BetTypeItem(bt));
+            return GetData<BetTypeInfo>(criteria);
         }
 
         public ICommandResult UpdateDefaultBettypes(UpdateDefaultBettypeCriteria criteria)

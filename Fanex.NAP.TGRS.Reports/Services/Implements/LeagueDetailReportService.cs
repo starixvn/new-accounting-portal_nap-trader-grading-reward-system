@@ -61,6 +61,39 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return betTypes ?? new List<BetTypeItem>();
         }
 
+        public IEnumerable<GroupBetTypes> GetGroupBetTypes(int userId, BettypeViewPermission permission = BettypeViewPermission.All)
+        {
+            var groupBetTypes = Enumerable.Empty<GroupBetTypes>();
+            List<BetTypeItem> betTypes = null;
+            var criteria = new GetBetTypesCriteria(permission) { UserId = userId };
+            IEnumerable<BetTypeInfo> data = this.GetData<BetTypeInfo>(criteria);            
+
+            if (data != null && data.Any())
+            {
+                groupBetTypes = data
+                    .GroupBy(g => new { g.GroupBettypeId, g.GroupBettypeName })
+                    .Select(x => new { Group = x.Key, BetTypeList = x.ToList() })
+                    .Select(x => new GroupBetTypes
+                    {
+                        GroupId = x.Group.GroupBettypeId,
+                        GroupName = x.Group.GroupBettypeName,
+                        TotalDefaultCheckOfBetTypeList = x.BetTypeList.Where(y=>y.IsDefault).Count(),
+                        BetTypeList = x.BetTypeList.Select(y => new BetType
+                        {
+                            BetTypeId = y.BetType,
+                            BetTypeName = y.TypeName,
+                            IsDefaultCheck = y.IsDefault
+                        })
+                    });
+
+               betTypes = data.Select(obj => new BetTypeItem(obj)).ToList();
+            }
+
+            SessionManager.Set<List<BetTypeItem>>(DefaultBettypeSessionKey, betTypes);
+
+            return groupBetTypes;
+        }
+
         /// <summary>
         /// Gets the bet types from session.
         /// </summary>

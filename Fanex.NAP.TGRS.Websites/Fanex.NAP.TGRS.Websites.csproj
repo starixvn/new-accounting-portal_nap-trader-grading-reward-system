@@ -454,6 +454,8 @@
     <Content Include="Content\Bootstrap\Css\bootstrap.css" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\jQuery-UI\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Content\MultipleSelect\images\drop-down.svg" />
+    <Content Include="Content\MultipleSelect\images\drop-up.svg" />
     <Content Include="Content\ReponsiveTabs\responsive-tabs-theme.css" />
     <Content Include="Content\ReponsiveTabs\responsive-tabs.css" />
     <Content Include="Content\DatePicker\images\icon-calendar.png" />

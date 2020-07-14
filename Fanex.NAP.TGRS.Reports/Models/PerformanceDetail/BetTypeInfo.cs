@@ -19,5 +19,9 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public string TypeName { get; set; }
 
         public bool IsDefault { get; set; }
+
+        public int GroupBettypeId { get; set; }
+
+        public string GroupBettypeName { get; set; }
     }
 }

@@ -17,10 +17,12 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using Fanex.NAP.TGRS.User.Criteria.Setting;
     using Fanex.NAP.TGRS.User.Services.Implements;
     using Fanex.NAP.TGRS.User.Services.Interfaces;
     using System;
+    using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
     using System.Web;
@@ -183,10 +185,31 @@ namespace Fanex.NAP.TGRS.User.Controllers
         {
             var id = CurrentSession.UserId;
             var permission = Reports.ReportUtil.GetBettypePermission(HasRight);
+            var groupBettypes = Enumerable.Empty<GroupBetTypes>();
 
             var bettypes = _userSetting.GetDefaultBettypes(id, permission);
 
-            ViewBag.BetTypes = bettypes;
+            if (bettypes != null && bettypes.Any())
+            {
+                groupBettypes = bettypes
+                    .GroupBy(g => new { g.GroupBettypeId, g.GroupBettypeName })
+                    .Select(x => new { Group = x.Key, BetTypeList = x.ToList() })
+                    .Select(x => new GroupBetTypes
+                    {
+                        GroupId = x.Group.GroupBettypeId,
+                        GroupName = x.Group.GroupBettypeName,
+                        TotalDefaultCheckOfBetTypeList = x.BetTypeList.Where(y => y.IsDefault).Count(),
+                        BetTypeList = x.BetTypeList.Select(y => new BetType
+                        {
+                            BetTypeId = y.BetType,
+                            BetTypeName = y.TypeName,
+                            IsDefaultCheck = y.IsDefault
+                        })
+                    });
+            }
+
+            ViewBag.GroupBetTypes = groupBettypes;
+
             return View();
         }
 

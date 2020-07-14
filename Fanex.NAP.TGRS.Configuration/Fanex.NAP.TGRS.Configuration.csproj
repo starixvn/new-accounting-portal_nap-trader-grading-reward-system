@@ -199,6 +199,8 @@
     <Compile Include="Models\BenchmarkManagement\SpecialLeague.cs" />
     <Compile Include="Models\BenchmarkManagement\TeamBenchmark.cs" />
     <Compile Include="Models\BettypeManagement\Bettype.cs" />
+    <Compile Include="Models\BettypeManagement\BetTypeInfo.cs" />
+    <Compile Include="Models\BettypeManagement\GroupBetTypeInfo.cs" />
     <Compile Include="Models\LeagueExclusion\League.cs" />
     <Compile Include="Models\SpreadManagement\Bettype.cs" />
     <Compile Include="Models\SpreadManagement\SpreadValidation.cs" />
@@ -247,6 +249,9 @@
     <Compile Include="ViewModel\BenchmarkManagement\SpecialLeagueItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\TeamBenchmarkItem.cs" />
     <Compile Include="ViewModel\BenchmarkManagement\UpdatingLeagueBenchmarkForm.cs" />
+    <Compile Include="ViewModel\BettypeManagement\BetType.cs" />
+    <Compile Include="ViewModel\BettypeManagement\Group.cs" />
+    <Compile Include="ViewModel\BettypeManagement\GroupBetType.cs" />
     <Compile Include="ViewModel\SpreadManagement\SpreadInfoList.cs" />
     <Compile Include="ViewModel\TargetedMargin\TargetedMarginWithAllShift.cs" />
     <Compile Include="ViewModel\TraderManagement\GradeHistoryItem.cs" />
