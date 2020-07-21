@@ -98,6 +98,17 @@
         </div>
         <div class="filter-row">
             <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_5">
                 <label for="txtLeague">@ViewLang.League</label>
             </div>
             <div class="edit-field col_8">
@@ -142,6 +153,7 @@
         var labels = {
             No: '#',
             League: '@ViewLang.League',
+            LeagueGroup: '@ViewLang.LeagueGroup',
             Market: '@ViewLang.Market',     
             MarketNonLive: '@ViewLang.MarketNonLive',
             MarketLive: '@ViewLang.MarketLive',
@@ -163,6 +175,7 @@
             Total: '@ViewLang.Total',
             GrandTotal: '@ViewLang.GrandTotal',
             AllBetTypes: '@ViewLang.AllBetTypes',
+            AllLeagueGroups: '@ViewLang.AllLeagueGroups',
             NA: '@ViewLang.NA',
             Forecast: '@ViewLang.Forecast',
             EffectiveDate: '@ViewLang.EffectiveDate',

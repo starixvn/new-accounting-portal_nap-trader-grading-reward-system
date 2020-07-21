@@ -6,9 +6,6 @@
 // <history>
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
-
-using Fanex.Data.Repository;
-
 namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail;
@@ -28,6 +25,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         IEnumerable<BetTypeItem> GetBetTypes(int userid, BettypeViewPermission permission = BettypeViewPermission.All);
 
         IEnumerable<GroupBetTypes> GetGroupBetTypes(int userid, BettypeViewPermission permission = BettypeViewPermission.All);
+
+        IEnumerable<LeagueGroup> GetLeagueGroups();
 
         /// <summary>
         /// Gets the bet types from session.

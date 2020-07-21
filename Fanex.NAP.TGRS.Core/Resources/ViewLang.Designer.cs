@@ -133,6 +133,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All League Groups.
+        /// </summary>
+        public static string AllLeagueGroups {
+            get {
+                return ResourceManager.GetString("AllLeagueGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Leagues.
         /// </summary>
         public static string AllLeagues {

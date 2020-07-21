@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             {
                 this.LeagueId = leagueData.LeagueId.Value;
                 this.LeagueName = leagueData.LeagueName;
+                this.LeagueGroupId = Converter.ToInt(leagueData.LeagueGroupID);
                 this.NoOfTraders = Converter.ToInt(leagueData.TraderCount);
                 this.NoOfMatches = Converter.ToInt(leagueData.MatchCount);
                 this.Turnover = Converter.ToDecimal(leagueData.Turnover);
@@ -48,6 +49,10 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         public int LeagueId { get; set; }
 
         public string LeagueName { get; set; }
+
+        public int LeagueGroupId { get; set; }
+
+        public string LeagueGroupName { get; set; }
 
         public int NoOfTraders { get; set; }
 

@@ -6,7 +6,6 @@
 // <history>
 //   <change who="Jason.Ly" date="2014.6.9">Created</change>
 // </history>
-
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 {
     /// <summary>
@@ -17,6 +16,8 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
         public int? LeagueId { get; set; }
 
         public string LeagueName { get; set; }
+
+        public short? LeagueGroupID { get; set; }
 
         public decimal? LeagueBenchmark { get; set; }
 

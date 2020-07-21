@@ -849,4 +849,7 @@
   <data name="BetTypeGroup" xml:space="preserve">
     <value>Bet Type Group</value>
   </data>
+  <data name="AllLeagueGroups" xml:space="preserve">
+    <value>All League Groups</value>
+  </data>
 </root>

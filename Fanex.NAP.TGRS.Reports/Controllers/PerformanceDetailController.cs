@@ -114,6 +114,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             IEnumerable<GroupBetTypes> groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));
            
             ViewBag.GroupBetTypes = groupBetTypes;
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
             ViewBag.Markets = GetMarketsPermission();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)

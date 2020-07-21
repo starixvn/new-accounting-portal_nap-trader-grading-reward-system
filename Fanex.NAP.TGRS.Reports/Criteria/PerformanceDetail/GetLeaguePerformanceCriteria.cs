@@ -40,6 +40,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime ToDate { get; set; }
 
+        public string LeagueGroupIds { get; set; }
+
         public string LeagueName { get; set; }
 
         public decimal? Turnover { get; set; }

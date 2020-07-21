@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 {
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceDetail;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// League performance list view model.
@@ -43,21 +45,49 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public void AddLeagueList(IEnumerable<LeaguePerformanceInfo> leaguePerformanceInfos)
         {
+            var leagueGroups = SessionManager.Get<List<LeagueGroup>>("Fanex.NAP.TGRS.Reports.LeagueGroups");
+
             foreach (var item in leaguePerformanceInfos)
             {
                 if (item != null)
                 {
-                    this.AddItem(new LeaguePerformanceItem(item));
+                    var leagueGroupName = "-";
+                    if (leagueGroups != null && item.LeagueGroupID.HasValue)
+                    {
+                        var group = leagueGroups
+                            .Where(x => x.LeagueGroupId.Equals(item.LeagueGroupID.Value))
+                            .Select(x => x.LeagueGroupName).ToList();
+
+                        leagueGroupName = group != null && group.Any() ? group[0] : "-";                        
+                    }
+                    var itemData = new LeaguePerformanceItem(item);
+                    itemData.LeagueGroupName = leagueGroupName;
+
+                    this.AddItem(itemData);
                 }
             }
         }
 
         public void AddLeagueList(IEnumerable<LeaguePerformanceInfo> leaguePerformanceInfos, bool isLive)
         {
+            var leagueGroups = SessionManager.Get<List<LeagueGroup>>("Fanex.NAP.TGRS.Reports.LeagueGroups");
+
             foreach (var item in leaguePerformanceInfos)
             {
                 if (item != null)
                 {
+                    var leagueGroupName = "-";
+                    if (leagueGroups != null && item.LeagueGroupID.HasValue)
+                    {
+                        var group = leagueGroups
+                            .Where(x => x.LeagueGroupId.Equals(item.LeagueGroupID.Value))
+                            .Select(x => x.LeagueGroupName).ToList();
+
+                        leagueGroupName = group != null && group.Any() ? group[0] : "-";
+                    }
+                    var itemData = new LeaguePerformanceItem(item);
+                    itemData.LeagueGroupName = leagueGroupName;
+
                     this.AddItem(new LeaguePerformanceItem(item), isLive);
                 }
             }

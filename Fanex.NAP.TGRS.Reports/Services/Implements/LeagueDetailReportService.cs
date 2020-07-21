@@ -35,6 +35,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     {
         private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.Reports.LeaguePerformance";
         private const string DefaultBettypeSessionKey = "Fanex.NAP.TGRS.Reports.DefaultBettype";
+        private const string LeagueGroupsSessionKey = "Fanex.NAP.TGRS.Reports.LeagueGroups";
         private const int PointInPixel = 225;
         private const string MinPercentString = "min";
         private const string MaxPercentString = "max";
@@ -94,6 +95,28 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return groupBetTypes;
         }
 
+        public IEnumerable<LeagueGroup> GetLeagueGroups()
+        {
+            var leagueGroupList = new List<LeagueGroup> {
+                new LeagueGroup { LeagueGroupId = 1, LeagueGroupName = "Major" },
+                new LeagueGroup { LeagueGroupId = 2, LeagueGroupName = "Minor 1" },
+                new LeagueGroup { LeagueGroupId = 3, LeagueGroupName = "Minor 2" },
+                new LeagueGroup { LeagueGroupId = 4, LeagueGroupName = "Minor 3" },
+                new LeagueGroup { LeagueGroupId = 5, LeagueGroupName = "Minor 4" },
+                new LeagueGroup { LeagueGroupId = 6, LeagueGroupName = "Others" },
+                new LeagueGroup { LeagueGroupId = 7, LeagueGroupName = "Others 1" },
+                new LeagueGroup { LeagueGroupId = 8, LeagueGroupName = "Others 2" },
+                new LeagueGroup { LeagueGroupId = 9, LeagueGroupName = "Others 3" },
+                new LeagueGroup { LeagueGroupId = 10, LeagueGroupName = "Others 4" },
+                new LeagueGroup { LeagueGroupId = 11, LeagueGroupName = "Others 5" },
+                new LeagueGroup { LeagueGroupId = 12, LeagueGroupName = "Other Groups" }
+            };
+
+            SessionManager.Set<List<LeagueGroup>>(LeagueGroupsSessionKey, leagueGroupList);
+
+            return leagueGroupList;
+        }
+
         /// <summary>
         /// Gets the bet types from session.
         /// </summary>
@@ -151,6 +174,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                             {
                                 LeagueId = c.LeagueId,
                                 LeagueName = c.LeagueName,
+                                LeagueGroupID = c.LeagueGroupID,
                                 LeagueBenchmark = c.LeagueBenchmark,
                                 BetTypeBMShift1 = c.BetTypeBMShift1,
                                 BetTypeBMShift2 = c.BetTypeBMShift2,
