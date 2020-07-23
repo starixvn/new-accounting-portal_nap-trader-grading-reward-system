@@ -45,7 +45,7 @@
             </div>
             <div class="edit-field col_5">
                 <select id="ddlMarket" disabled="@isDisableMarket">
-                   @foreach (KeyValuePair<Market, string> item in markets)
+                    @foreach (KeyValuePair<Market, string> item in markets)
                     {
                         <option value="@item.Key">@item.Value</option>
                     }
@@ -55,7 +55,7 @@
             <div class="lbl-field col_3">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_9">               
+            <div class="edit-field col_9">
                 <select id="ddlBetType" multiple="multiple">
                     @foreach (var group in (IEnumerable<GroupBetTypes>)ViewBag.GroupBetTypes)
                     {
@@ -64,7 +64,7 @@
                         {
                             check = true;
                         }
-                        <optgroup label="@group.GroupName" checked =@check>
+                        <optgroup label="@group.GroupName" checked=@check>
                             @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
                             {
                                 <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
@@ -72,9 +72,20 @@
                         </optgroup>
                     }
                 </select>
-            </div>
+            </div>           
         </div>
         <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                    }
+                </select>
+            </div>
             <div class="lbl-field col_5">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
@@ -96,18 +107,7 @@
                 <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
         </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5">
-                <label for="txtLeague">@ViewLang.LeagueGroup</label>
-            </div>
-            <div class="edit-field col_8">
-                <select id="ddlLeagueGroup" multiple="multiple">
-                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
-                    {
-                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
-                    }
-                </select>
-            </div>
+        <div class="filter-row">           
             <div class="lbl-field col_5">
                 <label for="txtLeague">@ViewLang.League</label>
             </div>

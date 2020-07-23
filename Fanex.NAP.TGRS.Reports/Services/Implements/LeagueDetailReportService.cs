@@ -389,6 +389,37 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
         }
 
+        private string MakeLeagueGroupSelectString(string leagueGroupIds)
+        {
+            var leagueGroupNames = string.Empty;
+
+            if (string.IsNullOrEmpty(leagueGroupIds))
+                return leagueGroupNames;
+
+            var leagueGroups = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+
+            if (leagueGroups == null || !leagueGroups.Any())
+                return leagueGroupNames;
+
+            var ids = leagueGroupIds.Split(',');
+
+            foreach (var id in ids)
+            {
+                var group = leagueGroups
+                .Where(x => x.LeagueGroupId.ToString().Equals(id))
+                .Select(x => x.LeagueGroupName).ToList();
+
+                if (group != null && group.Any())
+                {
+                    leagueGroupNames += group[0] + ", ";
+                }
+            }
+
+            leagueGroupNames = leagueGroupNames.TrimEnd(new char[] { ' ', ',' });
+
+            return leagueGroupNames;
+        }
+
         /// <summary>
         /// Fills the content row.
         /// </summary>
@@ -546,6 +577,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlossString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
             string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+            var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
@@ -553,6 +585,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlossString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, leagueGroupNameString, normalFont, "\n");
 
             //// Margin
             string marginFromString = MinPercentString;

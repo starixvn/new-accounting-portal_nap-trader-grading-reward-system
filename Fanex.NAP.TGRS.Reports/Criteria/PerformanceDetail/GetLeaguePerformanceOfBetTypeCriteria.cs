@@ -41,6 +41,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public bool IsExcludeLeagues { get; set; }
 
+        public string LeagueGroupIds { get; set; }
+
         /// <summary>
         /// Gets Setting Key.
         /// </summary>

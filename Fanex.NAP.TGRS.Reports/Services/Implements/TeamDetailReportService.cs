@@ -314,6 +314,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
             string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
             string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+            var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
@@ -321,6 +322,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, leagueGroupNameString, normalFont, "\n");
 
             //// Margin
             string marginFromString = MinPercentString;

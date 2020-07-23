@@ -88,7 +88,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                     var itemData = new LeaguePerformanceItem(item);
                     itemData.LeagueGroupName = leagueGroupName;
 
-                    this.AddItem(new LeaguePerformanceItem(item), isLive);
+                    this.AddItem(itemData, isLive);
                 }
             }
         }

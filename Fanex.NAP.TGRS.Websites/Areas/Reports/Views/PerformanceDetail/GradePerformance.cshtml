@@ -56,7 +56,7 @@
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
             <div class="edit-field col_9">
-                <select id="ddlBetType" multiple="multiple">                   
+                <select id="ddlBetType" multiple="multiple">
                     @foreach (var group in (IEnumerable<GroupBetTypes>)ViewBag.GroupBetTypes)
                     {
                         var check = false;
@@ -64,7 +64,7 @@
                         {
                             check = true;
                         }
-                        <optgroup label="@group.GroupName" checked =@check>
+                        <optgroup label="@group.GroupName" checked=@check>
                             @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
                             {
                                 <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
@@ -72,9 +72,20 @@
                         </optgroup>
                     }
                 </select>
-            </div>
+            </div>           
         </div>
         <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_9">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                    }
+                </select>
+            </div>
             <div class="lbl-field col_5">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
@@ -136,6 +147,7 @@
             No: '#',
             NoOfLeagues: '@ViewLang.NoOfLeagues',
             League: '@ViewLang.League',
+            LeagueGroup: '@ViewLang.LeagueGroup',
             NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
             Turnover: '@ViewLang.Turnover',
@@ -146,6 +158,7 @@
             BetTypeBM: '@ViewLang.BetTypeBM',
             BetType: '@ViewLang.BetType',
             BetTypeDetail: '@ViewLang.BetTypeDetail',
+            AllLeagueGroups: '@ViewLang.AllLeagueGroups',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',

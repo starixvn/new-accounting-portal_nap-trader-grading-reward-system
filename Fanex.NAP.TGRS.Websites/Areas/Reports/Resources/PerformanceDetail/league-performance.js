@@ -156,7 +156,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
         domElements.ddlLeagueGroup.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            minWidth: 195,
             height: 200,
             allSelectedText: labels.AllLeagueGroups
         });
@@ -195,7 +195,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        return validateBetType();
+        return validateBetType() && validateLeagueGroup();
     };
 
     // Validate Bet Type field.
@@ -210,6 +210,16 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
             return true;
         }
     };
+
+    var validateLeagueGroup = function () {
+        if (!domElements.ddlLeagueGroup.val()) {
+            validator.ShowError(domElements.ddlLeagueGroup.next(), messages.RequiredField, 'w');
+
+            return false;
+        }
+
+        return true;
+    }; 
 
     // Get league performance report data.
     var getLeaguePerformanceReport = function () {

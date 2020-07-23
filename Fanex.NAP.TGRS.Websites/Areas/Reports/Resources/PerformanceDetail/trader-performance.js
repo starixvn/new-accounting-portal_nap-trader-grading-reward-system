@@ -23,6 +23,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         txtMarginTo: null,
         txtMinTurnover: null,
         txtMinWinLoss: null,
+        ddlLeagueGroup: null,
         btnGenerate: null,
         divTraderPerformanceContainer: null,
         divTraderPerformanceGrid: null,
@@ -72,6 +73,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
         domElements.txtMarginTo = domElements.divTraderPerformanceFilter.find('#txtMarginTo');
         domElements.txtMinTurnover = domElements.divTraderPerformanceFilter.find('#txtMinTurnover');
         domElements.txtMinWinLoss = domElements.divTraderPerformanceFilter.find('#txtMinWinLoss');
+        domElements.ddlLeagueGroup = domElements.divTraderPerformanceFilter.find('#ddlLeagueGroup');
         domElements.btnGenerate = domElements.divTraderPerformanceFilter.find('#btnGenerate');
         domElements.divTraderPerformanceContainer = $('#divTraderPerformanceContainer');
         domElements.divTraderPerformanceGrid = $('#divTraderPerformanceGrid');
@@ -141,10 +143,17 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             validator.ClearError(domElements.txtMinWinLoss);
         });
 
+        domElements.ddlLeagueGroup.multiselect({
+            selectedList: 2,
+            minWidth: 195,
+            height: 200,
+            allSelectedText: labels.AllLeagueGroups
+        });
+
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divTraderPerformanceFilter, 'w') && validateFilterForm()) {
-                var selectedBetTypes = domElements.ddlBetType.val();
-                var betTypeOptions = domElements.ddlBetType.find('option');
+                var selectedBetTypes = domElements.ddlBetType.val();                
+                var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
 
                 parameters.MarketFilter = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
@@ -155,6 +164,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
                 parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null,
 
                 hideReports();
                 getTraderPerformanceReport();
@@ -171,8 +181,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-               validateBetType();
+        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo)
+            && validateBetType()
+            && validateLeagueGroup();
     };
 
     // Validate From/To values.
@@ -207,6 +218,16 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             return true;
         }
     };
+
+    var validateLeagueGroup = function () {
+        if (!domElements.ddlLeagueGroup.val()) {
+            validator.ShowError(domElements.ddlLeagueGroup.next(), messages.RequiredField, 'w');
+
+            return false;
+        }
+
+        return true;
+    }; 
 
     // Get trader performance on a specific league.
     var getTraderPerformanceReport = function () {
@@ -473,7 +494,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             CustId: traderId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
 
         common.DisableInput();
@@ -689,7 +711,8 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
             MatchId: matchId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
         common.DisableInput();
         $.ajax({

@@ -31,6 +31,8 @@
 
         public bool IsExcludeLeagues { get; set; }
 
+        public string LeagueGroupIds { get; set; }
+
         public override bool IsValid()
         {
             return true;

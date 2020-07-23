@@ -64,18 +64,29 @@
                         {
                             check = true;
                         }
-                    <optgroup label="@group.GroupName" checked =@check>
-                        @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
-                        {
-                            <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
-                        }
+                        <optgroup label="@group.GroupName" checked=@check>
+                            @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
+                            {
+                                <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
+                            }
 
-                    </optgroup>
+                        </optgroup>
+                    }
+                </select>
+            </div>           
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
                     }
                 </select>
             </div>
-        </div>
-        <div class="filter-row">
             <div class="lbl-field col_5">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
@@ -108,7 +119,7 @@
                         <option value="@item.TeamId">@item.TeamName</option>
                     }
                 </select>
-            </div>
+            </div>            
             <div class="lbl-field col_3 team-bm">
             </div>
             <div class="submit col_4">
@@ -147,6 +158,7 @@
             MarketNonLive: '@ViewLang.MarketNonLive',
             MarketLive: '@ViewLang.MarketLive',
             No: '#',
+            LeagueGroup: '@ViewLang.LeagueGroup',
             NoOfLeagues: '@ViewLang.NoOfLeagues',
             NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
@@ -159,6 +171,7 @@
             BetTypeBM: '@ViewLang.BetTypeBM',
             BetType: '@ViewLang.BetType',
             BetTypeDetail: '@ViewLang.BetTypeDetail',
+            AllLeagueGroups: '@ViewLang.AllLeagueGroups',
             Trader: '@ViewLang.Trader',
             Grade: '@ViewLang.Grade',
             Team: '@ViewLang.Team',

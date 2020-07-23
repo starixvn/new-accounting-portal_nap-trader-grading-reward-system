@@ -283,6 +283,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -372,10 +373,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var groupBetTypes = this._detailReportService.GetGroupBetTypes(CurrentSession.UserId, ReportUtil.GetBettypePermission(HasRight));            
 
             ViewBag.groupBetTypes = groupBetTypes;
-            ViewBag.Markets = GetMarketsPermission();
-
+            ViewBag.Markets = GetMarketsPermission();            
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -515,6 +516,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.groupBetTypes = groupBetTypes;
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -642,6 +644,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");

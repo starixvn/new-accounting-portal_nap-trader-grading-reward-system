@@ -64,7 +64,7 @@
                         {
                             check = true;
                         }
-                        <optgroup label="@group.GroupName" checked =@check>
+                        <optgroup label="@group.GroupName" checked=@check>
                             @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
                             {
                                 <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
@@ -72,9 +72,20 @@
                         </optgroup>
                     }
                 </select>
-            </div>
+            </div>            
         </div>
         <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_9">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                    }
+                </select>
+            </div>
             <div class="lbl-field col_5">
                 <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
             </div>
@@ -135,6 +146,7 @@
             Market: '@ViewLang.Market',
             MarketNonLive: '@ViewLang.MarketNonLive',
             MarketLive: '@ViewLang.MarketLive',
+            LeagueGroup: '@ViewLang.LeagueGroup',
             NoOfLeagues: '@ViewLang.NoOfLeagues',
             NoOfTraders: '@ViewLang.NoOfTraders',
             NoOfMatches: '@ViewLang.NoOfMatches',
@@ -156,6 +168,7 @@
             EffectiveDate: '@ViewLang.EffectiveDate',
             NA: '@ViewLang.NA',
             Forecast: '@ViewLang.Forecast',
+            AllLeagueGroups: '@ViewLang.AllLeagueGroups',
             BetTypePerformance: '@ViewLang.BetTypePerformance',
             LeaguePerformance: '@ViewLang.LeaguePerformance',
             TraderPerformance: '@ViewLang.TraderPerformance',

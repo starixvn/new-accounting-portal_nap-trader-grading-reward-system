@@ -22,6 +22,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         txtMarginTo: null,
         txtMinTurnover: null,
         txtMinWinLoss: null,
+        ddlLeagueGroup: null,
         btnGenerate: null,
         divGradePerformanceContainer: null,
         divGradePerformanceGrid: null,
@@ -77,6 +78,7 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
         domElements.txtMarginTo = domElements.divGradePerformanceFilter.find('#txtMarginTo');
         domElements.txtMinTurnover = domElements.divGradePerformanceFilter.find('#txtMinTurnover');
         domElements.txtMinWinLoss = domElements.divGradePerformanceFilter.find('#txtMinWinLoss');
+        domElements.ddlLeagueGroup = domElements.divGradePerformanceFilter.find('#ddlLeagueGroup');
         domElements.btnGenerate = domElements.divGradePerformanceFilter.find('#btnGenerate');
         domElements.divGradePerformanceContainer = $('#divGradePerformanceContainer');
         domElements.divGradePerformanceGrid = $('#divGradePerformanceGrid');
@@ -146,15 +148,23 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             validator.ClearError(domElements.txtMinWinLoss);
         });
 
+        domElements.ddlLeagueGroup.multiselect({
+            selectedList: 2,
+            minWidth: 200,
+            height: 200,
+            allSelectedText: labels.AllLeagueGroups
+        });
+
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divGradePerformanceFilter, 'w') && validateFilterForm()) {
                 var selectedBetTypes = domElements.ddlBetType.val();
-                var betTypeOptions = domElements.ddlBetType.find('option');
+                var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
 
                 parameters.MarketFilter = domElements.ddlMarket.val();
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.BetTypes = selectedBetTypes.join(',');
+                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null,
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
@@ -178,8 +188,9 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo) &&
-            validateBetType();
+        return validateValueRange(domElements.txtMarginFrom, domElements.txtMarginTo)
+            && validateBetType()
+            && validateLeagueGroup();
     };
 
     // Validate From/To values.
@@ -214,6 +225,16 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             return true;
         }
     };
+
+    var validateLeagueGroup = function () {
+        if (!domElements.ddlLeagueGroup.val()) {
+            validator.ShowError(domElements.ddlLeagueGroup.next(), messages.RequiredField, 'w');
+
+            return false;
+        }
+
+        return true;
+    }; 
 
     // Get grade performance on a specific league.
     var getGradePerformanceReport = function () {
@@ -445,7 +466,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             Grade: grade,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
 
         common.DisableInput();
@@ -491,7 +513,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: labels.LeagueGroup, Width: 100, Name: 'ColLeagueGroupName', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.NoOfTraders, Width: 100, Name: 'ColNoOfTraders', HeaderAlign: 'center', CellAlign: 'right' },
             {
                 HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
@@ -562,15 +585,16 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
                 numeral(item.NoOfTraders).format(common.Formats.IntegerFormat));
             row = {
                 Columns: [{ Name: 'ColNo', Value: index + 1 },
-                { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
-                { Name: 'ColNoOfTraders', Value: noOfTradersCol },
-                { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
-                { Name: 'ColTurnover', Value: item.Turnover },
-                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
-                { Name: 'ColWinLoss', Value: item.WinLoss },
-                { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
-            };
+                    { Name: 'ColLeague', Value: item.LeagueName, CssClass: 'league-name' },
+                    { Name: 'ColLeagueGroupName', Value: item.LeagueGroupName }, 
+                    { Name: 'ColNoOfTraders', Value: noOfTradersCol },
+                    { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                    { Name: 'ColTurnover', Value: item.Turnover },
+                    { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                    { Name: 'ColWinLoss', Value: item.WinLoss },
+                    { Name: 'ColBetCount', Value: item.BetCount },
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+                };
 
             bodyData.push(row);
         });
@@ -581,14 +605,15 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
     var renderLeaguePerformanceGridToFooter = function (data) {
         return footerData  = [{
             Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-            { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
-            { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-            { Name: 'ColTurnover', Value: data.Total.Turnover },
-            { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
-            { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-            { Name: 'ColBetCount', Value: data.Total.BetCount },
-            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
-        }];
+                { Name: 'ColLeagueGroupName', Value: data.TotalItemLive.LeagueGroupName },
+                { Name: 'ColNoOfTraders', Value: numeral(data.Total.NoOfTraders).format(common.Formats.IntegerFormat) },
+                { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+                { Name: 'ColTurnover', Value: data.Total.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+                { Name: 'ColBetCount', Value: data.Total.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+            }];
     }
 
     // Handle grid's events.
@@ -618,7 +643,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             LeagueId: leagueId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
 
         common.DisableInput();
@@ -820,7 +846,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             Grade: grade,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
 
         common.DisableInput();
@@ -1021,7 +1048,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             Grade: grade,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
 
         common.DisableInput();
@@ -1242,7 +1270,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             MatchId: matchId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
         common.DisableInput();
         $.ajax({

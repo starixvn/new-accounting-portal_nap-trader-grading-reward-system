@@ -45,6 +45,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public bool IsExcludeLeagues { get; set; }
 
+        public string LeagueGroupIds { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_PerformanceDetail_Trader_Match_Bettype";

@@ -2,9 +2,10 @@
 {
     using System;
 
+    [Serializable]
     public class LeagueGroup
     {
-        public Int16 LeagueGroupId { get; set; }
+        public int LeagueGroupId { get; set; }
 
         public string LeagueGroupName { get; set; }
     }
