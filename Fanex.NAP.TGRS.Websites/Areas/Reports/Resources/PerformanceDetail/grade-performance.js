@@ -1611,7 +1611,8 @@ Fanex.NAP.TGRS.PerformanceDetail.GradePerformance = function () {
             MatchId: matchId,
             BetTypes: parameters.BetTypes,
             FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds
         };
         common.DisableInput();
         $.ajax({

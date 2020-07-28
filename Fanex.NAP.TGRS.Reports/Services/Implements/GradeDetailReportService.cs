@@ -170,7 +170,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                         CustId = criteria.CustId,
                         MatchId = criteria.MatchId,
                         Bettypes = string.Join(",", bettypeData.Select(b => b.BetType.ToString())),
-                        IsExcludeLeagues = AppSession.IsExcludingLeagues
+                        IsExcludeLeagues = AppSession.IsExcludingLeagues,
+                        LeagueGroupIds = criteria.LeagueGroupIds
                     };
 
                     IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);

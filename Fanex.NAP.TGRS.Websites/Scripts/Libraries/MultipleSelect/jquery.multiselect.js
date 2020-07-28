@@ -101,9 +101,17 @@
         refresh: function (init) {
             function makeOptionGroup(self, groupNode, optionInGroupList) {
                 var htmlGroup = '';               
-                var optLabel = groupNode.getAttribute('label');                
-                var checked = groupNode.getAttribute('checked') === "True" ? 'checked="true"' : '';
-                var ariaSelected = groupNode.getAttribute('checked') === "True" ? 'aria-selected="true"' : 'aria-selected="false"';
+                var optLabel = groupNode.getAttribute('label');         
+                var checkedAttribute = groupNode.getAttribute('checked');
+                var checked = '';
+                var ariaSelected = 'aria-selected="false"';
+                if (checkedAttribute !== undefined && checkedAttribute !== null) {
+                    checkedAttribute = checkedAttribute.toLowerCase();
+                    if (checkedAttribute === "true" || checkedAttribute === 'checked') {
+                        checked = 'checked="true"';
+                        ariaSelected = 'aria-selected="true"';
+                    }
+                }
 
                 htmlGroup += '<li class="ui-multiselect-optgroup">';                
                 htmlGroup += '<span class="ui-multiselect-grouplabel ui-multiselect-selectable optgroup-span">';
