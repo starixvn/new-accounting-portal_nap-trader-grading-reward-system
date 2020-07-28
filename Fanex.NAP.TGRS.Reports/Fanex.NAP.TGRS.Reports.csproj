@@ -245,6 +245,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetLeagueDetailTeamCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetChoicePerformanceOfBetTypeCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceOfBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfBetTypeTraderCriteria.cs" />
