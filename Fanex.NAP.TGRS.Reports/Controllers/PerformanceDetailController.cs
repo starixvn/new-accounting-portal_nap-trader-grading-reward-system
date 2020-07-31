@@ -718,17 +718,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteriaBetChoice)
+        public JsonResult GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
-            var criteria = new GetLeaguePerformanceOfBetTypeCriteria
-            {
-                BetType = criteriaBetChoice.BetType,
-                FromDate = criteriaBetChoice.FromDate,
-                ToDate = criteriaBetChoice.ToDate,
-                IsLive = criteriaBetChoice.IsLive,
-                LeagueGroupIds = criteriaBetChoice.LeagueGroupIds
-            };
-
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfBetType(criteria);
             JsonResult jsonResult = Json(leaguePerformance);
