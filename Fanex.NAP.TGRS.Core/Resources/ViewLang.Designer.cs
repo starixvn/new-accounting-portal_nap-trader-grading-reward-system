@@ -1357,6 +1357,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No. Of Bet Choices.
+        /// </summary>
+        public static string NoOfBetChoices {
+            get {
+                return ResourceManager.GetString("NoOfBetChoices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No. Of Bet Type.
         /// </summary>
         public static string NoOfBetTypes {

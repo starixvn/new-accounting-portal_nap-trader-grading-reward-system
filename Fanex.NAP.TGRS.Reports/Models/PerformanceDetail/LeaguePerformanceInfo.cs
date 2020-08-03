@@ -31,6 +31,8 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public int? MatchCount { get; set; }
 
+        public int? BetChoiceCount { get; set; }
+
         public decimal? Turnover { get; set; }
 
         public decimal? WinLoss { get; set; }

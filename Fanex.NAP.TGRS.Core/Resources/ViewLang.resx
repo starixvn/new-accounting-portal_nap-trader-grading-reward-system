@@ -852,4 +852,7 @@
   <data name="AllLeagueGroups" xml:space="preserve">
     <value>All League Groups</value>
   </data>
+  <data name="NoOfBetChoices" xml:space="preserve">
+    <value>No. Of Bet Choices</value>
+  </data>
 </root>

@@ -23,6 +23,8 @@
 
         public short BetType { get; set; }
 
+        public string BetChoice { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
@@ -37,7 +39,7 @@
         /// <returns>Setting key of the criteria.</returns>
         public override string GetSettingKey()
         {
-            return "TGRS_Rpt_PerformanceDetail_Bettype_League";
+            return "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_League";
         }
 
         /// <summary>

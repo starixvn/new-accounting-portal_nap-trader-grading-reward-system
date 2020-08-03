@@ -157,6 +157,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return leaguePerformance;
         }
 
+        public LeaguePerformanceList GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
+        {
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+
+            if (leagueData != null && leagueData.Any())
+            {
+                leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
+                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
+            }
+
+            return leaguePerformance;
+        }
+
         /// <summary>
         /// Gets the trader performance of a bet type, league.
         /// </summary>
@@ -175,6 +190,15 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             return traderPerformance;
+        }
+
+        public IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetChociePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria)
+        {           
+            var result = this.GetData<BetTypeBetChoicePerformanceInfo>(criteria);
+
+            result = result ?? new List<BetTypeBetChoicePerformanceInfo>();
+
+            return result;
         }
 
         /// <summary>
