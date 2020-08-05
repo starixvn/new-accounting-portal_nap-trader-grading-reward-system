@@ -129,6 +129,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
         $('#chkOS').on('change', function () {
             window.location = common.ResolveRootUrl("OSReports/OSDashboard");
         });
+
+        $('#chkBasketBall').on('change', function () {
+            window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
+        });
     };
     //}
 

@@ -4,6 +4,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Reports.Criteria;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
@@ -90,6 +91,25 @@
             {
                 TeamData = teamData
             });
+        }
+        
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public ActionResult BasketBallDashboard()
+        {
+            if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None) return View("~/Views/Home/Index.cshtml");
+
+            ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
+
+            return View();
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryInfoCriteria criteria)
+        {
+            var data = this._dashboardService.GetBasketballSummaryInfo(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

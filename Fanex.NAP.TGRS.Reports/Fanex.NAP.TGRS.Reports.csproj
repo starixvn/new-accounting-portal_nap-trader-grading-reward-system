@@ -193,6 +193,7 @@
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\GetBasketballSummaryInfoCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetBettypeDetailOfTraderCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetBetTypesCriteria.cs" />
@@ -428,6 +429,9 @@
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\GroupingLeagueItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\LeagueGroup.cs" />
+    <Compile Include="ViewModels\Dashboard\BasketballSummaryInfo.cs" />
+    <Compile Include="ViewModels\Dashboard\BasketballSummaryInfoAvgItem.cs" />
+    <Compile Include="ViewModels\Dashboard\BasketballSummaryInfoItem.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />

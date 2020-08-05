@@ -395,6 +395,7 @@
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\team-performance.js" />
     <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\event-performance.js" />
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\basketball-dashboard.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\trader-performance.js" />
@@ -643,6 +644,8 @@
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\LeaguePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformance.xls" />
+    <Content Include="Areas\Reports\Views\Dashboard\BasketBallDashboard.cshtml" />
+    <Content Include="Areas\Reports\Resources\Dashboard\basketball-dashboard.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -681,6 +684,7 @@
     <Content Include="Scripts\Libraries\Highcharts\exporting.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libraries\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libraries\Highcharts\highcharts-v2020.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery-ui-1.9.1.min.js" />
     <Content Include="Scripts\Libraries\jQuery\jquery.cookie.js" />

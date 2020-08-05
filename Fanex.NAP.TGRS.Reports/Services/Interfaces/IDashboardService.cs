@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
+    using Fanex.NAP.TGRS.Reports.Criteria;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
     using System.Collections.Generic;
@@ -17,5 +18,7 @@
         IEnumerable<MonthAmountItem> GetSummaryData(int month, int permission);
 
         IEnumerable<TeamPerformance> GetTeamData(int month, int permission);
+
+        BasketballSummaryInfo GetBasketballSummaryInfo(GetBasketballSummaryInfoCriteria criteria);
     }
 }

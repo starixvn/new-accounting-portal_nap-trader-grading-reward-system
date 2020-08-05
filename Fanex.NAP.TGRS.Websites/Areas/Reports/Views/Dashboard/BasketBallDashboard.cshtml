@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = ViewLang.PerformanceSummaryReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var canSwitch = (bool)(@ViewBag.CanViewOSDashboard) ? true : false;
+}
+
+@Styles.Render("~/styles/basketballdashboard")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            @if (@canSwitch == true)
+            {
+                <div class="switch-toggle switch-ios switch-3 flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio" />
+                    <label for="chkSoccer">SOCCER</label>
+
+                    <input id="chkBasketBall" name="chartType" type="radio" checked="">
+                    <label for="chkBasketBall">BasketBall</label>
+
+                    <input id="chkOS" name="chartType" type="radio" />
+                    <label for="chkOS">OS</label>
+
+                    <a id="toggleB"></a>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="divTabSummaryContent" class="box-container">
+        <div class="box box-left" style="width:99%">
+            <div id="divWinlossContainer" class="box-chart-container">
+                <div id="divWinlossHeader" class="box-header">
+                    <div class="align-left">
+                        <span>WINLOSS COMPARISON</span>
+                        <span>2018</span>
+                    </div>
+                    <div class="align-right">
+                        <span>ICON</span>
+                        <span>average</span>
+                    </div>
+                </div>
+                <div id="divWinlossContent" class="box-content">
+                </div>
+            </div>
+            
+            <div id="divMarginContainer" class="box-chart-container">
+                <div id="divMarginHeader" class="box-header">
+                    <div class="align-left">
+                        <span>MARGIN COMPARISON</span>
+                        <span>2018</span>
+                    </div>
+                    <div class="align-right">
+                        <span>ICON</span>
+                        <span>average</span>
+                    </div>
+                </div>
+                <div id="divMarginContent" class="box-content">                    
+                </div>
+            </div>
+
+            <div id="divBetCountContainer" class="box-chart-container">
+                <div id="divBetCountHeader" class="box-header">
+                    <div class="align-left">
+                        <span>BET COUNT COMPARISON</span>
+                        <span>2018</span>
+                    </div>
+                    <div class="align-right">
+                        <span>ICON</span>
+                        <span>average</span>
+                    </div>
+                </div>
+                <div id="divBetcountContent" class="box-content">                   
+                </div>
+            </div>
+
+            <div id="divTurnoverContainer" class="box-chart-container">
+                <div id="divTurnoverHeader" class="box-header">
+                    <div class="align-left">
+                        <span>TURNOVER COMPARISON</span>
+                        <span>2018</span>
+                    </div>
+                    <div class="align-right">
+                        <span>ICON</span>
+                        <span>average</span>
+                    </div>
+                </div>
+                <div id="divTurnoverContent" class="box-content">                   
+                </div>
+            </div>
+           
+        </div>
+        <div class="box" style="width:99%">
+            <div class="box-left">
+                <div class="box">
+                    <div>Live Trader Performance</div>
+                </div>
+                <div class="box">
+                    <div>League Performance</div>
+                </div>
+            </div>
+            <div id="divMatchesCountContainer" class="box-chart-container">
+                <div id="divMatchesHeader" class="box-header">
+                    <div class="align-left">
+                        <span>MATCHES COUNT COMPARISON</span>
+                        <span>2018</span>
+                    </div>
+                    <div class="align-right">
+                        <span>ICON</span>
+                        <span>average</span>
+                    </div>
+                </div>
+                <div id="divMatchesCountContent" class="box-content">                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/basketballdashboard")
+    <script type="text/javascript">
+        var labels = {
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            NA: '@ViewLang.NA'
+        };
+    </script>
+}
+
