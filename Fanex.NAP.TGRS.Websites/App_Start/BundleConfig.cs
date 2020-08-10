@@ -240,10 +240,12 @@ namespace Fanex.NAP.TGRS.Websites
             bundles.AddAndInclude(
                "~/styles/basketballdashboard",
                "~/Content/ToggleSwitch/toggle-switch.css",
+               "~/Content/DatePicker/jquery.nexDatePicker.css",
                "~/Areas/Reports/Resources/Dashboard/basketball-dashboard.less");
 
             bundles.Add(new ScriptBundle("~/scripts/basketballdashboard").Include(
                 "~/Scripts/Libraries/jQuery/jquery.cookie.js",
+                "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-v2020.js",
                 "~/Areas/Reports/Resources/Dashboard/basketball-dashboard.js"));
 

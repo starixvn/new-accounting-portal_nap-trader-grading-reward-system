@@ -23,64 +23,115 @@
                     <a id="toggleB"></a>
                 </div>
             }
+            <div class="filter">
+                <div style="margin-left:40px; margin-top:1px;">
+                    <span>Filtered by</span>
+                    <select id="divFilterPeriod" class="select-period">
+                        <option value="1" selected>Today</option>
+                        <option value="2">Last 7 days</option>
+                        <option value="3">Last 30 days</option>
+                        <option value="4">Custom months</option>
+                    </select>
+                </div>
+               
+                <div id="divRangeMonth" style="margin-left:40px">
+                </div>
+            </div>
         </div>
     </div>
+
     <div id="divTabSummaryContent" class="box-container">
         <div class="box box-left" style="width:99%">
-            <div id="divWinlossContainer" class="box-chart-container">
+            <div id="divWinlossContainer" class="box-chart-container margin-right margin-bottom">
                 <div id="divWinlossHeader" class="box-header">
                     <div class="align-left">
-                        <span>WINLOSS COMPARISON</span>
-                        <span>2018</span>
+                        <span class="box-name">WIN-LOSS COMPARISON</span>
+                        @*<span>2018</span>*@
                     </div>
                     <div class="align-right">
-                        <span>ICON</span>
-                        <span>average</span>
+                        <div>
+                            <span class="icon-chart-bar"></span>
+                            <span class="icon-chart-line"></span>
+                        </div>                                         
+                        <div class="chart-average">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="divWinlossContent" class="box-content">
                 </div>
             </div>
             
-            <div id="divMarginContainer" class="box-chart-container">
+            <div id="divMarginContainer" class="box-chart-container margin-bottom">
                 <div id="divMarginHeader" class="box-header">
                     <div class="align-left">
-                        <span>MARGIN COMPARISON</span>
-                        <span>2018</span>
+                        <span class="box-name">MARGIN COMPARISON</span>
+                        @*<span>2018</span>*@
                     </div>
                     <div class="align-right">
-                        <span>ICON</span>
-                        <span>average</span>
+                        <div>
+                            <span class="icon-chart-bar"></span>
+                            <span class="icon-chart-line"></span>
+                        </div>
+                        <div class="chart-average">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="divMarginContent" class="box-content">                    
                 </div>
             </div>
 
-            <div id="divBetCountContainer" class="box-chart-container">
+            <div id="divBetCountContainer" class="box-chart-container margin-right margin-bottom">
                 <div id="divBetCountHeader" class="box-header">
                     <div class="align-left">
-                        <span>BET COUNT COMPARISON</span>
-                        <span>2018</span>
+                        <span class="box-name">BET COUNT COMPARISON</span>
+                        @*<span>2018</span>*@
                     </div>
                     <div class="align-right">
-                        <span>ICON</span>
-                        <span>average</span>
+                        <div>
+                            <span class="icon-chart-bar"></span>
+                            <span class="icon-chart-line"></span>
+                        </div>
+                        <div class="chart-average">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="divBetcountContent" class="box-content">                   
                 </div>
             </div>
 
-            <div id="divTurnoverContainer" class="box-chart-container">
+            <div id="divTurnoverContainer" class="box-chart-container margin-bottom">
                 <div id="divTurnoverHeader" class="box-header">
                     <div class="align-left">
-                        <span>TURNOVER COMPARISON</span>
-                        <span>2018</span>
+                        <span class="box-name">TURNOVER COMPARISON</span>
+                        @*<span>2018</span>*@
                     </div>
                     <div class="align-right">
-                        <span>ICON</span>
-                        <span>average</span>
+                        <div>
+                            <span class="icon-chart-bar"></span>
+                            <span class="icon-chart-line"></span>
+                        </div>
+                        <div class="chart-average">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="divTurnoverContent" class="box-content">                   
@@ -88,24 +139,123 @@
             </div>
            
         </div>
+
         <div class="box" style="width:99%">
-            <div class="box-left">
-                <div class="box">
-                    <div>Live Trader Performance</div>
+            <div class="box-left margin-bottom">
+                <div class="box margin-right">
+                    <div class="row-title">
+                        <h6>Live Trader Performance</h6>
+                    </div>
+                    <div class="row-header">
+                        <div class="margin">
+                            <span class="column-left">Trader</span>
+                            <span class="column-right">Margin %</span>
+                        </div>                       
+                    </div>
+                    <div class="row-content">
+                        <div class="border-bottom">
+                            <span class="column-left">AntonioHart</span>
+                            <span class="column-right">9.80</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">BethJordan</span>
+                            <span class="column-right">-5.21</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">StanleyDavidson</span>
+                            <span class="column-right">-9.5</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">JillTaylor</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="box">
-                    <div>League Performance</div>
+                    <div class="row-title">
+                        <h6>League Performance</h6>
+                    </div>
+                    <div class="row-header">
+                        <div class="margin">
+                            <span class="column-left">Trader</span>
+                            <span class="column-right">Margin %</span>
+                        </div>                        
+                    </div>
+                    <div class="row-content">
+                        <div class="border-bottom">
+                            <span class="column-left">NBA</span>
+                            <span class="column-right">9.80</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">ABC Super Division</span>
+                            <span class="column-right">-5.21</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">ABSL</span>
+                            <span class="column-right">-5.21</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">FIBA</span>
+                            <span class="column-right">-5.21</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">NBLC</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">NBLC</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">NBLC</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                        <div class="border-bottom">
+                            <span class="column-left">NBLC</span>
+                            <span class="column-right">9.67</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="divMatchesCountContainer" class="box-chart-container">
+
+            <div id="divMatchesCountContainer" class="box-chart-container margin-bottom">
                 <div id="divMatchesHeader" class="box-header">
                     <div class="align-left">
-                        <span>MATCHES COUNT COMPARISON</span>
-                        <span>2018</span>
+                        <span class="box-name">MATCHES COUNT COMPARISON</span>
+                        @*<span>2018</span>*@
                     </div>
                     <div class="align-right">
-                        <span>ICON</span>
-                        <span>average</span>
+                        <div>
+                            <span class="icon-chart-bar"></span>
+                            <span class="icon-chart-line"></span>
+                        </div>
+                        <div class="chart-average">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="divMatchesCountContent" class="box-content">                   
@@ -118,6 +268,13 @@
 {
     @Scripts.Render("~/scripts/basketballdashboard")
     <script type="text/javascript">
+         var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+
         var labels = {
             League: '@ViewLang.League',
             Turnover: '@ViewLang.Turnover',

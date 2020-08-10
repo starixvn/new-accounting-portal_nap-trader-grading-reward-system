@@ -8,6 +8,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     var $this = this;
 
     var domElements = {
+        divRangeMonth: null,       
         divWinlossContent: null,
         divMarginContent: null,
         divBetcountContent: null,
@@ -16,6 +17,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };
 
     var cacheDomElements = function () {
+        domElements.divRangeMonth = $('#divRangeMonth');      
         domElements.divWinlossContent = $('#divWinlossContent');
         domElements.divMarginContent = $('#divMarginContent');
         domElements.divBetcountContent = $('#divBetcountContent');
@@ -30,7 +32,29 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     $this.Initialize = function () {        
         cacheDomElements();
         $("#headline").hide();
+        initializeMonthPickers();
         getBasketballSummaryInfo();
+    };
+
+    var initializeMonthPickers = function () {
+        domElements.divRangeMonth = domElements.divRangeMonth.timeRange({
+            minDate: datepickerSetting.MinDate,
+            maxDate: datepickerSetting.DefaultToDate,
+            defaultFromDate: datepickerSetting.DefaultFromDate,
+            defaultToDate: datepickerSetting.DefaultToDate,
+            allowYearRange: datepickerSetting.AllowYearRange,
+            yearRanges: null,
+            labelCss: 'lbl-range-month'
+        });
+
+        domElements.ddlPeriodType = domElements.divRangeMonth.find('#ddlPeriodType');        
+        domElements.ddlPeriodType.val(2).change();
+        var instance = domElements.divRangeMonth.find("span:contains(Date)");
+        if (instance.length > 0) {
+            instance.text('Month');
+        }
+        $('.lbl-range-month').hide();
+        $('.lbl-range-month').next().hide(); 
     };
 
     var getBasketballSummaryInfo = function () {
@@ -113,18 +137,18 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     data: [7.0, 6.9, 9.5, 10.0, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
                     zones: [{
                         value: 10,
-                        color: 'blue'
+                        color: '#5a7dc1'
                     }, {
-                        color: 'red'
+                            color: '#3fd0da'
                     }]
                 },
                 {
                     data: [7.0, 6.9, 9.5, 10.0, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
                     zones: [{
                         value: 10,
-                        color: 'blue'
+                        color: '#5a7dc1'
                     }, {
-                        color: 'red'
+                            color: '#3fd0da'
                     }]
                 }
             ]
@@ -152,7 +176,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     name: groupName,
                     zoneAxis: 'x',
                     dashStyle: 'Solid',
-                    color: 'blue'
+                    color: '#3fd0da'
                 });
         }
 
@@ -170,7 +194,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     name: groupName,
                     zoneAxis: 'x',
                     dashStyle: 'Solid',
-                    color: 'yellow'
+                    color: '#5a7dc1'
                 });
         }
 
@@ -200,7 +224,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             legend: {
                 layout: 'horizontal',
                 align: 'top',
-                verticalAlign: 'top'
+                verticalAlign: 'top',
+                enabled: false
             },                       
             series: series
         };
@@ -236,11 +261,11 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     zones: [
                         {
                             value: 5,
-                            color: 'blue'
+                            color: '#5a7dc1'
                         }
                         , {
                             dashStyle: 'Solid',
-                            color: 'yellow'
+                            color: '#3fd0da'
                         }],
                     dashStyle: 'ShortDot'
                 },
@@ -249,10 +274,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     zoneAxis: 'x',
                     zones: [{
                         value: 5,
-                        color: 'blue'
+                        color: '#5a7dc1'
                     }, {
                         dashStyle: 'Solid',
-                        color: 'yellow'
+                        color: '#3fd0da'
                     }],
                     dashStyle: 'ShortDot'
                 }
@@ -281,7 +306,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     name: groupName,
                     zoneAxis: 'x',
                     dashStyle: 'Solid',
-                    color: 'blue'
+                    color: '#3fd0da' 
                 });
         }
 
@@ -299,7 +324,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     name: groupName,
                     zoneAxis: 'x',
                     dashStyle: 'Solid',
-                    color: 'yellow'
+                    color: '#5a7dc1'
                 });
         }
 
@@ -322,8 +347,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             },
             legend: {
                 layout: 'horizontal',
-                align: 'top',
-                verticalAlign: 'top'
+                align: 'top left',
+                verticalAlign: 'top left',
+                itemMarginTop: -15,
+                enabled: false
             },            
             series: series
         };

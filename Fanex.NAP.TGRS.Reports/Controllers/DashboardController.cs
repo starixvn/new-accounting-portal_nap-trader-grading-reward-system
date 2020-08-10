@@ -3,11 +3,13 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Reports.Criteria;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -27,6 +29,15 @@
             : this(null)
         {
             _permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.Dashboard_PHbettypes, TGRSFunctionKeys.Dashboard_Majorbettypes);
+
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;            
         }
 
         public DashboardController(IDashboardService dashboardService)

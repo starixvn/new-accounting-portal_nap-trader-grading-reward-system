@@ -398,6 +398,8 @@
     <Content Include="Areas\Reports\Resources\Dashboard\basketball-dashboard.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
+    <Content Include="Areas\Reports\Resources\Dashboard\images\chart-bar.png" />
+    <Content Include="Areas\Reports\Resources\Dashboard\images\chart-line.png" />
     <Content Include="Areas\Reports\Resources\MultipleMatchesPerformance\trader-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\NewPerformanceDetail\grade-performance.js" />
