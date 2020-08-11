@@ -113,6 +113,10 @@ body {
                 float: right;
             }
 
+            .format-negative {
+                color: Red;
+            }
+
             .border-bottom {
                 border-bottom: 1px solid #ddd;
                 margin: 0 5px;
@@ -175,16 +179,52 @@ body {
                         float: right;
                     }
 
-                    .icon-chart-bar {
-                        background-image: url('images/chart-bar.png');
+                    .icon-chart,
+                    .icon-chart-active {
+                        width: 30px;
+                        background-color: #CECCCD;
+                        padding-right: 6px;
+                    }
+
+                    .border-radius-left {
+                        border-radius: 5px 0 0 5px;
+                        border-right: none;
+                    }
+
+                    .border-radius-right {
+                        border-radius: 0 5px 5px 0;
+                        border-left: none;
+                    }
+
+                    .icon-chart-active {
+                        background-color: #fff;
+                    }
+
+                    .icon-chart-bar,
+                    .icon-chart-line,
+                    .icon-chart-bar-active,
+                    .icon-chart-line-active {
                         width: 24px;
                         height: 24px;
+                        border: none;
+                    }
+
+                    .icon-chart-bar {
+                        background-image: url('images/chart-bar.png');
+                        background-color: #CECCCD;
+                    }
+
+                    .icon-chart-bar-active {
+                        background-image: url('images/chart-bar-active.png');
                     }
 
                     .icon-chart-line {
                         background-image: url('images/chart-line.png');
-                        width: 24px;
-                        height: 24px;
+                        background-color: #CECCCD;
+                    }
+
+                    .icon-chart-line-active {
+                        background-image: url('images/chart-line-active.png');
                     }
 
                     .chart-average {
@@ -291,17 +331,13 @@ body {
     .white-content;
     .absolute-padding;
     width: 100%;
-    text-transform: uppercase;
     font-size: 145%;
     .title-border;
     height: 40px;
     line-height: 40px;
     vertical-align: middle;
     padding-left: 10px;
-
-    label {
-        cursor: pointer;
-    }
+    padding-bottom: 10px;
 
     .flat-switch {
         float: right;
@@ -316,6 +352,46 @@ body {
         margin-right: 8px;
         margin-top: 10.5px;
     }
+
+    .dashboard-content {
+        height: 38px;
+        display: flex;        
+
+        .filter {
+            font-size: 13px;
+            text-transform: none;
+            font-weight: normal;
+            color: #000;
+            font-family: Lucida Sans Unicode;
+            text-shadow: 0 0.023em 0 #000000;
+            display: flex;
+
+            .range-month {
+                display: flex;
+            }
+
+            .btn-generate {
+                float: left;
+                margin: 2px 0 0 10px;
+            }
+
+            .period-selected {
+                height: 26px;
+                width: 120px;
+                border-color: #CECCCD;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-prev,
+            .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-next,
+            .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-down {
+                top: 12px;
+            }
+        }
+    }
 }
 
 .dashboard-border {
@@ -328,31 +404,4 @@ body {
     -webkit-box-shadow: 0px 1px 1px 0px #d8d9dc;
     -moz-box-shadow: 0px 1px 1px 0px #d8d9dc;
     box-shadow: 0px 1px 1px 0px #d8d9dc;
-}
-
-.dashboard-content {
-    height: 35px;
-    width: 100%;
-
-    .filter {
-        font-size: 13px;
-        text-transform: none;
-        font-weight: normal;
-        color: #000;
-        font-family: Lucida Sans Unicode;
-        text-shadow: 0 0.023em 0 #000000;
-        display: inline-flex;
-        float: left;
-
-        .select-period {
-            height: 26px;
-            border-color: #CECCCD;
-        }
-
-        .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-prev,
-        .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-next,
-        .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-down {
-            top: 12px;
-        }
-    }
 }

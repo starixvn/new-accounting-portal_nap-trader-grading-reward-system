@@ -3,7 +3,7 @@
     using System;
 
     [Serializable]
-    public class BasketballSummaryInfoAvgItem
+    public class BasketballSummaryGeneralInfoAvgItem
     {
         public DateTime FromDate { get; set; }
 

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     [Serializable]
-    public class BasketballSummaryInfo
+    public class BasketballSummaryGeneralInfo
     {
         public bool IsCrossYear { get; set; }
 
@@ -57,5 +57,9 @@
         public string Name { get; set; }
 
         public decimal Value { get; set; }
+
+        public int Month { get; set; }
+
+        public int Year { get; set; }
     }
 }

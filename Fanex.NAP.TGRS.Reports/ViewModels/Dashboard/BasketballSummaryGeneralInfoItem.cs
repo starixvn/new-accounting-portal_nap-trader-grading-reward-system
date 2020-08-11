@@ -3,7 +3,7 @@
     using System;
 
     [Serializable]
-    public class BasketballSummaryInfoItem
+    public class BasketballSummaryGeneralInfoItem
     {
         public DateTime EventDate { get; set; }
 

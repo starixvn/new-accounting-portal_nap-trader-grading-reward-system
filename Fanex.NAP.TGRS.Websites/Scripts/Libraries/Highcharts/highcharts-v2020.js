@@ -1893,4 +1893,3 @@
                     }
                 }); O(q, "masters/highcharts.src.js", [q["parts/Globals.js"]], function (g) { return g }); q["masters/highcharts.src.js"]._modules = q; return q["masters/highcharts.src.js"]
 });
-//# sourceMappingURL=highcharts.js.map

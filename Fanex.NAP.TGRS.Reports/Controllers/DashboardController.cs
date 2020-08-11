@@ -4,8 +4,8 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Core.Helpers;
-    using Fanex.NAP.TGRS.Reports.Criteria;
+    using Fanex.NAP.TGRS.Core.Helpers;   
+    using Fanex.NAP.TGRS.Reports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
@@ -116,9 +116,27 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
-        public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryInfoCriteria criteria)
+        public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
         {
             var data = this._dashboardService.GetBasketballSummaryInfo(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
+        {
+            var data = this._dashboardService.GetBasketballTraderSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
+        {
+            var data = this._dashboardService.GetBasketballLeagueGroupSummary(criteria);
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }

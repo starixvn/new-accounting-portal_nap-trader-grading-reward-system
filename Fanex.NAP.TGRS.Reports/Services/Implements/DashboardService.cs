@@ -1,16 +1,15 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
     using Fanex.Data;
-    using Fanex.NAP.TGRS.Core.BaseClasses;
-    using Fanex.NAP.TGRS.Reports.Criteria;
+    using Fanex.NAP.TGRS.Core.BaseClasses;    
+    using Fanex.NAP.TGRS.Reports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Models.Dashboard;
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
+    using System.Collections.Generic;    
     using System.Linq;
 
     /// <summary>
@@ -177,26 +176,65 @@
 
 
         #region Basketball summary
-        public BasketballSummaryInfo GetBasketballSummaryInfo(GetBasketballSummaryInfoCriteria criteria)
+        public IEnumerable<BasketballTraderSummary> GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
         {
-            var basketballSummaryInfo = new BasketballSummaryInfo();
+            var traders = new List<BasketballTraderSummary>();
+
+            IEnumerable<BasketballTraderSummaryInfo> data = this.GetData<BasketballTraderSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                traders = data.Select(x => new BasketballTraderSummary
+                {
+                     TraderName = x.Username,
+                     Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return traders;
+        }
+
+        public IEnumerable<BasketballLeagueGroupSummary> GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
+        {
+            var leagueGroups = new List<BasketballLeagueGroupSummary>();
+           
+            IEnumerable<BasketballLeagueGroupSummaryInfo> data = this.GetData<BasketballLeagueGroupSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                leagueGroups = data.Select(x => new BasketballLeagueGroupSummary
+                {
+                    GroupID = x.GroupID,
+                    GroupName = x.GroupName,
+                    Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return leagueGroups;
+        }
+
+        public BasketballSummaryGeneralInfo GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
+        {
+            var basketballSummaryInfo = new BasketballSummaryGeneralInfo();
 
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
-                    var items = multi.Read<BasketballSummaryInfoItem>();
-                    var avgItems = multi.Read<BasketballSummaryInfoAvgItem>();
+                    var items = multi.Read<BasketballSummaryGeneralInfoItem>();
+                    var avgItems = multi.Read<BasketballSummaryGeneralInfoAvgItem>();
                   
                     basketballSummaryInfo.IsCrossYear = !criteria.FromDate.Year.Equals(criteria.ToDate.Year);
 
                     if (items != null && items.Any())
                     {
-                        basketballSummaryInfo = BindBasketballWinLoss(basketballSummaryInfo, items, criteria);
-                        basketballSummaryInfo = BindBasketballTurnover(basketballSummaryInfo, items, criteria);
-                        basketballSummaryInfo = BindBasketballMargin(basketballSummaryInfo, items, criteria);
-                        basketballSummaryInfo = BindBasketballBetCount(basketballSummaryInfo, items, criteria);
-                        basketballSummaryInfo = BindBasketballMatchCount(basketballSummaryInfo, items, criteria);
+                        var monthYearList = GenerateMonthYearList(criteria.FromDate, criteria.ToDate);
+
+                        basketballSummaryInfo = BindBasketballWinLoss(basketballSummaryInfo, items, criteria, monthYearList);
+                        basketballSummaryInfo = BindBasketballTurnover(basketballSummaryInfo, items, criteria, monthYearList);
+                        basketballSummaryInfo = BindBasketballMargin(basketballSummaryInfo, items, criteria, monthYearList);
+                        basketballSummaryInfo = BindBasketballBetCount(basketballSummaryInfo, items, criteria, monthYearList);
+                        basketballSummaryInfo = BindBasketballMatchCount(basketballSummaryInfo, items, criteria, monthYearList);
                     }
                 }
             }
@@ -204,148 +242,216 @@
             return basketballSummaryInfo;
         }
 
-        private BasketballSummaryInfo BindBasketballWinLoss(BasketballSummaryInfo basketballSummaryInfo
-            , IEnumerable<BasketballSummaryInfoItem> infoList
-            , GetBasketballSummaryInfoCriteria criteria)
-        {            
-            if (basketballSummaryInfo.IsCrossYear)
+        private decimal GetValue(BasketballSummaryGeneralInfoItem item, string type)
+        {
+            if (item != null)
             {
-                basketballSummaryInfo.WinLossCrossYearList = infoList
-                   .Where(x => x.EventDate.Year.Equals(criteria.FromDate.Year))
-                   .Select(x => new Column
-                   {
-                       GroupName = x.EventDate.Year.ToString(),
-                       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                       Value = x.Turnover
-                   });
-
-                basketballSummaryInfo.WinLossComparisonList = infoList
-                .Where(x => !x.EventDate.Year.Equals(criteria.FromDate.Year))
-                .Select(x => new Column
+                switch (type)
                 {
-                    GroupName = x.EventDate.Year.ToString(),
-                    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                    Value = x.Turnover
+                    case "winloss":
+                        return item.WinLoss;
+                    case "margin":
+                        return item.Margin;
+                    case "turnover":
+                        return item.Turnover;
+                    case "betcount":
+                        return item.BetCount;
+                    case "matchcount":
+                        return item.MatchCount;
+                    default:
+                        return 0;
+                }
+            }
+            return 0;
+        }
+
+        private List<Column> GenerateMonthYearList(DateTime fromDate, DateTime toDate)
+        {
+            var monthList = new List<Column>();
+            var year = fromDate.Year;
+
+            for (int i = fromDate.Month; i < toDate.Month; i++)
+            {
+                monthList.Add(new Column
+                {
+                    GroupName = year.ToString(),
+                    Name = i + "/" + year,
+                    Value = 0,
+                    Month = i,
+                    Year = year
                 });
             }
 
-            basketballSummaryInfo.WinLossList = infoList
-                   .Where(x => x.EventDate.Year.Equals(criteria.ToDate.Year))
-                   .Select(x => new Column
-                   {
-                       GroupName = x.EventDate.Year.ToString(),
-                       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                       Value = x.Turnover
-                   });
+            return monthList;
+        }
 
-            basketballSummaryInfo.WinLossComparisonList = infoList
-                .Where(x => !x.EventDate.Year.Equals(criteria.ToDate.Year))
-                .Select(x => new Column
-                {
-                    GroupName = x.EventDate.Year.ToString(),
-                    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                    Value = x.Turnover
-                });
+        private BasketballSummaryGeneralInfo BindBasketballWinLoss(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , GetBasketballSummaryGeneralCriteria criteria
+            , List<Column> monthYearList)
+        {            
+            if (basketballSummaryInfo.IsCrossYear)
+            {
+                //basketballSummaryInfo.WinLossCrossYearList = infoList
+                //   .Where(x => x.EventDate.Year.Equals(criteria.FromDate.Year))
+                //   .Select(x => new Column
+                //   {
+                //       GroupName = x.EventDate.Year.ToString(),
+                //       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
+                //       Value = x.Turnover
+                //   });
+
+                //basketballSummaryInfo.WinLossComparisonList = infoList
+                //.Where(x => !x.EventDate.Year.Equals(criteria.FromDate.Year))
+                //.Select(x => new Column
+                //{
+                //    GroupName = x.EventDate.Year.ToString(),
+                //    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
+                //    Value = x.Turnover
+                //});
+            }            
+
+            basketballSummaryInfo.WinLossList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                    y => y.EventDate.Month.Equals(x.Month) 
+                        && y.EventDate.Year.Equals(x.Year)), "winloss")
+            });
+
+            basketballSummaryInfo.WinLossComparisonList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year - 1,
+                Value = GetValue(infoList.FirstOrDefault(
+                   y => y.EventDate.Month.Equals(x.Month)
+                       && y.EventDate.Year.Equals(x.Year - 1)), "winloss")
+            });
+           
+            return basketballSummaryInfo;
+        }      
+
+        private BasketballSummaryGeneralInfo BindBasketballTurnover(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , GetBasketballSummaryGeneralCriteria criteria
+            , List<Column> monthYearList)
+        {
+            basketballSummaryInfo.TurnoverList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                   y => y.EventDate.Month.Equals(x.Month)
+                       && y.EventDate.Year.Equals(x.Year)), "turnover")
+            });
+
+            basketballSummaryInfo.TurnoverComparisonList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year - 1,
+                Value = GetValue(infoList.FirstOrDefault(
+                  y => y.EventDate.Month.Equals(x.Month)
+                      && y.EventDate.Year.Equals(x.Year - 1)), "turnover")
+            });           
 
             return basketballSummaryInfo;
         }
 
-        private BasketballSummaryInfo BindBasketballTurnover(BasketballSummaryInfo basketballSummaryInfo
-            , IEnumerable<BasketballSummaryInfoItem> infoList
-            , GetBasketballSummaryInfoCriteria criteria)
+        private BasketballSummaryGeneralInfo BindBasketballMargin(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , GetBasketballSummaryGeneralCriteria criteria
+            , List<Column> monthYearList)
         {
-            basketballSummaryInfo.TurnoverList = infoList
-                   .Where(x => x.EventDate.Year.Equals(criteria.ToDate.Year))
-                   .Select(x => new Column
-                   {
-                       GroupName = x.EventDate.Year.ToString(),
-                       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                       Value = x.Turnover
-                   });
+            basketballSummaryInfo.MarginList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                   y => y.EventDate.Month.Equals(x.Month)
+                       && y.EventDate.Year.Equals(x.Year)), "margin")
+            });
 
-            basketballSummaryInfo.TurnoverComparisonList = infoList
-                .Where(x => !x.EventDate.Year.Equals(criteria.ToDate.Year))
-                .Select(x => new Column
-                {
-                    GroupName = x.EventDate.Year.ToString(),
-                    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                    Value = x.Turnover
-                });
-
-            return basketballSummaryInfo;
-        }
-
-        private BasketballSummaryInfo BindBasketballMargin(BasketballSummaryInfo basketballSummaryInfo
-            , IEnumerable<BasketballSummaryInfoItem> infoList
-            , GetBasketballSummaryInfoCriteria criteria)
-        {
-            basketballSummaryInfo.MarginList = infoList
-                  .Where(x => x.EventDate.Year.Equals(criteria.ToDate.Year))
-                  .Select(x => new Column
-                  {
-                      GroupName = x.EventDate.Year.ToString(),
-                      Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                      Value = x.Margin
-                  });
-
-            basketballSummaryInfo.MarginComparisonList = infoList
-               .Where(x => !x.EventDate.Year.Equals(criteria.ToDate.Year))
-               .Select(x => new Column
-               {
-                   GroupName = x.EventDate.Year.ToString(),
-                   Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                   Value = x.Margin
-               });
+            basketballSummaryInfo.MarginComparisonList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year - 1,
+                Value = GetValue(infoList.FirstOrDefault(
+                  y => y.EventDate.Month.Equals(x.Month)
+                      && y.EventDate.Year.Equals(x.Year - 1)), "margin")
+            });           
                   
             return basketballSummaryInfo;
         }
 
-        private BasketballSummaryInfo BindBasketballBetCount(BasketballSummaryInfo basketballSummaryInfo
-            , IEnumerable<BasketballSummaryInfoItem> infoList
-            , GetBasketballSummaryInfoCriteria criteria)
+        private BasketballSummaryGeneralInfo BindBasketballBetCount(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , GetBasketballSummaryGeneralCriteria criteria
+            , List<Column> monthYearList)
         {
-            basketballSummaryInfo.BetCountList = infoList
-                   .Where(x => x.EventDate.Year.Equals(criteria.ToDate.Year))
-                   .Select(x => new Column
-                   {
-                       GroupName = x.EventDate.Year.ToString(),
-                       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                       Value = x.BetCount
-                   });
+            basketballSummaryInfo.BetCountList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                   y => y.EventDate.Month.Equals(x.Month)
+                       && y.EventDate.Year.Equals(x.Year)), "betcount")
+            });
 
-            basketballSummaryInfo.BetCountComparisonList = infoList
-                .Where(x => !x.EventDate.Year.Equals(criteria.ToDate.Year))
-                .Select(x => new Column
-                {
-                    GroupName = x.EventDate.Year.ToString(),
-                    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                    Value = x.BetCount
-                });
-
+            basketballSummaryInfo.BetCountComparisonList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year - 1,
+                Value = GetValue(infoList.FirstOrDefault(
+                  y => y.EventDate.Month.Equals(x.Month)
+                      && y.EventDate.Year.Equals(x.Year - 1)), "betcount")
+            });
+           
             return basketballSummaryInfo;
         }
 
-        private BasketballSummaryInfo BindBasketballMatchCount(BasketballSummaryInfo basketballSummaryInfo
-            , IEnumerable<BasketballSummaryInfoItem> infoList
-            , GetBasketballSummaryInfoCriteria criteria)
+        private BasketballSummaryGeneralInfo BindBasketballMatchCount(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , GetBasketballSummaryGeneralCriteria criteria
+            , List<Column> monthYearList)
         {
-            basketballSummaryInfo.MatchCountList = infoList
-                   .Where(x => x.EventDate.Year.Equals(criteria.ToDate.Year))
-                   .Select(x => new Column
-                   {
-                       GroupName = x.EventDate.Year.ToString(),
-                       Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                       Value = x.MatchCount
-                   });
+            basketballSummaryInfo.MatchCountList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                   y => y.EventDate.Month.Equals(x.Month)
+                       && y.EventDate.Year.Equals(x.Year)), "matchcount")
+            });
 
-            basketballSummaryInfo.MatchCountComparisonList = infoList
-                .Where(x => !x.EventDate.Year.Equals(criteria.ToDate.Year))
-                .Select(x => new Column
-                {
-                    GroupName = x.EventDate.Year.ToString(),
-                    Name = x.EventDate.Month.ToString() + "/" + x.EventDate.Year.ToString(),
-                    Value = x.MatchCount
-                });
+            basketballSummaryInfo.MatchCountComparisonList = monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year - 1,
+                Value = GetValue(infoList.FirstOrDefault(
+                  y => y.EventDate.Month.Equals(x.Month)
+                      && y.EventDate.Year.Equals(x.Year - 1)), "matchcount")
+            });            
 
             return basketballSummaryInfo;
         }

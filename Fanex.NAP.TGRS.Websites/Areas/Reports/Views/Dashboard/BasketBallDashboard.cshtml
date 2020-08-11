@@ -24,17 +24,21 @@
                 </div>
             }
             <div class="filter">
-                <div style="margin-left:40px; margin-top:1px;">
+                <div style="margin-left:40px;">
                     <span>Filtered by</span>
-                    <select id="divFilterPeriod" class="select-period">
+                    <select id="divPeriodSelected" class="period-selected">
                         <option value="1" selected>Today</option>
-                        <option value="2">Last 7 days</option>
-                        <option value="3">Last 30 days</option>
-                        <option value="4">Custom months</option>
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="0">Custom months</option>
                     </select>
                 </div>
-               
-                <div id="divRangeMonth" style="margin-left:40px">
+                <div id="divRangeMonthWrapper" class="range-month hidden">
+                    <div id="divRangeMonth" style="margin-left:40px">
+                    </div>
+                    <div class="btn-generate">
+                        <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -50,9 +54,9 @@
                     </div>
                     <div class="align-right">
                         <div>
-                            <span class="icon-chart-bar"></span>
-                            <span class="icon-chart-line"></span>
-                        </div>                                         
+                            <span class="view-chart icon-chart border-radius-right" name="winloss" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="winloss" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
                         <div class="chart-average">
                             <label class="top-5">Show average</label>
                             <label class="switch">
@@ -74,8 +78,8 @@
                     </div>
                     <div class="align-right">
                         <div>
-                            <span class="icon-chart-bar"></span>
-                            <span class="icon-chart-line"></span>
+                            <span class="view-chart icon-chart border-radius-right" name="margin" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="margin" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
                         <div class="chart-average">
                             <label class="top-5">Show average</label>
@@ -98,8 +102,8 @@
                     </div>
                     <div class="align-right">
                         <div>
-                            <span class="icon-chart-bar"></span>
-                            <span class="icon-chart-line"></span>
+                            <span class="view-chart icon-chart border-radius-right" name="betcount" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="betcount" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
                         <div class="chart-average">
                             <label class="top-5">Show average</label>
@@ -122,8 +126,8 @@
                     </div>
                     <div class="align-right">
                         <div>
-                            <span class="icon-chart-bar"></span>
-                            <span class="icon-chart-line"></span>
+                            <span class="view-chart icon-chart border-radius-right" name="turnover" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="turnover" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
                         <div class="chart-average">
                             <label class="top-5">Show average</label>
@@ -152,43 +156,8 @@
                             <span class="column-right">Margin %</span>
                         </div>                       
                     </div>
-                    <div class="row-content">
-                        <div class="border-bottom">
-                            <span class="column-left">AntonioHart</span>
-                            <span class="column-right">9.80</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">BethJordan</span>
-                            <span class="column-right">-5.21</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">StanleyDavidson</span>
-                            <span class="column-right">-9.5</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">JillTaylor</span>
-                            <span class="column-right">9.67</span>
-                        </div>
+                    <div class="row-content" id="divTraderContent">
+
                     </div>
                 </div>
                 <div class="box">
@@ -199,41 +168,10 @@
                         <div class="margin">
                             <span class="column-left">Trader</span>
                             <span class="column-right">Margin %</span>
-                        </div>                        
+                        </div>
                     </div>
-                    <div class="row-content">
-                        <div class="border-bottom">
-                            <span class="column-left">NBA</span>
-                            <span class="column-right">9.80</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">ABC Super Division</span>
-                            <span class="column-right">-5.21</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">ABSL</span>
-                            <span class="column-right">-5.21</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">FIBA</span>
-                            <span class="column-right">-5.21</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">NBLC</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">NBLC</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">NBLC</span>
-                            <span class="column-right">9.67</span>
-                        </div>
-                        <div class="border-bottom">
-                            <span class="column-left">NBLC</span>
-                            <span class="column-right">9.67</span>
-                        </div>
+                    <div class="row-content" id="divLeagueGroupContent">
+                       
                     </div>
                 </div>
             </div>
@@ -246,8 +184,8 @@
                     </div>
                     <div class="align-right">
                         <div>
-                            <span class="icon-chart-bar"></span>
-                            <span class="icon-chart-line"></span>
+                            <span class="view-chart icon-chart border-radius-right" name="matchcount" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="matchcount" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
                         <div class="chart-average">
                             <label class="top-5">Show average</label>
@@ -281,7 +219,9 @@
             WinLoss: '@ViewLang.WinLoss',
             Margin: '@ViewLang.Margin',
             BetType: '@ViewLang.BetType',
-            NA: '@ViewLang.NA'
+            NA: '@ViewLang.NA',
+            Date: '@ViewLang.Date',
+            Month: '@ViewLang.Month'
         };
     </script>
 }
