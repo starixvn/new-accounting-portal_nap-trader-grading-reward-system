@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.Dashboard
-{
+{    
     public class GetBasketballSummaryGeneralCriteria : BasketballSummaryInfoCriteria
-    {
+    {        
         /// <summary>
         /// Gets Setting Key.
         /// </summary>

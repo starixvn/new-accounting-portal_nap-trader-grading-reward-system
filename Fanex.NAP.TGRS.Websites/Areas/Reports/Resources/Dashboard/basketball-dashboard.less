@@ -1,4 +1,4 @@
-.black-content {    
+﻿.black-content {    
     color: #353535;
     background-color: #edecea;
 }
@@ -102,7 +102,7 @@ body {
             background-color: #fff;
             line-height: 28px;
             overflow-y: scroll;
-            height: 170px;
+            height: 252px;
 
             .column-left, .column-right {
                 color: #000;
@@ -156,8 +156,6 @@ body {
                     float: left;
 
                     span {
-                        display: list-item;
-                        list-style-type: none;
                         margin-top: 5px;
                         margin-bottom: 5px;
                     }
@@ -167,6 +165,60 @@ body {
                         font-family: Lucida Sans Unicode;
                         font-weight: bold;
                         color: #5a7dc1;
+                    }
+
+                    .legend {
+                        height: 30px;
+                        display: inline-block;
+                        cursor: text;
+                        float: left;
+                        margin-top: 7px;
+
+                        .legend-item {
+                            margin-right: 10px;
+                        }
+
+                        .cricle-1:before {
+                            content: ' \25CF';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #f2994a;
+                        }
+
+                        .cricle-2:before {
+                            content: ' \25CF';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #3fd0da;
+                        }
+
+                        .cricle-3:before {
+                            content: ' \25CF';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #5a7dc1;
+                        }
+
+                        .square-1:before {
+                            content: ' \25A0';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #f2994a;
+                        }
+
+                        .square-2:before {
+                            content: ' \25A0';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #3fd0da;
+                        }
+
+                        .square-3:before {
+                            content: ' \25A0';
+                            font-size: 25px;
+                            margin-right: 2px;
+                            color: #5a7dc1;
+                        }
                     }
                 }
 
@@ -230,10 +282,10 @@ body {
                     .chart-average {
                         height: 30px;
                         display: inline-block;
-                        cursor: none;
+                        cursor: text;
 
                         .switch {
-                            top: 5px;
+                            top: 10px;
                             position: relative;
                             display: inline-block;
                             width: 26px;
@@ -295,8 +347,13 @@ body {
 
                         .top-5 {
                             float: left;
-                            margin: 5px 5px 0 0;
+                            margin: 10px 5px 0 0;
+                            cursor: text;
                         }
+                    }
+
+                    .hidden {
+                        display: none;
                     }
                 }
             }
@@ -304,6 +361,7 @@ body {
             .box-content {
                 margin: 0px;
                 background-color: #fff;
+                max-width: 620px;
             }
         }
 
@@ -311,13 +369,41 @@ body {
             margin-right: 8px;
         }
 
-        .margin-bottom {
+        .margin-bottom,
+        .margin-bottom-8 {
             margin-bottom: 8px;
         }
     }
 
-    .margin-right {
+    .margin-right,
+    .box-margin-right {
         margin-right: 8px;
+    }
+}
+
+@media screen and (max-width:1245px) {
+    .box-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        float: left;
+        margin: 8px 0 0 8px;
+        width: 99%;
+
+        .box-left {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .box {
+            .box-chart-container {
+                margin-right: 0px;
+            }
+
+            .box-margin-right {
+                margin-right: 0px;
+                margin-bottom: 6px;
+            }
+        }
     }
 }
 
@@ -331,7 +417,7 @@ body {
     .white-content;
     .absolute-padding;
     width: 100%;
-    font-size: 145%;
+    font-size: 120%;
     .title-border;
     height: 40px;
     line-height: 40px;

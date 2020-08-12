@@ -6,6 +6,7 @@
 Namespace.Register("Fanex.TGRS.Reports.BasketballDashboard");
 Fanex.TGRS.Reports.BasketballDashboard = function () {
     var $this = this;
+    var dataChart = null;
 
     var domElements = {
         divRangeMonthWrapper: null,
@@ -18,7 +19,24 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         divTurnoverContent: null,
         divMatchesCountContent: null,
         divTraderContent: null,
-        divLeagueGroupContent: null
+        divLeagueGroupContent: null,
+        inputWinLossAverage: null,
+        inputMarginAverage: null,
+        inputTurnoverAverage: null,
+        inputBetCountAverage: null,
+        inputMatchCountAverage: null,
+        chkSoccer: null,
+        chkOS: null,
+        divWinLossLegend: null,
+        divMarginLegend: null,
+        divBetCountLegend: null,
+        divTurnoverLegend: null,
+        divMatchCountLegend: null,
+        divWinLossAverage: null,
+        divMarginAverage: null,
+        divBetCountAverage: null,
+        divTurnoverAverage: null,
+        divMatchCountAverage: null,
     };
 
     var cacheDomElements = function () {
@@ -33,6 +51,23 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         domElements.divMatchesCountContent = $('#divMatchesCountContent');
         domElements.divTraderContent = $('#divTraderContent');
         domElements.divLeagueGroupContent = $('#divLeagueGroupContent');
+        domElements.inputWinLossAverage = $('#inputWinLossAverage');
+        domElements.inputMarginAverage = $('#inputMarginAverage');
+        domElements.inputTurnoverAverage = $('#inputTurnoverAverage');
+        domElements.inputBetCountAverage = $('#inputBetCountAverage');
+        domElements.inputMatchCountAverage = $('#inputMatchCountAverage');
+        domElements.chkSoccer = $('#chkSoccer');
+        domElements.chkOS = $('#chkOS');
+        domElements.divWinLossLegend = $('#divWinLossLegend');
+        domElements.divMarginLegend = $('#divMarginLegend');
+        domElements.divBetCountLegend = $('#divBetCountLegend');
+        domElements.divTurnoverLegend = $('#divTurnoverLegend');
+        domElements.divMatchCountLegend = $('#divMatchCountLegend'); 
+        domElements.divWinLossAverage = $('#divWinLossAverage');
+        domElements.divMarginAverage = $('#divMarginAverage');
+        domElements.divBetCountAverage = $('#divBetCountAverage');
+        domElements.divTurnoverAverage = $('#divTurnoverAverage');
+        domElements.divMatchCountAverage = $('#divMatchCountAverage'); 
     };
 
     var parameters = {
@@ -46,10 +81,46 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         GetBasketballTraderSummary: common.ResolveRootUrl('Dashboard/GetBasketballTraderSummary'),
         GetBasketballLeagueGroupSummary: common.ResolveRootUrl('Dashboard/GetBasketballLeagueGroupSummary')
     };
+   
+    var legendColors = [
+        { item: 'cricle-1', color: '#f2994a', text: '' },
+        { item: 'cricle-2', color: '#3fd0da', text: '' },
+        { item: 'cricle-3', color: '#5a7dc1', text: '' }
+    ];
 
     $this.Initialize = function () {        
         cacheDomElements();
-        initializeFields();               
+        initializeFields(); 
+
+        $('.view-chart').on('click', viewChartOnClick);
+
+        domElements.inputWinLossAverage.on('click', function () {
+            showAverageOnClick(domElements.divWinlossContent, $(this));
+        });
+
+        domElements.inputMarginAverage.on('click', function () {
+            showAverageOnClick(domElements.divMarginContent, $(this));
+        });
+
+        domElements.inputTurnoverAverage.on('click', function () {
+            showAverageOnClick(domElements.divTurnoverContent, $(this));
+        });
+
+        domElements.inputBetCountAverage.on('click', function () {
+            showAverageOnClick(domElements.divBetcountContent, $(this));
+        });
+
+        domElements.inputMatchCountAverage.on('click', function () {
+            showAverageOnClick(domElements.divMatchesCountContent, $(this));
+        });
+
+        domElements.chkSoccer.on('change', function () {
+            window.location = common.ResolveRootUrl("Reports/Dashboard");
+        });
+
+        domElements.chkOS.on('change', function () {
+            window.location = common.ResolveRootUrl("OSReports/OSDashboard");
+        });       
     };
 
     var initializeFields = function () {
@@ -58,7 +129,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
 
         parameters.FromDate = domElements.divRangeMonth.getFrom();
         parameters.ToDate = domElements.divRangeMonth.getTo();
-        parameters.ReportType = 2;
+        parameters.ReportType = 1;
+        parameters.BasketballDays = domElements.divPeriodSelected.val();
 
         getSummaryGeneralInfo();
         getTraderSummary();
@@ -67,14 +139,13 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         domElements.btnGenerate.on('click', function () {
             parameters.FromDate = domElements.divRangeMonth.getFrom();
             parameters.ToDate = domElements.divRangeMonth.getTo();
-            parameters.ReportType = domElements.divPeriodSelected.val() === 0 ? 1 : 2;
+            parameters.ReportType = domElements.divPeriodSelected.val() === "0" ? 2 : 1;
+            parameters.BasketballDays = domElements.divPeriodSelected.val();
 
             getSummaryGeneralInfo();
             getTraderSummary();
             getLeagueGroupSummary();
-        });
-
-        $('.view-chart').on('click', viewChartOnClick);
+        });               
     };
 
     var initializeMonthPickers = function () {
@@ -158,8 +229,9 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };
 
     var bindTraderSummaryData = function (data) {
-        if (data && data.length > 0) {
-            let html = '';
+        let html = '';
+
+        if (data && data.length > 0) {           
             let divFormat = '<div class="border-bottom">';
             divFormat += '<span class="column-left">{0}</span>';
             divFormat += '<span class="column-right {1}">{2}</span></div>';
@@ -167,10 +239,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             data.map(function (x) {
                 let formatMargin = x.Margin < 0 ? 'format-negative' : '';
                 html += divFormat.format(x.TraderName, formatMargin, x.Margin);
-            });
-
-            domElements.divTraderContent.html(html);
+            });            
         }
+
+        domElements.divTraderContent.html(html);
     };
 
     var getLeagueGroupSummary = function () {
@@ -196,8 +268,9 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };
 
     var bindLeagueGroupSummaryData = function (data) {
-        if (data && data.length > 0) {
-            let html = '';
+        let html = '';
+
+        if (data && data.length > 0) {            
             let divFormat = '<div class="border-bottom">';
             divFormat += '<span class="column-left">{0}</span>';
             divFormat += '<span class="column-right {1}">{2}</span></div>';
@@ -205,10 +278,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             data.map(function (x) {
                 let formatMargin = x.Margin < 0 ? 'format-negative' : '';
                 html += divFormat.format(x.GroupName, formatMargin, x.Margin);
-            });
-
-            domElements.divLeagueGroupContent.html(html);
+            });            
         }
+
+        domElements.divLeagueGroupContent.html(html);
     };
 
     var getSummaryGeneralInfo = function () {
@@ -222,8 +295,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result) {
+                    showLegends(result);
                     bindSummaryGeneralData(result);
                 }
+                dataChart = result;
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -235,35 +310,106 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         });
     };
 
-    var bindSummaryGeneralData = function (data) {        
-        var winlossOptions = generateLineChartOptions(data.WinLossList, data.WinLossComparisonList);
+    var bindSummaryGeneralData = function (data) {
+        var winlossOptions = generateLineChartOptions(data.WinLossList
+            , data.WinLossComparisonList
+            , data.WinLossCrossYearList
+            , data.WinLossCrossYearComparisonList
+            , data.WinLossAverage
+            , data.WinLossAverageComparison);
         domElements.divWinlossContent.highcharts(winlossOptions);
 
-        var marginOptions = generateLineChartOptions(data.MarginList, data.MarginComparisonList);
+        var marginOptions = generateLineChartOptions(data.MarginList
+            , data.MarginComparisonList
+            , data.MarginCrossYearList
+            , data.MarginCrossYearComparisonList
+            , data.MarginAverage
+            , data.MarginAverageComparison);
         domElements.divMarginContent.highcharts(marginOptions);
 
-        var betCountOptions = generateLineChartOptions(data.BetCountList, data.BetCountComparisonList);
+        var betCountOptions = generateLineChartOptions(data.BetCountList
+            , data.BetCountComparisonList
+            , data.BetCountCrossYearList
+            , data.BetCountCrossComparisonList
+            , data.BetCountAverage
+            , data.BetCountAverageComparison);
         domElements.divBetcountContent.highcharts(betCountOptions);
 
-        var turnoverOptions = generateLineChartOptions(data.TurnoverList, data.TurnoverComparisonList);
+        var turnoverOptions = generateLineChartOptions(data.TurnoverList
+            , data.TurnoverComparisonList
+            , data.TurnoverCrossYearList
+            , data.TurnoverCrossYearComparisonList
+            , data.TurnoverAverage
+            , data.TurnoverAverageComparison);
         domElements.divTurnoverContent.highcharts(turnoverOptions);
 
-        var matchCountOptions = generateLineChartOptions(data.MatchCountList, data.MatchCountComparisonList);
+        var matchCountOptions = generateLineChartOptions(data.MatchCountList
+            , data.MatchCountComparisonList
+            , data.MatchCountCrossYearList
+            , data.MatchCountCrossYearComparisonList
+            , data.MatchCountAverage
+            , data.MatchCountAverageComparison);
         domElements.divMatchesCountContent.highcharts(matchCountOptions);
-    };
+    };   
 
-    var generateLineChartOptions = function (data, dataComparison) {
-        var series = [];
-        var names = [];
-        var values = [];
-        var valuesComparison = [];
+    var showLegends = function (data) {
+        var div = '';        
+        if (data.WinLossList || data.WinLossComparisonList || data.WinLossCrossYearList || data.WinLossCrossYearComparisonList) {
+            var i = 4 - data.LegendList.length;
+            data.LegendList.map(function (x) {
+                div += '<span class="legend-item cricle-' + i + '">' + x + '</span>';
+
+                legendColors.forEach(function (y) {
+                    if (y.item === 'cricle-' + i) {
+                        y.text = x
+                    };
+                });
+
+                i = i + 1;
+            });
+        }
+        domElements.divWinLossLegend.html(div);       
+        domElements.divMarginLegend.html(div);
+        domElements.divTurnoverLegend.html(div);
+        domElements.divBetCountLegend.html(div);
+        domElements.divMatchCountLegend.html(div);
+
+        if (div != '') {
+            domElements.divWinLossAverage.removeClass('hidden');
+            domElements.divMarginAverage.removeClass('hidden');
+            domElements.divTurnoverAverage.removeClass('hidden');
+            domElements.divBetCountAverage.removeClass('hidden');
+            domElements.divMatchCountAverage.removeClass('hidden');
+        } else {
+            domElements.divWinLossAverage.addClass('hidden');
+            domElements.divMarginAverage.addClass('hidden');
+            domElements.divTurnoverAverage.addClass('hidden');
+            domElements.divBetCountAverage.addClass('hidden');
+            domElements.divMatchCountAverage.addClass('hidden');
+        }
+    }
+
+    var generateSeriesOptions = function (data, dataComparison, dataCrossYear, dataCrossYearComparison) {
+        let series = [];
+        let values = [];
+        let valuesComparison = [];
+        let groupName = '';
+        let groupNameDash = '';
+        let lengthDash = 0;
+
+        if (dataCrossYearComparison && dataCrossYearComparison.length > 0) {
+            groupNameDash = '';
+            dataCrossYearComparison.map(function (x) {
+                valuesComparison.push(x.Value);
+                groupNameDash = x.GroupName;
+            });
+            lengthDash = dataCrossYearComparison.length;
+        }
 
         if (dataComparison && dataComparison.length > 0) {
-            var groupName = '';
+            groupName = '';
             dataComparison.map(function (x) {
-                names.push(x.Name);
                 valuesComparison.push(x.Value);
-                values.push(null);
                 groupName = x.GroupName;
             });
 
@@ -272,15 +418,33 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     data: valuesComparison,
                     name: groupName,
                     zoneAxis: 'x',
-                    dashStyle: 'Solid',
-                    color: '#3fd0da'
+                    zones: [
+                        {
+                            value: lengthDash,
+                            color: '#f2994a',
+                            name: groupNameDash
+                        }
+                        , {
+                            dashStyle: 'ShortDot',
+                            color: '#3fd0da',
+                            name: groupName
+                        }],
+                    dashStyle: 'ShortDot'
                 });
+        }
+
+        if (dataCrossYear && dataCrossYear.length > 0) {
+            groupNameDash = '';
+            dataCrossYear.map(function (x) {
+                values.push(x.Value);
+                groupNameDash = x.GroupName;
+            });
+            lengthDash = dataCrossYear.length;
         }
 
         if (data && data.length > 0) {
             groupName = '';
             data.map(function (x) {
-                names.push(x.Name);
                 values.push(x.Value);
                 groupName = x.GroupName;
             });
@@ -290,136 +454,184 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     data: values,
                     name: groupName,
                     zoneAxis: 'x',
-                    dashStyle: 'Solid',
-                    color: '#5a7dc1'
+                    zones: [{
+                        value: lengthDash,
+                        color: '#3fd0da',
+                        name: groupNameDash
+                    }, {
+                        dashStyle: 'Solid',
+                        color: '#5a7dc1',
+                        name: groupName
+                    }],
+                    dashStyle: 'Solid'
                 });
         }
 
+        return series;
+    };
+
+    var generateCategoriesOptions = function (data, dataComparison, dataCrossYear, dataCrossYearComparison) {
+        let categories = [];
+
+        if (dataCrossYearComparison && dataCrossYearComparison.length > 0) {
+            dataCrossYearComparison.map(function (x) {
+                categories.push(x.Name);
+            });
+        }
+
+        if (dataComparison && dataComparison.length > 0) {
+            dataComparison.map(function (x) {
+                categories.push(x.Name);
+            });
+        }
+
+        if (dataCrossYear && dataCrossYear.length > 0) {
+            dataCrossYear.map(function (x) {
+                categories.push(x.Name);
+            });
+        }
+
+        if (data && data.length > 0) {
+            data.map(function (x) {
+                categories.push(x.Name);
+            });
+        }
+
+        return categories;
+    };
+
+    var generatePlotLinesOptions = function (value1, value2) {
+        return [{
+            color: '#3fd0da',
+            width: 2,
+            value: value1,
+            dashStyle: 'ShortDot'
+        }, {
+            color: '#5a7dc1',
+            width: 2,
+            value: value2,
+            dashStyle: 'Solid'
+        }];
+    };
+
+    var generateLineChartOptions = function (data, dataComparison, dataCrossYear, dataCrossYearComparison, avg1, avg2) {
+        let series = generateSeriesOptions(data, dataComparison, dataCrossYear, dataCrossYearComparison);
+        let categories = generateCategoriesOptions(data, dataComparison, dataCrossYear, dataCrossYearComparison);
+        let plotLines = generatePlotLinesOptions(avg1, avg2);
+
         return {
             chart: {
-                height: 240,
-                width: 400
+                type: 'line'
             },
             title: {
                 text: null
             },
-            yAxis: {
-                title: { text: null }
-            },
             xAxis: {
-                categories: names
+                categories: categories,
+                labels: {
+                    style: {
+                        fontSize: 10
+                    },                    
+                    rotation: -60
+                }
+            },
+            yAxis: [{
+                title: { text: null },
+                plotLines: plotLines
+            }],   
+            tooltip: {
+                formatter: renderTooltip
             },
             credits: {
                 enabled: false
             },
-            legend: {
-                layout: 'horizontal',
-                align: 'top left',
-                verticalAlign: 'top left',
-                itemMarginTop: -15,
+            legend: {                
                 enabled: false
             },
-            series: series
+            series: series            
         };
     };   
 
-
-    var generateBarChartOptions = function (data, dataComparison) {
-        var series = [];
-        var names = [];
-        var values = [];
-        var valuesComparison = [];
-
-        if (dataComparison && dataComparison.length > 0) {
-            var groupName = '';
-            dataComparison.map(function (x) {
-                names.push(x.Name);
-                valuesComparison.push(x.Value);
-                values.push(null);
-                groupName = x.GroupName;
-            });
-
-            series.push(
-                {
-                    data: valuesComparison,
-                    name: groupName,
-                    zoneAxis: 'x',
-                    dashStyle: 'Solid',
-                    color: '#3fd0da'
-                });
-        }
-
-        if (data && data.length > 0) {
-            groupName = '';
-            data.map(function (x) {
-                names.push(x.Name);
-                values.push(x.Value);
-                groupName = x.GroupName;
-            });
-
-            series.push(
-                {
-                    data: values,
-                    name: groupName,
-                    zoneAxis: 'x',
-                    dashStyle: 'Solid',
-                    color: '#5a7dc1'
-                });
-        }
+    var generateBarChartOptions = function (data, dataComparison, dataCrossYear, dataCrossYearComparison, avg1, avg2) {
+        let series = generateSeriesOptions(data, dataComparison, dataCrossYear, dataCrossYearComparison);
+        let categories = generateCategoriesOptions(data, dataComparison, dataCrossYear, dataCrossYearComparison);
+        let plotLines = generatePlotLinesOptions(avg1, avg2);
 
         return {
             chart: {
-                type: 'column',
-                height: 240,
-                width: 400
-            },  
+                type: 'column'              
+            },
             title: {
                 text: null
             },
             xAxis: {
-                categories: names
+                categories: categories,
+                labels: {
+                    style: {
+                        fontSize: 10
+                    },                    
+                    rotation: -60
+                }
             },
             yAxis: {
                 title: { text: null },
-                labels: {
-                    formatter: function () {
-                        return this.value + ' %';
-                    }
-                }
+                plotLines: plotLines
+            },
+            tooltip: {
+                formatter: renderTooltip
             },
             credits: {
                 enabled: false
             },
-            legend: {
-                layout: 'horizontal',
-                align: 'top',
-                verticalAlign: 'top',
+            legend: {             
                 enabled: false
-            },                       
+            },
+            plotOptions: {
+                series: {
+                    pointWidth: 9
+                }
+            },
             series: series
         };
     };
-        
-    var reDrawChartByType = function (name, type) {
-        $.ajax({
-            type: 'POST',
-            url: urls.GetBasketballSummaryInfo,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(parameters),
-            success: function (result) {
-                if (result) {
-                    reDrawChart(result, name, type);
-                }
-            },
-            error: function (xhr) {
-                common.HandleAjaxError(xhr);
-                common.EnableInput();
-            },
-            complete: function () {
-                common.EnableInput();
+
+    var renderTooltip = function () {
+        let data1 = this.series.chart.series[0].data;
+        let data2 = this.series.chart.series[1].data;
+        let index = this.point.index;
+        let yComparison = data1[index].y;
+        let y = data2[index].y;
+        let valueComparison = 0;
+        if (yComparison !== this.y && y !== 0 && yComparison !== 0) {
+            valueComparison = (y - yComparison) / yComparison * 100;
+            valueComparison = valueComparison.toFixed(2);
+        }
+        let nodeColor = this.color;
+        let currentLegend = '';
+        legendColors.forEach(function (le) {
+            if (le.color === nodeColor) {
+                currentLegend = le.text;
             }
-        });        
+        });
+
+        let legend1 = this.series.chart.series[0].name;
+
+        let tooltip = '';
+        tooltip += '<span>' + this.x + '-' + currentLegend + '</span>';
+        tooltip += '<br/><span style="font-weight: bold">' + this.y + '</span><br/>';
+        if (yComparison !== this.y) {
+            let color = valueComparison > 0 ? 'green' : 'red';
+            tooltip += '<span style="font-weight: bold; color: ' + color + '">(' + valueComparison + '%)</span>';
+            tooltip += '<span> to ' + this.x + ' ' + legend1 + '</span>';
+        }
+
+        return tooltip;
+    };
+    
+    var reDrawChartByType = function (name, type) {        
+        if (dataChart !== null) {
+            reDrawChart(dataChart, name, type);
+        }
     };
 
     var reDrawChart = function (data, name, type) {
@@ -428,32 +640,82 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         switch (name) {
             case 'winloss':
                 options = type === 'line'
-                    ? generateLineChartOptions(data.WinLossList, data.WinLossComparisonList)
-                    : generateBarChartOptions(data.WinLossList, data.WinLossComparisonList);
+                    ? generateLineChartOptions(data.WinLossList
+                        , data.WinLossComparisonList
+                        , data.WinLossCrossYearList
+                        , data.WinLossCrossYearComparisonList
+                        , data.WinLossAverage
+                        , data.WinLossAverageComparison)
+                    : generateBarChartOptions(data.WinLossList
+                        , data.WinLossComparisonList
+                        , data.WinLossCrossYearList
+                        , data.WinLossCrossYearComparisonList
+                        , data.WinLossAverage
+                        , data.WinLossAverageComparison);
                 domElements.divWinlossContent.highcharts(options);
                 break;
             case 'margin':
                 options = type === 'line'
-                    ? generateLineChartOptions(data.MarginList, data.MarginComparisonList)
-                    : generateBarChartOptions(data.MarginList, data.MarginComparisonList);
+                    ? generateLineChartOptions(data.MarginList
+                        , data.MarginComparisonList
+                        , data.MarginCrossYearList
+                        , data.MarginCrossYearComparisonList
+                        , data.MarginAverage
+                        , data.MarginAverageComparison)
+                    : generateBarChartOptions(data.MarginList
+                        , data.MarginComparisonList
+                        , data.MarginCrossYearList
+                        , data.MarginCrossYearComparisonList
+                        , data.MarginAverage
+                        , data.MarginAverageComparison);
                 domElements.divMarginContent.highcharts(options);
                 break;
             case 'betcount':
                 options = type === 'line'
-                    ? generateLineChartOptions(data.BetCountList, data.BetCountComparisonList)
-                    : generateBarChartOptions(data.BetCountList, data.BetCountComparisonList);
+                    ? generateLineChartOptions(data.BetCountList
+                        , data.BetCountComparisonList
+                        , data.BetCountCrossYearList
+                        , data.BetCountCrossComparisonList
+                        , data.BetCountAverage
+                        , data.BetCountAverageComparison)
+                    : generateBarChartOptions(data.BetCountList
+                        , data.BetCountComparisonList
+                        , data.BetCountCrossYearList
+                        , data.BetCountCrossComparisonList
+                        , data.BetCountAverage
+                        , data.BetCountAverageComparison);
                 domElements.divBetcountContent.highcharts(options);
                 break;
             case 'turnover':
                 options = type === 'line'
-                    ? generateLineChartOptions(data.TurnoverList, data.TurnoverComparisonList)
-                    : generateBarChartOptions(data.TurnoverList, data.TurnoverComparisonList);
+                    ? generateLineChartOptions(data.TurnoverList
+                        , data.TurnoverComparisonList
+                        , data.TurnoverCrossYearList
+                        , data.TurnoverCrossYearComparisonList
+                        , data.TurnoverAverage
+                        , data.TurnoverAverageComparison)
+                    : generateBarChartOptions(data.TurnoverList
+                        , data.TurnoverComparisonList
+                        , data.TurnoverCrossYearList
+                        , data.TurnoverCrossYearComparisonList
+                        , data.TurnoverAverage
+                        , data.TurnoverAverageComparison);
                 domElements.divTurnoverContent.highcharts(options);
                 break;
             case 'matchcount':
                 options = type === 'line'
-                    ? generateLineChartOptions(data.MatchCountList, data.MatchCountComparisonList)
-                    : generateBarChartOptions(data.MatchCountList, data.MatchCountComparisonList);
+                    ? generateLineChartOptions(data.MatchCountList
+                        , data.MatchCountComparisonList
+                        , data.MatchCountCrossYearList
+                        , data.MatchCountCrossYearComparisonList
+                        , data.MatchCountAverage
+                        , data.MatchCountAverageComparison)
+                    : generateBarChartOptions(data.MatchCountList
+                        , data.MatchCountComparisonList
+                        , data.MatchCountCrossYearList
+                        , data.MatchCountCrossYearComparisonList
+                        , data.MatchCountAverage
+                        , data.MatchCountAverageComparison);
                 domElements.divMatchesCountContent.highcharts(options);
                 break;
             default:
@@ -461,110 +723,14 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         }
     };
 
-    var generateBarChartOptionsOld = function (chartName) {
-        return {
-            chart: {
-                type: 'column',
-                height: 240,
-                width: 400
-            },
-            title: {
-                text: chartName
-            },
-            xAxis: {
-                categories: ["name 1", "name 2"]
-            },
-            yAxis: {
-                title: { text: null },
-                labels: {
-                    formatter: function () {
-                        return this.value + ' %';
-                    }
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            legend: {
-                layout: 'horizontal',
-                align: 'top',
-                verticalAlign: 'top'
-            },
-            series: [
-                {
-                    data: [7.0, 6.9, 9.5, 10.0, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                    zones: [{
-                        value: 10,
-                        color: '#5a7dc1'
-                    }, {
-                        color: '#3fd0da'
-                    }]
-                },
-                {
-                    data: [7.0, 6.9, 9.5, 10.0, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                    zones: [{
-                        value: 10,
-                        color: '#5a7dc1'
-                    }, {
-                        color: '#3fd0da'
-                    }]
-                }
-            ]
-        };
+    var showAverageOnClick = function (elementContent, $this) {
+        var isShow = $this.is(':checked');
+        elementContent.find('.highcharts-plot-line ').each(function () {
+            if (isShow)
+                $(this).css("visibility", "visible");
+            else
+                $(this).css("visibility", "hidden");
+        });
     };
-
-    var generateLineChartOptionsOld = function (chartName) {
-        return {
-            chart: {
-                height: 240,
-                width: 400
-            },
-            title: {
-                text: chartName
-            },
-            yAxis: {
-                title: { text: null }
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            credits: {
-                enabled: false
-            },
-            legend: {
-                layout: 'horizontal',
-                align: 'top',
-                verticalAlign: 'top'
-            },
-            series: [
-                {
-                    data: [29, 71, 106, 129, 144, 176, 135, 148, 216, 194, 95, 54],
-                    zoneAxis: 'x',
-                    zones: [
-                        {
-                            value: 5,
-                            color: '#5a7dc1'
-                        }
-                        , {
-                            dashStyle: 'Solid',
-                            color: '#3fd0da'
-                        }],
-                    dashStyle: 'ShortDot'
-                },
-                {
-                    data: [3, 5, 100, 111, 132, 150, 80, 85, 92, 105, 155, 160],
-                    zoneAxis: 'x',
-                    zones: [{
-                        value: 5,
-                        color: '#5a7dc1'
-                    }, {
-                        dashStyle: 'Solid',
-                        color: '#3fd0da'
-                    }],
-                    dashStyle: 'ShortDot'
-                }
-            ]
-        };
-    };
-
+   
 };

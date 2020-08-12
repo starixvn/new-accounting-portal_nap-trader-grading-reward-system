@@ -10,7 +10,10 @@
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
-       
+
+        [SpParam(Ignored = true)]
+        public BasketballDays BasketballDays { get; set; }
+
         /// <summary>
         /// Checks validation of the criteria.
         /// </summary>

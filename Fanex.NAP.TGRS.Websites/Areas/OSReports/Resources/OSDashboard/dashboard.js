@@ -42,7 +42,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         divMonthSelect: null,
         titleMonthCount: null,
 
-        toggleA: null
+        chkOS: null,
+        toggleA: null        
     };
 
     //{ DOM-Caching
@@ -60,8 +61,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         domElements.titleMonthCount = $('#titleMonthCount');
         domElements.divMonthSelect = $("#divTeamMonthPicker");
-
-        domElements.toggleA = $("#toggleA");
+        domElements.chkOS = $('#chkOS');
+        domElements.toggleA = $("#toggleA");      
     };
 
     //}
@@ -77,6 +78,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         initialize();
         cacheDomElements();
         handlePageEvents();
+
+        domElements.chkOS.trigger('click');
     };
 
     //}
@@ -105,16 +108,22 @@ Fanex.TGRS.Reports.Dashboard = function () {
             domElements.toggleA.removeClass('type3D');
             reRenderChart(currentChartType);
             saveChartTypeCookies();
+            domElements.chkOS.trigger('click');
         });
         $('#chk3D').on('change', function () {
             currentChartType = 3;
             domElements.toggleA.addClass('type3D');
             reRenderChart(currentChartType);
-            saveChartTypeCookies();
+            saveChartTypeCookies();        
+            domElements.chkOS.trigger('click');
         });
 
         $('#chkSoccer').on('change', function () {
             window.location = common.ResolveRootUrl("Reports/Dashboard");
+        });       
+
+        $('#chkBasketBall').on('change', function () {
+            window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
         });
     };
     //}

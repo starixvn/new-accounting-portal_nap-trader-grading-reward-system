@@ -10,37 +10,37 @@
         <div class="dashboard-content">
             @if (@canSwitch == true)
             {
-                <div class="switch-toggle switch-ios switch-3 flat-switch-left">
-                    <input id="chkSoccer" name="chartType" type="radio" />
-                    <label for="chkSoccer">SOCCER</label>
+            <div class="switch-toggle switch-ios switch-3 flat-switch-left">
+                <input id="chkSoccer" name="chartType" type="radio">
+                <label for="chkSoccer">SOCCER</label>
 
-                    <input id="chkBasketBall" name="chartType" type="radio" checked="">
-                    <label for="chkBasketBall">BasketBall</label>
+                <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                <label for="chkBasketBall">BASKETBALL</label>
 
-                    <input id="chkOS" name="chartType" type="radio" />
-                    <label for="chkOS">OS</label>
+                <input id="chkOS" name="chartType" type="radio">
+                <label for="chkOS">OTHERS</label>
 
-                    <a id="toggleB"></a>
-                </div>
+                <a></a>
+            </div>
             }
-            <div class="filter">
-                <div style="margin-left:40px;">
-                    <span>Filtered by</span>
-                    <select id="divPeriodSelected" class="period-selected">
-                        <option value="1" selected>Today</option>
-                        <option value="7">Last 7 days</option>
-                        <option value="30">Last 30 days</option>
-                        <option value="0">Custom months</option>
-                    </select>
-                </div>
-                <div id="divRangeMonthWrapper" class="range-month hidden">
-                    <div id="divRangeMonth" style="margin-left:40px">
-                    </div>
-                    <div class="btn-generate">
-                        <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
-                    </div>                    
+        <div class="filter">
+            <div style="margin-left:30px;">
+                <span>Filtered by</span>
+                <select id="divPeriodSelected" class="period-selected">
+                    <option value="1" selected>Today</option>
+                    <option value="2">Last 7 days</option>
+                    <option value="3">Last 30 days</option>
+                    <option value="0">Custom months</option>
+                </select>
+            </div>
+            <div id="divRangeMonthWrapper" class="range-month hidden">
+                <div id="divRangeMonth" style="margin-left:30px">
                 </div>
             </div>
+            <div class="btn-generate">
+                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
         </div>
     </div>
 
@@ -49,18 +49,22 @@
             <div id="divWinlossContainer" class="box-chart-container margin-right margin-bottom">
                 <div id="divWinlossHeader" class="box-header">
                     <div class="align-left">
-                        <span class="box-name">WIN-LOSS COMPARISON</span>
-                        @*<span>2018</span>*@
+                        <div>
+                            <span class="box-name">WIN-LOSS COMPARISON</span>
+                        </div>
+                        
+                        <div class="legend" id="divWinLossLegend">
+                        </div>
                     </div>
                     <div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="winloss" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="winloss" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
-                        <div class="chart-average">
+                        <div class="chart-average hidden" id="divWinLossAverage">
                             <label class="top-5">Show average</label>
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="inputWinLossAverage" checked />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -73,18 +77,22 @@
             <div id="divMarginContainer" class="box-chart-container margin-bottom">
                 <div id="divMarginHeader" class="box-header">
                     <div class="align-left">
-                        <span class="box-name">MARGIN COMPARISON</span>
-                        @*<span>2018</span>*@
+                        <div>
+                            <span class="box-name">MARGIN COMPARISON</span>
+                        </div>                        
+                        <div class="legend" id="divMarginLegend">
+
+                        </div>
                     </div>
                     <div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="margin" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="margin" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
-                        <div class="chart-average">
+                        <div class="chart-average hidden" id="divMarginAverage">
                             <label class="top-5">Show average</label>
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="inputMarginAverage" checked />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -97,18 +105,22 @@
             <div id="divBetCountContainer" class="box-chart-container margin-right margin-bottom">
                 <div id="divBetCountHeader" class="box-header">
                     <div class="align-left">
-                        <span class="box-name">BET COUNT COMPARISON</span>
-                        @*<span>2018</span>*@
+                        <div>
+                            <span class="box-name">BET COUNT COMPARISON</span>
+                        </div>                        
+                        <div class="legend" id="divBetCountLegend">
+                           
+                        </div>
                     </div>
                     <div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="betcount" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="betcount" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
-                        <div class="chart-average">
+                        <div class="chart-average hidden" id="divBetCountAverage">
                             <label class="top-5">Show average</label>
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="inputBetCountAverage" checked />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -121,18 +133,22 @@
             <div id="divTurnoverContainer" class="box-chart-container margin-bottom">
                 <div id="divTurnoverHeader" class="box-header">
                     <div class="align-left">
-                        <span class="box-name">TURNOVER COMPARISON</span>
-                        @*<span>2018</span>*@
+                        <div>
+                            <span class="box-name">TURNOVER COMPARISON</span>
+                        </div>
+                        <div class="legend" id="divTurnoverLegend">
+                         
+                        </div>
                     </div>
                     <div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="turnover" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="turnover" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
-                        <div class="chart-average">
+                        <div class="chart-average hidden" id="divTurnoverAverage">
                             <label class="top-5">Show average</label>
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="inputTurnoverAverage" checked />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -145,8 +161,8 @@
         </div>
 
         <div class="box" style="width:99%">
-            <div class="box-left margin-bottom">
-                <div class="box margin-right">
+            <div class="box-left margin-bottom-8">
+                <div class="box box-margin-right">
                     <div class="row-title">
                         <h6>Live Trader Performance</h6>
                     </div>
@@ -178,19 +194,22 @@
 
             <div id="divMatchesCountContainer" class="box-chart-container margin-bottom">
                 <div id="divMatchesHeader" class="box-header">
-                    <div class="align-left">
-                        <span class="box-name">MATCHES COUNT COMPARISON</span>
-                        @*<span>2018</span>*@
+                    <div class="align-left">                       
+                        <div>
+                            <span class="box-name">MATCHES COUNT COMPARISON</span>
+                        </div>
+                        <div class="legend" id="divMatchCountLegend">                           
+                        </div>
                     </div>
                     <div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="matchcount" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="matchcount" type="line"><span class="icon-chart-line-active"></span></span>
                         </div>
-                        <div class="chart-average">
+                        <div class="chart-average hidden" id="divMatchCountAverage">
                             <label class="top-5">Show average</label>
                             <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" id="inputMatchCountAverage" checked />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -225,4 +244,3 @@
         };
     </script>
 }
-

@@ -17,4 +17,21 @@
         PeriodMonth,
         Match
     }
+
+    public enum BasketballChartName
+    {
+        WinLoss,
+        Turnover,
+        Margin,
+        MatchCount,
+        BetCount
+    }
+
+    public enum BasketballDays
+    {
+        CustomMonth,
+        Today,
+        Days7,
+        Days30
+    }
 }
