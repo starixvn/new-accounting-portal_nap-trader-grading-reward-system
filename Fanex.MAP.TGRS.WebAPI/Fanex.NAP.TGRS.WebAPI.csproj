@@ -406,6 +406,7 @@
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Info.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingModelPerformanceInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingMonthlyPerformanceInfo.cs" />
+    <Compile Include="Model\DataModel\AutoTrading\AutoTradingSimilarLeagueName.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryEventInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryEventLeaguesInfo.cs" />
     <Compile Include="Model\DataModel\AutoTrading\AutoTradingSummaryInfo.cs" />

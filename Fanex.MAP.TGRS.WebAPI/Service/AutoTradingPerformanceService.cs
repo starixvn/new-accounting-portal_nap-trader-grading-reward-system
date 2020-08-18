@@ -1,16 +1,16 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Service
 {
     using Fanex.Data;
-    using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;    
+    using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
     using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;    
+    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;    
+    using System.Linq;
 
     public class AutoTradingPerformanceService : IAutoTradingPerformanceService
     {
@@ -18,7 +18,7 @@
         private string _leagueGroupIds = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11";
         private string _typeSiteIds = "2, 3";
         private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
-        private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);       
+        private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
         #endregion
 
         public byte[] GetAutoTradingTAMonthly()
@@ -43,7 +43,7 @@
         {
             var titleTaNoTrader = "TA WIN-LOSS REPORT NO TRADER PERFORMANCE";
             var titleLastWeeks = "TA LAST 4 WEEK WIN-LOSS REPORT";
-            
+
             var criteria = new GetAutoTradingWeeklyPerformanceCriteria
             {
                 FromDate = _ptAfterIncreaseVarianceDate,
@@ -71,7 +71,7 @@
         public byte[] GetAutoTradingRT3AndTAComparition()
         {
             var titleModelRT3 = "RT3 WIN-LOSS WITH TRADER PERFORMANCE (BY LEAGUE GROUP)";
-            var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";          
+            var titleModelTA = "TA WIN-LOSS NO TRADER PERFORMANCE (BY LEAGUE GROUP)";
             var criteria = new GetAutoTradingEventPerformanceCriteria
             {
                 FromDate = _taLauchedDate,
@@ -109,9 +109,9 @@
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
-                {                    
+                {
                     var summaryLeagueData = multi.Read<AutoTradingSummaryEventLeaguesInfo>();
-                    
+
                     var leagueData = multi.Read<AutoTradingEventLeaguesPerformanceInfo>();
 
                     if (summaryLeagueData != null && summaryLeagueData.Any())
@@ -137,36 +137,59 @@
                             + criteria.ToDate.ToString(Consts.FormatDateTimeToString_ddMMMyyyy);
 
             writer.WriteRow(1, new object[] { rangeDate });
-            writer.CopyRows(2, 2);            
+            writer.CopyRows(2, 2);
             var rowStartNum = 5;
             var rowEndNum = 5;
 
             var eventGroupInfos = summaryEventLeagueList
-                                    .OrderBy(x=>x.LeagueGroupId)
-                                    .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });
-            
+                                    .OrderBy(x => x.LeagueGroupId)
+                                    .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });           
+
             foreach (var grouping in eventGroupInfos)
-            {                
+            {
                 var eventLeague = GetLeagueGroupList().FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
 
                 var groupTotalLeagueInfo = eventLeagueList
-                                        .Where(x=>x.LeagueGroupId.Equals(grouping.LeagueGroupId))
+                                        .Where(x => x.LeagueGroupId.Equals(grouping.LeagueGroupId))
                                         .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
                 var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
 
                 FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, 5, ref writer);
 
+                var similarLeagueNames = GetEventSimilarLeagueName(grouping.ItemList);
+                var skipSimilarLeagues = 0;
+
                 foreach (var leagueList in grouping.ItemList)
                 {
-                    var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueList.LeagueId)).MatchCount;
-                    var leagueInfo = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId))
+                    var similarLeague = CheckExistSimilarLeague(similarLeagueNames, leagueList.LeagueId);
+
+                    if (similarLeague == null)
+                    {
+                        var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueList.LeagueId)).MatchCount;
+                        var leagueInfo = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId))
                                                     .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                    FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, 4, ref writer);
-                }             
+                        FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, 4, ref writer);
+                    }
+                    else
+                    {
+                        if (similarLeague.IsMerged)
+                        {
+                            skipSimilarLeagues += 1;
+                            continue;
+                        }
+                            
+                        var matchCount = summaryEventLeagueList.Where(x => similarLeague.LeagueIdList.Contains(x.LeagueId)).Sum(x => x.MatchCount);
+                        var leagueInfo = eventLeagueList.Where(x => similarLeague.LeagueIdList.Contains(x.LeagueId))
+                                                    .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                rowEndNum = rowStartNum + grouping.ItemList.Count - 1;
+                        FillRowDataEventLeague(similarLeague.LeagueName, matchCount, leagueInfo, 4, ref writer);
+                        MergedSimilarLeague(similarLeagueNames, similarLeague.LeagueName);
+                    }
+                }
+
+                rowEndNum = rowStartNum + (grouping.ItemList.Count - skipSimilarLeagues) - 1;                
                 sheet.GroupRow(rowStartNum, rowEndNum);
                 sheet.SetRowGroupCollapsed(rowStartNum, true);
 
@@ -183,7 +206,7 @@
 
             return writer.ToBytes();
         }
-    
+
         private void FillRowDataEventLeague(string autoTradingName, int matchCount, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
         {
             var record = new object[]
@@ -204,6 +227,48 @@
                 };
 
             writer.WriteRow(styleIndex, record);
+        }
+
+        private List<AutoTradingSimilarLeagueName> GetEventSimilarLeagueName(List<AutoTradingSummaryEventLeaguesInfo> eventLeagueList)
+        {
+            var leagues = new List<AutoTradingSimilarLeagueName>();
+
+            var leaguePlayOff = eventLeagueList.Where(x => x.LeagueName.ToUpper().Contains(Consts.AutomationTradingLeagueNamePlayOff));
+
+            foreach (var info in leaguePlayOff)
+            {
+                var leagueName = info.LeagueName.Substring(0, info.LeagueName.Length - Consts.AutomationTradingLeagueNamePlayOff.Length - 1);
+
+                var sameLeagues = eventLeagueList.Where(x => x.LeagueName.Contains(leagueName));
+
+                leagues.Add(new AutoTradingSimilarLeagueName
+                {
+                    LeagueIdList = sameLeagues.Select(x => x.LeagueId).ToList(),
+                    LeagueName = leagueName,
+                    LeagueNameOther = info.LeagueName
+                });
+            }
+
+            return leagues;
+        }
+
+        private AutoTradingSimilarLeagueName CheckExistSimilarLeague(List<AutoTradingSimilarLeagueName> similarLeagueNames, int leagueId)
+        {
+            return similarLeagueNames.AsEnumerable().FirstOrDefault(x => x.LeagueIdList.Contains(leagueId));
+        }
+
+        private List<AutoTradingSimilarLeagueName> MergedSimilarLeague(List<AutoTradingSimilarLeagueName> similarLeagueNames, string leagueName)
+        {
+            foreach (var league in similarLeagueNames)
+            {
+                if (league.LeagueName.Equals(leagueName))
+                {
+                    league.IsMerged = true;
+                    break;
+                }
+            }
+
+            return similarLeagueNames;
         }
 
         private void GetAutoTradingMonthlyPerformance(GetAutoTradingMonthlyPerformanceCriteria criteria, IAutoTradingHtmlWriter writer)
@@ -237,7 +302,7 @@
                             var rptMonth = BackToBeginningOfTheMonth(group.RptMonth);
 
                             var summaryMonthlyInfo = summaryMonthlyData.FirstOrDefault(x => x.RptMonth.Equals(rptMonth));
-                            
+
                             var autoTradingName = "TA - " + group.RptMonth.ToString(Consts.FormatDateTimeToString_MMMyyyy);
 
                             writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
@@ -291,7 +356,7 @@
                                 autoTradingTimelineInfo.RT3AfterPT85,
                                 autoTradingTimelineInfo.RT3IncreaseVariancePT
                             };
-                            writer.GenerateRT3PTTableTr(timelinePTInfoList);                            
+                            writer.GenerateRT3PTTableTr(timelinePTInfoList);
                         }
 
                         var autoTradingName = "TA After PT 85 & increase Variance PT";
@@ -342,7 +407,7 @@
                     }
                 }
             }
-        }        
+        }
 
         private string GenerateWeekly(AutoTradingWeeklyPerformanceInfo info)
         {
@@ -413,7 +478,7 @@
                         foreach (var group in groupInfos)
                         {
                             var summaryMonthlyInfo = summaryEventData.FirstOrDefault(x => x.LeagueGroupId == group.LeagueGroupId);
-                            
+
                             var autoTradingName = leagueGroupList[group.LeagueGroupId];
 
                             writer.GenerateTableTr(group.Items, summaryMonthlyInfo, autoTradingName);
@@ -424,7 +489,7 @@
                     }
                 }
             }
-        }    
+        }
 
         private DateTime GetDateOfFourLastWeek()
         {

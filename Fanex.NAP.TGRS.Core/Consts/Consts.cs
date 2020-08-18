@@ -59,6 +59,7 @@
         public const string AutomationTradingCssClassBodySumTOWL = "body-sum-to-wl";
         public const string AutomationTradingCssClassBodySumMargin = "body-sum-margin";
         public const string AutomationTradingTOTAL = "TOTAL";
+        public const string AutomationTradingLeagueNamePlayOff = "(PLAY OFF)";        
 
         public const string MultipleMatchesMatchKeyNoOfConners = "No.of Corners";
         public const string MultipleMatchesMatchKeyConner = "Conner";
