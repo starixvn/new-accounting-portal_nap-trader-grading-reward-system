@@ -2,7 +2,7 @@
 {
     public class BasketballLeagueGroupSummaryInfo
     {
-        public short GroupID { get; set; }
+        public int LeagueGroupId { get; set; }
 
         public string GroupName { get; set; }
 

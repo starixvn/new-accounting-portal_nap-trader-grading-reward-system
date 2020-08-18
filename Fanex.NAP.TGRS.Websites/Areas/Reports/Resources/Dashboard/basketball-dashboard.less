@@ -102,7 +102,7 @@ body {
             background-color: #fff;
             line-height: 28px;
             overflow-y: scroll;
-            height: 252px;
+            height: 357px;
 
             .column-left, .column-right {
                 color: #000;
@@ -114,7 +114,7 @@ body {
             }
 
             .format-negative {
-                color: Red;
+                color: red;
             }
 
             .border-bottom {
@@ -145,7 +145,7 @@ body {
         border: none;
 
         .box-chart-container {
-            margin-right: 0px;
+            margin-right: 8px;
 
             .box-header {
                 padding: 10px;
@@ -360,9 +360,13 @@ body {
 
             .box-content {
                 margin: 0px;
-                background-color: #fff;
-                max-width: 620px;
+                background-color: #fff;  
+                width: 100%;
             }
+        }
+
+        .box-match {
+            margin-right: 0px;
         }
 
         .margin-right {
@@ -371,17 +375,18 @@ body {
 
         .margin-bottom,
         .margin-bottom-8 {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
     }
 
     .margin-right,
-    .box-margin-right {
+    .box-margin-right,
+    .box-match {
         margin-right: 8px;
     }
 }
 
-@media screen and (max-width:1245px) {
+@media screen and (max-width:1400px) {
     .box-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -395,13 +400,23 @@ body {
         }
 
         .box {
+            .absolute-padding;
+
             .box-chart-container {
-                margin-right: 0px;
+                margin-right: 8px;
+
+                .box-content {                   
+                    width: 100%;
+                }
             }
 
             .box-margin-right {
                 margin-right: 0px;
                 margin-bottom: 6px;
+            }
+
+            .box-match {
+                margin-right: 0;
             }
         }
     }
@@ -420,7 +435,7 @@ body {
     font-size: 120%;
     .title-border;
     height: 40px;
-    line-height: 40px;
+    padding-top: 5px;
     vertical-align: middle;
     padding-left: 10px;
     padding-bottom: 10px;
@@ -436,12 +451,12 @@ body {
         float: left;
         width: 255px;
         margin-right: 8px;
-        margin-top: 10.5px;
+        margin-top: 5px;
     }
 
     .dashboard-content {
         height: 38px;
-        display: flex;        
+        display: flex;
 
         .filter {
             font-size: 13px;
@@ -451,6 +466,7 @@ body {
             font-family: Lucida Sans Unicode;
             text-shadow: 0 0.023em 0 #000000;
             display: flex;
+            margin-top: 2px;
 
             .range-month {
                 display: flex;
@@ -458,13 +474,13 @@ body {
 
             .btn-generate {
                 float: left;
-                margin: 2px 0 0 10px;
+                margin: 0 0 0 10px;
             }
 
             .period-selected {
                 height: 26px;
                 width: 120px;
-                border-color: #CECCCD;
+                border: 1px solid #cecccd;
             }
 
             .hidden {
@@ -474,7 +490,17 @@ body {
             .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-prev,
             .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-next,
             .monpickr-wrap-parent .monpickr-wrap .monpickr.monpickr-arrows .monpickr-down {
-                top: 12px;
+                top: 4px;
+            }
+
+            .ui_nexdatepicker_datetextbox {
+                border-color: #CECCCD;
+                border: #CECCCD 1px solid;
+                line-height: 20px;
+            }
+
+            .ui_nexdatepicker_lbl_field {
+                padding: 4px 10px 0 0;
             }
         }
     }
@@ -491,3 +517,4 @@ body {
     -moz-box-shadow: 0px 1px 1px 0px #d8d9dc;
     box-shadow: 0px 1px 1px 0px #d8d9dc;
 }
+

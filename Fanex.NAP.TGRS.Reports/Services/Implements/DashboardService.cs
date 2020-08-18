@@ -208,15 +208,39 @@
 
             if (data != null && data.Any())
             {
-                leagueGroups = data.Select(x => new BasketballLeagueGroupSummary
+                leagueGroups.AddRange(
+                    data.Where(x => x.LeagueGroupId >= 42 && x.LeagueGroupId <= 72)
+                    .Select(x => new BasketballLeagueGroupSummary
+                    {
+                        GroupID = x.LeagueGroupId,
+                        GroupName = x.GroupName,
+                        Margin = Math.Round(x.Margin, 2)
+                    }).ToList()
+                );
+
+                var groupOthers = data.Where(x => x.LeagueGroupId < 42 || x.LeagueGroupId > 72 || x.LeagueGroupId == 0).Select(x => new BasketballLeagueGroupSummaryInfo
                 {
-                    GroupID = x.GroupID,
-                    GroupName = x.GroupName,
-                    Margin = Math.Round(x.Margin, 2)
-                }).ToList();
+                     LeagueGroupId = -1,
+                     WinLoss = x.WinLoss,
+                     Turnover = x.Turnover
+                });
+
+                if (groupOthers != null && groupOthers.Any())
+                {
+                    var winloss = groupOthers.Sum(x => x.WinLoss);
+                    var turnover = groupOthers.Sum(x => x.Turnover);
+                    var others = groupOthers.GroupBy(x => x.LeagueGroupId).Select(x => new BasketballLeagueGroupSummary
+                    {
+                        GroupID = x.Key,
+                        GroupName = "Others",
+                        Margin = Math.Round(winloss * 100 / turnover, 2) 
+                    });
+
+                    leagueGroups.AddRange(others.Distinct());
+                }
             }
 
-            return leagueGroups;
+            return leagueGroups.OrderBy(x=>x.Margin);
         }
 
         public BasketballSummaryGeneralInfo GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
@@ -434,7 +458,7 @@
                 dayList.Add(new Column
                 {
                     GroupName = '-' + fromDate.Year.ToString(),
-                    Name = i.ToString() + "-" + fromDate.Month,
+                    Name = i.ToString() + "-" + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(fromDate.Month).Substring(0, 3),
                     Value = 0,
                     Day = i,
                     Month = fromDate.Month,

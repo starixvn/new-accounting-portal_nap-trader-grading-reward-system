@@ -29,15 +29,6 @@
             : this(null)
         {
             _permission = (int)ReportUtil.GetBettypeViewPermission(HasRight, TGRSFunctionKeys.Dashboard_PHbettypes, TGRSFunctionKeys.Dashboard_Majorbettypes);
-
-            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
-
-            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
-
-            ViewBag.MinDate = minDate;
-            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today;
-            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;            
         }
 
         public DashboardController(IDashboardService dashboardService)
@@ -104,18 +95,27 @@
             });
         }
         
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
         public ActionResult BasketBallDashboard()
         {
-            if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None) return View("~/Views/Home/Index.cshtml");
+            if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None)
+                return View("~/Views/Home/Index.cshtml");
+            
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
 
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+            
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
 
             return View();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
         public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
         {
             var data = this._dashboardService.GetBasketballSummaryInfo(criteria);
@@ -124,7 +124,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
         public JsonResult GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
         {
             var data = this._dashboardService.GetBasketballTraderSummary(criteria);
@@ -133,10 +133,44 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummary, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
         public JsonResult GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
         {
             var data = this._dashboardService.GetBasketballLeagueGroupSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
+        public JsonResult GetDate(BasketballDays days)
+        {
+            var toDay = DateTime.Today;
+            var data = new
+            {
+                FromDate = toDay.ToString(),
+                ToDate = toDay.ToString()
+            };
+
+            switch (days)
+            {
+                case BasketballDays.Days7:
+                    data = new
+                    {
+                        FromDate = toDay.AddDays(-7).ToString(),
+                        ToDate = toDay.ToString()
+                    };
+                    break;
+                case BasketballDays.Days30:
+                    data = new
+                    {
+                        FromDate = toDay.AddDays(-30).ToString(),
+                        ToDate = toDay.ToString()
+                    };
+                    break;
+                default:
+                    break;
+            }
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }

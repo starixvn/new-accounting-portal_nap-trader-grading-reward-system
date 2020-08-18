@@ -5,7 +5,7 @@
     [Serializable]
     public class BasketballLeagueGroupSummary
     {
-        public short GroupID { get; set; }
+        public int GroupID { get; set; }
 
         public string GroupName { get; set; }
 

@@ -36,13 +36,13 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         divMarginAverage: null,
         divBetCountAverage: null,
         divTurnoverAverage: null,
-        divMatchCountAverage: null,
+        divMatchCountAverage: null       
     };
 
     var cacheDomElements = function () {
         domElements.divRangeMonthWrapper = $('#divRangeMonthWrapper');
-        domElements.divRangeMonth = $('#divRangeMonth');
         domElements.divPeriodSelected = $('#divPeriodSelected');
+        domElements.divRangeMonth = $('#divRangeMonth');        
         domElements.btnGenerate = $('#btnGenerate');
         domElements.divWinlossContent = $('#divWinlossContent');        
         domElements.divMarginContent = $('#divMarginContent');
@@ -67,7 +67,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         domElements.divMarginAverage = $('#divMarginAverage');
         domElements.divBetCountAverage = $('#divBetCountAverage');
         domElements.divTurnoverAverage = $('#divTurnoverAverage');
-        domElements.divMatchCountAverage = $('#divMatchCountAverage'); 
+        domElements.divMatchCountAverage = $('#divMatchCountAverage');       
     };
 
     var parameters = {
@@ -79,7 +79,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     var urls = {
         GetBasketballSummaryInfo: common.ResolveRootUrl('Dashboard/GetBasketballSummaryInfo'),
         GetBasketballTraderSummary: common.ResolveRootUrl('Dashboard/GetBasketballTraderSummary'),
-        GetBasketballLeagueGroupSummary: common.ResolveRootUrl('Dashboard/GetBasketballLeagueGroupSummary')
+        GetBasketballLeagueGroupSummary: common.ResolveRootUrl('Dashboard/GetBasketballLeagueGroupSummary'),
+        GetDate: common.ResolveRootUrl('Dashboard/GetDate')
     };
    
     var legendColors = [
@@ -152,32 +153,54 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         domElements.divRangeMonth = domElements.divRangeMonth.timeRange({
             minDate: datepickerSetting.MinDate,
             maxDate: datepickerSetting.DefaultToDate,
-            defaultFromDate: datepickerSetting.DefaultFromDate,
+            defaultFromDate: datepickerSetting.DefaultToDate,
             defaultToDate: datepickerSetting.DefaultToDate,
             allowYearRange: datepickerSetting.AllowYearRange,
             yearRanges: null,
             labelCss: 'lbl-range-month'
         });
-
-        domElements.ddlPeriodType = domElements.divRangeMonth.find('#ddlPeriodType');        
-        domElements.ddlPeriodType.val(2).change();
-
-        let instance = domElements.divRangeMonth.find("span:contains(" + labels.Date + ")");
-        if (instance.length > 0) {
-            instance.text(labels.Month);
-        }
-
+     
         $('.lbl-range-month').hide();
         $('.lbl-range-month').next().hide();
+        $('#dpkFromDate').off('focus');
+        $('#dpkToDate').off('focus');        
 
         domElements.divPeriodSelected.on('change', function () {
             let $this = $(this);
             let value = $this.val();
-            if (value === "0")
-                domElements.divRangeMonthWrapper.removeClass('hidden');
-            else
-                domElements.divRangeMonthWrapper.addClass('hidden');
-        });       
+            domElements.ddlPeriodType = domElements.divRangeMonth.find('#ddlPeriodType');
+            let params = {};
+            params.days = parseInt(value);
+
+            if (value === "0") {
+                domElements.ddlPeriodType.val(2).change();
+            } else {
+                domElements.ddlPeriodType.val(1).change();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: urls.GetDate,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify(params),
+                    success: function (result) {                        
+
+                        if (result) {
+                            console.log(result.FromDate);
+                            $('#dpkFromDate').datepicker("setDate", result.FromDate);
+                            $('#dpkToDate').datepicker("setDate", result.ToDate);
+                        }
+                    },
+                    error: function (xhr) {
+                        common.HandleAjaxError(xhr);
+                        common.EnableInput();
+                    },
+                    complete: function () {
+                        common.EnableInput();
+                    }
+                });
+            }
+        });
     };
 
     var viewChartOnClick = function () {
@@ -353,7 +376,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };   
 
     var showLegends = function (data) {
-        var div = '';        
+        var div = '';
         if (data.WinLossList || data.WinLossComparisonList || data.WinLossCrossYearList || data.WinLossCrossYearComparisonList) {
             var i = 4 - data.LegendList.length;
             data.LegendList.map(function (x) {
@@ -361,20 +384,20 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
 
                 legendColors.forEach(function (y) {
                     if (y.item === 'cricle-' + i) {
-                        y.text = x
-                    };
+                        y.text = x;
+                    }
                 });
 
                 i = i + 1;
             });
         }
-        domElements.divWinLossLegend.html(div);       
+        domElements.divWinLossLegend.html(div);
         domElements.divMarginLegend.html(div);
         domElements.divTurnoverLegend.html(div);
         domElements.divBetCountLegend.html(div);
         domElements.divMatchCountLegend.html(div);
 
-        if (div != '') {
+        if (div !== '') {
             domElements.divWinLossAverage.removeClass('hidden');
             domElements.divMarginAverage.removeClass('hidden');
             domElements.divTurnoverAverage.removeClass('hidden');
@@ -387,7 +410,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             domElements.divBetCountAverage.addClass('hidden');
             domElements.divMatchCountAverage.addClass('hidden');
         }
-    }
+    };
 
     var generateSeriesOptions = function (data, dataComparison, dataCrossYear, dataCrossYearComparison) {
         let series = [];
@@ -501,16 +524,42 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };
 
     var generatePlotLinesOptions = function (value1, value2) {
+        let y1Position = -4;
+        let y2Position = 16;
+
+        if (value1 < value2) {
+            y2Position = -4;
+            y1Position = 16;
+        }
+
         return [{
             color: '#3fd0da',
             width: 2,
             value: value1,
-            dashStyle: 'ShortDot'
+            dashStyle: 'ShortDot',
+            label: {
+                text: formatNumber(value1),
+                align: 'right',
+                x: -5,
+                y: y1Position,
+                style: {
+                    color: '#000'                   
+                }
+            }
         }, {
             color: '#5a7dc1',
             width: 2,
             value: value2,
-            dashStyle: 'Solid'
+                dashStyle: 'Solid',
+                label: {
+                    text: formatNumber(value2),
+                    align: 'right',  
+                    x: -5,
+                    y: y2Position,
+                    style: {
+                        color: '#000'                        
+                    }
+                }
         }];
     };
 
@@ -521,7 +570,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
 
         return {
             chart: {
-                type: 'line'
+                type: 'line',
+                height: 345
             },
             title: {
                 text: null
@@ -559,7 +609,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
 
         return {
             chart: {
-                type: 'column'              
+                type: 'column',
+                height: 345
             },
             title: {
                 text: null
@@ -604,7 +655,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         let valueComparison = 0;
         if (yComparison !== this.y && y !== 0 && yComparison !== 0) {
             valueComparison = (y - yComparison) / yComparison * 100;
-            valueComparison = valueComparison.toFixed(2);
+            valueComparison = valueComparison.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         let nodeColor = this.color;
         let currentLegend = '';
@@ -615,10 +666,16 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         });
 
         let legend1 = this.series.chart.series[0].name;
-
+        let yValue = this.y;
+        if (!isInt(yValue)) {
+            yValue = this.y.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        } else {
+            yValue = yValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
         let tooltip = '';
         tooltip += '<span>' + this.x + '-' + currentLegend + '</span>';
-        tooltip += '<br/><span style="font-weight: bold">' + this.y + '</span><br/>';
+        tooltip += '<br/><span style="font-weight: bold">' + yValue + '</span><br/>';
         if (yComparison !== this.y) {
             let color = valueComparison > 0 ? 'green' : 'red';
             tooltip += '<span style="font-weight: bold; color: ' + color + '">(' + valueComparison + '%)</span>';
@@ -626,6 +683,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         }
 
         return tooltip;
+    };
+
+    var isInt = function (number) {
+        return number % 1 === 0;
     };
     
     var reDrawChartByType = function (name, type) {        
@@ -731,6 +792,28 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             else
                 $(this).css("visibility", "hidden");
         });
+
+        elementContent.find('.highcharts-plot-line-label ').each(function () {
+            if (isShow)
+                $(this).css("visibility", "visible");
+            else
+                $(this).css("visibility", "hidden");
+        });
     };
-   
+
+    var formatNumber = function (number) {
+        number = number.toFixed(2);
+
+        if (number < 1000)
+            return number;
+
+        if (parseInt(number / 1e6) !== 0)
+            return parseInt(number / 1e6) + "M";
+        else
+            return parseInt(number / 1e3) + "K";
+    };
+
+    $(window).unload(function () {
+        domElements.divPeriodSelected.find('option').remove();
+    });
 };
