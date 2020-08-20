@@ -115,13 +115,17 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
             showAverageOnClick(domElements.divMatchesCountContent, $(this));
         });
 
-        domElements.chkSoccer.on('change', function () {
-            window.location = common.ResolveRootUrl("Reports/Dashboard");
-        });
+        if (domElements.chkSoccer !== null) {
+            domElements.chkSoccer.on('change', function () {
+                window.location = common.ResolveRootUrl("Reports/Dashboard");
+            });
+        }
 
-        domElements.chkOS.on('change', function () {
-            window.location = common.ResolveRootUrl("OSReports/OSDashboard");
-        });       
+        if (domElements.chkOS !== null) {
+            domElements.chkOS.on('change', function () {
+                window.location = common.ResolveRootUrl("OSReports/OSDashboard");
+            });
+        }
     };
 
     var initializeFields = function () {
@@ -527,7 +531,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         let y1Position = -4;
         let y2Position = 16;
 
-        if (value1 < value2) {
+        if (value1 > value2) {
             y2Position = -4;
             y1Position = 16;
         }
@@ -535,10 +539,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         return [{
             color: '#3fd0da',
             width: 2,
-            value: value1,
+            value: value2,
             dashStyle: 'ShortDot',
             label: {
-                text: formatNumber(value1),
+                text: formatNumber(value2),
                 align: 'right',
                 x: -5,
                 y: y1Position,
@@ -549,10 +553,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
         }, {
             color: '#5a7dc1',
             width: 2,
-            value: value2,
+                value: value1,
                 dashStyle: 'Solid',
                 label: {
-                    text: formatNumber(value2),
+                    text: formatNumber(value1),
                     align: 'right',  
                     x: -5,
                     y: y2Position,

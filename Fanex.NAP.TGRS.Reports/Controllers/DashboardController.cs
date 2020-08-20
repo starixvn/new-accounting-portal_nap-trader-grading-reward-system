@@ -45,7 +45,8 @@
         {
             if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None) return View("~/Views/Home/Index.cshtml");
 
-            ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
+            ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);            
+            ViewBag.CanViewBasketballDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, Constant.Policy.Read);
 
             return View();
         }
@@ -98,9 +99,6 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
         public ActionResult BasketBallDashboard()
         {
-            if ((Models.Permission.BettypeViewPermission)_permission == Models.Permission.BettypeViewPermission.None)
-                return View("~/Views/Home/Index.cshtml");
-            
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
 
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
@@ -110,6 +108,7 @@
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
+            ViewBag.CanViewSoccerDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
 
             return View();
         }

@@ -126,13 +126,18 @@ Fanex.TGRS.Reports.Dashboard = function () {
             saveChartTypeCookies();
         });
 
-        $('#chkOS').on('change', function () {
-            window.location = common.ResolveRootUrl("OSReports/OSDashboard");
-        });
+        if ($('#chkOS') !== null) {
+            $('#chkOS').on('change', function () {
+                window.location = common.ResolveRootUrl("OSReports/OSDashboard");
+            });
+        }
 
-        $('#chkBasketBall').on('change', function () {
-            window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
-        });
+        if ($('#chkBasketBall') !== null) {
+            $('#chkBasketBall').on('change', function () {
+                window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
+            });
+        }
+        
     };
     //}
 

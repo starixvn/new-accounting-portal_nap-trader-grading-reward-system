@@ -32,6 +32,7 @@
         public ActionResult Index()
         {
             ViewBag.CanViewDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
+            ViewBag.CanViewBasketballDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, Constant.Policy.Read);
 
             return View();
         }

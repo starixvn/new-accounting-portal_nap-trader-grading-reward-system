@@ -1,46 +1,67 @@
 ﻿@{
     ViewBag.Title = ViewLang.PerformanceSummaryReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var canSwitch = (bool)(@ViewBag.CanViewOSDashboard) ? true : false;
+    var canSwitch2 = (bool)(@ViewBag.CanViewOSDashboard) || (bool)(@ViewBag.CanViewSoccerDashboard) ? true : false;
+    var canSwitchAll = (bool)(@ViewBag.CanViewOSDashboard) && (bool)(@ViewBag.CanViewSoccerDashboard) ? true : false;
 }
 
 @Styles.Render("~/styles/basketballdashboard")
 <div id="divHorizontalTab">
     <div class="dashboard-title">
         <div class="dashboard-content">
-            @if (@canSwitch == true)
+            @if (canSwitchAll)
             {
-            <div class="switch-toggle switch-ios switch-3 flat-switch-left">
-                <input id="chkSoccer" name="chartType" type="radio">
-                <label for="chkSoccer">SOCCER</label>
+                <div class="switch-toggle switch-ios switch-3 flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio">
+                    <label for="chkSoccer">SOCCER</label>
 
-                <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
-                <label for="chkBasketBall">BASKETBALL</label>
+                    <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                    <label for="chkBasketBall">BASKETBALL</label>
 
-                <input id="chkOS" name="chartType" type="radio">
-                <label for="chkOS">OTHERS</label>
+                    <input id="chkOS" name="chartType" type="radio">
+                    <label for="chkOS">OTHERS</label>
 
-                <a></a>
-            </div>
+                    <a></a>
+                </div>
             }
-        <div class="filter">
-            <div style="margin-left:30px;">
-                <span>Filtered by</span>
-                <select id="divPeriodSelected" class="period-selected">
-                    <option value="1">Today</option>
-                    <option value="2">Last 7 days</option>
-                    <option value="3">Last 30 days</option>
-                    <option value="0">Custom months</option>
-                </select>
-            </div>
-            <div id="divRangeMonthWrapper" class="range-month">
-                <div id="divRangeMonth" style="margin-left:30px">
+            else if (canSwitch2) {
+                <div class="switch-toggle switch-ios flat-switch-left">
+                    @if ((bool)(@ViewBag.CanViewSoccerDashboard))
+                    {
+                        <input id="chkSoccer" name="chartType" type="radio">
+                        <label for="chkSoccer">SOCCER</label>
+                    }
+
+                    <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                    <label for="chkBasketBall">BASKETBALL</label>
+
+                    @if ((bool)(@ViewBag.CanViewOSDashboard))
+                    {
+                        <input id="chkOS" name="chartType" type="radio">
+                        <label for="chkOS">OTHERS</label>
+                    }
+
+                    <a></a>
+                </div>
+            }
+            <div class="filter">
+                <div style="margin-left:30px;">
+                    <span>Filtered by</span>
+                    <select id="divPeriodSelected" class="period-selected">
+                        <option value="1">Today</option>
+                        <option value="2">Last 7 days</option>
+                        <option value="3">Last 30 days</option>
+                        <option value="0">Custom months</option>
+                    </select>
+                </div>
+                <div id="divRangeMonthWrapper" class="range-month">
+                    <div id="divRangeMonth" style="margin-left:30px">
+                    </div>
+                </div>
+                <div class="btn-generate">
+                    <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
                 </div>
             </div>
-            <div class="btn-generate">
-                <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
-            </div>
-        </div>
         </div>
     </div>
 

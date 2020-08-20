@@ -376,19 +376,21 @@
         {
             if (avgItems != null && avgItems.Any())
             {
-                if (basketballSummaryInfo.IsCrossYear)
-                {
-                    var avgCrossYear = avgItems.FirstOrDefault(x => x.ToDate.Year.Equals(criteria.ToDate.Year - 1));
+                var avgComparison = avgItems.FirstOrDefault(x => x.ToDate.Year.Equals(criteria.ToDate.Year - 1));                
 
-                    if (avgCrossYear != null)
+                if (avgComparison != null)
+                {
+                    if (basketballSummaryInfo.IsCrossYear)
                     {
-                        basketballSummaryInfo.WinLossAverageComparison = avgCrossYear.AvgWinLoss;
-                        basketballSummaryInfo.TurnoverAverageComparison = avgCrossYear.AvgTurnover;
-                        basketballSummaryInfo.MarginAverageComparison = avgCrossYear.AvgMargin;
-                        basketballSummaryInfo.BetCountAverageComparison = avgCrossYear.AvgBetCount;
-                        basketballSummaryInfo.MatchCountAverageComparison = avgCrossYear.AvgMatchCount;
-                        basketballSummaryInfo.LegendList.Add(avgCrossYear.FromDate.Year);
+                        basketballSummaryInfo.LegendList.Add(avgComparison.ToDate.Year - 1);
                     }
+
+                    basketballSummaryInfo.WinLossAverageComparison = avgComparison.AvgWinLoss;
+                    basketballSummaryInfo.TurnoverAverageComparison = avgComparison.AvgTurnover;
+                    basketballSummaryInfo.MarginAverageComparison = avgComparison.AvgMargin;
+                    basketballSummaryInfo.BetCountAverageComparison = avgComparison.AvgBetCount;
+                    basketballSummaryInfo.MatchCountAverageComparison = avgComparison.AvgMatchCount;
+                    basketballSummaryInfo.LegendList.Add(avgComparison.ToDate.Year);
                 }
 
                 var avgCurrentYear = avgItems.FirstOrDefault(x => x.ToDate.Year.Equals(criteria.ToDate.Year));
@@ -399,8 +401,7 @@
                     basketballSummaryInfo.TurnoverAverage = avgCurrentYear.AvgTurnover;
                     basketballSummaryInfo.MarginAverage = avgCurrentYear.AvgMargin;
                     basketballSummaryInfo.BetCountAverage = avgCurrentYear.AvgBetCount;
-                    basketballSummaryInfo.MatchCountAverage = avgCurrentYear.AvgMatchCount;
-                    basketballSummaryInfo.LegendList.Add(avgCurrentYear.ToDate.Year - 1);
+                    basketballSummaryInfo.MatchCountAverage = avgCurrentYear.AvgMatchCount;                    
                     basketballSummaryInfo.LegendList.Add(avgCurrentYear.ToDate.Year);
                 }
             }

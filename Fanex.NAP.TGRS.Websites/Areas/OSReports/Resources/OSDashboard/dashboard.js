@@ -79,7 +79,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         cacheDomElements();
         handlePageEvents();
 
-        domElements.chkOS.trigger('click');
+        domElements.chkOS.trigger('click');      
     };
 
     //}
@@ -118,13 +118,17 @@ Fanex.TGRS.Reports.Dashboard = function () {
             domElements.chkOS.trigger('click');
         });
 
-        $('#chkSoccer').on('change', function () {
-            window.location = common.ResolveRootUrl("Reports/Dashboard");
-        });       
+        if ($('#chkSoccer') !== null) {
+            $('#chkSoccer').on('change', function () {
+                window.location = common.ResolveRootUrl("Reports/Dashboard");
+            }); 
+        }
 
-        $('#chkBasketBall').on('change', function () {
-            window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
-        });
+        if ($('#chkBasketBall') !== null) {
+            $('#chkBasketBall').on('change', function () {
+                window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
+            });
+        }        
     };
     //}
 

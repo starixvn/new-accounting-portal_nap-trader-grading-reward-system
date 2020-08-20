@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = ViewLang.PerformanceSummaryReport;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var canSwitch = (bool)(@ViewBag.CanViewOSDashboard) ? true : false;
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+    var canSwitch2 = (bool)(@ViewBag.CanViewOSDashboard) || (bool)(@ViewBag.CanViewBasketballDashboard) ? true : false;
+    var canSwitchAll = (bool)(@ViewBag.CanViewOSDashboard) && (bool)(@ViewBag.CanViewBasketballDashboard) ? true : false;
 }
 @Styles.Render("~/styles/dashboard")
 <div id="divHorizontalTab">
@@ -21,17 +22,38 @@
                 <a id="toggleA"></a>
             </div>
 
-            @if (@canSwitch == true)
+            @if (canSwitchAll)
             {
                 <div class="switch-toggle switch-ios switch-3 flat-switch-left">
                     <input id="chkSoccer" name="chartType" type="radio" checked="checked">
                     <label for="chkSoccer">SOCCER</label>
-           
+
                     <input id="chkBasketBall" name="chartType" type="radio">
                     <label for="chkBasketBall">BASKETBALL</label>
 
                     <input id="chkOS" name="chartType" type="radio">
                     <label for="chkOS">OTHERS</label>
+
+                    <a></a>
+                </div>
+            }
+            else if(canSwitch2)
+            {
+                <div class="switch-toggle switch-ios flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio">
+                    <label for="chkSoccer">SOCCER</label>
+
+                    @if ((bool)(@ViewBag.CanViewBasketballDashboard))
+                    {
+                        <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                        <label for="chkBasketBall">BASKETBALL</label>
+                    }
+
+                    @if ((bool)(@ViewBag.CanViewOSDashboard))
+                    {
+                        <input id="chkOS" name="chartType" type="radio">
+                        <label for="chkOS">OTHERS</label>
+                    }
 
                     <a></a>
                 </div>
