@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Services
 {
+    using Fanex.NAP.TGRS.OSReports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
+    using Fanex.NAP.TGRS.OSReports.ViewModel;
     using System.Collections.Generic;
 
     public interface IDashboardService
@@ -16,5 +18,9 @@
         IEnumerable<DataByMonth> GetDataByTeam(int numOfMonth);
 
         IEnumerable<DataByMonth> GetDataByRegion(int numOfMonth);
+
+        IEnumerable<OSSport> GetOSSports();
+
+        OSSummaryGeneralInfo GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria);
     }
 }

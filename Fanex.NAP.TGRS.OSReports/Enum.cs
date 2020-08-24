@@ -7,4 +7,21 @@
         Live,
         NonLive
     }
+
+    public enum OSChartName
+    {
+        WinLoss,
+        Turnover,
+        Margin,
+        MatchCount,
+        BetCount
+    }
+
+    public enum DayType
+    {
+        CustomMonth,
+        Today,
+        Days7,
+        Days30
+    }
 }

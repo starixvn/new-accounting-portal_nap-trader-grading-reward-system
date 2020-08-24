@@ -375,15 +375,15 @@ namespace Fanex.NAP.TGRS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/os-dashboard",
-                "~/Content/ToggleSwitch/toggle-switch.css",
-                "~/Areas/OSReports/Resources/OSDashboard/dashboard.less");
+                "~/Content/ToggleSwitch/toggle-switch.css",                 
+               "~/Content/DatePicker/jquery.nexDatePicker.css",
+                "~/Areas/OSReports/Resources/OSDashboard/os-dashboard.less");
 
             bundles.Add(new ScriptBundle("~/scripts/os-dashboard").Include(
                 "~/Scripts/Libraries/jQuery/jquery.cookie.js",
-                "~/Scripts/Libraries/Highcharts/highcharts.js",
-                "~/Scripts/Libraries/Highcharts/highcharts-3d.js",
-                "~/Areas/OSReports/Resources/OSDashboard/dashboard-chart.js",
-                "~/Areas/OSReports/Resources/OSDashboard/dashboard.js"));
+                "~/Scripts/Libraries/DatePicker/jquery.nexDatePicker.js",
+                "~/Scripts/Libraries/Highcharts/highcharts-v2020.js",
+                "~/Areas/OSReports/Resources/OSDashboard/os-dashboard.js"));
 
             bundles.AddAndInclude(
                 "~/styles/sport-performance",

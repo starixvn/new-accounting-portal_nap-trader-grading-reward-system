@@ -3,8 +3,11 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
+    using Fanex.NAP.TGRS.OSReports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Services;
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web.Mvc;
@@ -30,7 +33,16 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
         public ActionResult Index()
-        {
+        {            
+            ViewBag.Sports = _dashboardService.GetOSSports();
+
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             ViewBag.CanViewDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
             ViewBag.CanViewBasketballDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, Constant.Policy.Read);
 
@@ -64,6 +76,49 @@
                     BestSports = bestSports,
                     WorstTraders = worstTraders
                 });
+        }        
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetDate(DayType days)
+        {
+            var toDay = DateTime.Today;
+            var data = new
+            {
+                FromDate = toDay.ToString(),
+                ToDate = toDay.ToString()
+            };
+
+            switch (days)
+            {
+                case DayType.Days7:
+                    data = new
+                    {
+                        FromDate = toDay.AddDays(-7).ToString(),
+                        ToDate = toDay.ToString()
+                    };
+                    break;
+                case DayType.Days30:
+                    data = new
+                    {
+                        FromDate = toDay.AddDays(-30).ToString(),
+                        ToDate = toDay.ToString()
+                    };
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria)
+        {
+            var data = _dashboardService.GetOSSummaryInfo(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

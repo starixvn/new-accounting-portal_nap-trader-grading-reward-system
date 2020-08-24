@@ -189,8 +189,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                     data: JSON.stringify(params),
                     success: function (result) {                        
 
-                        if (result) {
-                            console.log(result.FromDate);
+                        if (result) {                            
                             $('#dpkFromDate').datepicker("setDate", result.FromDate);
                             $('#dpkToDate').datepicker("setDate", result.ToDate);
                         }
