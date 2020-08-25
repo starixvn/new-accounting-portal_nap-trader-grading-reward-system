@@ -141,9 +141,13 @@
             var rowStartNum = 5;
             var rowEndNum = 5;
 
+            var similarLeagueNames = GetEventSimilarLeagueName(summaryEventLeagueList.ToList());
+
+            summaryEventLeagueList = DetectLeagueGroupBackup(summaryEventLeagueList.ToList(), similarLeagueNames);
+
             var eventGroupInfos = summaryEventLeagueList
                                     .OrderBy(x => x.LeagueGroupId)
-                                    .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });           
+                                    .GroupBy(x => x.LeagueGroupId, (key, g) => new { LeagueGroupId = key, ItemList = g.ToList() });            
 
             foreach (var grouping in eventGroupInfos)
             {
@@ -156,8 +160,7 @@
                 var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
 
                 FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, 5, ref writer);
-
-                var similarLeagueNames = GetEventSimilarLeagueName(grouping.ItemList);
+                
                 var skipSimilarLeagues = 0;
 
                 foreach (var leagueList in grouping.ItemList)
@@ -189,7 +192,7 @@
                     }
                 }
 
-                rowEndNum = rowStartNum + (grouping.ItemList.Count - skipSimilarLeagues) - 1;                
+                rowEndNum = rowStartNum + (grouping.ItemList.Count - skipSimilarLeagues) - 1;
                 sheet.GroupRow(rowStartNum, rowEndNum);
                 sheet.SetRowGroupCollapsed(rowStartNum, true);
 
@@ -241,15 +244,40 @@
 
                 var sameLeagues = eventLeagueList.Where(x => x.LeagueName.Contains(leagueName));
 
-                leagues.Add(new AutoTradingSimilarLeagueName
+                if (sameLeagues.Any())
                 {
-                    LeagueIdList = sameLeagues.Select(x => x.LeagueId).ToList(),
-                    LeagueName = leagueName,
-                    LeagueNameOther = info.LeagueName
-                });
+                    var mainGroup = sameLeagues.FirstOrDefault(x => x.LeagueName.Equals(leagueName));
+
+                    leagues.Add(new AutoTradingSimilarLeagueName
+                    {
+                        LeagueGroupIdList = sameLeagues.Select(x => x.LeagueGroupId).ToList(),
+                        LeagueIdList = sameLeagues.Select(x => x.LeagueId).ToList(),
+                        MainGroupId = mainGroup != null ? mainGroup.LeagueGroupId : info.LeagueGroupId,
+                        LeagueName = leagueName,
+                        LeagueNameOther = info.LeagueName
+                    });
+                }
             }
 
             return leagues;
+        }
+
+        private List<AutoTradingSummaryEventLeaguesInfo> DetectLeagueGroupBackup(List<AutoTradingSummaryEventLeaguesInfo> eventLeagueList, List<AutoTradingSimilarLeagueName> similarLeagueNames)
+        {
+            foreach (var itemSimilar in similarLeagueNames)
+            {
+                var detectAndBackupLeagueGroups = eventLeagueList.Where(x => itemSimilar.LeagueIdList.Contains(x.LeagueId));
+
+                if (detectAndBackupLeagueGroups.Count() > 1) {
+                    foreach (var itemBackup in detectAndBackupLeagueGroups)
+                    {
+                        itemBackup.LeagueGroupIdBackup = itemBackup.LeagueGroupId;
+                        itemBackup.LeagueGroupId = itemSimilar.MainGroupId;
+                    }
+                }
+            }
+
+            return eventLeagueList;
         }
 
         private AutoTradingSimilarLeagueName CheckExistSimilarLeague(List<AutoTradingSimilarLeagueName> similarLeagueNames, int leagueId)

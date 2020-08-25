@@ -4,6 +4,8 @@
     {
         public int LeagueGroupId { get; set; }
 
+        public int LeagueGroupIdBackup { get; set; }
+
         public int LeagueId { get; set; }
 
         public string LeagueName { get; set; }

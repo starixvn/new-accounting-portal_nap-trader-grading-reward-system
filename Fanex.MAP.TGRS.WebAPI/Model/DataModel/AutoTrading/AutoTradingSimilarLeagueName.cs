@@ -6,6 +6,10 @@
     {
         public List<int> LeagueIdList { get; set; }
 
+        public List<int> LeagueGroupIdList { get; set; }
+
+        public int MainGroupId { get; set; }
+
         public string LeagueName { get; set; }
 
         public string LeagueNameOther { get; set; }
