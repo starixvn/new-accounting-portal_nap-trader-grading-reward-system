@@ -153,8 +153,9 @@
             {
                 var eventLeague = GetLeagueGroupList().FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
 
+                var leagueIds = grouping.ItemList.Select(x => x.LeagueId);
                 var groupTotalLeagueInfo = eventLeagueList
-                                        .Where(x => x.LeagueGroupId.Equals(grouping.LeagueGroupId))
+                                        .Where(x => leagueIds.Contains(x.LeagueId))
                                         .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
                 var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
@@ -241,12 +242,16 @@
             foreach (var info in leaguePlayOff)
             {
                 var leagueName = info.LeagueName.Substring(0, info.LeagueName.Length - Consts.AutomationTradingLeagueNamePlayOff.Length - 1);
-
-                var sameLeagues = eventLeagueList.Where(x => x.LeagueName.Contains(leagueName));
+                
+                var sameLeagues = new List<AutoTradingSummaryEventLeaguesInfo>();
+                var mainLeague = eventLeagueList.Where(x => x.LeagueName.Equals(leagueName));
+                var playoffLeague = eventLeagueList.Where(x => x.LeagueName.Equals(info.LeagueName));                
+                sameLeagues.AddRange(mainLeague);
+                sameLeagues.AddRange(playoffLeague);
 
                 if (sameLeagues.Any())
                 {
-                    var mainGroup = sameLeagues.FirstOrDefault(x => x.LeagueName.Equals(leagueName));
+                    var mainGroup = mainLeague.FirstOrDefault(x => x.LeagueName.Equals(leagueName));
 
                     leagues.Add(new AutoTradingSimilarLeagueName
                     {
