@@ -52,7 +52,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         domElements.divTurnoverContent = $('#divTurnoverContent');
         domElements.divMarketCountContent = $('#divMarketCountContent');
         domElements.divTraderContent = $('#divTraderContent');
-        domElements.divLeagueGroupContent = $('#divLeagueGroupContent');
+        domElements.divSportLeagueContent = $('#divSportLeagueContent');
         domElements.inputWinLossAverage = $('#inputWinLossAverage');
         domElements.inputMarginAverage = $('#inputMarginAverage');
         domElements.inputTurnoverAverage = $('#inputTurnoverAverage');
@@ -80,7 +80,10 @@ Fanex.TGRS.Reports.OSDashboard = function () {
     };
 
     var urls = {
-        GetDate: common.ResolveRootUrl('Dashboard/GetDate'),       
+        GetDate: common.ResolveRootUrl('Dashboard/GetDate'),
+        GetOSTraderSummary: common.ResolveRootUrl('OSDashboard/GetOSTraderSummary'),
+        GetOSSportSummary: common.ResolveRootUrl('OSDashboard/GetOSSportSummary'),
+        GetOSLeagueSummary: common.ResolveRootUrl('OSDashboard/GetOSLeagueSummary'),
         GetOSSummaryInfo: common.ResolveRootUrl('OSDashboard/GetOSSummaryInfo')
     };
 
@@ -132,30 +135,34 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             selectedList: 2,
             minWidth: 150,
             height: 200,
-            allSelectedText: "All"
+            allSelectedText: "All Sport"
         }).multiselectfilter({ width: 80 }).change(function () {
             validator.ClearError(domElements.ddlBetType.next());
         });
 
         initializeMonthPickers();
 
+        var selectedSportTypes = domElements.ddlSportType.val();
+
+        parameters.SportIds = selectedSportTypes !== null ? selectedSportTypes.join(',') : null,
         parameters.FromDate = domElements.divRangeMonth.getFrom();
-        parameters.ToDate = domElements.divRangeMonth.getTo();
-        parameters.SportIds = "3,4,5,6,7,8,9,10";
-        parameters.ReportType = 1;       
+        parameters.ToDate = domElements.divRangeMonth.getTo();        
+        parameters.ReportType = 1;
 
         getSummaryGeneralInfo();
-        //getTraderSummary();
-        //getLeagueGroupSummary();
+        getTraderSummary();
+        getSportLeagueSummary();
 
         domElements.btnGenerate.on('click', function () {
+            var selectedSportTypes = domElements.ddlSportType.val();
+            parameters.SportIds = selectedSportTypes !== null ? selectedSportTypes.join(',') : null,
             parameters.FromDate = domElements.divRangeMonth.getFrom();
             parameters.ToDate = domElements.divRangeMonth.getTo();
             parameters.ReportType = domElements.divPeriodSelected.val() === "0" ? 2 : 1;
 
             getSummaryGeneralInfo();
-            //getTraderSummary();
-            //getLeagueGroupSummary();
+            getTraderSummary();
+            getSportLeagueSummary();
         });
     };
 
@@ -241,7 +248,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
     var getTraderSummary = function () {
         $.ajax({
             type: 'POST',
-            url: urls.GetBasketballTraderSummary,
+            url: urls.GetOSTraderSummary,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
@@ -277,16 +284,16 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         domElements.divTraderContent.html(html);
     };
 
-    var getLeagueGroupSummary = function () {
+    var getSportLeagueSummary = function () {
         $.ajax({
             type: 'POST',
-            url: urls.GetBasketballLeagueGroupSummary,
+            url: urls.GetOSLeagueSummary,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result) {
-                    bindLeagueGroupSummaryData(result);
+                    bindSportLeagueSummaryData(result);
                 }
             },
             error: function (xhr) {
@@ -299,7 +306,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         });
     };
 
-    var bindLeagueGroupSummaryData = function (data) {
+    var bindSportLeagueSummaryData = function (data) {
         let html = '';
 
         if (data && data.length > 0) {
@@ -309,11 +316,11 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
             data.map(function (x) {
                 let formatMargin = x.Margin < 0 ? 'format-negative' : '';
-                html += divFormat.format(x.GroupName, formatMargin, x.Margin);
+                html += divFormat.format(x.Name, formatMargin, x.Margin);
             });
         }
 
-        domElements.divLeagueGroupContent.html(html);
+        domElements.divSportLeagueContent.html(html);
     };
 
     var getSummaryGeneralInfo = function () {
@@ -537,7 +544,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         return [{
             color: '#3fd0da',
-            width: 2,
+            width: 0.5,
             value: value2,
             dashStyle: 'ShortDot',
             label: {
@@ -551,7 +558,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             }
         }, {
             color: '#5a7dc1',
-            width: 2,
+            width: 0.5,
             value: value1,
             dashStyle: 'Solid',
             label: {
@@ -803,4 +810,5 @@ Fanex.TGRS.Reports.OSDashboard = function () {
     $(window).unload(function () {
         domElements.divPeriodSelected.find('option').remove();
     });
+
 };

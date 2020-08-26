@@ -3,6 +3,7 @@
     using Fanex.NAP.TGRS.OSReports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
     using Fanex.NAP.TGRS.OSReports.ViewModel;
+    using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
     using System.Collections.Generic;
 
     public interface IDashboardService
@@ -21,6 +22,13 @@
 
         IEnumerable<OSSport> GetOSSports();
 
+        IEnumerable<OSTraderSummary> GetOSTraderSummary(GetOSTraderSummaryCriteria criteria);
+
+        IEnumerable<OSSportLeagueSummary> GetOSSportSummary(GetOSSportSummaryCriteria criteria);
+
+        IEnumerable<OSSportLeagueSummary> GetOSLeagueSummary(GetOSLeagueSummaryCriteria criteria);        
+
         OSSummaryGeneralInfo GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria);
+        
     }
 }

@@ -323,6 +323,12 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                 if (result) {
                     showLegends(result);
                     bindSummaryGeneralData(result);
+
+                    showAverageOnClick(domElements.divWinlossContent, domElements.inputWinLossAverage);
+                    showAverageOnClick(domElements.divMarginContent, domElements.inputMarginAverage);
+                    showAverageOnClick(domElements.divTurnoverContent, domElements.inputTurnoverAverage);
+                    showAverageOnClick(domElements.divBetcountContent, domElements.inputBetCountAverage);
+                    showAverageOnClick(domElements.divMatchesCountContent, domElements.inputMatchCountAverage);
                 }
                 dataChart = result;
             },
@@ -537,7 +543,7 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
 
         return [{
             color: '#3fd0da',
-            width: 2,
+            width: 0.5,
             value: value2,
             dashStyle: 'ShortDot',
             label: {
@@ -550,8 +556,8 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
                 }
             }
         }, {
-            color: '#5a7dc1',
-            width: 2,
+                color: '#5a7dc1',
+                width: 0.5,
                 value: value1,
                 dashStyle: 'Solid',
                 label: {
@@ -819,4 +825,5 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     $(window).unload(function () {
         domElements.divPeriodSelected.find('option').remove();
     });
+
 };

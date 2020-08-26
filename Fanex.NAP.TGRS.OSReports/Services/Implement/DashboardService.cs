@@ -4,8 +4,8 @@
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.OSReports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
-    using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
-    using Fanex.NAP.TGRS.OSReports.ViewModel;
+    using Fanex.NAP.TGRS.OSReports.Models.Dashboard;    
+    using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -144,6 +144,69 @@
             return data;
         }
 
+        public IEnumerable<OSTraderSummary> GetOSTraderSummary(GetOSTraderSummaryCriteria criteria)
+        {
+            var traders = new List<OSTraderSummary>();
+
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetOSTraderSummaryCriteria;
+
+            var data = this.GetData<OSTraderSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                traders = data.Select(x => new OSTraderSummary
+                {
+                    TraderName = x.Username,
+                    Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return traders;
+        }
+
+        public IEnumerable<OSSportLeagueSummary> GetOSSportSummary(GetOSSportSummaryCriteria criteria)
+        {
+            var sports = new List<OSSportLeagueSummary>();
+
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetOSSportSummaryCriteria;
+
+            var data = this.GetData<OSSportSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                sports = data.Select(x => new OSSportLeagueSummary
+                {
+                    Name = x.SportName,
+                    Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return sports;
+        }
+
+        public IEnumerable<OSSportLeagueSummary> GetOSLeagueSummary(GetOSLeagueSummaryCriteria criteria)
+        {
+            var leagues = new List<OSSportLeagueSummary>();
+
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetOSLeagueSummaryCriteria;
+
+            var data = this.GetData<OSLeagueSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                leagues = data.Select(x => new OSSportLeagueSummary
+                {
+                    Name = x.LeagueName,
+                    Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return leagues;
+        }
+
         public OSSummaryGeneralInfo GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria)
         {
             if (criteria.ReportType == 1)
@@ -197,19 +260,19 @@
                 daysList.AddRange(GenerateDayList(fromDate, criteria.ToDate));
                 comparisonDayList.AddRange(GenerateDayList(comparisonFromDate, comparisonToDate));
 
-                osSummaryInfo.WinLossList = GetBasketballColumnsByDate(items, daysList, OSChartName.WinLoss);
-                osSummaryInfo.WinLossComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.WinLoss);
-                osSummaryInfo.TurnoverList = GetBasketballColumnsByDate(items, daysList, OSChartName.Turnover);
-                osSummaryInfo.TurnoverComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.Turnover);
-                osSummaryInfo.MarginList = GetBasketballColumnsByDate(items, daysList, OSChartName.Margin);
-                osSummaryInfo.MarginComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.Margin);
-                osSummaryInfo.BetCountList = GetBasketballColumnsByDate(items, daysList, OSChartName.BetCount);
-                osSummaryInfo.BetCountComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.BetCount);
-                osSummaryInfo.MatchCountList = GetBasketballColumnsByDate(items, daysList, OSChartName.MatchCount);
-                osSummaryInfo.MatchCountComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
+                osSummaryInfo.WinLossList = GetOSColumnsByDate(items, daysList, OSChartName.WinLoss);
+                osSummaryInfo.WinLossComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.WinLoss);
+                osSummaryInfo.TurnoverList = GetOSColumnsByDate(items, daysList, OSChartName.Turnover);
+                osSummaryInfo.TurnoverComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.Turnover);
+                osSummaryInfo.MarginList = GetOSColumnsByDate(items, daysList, OSChartName.Margin);
+                osSummaryInfo.MarginComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.Margin);
+                osSummaryInfo.BetCountList = GetOSColumnsByDate(items, daysList, OSChartName.BetCount);
+                osSummaryInfo.BetCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.BetCount);
+                osSummaryInfo.MatchCountList = GetOSColumnsByDate(items, daysList, OSChartName.MatchCount);
+                osSummaryInfo.MatchCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
             }
 
-            osSummaryInfo = BindBasketballSummaryAverage(osSummaryInfo, criteria, avgItems);
+            osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
 
             return osSummaryInfo;
         }
@@ -236,16 +299,16 @@
                     var crossMonthYearList = GenerateMonthYearList(criteria.FromDate, crossToDate);
                     var crossComparisonMonthYearList = GenerateMonthYearList(crossComparisonFromDate, crossComparisonToDate);
 
-                    osSummaryInfo.WinLossCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.WinLoss);
-                    osSummaryInfo.WinLossCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.WinLoss);
-                    osSummaryInfo.TurnoverCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.Turnover);
-                    osSummaryInfo.TurnoverCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Turnover);
-                    osSummaryInfo.MarginCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.Margin);
-                    osSummaryInfo.MarginCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Margin);
-                    osSummaryInfo.BetCountCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.BetCount);
-                    osSummaryInfo.BetCountCrossComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.BetCount);
-                    osSummaryInfo.MatchCountCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
-                    osSummaryInfo.MatchCountCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
+                    osSummaryInfo.WinLossCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.WinLoss);
+                    osSummaryInfo.WinLossCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.WinLoss);
+                    osSummaryInfo.TurnoverCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.Turnover);
+                    osSummaryInfo.TurnoverCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Turnover);
+                    osSummaryInfo.MarginCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.Margin);
+                    osSummaryInfo.MarginCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Margin);
+                    osSummaryInfo.BetCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.BetCount);
+                    osSummaryInfo.BetCountCrossComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.BetCount);
+                    osSummaryInfo.MatchCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
+                    osSummaryInfo.MatchCountCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
 
                     fromDate = new DateTime(criteria.ToDate.Year, 1, 1);
                     comparisonFromDate = new DateTime(criteria.ToDate.Year - 1, 1, 1);
@@ -254,24 +317,24 @@
 
                 var monthYearList = GenerateMonthYearList(fromDate, criteria.ToDate);
                 var comparisonMonthYearList = GenerateMonthYearList(comparisonFromDate, comparisonToDate);
-                osSummaryInfo.WinLossList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.WinLoss);
-                osSummaryInfo.WinLossComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.WinLoss);
-                osSummaryInfo.TurnoverList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.Turnover);
-                osSummaryInfo.TurnoverComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.Turnover);
-                osSummaryInfo.MarginList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.Margin);
-                osSummaryInfo.MarginComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.Margin);
-                osSummaryInfo.BetCountList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.BetCount);
-                osSummaryInfo.BetCountComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.BetCount);
-                osSummaryInfo.MatchCountList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
-                osSummaryInfo.MatchCountComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
+                osSummaryInfo.WinLossList = GetOSColumnsByMonth(items, monthYearList, OSChartName.WinLoss);
+                osSummaryInfo.WinLossComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.WinLoss);
+                osSummaryInfo.TurnoverList = GetOSColumnsByMonth(items, monthYearList, OSChartName.Turnover);
+                osSummaryInfo.TurnoverComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.Turnover);
+                osSummaryInfo.MarginList = GetOSColumnsByMonth(items, monthYearList, OSChartName.Margin);
+                osSummaryInfo.MarginComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.Margin);
+                osSummaryInfo.BetCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.BetCount);
+                osSummaryInfo.BetCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.BetCount);
+                osSummaryInfo.MatchCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
+                osSummaryInfo.MatchCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
             }
 
-            osSummaryInfo = BindBasketballSummaryAverage(osSummaryInfo, criteria, avgItems);
+            osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
 
             return osSummaryInfo;
         }
 
-        private OSSummaryGeneralInfo BindBasketballSummaryAverage(OSSummaryGeneralInfo osSummaryInfo
+        private OSSummaryGeneralInfo BindOSSummaryAverage(OSSummaryGeneralInfo osSummaryInfo
             , GetOSSummaryGeneralCriteria criteria
             , IEnumerable<OSSummaryGeneralInfoAvgItem> avgItems)
         {
@@ -334,7 +397,7 @@
             return 0;
         }
 
-        private GetOSSummaryGeneralCriteria GenerateCriteriaRangeDate(GetOSSummaryGeneralCriteria criteria)
+        private OSSummaryInfoCriteria GenerateCriteriaRangeDate(OSSummaryInfoCriteria criteria)
         {
             var toDate = DateTime.Today;
             var fromDate =
@@ -391,7 +454,7 @@
             return monthList;
         }
 
-        private IEnumerable<Column> GetBasketballColumnsByMonth(IEnumerable<OSSummaryGeneralInfoItem> infoList
+        private IEnumerable<Column> GetOSColumnsByMonth(IEnumerable<OSSummaryGeneralInfoItem> infoList
             , List<Column> monthYearList
             , OSChartName type)
         {
@@ -407,7 +470,7 @@
             });
         }
 
-        private IEnumerable<Column> GetBasketballColumnsByDate(IEnumerable<OSSummaryGeneralInfoItem> infoList
+        private IEnumerable<Column> GetOSColumnsByDate(IEnumerable<OSSummaryGeneralInfoItem> infoList
             , List<Column> dayList
             , OSChartName type)
         {

@@ -79,10 +79,7 @@ body {
             width: 100%;
             padding: 0 -6px 0 6px;
             background-color: #fff;
-            line-height: 28px;
-            -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
-            -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
-            box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+            line-height: 28px;          
 
             .column-left, .column-right {
                 color: #5a7dc1;
@@ -94,12 +91,12 @@ body {
             }
 
             .margin {
-                margin: 0 5px;
+                margin: 0 10px 0 5px;
             }
         }
 
         .row-content {
-            display: inline-block;
+            display: list-item;
             width: 100%;
             padding: 0 -6px 0 6px;
             background-color: #fff;
@@ -110,22 +107,30 @@ body {
             -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
             box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
 
-            .column-left, .column-right {
-                color: #000;
-                font-size: 13px;
-            }
-
-            .column-right {
-                float: right;
-            }
-
-            .format-negative {
-                color: red;
-            }
-
             .border-bottom {
                 border-bottom: 1px solid #ddd;
                 margin: 0 5px;
+                display: flex;
+
+                .column-left {
+                    display: block;
+                    width: 80%;
+                    padding: 0px;
+                }
+
+                .column-right {
+                    float: right;
+                    margin-left: 5px;
+                }
+
+                .column-left, .column-right {
+                    color: #000;
+                    font-size: 13px;
+                }
+
+                .format-negative {
+                    color: red;
+                }
             }
         }
 
@@ -387,7 +392,7 @@ body {
 
         .margin-bottom,
         .margin-bottom-8 {
-            margin-bottom: 6px;
+            margin-bottom: 9px;
         }
     }
 
@@ -424,7 +429,7 @@ body {
 
             .box-margin-right {
                 margin-right: 0px;
-                margin-bottom: 6px;
+                margin-bottom: 10px;
             }
 
             .box-match {

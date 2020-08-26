@@ -114,11 +114,39 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetOSTraderSummary(GetOSTraderSummaryCriteria criteria)
+        {
+            var data = _dashboardService.GetOSTraderSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetOSSportSummary(GetOSSportSummaryCriteria criteria)
+        {
+            var data = _dashboardService.GetOSSportSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        public JsonResult GetOSLeagueSummary(GetOSLeagueSummaryCriteria criteria)
+        {
+            var data = _dashboardService.GetOSLeagueSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
         public JsonResult GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria)
         {
             var data = _dashboardService.GetOSSummaryInfo(criteria);
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+              
     }
 }
