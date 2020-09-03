@@ -268,8 +268,8 @@
                 osSummaryInfo.MarginComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.Margin);
                 osSummaryInfo.BetCountList = GetOSColumnsByDate(items, daysList, OSChartName.BetCount);
                 osSummaryInfo.BetCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.BetCount);
-                osSummaryInfo.MatchCountList = GetOSColumnsByDate(items, daysList, OSChartName.MatchCount);
-                osSummaryInfo.MatchCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
+                osSummaryInfo.MarketCountList = GetOSColumnsByDate(items, daysList, OSChartName.MatchCount);
+                osSummaryInfo.MarketCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
             }
 
             osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
@@ -307,8 +307,8 @@
                     osSummaryInfo.MarginCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Margin);
                     osSummaryInfo.BetCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.BetCount);
                     osSummaryInfo.BetCountCrossComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.BetCount);
-                    osSummaryInfo.MatchCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
-                    osSummaryInfo.MatchCountCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
+                    osSummaryInfo.MarketCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
+                    osSummaryInfo.MarketCountCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
 
                     fromDate = new DateTime(criteria.ToDate.Year, 1, 1);
                     comparisonFromDate = new DateTime(criteria.ToDate.Year - 1, 1, 1);
@@ -325,8 +325,8 @@
                 osSummaryInfo.MarginComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.Margin);
                 osSummaryInfo.BetCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.BetCount);
                 osSummaryInfo.BetCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.BetCount);
-                osSummaryInfo.MatchCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
-                osSummaryInfo.MatchCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
+                osSummaryInfo.MarketCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
+                osSummaryInfo.MarketCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
             }
 
             osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
@@ -353,7 +353,7 @@
                     osSummaryInfo.TurnoverAverageComparison = avgComparison.AvgTurnover;
                     osSummaryInfo.MarginAverageComparison = avgComparison.AvgMargin;
                     osSummaryInfo.BetCountAverageComparison = avgComparison.AvgBetCount;
-                    osSummaryInfo.MatchCountAverageComparison = avgComparison.AvgMatchCount;
+                    osSummaryInfo.MarketCountAverageComparison = avgComparison.AvgMatchCount;
                     osSummaryInfo.LegendList.Add(avgComparison.ToDate.Year);
                 }
 
@@ -365,7 +365,7 @@
                     osSummaryInfo.TurnoverAverage = avgCurrentYear.AvgTurnover;
                     osSummaryInfo.MarginAverage = avgCurrentYear.AvgMargin;
                     osSummaryInfo.BetCountAverage = avgCurrentYear.AvgBetCount;
-                    osSummaryInfo.MatchCountAverage = avgCurrentYear.AvgMatchCount;
+                    osSummaryInfo.MarketCountAverage = avgCurrentYear.AvgMatchCount;
                     osSummaryInfo.LegendList.Add(avgCurrentYear.ToDate.Year);
                 }
             }

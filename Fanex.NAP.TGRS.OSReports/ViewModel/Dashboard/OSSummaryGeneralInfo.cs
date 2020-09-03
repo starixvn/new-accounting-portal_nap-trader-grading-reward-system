@@ -61,17 +61,17 @@
 
         public decimal BetCountAverageComparison { get; set; }
 
-        public IEnumerable<Column> MatchCountList { get; set; }
+        public IEnumerable<Column> MarketCountList { get; set; }
 
-        public IEnumerable<Column> MatchCountComparisonList { get; set; }
+        public IEnumerable<Column> MarketCountComparisonList { get; set; }
 
-        public IEnumerable<Column> MatchCountCrossYearList { get; set; }
+        public IEnumerable<Column> MarketCountCrossYearList { get; set; }
 
-        public IEnumerable<Column> MatchCountCrossYearComparisonList { get; set; }
+        public IEnumerable<Column> MarketCountCrossYearComparisonList { get; set; }
 
-        public decimal MatchCountAverage { get; set; }
+        public decimal MarketCountAverage { get; set; }
 
-        public decimal MatchCountAverageComparison { get; set; }
+        public decimal MarketCountAverageComparison { get; set; }
 
         public List<int> LegendList { get; set; }
     }

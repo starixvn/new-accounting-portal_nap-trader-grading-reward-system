@@ -37,7 +37,9 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         divMarginAverage: null,
         divBetCountAverage: null,
         divTurnoverAverage: null,
-        divMarketCountAverage: null
+        divMarketCountAverage: null,
+        labelSportLeague: null,
+        spanSportLeague: null
     };
 
     var cacheDomElements = function () {
@@ -70,6 +72,8 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         domElements.divBetCountAverage = $('#divBetCountAverage');
         domElements.divTurnoverAverage = $('#divTurnoverAverage');
         domElements.divMarketCountAverage = $('#divMarketCountAverage');
+        domElements.labelSportLeague = $('#labelSportLeague');
+        domElements.spanSportLeague = $('#spanSportLeague');
     };
 
     var parameters = {
@@ -137,7 +141,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             height: 200,
             allSelectedText: "All Sport"
         }).multiselectfilter({ width: 80 }).change(function () {
-            validator.ClearError(domElements.ddlBetType.next());
+            validator.ClearError(domElements.ddlSportType.next());
         });
 
         initializeMonthPickers();
@@ -146,8 +150,9 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         parameters.SportIds = selectedSportTypes !== null ? selectedSportTypes.join(',') : null,
         parameters.FromDate = domElements.divRangeMonth.getFrom();
-        parameters.ToDate = domElements.divRangeMonth.getTo();        
-        parameters.ReportType = 1;
+        parameters.ToDate = domElements.divRangeMonth.getTo(); 
+        parameters.DayType = domElements.divPeriodSelected.val();
+        parameters.ReportType = 1;        
 
         getSummaryGeneralInfo();
         getTraderSummary();
@@ -158,7 +163,8 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             parameters.SportIds = selectedSportTypes !== null ? selectedSportTypes.join(',') : null,
             parameters.FromDate = domElements.divRangeMonth.getFrom();
             parameters.ToDate = domElements.divRangeMonth.getTo();
-            parameters.ReportType = domElements.divPeriodSelected.val() === "0" ? 2 : 1;
+            parameters.DayType = domElements.divPeriodSelected.val();
+            parameters.ReportType = parameters.DayType === "0" ? 2 : 1;            
 
             getSummaryGeneralInfo();
             getTraderSummary();
@@ -284,10 +290,21 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         domElements.divTraderContent.html(html);
     };
 
-    var getSportLeagueSummary = function () {
+    var getSportLeagueSummary = function () {      
+        let urlSportLeague = urls.GetOSLeagueSummary;
+        let selectedSportTypes = domElements.ddlSportType.val();
+        if (selectedSportTypes !== null && selectedSportTypes.length > 1) {
+            urlSportLeague = urls.GetOSSportSummary;
+            domElements.labelSportLeague.text(labels.Sport);
+            domElements.spanSportLeague.text(labels.Sport);
+        } else {
+            domElements.labelSportLeague.text(labels.League);
+            domElements.spanSportLeague.text(labels.League);
+        }
+
         $.ajax({
             type: 'POST',
-            url: urls.GetOSLeagueSummary,
+            url: urlSportLeague,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
@@ -385,8 +402,18 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             , data.TurnoverCrossYearComparisonList
             , data.TurnoverAverage
             , data.TurnoverAverageComparison);
-        domElements.divTurnoverContent.highcharts(turnoverOptions);        
-    };
+        domElements.divTurnoverContent.highcharts(turnoverOptions);
+
+        domElements.divMarketCountContent.css('height', domElements.divTurnoverContent.height());
+
+        //var marketOptions = generateLineChartOptions(data.TurnoverList
+        //    , data.MarketComparisonList
+        //    , data.MarketCrossYearList
+        //    , data.MarketCrossYearComparisonList
+        //    , data.MarketAverage
+        //    , data.MarketAverageComparison);
+        //domElements.divMarketCountContent.highcharts(marketOptions);
+    };  
 
     var showLegends = function (data) {
         var div = '';

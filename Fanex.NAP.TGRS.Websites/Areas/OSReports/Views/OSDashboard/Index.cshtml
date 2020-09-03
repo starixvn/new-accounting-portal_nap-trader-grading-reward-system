@@ -211,11 +211,11 @@
                 </div>
                 <div class="box">
                     <div class="row-title">
-                        <h6>League Performance</h6>
+                        <h6 id="labelSportLeague">League Performance</h6>
                     </div>
                     <div class="row-header">
                         <div class="margin">
-                            <span class="column-left">League</span>
+                            <span class="column-left" id="spanSportLeague">League</span>
                             <span class="column-right">Margin %</span>
                         </div>
                     </div>
@@ -229,12 +229,12 @@
                 <div id="divMarketHeader" class="box-header">
                     <div class="align-left">
                         <div>
-                            <span class="box-name">MARKET COUNT COMPARISON</span>
+                            <span class="box-name">MARKET COUNT COMPARISON (COMING SOON)</span>
                         </div>
                         <div class="legend" id="divMarketCountLegend">
                         </div>
                     </div>
-                    <div class="align-right">
+                    @*<div class="align-right">
                         <div>
                             <span class="view-chart icon-chart border-radius-right" name="matchcount" type="bar"><span class="icon-chart-bar"></span></span>
                             <span class="view-chart icon-chart-active border-radius-left" name="matchcount" type="line"><span class="icon-chart-line-active"></span></span>
@@ -246,7 +246,7 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div id="divMarketCountContent" class="box-content">
                 </div>
@@ -266,6 +266,7 @@
         };
 
         var labels = {
+            Sport: '@ViewLang.Sport',
             League: '@ViewLang.League',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
