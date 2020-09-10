@@ -72,7 +72,7 @@
                         </optgroup>
                     }
                 </select>
-            </div>            
+            </div>
         </div>
         <div class="filter-row">
             <div class="lbl-field col_5">
@@ -106,6 +106,15 @@
                 <span> - </span>
                 <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
             </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtLeague" class="league" maxlength="100" />
+            </div>
+            <div class="lbl-field col_3 bettype-bm"></div>
             <div class="submit width-auto col_4">
                 <input id="btnGenerate" type="button" class="blue-button bettype-generate" value="@ViewLang.Generate" />
             </div>

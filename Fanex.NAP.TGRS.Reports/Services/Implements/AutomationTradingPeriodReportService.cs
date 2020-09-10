@@ -152,17 +152,17 @@
             var fromDateInMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
             var toDateInMonth = new DateTime(currentDate.Year, currentDate.Month, days);
 
-            if (fromDate.Month == toDate.Month)
+            if (fromDate.Month == toDate.Month && fromDate.Year == toDate.Year)
             {
                 return fromDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
                            + toDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
-            }          
-            if (currentDate.Month == fromDate.Month)
+            }
+            if (currentDate.Month == fromDate.Month && currentDate.Year == fromDate.Year)
             {
                 return fromDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
                             + toDateInMonth.ToString(Consts.FormatDateTimeToString_yyyyMMdd);
             }
-            if (currentDate.Month == toDate.Month)
+            if (currentDate.Month == toDate.Month && currentDate.Year == toDate.Year)
             {
                 return currentDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd) + ";"
                             + toDate.ToString(Consts.FormatDateTimeToString_yyyyMMdd);

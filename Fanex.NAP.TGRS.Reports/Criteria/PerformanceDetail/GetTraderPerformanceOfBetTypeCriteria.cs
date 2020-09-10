@@ -44,6 +44,8 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string LeagueGroupIds { get; set; }
 
+        public string LeagueName { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

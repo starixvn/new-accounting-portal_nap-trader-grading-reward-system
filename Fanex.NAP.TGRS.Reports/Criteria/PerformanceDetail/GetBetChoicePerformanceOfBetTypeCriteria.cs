@@ -31,6 +31,8 @@
 
         public string LeagueGroupIds { get; set; }
 
+        public string LeagueName { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice";
