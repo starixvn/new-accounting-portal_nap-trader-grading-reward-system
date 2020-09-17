@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationAreaRegistration.cs" />
+    <Compile Include="Controllers\OSBasketballPerformanceController.cs" />
     <Compile Include="Controllers\OSDashboardController.cs" />
     <Compile Include="Controllers\OSNewSportPerformanceController.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="Criteria\TraderReport\GetChartDataCriteria.cs" />
     <Compile Include="Criteria\TraderReport\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\TraderReport\GetSportPerformanceCriteria.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="Models\BasketballPerformance\BettypePerformanceInfo.cs" />
     <Compile Include="Models\Dashboard\DataByMonth.cs" />
     <Compile Include="Models\Dashboard\TopSport.cs" />
     <Compile Include="Models\Dashboard\TopTrader.cs" />
@@ -205,18 +209,24 @@
     <Compile Include="Models\TraderReport\Sport.cs" />
     <Compile Include="Models\TraderReport\Trader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implement\BasketballBetTypeService.cs" />
     <Compile Include="Services\Implement\DashboardService.cs" />
     <Compile Include="Services\Implement\NewSportPerformanceService.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
     <Compile Include="Services\Implement\NewTraderPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderReportService.cs" />
+    <Compile Include="Services\Interface\IBasketballBetTypeService.cs" />
     <Compile Include="Services\Interface\IDashboardService.cs" />
     <Compile Include="Services\Interface\INewSportPerformanceService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetType.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BettypePerformance.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\GroupBetTypes.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeagueGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">
@@ -226,7 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

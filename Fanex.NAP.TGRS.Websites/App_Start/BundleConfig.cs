@@ -425,8 +425,6 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report-service.js",
                     "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report.js"));
 
-
-
             bundles.Add(new ScriptBundle("~/scripts/os-trader-performance-admin").Include(
                 "~/Areas/OSReports/Resources/OSTraderReportAdmin/*.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
@@ -436,6 +434,13 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/OSReports/Resources/OSTraderReport/*.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",
                 "~/Scripts/Libraries/Highcharts/highcharts-3d.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/os-basketball-performance",
+                "~/Areas/OSReports/Resources/OSBasketballPerformance/basketball-performance.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/os-basketball-performance").Include(
+                "~/Areas/OSReports/Resources/OSBasketballPerformance/bettype-performance.js"));
         }
 
         public static void RegisterOSAdministrationBundles(BundleCollection bundles)
