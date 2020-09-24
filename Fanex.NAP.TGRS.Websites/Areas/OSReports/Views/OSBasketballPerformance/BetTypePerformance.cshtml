@@ -26,10 +26,10 @@
                 <label>@ViewLang.Market</label>
             </div>
             <div class="edit-field col_3">
-                <select id="ddlMarket">
-                    <option value="@Market.All">@ViewLang.MarketAll</option>
-                    <option value="@Market.Live">@ViewLang.MarketLive</option>
-                    <option value="@Market.NonLive">@ViewLang.MarketNonLive</option>
+                <select id="ddlLiveType">
+                    <option value=-1>@ViewLang.MarketAll</option>
+                    <option value=1>@ViewLang.MarketLive</option>
+                    <option value=0>@ViewLang.MarketNonLive</option>
                 </select>
             </div>
             <div class="date-range"><div id="divDateRange"></div></div>
@@ -38,17 +38,12 @@
             </div>
             <div class="edit-field col_9">
                 <select id="ddlBetType" multiple="multiple">
-                    @foreach (var group in (IEnumerable<GroupBetTypes>)ViewBag.GroupBetTypes)
-                    {
-                        var check = false;
-                        if (group.TotalDefaultCheckOfBetTypeList == group.BetTypeList.Count())
-                        {
-                            check = true;
-                        }
-                        <optgroup label="@group.GroupName" checked=@check>
-                            @foreach (var bettype in (IEnumerable<BetType>)group.BetTypeList)
+                    @foreach (var group in (IEnumerable<GroupBettypes>)ViewBag.GroupBetTypes)
+                    {                      
+                        <optgroup label="@group.GroupName" checked=true>
+                            @foreach (var bettype in (IEnumerable<Bettype>)group.BetTypeList)
                             {
-                                <option value="@bettype.BetTypeId" data-default="@bettype.IsDefaultCheck">@bettype.BetTypeName</option>
+                                <option value="@bettype.BetTypeId" selected>@bettype.BetTypeName</option>
                             }
                         </optgroup>
                     }
@@ -84,7 +79,18 @@
 <div id="divBetTypePerformanceContainer" class="content-grid display-none">
     <div id="divBetTypePerformanceGrid" class="freegrid"></div>
 </div>
-
+<div id="divBetChoicePerformanceContainer" class="content-grid display-none">
+    <div id="divBetChoicePerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divTraderPerformanceContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divMatchPerformanceContainer" class="content-grid display-none">
+    <div id="divMatchPerformanceGrid" class="freegrid"></div>
+</div>
+<div id="divLeaguePerformanceContainer" class="content-grid display-none">
+    <div id="divLeaguePerformanceGrid" class="freegrid"></div>
+</div>
 
 @section Foot
 {

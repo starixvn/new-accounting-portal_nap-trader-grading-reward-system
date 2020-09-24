@@ -8,7 +8,6 @@
     using Fanex.NAP.TGRS.OSReports.Services.Implement;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
 
     public class OSBasketballPerformanceController : TGRSBaseController
@@ -43,12 +42,40 @@
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
-        [HttpGet]
+        [HttpPost]
         public ActionResult GetBettypePerformance(GetBettypePerformanceCriteria criteria)
         {
             var bettypePerformance = _basketballBetTypeService.GetBettypePerformance(criteria);
 
             return Json(bettypePerformance, JsonRequestBehavior.AllowGet);
         }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        public ActionResult GetLeagueOfBetType(GetLeagueOfBettypeCriteria criteria)
+        {
+            var leagues = _basketballBetTypeService.GetLeagueOfBettype(criteria);
+
+            return Json(leagues, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        public ActionResult GetTraderOfBetTypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
+        {
+            var traders = _basketballBetTypeService.GetTraderOfBetTypeLeague(criteria);
+
+            return Json(traders, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        public ActionResult GetMatchOfBetTypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
+        {
+            var traders = _basketballBetTypeService.GetMatchOfBetTypeLeagueTrader(criteria);
+
+            return Json(traders, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

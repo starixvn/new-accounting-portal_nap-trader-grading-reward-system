@@ -149,7 +149,18 @@
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeLeagueCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBettypeCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBettypesCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBettypePerformanceCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetLeagueGroupBySportCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeBetChoiceCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeLeagueTraderCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeTraderCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeLeagueCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
@@ -178,7 +189,17 @@
     <Compile Include="Criteria\TraderReport\GetGeneralInfoCriteria.cs" />
     <Compile Include="Criteria\TraderReport\GetSportPerformanceCriteria.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="Models\BasketballPerformance\BetChoiceOfBettypeInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\BetChoiceOfBettypeLeagueInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\BettypeInfo.cs" />
     <Compile Include="Models\BasketballPerformance\BettypePerformanceInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\LeagueGroupInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\LeagueOfBettypeBetChoiceInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\LeagueOfBettypeInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\MatchOfBettypeLeagueTraderInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\MatchOfBettypeTraderInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\TraderOfBettypeLeagueInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\TraderOfBettypeInfo.cs" />
     <Compile Include="Models\Dashboard\DataByMonth.cs" />
     <Compile Include="Models\Dashboard\TopSport.cs" />
     <Compile Include="Models\Dashboard\TopTrader.cs" />
@@ -223,10 +244,17 @@
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
-    <Compile Include="ViewModel\BasketballPerformance\BetType.cs" />
-    <Compile Include="ViewModel\BasketballPerformance\BettypePerformance.cs" />
-    <Compile Include="ViewModel\BasketballPerformance\GroupBetTypes.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\Bettype.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BettypePerformanceItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BettypePerformanceList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\GroupBettypes.cs" />
     <Compile Include="ViewModel\BasketballPerformance\LeagueGroup.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeLeagueTraderItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeLeagueTraderList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

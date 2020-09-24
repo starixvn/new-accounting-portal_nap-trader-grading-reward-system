@@ -8,9 +8,15 @@
     {
         IEnumerable<LeagueGroup> GetLeagueGroups();
 
-        IEnumerable<GroupBetTypes> GetGroupBetTypes();
+        IEnumerable<GroupBettypes> GetGroupBetTypes();
 
-        IEnumerable<BettypePerformance> GetBettypePerformance(GetBettypePerformanceCriteria criteria);
+        BettypePerformanceList GetBettypePerformance(GetBettypePerformanceCriteria criteria);
+
+        LeagueOfBettypeList GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria);
+
+        TraderOfBettypeLeagueList GetTraderOfBetTypeLeague(GetTraderOfBettypeLeagueCriteria criteria);
+
+        MatchOfBettypeLeagueTraderList GetMatchOfBetTypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria);
 
     }
 }
