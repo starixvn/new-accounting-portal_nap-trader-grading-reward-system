@@ -84,6 +84,54 @@
             return bettypeList;
         }
 
+        public TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
+        {
+            var traderList = new TraderOfBettypeList();
+
+            var traderData = this.GetData<TraderOfBettypeInfo>(criteria);
+
+            if (traderData != null && traderData.Any())
+            {
+                foreach (var info in traderData)
+                {
+                    traderList.AddTrader(info);
+                }
+
+                traderList.CalculateMargin(traderList.Total);
+            }
+
+            return traderList;
+        }
+
+        public MatchOfBettypeTraderList GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria)
+        {
+            var matchList = new MatchOfBettypeTraderList();
+
+            var matchData = this.GetData<MatchOfBettypeTraderInfo>(criteria);
+
+            if (matchData != null && matchData.Any())
+            {
+                IEnumerable<IGrouping<int, MatchOfBettypeTraderInfo>> matchGroups = matchData.GroupBy(x => x.LeagueId);
+                MatchOfBettypeTraderGroup matchGroup = null;
+
+                foreach (IGrouping<int, MatchOfBettypeTraderInfo> group in matchGroups)
+                {
+                    matchGroup = new MatchOfBettypeTraderGroup(group.Key);
+
+                    foreach (var item in group)
+                    {
+                        matchGroup.AddItem(item);
+                        matchGroup.CalculateMargin(matchGroup.Total);
+                    }
+                    matchList.AddGroup(matchGroup);
+                }
+
+                matchList.TotalItems = matchData.Count();
+            }
+
+            return matchList;
+        }
+
         public LeagueOfBettypeList GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria)
         {
             var leagueList = new LeagueOfBettypeList();
@@ -101,9 +149,9 @@
             }
 
             return leagueList;
-        }
+        }       
 
-        public TraderOfBettypeLeagueList GetTraderOfBetTypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
+        public TraderOfBettypeLeagueList GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {
             var traderList = new TraderOfBettypeLeagueList();
 
@@ -122,7 +170,7 @@
             return traderList;
         }
 
-        public MatchOfBettypeLeagueTraderList GetMatchOfBetTypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
+        public MatchOfBettypeLeagueTraderList GetMatchOfBettypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
         {
             var matchList = new MatchOfBettypeLeagueTraderList();
 
@@ -139,6 +187,7 @@
             }
 
             return matchList;
-        }
+        }        
+
     }
 }

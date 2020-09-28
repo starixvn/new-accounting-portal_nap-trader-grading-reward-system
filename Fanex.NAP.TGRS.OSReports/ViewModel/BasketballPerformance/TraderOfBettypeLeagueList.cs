@@ -39,6 +39,7 @@
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
             this.Total.BetCount += item.BetCount;
+            this.Total.NoOfMatches += item.NoOfMatches;
         }
     }
 }

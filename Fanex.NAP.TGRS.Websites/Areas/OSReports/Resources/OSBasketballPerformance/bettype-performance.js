@@ -9,11 +9,13 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
     var $this = this;
 
     var urls = {
-        GetBetTypePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetBettypePerformance'),
-        ExportBetTypePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportBettypePerformance'),
-        GetLeagueOfBetType: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeagueOfBetType'),
-        GetTraderOfBetTypeLeague: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetTraderOfBetTypeLeague'),
-        GetMatchOfBetTypeLeagueTrader: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetMatchOfBetTypeLeagueTrader')
+        GetBettypePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetBettypePerformance'),
+        ExportBettypePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportBettypePerformance'),
+        GetTraderOfBettype: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetTraderOfBettype'),
+        GetMatchOfBettypeTrader: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetMatchOfBettypeTrader'),
+        GetLeagueOfBettype: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeagueOfBettype'),
+        GetTraderOfBettypeLeague: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetTraderOfBettypeLeague'),
+        GetMatchOfBettypeLeagueTrader: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetMatchOfBettypeLeagueTrader')
     };
 
     var domElements = {
@@ -41,6 +43,14 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         FromDate: null,
         ToDate: null,
         Bettypes: null
+    };
+
+    var cachedData = {
+        MatchPerformance: null,
+        Total: null,
+        TotalItems: 0,
+        PageSize: common.Constants.PageSize,
+        PageIndex: 0
     };
 
     var cacheDOMElements = function () {
@@ -114,7 +124,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetBetTypePerformance,
+            url: urls.GetBettypePerformance,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
@@ -286,6 +296,15 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
     };
 
     var handleBetTypePerformanceGridEvents = function () {
+        domElements.divBetTypePerformanceGrid.find('span.trader-link').click(function () {
+            var $link = $(this);
+            var betTypeId = $link.attr('data-bettype');
+            var betTypeName = $link.attr('data-bettype-name');
+            var isLive = $link.attr('data-is-live');
+
+            getTraderOfBettypeReport(betTypeId, betTypeName, isLive);
+        });
+
         domElements.divBetTypePerformanceGrid.find('span.league-link').click(function () {
             var $link = $(this);
             var betTypeId = $link.attr('data-bettype');
@@ -293,16 +312,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             var isLive = $link.attr('data-is-live');
 
             getLeaguePerformanceOfBetTypeReport(betTypeId, betTypeName, isLive);
-        });
-
-        domElements.divBetTypePerformanceGrid.find('span.trader-link').click(function () {
-            var $link = $(this);           
-            var betTypeId = $link.attr('data-bettype');
-            var betTypeName = $link.attr('data-bettype-name');
-            var isLive = $link.attr('data-is-live');
-
-            getTraderPerformanceReport(betTypeId, betTypeName, isLive);
-        });
+        });        
 
         domElements.divBetTypePerformanceGrid.find('span.bettype-link').click(function () {
             var $link = $(this);
@@ -314,20 +324,402 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         });
     };
 
-    var getLeaguePerformanceOfBetTypeReport = function (betTypeId, betTypeName, isLive) {
-        var leagueParams = {
+    var getTraderOfBettypeReport = function (betTypeId, betTypeName, isLive) {
+        var traderParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
-            LeagueName: parameters.LeagueName,
-            LeagueGroupIds: parameters.LeagueGroupIds,            
             BetType: betTypeId,
-            IsLive: isLive
+            LeagueGroupIds: parameters.LeagueGroupIds,
+            LeagueName: parameters.LeagueName,
+            LiveType: isLive
         };
 
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetLeagueOfBetType,
+            url: urls.GetTraderOfBettype,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(traderParams),
+            success: function (result) {
+                renderTraderOfBettypeGrid(result, betTypeId, betTypeName, isLive);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+
+    var renderTraderOfBettypeGrid = function (data, betTypeId, betTypeName, isLive) {
+        var bodyData = [];
+        var footerData = [];
+
+        if (data && data.Items.length > 0) {
+            bodyData = renderTraderOfBettypeGridBody(data);
+            footerData = renderTraderOfBettypeGridFooter(data);
+        }
+
+        domElements.divBetTypePerformanceContainer.addClass('display-none');
+
+        var gridOptions = renderTraderOfBettypeGridOptions(betTypeId, betTypeName, isLive);
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+        domElements.divTraderPerformanceGrid.fanexGrid(gridOptions);
+
+        handleTraderOfBettypeGridEvents(betTypeId, betTypeName);
+    };
+
+    var renderTraderOfBettypeGridOptions = function (betTypeId, betTypeName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            {
+                HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true
+            },
+            {
+                HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true
+            },
+            {
+                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat, Sort: true
+            },
+            {
+                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+            }],
+            gridExpandHeight: 260,
+            showNumberColumn: true,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleTraderOfBettypeGridEvents(betTypeId, betTypeName);
+
+                    return rows;
+                }
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    handleTraderOfBettypeGridEvents(betTypeId, betTypeName);
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+        return gridOptions;
+    };
+
+    var renderTraderOfBettypeGridBody = function (data) {
+        var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}" data-is-live="{2}">{3}</span>';
+        var noOfMatchesFormat = '<span class="match-link link" data-is-live="{0}" title="{1}">{2}</span>';
+        var gradeFormat = '<span class="grade">{0}</span>';
+        var teamFormat = '<span class="team">{0}</span>';
+        var traderCol = '';
+        var gradeCol = '';
+        var teamCol = '';
+        var noOfMatchesCol = '';
+        var bodyData = [];
+        var row;
+
+        $.each(data.Items, function (index, item) {
+            traderCol = traderFormat.format(item.TraderId, item.TeamId, item.IsLive, item.TraderName);
+            noOfMatchesCol = noOfMatchesFormat.format(item.IsLive, labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
+            gradeCol = gradeFormat.format(item.Grade);
+            teamCol = teamFormat.format(item.TeamName);
+
+            row = {
+                Columns: [{ Name: 'ColNo', Value: index + 1 },
+                { Name: 'ColTrader', Value: traderCol },
+                { Name: 'ColGrade', Value: gradeCol },
+                { Name: 'ColTeam', Value: teamCol },
+                { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
+                { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
+                { Name: 'ColTurnover', Value: item.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: item.WinLoss },
+                { Name: 'ColBetCount', Value: item.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+            };
+
+            bodyData.push(row);
+        });
+
+        return bodyData;
+    };
+
+    var renderTraderOfBettypeGridFooter = function (data) {
+        return footerData = [{
+            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
+            { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
+            { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+            { Name: 'ColTurnover', Value: data.Total.Turnover },
+            { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
+            { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+            { Name: 'ColBetCount', Value: data.Total.BetCount },
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+            { Name: 'ColScore', Value: '' }]
+        }];
+    };
+
+    var handleTraderOfBettypeGridEvents = function (betTypeId, betTypeName) {       
+        domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
+            var $link = $(this);
+            var $trader = $link.closest('tr').find('span.trader');
+            var traderId = $trader.attr('data-cust-id');
+            var traderName = $trader.text();
+            var isLive = $link.attr('data-is-live');
+
+            getMatchOfBettypeTraderReport(betTypeId, betTypeName, traderId, traderName, isLive);
+        });
+
+        domElements.divTraderPerformanceContainer.find('#spanBetTypeLink').click(function () {
+            showBetTypePerformanceReport();
+        });
+    };
+
+    var getMatchOfBettypeTraderReport = function (betTypeId, betTypeName, traderId, traderName, isLive) {
+        var matchParams = {
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,            
+            CustId: traderId,
+            BetType: betTypeId,           
+            LeagueGroupIds: parameters.LeagueGroupIds,
+            LeagueName: parameters.LeagueName,
+            LiveType: isLive
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetMatchOfBettypeTrader,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(matchParams),
+            success: function (result) {
+                cachedData.PageSize = common.Constants.PageSize;
+                cachedData.PageIndex = 0;
+                cachedData.MatchPerformance = result.GroupList;
+                cachedData.Total = result.Total;
+                cachedData.TotalItems = result.TotalItems;
+                reloadPage(cachedData.PageIndex, cachedData.PageSize, betTypeId, betTypeName, traderId, traderName, isLive);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    };
+
+    var reloadPage = function (pageIndex, pageSize, betTypeId, betTypeName, traderId, traderName, isLive) {
+        var pageData = [];
+        var startIndex = 0;
+        var endIndex = 0;
+        var counter = 0;
+
+        if (cachedData.MatchPerformance && cachedData.MatchPerformance.length > 0) {
+            pageIndex = parseInt(pageIndex);
+            pageSize = parseInt(pageSize);
+            startIndex = pageIndex * pageSize;
+            endIndex = startIndex + pageSize - 1;
+
+            $.each(cachedData.MatchPerformance, function (groupIndex, group) {
+                var temCounter = counter + group.Items.length - 1;
+                var currentGroup = null;
+
+                if (temCounter < startIndex || counter > endIndex) {
+                    counter = temCounter + 1;
+                } else {
+                    currentGroup = {
+                        LeagueId: group.LeagueId,
+                        LeagueName: group.LeagueName,
+                        Total: group.Total,
+                        Items: []
+                    };
+
+                    $.each(group.Items, function (index, item) {
+                        if (counter >= startIndex && counter <= endIndex) {
+                            item.Order = counter;
+                            currentGroup.Items.push(item);
+                        }
+
+                        counter++;
+                    });
+
+                    pageData.push(currentGroup);
+                }
+            });
+        }
+
+        cachedData.PageIndex = pageIndex;
+        cachedData.PageSize = pageSize;
+        renderMatchOfBettypeTraderGrid(pageData, betTypeId, betTypeName, traderId, traderName, isLive);
+    };
+
+    var renderMatchOfBettypeTraderGrid = function (data, betTypeId, betTypeName, traderId, traderName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
+            '<span id="spanTraderLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
+            '<span> >> {3}</span>';
+
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
+            { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+            {
+                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat
+            },
+            {
+                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            }],
+            gridExpandHeight: 260,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, traderName)
+            },
+            showTree: true,
+            showDistinctRow: false,
+            showPager: true,
+            customPager: true,
+            pagerOption: {
+                currentPage: cachedData.PageIndex,
+                itemsPerPage: cachedData.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                totalItem: cachedData.TotalItems,
+                pagerSelectCallBack: function (pageIndex, pageSize) {
+                    reloadPage(pageIndex, pageSize, betTypeId, betTypeName, traderId, traderName);
+                }
+            },
+            showFooter: true
+        };
+        var bodyData = [];
+        var footerData = [];
+        var subRows;
+        var row;  
+        var counter = 0;
+
+        if (data && data.length > 0) {
+            $.each(data, function (groupIndex, group) {
+                subRows = [];
+
+                $.each(group.Items, function (index, item) {
+                    counter++;
+
+                    row = {
+                        Columns: [{ Name: 'ColNo', Value: item.Order + 1, CssClass: 'order-column' },
+                        { Name: 'ColMatch', Value: item.MatchName },
+                        { Name: 'ColEventDate', Value: item.EventDate },
+                        { Name: 'ColTurnover', Value: item.Turnover },
+                        { Name: 'ColWinLoss', Value: item.WinLoss },
+                        { Name: 'ColBetCount', Value: item.BetCount },
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                    };
+                    subRows.push(row);
+                });
+
+                row = {
+                    Columns: [{ Name: 'ColNo', Value: group.LeagueName, MergeColNumber: 3, CellAlign: 'left' },
+                    { Name: 'ColTurnover', Value: group.Total.Turnover },
+                    { Name: 'ColWinLoss', Value: group.Total.WinLoss },
+                    { Name: 'ColBetCount', Value: group.Total.BetCount },
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(group.Total.Margin, labels.NA) },
+                    { Name: 'ColScore', Value: common.GetNumWithLabel(group.Total.Score, labels.NA) }],
+                    SubRows: subRows
+                };
+                bodyData.push(row);
+            });
+
+            row = {
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+                    { Name: 'ColTurnover', Value: cachedData.Total.Turnover },
+                    { Name: 'ColWinLoss', Value: cachedData.Total.WinLoss },
+                    { Name: 'ColBetCount', Value: cachedData.Total.BetCount },
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(cachedData.Total.Margin, labels.NA) }]
+            };
+            footerData.push(row);
+        }
+        
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+
+        domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);
+
+        handleMatchOfBettypeTraderGridEvents();
+    };
+
+    var handleMatchOfBettypeTraderGridEvents = function () {
+        domElements.divMatchPerformanceContainer.find('#spanTraderLink').click(function () {
+            showTraderPerformanceReport();
+        });
+
+        domElements.divMatchPerformanceContainer.find('#spanBetTypeLink').click(function () {
+            showBetTypePerformanceReport();
+        });
+    };
+
+    var getLeaguePerformanceOfBetTypeReport = function (betTypeId, betTypeName, isLive) {
+        var leagueParams = {
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,
+            LeagueName: parameters.LeagueName,
+            LeagueGroupIds: parameters.LeagueGroupIds,
+            BetType: betTypeId,
+            LiveType: isLive
+        };
+
+        common.DisableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetLeagueOfBettype,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(leagueParams),
@@ -406,7 +798,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    handleLeaguePerformanceGridEvents(betTypeId, betTypeName);
+                    handleLeagueOfBetTypeGridEvents(betTypeId, betTypeName);
 
                     return rows;
                 }
@@ -418,7 +810,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
                 afterPagedFunction: function (rows) {
-                    handleLeaguePerformanceGridEvents(betTypeId, betTypeName);
+                    handleLeagueOfBetTypeGridEvents(betTypeId, betTypeName);
 
                     return rows;
                 }
@@ -486,7 +878,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var handleLeagueOfBetTypeGridEvents = function (betTypeId, betTypeName) {
         domElements.divLeaguePerformanceContainer.find('#spanBetTypeLink').click(function () {
-            //showBetTypePerformanceReport();
+            showBetTypePerformanceReport();
         });
 
         domElements.divLeaguePerformanceGrid.find('span.trader-link').click(function () {
@@ -517,13 +909,13 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             ToDate: parameters.ToDate,
             LeagueId: leagueId,
             BetType: betTypeId,
-            IsLive: isLive
+            LiveType: isLive
         };
 
         common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetTraderOfBetTypeLeague,
+            url: urls.GetTraderOfBettypeLeague,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(traderParams),
@@ -605,7 +997,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
+                    handleTraderOfBettypeLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
 
                     return rows;
                 }
@@ -616,7 +1008,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
                 afterPagedFunction: function (rows) {
-                    handleTraderPerformanceOfLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
+                    handleTraderOfBettypeLeagueGridEvents(betTypeId, betTypeName, leagueId, leagueName);
 
                     return rows;
                 }
@@ -637,10 +1029,9 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var teamCol = '';
         var noOfMatchesCol = '';
         var bodyData = [];
-        var row;
-        var items = data.ItemLiveList.length > 0 ? data.ItemLiveList : data.ItemNonLiveList;
+        var row;       
 
-        $.each(items, function (index, item) {
+        $.each(data.Items, function (index, item) {
             traderCol = traderFormat.format(item.TraderId, item.TeamId, item.IsLive, item.TraderName);
             noOfMatchesCol = noOfMatchesFormat.format(item.IsLive, labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
             gradeCol = gradeFormat.format(item.Grade);
@@ -681,11 +1072,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var handleTraderOfBettypeLeagueGridEvents = function (betTypeId, betTypeName, leagueId, leagueName) {
         domElements.divTraderPerformanceContainer.find('#spanBetTypeLink').click(function () {
-            //showBetTypePerformanceReport();
+            showBetTypePerformanceReport();
         });
 
         domElements.divTraderPerformanceContainer.find('#spanLeagueLink').click(function () {
-            //showLeaguePerformanceReport();
+            showLeaguePerformanceReport();
         });
 
         domElements.divTraderPerformanceGrid.find('span.match-link').click(function () {
@@ -701,14 +1092,19 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var getMatchOfBettypeLeagueTraderReport = function (betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive) {
         var matchParams = {
-
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,
+            LeagueId: leagueId,
+            TraderId: traderId,
+            BetType: betTypeId,
+            LiveType: isLive
         };
 
         common.DisableInput();
 
         $.ajax({
             type: 'POST',
-            url: urls.GetMatchOfBetTypeLeagueTrader,
+            url: urls.GetMatchOfBettypeLeagueTrader,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(matchParams),
@@ -722,6 +1118,145 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 common.EnableInput();
             }
         });
+    };
+
+    var renderMatchOfBettypeLeagueTraderGrid = function (data, betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive) {
+        var bodyData = [];
+        var footerData = []; 
+
+        if (data && data.Items.length > 0) {
+            bodyData = renderMatchOfBettypeLeagueTraderGridBody(data);
+            footerData = renderMatchOfBettypeLeagueTraderGridFooter(data);
+        }
+
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+
+        var gridOptions = renderMatchOfBettypeLeagueTraderGridOptions(betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive);
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+        
+        domElements.divMatchPerformanceGrid.fanexGrid(gridOptions);        
+
+        handleMatchOfBettypeLeagueTraderGridEvents();
+    };
+
+    var renderMatchOfBettypeLeagueTraderGridOptions = function (betTypeName, leagueName, traderName, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
+            '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
+            '<span id="spanTraderLink" class="breadcrumb-link" title="{3}"> >> {4}</span>' +
+            '<span> >> {5}</span>';
+        var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.EventDate, Width: 120, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+            {
+                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat
+            },
+            {
+                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+            }],
+            gridExpandHeight: 260,
+            showNumberColumn: true,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, trimLeagueName, traderName)
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    handleMatchOfBettypeLeagueTraderGridEvents();
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+        return gridOptions;
+    };
+
+    var renderMatchOfBettypeLeagueTraderGridBody = function (data) {
+        var bodyData = [];
+        var row;        
+
+        $.each(data.Items, function (index, item) {
+            row = {
+                Columns: [{ Name: 'ColNo', Value: index + 1 },
+                { Name: 'ColMatch', Value: item.MatchName },
+                { Name: 'ColEventDate', Value: item.EventDate },
+                { Name: 'ColTurnover', Value: item.Turnover },
+                { Name: 'ColWinLoss', Value: item.WinLoss },
+                { Name: 'ColBetCount', Value: item.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+            };
+            bodyData.push(row);
+        });
+
+        return bodyData;
+    };
+
+    var renderMatchOfBettypeLeagueTraderGridFooter = function (data) {
+        return footerData = [{
+            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+            { Name: 'ColTurnover', Value: data.Total.Turnover },
+            { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+            { Name: 'ColBetCount', Value: data.Total.BetCount },
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+        }];
+    };
+
+    var handleMatchOfBettypeLeagueTraderGridEvents = function () {
+        domElements.divMatchPerformanceContainer.find('#spanBetTypeLink').click(function () {
+            showBetTypePerformanceReport();
+        });
+
+        domElements.divMatchPerformanceContainer.find('#spanLeagueLink').click(function () {
+            showLeaguePerformanceReport();
+        });
+
+        domElements.divMatchPerformanceContainer.find('#spanTraderLink').click(function () {
+            showTraderPerformanceReport();
+        });
+    };
+
+    var showBetTypePerformanceReport = function () {
+        domElements.divBetTypePerformanceContainer.removeClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divBetChoicePerformanceContainer.addClass('display-none');
+    };
+
+    var showLeaguePerformanceReport = function () {
+        domElements.divBetTypePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.removeClass('display-none');
+    };
+
+    var showTraderPerformanceReport = function () {
+        domElements.divBetTypePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.removeClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
     };
         
     $this.InitPage = function () {

@@ -253,8 +253,13 @@
     <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeList.cs" />
     <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeLeagueTraderItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeLeagueTraderList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeTraderGroup.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeTraderItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfBettypeTraderList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

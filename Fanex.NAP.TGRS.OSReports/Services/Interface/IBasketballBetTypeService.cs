@@ -12,11 +12,15 @@
 
         BettypePerformanceList GetBettypePerformance(GetBettypePerformanceCriteria criteria);
 
+        TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria);
+
+        MatchOfBettypeTraderList GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria);
+
         LeagueOfBettypeList GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria);
 
-        TraderOfBettypeLeagueList GetTraderOfBetTypeLeague(GetTraderOfBettypeLeagueCriteria criteria);
+        TraderOfBettypeLeagueList GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria);
 
-        MatchOfBettypeLeagueTraderList GetMatchOfBetTypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria);
+        MatchOfBettypeLeagueTraderList GetMatchOfBettypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria);
 
     }
 }

@@ -1,5 +1,9 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
 {
+    using Fanex.Common;
+    using Fanex.NAP.Core.Web;
+    using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.OSReports.Models.BasketballPerformance;
     using System;
 
@@ -10,24 +14,21 @@
 
         public MatchOfBettypeLeagueTraderItem(MatchOfBettypeLeagueTraderInfo data)
         {
-            this.MatchId = data.MatchId;
-            this.HomeId = data.HomeId;
-            this.AwayId = data.AwayId;
-            this.EventDate = data.EventDate;
+            this.MatchId = data.MatchId;        
+            this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(data.HomeId), ViewLang.Vs, CacheRef.GetTeamName(data.AwayId));
+            this.EventDate = Convert.ToDateTime(data.EventDate).ToShortFormatedDate();
             this.IsLive = data.IsLive;
-            this.Turnover = data.Turnover;
-            this.WinLoss = data.WinLoss;
-            this.BetCount = data.BetCount;
+            this.Turnover = Converter.ToDecimal(data.Turnover);
+            this.WinLoss = Converter.ToDecimal(data.WinLoss);
+            this.BetCount = Converter.ToInt(data.BetCount);
             this.Margin = data.Margin;
         }
 
         public int MatchId { get; set; }
 
-        public int HomeId { get; set; }
-
-        public int AwayId { get; set; }
-
-        public DateTime EventDate { get; set; }
+        public string MatchName { get; set; }
+        
+        public string EventDate { get; set; }
 
         public bool IsLive { get; set; }
 

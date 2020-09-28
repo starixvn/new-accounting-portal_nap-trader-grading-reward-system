@@ -52,7 +52,25 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
         [HttpPost]
-        public ActionResult GetLeagueOfBetType(GetLeagueOfBettypeCriteria criteria)
+        public ActionResult GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
+        {
+            var traders = _basketballBetTypeService.GetTraderOfBettype(criteria);
+
+            return Json(traders, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        public ActionResult GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria)
+        {
+            var matches = _basketballBetTypeService.GetMatchOfBettypeTrader(criteria);
+
+            return Json(matches, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        public ActionResult GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria)
         {
             var leagues = _basketballBetTypeService.GetLeagueOfBettype(criteria);
 
@@ -61,20 +79,20 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
         [HttpPost]
-        public ActionResult GetTraderOfBetTypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
+        public ActionResult GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {
-            var traders = _basketballBetTypeService.GetTraderOfBetTypeLeague(criteria);
+            var traders = _basketballBetTypeService.GetTraderOfBettypeLeague(criteria);
 
             return Json(traders, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
         [HttpPost]
-        public ActionResult GetMatchOfBetTypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
+        public ActionResult GetMatchOfBettypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
         {
-            var traders = _basketballBetTypeService.GetMatchOfBetTypeLeagueTrader(criteria);
+            var matches = _basketballBetTypeService.GetMatchOfBettypeLeagueTrader(criteria);
 
-            return Json(traders, JsonRequestBehavior.AllowGet);
+            return Json(matches, JsonRequestBehavior.AllowGet);
         }
 
     }

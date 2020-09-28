@@ -12,10 +12,10 @@
         {
             this.TraderId = data.TraderId;
             this.TraderName = data.TraderName;
-            this.GradeId = data.GradeId;
+            this.Grade = data.GradeId;
             this.TeamId = data.TeamId;
             this.TeamName = data.TeamName;
-            this.MatchCount = data.MatchCount;
+            this.NoOfMatches = data.MatchCount;
             this.Turnover = data.WinLoss;
             this.WinLoss = data.WinLoss;
             this.BetCount = data.BetCount;
@@ -27,13 +27,13 @@
 
         public string TraderName { get; set; }
 
-        public int GradeId { get; set; }
+        public int Grade { get; set; }
 
         public int TeamId { get; set; }
 
         public string TeamName { get; set; }
 
-        public int MatchCount { get; set; }
+        public int NoOfMatches { get; set; }
 
         public decimal Turnover { get; set; }
 
