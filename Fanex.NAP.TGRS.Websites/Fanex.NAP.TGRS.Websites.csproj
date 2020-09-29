@@ -655,6 +655,7 @@
     <Content Include="Areas\OSReports\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\OSReports\Views\OSBasketballPerformance\BetTypePerformance.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\basketball-performance.less" />
+    <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

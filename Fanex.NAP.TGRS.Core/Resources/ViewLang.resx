@@ -855,4 +855,7 @@
   <data name="NoOfBetChoices" xml:space="preserve">
     <value>No. Of Bet Choices</value>
   </data>
+  <data name="LiveType" xml:space="preserve">
+    <value>Live Type</value>
+  </data>
 </root>

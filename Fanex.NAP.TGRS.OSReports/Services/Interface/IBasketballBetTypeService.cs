@@ -14,15 +14,21 @@
 
         BetChoiceOfBettypeList GetBetChoiceOfBettype(GetBetChoiceOfBettypeCriteria criteria);
 
+        LeagueOfBettypeBetChoiceList GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria);
+
         TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria);
 
         MatchOfBettypeTraderList GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria);
 
         LeagueOfBettypeList GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria);
 
+        BetChoiceOfBettypeLeagueList GetBetChoiceOfBettypeLeague(GetBetChoiceOfBettypeLeagueCriteria criteria);
+
         TraderOfBettypeLeagueList GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria);
 
         MatchOfBettypeLeagueTraderList GetMatchOfBettypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria);
+
+        void ExportBetTypePerformance(int userid, GetBettypePerformanceCriteria criteria, string templatePath);
 
     }
 }

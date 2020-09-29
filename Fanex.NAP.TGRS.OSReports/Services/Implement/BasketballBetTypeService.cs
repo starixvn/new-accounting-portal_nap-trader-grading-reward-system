@@ -1,18 +1,26 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Services.Implement
 {
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.ExcelUtility;
+    using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Core.Resources;
     using Fanex.NAP.TGRS.OSReports.Criteria.BasketballPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.BasketballPerformance;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance;
+    using NPOI.SS.UserModel;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public class BasketballBetTypeService : TGRSBaseService, IBasketballBetTypeService
     {
-        private const string LeagueGroupsSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.LeagueGroups";
-        private const string BetTypePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance";
+        private const int PointInPixel = 225;
+        private const string LeagueGroupsSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.LeagueGroups";
+        private const string BettypesSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.Bettypes";
+        private const string BetTypePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.GetBetTypes";
 
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
@@ -38,13 +46,13 @@
 
         public IEnumerable<GroupBettypes> GetGroupBetTypes()
         {
-            var groupBetTypes = Enumerable.Empty<GroupBettypes>();
+            var groupBettypes = Enumerable.Empty<GroupBettypes>();
             var criteria = new GetBettypesCriteria();
             var data = this.GetData<BettypeInfo>(criteria);
 
             if (data != null && data.Any())
             {
-                groupBetTypes = data
+                groupBettypes = data
                     .GroupBy(g => new { g.GroupBettypeId, g.GroupBettypeName })
                     .Select(x => new { Group = x.Key, BetTypeList = x.ToList() })
                     .Select(x => new GroupBettypes
@@ -57,9 +65,17 @@
                             BetTypeName = y.BettypeName                            
                         })
                     });
+
+                var cacheBettypes = data.Select(x => new Bettype
+                {
+                    BetTypeId = x.BettypeId,
+                    BetTypeName = x.BettypeName
+                }).ToList();
+
+                SessionManager.Set<List<Bettype>>(BettypesSessionKey, cacheBettypes);
             }            
 
-            return groupBetTypes;
+            return groupBettypes;
         }
 
         public BettypePerformanceList GetBettypePerformance(GetBettypePerformanceCriteria criteria)
@@ -101,6 +117,33 @@
             }
 
             return betChoiceList;
+        }
+
+        public LeagueOfBettypeBetChoiceList GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria)
+        {
+            var leagueList = new LeagueOfBettypeBetChoiceList();
+
+            var leagueData = this.GetData<LeagueOfBettypeBetChoiceInfo>(criteria);
+
+            if (leagueData != null && leagueData.Any())
+            {
+                var leagueGroupList = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+                if (leagueGroupList == null)
+                    leagueGroupList = new List<LeagueGroup>();
+
+                foreach (var info in leagueData)
+                {
+                    var group = leagueGroupList.FirstOrDefault(x => x.LeagueGroupId == info.LeagueGroupID);
+
+                    var leagueGroupName = group != null ? group.LeagueGroupName : string.Empty;
+
+                    leagueList.AddLeague(info, leagueGroupName);
+                }
+
+                leagueList.CalculateMargin(leagueList.Total);
+            }
+
+            return leagueList;
         }
 
         public TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
@@ -156,19 +199,46 @@
             var leagueList = new LeagueOfBettypeList();
 
             var leagueData = this.GetData<LeagueOfBettypeInfo>(criteria);
+            var leagueGroupList = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+
+            if (leagueGroupList == null)
+                leagueGroupList = new List<LeagueGroup>();
 
             if (leagueData != null && leagueData.Any())
             {
                 foreach(var info in leagueData)
                 {
-                    leagueList.AddLeague(info);
+                    var group = leagueGroupList.FirstOrDefault(x => x.LeagueGroupId == info.LeagueGroupID);
+
+                    var leagueGroupName = group != null ? group.LeagueGroupName : string.Empty;
+
+                    leagueList.AddLeague(info, leagueGroupName);
                 }
 
                 leagueList.CalculateMargin(leagueList.Total);
             }
 
             return leagueList;
-        }       
+        }
+
+        public BetChoiceOfBettypeLeagueList GetBetChoiceOfBettypeLeague(GetBetChoiceOfBettypeLeagueCriteria criteria)
+        {
+            var betChoiceList = new BetChoiceOfBettypeLeagueList();
+
+            var betChoiceData = this.GetData<BetChoiceOfBettypeLeagueInfo>(criteria);
+
+            if (betChoiceData != null && betChoiceData.Any())
+            {
+                foreach (var info in betChoiceData)
+                {
+                    betChoiceList.AddBetChoice(info);
+                }
+
+                betChoiceList.CalculateMargin(betChoiceList.Total);
+            }
+
+            return betChoiceList;
+        }
 
         public TraderOfBettypeLeagueList GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {
@@ -206,7 +276,214 @@
             }
 
             return matchList;
-        }        
+        }
+
+        public void ExportBetTypePerformance(int userId, GetBettypePerformanceCriteria criteria, string templatePath)
+        {
+            var betTypeData = SessionManager.Get<BettypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
+
+            if (betTypeData != null && betTypeData.Items.Count > 0)
+            {
+                var reportName = string.Format(
+                                    ViewLang.PerformanceDetailFileName,
+                                    ViewLang.BetTypeExcelFile,
+                                    criteria.FromDate.ToShortFormatedDateForFileName(),
+                                    criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
+
+                writer.CopyRows(0, 1);
+                FilterBlock(userId, criteria, ref writer);
+                FillHeader(ref writer);
+                writer.FreezeRow(0, 3);
+                FillRowData(betTypeData, criteria.LiveType, ref writer);
+                writer.SyncColumnsWidth(9);
+                writer.Render();
+            }
+        }
+        
+        private void FilterBlock(int userid, GetBettypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            RichTextRender contentRender = new RichTextRender().Clear();
+            IFont boldFont = writer.GetFont(10, 0);
+            IFont normalFont = writer.GetFont(11, 0);
+            int lineCount = 0;
+          
+            var liveType = criteria.LiveType == -1 ? ViewLang.MarketAll : (criteria.LiveType == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LiveType, boldFont, liveType, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, GetCacheBettypes(criteria.Bettypes), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, GetCacheLeagueGroup(criteria.LeagueGroupIds), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.League, boldFont, criteria.LeagueName, normalFont, "\n");
+            
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
+            writer.WriteRow(8, contentRichTextArray);
+            writer.SetRowHeight(1, PointInPixel * lineCount);
+        }
+
+        private string GetCacheBettypes(string bettypeIds)
+        {            
+            var cacheBettypes = SessionManager.Get<List<Bettype>>(BettypesSessionKey);
+            if (cacheBettypes != null && cacheBettypes.Any())
+            {
+                return string.Join(", ", 
+                    cacheBettypes.Where(x => bettypeIds.Contains(x.BetTypeId.ToString()))
+                                .Select(x => x.BetTypeName));
+            }
+
+            return string.Empty;
+        }
+
+        private string GetCacheLeagueGroup(string leagueGroupIds)
+        {
+            var cacheLeagueGroups = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+            if (cacheLeagueGroups != null && cacheLeagueGroups.Any())
+            {
+                return string.Join(", ",
+                    cacheLeagueGroups.Where(x => leagueGroupIds.Contains(x.LeagueGroupId.ToString()))
+                                    .Select(x => x.LeagueGroupName));
+            }
+
+            return string.Empty;
+        }
+
+        private void AppendBlockContent(ref RichTextRender content, ref int lineCount, string name, IFont nameFont, string value, IFont valueFont, string endString)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            // Name
+            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            content = content.AddText(nameBlock);
+
+            // Value
+            TextBlock valueBlock = new TextBlock(value, valueFont);
+            content = content.AddText(valueBlock);
+
+            if (!string.IsNullOrEmpty(endString))
+            {
+                content = content.AddText(endString);
+            }
+
+            lineCount += CountLine(name + value);
+        }
+
+        private int CountLine(string line)
+        {
+            var charPerLine = 216;
+            return Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
+        }
+
+        private void FillHeader(ref ExcelTemplateWriter writer)
+        {
+            writer.CopyRows(3, 1);
+        }
+
+        private void FillRowData(BettypePerformanceList data, int liveType, ref ExcelTemplateWriter writer)
+        {
+            BettypePerformanceItem item;
+            var bettypeId = data.Items[0].BetTypeId;
+            var bettypeCounter = 1;
+
+            for (int i = 0; i < data.Items.Count; i++)
+            {
+                item = data.Items[i];
+
+                if (item.BetTypeId != bettypeId)
+                {
+                    bettypeCounter++;
+                    bettypeId = item.BetTypeId;
+                }
+
+                var styleIndex = bettypeCounter % 2 == 0 ? 4 : 5;
+
+                var record = new object[]
+                {
+                    i + 1,
+                    item.BetTypeName,
+                    item.IsLive ? ViewLang.MarketLive : ViewLang.MarketNonLive,
+                    item.NoOfTraders,
+                    item.NoOfLeagues,
+                    item.NoOfMatches,
+                    item.Turnover,
+                    item.Turnover / item.NoOfMatches,
+                    item.WinLoss,
+                    item.BetCount,
+                    (object)item.Margin ?? ViewLang.NA
+                };
+
+                writer.WriteRow(styleIndex, record);
+            }
+
+            FillRowFooterData(data, liveType, ref writer);
+        }
+
+        private void FillRowFooterData(BettypePerformanceList data, int liveType, ref ExcelTemplateWriter writer)
+        {
+            var itemLive = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                ViewLang.MarketLive,
+                data.TotalItemLive.NoOfTraders,
+                data.TotalItemLive.NoOfLeagues,
+                data.TotalItemLive.NoOfMatches,
+                data.TotalItemLive.Turnover,
+                data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches,
+                data.TotalItemLive.WinLoss,
+                data.TotalItemLive.BetCount,
+                (object)data.TotalItemLive.Margin ?? ViewLang.NA
+            };
+
+            var itemNonLive = new object[]
+            {
+                ViewLang.GrandTotal,
+                null,
+                ViewLang.MarketNonLive,
+                data.TotalItemNonLive.NoOfTraders,
+                data.TotalItemNonLive.NoOfLeagues,
+                data.TotalItemNonLive.NoOfMatches,
+                data.TotalItemNonLive.Turnover,
+                data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches,
+                data.TotalItemNonLive.WinLoss,
+                data.TotalItemNonLive.BetCount,
+                (object)data.TotalItemNonLive.Margin ?? ViewLang.NA
+            };
+
+            if (liveType == 0)
+            {
+                writer.WriteRow(6, itemNonLive);
+            }
+            else if (liveType == 1)
+            {
+                writer.WriteRow(6, itemLive);
+            }
+            else
+            {
+                var totalRecord = new object[]
+                {
+                    null,
+                    null,
+                    ViewLang.MarketNonLive,
+                    data.TotalItemNonLive.NoOfTraders,
+                    data.TotalItemNonLive.NoOfLeagues,
+                    data.TotalItemNonLive.NoOfMatches,
+                    data.TotalItemNonLive.Turnover,
+                    data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches,
+                    data.TotalItemNonLive.WinLoss,
+                    data.TotalItemNonLive.BetCount,
+                    (object)data.TotalItemNonLive.Margin ?? ViewLang.NA
+                };
+                writer.WriteRow(6, totalRecord);
+
+                writer.WriteRow(6, itemLive);
+            }
+        }
 
     }
 }

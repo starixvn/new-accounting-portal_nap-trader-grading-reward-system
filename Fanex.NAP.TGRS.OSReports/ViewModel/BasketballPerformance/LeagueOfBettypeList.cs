@@ -17,9 +17,11 @@
 
         public LeagueOfBettypeItem Total { get; set; }
 
-        public void AddLeague(LeagueOfBettypeInfo info)
+        public void AddLeague(LeagueOfBettypeInfo info, string leagueGroupName)
         {
             var item = new LeagueOfBettypeItem(info);
+
+            item.LeagueGroupName = leagueGroupName;
 
             this.Items.Add(item);
 

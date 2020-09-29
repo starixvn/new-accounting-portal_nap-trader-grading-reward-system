@@ -17,6 +17,5 @@
         public decimal Margin { get; set; }
 
         public int BetCount { get; set; }
-
     }
 }

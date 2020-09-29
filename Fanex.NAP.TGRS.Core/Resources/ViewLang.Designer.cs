@@ -970,6 +970,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live Type.
+        /// </summary>
+        public static string LiveType {
+            get {
+                return ResourceManager.GetString("LiveType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Live Win Loss.
         /// </summary>
         public static string LiveWinLoss {
