@@ -19,6 +19,7 @@
         private string _typeSiteIds = "2, 3";
         private DateTime _taLauchedDate = new DateTime(2019, 11, 7);
         private DateTime _ptAfterIncreaseVarianceDate = new DateTime(2019, 10, 19);
+        private Dictionary<string, string> _leagueNameChangedList = new Dictionary<string, string>();
         #endregion
 
         public byte[] GetAutoTradingTAMonthly()
@@ -143,6 +144,9 @@
 
             var similarLeagueNames = GetEventSimilarLeagueName(summaryEventLeagueList.ToList());
 
+            _leagueNameChangedList.Add("HOLLAND EREDIVISIE", "NETHERLANDS EREDIVISIE");
+            similarLeagueNames.AddRange(GetEventLeagueNameChanged(summaryEventLeagueList.ToList()));
+
             summaryEventLeagueList = DetectLeagueGroupBackup(summaryEventLeagueList.ToList(), similarLeagueNames);
 
             var eventGroupInfos = summaryEventLeagueList
@@ -210,7 +214,7 @@
 
             return writer.ToBytes();
         }
-
+      
         private void FillRowDataEventLeague(string autoTradingName, int matchCount, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
         {
             var record = new object[]
@@ -260,6 +264,31 @@
                         MainGroupId = mainGroup != null ? mainGroup.LeagueGroupId : info.LeagueGroupId,
                         LeagueName = leagueName,
                         LeagueNameOther = info.LeagueName
+                    });
+                }
+            }
+
+            return leagues;
+        }
+
+        private List<AutoTradingSimilarLeagueName> GetEventLeagueNameChanged(List<AutoTradingSummaryEventLeaguesInfo> eventLeagueList)
+        {
+            var leagues = new List<AutoTradingSimilarLeagueName>();
+
+            foreach (var leagueName in _leagueNameChangedList)
+            {
+                var nameLasted = eventLeagueList.FirstOrDefault(x => x.LeagueName.ToUpper() == leagueName.Value);
+                var nameOld = eventLeagueList.FirstOrDefault(x => x.LeagueName.ToUpper() == leagueName.Key);
+
+                if (nameLasted != null && nameOld != null)
+                {
+                    leagues.Add(new AutoTradingSimilarLeagueName
+                    {
+                        LeagueGroupIdList = new List<int>() { nameOld.LeagueGroupId, nameLasted.LeagueGroupId },
+                        LeagueIdList = new List<int>() { nameOld.LeagueId, nameLasted.LeagueId },
+                        MainGroupId = nameLasted.LeagueGroupId,
+                        LeagueName = nameLasted.LeagueName,
+                        LeagueNameOther = nameOld.LeagueName
                     });
                 }
             }
