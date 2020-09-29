@@ -144,7 +144,10 @@
 
             var similarLeagueNames = GetEventSimilarLeagueName(summaryEventLeagueList.ToList());
 
-            _leagueNameChangedList.Add("HOLLAND EREDIVISIE", "NETHERLANDS EREDIVISIE");
+            //_leagueNameChangedList.Add("HOLLAND EREDIVISIE", "NETHERLANDS EREDIVISIE");
+            _leagueNameChangedList.Add("FINLAND VEIKKAUSLIIGA", "NORWAY ELITESERIEN");
+            _leagueNameChangedList.Add("NORWAY 1ST DIVISION", "BELARUS PREMIER LEAGUE");
+
             similarLeagueNames.AddRange(GetEventLeagueNameChanged(summaryEventLeagueList.ToList()));
 
             summaryEventLeagueList = DetectLeagueGroupBackup(summaryEventLeagueList.ToList(), similarLeagueNames);
