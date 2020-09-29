@@ -144,9 +144,9 @@
 
             var similarLeagueNames = GetEventSimilarLeagueName(summaryEventLeagueList.ToList());
 
-            //_leagueNameChangedList.Add("HOLLAND EREDIVISIE", "NETHERLANDS EREDIVISIE");
-            _leagueNameChangedList.Add("FINLAND VEIKKAUSLIIGA", "NORWAY ELITESERIEN");
-            _leagueNameChangedList.Add("NORWAY 1ST DIVISION", "BELARUS PREMIER LEAGUE");
+            _leagueNameChangedList.Add("HOLLAND EREDIVISIE", "NETHERLANDS EREDIVISIE");
+            _leagueNameChangedList.Add("HOLLAND EREDIVISIE U19", "NETHERLANDS EREDIVISIE U19");
+            _leagueNameChangedList.Add("HOLLAND WOMEN EREDIVISIE", "NETHERLANDS WOMEN EREDIVISIE");
 
             similarLeagueNames.AddRange(GetEventLeagueNameChanged(summaryEventLeagueList.ToList()));
 
