@@ -244,6 +244,8 @@
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetChoiceOfBettypeItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetChoiceOfBettypeList.cs" />
     <Compile Include="ViewModel\BasketballPerformance\Bettype.cs" />
     <Compile Include="ViewModel\BasketballPerformance\BettypePerformanceItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\BettypePerformanceList.cs" />

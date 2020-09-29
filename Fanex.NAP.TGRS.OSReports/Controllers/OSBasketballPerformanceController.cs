@@ -52,6 +52,15 @@
 
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
         [HttpPost]
+        public ActionResult GetBetChoiceOfBetType(GetBetChoiceOfBettypeCriteria criteria)
+        {
+            var betChoices = _basketballBetTypeService.GetBetChoiceOfBettype(criteria);
+
+            return Json(betChoices, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        [HttpPost]
         public ActionResult GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
         {
             var traders = _basketballBetTypeService.GetTraderOfBettype(criteria);

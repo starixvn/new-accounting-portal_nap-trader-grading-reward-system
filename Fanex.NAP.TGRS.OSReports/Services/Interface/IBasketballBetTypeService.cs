@@ -12,6 +12,8 @@
 
         BettypePerformanceList GetBettypePerformance(GetBettypePerformanceCriteria criteria);
 
+        BetChoiceOfBettypeList GetBetChoiceOfBettype(GetBetChoiceOfBettypeCriteria criteria);
+
         TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria);
 
         MatchOfBettypeTraderList GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria);

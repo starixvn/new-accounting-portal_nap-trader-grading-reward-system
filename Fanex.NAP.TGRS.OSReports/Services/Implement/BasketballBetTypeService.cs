@@ -84,6 +84,25 @@
             return bettypeList;
         }
 
+        public BetChoiceOfBettypeList GetBetChoiceOfBettype(GetBetChoiceOfBettypeCriteria criteria)
+        {
+            var betChoiceList = new BetChoiceOfBettypeList();
+
+            var betChoiceData = this.GetData<BetChoiceOfBettypeInfo>(criteria);
+
+            if (betChoiceData != null && betChoiceData.Any())
+            {
+                foreach (var info in betChoiceData)
+                {
+                    betChoiceList.AddBetChoice(info);
+                }
+
+                betChoiceList.CalculateMargin(betChoiceList.Total);
+            }
+
+            return betChoiceList;
+        }
+
         public TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
         {
             var traderList = new TraderOfBettypeList();
