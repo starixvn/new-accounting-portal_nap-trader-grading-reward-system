@@ -10,6 +10,7 @@
     using System;
     using System.Web.Mvc;
 
+    [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
     public class OSBasketballPerformanceController : TGRSBaseController
     {
         private const string BetTypePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls";
@@ -19,14 +20,12 @@
         {
             _basketballBetTypeService = new BasketballBetTypeService();
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         public ActionResult Index()
         {
             return RedirectToAction("BettypePerformance");
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         public ActionResult BettypePerformance()
         {
             DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
@@ -41,8 +40,7 @@
 
             return View();
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetBettypePerformance(GetBettypePerformanceCriteria criteria)
         {
@@ -50,8 +48,7 @@
 
             return Json(bettypePerformance, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetBetChoiceOfBetType(GetBetChoiceOfBettypeCriteria criteria)
         {
@@ -59,8 +56,7 @@
 
             return Json(betChoices, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria)
         {
@@ -68,8 +64,7 @@
 
             return Json(leagues, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetTraderOfBettype(GetTraderOfBettypeCriteria criteria)
         {
@@ -77,8 +72,7 @@
 
             return Json(traders, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetMatchOfBettypeTrader(GetMatchOfBettypeTraderCriteria criteria)
         {
@@ -86,8 +80,7 @@
 
             return Json(matches, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetLeagueOfBettype(GetLeagueOfBettypeCriteria criteria)
         {
@@ -95,8 +88,7 @@
 
             return Json(leagues, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetBetChoiceOfBettypeLeague(GetBetChoiceOfBettypeLeagueCriteria criteria)
         {
@@ -104,8 +96,7 @@
 
             return Json(betChoices, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {
@@ -113,8 +104,7 @@
 
             return Json(traders, JsonRequestBehavior.AllowGet);
         }
-
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSBasketballPerformance, Policy = Constant.Policy.Read)]
+        
         [HttpPost]
         public ActionResult GetMatchOfBettypeLeagueTrader(GetMatchOfBettypeLeagueTraderCriteria criteria)
         {
@@ -123,6 +113,7 @@
             return Json(matches, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult ExportBettypePerformance(GetBettypePerformanceCriteria criteria)
         {
             string templatePath = Server.MapPath(BetTypePerformanceDetail);

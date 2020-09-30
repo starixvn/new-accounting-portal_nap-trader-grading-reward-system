@@ -182,12 +182,13 @@
 
                     foreach (var item in group)
                     {
-                        matchGroup.AddItem(item);
-                        matchGroup.CalculateMargin(matchGroup.Total);
+                        matchGroup.AddItem(item);                        
                     }
+                    matchGroup.CalculateMargin(matchGroup.Total);
                     matchList.AddGroup(matchGroup);
                 }
 
+                matchList.CalculateMargin(matchList.Total);
                 matchList.TotalItems = matchData.Count();
             }
 
@@ -325,13 +326,20 @@
         }
 
         private string GetCacheBettypes(string bettypeIds)
-        {            
-            var cacheBettypes = SessionManager.Get<List<Bettype>>(BettypesSessionKey);
-            if (cacheBettypes != null && cacheBettypes.Any())
+        {
+            if (!string.IsNullOrEmpty(bettypeIds))
             {
-                return string.Join(", ", 
-                    cacheBettypes.Where(x => bettypeIds.Contains(x.BetTypeId.ToString()))
-                                .Select(x => x.BetTypeName));
+                var countBettypeId = bettypeIds.Split(',').Count();
+                var cacheBettypes = SessionManager.Get<List<Bettype>>(BettypesSessionKey);
+                if (cacheBettypes != null && cacheBettypes.Any())
+                {
+                    if (cacheBettypes.Count == countBettypeId)
+                        return ViewLang.All;
+
+                    return string.Join(", ",
+                        cacheBettypes.Where(x => bettypeIds.Contains(x.BetTypeId.ToString()))
+                                    .Select(x => x.BetTypeName));
+                }
             }
 
             return string.Empty;
@@ -339,14 +347,21 @@
 
         private string GetCacheLeagueGroup(string leagueGroupIds)
         {
-            var cacheLeagueGroups = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
-            if (cacheLeagueGroups != null && cacheLeagueGroups.Any())
+            if (!string.IsNullOrEmpty(leagueGroupIds))
             {
-                return string.Join(", ",
-                    cacheLeagueGroups.Where(x => leagueGroupIds.Contains(x.LeagueGroupId.ToString()))
-                                    .Select(x => x.LeagueGroupName));
-            }
+                var countLeagueGroupIds = leagueGroupIds.Split(',').Count();
+                var cacheLeagueGroups = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+                if (cacheLeagueGroups != null && cacheLeagueGroups.Any())
+                {
+                    if (cacheLeagueGroups.Count == countLeagueGroupIds)
+                        return ViewLang.All;
 
+                    return string.Join(", ",
+                        cacheLeagueGroups.Where(x => leagueGroupIds.Contains(x.LeagueGroupId.ToString()))
+                                        .Select(x => x.LeagueGroupName));
+                }
+            }
+            
             return string.Empty;
         }
 
@@ -434,7 +449,7 @@
                 data.TotalItemLive.NoOfLeagues,
                 data.TotalItemLive.NoOfMatches,
                 data.TotalItemLive.Turnover,
-                data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches,
+                data.TotalItemLive.NoOfMatches != 0 ? data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches : 0,
                 data.TotalItemLive.WinLoss,
                 data.TotalItemLive.BetCount,
                 (object)data.TotalItemLive.Margin ?? ViewLang.NA
@@ -449,7 +464,7 @@
                 data.TotalItemNonLive.NoOfLeagues,
                 data.TotalItemNonLive.NoOfMatches,
                 data.TotalItemNonLive.Turnover,
-                data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches,
+                data.TotalItemNonLive.NoOfMatches != 0 ? data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches : 0,
                 data.TotalItemNonLive.WinLoss,
                 data.TotalItemNonLive.BetCount,
                 (object)data.TotalItemNonLive.Margin ?? ViewLang.NA
@@ -474,7 +489,7 @@
                     data.TotalItemNonLive.NoOfLeagues,
                     data.TotalItemNonLive.NoOfMatches,
                     data.TotalItemNonLive.Turnover,
-                    data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches,
+                    data.TotalItemNonLive.NoOfMatches != 0 ? data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches : 0,
                     data.TotalItemNonLive.WinLoss,
                     data.TotalItemNonLive.BetCount,
                     (object)data.TotalItemNonLive.Margin ?? ViewLang.NA

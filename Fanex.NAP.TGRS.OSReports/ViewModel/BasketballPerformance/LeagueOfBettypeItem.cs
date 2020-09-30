@@ -17,6 +17,7 @@
                 this.LeagueName = data.LeagueName;
                 this.LeagueGroupId = Converter.ToInt(data.LeagueGroupID);
                 this.LeagueGroupName = string.Empty;
+                this.IsLive = data.IsLive;
                 this.NoOfTraders = Converter.ToInt(data.TraderCount);
                 this.NoOfMatches = Converter.ToInt(data.MatchCount);
                 this.NoOfBetChoices = Converter.ToInt(data.BetChoiceCount);

@@ -23,7 +23,7 @@
     <div id="divBetTypePerformanceFilter" class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_5">
-                <label>@ViewLang.LiveType</label>
+                <label>@ViewLang.Market</label>
             </div>
             <div class="edit-field col_3">
                 <select id="ddlLiveType">
@@ -36,7 +36,7 @@
             <div class="lbl-field col_3">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
-            <div class="edit-field col_9">
+            <div class="edit-field col_6">
                 <select id="ddlBetType" multiple="multiple">
                     @foreach (var group in (IEnumerable<GroupBettypes>)ViewBag.GroupBetTypes)
                     {                      

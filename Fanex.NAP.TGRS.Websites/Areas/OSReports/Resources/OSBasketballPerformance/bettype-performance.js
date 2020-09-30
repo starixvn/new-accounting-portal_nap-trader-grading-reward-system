@@ -108,7 +108,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         });
 
         domElements.btnGenerate.click(function () {
-            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w')) {
+            if (validator.ValidateForm(domElements.divBetTypePerformanceFilter, 'w') && validateBetType() && validateLeagueGroup()) {
                 var selectedBetTypes = domElements.ddlBetType.val();
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
                 
@@ -116,13 +116,43 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Bettypes = selectedBetTypes.join(',');
                 parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null;
-                parameters.LeagueName = domElements.txtLeague.val();
+                parameters.LeagueName = domElements.txtLeague.val().trim();
                 parameters.LiveType = domElements.ddlLiveType.val();                
 
-                domElements.divBetTypePerformanceContainer.addClass('display-none');
+                hideAllReports();
                 getBetTypePerformanceReport();
             }
         });
+    };
+
+    var validateBetType = function () {
+        var selectedBetTypes = domElements.ddlBetType.val();
+
+        if (!selectedBetTypes) {
+            validator.ShowError(domElements.ddlBetType.next(), messages.RequiredField, 'w');
+
+            return false;
+        }
+
+        return true;
+    };
+
+    var validateLeagueGroup = function () {
+        if (!domElements.ddlLeagueGroup.val()) {
+            validator.ShowError(domElements.ddlLeagueGroup.next(), messages.RequiredField, 'w');
+
+            return false;
+        }
+
+        return true;
+    };
+
+    var hideAllReports = function () {
+        domElements.divBetTypePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divBetChoicePerformanceContainer.addClass('display-none');
     };
 
     var getBetTypePerformanceReport = function () {
@@ -284,7 +314,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
                 { Name: 'ColNoOfMatches', Value: data.TotalItemLive.NoOfMatches },
                 { Name: 'ColTurnover', Value: data.TotalItemLive.Turnover },
-                { Name: 'ColAvgTurnoverPerMatch', Value: (data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches) },
+                { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemLive.NoOfMatches !== 0 ? (data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches) : 0 },
                 { Name: 'ColWinLoss', Value: data.TotalItemLive.WinLoss },
                 { Name: 'ColBetCount', Value: data.TotalItemLive.BetCount },
                 { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) }]
@@ -298,7 +328,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemNonLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
                 { Name: 'ColNoOfMatches', Value: data.TotalItemNonLive.NoOfMatches },
                 { Name: 'ColTurnover', Value: data.TotalItemNonLive.Turnover },
-                { Name: 'ColAvgTurnoverPerMatch', Value: (data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches) },
+                { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemNonLive.NoOfMatches !== 0 ? (data.TotalItemNonLive.Turnover / data.TotalItemNonLive.NoOfMatches) : 0 },
                 { Name: 'ColWinLoss', Value: data.TotalItemNonLive.WinLoss },
                 { Name: 'ColBetCount', Value: data.TotalItemNonLive.BetCount },
                 { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin, labels.NA) }]
@@ -317,7 +347,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                     { Name: 'ColNoOfLeagues', Value: numeral(data.TotalItemLive.NoOfLeagues).format(common.Formats.IntegerFormat) },
                     { Name: 'ColNoOfMatches', Value: data.TotalItemLive.NoOfMatches },
                     { Name: 'ColTurnover', Value: data.TotalItemLive.Turnover },
-                    { Name: 'ColAvgTurnoverPerMatch', Value: (data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches) },
+                    { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemLive.NoOfMatches !== 0 ? (data.TotalItemLive.Turnover / data.TotalItemLive.NoOfMatches) : 0 },
                     { Name: 'ColWinLoss', Value: data.TotalItemLive.WinLoss },
                     { Name: 'ColBetCount', Value: data.TotalItemLive.BetCount },
                     { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) }]
@@ -360,7 +390,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var betChoiceParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
-            LiveType: isLive,
+            LiveType: isLive === 'true' ? "1" : "0",
             Bettype: betTypeId,
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName
@@ -508,7 +538,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             ToDate: parameters.ToDate,
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
-            IsLive: isLive,
+            LiveType: isLive === 'true' ? 1 : 0,
             BetType: betTypeId,
             BetChoice: betChoice
         };
@@ -553,7 +583,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         handleLeagueOfBettypeBetChoiceGridEvents();
     };
 
-    var renderLeagueOfBettypeBetChoiceGridOptions = function (betTypeId, betTypeName, betChoice, isLive) {
+    var renderLeagueOfBettypeBetChoiceGridOptions = function (betTypeId, betTypeName, betChoice, isLive) {        
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span id="spanBetChoiceLink" class="breadcrumb-link"> >> ({1}) {2} </span><span> >> {3}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -673,7 +703,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             BetType: betTypeId,
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
-            LiveType: isLive
+            LiveType: isLive === 'true' ? "1" : "0"
         };
 
         common.DisableInput();
@@ -748,10 +778,6 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
             }],
             gridExpandHeight: 260,
             showNumberColumn: true,
@@ -811,8 +837,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                 { Name: 'ColWinLoss', Value: item.WinLoss },
                 { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
             };
 
             bodyData.push(row);
@@ -830,8 +855,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
             { Name: 'ColWinLoss', Value: data.Total.WinLoss },
             { Name: 'ColBetCount', Value: data.Total.BetCount },
-            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
-            { Name: 'ColScore', Value: '' }]
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
         }];
     };
 
@@ -859,7 +883,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             BetType: betTypeId,           
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
-            LiveType: isLive
+            LiveType: isLive === 'true' ? "1" : "0"
         };
 
         common.DisableInput();
@@ -955,10 +979,6 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
             }],
             gridExpandHeight: 260,
             showTitle: true,
@@ -1000,8 +1020,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                         { Name: 'ColTurnover', Value: item.Turnover },
                         { Name: 'ColWinLoss', Value: item.WinLoss },
                         { Name: 'ColBetCount', Value: item.BetCount },
-                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                        { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
                     };
                     subRows.push(row);
                 });
@@ -1011,8 +1030,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                     { Name: 'ColTurnover', Value: group.Total.Turnover },
                     { Name: 'ColWinLoss', Value: group.Total.WinLoss },
                     { Name: 'ColBetCount', Value: group.Total.BetCount },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(group.Total.Margin, labels.NA) },
-                    { Name: 'ColScore', Value: common.GetNumWithLabel(group.Total.Score, labels.NA) }],
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(group.Total.Margin, labels.NA) }],
                     SubRows: subRows
                 };
                 bodyData.push(row);
@@ -1055,7 +1073,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LeagueName: parameters.LeagueName,
             LeagueGroupIds: parameters.LeagueGroupIds,
             BetType: betTypeId,
-            LiveType: isLive
+            LiveType: isLive === 'true' ? "1" : "0"
         };
 
         common.DisableInput();
@@ -1390,7 +1408,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             ToDate: parameters.ToDate,
             LeagueId: leagueId,
             BetType: betTypeId,
-            LiveType: isLive
+            LiveType: isLive === 'true' ? "1" : "0"
         };
 
         common.DisableInput();
@@ -1465,10 +1483,6 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
             }],
             gridExpandHeight: 260,
             showNumberColumn: true,
@@ -1528,8 +1542,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
                 { Name: 'ColWinLoss', Value: item.WinLoss },
                 { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                { Name: 'ColScore', Value: common.GetNumWithLabel(common.HasViewScorePermission ? item.Score : labels.NA, labels.NA) }]
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
             };
 
             bodyData.push(row);
@@ -1546,8 +1559,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
             { Name: 'ColWinLoss', Value: data.Total.WinLoss },
             { Name: 'ColBetCount', Value: data.Total.BetCount },
-            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
-            { Name: 'ColScore', Value: '' }]
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
         }];
     };
 
@@ -1578,7 +1590,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LeagueId: leagueId,
             TraderId: traderId,
             BetType: betTypeId,
-            LiveType: isLive
+            LiveType: isLive === 'true' ? "1" : "0"
         };
 
         common.DisableInput();
@@ -1621,7 +1633,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         handleMatchOfBettypeLeagueTraderGridEvents();
     };
 
-    var renderMatchOfBettypeLeagueTraderGridOptions = function (betTypeName, leagueName, traderName, isLive) {
+    var renderMatchOfBettypeLeagueTraderGridOptions = function (betTypeId, betTypeName, leagueId, leagueName, traderId, traderName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
             '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
             '<span id="spanTraderLink" class="breadcrumb-link" title="{3}"> >> {4}</span>' +
@@ -1645,10 +1657,6 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             },
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
             }],
             gridExpandHeight: 260,
@@ -1685,8 +1693,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 { Name: 'ColTurnover', Value: item.Turnover },
                 { Name: 'ColWinLoss', Value: item.WinLoss },
                 { Name: 'ColBetCount', Value: item.BetCount },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
-                { Name: 'ColScore', Value: common.GetNumWithLabel(item.Score, labels.NA) }]
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
             };
             bodyData.push(row);
         });

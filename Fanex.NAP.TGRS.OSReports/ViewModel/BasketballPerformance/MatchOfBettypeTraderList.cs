@@ -28,5 +28,13 @@
                 this.Total.BetCount += group.Total.BetCount;
             }
         }
+
+        public void CalculateMargin(MatchOfBettypeTraderItem item)
+        {
+            if (item.Turnover != 0)
+            {
+                item.Margin = item.WinLoss / item.Turnover * 100;
+            }
+        }
     }
 }

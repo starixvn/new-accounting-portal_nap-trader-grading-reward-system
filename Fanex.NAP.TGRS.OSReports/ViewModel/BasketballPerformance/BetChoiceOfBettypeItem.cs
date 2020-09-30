@@ -17,7 +17,10 @@
             this.NoOfMatches = Converter.ToInt(data.MatchCount);
             this.Turnover = Converter.ToDecimal(data.Turnover);
             this.WinLoss = Converter.ToDecimal(data.WinLoss);
-            this.Margin = Converter.ToDecimal(data.Margin);
+            if (this.Turnover != 0)
+            {
+                this.Margin = Converter.ToDecimal(data.WinLoss / data.Turnover * 100);
+            }            
             this.BetCount = Converter.ToInt(data.BetCount);
         }
 

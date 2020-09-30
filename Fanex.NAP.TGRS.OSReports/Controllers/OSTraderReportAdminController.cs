@@ -38,12 +38,7 @@
 
             var sports = new List<Models.TraderReport.Sport>();
 
-            if(trader.TraderId == 0)
-            {
-                return Json(new { trader, sports }, JsonRequestBehavior.AllowGet);
-            }
-
-            Session.Add("traderId", trader.TraderId);
+            Session.Add("traderId", trader.TraderId);                   
 
             sports = _service.GetSportPerformance(new Criteria.TraderReport.GetSportPerformanceCriteria
             {
