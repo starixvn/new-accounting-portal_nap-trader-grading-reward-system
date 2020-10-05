@@ -286,11 +286,11 @@
             if (betTypeData != null && betTypeData.Items.Count > 0)
             {
                 var reportName = string.Format(
-                                    ViewLang.PerformanceDetailFileName,
+                                    ViewLang.BasketballBetTypePerformance,
                                     ViewLang.BetTypeExcelFile,
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
                                     criteria.ToDate.ToShortFormatedDateForFileName());
-                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BasketballBetTypePerformance);
 
                 writer.CopyRows(0, 1);
                 FilterBlock(userId, criteria, ref writer);
@@ -311,7 +311,7 @@
           
             var liveType = criteria.LiveType == -1 ? ViewLang.MarketAll : (criteria.LiveType == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
 
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LiveType, boldFont, liveType, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, liveType, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, GetCacheBettypes(criteria.Bettypes), normalFont, "\n");

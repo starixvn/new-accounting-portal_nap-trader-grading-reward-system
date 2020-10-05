@@ -12,11 +12,11 @@
     <Setting Key="TGRS_OS_Rpt_NewTraderPerformance_Region" SpName="TGRS_OS_Rpt_NewTraderPerformance_Region_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
   </Function>
   <Function Name="OSDashboard">
-    <Setting Key="TGRS_OS_Rpt_SummaryTopTrader" SpName="TGRS_OS_Rpt_SummaryTopTrader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_OS_Rpt_SummaryTopSport" SpName="TGRS_OS_Rpt_SummaryTopSport" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_OS_Rpt_SummaryDataByTeam" SpName="TGRS_OS_Rpt_SummaryDataByTeam" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_OS_Rpt_SummaryDataByMonth" SpName="TGRS_OS_Rpt_SummaryDataByMonth" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
-    <Setting Key="TGRS_OS_Rpt_SummaryDataByRegion" SpName="TGRS_OS_Rpt_SummaryDataByRegion" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_OS_Rpt_SummaryTopTrader" SpName="TGRS_OS_Rpt_SummaryTopTrader_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_OS_Rpt_SummaryTopSport" SpName="TGRS_OS_Rpt_SummaryTopSport_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_OS_Rpt_SummaryDataByTeam" SpName="TGRS_OS_Rpt_SummaryDataByTeam_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_OS_Rpt_SummaryDataByMonth" SpName="TGRS_OS_Rpt_SummaryDataByMonth_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
+    <Setting Key="TGRS_OS_Rpt_SummaryDataByRegion" SpName="TGRS_OS_Rpt_SummaryDataByRegion_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />
   </Function>
   <Function Name="OSLeagueRegion">
     <Setting Key="TGRS_OS_LeagueRegionGet" SpName="TGRS_OS_LeagueRegionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet" />

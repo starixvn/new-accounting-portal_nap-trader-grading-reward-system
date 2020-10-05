@@ -858,4 +858,7 @@
   <data name="LiveType" xml:space="preserve">
     <value>Live Type</value>
   </data>
+  <data name="BasketballBetTypePerformance" xml:space="preserve">
+    <value>Bet Type Basketball Performance</value>
+  </data>
 </root>

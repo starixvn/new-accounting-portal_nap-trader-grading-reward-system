@@ -277,6 +277,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Type Basketball Performance.
+        /// </summary>
+        public static string BasketballBetTypePerformance {
+            get {
+                return ResourceManager.GetString("BasketballBetTypePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Benchmark %.
         /// </summary>
         public static string Benchmark {
