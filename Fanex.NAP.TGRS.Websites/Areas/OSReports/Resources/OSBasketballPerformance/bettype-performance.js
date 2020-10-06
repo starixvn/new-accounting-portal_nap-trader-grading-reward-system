@@ -748,9 +748,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },         
             {
                 HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
@@ -810,12 +808,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var renderTraderOfBettypeGridBody = function (data) {
         var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}" data-is-live="{2}">{3}</span>';
-        var noOfMatchesFormat = '<span class="match-link link" data-is-live="{0}" title="{1}">{2}</span>';
-        var gradeFormat = '<span class="grade">{0}</span>';
-        var teamFormat = '<span class="team">{0}</span>';
-        var traderCol = '';
-        var gradeCol = '';
-        var teamCol = '';
+        var noOfMatchesFormat = '<span class="match-link link" data-is-live="{0}" title="{1}">{2}</span>';    
+        var traderCol = '';       
         var noOfMatchesCol = '';
         var bodyData = [];
         var row;
@@ -823,14 +817,10 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         $.each(data.Items, function (index, item) {
             traderCol = traderFormat.format(item.TraderId, item.TeamId, item.IsLive, item.TraderName);
             noOfMatchesCol = noOfMatchesFormat.format(item.IsLive, labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
-            gradeCol = gradeFormat.format(item.Grade);
-            teamCol = teamFormat.format(item.TeamName);
-
+           
             row = {
                 Columns: [{ Name: 'ColNo', Value: index + 1 },
-                { Name: 'ColTrader', Value: traderCol },
-                { Name: 'ColGrade', Value: gradeCol },
-                { Name: 'ColTeam', Value: teamCol },
+                { Name: 'ColTrader', Value: traderCol },               
                 { Name: 'ColNoOfLeagues', Value: item.NoOfLeagues },
                 { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                 { Name: 'ColTurnover', Value: item.Turnover },
@@ -848,7 +838,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var renderTraderOfBettypeGridFooter = function (data) {
         return footerData = [{
-            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
+            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
             { Name: 'ColNoOfLeagues', Value: data.Total.NoOfLeagues },
             { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
             { Name: 'ColTurnover', Value: data.Total.Turnover },
@@ -1457,9 +1447,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var trimLeagueName = leagueName.length > 80 ? leagueName.substring(0, 81) : leagueName;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },         
             {
                 HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
@@ -1516,27 +1504,19 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var renderTraderOfBettypeLeagueGridBody = function (data) {
         var traderFormat = '<span class="trader" data-cust-id="{0}" data-team-id="{1}" data-is-live="{2}">{3}</span>';
-        var noOfMatchesFormat = '<span class="match-link link" data-is-live="{0}" title="{1}">{2}</span>';
-        var gradeFormat = '<span class="grade">{0}</span>';
-        var teamFormat = '<span class="team">{0}</span>';
-        var traderCol = '';
-        var gradeCol = '';
-        var teamCol = '';
+        var noOfMatchesFormat = '<span class="match-link link" data-is-live="{0}" title="{1}">{2}</span>';        
+        var traderCol = '';    
         var noOfMatchesCol = '';
         var bodyData = [];
         var row;       
 
         $.each(data.Items, function (index, item) {
             traderCol = traderFormat.format(item.TraderId, item.TeamId, item.IsLive, item.TraderName);
-            noOfMatchesCol = noOfMatchesFormat.format(item.IsLive, labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));
-            gradeCol = gradeFormat.format(item.Grade);
-            teamCol = teamFormat.format(item.TeamName);
+            noOfMatchesCol = noOfMatchesFormat.format(item.IsLive, labels.MatchPerformance, numeral(item.NoOfMatches).format(common.Formats.IntegerFormat));            
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: index + 1 },
                 { Name: 'ColTrader', Value: traderCol },
-                { Name: 'ColGrade', Value: gradeCol },
-                { Name: 'ColTeam', Value: teamCol },
                 { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
                 { Name: 'ColTurnover', Value: item.Turnover },
                 { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
@@ -1553,7 +1533,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var renderTraderOfBettypeLeagueGridFooter = function (data) {
         return footerData = [{
-            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 4, CellAlign: 'right' },
+            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
             { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
             { Name: 'ColTurnover', Value: data.Total.Turnover },
             { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
