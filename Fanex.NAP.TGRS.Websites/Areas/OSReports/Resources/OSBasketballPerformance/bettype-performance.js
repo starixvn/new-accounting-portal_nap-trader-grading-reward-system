@@ -539,7 +539,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
             LiveType: isLive === 'true' ? 1 : 0,
-            BetType: betTypeId,
+            Bettype: betTypeId,
             BetChoice: betChoice
         };
 
@@ -700,7 +700,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var traderParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
-            BetType: betTypeId,
+            Bettype: betTypeId,
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
             LiveType: isLive === 'true' ? "1" : "0"
@@ -869,8 +869,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         var matchParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,            
-            CustId: traderId,
-            BetType: betTypeId,           
+            TraderId: traderId,
+            Bettype: betTypeId,           
             LeagueGroupIds: parameters.LeagueGroupIds,
             LeagueName: parameters.LeagueName,
             LiveType: isLive === 'true' ? "1" : "0"
@@ -1062,7 +1062,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             ToDate: parameters.ToDate,
             LeagueName: parameters.LeagueName,
             LeagueGroupIds: parameters.LeagueGroupIds,
-            BetType: betTypeId,
+            Bettype: betTypeId,
             LiveType: isLive === 'true' ? "1" : "0"
         };
 
@@ -1255,8 +1255,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
     var getBetChoiceOfBettypeLeagueReport = function (betTypeId, betTypeName, leagueId, leagueName, isLive) {
         var betChoiceParams = {
-            IsLive: isLive,
-            BetType: betTypeId,
+            LiveType: isLive === 'true' ? "1" : "0",
+            Bettype: betTypeId,
             LeagueId: leagueId,
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate
@@ -1397,7 +1397,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             LeagueId: leagueId,
-            BetType: betTypeId,
+            Bettype: betTypeId,
             LiveType: isLive === 'true' ? "1" : "0"
         };
 
@@ -1476,7 +1476,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             showNumberColumn: true,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, trimLeagueName)
+                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, trimLeagueName)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -1569,7 +1569,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             ToDate: parameters.ToDate,
             LeagueId: leagueId,
             TraderId: traderId,
-            BetType: betTypeId,
+            Bettype: betTypeId,
             LiveType: isLive === 'true' ? "1" : "0"
         };
 
