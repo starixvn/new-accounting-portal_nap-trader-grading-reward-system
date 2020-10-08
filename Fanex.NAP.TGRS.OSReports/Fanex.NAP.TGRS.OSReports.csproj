@@ -166,7 +166,6 @@
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeLeagueCriteria.cs" />
-    <Compile Include="Criteria\BasketballPerformance\GetBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBettypesCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetLeagueGroupBySportCriteria.cs" />
