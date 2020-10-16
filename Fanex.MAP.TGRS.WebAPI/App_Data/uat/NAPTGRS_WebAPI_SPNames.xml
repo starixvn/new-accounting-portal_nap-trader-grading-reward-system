@@ -8,8 +8,8 @@
   <Function Name="AutoTradingPerformance">
     <Setting Key="TGRS_Rpt_RobotTrading_Monthly" SpName="TGRS_Rpt_RobotTrading_Monthly_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_RobotTrading_Week" SpName="TGRS_Rpt_RobotTrading_Week_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_RobotTrading_Event" SpName="TGRS_Rpt_RobotTrading_Event_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_RobotTrading_Event_League" SpName="TGRS_Rpt_RobotTrading_Event_League_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+    <Setting Key="TGRS_Rpt_RobotTrading_Event" SpName="TGRS_Rpt_RobotTrading_Event_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
+    <Setting Key="TGRS_Rpt_RobotTrading_Event_League_Detail" SpName="TGRS_Rpt_RobotTrading_Event_League_Detail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   
 </Functions>

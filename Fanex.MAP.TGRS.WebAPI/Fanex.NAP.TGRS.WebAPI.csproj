@@ -389,7 +389,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Criteria\AutoTrading\AutoTradingPerformanceCriteria.cs" />
-    <Compile Include="Criteria\AutoTrading\GetAutoTradingEventLeaguesPerformanceCriteria.cs" />
+    <Compile Include="Criteria\AutoTrading\GetAutoTradingEventLeagueDetailCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingEventPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingTimelinePerformanceCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingWeeklyPerformanceCriteria.cs" />
@@ -454,7 +454,7 @@
   <ItemGroup>
     <Content Include="Model\DataModel\AutoTrading\AutoTradingTimelineFixed.json" />
     <Content Include="Model\DataModel\AutoTrading\AutoTradingEventRT3Fixed.json" />
-    <Content Include="ExcelTemplate\AutoTrading\EventLeaguePerformance.xlsx" />
+    <Content Include="ExcelTemplate\AutoTrading\EventLeagueDetailPerformance.xlsx" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

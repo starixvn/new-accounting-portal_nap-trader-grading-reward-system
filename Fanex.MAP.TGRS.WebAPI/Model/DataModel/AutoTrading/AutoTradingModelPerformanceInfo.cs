@@ -40,6 +40,27 @@
 
         public string TypeSiteDesc { get; set; }
 
+        public int BetType { get; set; }
+
+        public string BetTypeName {
+            get
+            {
+                switch (this.BetType)
+                {
+                    case 1:
+                        return "HDP";
+                    case 3:
+                        return "OU";
+                    case 7:
+                        return "1H HDP";
+                    case 8:
+                        return "1H OU";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
         public static AutoTradingModelPerformanceInfo operator +(AutoTradingModelPerformanceInfo info1, AutoTradingModelPerformanceInfo info2)
         {
             if (info1 == null)
@@ -67,7 +88,8 @@
                 Stake_AR8RM = info1.Stake_AR8RM + info2.Stake_AR8RM,
                 Winloss_AR8RM = info1.Winloss_AR8RM + info2.Winloss_AR8RM,
                 TypeSiteId = info1.TypeSiteId,
-                TypeSiteDesc = info1.TypeSiteDesc
+                TypeSiteDesc = info1.TypeSiteDesc,
+                BetType = 0
             };
 
             sumInfo.Margin_VR = sumInfo.Stake_VR == 0 ? 0 : (sumInfo.WinLoss_VR / sumInfo.Stake_VR) * 100;

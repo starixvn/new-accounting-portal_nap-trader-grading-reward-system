@@ -98,13 +98,12 @@
 
         public byte[] GetAutoTradingEventLeaguesExcel(string templatePath)
         {
-            var criteria = new GetAutoTradingEventLeaguesPerformanceCriteria
+            var criteria = new GetAutoTradingEventLeagueDetailCriteria
             {
                 FromDate = _taLauchedDate,
                 ToDate = GetSundayOfLastWeek(),
                 TypeSiteIds = _typeSiteIds,
                 Model = 3, // TA
-                IsExportExcel = true
             };
 
             using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
@@ -127,7 +126,7 @@
 
         public byte[] GenerateAutoTradingEventLeaguesExcel(IEnumerable<AutoTradingSummaryEventLeaguesInfo> summaryEventLeagueList
             , IEnumerable<AutoTradingEventLeaguesPerformanceInfo> eventLeagueList
-            , GetAutoTradingEventLeaguesPerformanceCriteria criteria
+            , GetAutoTradingEventLeagueDetailCriteria criteria
             , string templatePath)
         {
             var writer = new ExcelTemplateWriter(templatePath, "", "TA Report");
@@ -161,13 +160,14 @@
                 var eventLeague = GetLeagueGroupList().FirstOrDefault(x => x.Key.Equals(grouping.LeagueGroupId));
 
                 var leagueIds = grouping.ItemList.Select(x => x.LeagueId);
-                var groupTotalLeagueInfo = eventLeagueList
-                                        .Where(x => leagueIds.Contains(x.LeagueId))
-                                        .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+                var groupTotalLeagueBettypeInfos = eventLeagueList.Where(x => leagueIds.Contains(x.LeagueId));
+
+                var groupTotalLeagueInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
                 var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
 
-                FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, 5, ref writer);
+                FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, groupTotalLeagueBettypeInfos, 5, ref writer);
                 
                 var skipSimilarLeagues = 0;
 
@@ -178,10 +178,12 @@
                     if (similarLeague == null)
                     {
                         var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueList.LeagueId)).MatchCount;
-                        var leagueInfo = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId))
-                                                    .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                        FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, 4, ref writer);
+                        var leagueBettypeInfos = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId));
+
+                        var leagueInfo = leagueBettypeInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+                        FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, leagueBettypeInfos, 4, ref writer);
                     }
                     else
                     {
@@ -192,10 +194,13 @@
                         }
                             
                         var matchCount = summaryEventLeagueList.Where(x => similarLeague.LeagueIdList.Contains(x.LeagueId)).Sum(x => x.MatchCount);
-                        var leagueInfo = eventLeagueList.Where(x => similarLeague.LeagueIdList.Contains(x.LeagueId))
-                                                    .Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                        FillRowDataEventLeague(similarLeague.LeagueName, matchCount, leagueInfo, 4, ref writer);
+                        var leagueBettypeInfos = eventLeagueList.Where(x => similarLeague.LeagueIdList.Contains(x.LeagueId));
+
+                        var leagueInfo = leagueBettypeInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+                        FillRowDataEventLeague(similarLeague.LeagueName, matchCount, leagueInfo, leagueBettypeInfos, 4, ref writer);
+
                         MergedSimilarLeague(similarLeagueNames, similarLeague.LeagueName);
                     }
                 }
@@ -207,33 +212,73 @@
                 rowStartNum = rowEndNum + 2;
             }
 
+            sheet.GroupColumn(5, 16);
+            sheet.GroupColumn(20, 31);
+            sheet.GroupColumn(35, 46);
+            sheet.GroupColumn(53, 64);
+
             var grandTotalInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
             var grandTotalMatchCount = summaryEventLeagueList.Sum(x => x.MatchCount);
 
-            FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, 6, ref writer);
+            FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, new List<AutoTradingModelPerformanceInfo>(), 6, ref writer);
 
-            writer.SyncColumnsWidth(18);
+            writer.SyncColumnsWidth(66);
 
             return writer.ToBytes();
         }
       
-        private void FillRowDataEventLeague(string autoTradingName, int matchCount, AutoTradingModelPerformanceInfo info, int styleIndex, ref ExcelTemplateWriter writer)
+        private void FillRowDataEventLeague(string autoTradingName
+            , int matchCount
+            , AutoTradingModelPerformanceInfo info
+            , IEnumerable<AutoTradingModelPerformanceInfo> bettypeList
+            , int styleIndex
+            , ref ExcelTemplateWriter writer)
         {
+            var bettypeHDP = bettypeList.Where(x => x.BetType == 1).Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+            var bettypeOU = bettypeList.Where(x => x.BetType == 3).Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+            var bettype1HHDP = bettypeList.Where(x => x.BetType == 7).Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+            var bettype1HOU = bettypeList.Where(x => x.BetType == 8).Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+
+            if (bettypeHDP == null)
+                bettypeHDP = new AutoTradingModelPerformanceInfo();
+            if (bettypeOU == null)
+                bettypeOU = new AutoTradingModelPerformanceInfo();
+            if (bettype1HHDP == null)
+                bettype1HHDP = new AutoTradingModelPerformanceInfo();
+            if (bettype1HOU == null)
+                bettype1HOU = new AutoTradingModelPerformanceInfo();
+
             var record = new object[]
                {
                     autoTradingName,
                     matchCount,
                     // Variance
                     info.Stake_VAR, info.Winloss_VAR, info.Margin_VAR/100,
+                    bettypeHDP.Stake_VAR, bettypeHDP.Winloss_VAR, bettypeHDP.Margin_VAR/100, // Variance Handicap
+                    bettypeOU.Stake_VAR, bettypeOU.Winloss_VAR, bettypeOU.Margin_VAR/100, // Variance Over/Under
+                    bettype1HHDP.Stake_VAR, bettype1HHDP.Winloss_VAR, bettype1HHDP.Margin_VAR/100, // Variance 1H Handicap
+                    bettype1HOU.Stake_VAR, bettype1HOU.Winloss_VAR, bettype1HOU.Margin_VAR/100, // Variance 1H Over/Under
                     // Real total
                     info.Stake_AR, info.Winloss_AR, info.Margin_AR/100,
+                    bettypeHDP.Stake_AR, bettypeHDP.Winloss_AR, bettypeHDP.Margin_AR/100, // Real total Handicap
+                    bettypeOU.Stake_AR, bettypeOU.Winloss_AR, bettypeOU.Margin_AR/100, // Real total Over/Under
+                    bettype1HHDP.Stake_AR, bettype1HHDP.Winloss_AR, bettype1HHDP.Margin_AR/100, // Real total 1H Handicap
+                    bettype1HOU.Stake_AR, bettype1HOU.Winloss_AR, bettype1HOU.Margin_AR/100, // Real total 1H Over/Under
                     // Virtual total
                     info.Stake_VR, info.WinLoss_VR, info.Margin_VR/100,
+                    bettypeHDP.Stake_VR, bettypeHDP.WinLoss_VR, bettypeHDP.Margin_VR/100, // Virtual total Handicap
+                    bettypeOU.Stake_VR, bettypeOU.WinLoss_VR, bettypeOU.Margin_VR/100, // Virtual total Over/Under
+                    bettype1HHDP.Stake_VR, bettype1HHDP.WinLoss_VR, bettype1HHDP.Margin_VR/100, // Virtual total 1H Handicap
+                    bettype1HOU.Stake_VR, bettype1HOU.WinLoss_VR, bettype1HOU.Margin_VR/100, // Virtual total 1H Over/Under
                     // 8RM total
                     string.Empty, info.Winloss_8RM, string.Empty,
                     // Real total 8RM WL
                     info.Stake_AR8RM, info.Winloss_AR8RM, info.Margin_AR8RM/100,
+                    bettypeHDP.Stake_AR8RM, bettypeHDP.Winloss_AR8RM, bettypeHDP.Margin_AR8RM/100, // Real total 8RM WL Handicap
+                    bettypeOU.Stake_AR8RM, bettypeOU.Winloss_AR8RM, bettypeOU.Margin_AR8RM/100, // Real total 8RM WL Over/Under
+                    bettype1HHDP.Stake_AR8RM, bettype1HHDP.Winloss_AR8RM, bettype1HHDP.Margin_AR8RM/100, // Real total 8RM WL 1H Handicap
+                    bettype1HOU.Stake_AR8RM, bettype1HOU.Winloss_AR8RM, bettype1HOU.Margin_AR8RM/100, // Real total 8RM WL 1H Over/Under
                     info.BetCount
                 };
 
