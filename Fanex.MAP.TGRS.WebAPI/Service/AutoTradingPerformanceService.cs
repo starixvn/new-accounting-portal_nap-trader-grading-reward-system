@@ -161,29 +161,29 @@
 
                 var leagueIds = grouping.ItemList.Select(x => x.LeagueId);
 
-                var groupTotalLeagueBettypeInfos = eventLeagueList.Where(x => leagueIds.Contains(x.LeagueId));
+                var groupLeagueBettypeInfos = eventLeagueList.Where(x => leagueIds.Contains(x.LeagueId));
 
-                var groupTotalLeagueInfo = eventLeagueList.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
+                var groupLeagueInfo = groupLeagueBettypeInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
                 var groupMatchCount = grouping.ItemList.Sum(x => x.MatchCount);
 
-                FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupTotalLeagueInfo, groupTotalLeagueBettypeInfos, 5, ref writer);
+                FillRowDataEventLeague(eventLeague.Value, groupMatchCount, groupLeagueInfo, groupLeagueBettypeInfos, 5, ref writer);
                 
                 var skipSimilarLeagues = 0;
 
-                foreach (var leagueList in grouping.ItemList)
+                foreach (var leagueItem in grouping.ItemList)
                 {
-                    var similarLeague = CheckExistSimilarLeague(similarLeagueNames, leagueList.LeagueId);
+                    var similarLeague = CheckExistSimilarLeague(similarLeagueNames, leagueItem.LeagueId);
 
                     if (similarLeague == null)
                     {
-                        var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueList.LeagueId)).MatchCount;
+                        var matchCount = summaryEventLeagueList.FirstOrDefault(x => x.LeagueId.Equals(leagueItem.LeagueId)).MatchCount;
 
-                        var leagueBettypeInfos = eventLeagueList.Where(x => x.LeagueId.Equals(leagueList.LeagueId));
+                        var leagueBettypeInfos = eventLeagueList.Where(x => x.LeagueId.Equals(leagueItem.LeagueId));
 
                         var leagueInfo = leagueBettypeInfos.Aggregate<AutoTradingModelPerformanceInfo, AutoTradingModelPerformanceInfo>(null, (acc, s) => acc + s);
 
-                        FillRowDataEventLeague(leagueList.LeagueName, matchCount, leagueInfo, leagueBettypeInfos, 4, ref writer);
+                        FillRowDataEventLeague(leagueItem.LeagueName, matchCount, leagueInfo, leagueBettypeInfos, 4, ref writer);
                     }
                     else
                     {
@@ -221,7 +221,7 @@
 
             var grandTotalMatchCount = summaryEventLeagueList.Sum(x => x.MatchCount);
 
-            FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, new List<AutoTradingModelPerformanceInfo>(), 6, ref writer);
+            FillRowDataEventLeague("Overall", grandTotalMatchCount, grandTotalInfo, eventLeagueList, 6, ref writer);
 
             writer.SyncColumnsWidth(66);
 
