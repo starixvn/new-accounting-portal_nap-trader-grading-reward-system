@@ -375,8 +375,6 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\bettype-performance.js" />
-    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard-chart.js" />
-    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.js" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar-active.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-line-active.png" />
@@ -601,7 +599,6 @@
     <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\Index.cshtml" />
     <Content Include="Areas\OSConfiguration\Views\OSLeagueRegionManagement\IndexFilter.cshtml" />
     <Content Include="Areas\OSReports\Views\OSDashboard\Index.cshtml" />
-    <Content Include="Areas\OSReports\Resources\OSDashboard\dashboard.less" />
     <Content Include="Areas\OSReports\Resources\OSNewTraderPerformance\trader-performance.less" />
     <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\Index.cshtml" />
     <Content Include="Areas\OSReports\Views\OSNewTraderPerformance\IndexFilter.cshtml" />
