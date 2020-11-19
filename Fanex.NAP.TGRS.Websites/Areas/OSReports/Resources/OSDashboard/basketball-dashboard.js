@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    var dashboard = new Fanex.TGRS.Reports.BasketballDashboard();
+    var dashboard = new Fanex.TGRS.OSReports.BasketballDashboard();
     dashboard.Initialize();
 });
 
-Namespace.Register("Fanex.TGRS.Reports.BasketballDashboard");
-Fanex.TGRS.Reports.BasketballDashboard = function () {
+Namespace.Register("Fanex.TGRS.OSReports.BasketballDashboard");
+Fanex.TGRS.OSReports.BasketballDashboard = function () {
     var $this = this;
     var dataChart = null;
 
@@ -77,10 +77,10 @@ Fanex.TGRS.Reports.BasketballDashboard = function () {
     };
 
     var urls = {
-        GetBasketballSummaryInfo: common.ResolveRootUrl('Dashboard/GetBasketballSummaryInfo'),
-        GetBasketballTraderSummary: common.ResolveRootUrl('Dashboard/GetBasketballTraderSummary'),
-        GetBasketballLeagueGroupSummary: common.ResolveRootUrl('Dashboard/GetBasketballLeagueGroupSummary'),
-        GetDate: common.ResolveRootUrl('Dashboard/GetDate')
+        GetBasketballSummaryInfo: common.ResolveRootUrl('OSDashboard/GetBasketballSummaryInfo'),
+        GetBasketballTraderSummary: common.ResolveRootUrl('OSDashboard/GetBasketballTraderSummary'),
+        GetBasketballLeagueGroupSummary: common.ResolveRootUrl('OSDashboard/GetBasketballLeagueGroupSummary'),
+        GetDate: common.ResolveRootUrl('OSDashboard/GetDate')
     };
    
     var legendColors = [

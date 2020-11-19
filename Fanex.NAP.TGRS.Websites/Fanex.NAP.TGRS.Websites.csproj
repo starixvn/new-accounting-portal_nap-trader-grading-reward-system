@@ -375,6 +375,7 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\bettype-performance.js" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\basketball-dashboard.js" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar-active.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-line-active.png" />
@@ -399,7 +400,6 @@
     <Content Include="Areas\Reports\Resources\ActualRatePerformanceDetail\team-performance.js" />
     <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\event-performance.js" />
     <Content Include="Areas\Reports\Resources\BettypeMonthlyPerformance\bettype-monthly-performance.js" />
-    <Content Include="Areas\Reports\Resources\Dashboard\basketball-dashboard.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard-chart.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\dashboard.js" />
     <Content Include="Areas\Reports\Resources\Dashboard\images\chart-bar-active.png" />
@@ -652,14 +652,14 @@
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\EventLeaguePerformance.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\AutomationTradingPerformance\MatchPerformance.xls" />
     <Content Include="Areas\Reports\Views\Dashboard\BasketBallDashboard.cshtml" />
-    <Content Include="Areas\Reports\Resources\Dashboard\basketball-dashboard.less" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\os-dashboard.less" />
     <Content Include="Areas\OSReports\Views\_ViewStart.cshtml" />
     <Content Include="Areas\OSReports\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\OSReports\Views\OSDashboard\Index - old.cshtml" />
     <Content Include="Areas\OSReports\Views\OSBasketballPerformance\BetTypePerformance.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\basketball-performance.less" />
     <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\basketball-dashboard.less" />
+    <Content Include="Areas\OSReports\Views\OSDashboard\BasketBallDashboard.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

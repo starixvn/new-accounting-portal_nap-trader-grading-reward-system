@@ -147,6 +147,53 @@
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-              
+
+        #region BasketBall Dashboard
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
+        public ActionResult BasketBallDashboard()
+        {
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
+            ViewBag.CanViewSoccerDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
+
+            return View();
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
+        {
+            var data = _dashboardService.GetBasketballSummaryInfo(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
+        {
+            var data = _dashboardService.GetBasketballTraderSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
+        public JsonResult GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
+        {
+            var data = _dashboardService.GetBasketballLeagueGroupSummary(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

@@ -6,6 +6,7 @@
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;    
     using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
+    using Fanex.NAP.TGRS.OSReports.ViewModels.Dashboard;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -487,6 +488,316 @@
                         && y.EventDate.Year.Equals(x.Year)), type)
             });
         }
+
+        #region Basketball Dashboard
+        public IEnumerable<BasketballTraderSummary> GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
+        {
+            var traders = new List<BasketballTraderSummary>();
+
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetBasketballTraderSummaryCriteria;
+
+            IEnumerable<BasketballTraderSummaryInfo> data = this.GetData<BasketballTraderSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                traders = data.Select(x => new BasketballTraderSummary
+                {
+                    TraderName = x.Username,
+                    Margin = Math.Round(x.Margin, 2)
+                }).ToList();
+            }
+
+            return traders;
+        }
+
+        public IEnumerable<BasketballLeagueGroupSummary> GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
+        {
+            var leagueGroups = new List<BasketballLeagueGroupSummary>();
+
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetBasketballLeagueGroupSummaryCriteria;
+
+            IEnumerable<BasketballLeagueGroupSummaryInfo> data = this.GetData<BasketballLeagueGroupSummaryInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                leagueGroups.AddRange(
+                    data.Where(x => x.LeagueGroupId >= 42 && x.LeagueGroupId <= 72)
+                    .Select(x => new BasketballLeagueGroupSummary
+                    {
+                        GroupID = x.LeagueGroupId,
+                        GroupName = x.GroupName,
+                        Margin = Math.Round(x.Margin, 2)
+                    }).ToList()
+                );
+
+                var groupOthers = data.Where(x => x.LeagueGroupId < 42 || x.LeagueGroupId > 72 || x.LeagueGroupId == 0).Select(x => new BasketballLeagueGroupSummaryInfo
+                {
+                    LeagueGroupId = -1,
+                    WinLoss = x.WinLoss,
+                    Turnover = x.Turnover
+                });
+
+                if (groupOthers != null && groupOthers.Any())
+                {
+                    var winloss = groupOthers.Sum(x => x.WinLoss);
+                    var turnover = groupOthers.Sum(x => x.Turnover);
+                    var others = groupOthers.GroupBy(x => x.LeagueGroupId).Select(x => new BasketballLeagueGroupSummary
+                    {
+                        GroupID = x.Key,
+                        GroupName = "Others",
+                        Margin = Math.Round(winloss * 100 / turnover, 2)
+                    });
+
+                    leagueGroups.AddRange(others.Distinct());
+                }
+            }
+
+            return leagueGroups.OrderBy(x => x.Margin);
+        }
+
+        public BasketballSummaryGeneralInfo GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
+        {
+            if (criteria.ReportType == 1)
+                criteria = GenerateCriteriaRangeDate(criteria) as GetBasketballSummaryGeneralCriteria;
+
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    var items = multi.Read<BasketballSummaryGeneralInfoItem>();
+                    var avgItems = multi.Read<BasketballSummaryGeneralInfoAvgItem>();
+
+                    return criteria.ReportType == 1
+                        ? GetBasketballSummaryByDate(criteria, items, avgItems)
+                        : GetBasketballSummaryByMonth(criteria, items, avgItems);
+                }
+            }
+        }
+
+        private BasketballSummaryGeneralInfo GetBasketballSummaryByDate(GetBasketballSummaryGeneralCriteria criteria
+            , IEnumerable<BasketballSummaryGeneralInfoItem> items
+            , IEnumerable<BasketballSummaryGeneralInfoAvgItem> avgItems)
+        {
+            var basketballSummaryInfo = new BasketballSummaryGeneralInfo();
+
+            if (items != null && items.Any())
+            {
+                var daysList = new List<Column>();
+                var comparisonDayList = new List<Column>();
+                var fromDate = criteria.FromDate;
+                var comparisonFromDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, criteria.FromDate.Day);
+                var comparisonToDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, criteria.ToDate.Day);
+                var isCrossMonth = !criteria.FromDate.Month.Equals(criteria.ToDate.Month);
+
+                if (isCrossMonth)
+                {
+                    var daysInMonth = DateTime.DaysInMonth(criteria.FromDate.Year, criteria.FromDate.Month);
+                    var crossToDate = new DateTime(criteria.FromDate.Year, criteria.FromDate.Month, daysInMonth);
+                    daysList.AddRange(GenerateDayList(fromDate, crossToDate));
+
+                    var crossComparisonDaysInMonth = DateTime.DaysInMonth(criteria.FromDate.Year - 1, criteria.FromDate.Month);
+                    var crossComparisonFromDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, criteria.FromDate.Day);
+                    var crossComparisonToDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, crossComparisonDaysInMonth);
+                    comparisonDayList.AddRange(GenerateDayList(crossComparisonFromDate, crossComparisonToDate));
+
+                    fromDate = new DateTime(criteria.ToDate.Year, criteria.ToDate.Month, 1);
+                    comparisonFromDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, 1);
+                    comparisonToDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, criteria.ToDate.Day);
+                }
+
+                daysList.AddRange(GenerateDayList(fromDate, criteria.ToDate));
+                comparisonDayList.AddRange(GenerateDayList(comparisonFromDate, comparisonToDate));
+
+                basketballSummaryInfo.WinLossList = GetBasketballColumnsByDate(items, daysList, OSChartName.WinLoss);
+                basketballSummaryInfo.WinLossComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.WinLoss);
+                basketballSummaryInfo.TurnoverList = GetBasketballColumnsByDate(items, daysList, OSChartName.Turnover);
+                basketballSummaryInfo.TurnoverComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.Turnover);
+                basketballSummaryInfo.MarginList = GetBasketballColumnsByDate(items, daysList, OSChartName.Margin);
+                basketballSummaryInfo.MarginComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.Margin);
+                basketballSummaryInfo.BetCountList = GetBasketballColumnsByDate(items, daysList, OSChartName.BetCount);
+                basketballSummaryInfo.BetCountComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.BetCount);
+                basketballSummaryInfo.MatchCountList = GetBasketballColumnsByDate(items, daysList, OSChartName.MatchCount);
+                basketballSummaryInfo.MatchCountComparisonList = GetBasketballColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
+            }
+
+            basketballSummaryInfo = BindBasketballSummaryAverage(basketballSummaryInfo, criteria, avgItems);
+
+            return basketballSummaryInfo;
+        }
+
+        private BasketballSummaryGeneralInfo GetBasketballSummaryByMonth(GetBasketballSummaryGeneralCriteria criteria
+            , IEnumerable<BasketballSummaryGeneralInfoItem> items
+            , IEnumerable<BasketballSummaryGeneralInfoAvgItem> avgItems)
+        {
+            var basketballSummaryInfo = new BasketballSummaryGeneralInfo();
+
+            basketballSummaryInfo.IsCrossYear = !criteria.FromDate.Year.Equals(criteria.ToDate.Year);
+
+            if (items != null && items.Any())
+            {
+                var fromDate = criteria.FromDate;
+                var comparisonFromDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, 1);
+                var comparisonToDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, 1);
+
+                if (basketballSummaryInfo.IsCrossYear)
+                {
+                    var crossToDate = new DateTime(criteria.FromDate.Year, 12, 1);
+                    var crossComparisonFromDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, 1);
+                    var crossComparisonToDate = new DateTime(criteria.FromDate.Year - 1, 12, 1);
+                    var crossMonthYearList = GenerateMonthYearList(criteria.FromDate, crossToDate);
+                    var crossComparisonMonthYearList = GenerateMonthYearList(crossComparisonFromDate, crossComparisonToDate);
+
+                    basketballSummaryInfo.WinLossCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.WinLoss);
+                    basketballSummaryInfo.WinLossCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.WinLoss);
+                    basketballSummaryInfo.TurnoverCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.Turnover);
+                    basketballSummaryInfo.TurnoverCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Turnover);
+                    basketballSummaryInfo.MarginCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.Margin);
+                    basketballSummaryInfo.MarginCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Margin);
+                    basketballSummaryInfo.BetCountCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.BetCount);
+                    basketballSummaryInfo.BetCountCrossComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.BetCount);
+                    basketballSummaryInfo.MatchCountCrossYearList = GetBasketballColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
+                    basketballSummaryInfo.MatchCountCrossYearComparisonList = GetBasketballColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
+
+                    fromDate = new DateTime(criteria.ToDate.Year, 1, 1);
+                    comparisonFromDate = new DateTime(criteria.ToDate.Year - 1, 1, 1);
+                    comparisonToDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, 1);
+                }
+
+                var monthYearList = GenerateMonthYearList(fromDate, criteria.ToDate);
+                var comparisonMonthYearList = GenerateMonthYearList(comparisonFromDate, comparisonToDate);
+                basketballSummaryInfo.WinLossList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.WinLoss);
+                basketballSummaryInfo.WinLossComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.WinLoss);
+                basketballSummaryInfo.TurnoverList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.Turnover);
+                basketballSummaryInfo.TurnoverComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.Turnover);
+                basketballSummaryInfo.MarginList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.Margin);
+                basketballSummaryInfo.MarginComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.Margin);
+                basketballSummaryInfo.BetCountList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.BetCount);
+                basketballSummaryInfo.BetCountComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.BetCount);
+                basketballSummaryInfo.MatchCountList = GetBasketballColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
+                basketballSummaryInfo.MatchCountComparisonList = GetBasketballColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
+            }
+
+            basketballSummaryInfo = BindBasketballSummaryAverage(basketballSummaryInfo, criteria, avgItems);
+
+            return basketballSummaryInfo;
+        }
+
+        private BasketballSummaryGeneralInfo BindBasketballSummaryAverage(BasketballSummaryGeneralInfo basketballSummaryInfo
+            , GetBasketballSummaryGeneralCriteria criteria
+            , IEnumerable<BasketballSummaryGeneralInfoAvgItem> avgItems)
+        {
+            if (avgItems != null && avgItems.Any())
+            {
+                var avgComparison = avgItems.FirstOrDefault(x => x.ToDate.Year.Equals(criteria.ToDate.Year - 1));
+
+                if (avgComparison != null)
+                {
+                    if (basketballSummaryInfo.IsCrossYear)
+                    {
+                        basketballSummaryInfo.LegendList.Add(avgComparison.ToDate.Year - 1);
+                    }
+
+                    basketballSummaryInfo.WinLossAverageComparison = avgComparison.AvgWinLoss;
+                    basketballSummaryInfo.TurnoverAverageComparison = avgComparison.AvgTurnover;
+                    basketballSummaryInfo.MarginAverageComparison = avgComparison.AvgMargin;
+                    basketballSummaryInfo.BetCountAverageComparison = avgComparison.AvgBetCount;
+                    basketballSummaryInfo.MatchCountAverageComparison = avgComparison.AvgMatchCount;
+                    basketballSummaryInfo.LegendList.Add(avgComparison.ToDate.Year);
+                }
+
+                var avgCurrentYear = avgItems.FirstOrDefault(x => x.ToDate.Year.Equals(criteria.ToDate.Year));
+
+                if (avgCurrentYear != null)
+                {
+                    basketballSummaryInfo.WinLossAverage = avgCurrentYear.AvgWinLoss;
+                    basketballSummaryInfo.TurnoverAverage = avgCurrentYear.AvgTurnover;
+                    basketballSummaryInfo.MarginAverage = avgCurrentYear.AvgMargin;
+                    basketballSummaryInfo.BetCountAverage = avgCurrentYear.AvgBetCount;
+                    basketballSummaryInfo.MatchCountAverage = avgCurrentYear.AvgMatchCount;
+                    basketballSummaryInfo.LegendList.Add(avgCurrentYear.ToDate.Year);
+                }
+            }
+
+            return basketballSummaryInfo;
+        }
+
+        private decimal GetValue(BasketballSummaryGeneralInfoItem item, OSChartName type)
+        {
+            if (item != null)
+            {
+                switch (type)
+                {
+                    case OSChartName.WinLoss:
+                        return item.WinLoss;
+                    case OSChartName.Margin:
+                        return item.Margin;
+                    case OSChartName.Turnover:
+                        return item.Turnover;
+                    case OSChartName.BetCount:
+                        return item.BetCount;
+                    case OSChartName.MatchCount:
+                        return item.MatchCount;
+                    default:
+                        return 0;
+                }
+            }
+
+            return 0;
+        }
+
+        private BasketballSummaryInfoCriteria GenerateCriteriaRangeDate(BasketballSummaryInfoCriteria criteria)
+        {
+            var toDate = DateTime.Today;
+            var fromDate =
+                criteria.BasketballDays == DayType.Today
+                ? toDate
+                : (criteria.BasketballDays == DayType.Days7
+                    ? toDate.AddDays(-7)
+                    : toDate.AddDays(-30)
+                );
+
+            criteria.FromDate = fromDate;
+            criteria.ToDate = toDate;
+
+            return criteria;
+        }       
+
+        private IEnumerable<Column> GetBasketballColumnsByMonth(IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , List<Column> monthYearList
+            , OSChartName type)
+        {
+            return monthYearList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Value = GetValue(infoList.FirstOrDefault(
+                    y => y.EventDate.Month.Equals(x.Month)
+                        && y.EventDate.Year.Equals(x.Year)), type)
+            });
+        }
+
+        private IEnumerable<Column> GetBasketballColumnsByDate(IEnumerable<BasketballSummaryGeneralInfoItem> infoList
+            , List<Column> dayList
+            , OSChartName type)
+        {
+            return dayList.Select(x => new Column
+            {
+                GroupName = x.GroupName,
+                Name = x.Name,
+                Month = x.Month,
+                Year = x.Year,
+                Day = x.Day,
+                Value = GetValue(infoList.FirstOrDefault(
+                    y => y.EventDate.Day.Equals(x.Day)
+                        && y.EventDate.Month.Equals(x.Month)
+                        && y.EventDate.Year.Equals(x.Year)), type)
+            });
+        }
+        #endregion
 
     }
 }

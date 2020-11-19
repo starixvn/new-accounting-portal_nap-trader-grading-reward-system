@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Models.Dashboard
+﻿namespace Fanex.NAP.TGRS.OSReports.Models.Dashboard
 {
     public class BasketballTraderSummaryInfo
     {

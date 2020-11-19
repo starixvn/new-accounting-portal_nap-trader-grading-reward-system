@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.Dashboard
+﻿namespace Fanex.NAP.TGRS.OSReports.ViewModels.Dashboard
 {
     using System;
 

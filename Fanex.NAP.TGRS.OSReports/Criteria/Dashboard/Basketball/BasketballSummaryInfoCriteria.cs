@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Criteria.Dashboard
+﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.Dashboard
 {  
     using System;
     using Fanex.Data.Repository;
@@ -12,7 +12,7 @@
         public DateTime ToDate { get; set; }
 
         [SpParam(Ignored = true)]
-        public BasketballDays BasketballDays { get; set; }
+        public DayType BasketballDays { get; set; }
 
         /// <summary>
         /// Checks validation of the criteria.

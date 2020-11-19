@@ -1,0 +1,267 @@
+﻿@{
+    ViewBag.Title = "Basketball Performance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var canSwitch2 = (bool)(@ViewBag.CanViewOSDashboard) || (bool)(@ViewBag.CanViewSoccerDashboard) ? true : false;
+    var canSwitchAll = (bool)(@ViewBag.CanViewOSDashboard) && (bool)(@ViewBag.CanViewSoccerDashboard) ? true : false;
+}
+
+@Styles.Render("~/styles/basketballdashboard")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            @if (canSwitchAll)
+            {
+                <div class="switch-toggle switch-ios switch-3 flat-switch-left">
+                    <input id="chkSoccer" name="chartType" type="radio">
+                    <label for="chkSoccer">SOCCER</label>
+
+                    <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                    <label for="chkBasketBall">BASKETBALL</label>
+
+                    <input id="chkOS" name="chartType" type="radio">
+                    <label for="chkOS">OTHERS</label>
+
+                    <a></a>
+                </div>
+            }
+            else if (canSwitch2) {
+                <div class="switch-toggle switch-ios flat-switch-left">
+                    @if ((bool)(@ViewBag.CanViewSoccerDashboard))
+                    {
+                        <input id="chkSoccer" name="chartType" type="radio">
+                        <label for="chkSoccer">SOCCER</label>
+                    }
+
+                    <input id="chkBasketBall" name="chartType" type="radio" checked="checked">
+                    <label for="chkBasketBall">BASKETBALL</label>
+
+                    @if ((bool)(@ViewBag.CanViewOSDashboard))
+                    {
+                        <input id="chkOS" name="chartType" type="radio">
+                        <label for="chkOS">OTHERS</label>
+                    }
+
+                    <a></a>
+                </div>
+            }
+            <div class="filter">
+                <div style="margin-left:30px;">
+                    <span>Filtered by</span>
+                    <select id="divPeriodSelected" class="period-selected">
+                        <option value="1">Today</option>
+                        <option value="2">Last 7 days</option>
+                        <option value="3">Last 30 days</option>
+                        <option value="0">Custom months</option>
+                    </select>
+                </div>
+                <div id="divRangeMonthWrapper" class="range-month">
+                    <div id="divRangeMonth" style="margin-left:30px">
+                    </div>
+                </div>
+                <div class="btn-generate">
+                    <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divTabSummaryContent" class="box-container">
+        <div class="box box-left">
+            <div id="divWinlossContainer" class="box-chart-container margin-bottom">
+                <div id="divWinlossHeader" class="box-header">
+                    <div class="align-left">
+                        <div>
+                            <span class="box-name">WIN-LOSS COMPARISON</span>
+                        </div>
+                        
+                        <div class="legend" id="divWinLossLegend">
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <div>
+                            <span class="view-chart icon-chart border-radius-right" name="winloss" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="winloss" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
+                        <div class="chart-average hidden" id="divWinLossAverage">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" id="inputWinLossAverage" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divWinlossContent" class="box-content">
+                </div>
+            </div>
+            
+            <div id="divMarginContainer" class="box-chart-container margin-bottom">
+                <div id="divMarginHeader" class="box-header">
+                    <div class="align-left">
+                        <div>
+                            <span class="box-name">MARGIN COMPARISON</span>
+                        </div>                        
+                        <div class="legend" id="divMarginLegend">
+
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <div>
+                            <span class="view-chart icon-chart border-radius-right" name="margin" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="margin" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
+                        <div class="chart-average hidden" id="divMarginAverage">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" id="inputMarginAverage" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divMarginContent" class="box-content">                    
+                </div>
+            </div>
+
+            <div id="divBetCountContainer" class="box-chart-container margin-bottom">
+                <div id="divBetCountHeader" class="box-header">
+                    <div class="align-left">
+                        <div>
+                            <span class="box-name">BET COUNT COMPARISON</span>
+                        </div>                        
+                        <div class="legend" id="divBetCountLegend">
+                           
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <div>
+                            <span class="view-chart icon-chart border-radius-right" name="betcount" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="betcount" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
+                        <div class="chart-average hidden" id="divBetCountAverage">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" id="inputBetCountAverage" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divBetcountContent" class="box-content">                   
+                </div>
+            </div>
+
+            <div id="divTurnoverContainer" class="box-chart-container margin-bottom">
+                <div id="divTurnoverHeader" class="box-header">
+                    <div class="align-left">
+                        <div>
+                            <span class="box-name">TURNOVER COMPARISON</span>
+                        </div>
+                        <div class="legend" id="divTurnoverLegend">
+                         
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <div>
+                            <span class="view-chart icon-chart border-radius-right" name="turnover" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="turnover" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
+                        <div class="chart-average hidden" id="divTurnoverAverage">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" id="inputTurnoverAverage" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divTurnoverContent" class="box-content">                   
+                </div>
+            </div>
+           
+        </div>
+
+        <div class="box">
+            <div class="box-left margin-bottom-8">
+                <div class="box box-margin-right">
+                    <div class="row-title">
+                        <h6>Live Trader Performance</h6>
+                    </div>
+                    <div class="row-header">
+                        <div class="margin">
+                            <span class="column-left">Trader</span>
+                            <span class="column-right">Margin %</span>
+                        </div>                       
+                    </div>
+                    <div class="row-content" id="divTraderContent">
+
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="row-title">
+                        <h6>League Performance</h6>
+                    </div>
+                    <div class="row-header">
+                        <div class="margin">
+                            <span class="column-left">Trader</span>
+                            <span class="column-right">Margin %</span>
+                        </div>
+                    </div>
+                    <div class="row-content" id="divLeagueGroupContent">
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div id="divMatchesCountContainer" class="box-chart-container margin-bottom box-match">
+                <div id="divMatchesHeader" class="box-header">
+                    <div class="align-left">                       
+                        <div>
+                            <span class="box-name">MATCHES COUNT COMPARISON</span>
+                        </div>
+                        <div class="legend" id="divMatchCountLegend">                           
+                        </div>
+                    </div>
+                    <div class="align-right">
+                        <div>
+                            <span class="view-chart icon-chart border-radius-right" name="matchcount" type="bar"><span class="icon-chart-bar"></span></span>
+                            <span class="view-chart icon-chart-active border-radius-left" name="matchcount" type="line"><span class="icon-chart-line-active"></span></span>
+                        </div>
+                        <div class="chart-average hidden" id="divMatchCountAverage">
+                            <label class="top-5">Show average</label>
+                            <label class="switch">
+                                <input type="checkbox" id="inputMatchCountAverage" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="divMatchesCountContent" class="box-content">                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/basketballdashboard")
+    <script type="text/javascript">
+         var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+
+        var labels = {
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            NA: '@ViewLang.NA',
+            Date: '@ViewLang.Date',
+            Month: '@ViewLang.Month'
+        };
+    </script>
+}

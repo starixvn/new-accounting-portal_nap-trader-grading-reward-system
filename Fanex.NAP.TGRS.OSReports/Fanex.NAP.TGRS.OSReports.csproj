@@ -175,6 +175,10 @@
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeTraderCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeLeagueCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\Basketball\BasketballSummaryInfoCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\Basketball\GetBasketballLeagueGroupSummaryCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\Basketball\GetBasketballSummaryGeneralCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\Basketball\GetBasketballTraderSummaryCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByRegionCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByTeamCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetDataByMonthCriteria.cs" />
@@ -219,6 +223,8 @@
     <Compile Include="Models\BasketballPerformance\MatchOfBettypeTraderInfo.cs" />
     <Compile Include="Models\BasketballPerformance\TraderOfBettypeLeagueInfo.cs" />
     <Compile Include="Models\BasketballPerformance\TraderOfBettypeInfo.cs" />
+    <Compile Include="Models\Dashboard\Basketball\BasketballLeagueGroupSummaryInfo.cs" />
+    <Compile Include="Models\Dashboard\Basketball\BasketballTraderSummaryInfo.cs" />
     <Compile Include="Models\Dashboard\DataByMonth.cs" />
     <Compile Include="Models\Dashboard\OSLeagueSummaryInfo.cs" />
     <Compile Include="Models\Dashboard\OSSport.cs" />
@@ -267,6 +273,11 @@
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
+    <Compile Include="ViewModel\Dashboard\Basketball\BasketballLeagueGroupSummary.cs" />
+    <Compile Include="ViewModel\Dashboard\Basketball\BasketballSummaryGeneralInfo.cs" />
+    <Compile Include="ViewModel\Dashboard\Basketball\BasketballSummaryGeneralInfoAvgItem.cs" />
+    <Compile Include="ViewModel\Dashboard\Basketball\BasketballSummaryGeneralInfoItem.cs" />
+    <Compile Include="ViewModel\Dashboard\Basketball\BasketballTraderSummary.cs" />
     <Compile Include="ViewModel\Dashboard\OSSportLeagueSummary.cs" />
     <Compile Include="ViewModel\Dashboard\OSSummaryGeneralInfo.cs" />
     <Compile Include="ViewModel\Dashboard\OSSummaryGeneralInfoAvgItem.cs" />

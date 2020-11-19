@@ -1,5 +1,6 @@
-﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.Dashboard
+﻿namespace Fanex.NAP.TGRS.OSReports.ViewModels.Dashboard
 {
+    using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
     using System;    
     using System.Collections.Generic;
 
@@ -74,21 +75,5 @@
         public decimal MatchCountAverageComparison { get; set; }
 
         public List<int> LegendList { get; set; }
-    }
-
-    [Serializable]
-    public class Column
-    {
-        public string GroupName { get; set; }
-
-        public string Name { get; set; }
-
-        public decimal Value { get; set; }
-
-        public int Day { get; set; }
-
-        public int Month { get; set; }
-
-        public int Year { get; set; }
-    }
+    }   
 }

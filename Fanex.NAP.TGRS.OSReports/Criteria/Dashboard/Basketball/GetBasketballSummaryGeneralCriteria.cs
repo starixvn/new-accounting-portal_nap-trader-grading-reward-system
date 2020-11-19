@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Criteria.Dashboard
+﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.Dashboard
 {    
     public class GetBasketballSummaryGeneralCriteria : BasketballSummaryInfoCriteria
     {        

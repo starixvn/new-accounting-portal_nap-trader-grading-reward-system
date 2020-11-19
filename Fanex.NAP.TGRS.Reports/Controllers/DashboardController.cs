@@ -4,8 +4,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.Configurations;
-    using Fanex.NAP.TGRS.Core.Helpers;   
-    using Fanex.NAP.TGRS.Reports.Criteria.Dashboard;
+    using Fanex.NAP.TGRS.Core.Helpers;       
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
@@ -94,50 +93,6 @@
             {
                 TeamData = teamData
             });
-        }
-        
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
-        public ActionResult BasketBallDashboard()
-        {
-            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
-
-            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
-            
-            ViewBag.MinDate = minDate;
-            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today;
-            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
-            ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
-            ViewBag.CanViewSoccerDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
-
-            return View();
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
-        public JsonResult GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria)
-        {
-            var data = this._dashboardService.GetBasketballSummaryInfo(criteria);
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
-        public JsonResult GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria)
-        {
-            var data = this._dashboardService.GetBasketballTraderSummary(criteria);
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceSummaryComparison, Policy = Constant.Policy.Read)]
-        public JsonResult GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria)
-        {
-            var data = this._dashboardService.GetBasketballLeagueGroupSummary(criteria);
-
-            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

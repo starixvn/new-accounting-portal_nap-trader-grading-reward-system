@@ -193,10 +193,6 @@
     <Compile Include="Criteria\AutomationTradingPerformance\GetWeekPerformanceCriteria.cs" />
     <Compile Include="Criteria\BettypeGroupCriteria.cs" />
     <Compile Include="Criteria\BettypeMonthlyPerformance\BettypeMonthlyGetCriteria.cs" />
-    <Compile Include="Criteria\Dashboard\BasketballSummaryInfoCriteria.cs" />
-    <Compile Include="Criteria\Dashboard\GetBasketballLeagueGroupSummaryCriteria.cs" />
-    <Compile Include="Criteria\Dashboard\GetBasketballSummaryGeneralCriteria.cs" />
-    <Compile Include="Criteria\Dashboard\GetBasketballTraderSummaryCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetSummaryInfoCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetBettypeDetailOfTraderCriteria.cs" />
     <Compile Include="Criteria\MultipleMatchesPerformance\GetBetTypesCriteria.cs" />
@@ -301,8 +297,6 @@
     <Compile Include="Models\BettypeMonthlyPerformance\ExcelConfig.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\Summary.cs" />
     <Compile Include="Models\BettypeMonthlyPerformance\SummaryList.cs" />
-    <Compile Include="Models\Dashboard\BasketballLeagueGroupSummaryInfo.cs" />
-    <Compile Include="Models\Dashboard\BasketballTraderSummaryInfo.cs" />
     <Compile Include="Models\Dashboard\MonthAmount.cs" />
     <Compile Include="Models\MultipleMatchesPerformance\BetTypeDefaultInfo.cs" />
     <Compile Include="Models\MultipleMatchesPerformance\BetTypeInfo.cs" />
@@ -434,11 +428,6 @@
     <Compile Include="ViewModels\AutomationTradingPerformance\AutoTradingList.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\GroupingLeagueItem.cs" />
     <Compile Include="ViewModels\AutomationTradingPerformance\LeagueGroup.cs" />
-    <Compile Include="ViewModels\Dashboard\BasketballLeagueGroupSummary.cs" />
-    <Compile Include="ViewModels\Dashboard\BasketballSummaryGeneralInfo.cs" />
-    <Compile Include="ViewModels\Dashboard\BasketballSummaryGeneralInfoAvgItem.cs" />
-    <Compile Include="ViewModels\Dashboard\BasketballSummaryGeneralInfoItem.cs" />
-    <Compile Include="ViewModels\Dashboard\BasketballTraderSummary.cs" />
     <Compile Include="ViewModels\Dashboard\MonthAmountItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeDefaultItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\BetTypeItem.cs" />

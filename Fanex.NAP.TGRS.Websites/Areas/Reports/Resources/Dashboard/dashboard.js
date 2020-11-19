@@ -134,7 +134,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
 
         if ($('#chkBasketBall') !== null) {
             $('#chkBasketBall').on('change', function () {
-                window.location = common.ResolveRootUrl("Reports/Dashboard/BasketBallDashboard");
+                window.location = common.ResolveRootUrl("OSReports/OSDashboard/BasketBallDashboard");
             });
         }
         

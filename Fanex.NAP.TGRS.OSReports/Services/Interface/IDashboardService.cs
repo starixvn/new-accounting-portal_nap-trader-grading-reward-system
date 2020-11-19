@@ -4,6 +4,7 @@
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
     using Fanex.NAP.TGRS.OSReports.ViewModel;
     using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
+    using Fanex.NAP.TGRS.OSReports.ViewModels.Dashboard;
     using System.Collections.Generic;
 
     public interface IDashboardService
@@ -29,6 +30,14 @@
         IEnumerable<OSSportLeagueSummary> GetOSLeagueSummary(GetOSLeagueSummaryCriteria criteria);        
 
         OSSummaryGeneralInfo GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria);
-        
+
+        #region Basketball Dashboard
+        BasketballSummaryGeneralInfo GetBasketballSummaryInfo(GetBasketballSummaryGeneralCriteria criteria);
+
+        IEnumerable<BasketballTraderSummary> GetBasketballTraderSummary(GetBasketballTraderSummaryCriteria criteria);
+
+        IEnumerable<BasketballLeagueGroupSummary> GetBasketballLeagueGroupSummary(GetBasketballLeagueGroupSummaryCriteria criteria);
+
+        #endregion
     }
 }
