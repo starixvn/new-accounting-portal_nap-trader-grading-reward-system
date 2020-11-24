@@ -2,7 +2,6 @@
 {
     using Fanex.NAP.TGRS.OSReports.Criteria.Dashboard;
     using Fanex.NAP.TGRS.OSReports.Models.Dashboard;
-    using Fanex.NAP.TGRS.OSReports.ViewModel;
     using Fanex.NAP.TGRS.OSReports.ViewModel.Dashboard;
     using Fanex.NAP.TGRS.OSReports.ViewModels.Dashboard;
     using System.Collections.Generic;

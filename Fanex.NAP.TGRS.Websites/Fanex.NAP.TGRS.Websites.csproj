@@ -380,6 +380,7 @@
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-line-active.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-line.png" />
+    <Content Include="Areas\OSReports\Resources\OSDashboard\images\loading.gif" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\os-dashboard.js" />
     <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance-factory.js" />
     <Content Include="Areas\OSReports\Resources\OSNewSportPerformance\sport-performance-service.js" />

@@ -117,11 +117,11 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         domElements.inputBetCountAverage.on('click', function () {
             showAverageOnClick(domElements.divBetcountContent, $(this));
-        });
+        });       
 
-        if ($('#chkOS') !== null) {
-            $('#chkOS').on('change', function () {
-                window.location = common.ResolveRootUrl("OSReports/OSDashboard");
+        if (domElements.chkSoccer !== null) {
+            domElements.chkSoccer.on('change', function () {
+                window.location = common.ResolveRootUrl("Reports/Dashboard");
             });
         }
 
@@ -156,7 +156,7 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         getSummaryGeneralInfo();
         getTraderSummary();
-        getSportLeagueSummary();
+        getSportLeagueSummary();               
 
         domElements.btnGenerate.on('click', function () {
             var selectedSportTypes = domElements.ddlSportType.val();
@@ -258,6 +258,10 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
+            beforeSend: function () {
+                domElements.divTraderContent.addClass('loading');
+                domElements.divTraderContent.html('');
+            },
             success: function (result) {
                 if (result) {
                     bindTraderSummaryData(result);
@@ -266,9 +270,11 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
                 common.EnableInput();
+                domElements.divTraderContent.removeClass('loading');
             },
             complete: function () {
                 common.EnableInput();
+                domElements.divTraderContent.removeClass('loading');
             }
         });
     };
@@ -295,12 +301,12 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         let selectedSportTypes = domElements.ddlSportType.val();
         if (selectedSportTypes !== null && selectedSportTypes.length > 1) {
             urlSportLeague = urls.GetOSSportSummary;
-            domElements.labelSportLeague.text(labels.Sport);
+            domElements.labelSportLeague.text(labels.SportPerformance);
             domElements.spanSportLeague.text(labels.Sport);
         } else {
-            domElements.labelSportLeague.text(labels.League);
+            domElements.labelSportLeague.text(labels.LeaguePerformance);
             domElements.spanSportLeague.text(labels.League);
-        }
+        }        
 
         $.ajax({
             type: 'POST',
@@ -308,6 +314,10 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(parameters),
+            beforeSend: function () {
+                domElements.divSportLeagueContent.addClass('loading');
+                domElements.divSportLeagueContent.html('');
+            },
             success: function (result) {
                 if (result) {
                     bindSportLeagueSummaryData(result);
@@ -316,9 +326,11 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
                 common.EnableInput();
+                domElements.divSportLeagueContent.removeClass('loading');
             },
             complete: function () {
                 common.EnableInput();
+                domElements.divSportLeagueContent.removeClass('loading');
             }
         });
     };
