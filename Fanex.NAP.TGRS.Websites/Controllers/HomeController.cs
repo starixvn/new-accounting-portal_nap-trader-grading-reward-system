@@ -32,7 +32,7 @@ namespace Fanex.NAP.TGRS.Websites.Controllers
             }
             else if (this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, NAP.Core.Business.Constant.Policy.Read))
             {
-                return RedirectToAction("../Reports/Dashboard/BasketBallDashboard");
+                return RedirectToAction("../OSReports/OSDashboard/BasketBallDashboard");
             }
             else if (this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, NAP.Core.Business.Constant.Policy.Read))
             {

@@ -43,6 +43,7 @@
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+
             ViewBag.CanViewDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
             ViewBag.CanViewBasketballDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, Constant.Policy.Read);
 
@@ -78,8 +79,7 @@
                 });
         }        
 
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.OSPerformanceSummary, Policy = Constant.Policy.Read)]
+        [HttpPost]        
         public JsonResult GetDate(DayType days)
         {
             var toDay = DateTime.Today;
