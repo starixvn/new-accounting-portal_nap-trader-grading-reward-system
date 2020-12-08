@@ -14,7 +14,8 @@
         Turnover,
         Margin,
         MatchCount,
-        BetCount
+        BetCount,
+        MarketCount
     }
 
     public enum DayType

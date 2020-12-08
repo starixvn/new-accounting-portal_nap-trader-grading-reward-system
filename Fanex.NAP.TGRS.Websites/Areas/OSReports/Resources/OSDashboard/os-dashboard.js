@@ -117,7 +117,11 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         domElements.inputBetCountAverage.on('click', function () {
             showAverageOnClick(domElements.divBetcountContent, $(this));
-        });       
+        });
+
+        domElements.inputMarketCountAverage.on('click', function () {
+            showAverageOnClick(domElements.divMarketCountContent, $(this));
+        });    
 
         if (domElements.chkSoccer !== null) {
             domElements.chkSoccer.on('change', function () {
@@ -369,7 +373,8 @@ Fanex.TGRS.Reports.OSDashboard = function () {
                     showAverageOnClick(domElements.divWinlossContent, domElements.inputWinLossAverage);
                     showAverageOnClick(domElements.divMarginContent, domElements.inputMarginAverage);
                     showAverageOnClick(domElements.divTurnoverContent, domElements.inputTurnoverAverage);
-                    showAverageOnClick(domElements.divBetcountContent, domElements.inputBetCountAverage);                    
+                    showAverageOnClick(domElements.divBetcountContent, domElements.inputBetCountAverage);
+                    showAverageOnClick(domElements.divMarketCountContent, domElements.inputMarketCountAverage); 
                 }
                 dataChart = result;
             },
@@ -418,13 +423,13 @@ Fanex.TGRS.Reports.OSDashboard = function () {
 
         domElements.divMarketCountContent.css('height', domElements.divTurnoverContent.height());
 
-        //var marketOptions = generateLineChartOptions(data.TurnoverList
-        //    , data.MarketComparisonList
-        //    , data.MarketCrossYearList
-        //    , data.MarketCrossYearComparisonList
-        //    , data.MarketAverage
-        //    , data.MarketAverageComparison);
-        //domElements.divMarketCountContent.highcharts(marketOptions);
+        var marketOptions = generateLineChartOptions(data.MarketCountList
+            , data.MarketCountComparisonList
+            , data.MarketCountCrossYearList
+            , data.MarketCountCrossYearComparisonList
+            , data.MarketCountAverage
+            , data.MarketCountAverageComparison);
+        domElements.divMarketCountContent.highcharts(marketOptions);
     };  
 
     var showLegends = function (data) {
@@ -446,18 +451,21 @@ Fanex.TGRS.Reports.OSDashboard = function () {
         domElements.divWinLossLegend.html(div);
         domElements.divMarginLegend.html(div);
         domElements.divTurnoverLegend.html(div);
-        domElements.divBetCountLegend.html(div);        
+        domElements.divBetCountLegend.html(div);
+        domElements.divMarketCountLegend.html(div);
 
         if (div !== '') {
             domElements.divWinLossAverage.removeClass('hidden');
             domElements.divMarginAverage.removeClass('hidden');
             domElements.divTurnoverAverage.removeClass('hidden');
-            domElements.divBetCountAverage.removeClass('hidden');            
+            domElements.divBetCountAverage.removeClass('hidden');
+            domElements.divMarketCountAverage.removeClass('hidden');
         } else {
             domElements.divWinLossAverage.addClass('hidden');
             domElements.divMarginAverage.addClass('hidden');
             domElements.divTurnoverAverage.addClass('hidden');
-            domElements.divBetCountAverage.addClass('hidden');            
+            domElements.divBetCountAverage.addClass('hidden');  
+            domElements.divMarketCountAverage.addClass('hidden');
         }
     };
 
@@ -811,7 +819,23 @@ Fanex.TGRS.Reports.OSDashboard = function () {
                         , data.TurnoverAverage
                         , data.TurnoverAverageComparison);
                 domElements.divTurnoverContent.highcharts(options);
-                break;            
+                break; 
+            case 'marketcount':
+                options = type === 'line'
+                    ? generateLineChartOptions(data.MarketCountList
+                        , data.MarketCountComparisonList
+                        , data.MarketCountCrossYearList
+                        , data.MarketCountCrossYearComparisonList
+                        , data.MarketCountAverage
+                        , data.MarketCountAverageComparison)
+                    : generateBarChartOptions(data.MarketCountList
+                        , data.MarketCountComparisonList
+                        , data.MarketCountCrossYearList
+                        , data.MarketCountCrossYearComparisonList
+                        , data.MarketCountAverage
+                        , data.MarketCountAverageComparison);
+                domElements.divMarketCountContent.highcharts(options);
+                break;
             default:
                 break;
         }

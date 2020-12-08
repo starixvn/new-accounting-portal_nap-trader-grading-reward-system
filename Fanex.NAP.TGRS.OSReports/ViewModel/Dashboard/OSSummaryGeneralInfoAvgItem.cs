@@ -18,5 +18,7 @@
         public int AvgMatchCount { get; set; }
 
         public int AvgBetCount { get; set; }
+
+        public int AvgMarketCount { get; set; }
     }
 }

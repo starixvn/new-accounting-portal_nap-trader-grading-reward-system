@@ -16,5 +16,7 @@
         public int MatchCount { get; set; }
 
         public int BetCount { get; set; }
+
+        public int MarketCount { get; set; }
     }
 }

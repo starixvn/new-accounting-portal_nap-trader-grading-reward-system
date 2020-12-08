@@ -206,10 +206,12 @@
             }
 
             return leagues;
-        }
+        }        
 
         public OSSummaryGeneralInfo GetOSSummaryInfo(GetOSSummaryGeneralCriteria criteria)
         {
+            var osSummaryGeneral = new OSSummaryGeneralInfo();
+
             if (criteria.ReportType == 1)
                 criteria = GenerateCriteriaRangeDate(criteria) as GetOSSummaryGeneralCriteria;
 
@@ -220,23 +222,84 @@
                     var items = multi.Read<OSSummaryGeneralInfoItem>();
                     var avgItems = multi.Read<OSSummaryGeneralInfoAvgItem>();
 
-                    return criteria.ReportType == 1
+                    osSummaryGeneral = criteria.ReportType == 1
                         ? GetOSSummaryByDate(criteria, items, avgItems)
                         : GetOSSummaryByMonth(criteria, items, avgItems);
                 }
             }
+
+            var marketCriteria = new GetOSSummaryMarketCriteria
+            {
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate,
+                DayType = criteria.DayType,
+                ReportType = criteria.ReportType,
+                SportIds = criteria.SportIds
+            };
+
+            osSummaryGeneral = GetOSSummaryMarket(osSummaryGeneral, marketCriteria);
+
+            return osSummaryGeneral;
         }
 
-        private OSSummaryGeneralInfo GetOSSummaryByDate(GetOSSummaryGeneralCriteria criteria
+        private OSSummaryGeneralInfo GetOSSummaryMarket(OSSummaryGeneralInfo osSummaryGeneral, GetOSSummaryMarketCriteria marketCriteria)
+        {
+            using (var objectDb = new ObjectDb(marketCriteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(marketCriteria.GetSpParams()))
+                {
+                    var marketItems = multi.Read<OSSummaryGeneralInfoItem>();
+                    var marketAvgItems = multi.Read<OSSummaryGeneralInfoAvgItem>();
+
+                    if (marketCriteria.ReportType == 1)
+                    {
+                        osSummaryGeneral.MarketCountList = GetOSColumnsByDate(marketItems, osSummaryGeneral.DayOrMonthList, OSChartName.MarketCount);
+                        osSummaryGeneral.MarketCountComparisonList = GetOSColumnsByDate(marketItems, osSummaryGeneral.ComparisonDayOrMonthList, OSChartName.MarketCount);
+                    }
+                    else
+                    {
+                        if (osSummaryGeneral.IsCrossYear)
+                        {
+                            osSummaryGeneral.MarketCountCrossYearList = GetOSColumnsByMonth(marketItems, osSummaryGeneral.CrossDayOrMonthList, OSChartName.MarketCount);
+                            osSummaryGeneral.MarketCountCrossYearComparisonList = GetOSColumnsByMonth(marketItems, osSummaryGeneral.CrossComparisonDayOrMonthList, OSChartName.MarketCount);
+                        }
+
+                        osSummaryGeneral.MarketCountList = GetOSColumnsByMonth(marketItems, osSummaryGeneral.DayOrMonthList, OSChartName.MarketCount);
+                        osSummaryGeneral.MarketCountComparisonList = GetOSColumnsByMonth(marketItems, osSummaryGeneral.ComparisonDayOrMonthList, OSChartName.MarketCount);
+                    }
+
+                    if (marketAvgItems != null && marketAvgItems.Any())
+                    {
+                        var avgComparison = marketAvgItems.FirstOrDefault(x => x.ToDate.Year.Equals(marketCriteria.ToDate.Year - 1));
+
+                        if (avgComparison != null)
+                        {
+                            osSummaryGeneral.MarketCountAverageComparison = avgComparison.AvgMarketCount;
+                        }
+
+                        var avgCurrentYear = marketAvgItems.FirstOrDefault(x => x.ToDate.Year.Equals(marketCriteria.ToDate.Year));
+
+                        if (avgCurrentYear != null)
+                        {
+                            osSummaryGeneral.MarketCountAverage = avgCurrentYear.AvgMarketCount;
+                        }
+                    }
+                }
+            }
+
+            return osSummaryGeneral;
+        }
+
+        private OSSummaryGeneralInfo GetOSSummaryByDate(OSSummaryInfoCriteria criteria
             , IEnumerable<OSSummaryGeneralInfoItem> items
             , IEnumerable<OSSummaryGeneralInfoAvgItem> avgItems)
         {
             var osSummaryInfo = new OSSummaryGeneralInfo();
+            var daysList = new List<Column>();
+            var comparisonDayList = new List<Column>();
 
             if (items != null && items.Any())
-            {
-                var daysList = new List<Column>();
-                var comparisonDayList = new List<Column>();
+            {               
                 var fromDate = criteria.FromDate;
                 var comparisonFromDate = new DateTime(criteria.FromDate.Year - 1, criteria.FromDate.Month, criteria.FromDate.Day);
                 var comparisonToDate = new DateTime(criteria.ToDate.Year - 1, criteria.ToDate.Month, criteria.ToDate.Day);
@@ -268,17 +331,17 @@
                 osSummaryInfo.MarginList = GetOSColumnsByDate(items, daysList, OSChartName.Margin);
                 osSummaryInfo.MarginComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.Margin);
                 osSummaryInfo.BetCountList = GetOSColumnsByDate(items, daysList, OSChartName.BetCount);
-                osSummaryInfo.BetCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.BetCount);
-                osSummaryInfo.MarketCountList = GetOSColumnsByDate(items, daysList, OSChartName.MatchCount);
-                osSummaryInfo.MarketCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.MatchCount);
+                osSummaryInfo.BetCountComparisonList = GetOSColumnsByDate(items, comparisonDayList, OSChartName.BetCount);              
             }
+            osSummaryInfo.DayOrMonthList = daysList;
+            osSummaryInfo.ComparisonDayOrMonthList = comparisonDayList;
 
             osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
 
             return osSummaryInfo;
         }
 
-        private OSSummaryGeneralInfo GetOSSummaryByMonth(GetOSSummaryGeneralCriteria criteria
+        private OSSummaryGeneralInfo GetOSSummaryByMonth(OSSummaryInfoCriteria criteria
             , IEnumerable<OSSummaryGeneralInfoItem> items
             , IEnumerable<OSSummaryGeneralInfoAvgItem> avgItems)
         {
@@ -308,8 +371,9 @@
                     osSummaryInfo.MarginCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.Margin);
                     osSummaryInfo.BetCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.BetCount);
                     osSummaryInfo.BetCountCrossComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.BetCount);
-                    osSummaryInfo.MarketCountCrossYearList = GetOSColumnsByMonth(items, crossMonthYearList, OSChartName.MatchCount);
-                    osSummaryInfo.MarketCountCrossYearComparisonList = GetOSColumnsByMonth(items, crossComparisonMonthYearList, OSChartName.MatchCount);
+                   
+                    osSummaryInfo.CrossDayOrMonthList = crossMonthYearList;
+                    osSummaryInfo.CrossComparisonDayOrMonthList = crossComparisonMonthYearList;
 
                     fromDate = new DateTime(criteria.ToDate.Year, 1, 1);
                     comparisonFromDate = new DateTime(criteria.ToDate.Year - 1, 1, 1);
@@ -326,8 +390,9 @@
                 osSummaryInfo.MarginComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.Margin);
                 osSummaryInfo.BetCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.BetCount);
                 osSummaryInfo.BetCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.BetCount);
-                osSummaryInfo.MarketCountList = GetOSColumnsByMonth(items, monthYearList, OSChartName.MatchCount);
-                osSummaryInfo.MarketCountComparisonList = GetOSColumnsByMonth(items, comparisonMonthYearList, OSChartName.MatchCount);
+               
+                osSummaryInfo.DayOrMonthList = monthYearList;
+                osSummaryInfo.ComparisonDayOrMonthList = comparisonMonthYearList;
             }
 
             osSummaryInfo = BindOSSummaryAverage(osSummaryInfo, criteria, avgItems);
@@ -336,7 +401,7 @@
         }
 
         private OSSummaryGeneralInfo BindOSSummaryAverage(OSSummaryGeneralInfo osSummaryInfo
-            , GetOSSummaryGeneralCriteria criteria
+            , OSSummaryInfoCriteria criteria
             , IEnumerable<OSSummaryGeneralInfoAvgItem> avgItems)
         {
             if (avgItems != null && avgItems.Any())
@@ -353,8 +418,7 @@
                     osSummaryInfo.WinLossAverageComparison = avgComparison.AvgWinLoss;
                     osSummaryInfo.TurnoverAverageComparison = avgComparison.AvgTurnover;
                     osSummaryInfo.MarginAverageComparison = avgComparison.AvgMargin;
-                    osSummaryInfo.BetCountAverageComparison = avgComparison.AvgBetCount;
-                    osSummaryInfo.MarketCountAverageComparison = avgComparison.AvgMatchCount;
+                    osSummaryInfo.BetCountAverageComparison = avgComparison.AvgBetCount;                    
                     osSummaryInfo.LegendList.Add(avgComparison.ToDate.Year);
                 }
 
@@ -365,8 +429,7 @@
                     osSummaryInfo.WinLossAverage = avgCurrentYear.AvgWinLoss;
                     osSummaryInfo.TurnoverAverage = avgCurrentYear.AvgTurnover;
                     osSummaryInfo.MarginAverage = avgCurrentYear.AvgMargin;
-                    osSummaryInfo.BetCountAverage = avgCurrentYear.AvgBetCount;
-                    osSummaryInfo.MarketCountAverage = avgCurrentYear.AvgMatchCount;
+                    osSummaryInfo.BetCountAverage = avgCurrentYear.AvgBetCount;                    
                     osSummaryInfo.LegendList.Add(avgCurrentYear.ToDate.Year);
                 }
             }
@@ -390,6 +453,8 @@
                         return item.BetCount;
                     case OSChartName.MatchCount:
                         return item.MatchCount;
+                    case OSChartName.MarketCount:
+                        return item.MarketCount;
                     default:
                         return 0;
                 }

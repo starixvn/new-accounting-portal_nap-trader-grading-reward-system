@@ -21,6 +21,7 @@
     <Setting Key="TGRS_OS_Rpt_SummaryLeaguePerformance" SpName="TGRS_OS_Rpt_SummaryLeaguePerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_Rpt_SummarySportPerformance" SpName="TGRS_OS_Rpt_SummarySportPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_OS_Rpt_SummaryTraderPerformance" SpName="TGRS_OS_Rpt_SummaryTraderPerformance" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	<Setting Key="TGRS_OS_Rpt_SummaryMarket" SpName="TGRS_OS_Rpt_SummaryMarket" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>  
   </Function>
   <Function Name="OSLeagueRegion">
     <Setting Key="TGRS_OS_LeagueRegionGet" SpName="TGRS_OS_LeagueRegionGet" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

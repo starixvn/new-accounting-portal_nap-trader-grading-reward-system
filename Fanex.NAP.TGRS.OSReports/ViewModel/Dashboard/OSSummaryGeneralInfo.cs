@@ -9,6 +9,10 @@
         public OSSummaryGeneralInfo()
         {
             LegendList = new List<int>();
+            DayOrMonthList = new List<Column>();
+            CrossDayOrMonthList = new List<Column>();
+            ComparisonDayOrMonthList = new List<Column>();
+            CrossComparisonDayOrMonthList = new List<Column>();       
         }
 
         public bool IsCrossYear { get; set; }
@@ -74,6 +78,14 @@
         public decimal MarketCountAverageComparison { get; set; }
 
         public List<int> LegendList { get; set; }
+
+        public List<Column> DayOrMonthList { get; set; }
+
+        public List<Column> CrossDayOrMonthList { get; set; }        
+
+        public List<Column> ComparisonDayOrMonthList { get; set; }
+        
+        public List<Column> CrossComparisonDayOrMonthList { get; set; }
     }
 
     [Serializable]

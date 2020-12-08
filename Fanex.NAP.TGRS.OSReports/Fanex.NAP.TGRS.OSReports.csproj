@@ -185,6 +185,7 @@
     <Compile Include="Criteria\Dashboard\GetOSLeagueSummaryCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetOSSportSummaryCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetOSSummaryGeneralCriteria.cs" />
+    <Compile Include="Criteria\Dashboard\GetOSSummaryMarketCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetOSTraderSummaryCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetTopNWorstTraderCriteria.cs" />
     <Compile Include="Criteria\Dashboard\GetTopNBestSportCriteria.cs" />
