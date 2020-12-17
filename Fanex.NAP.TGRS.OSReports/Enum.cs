@@ -20,8 +20,8 @@
 
     public enum DayType
     {
-        CustomMonth,
-        Today,
+        CustomMonth,       
+        Yesterday,
         Days7,
         Days30
     }

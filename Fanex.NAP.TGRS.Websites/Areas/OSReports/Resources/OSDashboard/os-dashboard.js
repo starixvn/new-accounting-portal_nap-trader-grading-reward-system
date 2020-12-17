@@ -199,33 +199,29 @@ Fanex.TGRS.Reports.OSDashboard = function () {
             let params = {};
             params.days = parseInt(value);
 
-            if (value === "0") {
-                domElements.ddlPeriodType.val(2).change();
-            } else {
-                domElements.ddlPeriodType.val(1).change();
+            domElements.ddlPeriodType.val(1).change();
 
-                $.ajax({
-                    type: 'POST',
-                    url: urls.GetDate,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify(params),
-                    success: function (result) {
+            $.ajax({
+                type: 'POST',
+                url: urls.GetDate,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(params),
+                success: function (result) {
 
-                        if (result) {                            
-                            $('#dpkFromDate').datepicker("setDate", result.FromDate);
-                            $('#dpkToDate').datepicker("setDate", result.ToDate);
-                        }
-                    },
-                    error: function (xhr) {
-                        common.HandleAjaxError(xhr);
-                        common.EnableInput();
-                    },
-                    complete: function () {
-                        common.EnableInput();
+                    if (result) {
+                        $('#dpkFromDate').datepicker("setDate", result.FromDate);
+                        $('#dpkToDate').datepicker("setDate", result.ToDate);
                     }
-                });
-            }
+                },
+                error: function (xhr) {
+                    common.HandleAjaxError(xhr);
+                    common.EnableInput();
+                },
+                complete: function () {
+                    common.EnableInput();
+                }
+            });
         });
     };
 

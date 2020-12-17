@@ -467,8 +467,8 @@
         {
             var toDate = DateTime.Today;
             var fromDate =
-                criteria.DayType == DayType.Today
-                ? toDate
+                criteria.DayType == DayType.Yesterday
+                ? toDate.AddDays(-1)
                 : (criteria.DayType == DayType.Days7
                     ? toDate.AddDays(-7)
                     : toDate.AddDays(-30)
@@ -814,13 +814,13 @@
 
         private BasketballSummaryInfoCriteria GenerateCriteriaRangeDate(BasketballSummaryInfoCriteria criteria)
         {
-            var toDate = DateTime.Today;
+            var toDate = DateTime.Today.AddDays(-1);
             var fromDate =
-                criteria.BasketballDays == DayType.Today
+                criteria.BasketballDays == DayType.Yesterday
                 ? toDate
                 : (criteria.BasketballDays == DayType.Days7
-                    ? toDate.AddDays(-7)
-                    : toDate.AddDays(-30)
+                    ? toDate.AddDays(-6)
+                    : toDate.AddDays(-29)
                 );
 
             criteria.FromDate = fromDate;

@@ -40,8 +40,8 @@
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
             ViewBag.MinDate = minDate;
-            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -2);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
 
             ViewBag.CanViewDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
@@ -91,6 +91,13 @@
 
             switch (days)
             {
+                case DayType.Yesterday:
+                    data = new
+                    {
+                        FromDate = toDay.AddDays(-1).ToString(),
+                        ToDate = toDay.ToString()
+                    };
+                    break;
                 case DayType.Days7:
                     data = new
                     {
@@ -157,8 +164,8 @@
             minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
             ViewBag.MinDate = minDate;
-            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-            ViewBag.DefaultToDate = DateTime.Today;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -2);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
             ViewBag.CanViewOSDashboard = this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, Constant.Policy.Read);
             ViewBag.CanViewSoccerDashboard = this.HasRight(TGRSFunctionKeys.PerformanceSummary, Constant.Policy.Read);
