@@ -313,6 +313,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\local\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\PROCLOUD\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\PROCLOUD\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\prod\NAPTGRSSPNames.xml">
       <SubType>Designer</SubType>
@@ -558,6 +562,10 @@
     <Content Include="Content\ToggleSwitch\toggle-switch.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="prod\NAPCommonSpNames.xml" />
+    <Content Include="prod\NAPTGRSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Extensions\jquery.extensions.js" />
@@ -745,6 +753,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Web.AppSettings.PROCLOUD.config" />
+    <Content Include="Web.ConnectionString.PROCLOUD.config" />
+    <Content Include="Web.PROCLOUD.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
