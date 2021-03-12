@@ -3,6 +3,7 @@
     using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.TraderPerformance;
+    using Fanex.NAP.TGRS.OSReports.ViewModel.TraderPerformance;
     using System.Collections.Generic;
 
     public interface ITraderPerformanceService
@@ -19,7 +20,7 @@
 
         List<Sport> GetAllSport();
 
-        IEnumerable<MatchPerformance> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria);
+        IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria);
 
         IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria);
     }

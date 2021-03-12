@@ -306,6 +306,7 @@
     <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeLeagueList.cs" />
     <Compile Include="ViewModel\BasketballPerformance\TraderOfBettypeList.cs" />
+    <Compile Include="ViewModel\TraderPerformance\MatchPerformanceInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj">

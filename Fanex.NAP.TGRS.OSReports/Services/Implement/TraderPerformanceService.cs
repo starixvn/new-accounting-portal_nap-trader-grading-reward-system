@@ -6,6 +6,7 @@
     using Fanex.NAP.TGRS.OSReports.Models.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.TraderPerformance;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
+    using Fanex.NAP.TGRS.OSReports.ViewModel.TraderPerformance;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -47,9 +48,40 @@
             return result != null ? result.ToList() : new List<BettypePerformance>();
         }
 
-        public IEnumerable<MatchPerformance> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
+        public IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
-            return GetData<MatchPerformance>(criteria);
+            var matchList = new List<MatchPerformanceInfo>();
+            var data = GetData<MatchPerformance>(criteria);            
+
+            if (data != null && data.Any())
+            {
+                var matchTypes200 = data.Where(x => x.ChildMatchType == 200);
+
+                if (matchTypes200.Any())
+                {
+                    var parentMatches = matchTypes200.Where(x => x.ParentID == 0);
+
+                    foreach (var parentMatchItem in parentMatches)
+                    {
+                        matchList.Add(new MatchPerformanceInfo(parentMatchItem));
+
+                        var childMatchInfos = data.Where(x => x.ParentID == parentMatchItem.MatchId)
+                            .Select(x => new MatchPerformanceInfo(x));
+
+                        if (childMatchInfos != null && childMatchInfos.Any())
+                        {
+                            var sumInfo = childMatchInfos.Aggregate<MatchPerformanceInfo, MatchPerformanceInfo>(null, (acc, s) => acc + s);
+
+                            matchList.Add(sumInfo);
+                        }
+                    }
+                }
+
+                var matchTypeNot200Infos = data.Where(x => x.ChildMatchType != 200).Select(x => new MatchPerformanceInfo(x));
+                matchList.AddRange(matchTypeNot200Infos);
+            }
+
+            return matchList;
         }
 
         public IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria)

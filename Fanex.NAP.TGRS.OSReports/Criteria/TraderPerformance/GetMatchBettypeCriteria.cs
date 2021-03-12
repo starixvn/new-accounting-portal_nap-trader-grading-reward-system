@@ -7,7 +7,7 @@
     {
         public int LeagueId { get; set; }
 
-        public int MatchId { get; set; }
+        public string MatchIds { get; set; }
 
         public int TraderId { get; set; }
 

@@ -83,9 +83,7 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
         {
-            var data =
-                _service
-                .GetTraderMatchPerformance(criteria);
+            var data = _service.GetTraderMatchPerformance(criteria);
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
