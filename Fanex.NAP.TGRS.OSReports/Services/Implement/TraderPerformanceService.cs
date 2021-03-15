@@ -55,30 +55,38 @@
 
             if (data != null && data.Any())
             {
-                var matchTypes200 = data.Where(x => x.ChildMatchType == 200);
-
-                if (matchTypes200.Any())
+                // Sport is Cricket
+                if (criteria.SportId == 50)
                 {
-                    var parentMatches = matchTypes200.Where(x => x.ParentID == 0);
+                    var singularMatches = data.Where(x => x.ChildMatchType != 200);
 
-                    foreach (var parentMatchItem in parentMatches)
+                    foreach (var singularMatchItem in singularMatches)
                     {
-                        matchList.Add(new MatchPerformanceInfo(parentMatchItem));
+                        var matchInfo = new MatchPerformanceInfo(singularMatchItem);
 
-                        var childMatchInfos = data.Where(x => x.ParentID == parentMatchItem.MatchId)
-                            .Select(x => new MatchPerformanceInfo(x));
+                        var childMatches = data.Where(x => x.ChildMatchType == 200 && x.ParentID == singularMatchItem.MatchId)
+                                               .Select(x => new MatchPerformanceInfo(x));
 
-                        if (childMatchInfos != null && childMatchInfos.Any())
+                        if (childMatches.Any())
                         {
-                            var sumInfo = childMatchInfos.Aggregate<MatchPerformanceInfo, MatchPerformanceInfo>(null, (acc, s) => acc + s);
+                            childMatches.ToList().Add(matchInfo);
 
-                            matchList.Add(sumInfo);
+                            var sumMatchInfo = childMatches.Aggregate<MatchPerformanceInfo, MatchPerformanceInfo>(null, (acc, s) => acc + s);
+
+                            matchList.Add(sumMatchInfo);
+                        }
+                        else
+                        {
+                            matchList.Add(matchInfo);
                         }
                     }
                 }
+                else
+                {
+                    var matchInfos = data.Select(x => new MatchPerformanceInfo(x));
 
-                var matchTypeNot200Infos = data.Where(x => x.ChildMatchType != 200).Select(x => new MatchPerformanceInfo(x));
-                matchList.AddRange(matchTypeNot200Infos);
+                    matchList.AddRange(matchInfos);
+                }
             }
 
             return matchList;

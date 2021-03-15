@@ -735,7 +735,7 @@ var traderReports = (function ($) {
         var criteria =
             {
                 leagueId: obj.LeagueId,
-                matchIds: obj.MatchId,
+                matchIds: obj.MatchIds,
                 traderId: obj.global.traderId,
                 sportId: obj.global.sportId,
                 FromDate: domElements.divDateRange.getFrom(),
