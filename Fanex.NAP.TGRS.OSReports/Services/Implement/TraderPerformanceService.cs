@@ -62,22 +62,24 @@
 
                     foreach (var singularMatchItem in singularMatches)
                     {
-                        var matchInfo = new MatchPerformanceInfo(singularMatchItem);
+                        var parentMatchInfo = new MatchPerformanceInfo(singularMatchItem);
 
                         var childMatches = data.Where(x => x.ChildMatchType == 200 && x.ParentID == singularMatchItem.MatchId)
                                                .Select(x => new MatchPerformanceInfo(x));
 
                         if (childMatches.Any())
                         {
-                            childMatches.ToList().Add(matchInfo);
+                            var treeMatches = childMatches.ToList();
 
-                            var sumMatchInfo = childMatches.Aggregate<MatchPerformanceInfo, MatchPerformanceInfo>(null, (acc, s) => acc + s);
+                            treeMatches.Add(parentMatchInfo);
+
+                            var sumMatchInfo = treeMatches.Aggregate<MatchPerformanceInfo, MatchPerformanceInfo>(null, (acc, s) => acc + s);
 
                             matchList.Add(sumMatchInfo);
                         }
                         else
                         {
-                            matchList.Add(matchInfo);
+                            matchList.Add(parentMatchInfo);
                         }
                     }
                 }

@@ -23,6 +23,7 @@
             this.Point = matchData.Point;
             this.EventProductCount = matchData.EventProductCount;
             this.BetCount = matchData.BetCount;
+            this.ChildMatchType = matchData.ChildMatchType;
         }
 
         public int LeagueId { get; set; }
@@ -51,6 +52,8 @@
 
         public int BetCount { get; set; }
 
+        public int ChildMatchType { get; set; }
+
         public static MatchPerformanceInfo operator +(MatchPerformanceInfo info1, MatchPerformanceInfo info2)
         {
             if (info1 == null)
@@ -63,20 +66,23 @@
                 return info1;
             }
 
+            var parentMatchInfo = info1.ChildMatchType == 0 ? info1 : info2;
+
             var sumInfo = new MatchPerformanceInfo
             {
-                LeagueId = info1.LeagueId,
+                LeagueId = parentMatchInfo.LeagueId,
                 MatchIds = info1.MatchIds + "," + info2.MatchIds,
-                HomeId = info1.HomeId,
-                AwayId = info1.AwayId,
-                TeamName = info1.TeamName,
-                Date = info1.Date,
-                Point = info1.Point,
+                HomeId = parentMatchInfo.HomeId,
+                AwayId = parentMatchInfo.AwayId,
+                TeamName = parentMatchInfo.TeamName,
+                Date = parentMatchInfo.Date,
+                ChildMatchType = parentMatchInfo.ChildMatchType,
+                Point = info1.Point + info2.Point,
                 EventProductCount = info1.EventProductCount + info2.EventProductCount,
                 BetCount = info1.BetCount + info2.BetCount,
-                Turnover = info1.Turnover,
-                Winloss = info1.Winloss                
-            };
+                Turnover = info1.Turnover + info2.Turnover,
+                Winloss = info1.Winloss + info2.Winloss
+            };            
 
             sumInfo.Margin = sumInfo.Turnover == 0 ? 0 : (sumInfo.Winloss / sumInfo.Turnover) * 100;
 
