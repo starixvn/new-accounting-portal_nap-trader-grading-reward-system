@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using ViewModels.Trader;
+    using BetTypePerformance = Models.Trader.BetTypePerformance;
 
     public class TraderReportService : TGRSBaseService, ITraderReportService
     {

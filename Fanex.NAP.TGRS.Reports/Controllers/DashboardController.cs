@@ -62,7 +62,15 @@
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Need Review.")]
         public JsonResult GetSummaryData(int month)
         {
-            GeneralInfo generalInfo = this._dashboardService.GetGeneralInfo(month, _permission).First();
+            GeneralInfo generalInfo = new GeneralInfo();
+
+            var data = this._dashboardService.GetGeneralInfo(month, _permission);
+
+            if (data != null && data.Any())
+            {
+                generalInfo = data.First();
+            }
+            
             IEnumerable<League> bestLeagues = this._dashboardService.GetTopWinLeague(month, _permission);
             IEnumerable<TopTrader> bestTraders = this._dashboardService.GetTopTrader(month, _permission);
             IEnumerable<BetTypePerformance> bestBettypes = this._dashboardService.GetTopBettype(month, _permission);

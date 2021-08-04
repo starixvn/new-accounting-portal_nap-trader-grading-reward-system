@@ -6,6 +6,7 @@
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using Fanex.NAP.TGRS.Reports.ViewModels.Trader;
     using System.Collections.Generic;
+    using BetTypePerformance = Models.Trader.BetTypePerformance;
 
     public interface ITraderReportService
     {

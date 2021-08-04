@@ -21,6 +21,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using BetTypePerformance = Models.Trader.BetTypePerformance;
 
     public class TraderController : TGRSBaseController
     {
@@ -115,7 +116,9 @@
                 IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
-            return Json(traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList());
+            var data = traderReportService.GetTraderWinlossTurnover(criteriaWLTO).ToList();
+
+            return Json(data);
         }
 
         [HttpPost]
@@ -249,7 +252,39 @@
                 IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
 
-            return traderReportService.GetTraderWinlossTurnover(criteria).OrderBy(t => t.WLDate).ToList();
+            return traderReportService.GetTraderWinlossTurnover(criteria).OrderBy(t => t.WLDate).ToList();           
+        }
+
+        private List<TraderWinlossTurnover> DataTest()
+        {
+            var data = new List<TraderWinlossTurnover>();
+
+            data.Add(new TraderWinlossTurnover
+            {
+                WLDate = new DateTime(2021, 08, 04),
+                Turnover = new decimal(432),
+                Winlost = new decimal(712),
+                TurnoverReal = new decimal(234),
+                WinlostReal = new decimal(-46)
+            });
+            data.Add(new TraderWinlossTurnover
+            {
+                WLDate = new DateTime(2021, 08, 03),
+                Turnover = new decimal(111),
+                Winlost = new decimal(111),
+                TurnoverReal = new decimal(78),
+                WinlostReal = new decimal(-2)
+            });
+            data.Add(new TraderWinlossTurnover
+            {
+                WLDate = new DateTime(2021, 08, 02),
+                Turnover = new decimal(222),
+                Winlost = new decimal(333),
+                TurnoverReal = new decimal(9),
+                WinlostReal = new decimal(-3)
+            });
+
+            return data;
         }
 
         private List<BetTypePerformance> GetTraderBettypePerformance(int traderId, DateTime fromtDate, DateTime toDate)

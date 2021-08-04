@@ -36,11 +36,14 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.NoOfBetChoices = Converter.ToInt(leagueData.BetChoiceCount);
                 this.Turnover = Converter.ToDecimal(leagueData.Turnover);
                 this.WinLoss = Converter.ToDecimal(leagueData.WinLoss);
+                this.Margin = leagueData.Margin;
+                this.TurnoverReal = Converter.ToDecimal(leagueData.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(leagueData.WinLossReal);
+                this.MarginReal = leagueData.MarginReal;
                 this.BetCount = Converter.ToInt(leagueData.BetCount);
                 this.BetTypeBMShift1 = leagueData.BetTypeBMShift1;
                 this.BetTypeBMShift2 = leagueData.BetTypeBMShift2;
-                this.BetTypeBMShift3 = leagueData.BetTypeBMShift3;
-                this.Margin = leagueData.Margin;
+                this.BetTypeBMShift3 = leagueData.BetTypeBMShift3;              
                 this.Market = GetMaketToString(leagueData.Market);
                 this.IsLive = leagueData.IsLive;
                 this.FlagForViewReport = leagueData.FlagForViewReport;
@@ -65,9 +68,15 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal WinLoss { get; set; }
 
+        public decimal? Margin { get; set; }
+
         public int BetCount { get; set; }
 
-        public decimal? Margin { get; set; }
+        public decimal? TurnoverReal { get; set; }
+
+        public decimal? WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
 
         public decimal? BetTypeBMShift1 { get; set; }
 

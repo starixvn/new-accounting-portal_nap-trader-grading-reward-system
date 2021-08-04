@@ -15,7 +15,8 @@ Fanex.TGRS.Reports.Trader = function () {
         Trader: null,
         ReportType: null,
         FromDate: null,
-        ToDate: null
+        ToDate: null,
+        FigureType: null
     };
 
     var ChartOptions = null;
@@ -51,14 +52,20 @@ Fanex.TGRS.Reports.Trader = function () {
         domElements.divTrader = $('#txtUserName');
     };
 
-    $('#chkMonth').on('change', function () {
-        var monthType = 2;
-        getChartData(monthType);
+    $('#chkMonth').on('change', function () {       
+        getChartData(2, filterParameters.FigureType);
     });
-    $('#chkDay').on('change', function () {
-        var dayType = 1;
-        getChartData(dayType);
+    $('#chkDay').on('change', function () {      
+        getChartData(1, filterParameters.FigureType);
     });
+
+    $('#chkVirtualFigure').on('change', function () {
+        getChartData(filterParameters.ReportType, 1);
+    })
+
+    $('#chkRealFigure').on('change', function () {
+        getChartData(filterParameters.ReportType, 2);
+    })
 
     var initDatePicker = function () {
         //Period date range control
@@ -122,8 +129,8 @@ Fanex.TGRS.Reports.Trader = function () {
         });
     }
 
-    function getChartData(type) {
-        filterParameters.ReportType = type;
+    function getChartData(reportType, figureType) {
+        filterParameters.ReportType = reportType;
         $.ajax({
             type: 'POST',
             url: common.ResolveRootUrl('Reports/Trader/ReloadChart'),
@@ -132,7 +139,7 @@ Fanex.TGRS.Reports.Trader = function () {
             data: JSON.stringify(filterParameters),
             success: function (result) {
                 if (result) {
-                    renderChart(result, type);
+                    renderChart(result, reportType, figureType);
                 }
             },
             error: function (xhr) {
@@ -146,7 +153,8 @@ Fanex.TGRS.Reports.Trader = function () {
 
     var renderReports = function (data, type) {
         renderGeneralInfo(data.GeneralInfo);
-        renderChart(data.WinlossTurnover, type);
+        filterParameters.FigureType = $('#chkVirtualFigure').is(':checked') ? 1 : 2;
+        renderChart(data.WinlossTurnover, type, filterParameters.FigureType);
         renderBetTypePerformance(data.BetTypePerformances);
         renderLeaguesPerformance(data.LeaguesPerformance);
         common.EnableInput();
@@ -169,31 +177,57 @@ Fanex.TGRS.Reports.Trader = function () {
 
     var renderBetTypePerformance = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      {
-                          HeaderText: 'Bet Type', Width: 250, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left'
-                      },
-                      {
-                          HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
-                      },
-                      {
-                          HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                      },
-                      {
-                          HeaderText: labels.BetCount, Width: 150, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      {
-                          HeaderText: labels.Margin, Width: 150, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                      }],
+            groupHeaderRows: [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: "Bet Type", Name: "ColBetType", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnOver", MergeColNumber: 3 },
+                    { HeaderText: "Real", Name: "ColTurnOverReal", MergeColNumber: 3 }
+                ]
+            }],
+            columns: [
+                {
+                    HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center'
+                },
+                {
+                    HeaderText: 'Bet Type', Width: 250, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left'
+                },
+                {
+                    HeaderText: labels.BetCount, Width: 150, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.IntegerFormat
+                },
+                {
+                    HeaderText: labels.Turnover, Width: 140, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat
+                },
+                {
+                    HeaderText: labels.WinLoss, Width: 140, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },                     
+                {
+                    HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
+                {
+                    HeaderText: labels.Turnover, Width: 140, Name: 'ColTurnOverReal', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat
+                },
+                {
+                    HeaderText: labels.WinLoss, Width: 140, Name: 'ColWinLossReal', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
+                {
+                    HeaderText: labels.Margin, Width: 100, Name: 'ColMarginReal', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                }
+            ],
             gridExpandHeight: 50,
             showTitle: true,
             titleInfo: {
                 text: labels.BetTypePerformance
             },
+            customizeHeader: true,
             showNumberColumn: true,
             showPager: true,
             pagerOption: {
@@ -218,13 +252,20 @@ Fanex.TGRS.Reports.Trader = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 row = {
-                    Columns: [{ Name: 'ColNo' },
-                              { Name: 'ColBetType', Value: item.TypeName },
-                              { Name: 'ColTurnOver', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.Winlost },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                    Columns:
+                        [
+                            { Name: 'ColNo' },
+                            { Name: 'ColBetType', Value: item.TypeName },
+                            { Name: 'ColBetCount', Value: item.BetCount },
+                            { Name: 'ColTurnOver', Value: item.Turnover },
+                            { Name: 'ColWinLoss', Value: item.Winlost },
+                            { Name: 'ColMargin', Value: item.Margin },
+                            { Name: 'ColTurnOverReal', Value: item.TurnoverReal },
+                            { Name: 'ColWinLossReal', Value: item.WinlostReal },
+                            { Name: 'ColMarginReal', Value: item.MarginReal }
+                        ]
                 };
+
                 bodyData.push(row);
 
                 total.Turnover += item.Turnover;
@@ -236,11 +277,15 @@ Fanex.TGRS.Reports.Trader = function () {
                 total.Margin = total.WinLoss / total.Turnover * 100;
             }
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColTurnOver', Value: total.Turnover },
-                          { Name: 'ColWinLoss', Value: total.WinLoss },
-                          { Name: 'ColBetCount', Value: total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) }
+                Columns: [
+                    { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
+                    { Name: 'ColBetCount', Value: total.BetCount },                    
+                    { Name: 'ColTurnOver', Value: total.Turnover },
+                    { Name: 'ColWinLoss', Value: total.WinLoss },                    
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(total.Margin, labels.NA) },
+                    { Name: 'ColTurnOverReal', Value: total.TurnoverReal },
+                    { Name: 'ColWinLossReal', Value: total.WinLossReal },                    
+                    { Name: 'ColMarginReal', Value: common.GetNumWithLabel(total.MarginReal, labels.NA) }
                 ]
             };
             footerData.push(row);
@@ -253,32 +298,58 @@ Fanex.TGRS.Reports.Trader = function () {
     var renderLeaguesPerformance = function (data) {
         var noOfMatchsFormat = '<span class="match-link link" data-league-id="{0}" data-league-name="{1}" title="{2}">{3}</span>';
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      {
-                          HeaderText: labels.League, Width: 250, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left'
-                      },
-                      {
-                          HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      {
-                          HeaderText: labels.Turnover, Width: 150, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat
-                      },
-                      {
-                          HeaderText: labels.WinLoss, Width: 150, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                      },
-                      {
-                          HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.IntegerFormat
-                      },
-                      {
-                          HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                      }],
+            groupHeaderRows: [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnOver", MergeColNumber: 3 },
+                    { HeaderText: "Real", Name: "ColTurnOverReal", MergeColNumber: 3 }
+                ]
+            }],
+            columns:
+                [
+                    { HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+                    {
+                        HeaderText: labels.League, Width: 250, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left'
+                    },
+                    {
+                        HeaderText: labels.NoOfMatches, Width: 65, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.IntegerFormat
+                    },
+                    {
+                        HeaderText: labels.BetCount, Width: 80, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.IntegerFormat
+                    },
+                    {
+                        HeaderText: labels.Turnover, Width: 140, Name: 'ColTurnOver', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat
+                    },
+                    {
+                        HeaderText: labels.WinLoss, Width: 140, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    },                    
+                    {
+                        HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    },
+                    {
+                        HeaderText: labels.Turnover, Width: 140, Name: 'ColTurnOverReal', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat
+                    },
+                    {
+                        HeaderText: labels.WinLoss, Width: 140, Name: 'ColWinLossReal', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    },
+                    {
+                        HeaderText: labels.Margin, Width: 100, Name: 'ColMarginReal', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                    }
+                ],
             gridExpandHeight: 50,
-            showTitle: true,
+            customizeHeader: true,
+            showTitle: true,            
             titleInfo: {
                 text: labels.LeaguesPerformance
             },
@@ -306,24 +377,36 @@ Fanex.TGRS.Reports.Trader = function () {
             $.each(data.ItemLiveList, function (index, item) {
                 var noOfMatchesCol = noOfMatchsFormat.format(item.LeagueId, item.LeagueName, labels.MatchPerformance, item.NoOfMatches);
                 row = {
-                    Columns: [{ Name: 'ColNo' },
-                              { Name: 'ColLeague', Value: item.LeagueName },
-                              { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
-                              { Name: 'ColTurnOver', Value: item.Turnover },
-                              { Name: 'ColWinLoss', Value: item.WinLoss },
-                              { Name: 'ColBetCount', Value: item.BetCount },
-                              { Name: 'ColMargin', Value: item.Margin }]
+                    Columns:
+                        [
+                            { Name: 'ColNo' },
+                            { Name: 'ColLeague', Value: item.LeagueName },
+                            { Name: 'ColNoOfMatches', Value: noOfMatchesCol },
+                            { Name: 'ColBetCount', Value: total.BetCount },
+                            { Name: 'ColTurnOver', Value: item.Turnover },
+                            { Name: 'ColWinLoss', Value: item.WinLoss },
+                            { Name: 'ColMargin', Value: item.Margin },
+                            { Name: 'ColTurnOverReal', Value: item.TurnoverReal },                          
+                            { Name: 'ColWinLossReal', Value: total.WinLossReal },                           
+                            { Name: 'ColMarginReal', Value: common.GetNumWithLabel(total.MarginReal, labels.NA) }
+                        ]
                 };
                 bodyData.push(row);
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
-                          { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
-                          { Name: 'ColTurnOver', Value: data.Total.Turnover },
-                          { Name: 'ColWinLoss', Value: data.Total.WinLoss },
-                          { Name: 'ColBetCount', Value: data.Total.BetCount },
-                          { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+                Columns:
+                    [
+                        { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
+                        { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+                        { Name: 'ColBetCount', Value: data.Total.BetCount },
+                        { Name: 'ColTurnOver', Value: data.Total.Turnover },
+                        { Name: 'ColWinLoss', Value: data.Total.WinLoss },                 
+                        { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) },
+                        { Name: 'ColTurnOverReal', Value: total.TurnoverReal },
+                        { Name: 'ColWinLossReal', Value: total.WinLossReal },                        
+                        { Name: 'ColMarginReal', Value: common.GetNumWithLabel(total.MarginReal, labels.NA) }
+                    ]
             };
             footerData.push(row);
         }
@@ -348,7 +431,7 @@ Fanex.TGRS.Reports.Trader = function () {
         });
     };
 
-    function renderChart(data, type) {
+    function renderChart(data, type, fingureType) {
         if (data) {
             chartData = {
                 MixData: [],
@@ -381,26 +464,36 @@ Fanex.TGRS.Reports.Trader = function () {
             if (type === 1) {
                 $.each(data, function (index, item) {
                     chartData.Categories.push(moment(item.WLDate).format('DD MMM'));
-                    chartData.MixData[0].data.push(item.Turnover);
-                    chartData.MixData[1].data.push(item.Winlost);
-                    if (item.Turnover < chartData.MixDataMin) {
-                        chartData.MixDataMin = item.Turnover;
+
+                    let turnover = fingureType == 1 ? item.Turnover : item.TurnoverReal;
+                    let winlost = fingureType == 1 ? item.Winlost : item.WinlostReal;
+
+                    chartData.MixData[0].data.push(turnover);
+                    chartData.MixData[1].data.push(winlost);
+
+                    if (turnover < chartData.MixDataMin) {
+                        chartData.MixDataMin = turnover;
                     }
-                    if (item.Winlost < chartData.MixDataMin) {
-                        chartData.MixDataMin = item.Winlost;
+                    if (winlost < chartData.MixDataMin) {
+                        chartData.MixDataMin = winlost;
                     }
                 });
             }
             else {
                 $.each(data, function (index, item) {
                     chartData.Categories.push(moment(item.WLDate).format('MMM'));
-                    chartData.MixData[0].data.push(item.Turnover);
-                    chartData.MixData[1].data.push(item.Winlost);
-                    if (item.Turnover < chartData.MixDataMin) {
-                        chartData.MixDataMin = item.Turnover;
+
+                    let turnover = fingureType == 1 ? item.Turnover : item.TurnoverReal;
+                    let winlost = fingureType == 1 ? item.Winlost : item.WinlostReal;
+
+                    chartData.MixData[0].data.push(turnover);
+                    chartData.MixData[1].data.push(winlost);
+
+                    if (turnover < chartData.MixDataMin) {
+                        chartData.MixDataMin = turnover;
                     }
-                    if (item.Winlost < chartData.MixDataMin) {
-                        chartData.MixDataMin = item.Winlost;
+                    if (winlost < chartData.MixDataMin) {
+                        chartData.MixDataMin = winlost;
                     }
                 });
             }

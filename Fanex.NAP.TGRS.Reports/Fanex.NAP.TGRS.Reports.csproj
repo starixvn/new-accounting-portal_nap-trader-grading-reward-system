@@ -381,6 +381,7 @@
     <Compile Include="Models\TraderPerformanceMonthly\SummaryList.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\Trader.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\YearSummary.cs" />
+    <Compile Include="Models\Trader\BetTypePerformance.cs" />
     <Compile Include="Models\Trader\LeaguePerformance.cs" />
     <Compile Include="Models\Trader\TraderWinlossTurnover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

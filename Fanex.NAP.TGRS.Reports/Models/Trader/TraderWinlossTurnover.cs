@@ -10,6 +10,10 @@
 
         public decimal Winlost { get; set; }
 
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinlostReal { get; set; }
+
         public string DisplayDate 
         {
             get
