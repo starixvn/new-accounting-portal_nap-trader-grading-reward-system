@@ -36,10 +36,13 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.HasTeamHistory = Converter.ToInt(traderData.NoOfTeamChanged) > 1;
                 this.NoOfLeagues = Converter.ToInt(traderData.LeagueCount);
                 this.NoOfMatches = Converter.ToInt(traderData.MatchCount);
-                this.Turnover = Converter.ToDecimal(traderData.Turnover);
-                this.WinLoss = Converter.ToDecimal(traderData.WinLoss);
                 this.BetCount = Converter.ToInt(traderData.BetCount);
+                this.Turnover = Converter.ToDecimal(traderData.Turnover);
+                this.WinLoss = Converter.ToDecimal(traderData.WinLoss);               
                 this.Margin = traderData.Margin;
+                this.TurnoverReal = Converter.ToDecimal(traderData.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(traderData.WinLossReal);
+                this.MarginReal = traderData.MarginReal;
                 this.Score = traderData.Score;
                 this.IsLive = traderData.IsLive;
             }
@@ -63,13 +66,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int NoOfMatches { get; set; }
 
+        public int BetCount { get; set; }
+
         public decimal Turnover { get; set; }
 
         public decimal WinLoss { get; set; }
-
-        public int BetCount { get; set; }
-
+       
         public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
 
         public decimal? Score { get; set; }
 

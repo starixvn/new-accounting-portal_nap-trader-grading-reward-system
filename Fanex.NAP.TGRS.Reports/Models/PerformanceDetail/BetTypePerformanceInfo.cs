@@ -32,6 +32,12 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public decimal? Margin { get; set; }
 
+        public decimal? TurnoverReal { get; set; }
+
+        public decimal? WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
+
         public bool IsLive { get; set; }
 
         public int FlagForViewReport { get; set; }

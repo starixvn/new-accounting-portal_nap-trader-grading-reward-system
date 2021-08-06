@@ -141,7 +141,7 @@
 @section Foot
 {
     @Scripts.Render("~/scripts/betTypePerformance")
-    <script type="text/javascript">
+<script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
             DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
@@ -149,7 +149,7 @@
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
         var forecastBettype = '@ViewBag.ForecastBetType';
-        var labels = {           
+        var labels = {
             No: '#',
             BetType: '@ViewLang.BetType',
             Market: '@ViewLang.Market',
@@ -199,5 +199,6 @@
             InvalidValue: '@Messages.InvalidValueError',
             RequiredField: '@Messages.RequiredFieldError'
         };
-    </script>
+        var isRealFigurePermission = '@ViewBag.IsRealFigurePermission' == "True";
+</script>
 }

@@ -137,4 +137,6 @@ public static class TGRSFunctionKeys
     public const string AutomationTradingPerformance = "AutomationTradingPerformance";
 
     public const string PerformanceSummaryComparison = "PerformanceSummaryComparison";
+
+    public const string SportsRealFigure = "SportsRealFigure";
 }

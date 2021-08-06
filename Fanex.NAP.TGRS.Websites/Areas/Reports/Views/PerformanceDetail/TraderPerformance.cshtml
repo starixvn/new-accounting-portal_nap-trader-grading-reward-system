@@ -134,7 +134,7 @@
 @section Foot
 {
     @Scripts.Render("~/scripts/traderPerformance")
-    <script type="text/javascript">
+<script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
             DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
@@ -180,6 +180,7 @@
       var messages = {
           InvalidValue: '@Messages.InvalidValueError',
           RequiredField: '@Messages.RequiredFieldError'
-      };
-    </script>
+        };
+        var isRealFigurePermission = '@ViewBag.IsRealFigurePermission' == "True";
+</script>
 }

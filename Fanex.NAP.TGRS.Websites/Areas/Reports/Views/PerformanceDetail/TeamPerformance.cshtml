@@ -146,7 +146,7 @@
 @section Foot
 {
     @Scripts.Render("~/scripts/teamPerformance")
-    <script type="text/javascript">
+<script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
             DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
@@ -198,5 +198,6 @@
             InvalidValue: '@Messages.InvalidValueError',
             RequiredField: '@Messages.RequiredFieldError'
         };
-    </script>
+        var isRealFigurePermission = '@ViewBag.IsRealFigurePermission' == "True";
+</script>
 }

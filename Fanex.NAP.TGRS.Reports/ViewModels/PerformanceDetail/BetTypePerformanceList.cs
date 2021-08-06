@@ -68,16 +68,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             if (this.Total != null)
             {
                 this.Total.Margin = CalculateTotalMargin(this.Total.WinLoss, this.Total.Turnover);
+                this.Total.MarginReal = CalculateTotalMargin(this.Total.WinLossReal, this.Total.TurnoverReal);
             }
 
             if (this.TotalItemLive != null)
             {
                 this.TotalItemLive.Margin = CalculateTotalMargin(this.TotalItemLive.WinLoss, this.TotalItemLive.Turnover);
+                this.TotalItemLive.MarginReal = CalculateTotalMargin(this.TotalItemLive.WinLossReal, this.TotalItemLive.TurnoverReal);
             }
 
             if (this.TotalItemNonLive != null)
             {
                 this.TotalItemNonLive.Margin = CalculateTotalMargin(this.TotalItemNonLive.WinLoss, this.TotalItemNonLive.Turnover);
+                this.TotalItemNonLive.MarginReal = CalculateTotalMargin(this.TotalItemNonLive.WinLossReal, this.TotalItemNonLive.TurnoverReal);
             }
         }
 
@@ -109,6 +112,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.Total.NoOfMatches += item.NoOfMatches;
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
+            this.Total.TurnoverReal += item.TurnoverReal;
+            this.Total.WinLossReal += item.WinLossReal;
             this.Total.BetCount += item.BetCount;
         }
 
@@ -121,6 +126,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TotalItemLive.NoOfMatches += item.NoOfMatches;
                 this.TotalItemLive.Turnover += item.Turnover;
                 this.TotalItemLive.WinLoss += item.WinLoss;
+                this.TotalItemLive.TurnoverReal += item.TurnoverReal;
+                this.TotalItemLive.WinLossReal += item.WinLossReal;
                 this.TotalItemLive.BetCount += item.BetCount;
             }
             else
@@ -130,6 +137,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TotalItemNonLive.NoOfMatches += item.NoOfMatches;
                 this.TotalItemNonLive.Turnover += item.Turnover;
                 this.TotalItemNonLive.WinLoss += item.WinLoss;
+                this.TotalItemNonLive.TurnoverReal += item.TurnoverReal;
+                this.TotalItemNonLive.WinLossReal += item.WinLossReal;
                 this.TotalItemNonLive.BetCount += item.BetCount;
             }
         }        

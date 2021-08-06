@@ -75,8 +75,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
                                   MatchCount = c.MatchCount,
                                   Turnover = c.Turnover,
                                   WinLoss = c.WinLoss,
-                                  BetCount = c.BetCount,
                                   Margin = c.Margin,
+                                  TurnoverReal = c.TurnoverReal,
+                                  WinLossReal = c.WinLossReal,
+                                  MarginReal = c.MarginReal,
+                                  BetCount = c.BetCount,                                  
                                   IsLive = c.IsLive,
                                   FlagForViewReport = betTypeData.Count(b => b.BetType == c.BetType)
                               });
@@ -187,6 +190,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 traderPerformance.AddTraderList(traderData, criteria.IsLive);
                 
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
+                traderPerformance.Total.MarginReal = CalculateTotalMargin(traderPerformance.Total.WinLossReal, traderPerformance.Total.TurnoverReal);
             }
 
             return traderPerformance;
@@ -215,6 +219,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 matchPerformance.AddMatchList(matchData, criteria.IsLive);
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
+                matchPerformance.Total.MarginReal = CalculateTotalMargin(matchPerformance.Total.WinLossReal, matchPerformance.Total.TurnoverReal);
             }
 
             return matchPerformance;

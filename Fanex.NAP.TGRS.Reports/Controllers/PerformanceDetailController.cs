@@ -116,6 +116,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
             ViewBag.Markets = GetMarketsPermission();
+            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -284,6 +285,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
+            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -377,6 +379,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
+            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -517,6 +520,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
+            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -645,6 +649,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
+            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;            
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");

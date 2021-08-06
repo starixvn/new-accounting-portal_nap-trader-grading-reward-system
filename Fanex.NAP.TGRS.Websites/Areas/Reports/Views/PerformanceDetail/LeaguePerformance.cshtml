@@ -142,7 +142,7 @@
 @section Foot
 {
     @Scripts.Render("~/scripts/leaguePerformance")
-    <script type="text/javascript">
+<script type="text/javascript">
         var datepickerSetting = {
             MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
             DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
@@ -154,7 +154,7 @@
             No: '#',
             League: '@ViewLang.League',
             LeagueGroup: '@ViewLang.LeagueGroup',
-            Market: '@ViewLang.Market',     
+            Market: '@ViewLang.Market',
             MarketNonLive: '@ViewLang.MarketNonLive',
             MarketLive: '@ViewLang.MarketLive',
             NoOfTraders: '@ViewLang.NoOfTraders',
@@ -193,5 +193,6 @@
             InvalidValue: '@Messages.InvalidValueError',
             RequiredField: '@Messages.RequiredFieldError'
         };
-    </script>
+        var isRealFigurePermission = '@ViewBag.IsRealFigurePermission' == "True";
+</script>
 }

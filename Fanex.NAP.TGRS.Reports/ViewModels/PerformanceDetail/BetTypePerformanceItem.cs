@@ -34,8 +34,11 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.NoOfMatches = Converter.ToInt(betTypeData.MatchCount);
                 this.Turnover = Converter.ToDecimal(betTypeData.Turnover);
                 this.WinLoss = Converter.ToDecimal(betTypeData.WinLoss);
-                this.BetCount = Converter.ToInt(betTypeData.BetCount);
                 this.Margin = betTypeData.Margin;
+                this.TurnoverReal = Converter.ToDecimal(betTypeData.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(betTypeData.WinLossReal);
+                this.MarginReal = betTypeData.MarginReal;
+                this.BetCount = Converter.ToInt(betTypeData.BetCount);                
                 this.IsLive = betTypeData.IsLive;
                 this.FlagForViewReport = betTypeData.FlagForViewReport;
             }
@@ -55,9 +58,15 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal WinLoss { get; set; }
 
-        public int BetCount { get; set; }
-
         public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
+
+        public int BetCount { get; set; }     
 
         public bool IsLive { get; set; }
 
