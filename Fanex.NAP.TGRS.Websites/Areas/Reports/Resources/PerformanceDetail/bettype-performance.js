@@ -318,24 +318,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
-                    { HeaderText: labels.Market, Name: "ColMarket", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfLeagues, Name: "ColNoOfLeagues", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-      
         var columns = [
             { HeaderText: labels.No, Width: 40, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: labels.BetType, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
@@ -366,7 +348,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
             },
-        ];        
+        ];
 
         if (isRealFigurePermission) {
             columns = columns.concat([
@@ -387,7 +369,23 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
                 }
             ]);
-        }        
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetType, Name: "ColBetType", MergeRowNumber: 2 },
+                    { HeaderText: labels.Market, Name: "ColMarket", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfLeagues, Name: "ColNoOfLeagues", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
+        }       
 
         gridOptions.columns = columns;
 
@@ -649,7 +647,36 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     // Render betchoice performance grid.
     var renderBetChoicePerformanceGrid = function (data, betTypeId, betTypeName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';              
+
+        var gridOptions = {           
+            gridExpandHeight: 260,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleBetChoicePerformanceGridEvents(betTypeId, betTypeName);
+
+                    return rows;
+                }
+            },
+            showNumberColumn: true,
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    handleBetChoicePerformanceGridEvents(betTypeId, betTypeName);
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+
         var columns = [];
 
         columns = columns.concat([
@@ -680,7 +707,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
             }
-        ]);
+        ]); 
 
         if (isRealFigurePermission) {
             columns = columns.concat([
@@ -701,37 +728,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
-        }
 
-        var gridOptions = {           
-            gridExpandHeight: 260,
-            showTitle: true,
-            titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
-            },
-            sortOption: {
-                afterGridSorted: function (rows) {
-                    handleBetChoicePerformanceGridEvents(betTypeId, betTypeName);
-
-                    return rows;
-                }
-            },
-            showNumberColumn: true,
-            showPager: true,
-            pagerOption: {
-                currentPage: 0,
-                itemsPerPage: common.Constants.PageSize,
-                itemsPerPageArray: common.Constants.PagerRanges,
-                afterPagedFunction: function (rows) {
-                    handleBetChoicePerformanceGridEvents(betTypeId, betTypeName);
-
-                    return rows;
-                }
-            },
-            showFooter: true
-        };
-
-        if (isRealFigurePermission) {
             gridOptions.customizeHeader = true;
 
             gridOptions.groupHeaderRows = [{
@@ -929,51 +926,35 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
-                    { HeaderText: labels.LeagueGroup, Name: "ColLeagueGroupName", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-            { HeaderText: labels.LeagueGroup, Width: 100, Name: 'ColLeagueGroupName', HeaderAlign: 'center', CellAlign: 'center' },
-            {
-                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat
-            },
-            {
-                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat, Sort: true
-            },
-            {
-                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true
-            },
-            {
-                HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true
-            },
-            {
-                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },           
-            {
-                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-            }]);
+        { HeaderText: labels.League, Width: 300, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+        { HeaderText: labels.LeagueGroup, Width: 100, Name: 'ColLeagueGroupName', HeaderAlign: 'center', CellAlign: 'center' },
+        {
+            HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.IntegerFormat
+        },
+        {
+            HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.IntegerFormat, Sort: true
+        },
+        {
+            HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.DecimalFormat, Sort: true
+        },
+        {
+            HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.DecimalFormat, Sort: true
+        },
+        {
+            HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+        },
+        {
+            HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+            FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+        }]);
 
         if (isRealFigurePermission) {
             columns = columns.concat([
@@ -994,7 +975,21 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
-        }
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
+                    { HeaderText: labels.LeagueGroup, Name: "ColLeagueGroupName", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
+        }       
         
         gridOptions.columns = columns;
 
@@ -1208,25 +1203,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.Trader, Name: "ColTrader", MergeRowNumber: 2 },
-                    { HeaderText: labels.Grade, Name: "ColGrade", MergeRowNumber: 2 },
-                    { HeaderText: labels.Team, Name: "ColTeam", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfLeagues, Name: "ColNoOfLeagues", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([
@@ -1261,11 +1237,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },           
+            },
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-            }           
+            }
         ]);
 
         if (isRealFigurePermission) {
@@ -1287,7 +1263,24 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
-        }
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.Trader, Name: "ColTrader", MergeRowNumber: 2 },
+                    { HeaderText: labels.Grade, Name: "ColGrade", MergeRowNumber: 2 },
+                    { HeaderText: labels.Team, Name: "ColTeam", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfLeagues, Name: "ColNoOfLeagues", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
+        }       
 
         gridOptions.columns = columns;
 
@@ -1547,51 +1540,35 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };       
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
-                    { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },                  
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
-        columns = columns.concat([
-            { HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
-            { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
-            {
-                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat
-            },
-            {
-                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },            
-            {
-                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            }           
-        ]);
-
         if (isRealFigurePermission) {
+            columns = columns.concat([
+                { HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
+                { HeaderText: labels.Match, Width: 400, Name: 'ColMatch', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+                {
+                    HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.IntegerFormat
+                },
+                {
+                    HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
+                {
+                    HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat
+                },
+                {
+                    HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                },
+                {
+                    HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
+                }
+            ]);
+
             columns = columns.concat([
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnoverReal', HeaderAlign: 'center', CellAlign: 'right',
@@ -1606,6 +1583,20 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 }
             ]);
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
+                    { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },                  
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 3 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 3 }
+                ]
+            }];
         }
 
         gridOptions.columns = columns;
@@ -1648,9 +1639,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     subRows.push(row);
                 });
 
-                var totalColumns = [];
+                var groupColumns = [];
 
-                totalColumns = totalColumns.concat([
+                groupColumns = groupColumns.concat([
                     { Name: 'ColNo', Value: group.LeagueName, MergeColNumber: 3, CellAlign: 'left' },
                     { Name: 'ColBetCount', Value: group.Total.BetCount },
                     { Name: 'ColScore', Value: common.GetNumWithLabel(group.Total.Score, labels.NA) },
@@ -1660,7 +1651,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 ]);
 
                 if (isRealFigurePermission) {
-                    totalColumns = totalColumns.concat([
+                    groupColumns = groupColumns.concat([
                         { Name: 'ColTurnoverReal', Value: group.Total.TurnoverReal },
                         { Name: 'ColWinLossReal', Value: group.Total.WinLossReal },
                         { Name: 'ColMarginReal', Value: common.GetNumWithLabel(group.Total.MarginReal, labels.NA) }
@@ -1668,7 +1659,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 }
 
                 row = {
-                    Columns: totalColumns,
+                    Columns: groupColumns,
                     SubRows: subRows
                 };
                 bodyData.push(row);
@@ -1679,7 +1670,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             totalColumns = totalColumns.concat([
                 { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
                 { Name: 'ColBetCount', Value: cachedData.GrandTotal.BetCount },
-                //{ Name: 'ColScore', Value: common.GetNumWithLabel(cachedData.GrandTotal.Score, labels.NA) }
+                { Name: 'ColScore', Value: common.GetNumWithLabel(cachedData.GrandTotal.Score, labels.NA) },
                 { Name: 'ColTurnover', Value: cachedData.GrandTotal.Turnover },
                 { Name: 'ColWinLoss', Value: cachedData.GrandTotal.WinLoss },               
                 { Name: 'ColMargin', Value: common.GetNumWithLabel(cachedData.GrandTotal.Margin, labels.NA) }
@@ -1801,23 +1792,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
-                    { HeaderText: labels.LeagueGroup, Name: "ColLeagueGroupName", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfBetChoices, Name: "ColNoOfBetChoices", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([
@@ -1848,7 +1822,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },           
+            },
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
@@ -1874,6 +1848,22 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.League, Name: "ColLeague", MergeRowNumber: 2 },
+                    { HeaderText: labels.LeagueGroup, Name: "ColLeagueGroupName", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfBetChoices, Name: "ColNoOfBetChoices", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
         }
 
         gridOptions.columns = columns;
@@ -2086,24 +2076,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.Trader, Name: "ColTrader", MergeRowNumber: 2 },
-                    { HeaderText: labels.Grade, Name: "ColGrade", MergeRowNumber: 2 },
-                    { HeaderText: labels.Team, Name: "ColTeam", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([
@@ -2135,7 +2107,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
             },
-            
+
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
@@ -2156,12 +2128,27 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLossReal', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
                 },
-
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMarginReal', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.Trader, Name: "ColTrader", MergeRowNumber: 2 },
+                    { HeaderText: labels.Grade, Name: "ColGrade", MergeRowNumber: 2 },
+                    { HeaderText: labels.Team, Name: "ColTeam", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
+                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
         }
 
         gridOptions.columns = columns;
@@ -2371,21 +2358,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetChoice, Name: "ColBetChoice", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },               
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([
@@ -2410,7 +2382,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },            
+            },
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
@@ -2436,8 +2408,21 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
                 }
             ]);
-        }
 
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetChoice, Name: "ColBetChoice", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },               
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
+                ]
+            }];
+        }
+       
         gridOptions.columns = columns;
 
         var bodyData = [];
@@ -2609,22 +2594,6 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             showFooter: true
         };
 
-        if (isRealFigurePermission) {
-            gridOptions.customizeHeader = true;
-
-            gridOptions.groupHeaderRows = [{
-                Columns: [
-                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                    { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
-                    { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
-                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },  
-                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },                   
-                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
-                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
-                ]
-            }];
-        }
-
         var columns = [];
 
         columns = columns.concat([
@@ -2646,11 +2615,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            },           
+            },
             {
                 HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-            }           
+            }
         ]);
 
         if (isRealFigurePermission) {
@@ -2662,12 +2631,26 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLossReal', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                },               
+                },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMarginReal', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
-                }  
+                }
             ]);
+
+            gridOptions.customizeHeader = true;
+
+            gridOptions.groupHeaderRows = [{
+                Columns: [
+                    { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
+                    { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
+                    { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },  
+                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },                   
+                    { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 3 },
+                    { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 3 }
+                ]
+            }];
         }
 
         gridOptions.columns = columns;
@@ -2710,14 +2693,26 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     }
 
     var renderMatchPerformanceOfLeagueTraderGridToFooter = function (data) {
-        return footerData = [{
-            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
-                { Name: 'ColBetCount', Value: data.Total.BetCount },
-                { Name: 'ColScore', Value: common.GetNumWithLabel(data.Total.Score, labels.NA) },
-                { Name: 'ColTurnover', Value: data.Total.Turnover },
-                { Name: 'ColWinLoss', Value: data.Total.WinLoss },           
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]                
-        }];
+        var columns = [];
+
+        columns = columns.concat([
+            { Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+            { Name: 'ColBetCount', Value: data.Total.BetCount },
+            { Name: 'ColScore', Value: common.GetNumWithLabel(data.Total.Score, labels.NA) },
+            { Name: 'ColTurnover', Value: data.Total.Turnover },
+            { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }
+        ]);
+
+        if (isRealFigurePermission) {
+            columns = columns.concat([                
+                { Name: 'ColTurnoverReal', Value: data.Total.TurnoverReal },
+                { Name: 'ColWinLossReal', Value: data.Total.WinLossReal },
+                { Name: 'ColMarginReal', Value: common.GetNumWithLabel(data.Total.MarginReal, labels.NA) }
+            ]);
+        }
+
+        return footerData = [{ Columns: columns }];
     }
 
     // Handle match performance grid's events.
