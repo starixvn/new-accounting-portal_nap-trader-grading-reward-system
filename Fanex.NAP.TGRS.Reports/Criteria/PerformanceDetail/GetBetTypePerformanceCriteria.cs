@@ -49,6 +49,16 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public decimal? MarginTo { get; set; }
 
+        public bool IsReal { get; set; }
+
+        public decimal? TurnoverReal { get; set; }
+
+        public decimal? WinLossReal { get; set; }
+
+        public decimal? MarginFromReal { get; set; }
+
+        public decimal? MarginToReal { get; set; }
+
         public string Bettypes { get; set; }
 
         public bool IsExcludeLeagues { get; set; }

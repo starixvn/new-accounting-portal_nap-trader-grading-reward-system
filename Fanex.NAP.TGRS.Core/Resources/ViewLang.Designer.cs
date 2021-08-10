@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -1150,11 +1150,47 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum Real Turnover.
+        /// </summary>
+        public static string MinimumRealTurnover {
+            get {
+                return ResourceManager.GetString("MinimumRealTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Real WinLoss.
+        /// </summary>
+        public static string MinimumRealWinLoss {
+            get {
+                return ResourceManager.GetString("MinimumRealWinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum Turnover.
         /// </summary>
         public static string MinimumTurnover {
             get {
                 return ResourceManager.GetString("MinimumTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Virtual Turnover.
+        /// </summary>
+        public static string MinimumVirtualTurnover {
+            get {
+                return ResourceManager.GetString("MinimumVirtualTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Virtual WinLoss.
+        /// </summary>
+        public static string MinimumVirtualWinLoss {
+            get {
+                return ResourceManager.GetString("MinimumVirtualWinLoss", resourceCulture);
             }
         }
         
@@ -1569,6 +1605,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string ProfitMargin_4Years {
             get {
                 return ResourceManager.GetString("ProfitMargin_4Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Real Margin.
+        /// </summary>
+        public static string RealMargin {
+            get {
+                return ResourceManager.GetString("RealMargin", resourceCulture);
             }
         }
         
@@ -2235,6 +2280,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string Virtual {
             get {
                 return ResourceManager.GetString("Virtual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Margin.
+        /// </summary>
+        public static string VirtualMargin {
+            get {
+                return ResourceManager.GetString("VirtualMargin", resourceCulture);
             }
         }
         

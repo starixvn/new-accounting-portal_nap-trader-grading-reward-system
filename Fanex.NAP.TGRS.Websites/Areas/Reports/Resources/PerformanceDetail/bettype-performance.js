@@ -33,6 +33,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         txtMarginTo: null,
         txtMinTurnover: null,
         txtMinWinLoss: null,
+        txtMinRealTurnover: null,
+        txtMinRealWinLoss: null,
+        txtRealMarginFrom: null,
+        txtRealMarginTo: null,
         ddlLeagueGroup: null,
         txtLeague: null,
         btnGenerate: null,
@@ -93,6 +97,13 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divLeaguePerformanceGrid = $('#divLeaguePerformanceGrid');
         domElements.divBetChoicePerformanceContainer = $('#divBetChoicePerformanceContainer');
         domElements.divBetChoicePerformanceGrid = $('#divBetChoicePerformanceGrid');
+
+        if (isRealFigurePermission) {
+            domElements.txtMarginFromReal = domElements.divBetTypePerformanceFilter.find('#txtMarginFromReal');
+            domElements.txtMarginToReal = domElements.divBetTypePerformanceFilter.find('#txtMarginToReal');
+            domElements.txtMinTurnoverReal = domElements.divBetTypePerformanceFilter.find('#txtMinTurnoverReal');
+            domElements.txtMinWinLossReal = domElements.divBetTypePerformanceFilter.find('#txtMinWinLossReal');
+        }
     };
 
     // Bind event handlers.
@@ -149,6 +160,34 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             validator.ClearError(domElements.txtMinWinLoss);
         });
 
+        domElements.txtMarginFromReal.numberField(2, true, null).focusout(function () {
+            var value = $.trim(domElements.txtMarginFromReal.val());
+
+            domElements.txtMarginFromReal.val(value);
+            validator.ClearError(domElements.txtMarginFromReal);
+        });
+
+        domElements.txtMarginToReal.numberField(2, true, null).focusout(function () {
+            var value = $.trim(domElements.txtMarginToReal.val());
+
+            domElements.txtMargitxtMarginToRealnTo.val(value);
+            validator.ClearError(domElements.txtMarginToReal);
+        });
+
+        domElements.txtMinTurnoverReal.numberField(2, true, null).focusout(function () {
+            var value = $.trim(domElements.txtMinTurnoverReal.val());
+
+            domElements.txtMinTurnoverReal.val(value);
+            validator.ClearError(domElements.txtMinTurnoverReal);
+        });
+
+        domElements.txtMinWinLossReal.numberField(2, true, null).focusout(function () {
+            var value = $.trim(domElements.txtMinWinLossReal.val());
+
+            domElements.txtMinWinLossReal.val(value);
+            validator.ClearError(domElements.txtMinWinLossReal);
+        });
+
         domElements.ddlLeagueGroup.multiselect({
             selectedList: 2,
             minWidth: 195,
@@ -168,9 +207,17 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
                 parameters.MarginTo = domElements.txtMarginTo.val().replace(/,/g, '');
                 parameters.Turnover = domElements.txtMinTurnover.val().replace(/,/g, '');
-                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');
+                parameters.WinLoss = domElements.txtMinWinLoss.val().replace(/,/g, '');                
                 parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null;
                 parameters.LeagueName = domElements.txtLeague.val();
+                parameters.IsReal = isRealFigurePermission;
+
+                if (isRealFigurePermission) {
+                    parameters.MarginFromReal = domElements.txtMarginFromReal.val().replace(/,/g, '');
+                    parameters.MarginToReal = domElements.txtMarginToReal.val().replace(/,/g, '');
+                    parameters.TurnoverReal = domElements.txtMinTurnoverReal.val().replace(/,/g, '');
+                    parameters.WinLossReal = domElements.txtMinWinLossReal.val().replace(/,/g, ''); 
+                }
 
                 hideAllReports();
                 getBetTypePerformanceReport();
