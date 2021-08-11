@@ -661,6 +661,7 @@
     <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\basketball-dashboard.less" />
     <Content Include="Areas\OSReports\Views\OSDashboard\BasketBallDashboard.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypeRealMeasurePerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

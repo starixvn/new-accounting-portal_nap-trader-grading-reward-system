@@ -52,7 +52,7 @@
                 </select>
             </div>
             <div class="date-range"><div id="divDateRange"></div></div>
-            <div class="lbl-field col_3">
+            <div class="lbl-field col_4">
                 <label for="ddlBetType">@ViewLang.BetType</label>
             </div>
             <div class="edit-field col_9">
@@ -88,7 +88,7 @@
             </div>
 
             <!-- Virtual -->
-            <div class="lbl-field col_5">
+            <div class="lbl-field col_6">
                 <label for="txtMinTurnover">@ViewLang.MinimumVirtualTurnover</label>                
             </div>
             <div class="edit-field col_5">
@@ -121,7 +121,7 @@
             @if (@ViewBag.IsRealFigurePermission)
             {
                 <!-- Real -->
-                <div class="lbl-field col_5">
+                <div class="lbl-field col_6">
                     <label for="txtMinTurnoverReal">@ViewLang.MinimumRealTurnover</label>
                 </div>
                 <div class="edit-field col_5">
@@ -133,7 +133,7 @@
                 <div class="edit-field col_5">
                     <input type="text" id="txtMinWinLossReal" maxlength="10" data-val-number="@Messages.InvalidValueError" />
                 </div>
-                <div class="lbl-field col_5 margin">
+                <div class="lbl-field col_6 margin">
                     <label for="txtMarginFromReal">@ViewLang.RealMargin</label>
                 </div>
                 <div class="edit-field col_9">

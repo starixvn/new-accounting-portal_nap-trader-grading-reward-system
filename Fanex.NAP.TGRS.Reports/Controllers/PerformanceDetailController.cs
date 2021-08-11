@@ -37,6 +37,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         private const string GradePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls";
         private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls";
         private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls";
+        private const string BetTypePerformanceDetailRealMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypeRealMeasurePerformance.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -793,7 +794,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            string templatePath = Server.MapPath(BetTypePerformanceDetail);
+            string templatePath = criteria.IsReal ? Server.MapPath(BetTypePerformanceDetailRealMeasure) : Server.MapPath(BetTypePerformanceDetail);
 
             this._detailReportService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
 
