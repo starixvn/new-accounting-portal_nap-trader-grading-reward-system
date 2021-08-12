@@ -99,6 +99,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         {
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
+            this.Total.TurnoverReal += item.TurnoverReal;
+            this.Total.WinLossReal += item.WinLossReal;
             this.Total.BetCount += item.BetCount;
             this.Total.WinLossScore += item.WinLossScore;
             this.Total.SumCategory += item.SumCategory;

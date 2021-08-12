@@ -72,9 +72,9 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public int BetCount { get; set; }
 
-        public decimal? TurnoverReal { get; set; }
+        public decimal TurnoverReal { get; set; }
 
-        public decimal? WinLossReal { get; set; }
+        public decimal WinLossReal { get; set; }
 
         public decimal? MarginReal { get; set; }
 

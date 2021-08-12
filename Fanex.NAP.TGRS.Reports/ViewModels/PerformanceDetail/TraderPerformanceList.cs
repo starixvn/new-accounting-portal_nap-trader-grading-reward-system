@@ -62,7 +62,9 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.Total.NoOfLeagues += item.NoOfLeagues;
             this.Total.NoOfMatches += item.NoOfMatches;
             this.Total.Turnover += item.Turnover;
-            this.Total.WinLoss += item.WinLoss;
+            this.Total.WinLoss += item.WinLoss;           
+            this.Total.TurnoverReal += item.TurnoverReal;
+            this.Total.WinLossReal += item.WinLossReal;
             this.Total.BetCount += item.BetCount;
         }
     }

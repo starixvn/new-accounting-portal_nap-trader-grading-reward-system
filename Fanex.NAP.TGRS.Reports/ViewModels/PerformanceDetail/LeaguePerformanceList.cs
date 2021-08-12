@@ -150,6 +150,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             this.Total.NoOfMatches += item.NoOfMatches;
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
+            this.Total.TurnoverReal += item.TurnoverReal;
+            this.Total.WinLossReal += item.WinLossReal;
             this.Total.BetCount += item.BetCount;
         }
 
@@ -161,6 +163,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TotalItemLive.NoOfMatches += item.NoOfMatches;
                 this.TotalItemLive.Turnover += item.Turnover;
                 this.TotalItemLive.WinLoss += item.WinLoss;
+                this.TotalItemLive.TurnoverReal += item.TurnoverReal;
+                this.TotalItemLive.WinLossReal += item.WinLossReal;
                 this.TotalItemLive.BetCount += item.BetCount;
             }
             else
@@ -169,6 +173,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.TotalItemNonLive.NoOfMatches += item.NoOfMatches;
                 this.TotalItemNonLive.Turnover += item.Turnover;
                 this.TotalItemNonLive.WinLoss += item.WinLoss;
+                this.TotalItemNonLive.TurnoverReal += item.TurnoverReal;
+                this.TotalItemNonLive.WinLossReal += item.WinLossReal;
                 this.TotalItemNonLive.BetCount += item.BetCount;
             }
         }

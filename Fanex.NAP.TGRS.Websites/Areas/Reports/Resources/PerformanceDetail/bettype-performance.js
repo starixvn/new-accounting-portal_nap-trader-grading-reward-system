@@ -1264,14 +1264,14 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             {
                 HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
+            },           
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat, Sort: true
             },
             {
                 HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat, Sort: true
             },
             {
                 HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
@@ -1320,9 +1320,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                     { HeaderText: labels.Grade, Name: "ColGrade", MergeRowNumber: 2 },
                     { HeaderText: labels.Team, Name: "ColTeam", MergeRowNumber: 2 },
                     { HeaderText: labels.NoOfLeagues, Name: "ColNoOfLeagues", MergeRowNumber: 2 },
-                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
-                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
+                    { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },                   
                     { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
+                    { HeaderText: labels.Score, Name: "ColScore", MergeRowNumber: 2 },
                     { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
                     { HeaderText: "Real", Name: "ColTurnoverReal", MergeColNumber: 4 }
                 ]
