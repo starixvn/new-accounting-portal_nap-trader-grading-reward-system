@@ -36,8 +36,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
         private const string GradePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls";
         private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls";
-        private const string BetTypePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformance.xls";
-        private const string BetTypePerformanceDetailRealMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypeRealMeasurePerformance.xls";
+        private const string BetTypePerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceHalfMeasure.xls";
+        private const string BetTypePerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceFullMeasure.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -117,7 +117,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
             ViewBag.Markets = GetMarketsPermission();
-            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
+            ViewBag.IsRealFigurePermission = false;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -286,7 +286,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
+            ViewBag.IsRealFigurePermission = false;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -380,7 +380,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
+            ViewBag.IsRealFigurePermission = false;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -521,7 +521,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;
+            ViewBag.IsRealFigurePermission = false;
 
             if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
@@ -650,9 +650,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = AppSession.IsRealFigurePermission;            
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+            if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
@@ -794,7 +796,9 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult ExportBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            string templatePath = criteria.IsReal ? Server.MapPath(BetTypePerformanceDetailRealMeasure) : Server.MapPath(BetTypePerformanceDetail);
+            string templatePath = (criteria.IsReal && criteria.IsVirtual) 
+                    ? Server.MapPath(BetTypePerformanceFullMeasureDetail) 
+                    : Server.MapPath(BetTypePerformanceHalfMeasureDetail);
 
             this._detailReportService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
 

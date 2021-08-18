@@ -49,7 +49,11 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public decimal? MarginTo { get; set; }
 
+        [SpParam(Ignored = true)]
         public bool IsReal { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsVirtual { get; set; }
 
         public decimal? TurnoverReal { get; set; }
 

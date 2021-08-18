@@ -41,6 +41,8 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.GroupList.Add(group);
                 this.GrandTotal.Turnover += group.Total.Turnover;
                 this.GrandTotal.WinLoss += group.Total.WinLoss;
+                this.GrandTotal.TurnoverReal += group.Total.TurnoverReal;
+                this.GrandTotal.WinLossReal += group.Total.WinLossReal;
                 this.GrandTotal.BetCount += group.Total.BetCount;
             }
         }

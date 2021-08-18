@@ -125,7 +125,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
                     AppSession.IsExcludingLeagues = IsExcludeLeague;
                     AppSession.IsSoccerLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SoccerLive)) >= (int)Constant.Policy.Read ? true : false;
                     AppSession.IsSoccerNoneLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive)) >= (int)Constant.Policy.Read ? true : false;
-                    AppSession.IsRealFigurePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SportsRealFigure)) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsVirtualPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance)) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsRealPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.RealPerformance)) >= (int)Constant.Policy.Read ? true : false;
 
                     if (this.SiteId != 0)
                     {

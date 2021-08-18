@@ -148,6 +148,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
         {
             this.Total.NoOfTraders += item.NoOfTraders;
             this.Total.NoOfMatches += item.NoOfMatches;
+            this.Total.NoOfBetChoices += item.NoOfBetChoices;
             this.Total.Turnover += item.Turnover;
             this.Total.WinLoss += item.WinLoss;
             this.Total.TurnoverReal += item.TurnoverReal;

@@ -37,6 +37,9 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.WinLoss = Converter.ToDecimal(matchData.WinLoss);
                 this.BetCount = Converter.ToInt(matchData.BetCount);
                 this.Margin = matchData.Margin;
+                this.TurnoverReal = Converter.ToDecimal(matchData.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(matchData.WinLossReal);
+                this.MarginReal = matchData.MarginReal;
                 this.Score = matchData.Score;
                 this.IsLive = matchData.IsLive;
             }

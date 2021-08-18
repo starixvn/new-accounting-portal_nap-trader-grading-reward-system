@@ -138,5 +138,7 @@ public static class TGRSFunctionKeys
 
     public const string PerformanceSummaryComparison = "PerformanceSummaryComparison";
 
-    public const string SportsRealFigure = "SportsRealFigure";
+    public const string VirtualPerformance = "VirtualPerformance";
+
+    public const string RealPerformance = "RealPerformance";
 }

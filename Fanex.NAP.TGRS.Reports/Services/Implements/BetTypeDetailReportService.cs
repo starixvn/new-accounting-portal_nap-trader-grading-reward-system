@@ -256,7 +256,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 FilterBlock(userId, criteria, ref writer);
                 
-                writer.CopyRows(3, 2);
+                var rowHeader = writer.CopyRows(3, 2);
+
+                if (!criteria.IsVirtual && criteria.IsReal)
+                {
+                    var cellHeader = rowHeader.GetCell(7);
+
+                    cellHeader.SetCellValue("Real");
+                }                
 
                 FillRowData(betTypeData, criteria, ref writer);
                 
@@ -304,12 +311,18 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.NoOfTraders,
                     item.NoOfLeagues,
                     item.NoOfMatches,
-                    item.BetCount,
-                    item.Turnover,
-                    item.Turnover / item.NoOfMatches,
-                    item.WinLoss,                    
-                    (object)item.Margin ?? ViewLang.NA
+                    item.BetCount,                 
                 };
+
+                if (criteria.IsVirtual)
+                {
+                    record.AddRange(new object[] {
+                        item.Turnover,
+                        item.Turnover / item.NoOfMatches,
+                        item.WinLoss,
+                        (object)item.Margin ?? ViewLang.NA
+                    });
+                }
 
                 if (criteria.IsReal)
                 {
@@ -326,23 +339,23 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (criteria.Market == -1)
             {
-                var totalRecord = CreateRecord(ref writer, data.TotalItemLive, criteria.IsReal, ViewLang.GrandTotal, true);
+                var totalRecord = CreateRecord(ref writer, data.TotalItemLive, criteria, ViewLang.GrandTotal, true);
 
                 writer.WriteRow(7, totalRecord.ToArray());
                 
-                totalRecord = CreateRecord(ref writer, data.TotalItemNonLive, criteria.IsReal, null, false);
+                totalRecord = CreateRecord(ref writer, data.TotalItemNonLive, criteria, null, false);
 
                 writer.WriteRow(8, totalRecord.ToArray());
             }
             else
             {
-                var totalRecord = CreateRecord(ref writer, data.Total, criteria.IsReal, ViewLang.GrandTotal, criteria.Market == 1);
+                var totalRecord = CreateRecord(ref writer, data.Total, criteria, ViewLang.GrandTotal, criteria.Market == 1);
 
                 writer.WriteRow(7, totalRecord.ToArray());
             }
         }
 
-        private List<object> CreateRecord(ref ExcelTemplateWriter writer, BetTypePerformanceItem total, bool isReal, string grandTotal, bool isLive)
+        private List<object> CreateRecord(ref ExcelTemplateWriter writer, BetTypePerformanceItem total, GetBetTypePerformanceCriteria criteria, string grandTotal, bool isLive)
         {
             var record = new List<object>
                 {
@@ -352,14 +365,20 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     total.NoOfTraders,
                     total.NoOfLeagues,
                     total.NoOfMatches,
-                    total.BetCount,
-                    total.Turnover,
-                    total.Turnover / total.NoOfMatches,
-                    total.WinLoss,                    
-                    (object)total.Margin ?? ViewLang.NA
+                    total.BetCount,                  
                 };
 
-            if (isReal)
+            if (criteria.IsVirtual)
+            {
+                record.AddRange(new object[] {
+                        total.Turnover,
+                        total.Turnover / total.NoOfMatches,
+                        total.WinLoss,
+                        (object)total.Margin ?? ViewLang.NA
+                    });
+            }
+
+            if (criteria.IsReal)
             {
                 record.AddRange(new object[] {
                         total.TurnoverReal,
@@ -381,15 +400,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FilterBlock(int userid, GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = criteria.IsReal ? writer.GetFont(11, 0) : writer.GetFont(10, 0);
-            IFont normalFont = criteria.IsReal ? writer.GetFont(12, 0) : writer.GetFont(11, 0);
+            IFont boldFont = writer.GetFont(11, 0);
+            IFont normalFont = writer.GetFont(12, 0);
             int lineCount = 0;
 
             var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
             List<BetTypeItem> betTypes = this.GetBetTypes(userid, permission).ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);
-            string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
-            string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);          
             string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
             var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
 
@@ -397,33 +414,40 @@ namespace Fanex.NAP.TGRS.Reports.Services
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, turnoverString, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, winlostString, normalFont, "\n");
+          
+            if (criteria.IsVirtual)
+            {
+                string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
+                string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumVirtualTurnover, boldFont, turnoverString, normalFont, "\n");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumVirtualWinLoss, boldFont, winlostString, normalFont, "\n");
+            }
 
             if (criteria.IsReal)
             {
                 string realTurnoverString = (criteria.TurnoverReal != null) ? criteria.TurnoverReal.Format(2) : string.Empty;
                 string realWinlostString = (criteria.WinLossReal != null) ? criteria.WinLossReal.Format(2) : string.Empty;
 
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumTurnover, boldFont, realTurnoverString, normalFont, "\n");
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumWinLoss, boldFont, realWinlostString, normalFont, "\n");
-            }
-
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, leagueGroupNameString, normalFont, "");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealTurnover, boldFont, realTurnoverString, normalFont, "\n");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealWinLoss, boldFont, realWinlostString, normalFont, "\n");
+            }            
                                              
-            if (criteria.MarginFrom != null || criteria.MarginTo != null)
+            if (criteria.IsVirtual && criteria.MarginFrom != null || criteria.MarginTo != null)
             {
-                var marginString = GenerateMarginString(criteria);
+                var marginString = GenerateMarginString(criteria.MarginFrom, criteria.MarginTo);
 
-                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Margin, boldFont, marginString, normalFont, "\n");
+                AppendBlockContent(ref contentRender, ref lineCount, ViewLang.VirtualMargin, boldFont, marginString, normalFont, "\n");
             }
 
             if (criteria.IsReal && criteria.MarginFromReal != null || criteria.MarginToReal != null)
             {
-                var marginString = GenerateMarginString(criteria);
+                var marginString = GenerateMarginString(criteria.MarginFromReal, criteria.MarginToReal);
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.RealMargin, boldFont, marginString, normalFont, "\n");
             }
+
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, leagueGroupNameString, normalFont, "");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -432,15 +456,15 @@ namespace Fanex.NAP.TGRS.Reports.Services
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
 
-        private string GenerateMarginString(GetBetTypePerformanceCriteria criteria)
+        private string GenerateMarginString(decimal? marginFrom, decimal? marginTo)
         {         
-            var marginFromString = criteria.MarginFrom != null ? criteria.MarginFrom.ToString() : MinPercentString;
-            var marginToString = criteria.MarginTo != null ? criteria.MarginTo.ToString() : MaxPercentString;
+            var marginFromString = marginFrom != null ? marginFrom.ToString() : MinPercentString;
+            var marginToString = marginTo != null ? marginTo.ToString() : MaxPercentString;
 
-            if (criteria.MarginFrom == null)
-                return string.Format("≤ {0}", criteria.MarginTo);
-            else if (criteria.MarginTo == null)
-                return string.Format("≥ {0}", criteria.MarginFrom);
+            if (marginFrom == null)
+                return string.Format("≤ {0}", marginTo);
+            else if (marginTo == null)
+                return string.Format("≥ {0}", marginFrom);
             else
                 return string.Format("from {0} to {1}", marginFromString, marginToString);
         }

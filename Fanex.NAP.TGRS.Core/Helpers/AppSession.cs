@@ -32,6 +32,9 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         private const string IsSoccerNoneLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerNoneLivePermission";
         private const string CurrentMarketSelectionKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentMarketSelection";
         private const string IsRealFigurePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsRealFigurePermission";
+        private const string IsVirtualPerformancePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsVirtualPerformancePermission";
+        private const string IsRealPerformancePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsRealPerformancePermission";
+
 
         /// <summary>
         ///     Gets or sets current login user.
@@ -141,11 +144,18 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             set { SessionManager.Set(CurrentMarketSelectionKey, value); }
         }
 
-        public static bool IsRealFigurePermission
+        public static bool IsVirtualPerformancePermission
         {
-            get { return SessionManager.Get<bool>(IsRealFigurePermissionKey); }
+            get { return SessionManager.Get<bool>(IsVirtualPerformancePermissionKey); }
 
-            set { SessionManager.Set(IsRealFigurePermissionKey, value); }
+            set { SessionManager.Set(IsVirtualPerformancePermissionKey, value); }
+        }
+
+        public static bool IsRealPerformancePermission
+        {
+            get { return SessionManager.Get<bool>(IsRealPerformancePermissionKey); }
+
+            set { SessionManager.Set(IsRealPerformancePermissionKey, value); }
         }
     }
 }

@@ -43,7 +43,7 @@
             <div class="lbl-field col_5">
                 <label>@ViewLang.Market</label>
             </div>
-            <div class="edit-field col_5">
+            <div class="edit-field col_3">
                 <select id="ddlMarket" disabled="@isDisableMarket">
                     @foreach (KeyValuePair<Market, string> item in markets)
                     {
@@ -74,60 +74,45 @@
                 </select>
             </div>
         </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5">
-                <label for="txtLeague">@ViewLang.LeagueGroup</label>
-            </div>
-            <div class="edit-field col_9">
-                <select id="ddlLeagueGroup" multiple="multiple">
-                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
-                    {
-                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
-                    }
-                </select>
-            </div>
-
-            <!-- Virtual -->
-            <div class="lbl-field col_6">
-                <label for="txtMinTurnover">@ViewLang.MinimumVirtualTurnover</label>                
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_5 min-winloss">
-                <label for="txtMinWinLoss">@ViewLang.MinimumVirtualWinLoss</label>
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_5 margin">
-                <label for="txtMarginFrom">@ViewLang.VirtualMargin</label>
-            </div>
-            <div class="edit-field col_9">
-                <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <!-- Virtual end -->
+        <div class="filter-row">            
+            @if (@ViewBag.IsVirtualPerformancePermission)
+            {
+                <!-- Virtual -->
+                <div class="lbl-field col_8">
+                    <label for="txtMinTurnover">@ViewLang.MinimumVirtualTurnover</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_6 min-winloss">
+                    <label for="txtMinWinLoss">@ViewLang.MinimumVirtualWinLoss</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_6 margin">
+                    <label for="txtMarginFrom">@ViewLang.VirtualMargin</label>
+                </div>
+                <div class="edit-field col_9">
+                    <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                    <span> - </span>
+                    <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <!-- Virtual end -->
+            }
 
         </div>       
-        <div class="filter-row">
-            <div class="lbl-field col_5">
-                <label for="txtLeague">@ViewLang.League</label>
-            </div>
-            <div class="edit-field col_9">
-                <input type="text" id="txtLeague" class="league" maxlength="100" />
-            </div>
-            @if (@ViewBag.IsRealFigurePermission)
+        <div class="filter-row">           
+            @if (@ViewBag.IsRealPerformancePermission)
             {
                 <!-- Real -->
-                <div class="lbl-field col_6">
+                <div class="lbl-field col_8">
                     <label for="txtMinTurnoverReal">@ViewLang.MinimumRealTurnover</label>
                 </div>
                 <div class="edit-field col_5">
                     <input type="text" id="txtMinTurnoverReal" maxlength="10" data-val-number="@Messages.InvalidValueError" />
                 </div>
-                <div class="lbl-field col_5 min-winloss">
+                <div class="lbl-field col_6 min-winloss">
                     <label for="txtMinWinLossReal">@ViewLang.MinimumRealWinLoss</label>
                 </div>
                 <div class="edit-field col_5">
@@ -145,6 +130,24 @@
             }
         </div>   
         <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_9">
+                <select id="ddlLeagueGroup" multiple="multiple">
+                    @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
+                    {
+                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_5">
+                <label for="txtLeague">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_9">
+                <input type="text" id="txtLeague" class="league" maxlength="100" />
+            </div>
+
             @*<div class="lbl-field col_3 bettype-bm"></div>*@
             <div class="lbl-field col_3 bettype-bm"></div>
             <div class="submit width-auto col_4">
@@ -231,6 +234,8 @@
             InvalidValue: '@Messages.InvalidValueError',
             RequiredField: '@Messages.RequiredFieldError'
         };
-        var isRealFigurePermission = '@ViewBag.IsRealFigurePermission' == "True";
+
+        var isVirtualPerformancePermission = '@ViewBag.IsVirtualPerformancePermission' == "True";
+        var isRealPerformancePermission = '@ViewBag.IsRealPerformancePermission' == "True";
 </script>
 }
