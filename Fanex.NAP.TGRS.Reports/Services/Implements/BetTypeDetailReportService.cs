@@ -267,7 +267,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 FillRowData(betTypeData, criteria, ref writer);
                 
-                if (criteria.IsReal)
+                if (criteria.IsReal && criteria.IsVirtual)
                     writer.SyncColumnsWidth(15);
                 else
                     writer.SyncColumnsWidth(11);
