@@ -27,9 +27,12 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.BetType = Converter.To<short>(betType.BetType);
                 this.TypeName = betType.TypeName;
                 this.Turnover = Converter.ToDecimal(betType.Turnover);
-                this.WinLoss = Converter.ToDecimal(betType.WinLoss);
-                this.BetCount = Converter.ToInt(betType.BetCount);
+                this.WinLoss = Converter.ToDecimal(betType.WinLoss);               
                 this.Margin = betType.Margin;
+                this.TurnoverReal = Converter.ToDecimal(betType.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(betType.WinLossReal);
+                this.MarginReal = betType.MarginReal;
+                this.BetCount = Converter.ToInt(betType.BetCount);
                 this.Benchmark = Converter.ToDecimal(betType.Benchmark);
                 this.Score = betType.Score;
             }
@@ -41,11 +44,17 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal Turnover { get; set; }
 
-        public decimal WinLoss { get; set; }
-
-        public int BetCount { get; set; }
+        public decimal WinLoss { get; set; }     
 
         public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
+
+        public int BetCount { get; set; }
 
         public decimal? Benchmark { get; set; }
 

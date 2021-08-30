@@ -32,9 +32,12 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                 this.NoOfLeagues = Converter.ToInt(gradeData.LeagueCount);
                 this.NoOfMatches = Converter.ToInt(gradeData.MatchCount);
                 this.Turnover = Converter.ToDecimal(gradeData.Turnover);
-                this.WinLoss = Converter.ToDecimal(gradeData.WinLoss);
-                this.BetCount = Converter.ToInt(gradeData.BetCount);
+                this.WinLoss = Converter.ToDecimal(gradeData.WinLoss);                
                 this.Margin = gradeData.Margin;
+                this.TurnoverReal = Converter.ToDecimal(gradeData.TurnoverReal);
+                this.WinLossReal = Converter.ToDecimal(gradeData.WinLossReal);
+                this.MarginReal = gradeData.MarginReal;
+                this.BetCount = Converter.ToInt(gradeData.BetCount);
                 this.Score = gradeData.Score;
                 this.IsLive = gradeData.IsLive;
             }
@@ -52,9 +55,15 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
 
         public decimal WinLoss { get; set; }
 
-        public int BetCount { get; set; }
-
         public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
+
+        public int BetCount { get; set; }
 
         public decimal? Score { get; set; }
 

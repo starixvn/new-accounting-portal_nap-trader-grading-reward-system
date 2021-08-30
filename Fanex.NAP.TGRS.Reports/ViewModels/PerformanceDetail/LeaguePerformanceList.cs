@@ -110,16 +110,19 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             if (this.Total != null)
             {
                 this.Total.Margin = CalculateTotalMargin(this.Total.WinLoss, this.Total.Turnover);
+                this.Total.MarginReal = CalculateTotalMargin(this.Total.WinLossReal, this.Total.TurnoverReal);
             }
 
             if (this.TotalItemLive != null)
             {
                 this.TotalItemLive.Margin = CalculateTotalMargin(this.TotalItemLive.WinLoss, this.TotalItemLive.Turnover);
+                this.TotalItemLive.MarginReal = CalculateTotalMargin(this.TotalItemLive.WinLossReal, this.TotalItemLive.TurnoverReal);
             }
 
             if (this.TotalItemNonLive != null)
             {
                 this.TotalItemNonLive.Margin = CalculateTotalMargin(this.TotalItemNonLive.WinLoss, this.TotalItemNonLive.Turnover);
+                this.TotalItemNonLive.MarginReal = CalculateTotalMargin(this.TotalItemNonLive.WinLossReal, this.TotalItemNonLive.TurnoverReal);
             }
         }
 

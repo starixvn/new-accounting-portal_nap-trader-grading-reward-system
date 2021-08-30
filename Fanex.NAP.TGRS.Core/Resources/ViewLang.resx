@@ -874,9 +874,9 @@
     <value>Minimum Virtual WinLoss</value>
   </data>
   <data name="RealMargin" xml:space="preserve">
-    <value>Real Margin</value>
+    <value>Real Margin %</value>
   </data>
   <data name="VirtualMargin" xml:space="preserve">
-    <value>Virtual Margin</value>
+    <value>Virtual Margin %</value>
   </data>
 </root>

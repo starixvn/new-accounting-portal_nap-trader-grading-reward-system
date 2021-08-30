@@ -663,6 +663,14 @@
     <Content Include="Areas\OSReports\Views\OSDashboard\BasketBallDashboard.cshtml" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceFullMeasure.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceHalfMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformanceFullMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformanceHalfMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceFullMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceHalfMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformanceFullMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformanceHalfMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformanceFullMeasure.xls" />
+    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformanceHalfMeasure.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -779,10 +787,6 @@
     <Content Include="Areas\Configuration\Resources\TraderManagement\trader-management.less" />
     <Content Include="Areas\Reports\Views\PerformanceSummary\TraderRank.cshtml" />
     <Content Include="Areas\Reports\Resources\PerformanceSummary\performance-summary.less" />
-    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls" />
-    <Content Include="Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls" />
     <Content Include="Areas\Configuration\Resources\SystemConfiguration\system-configuration.less" />
     <Content Include="Areas\Configuration\Views\SystemConfiguration\Index.cshtml" />
     <Content Include="Areas\Reports\Views\Dashboard\Index.cshtml" />

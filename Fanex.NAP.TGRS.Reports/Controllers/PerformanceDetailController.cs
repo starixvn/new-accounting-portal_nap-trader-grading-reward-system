@@ -31,11 +31,15 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
     public class PerformanceDetailController : TGRSBaseController
     {
         #region Attributes and Constructors
-
-        private const string LeaguePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformance.xls";
-        private const string TraderPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformance.xls";
-        private const string GradePerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformance.xls";
-        private const string TeamPerformanceDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformance.xls";
+        
+        private const string LeaguePerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceHalfMeasure.xls";
+        private const string LeaguePerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceFullMeasure.xls";        
+        private const string TraderPerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformanceHalfMeasure.xls";
+        private const string TraderPerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TraderPerformanceFullMeasure.xls";        
+        private const string GradePerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformanceHalfMeasure.xls";
+        private const string GradePerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\GradePerformanceFullMeasure.xls";        
+        private const string TeamPerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformanceHalfMeasure.xls";
+        private const string TeamPerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformanceFullMeasure.xls";
         private const string BetTypePerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceHalfMeasure.xls";
         private const string BetTypePerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceFullMeasure.xls";
 
@@ -117,9 +121,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
             ViewBag.Markets = GetMarketsPermission();
-            ViewBag.IsRealFigurePermission = false;
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+            if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
@@ -152,8 +158,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
         {
-            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            string templatePath = Server.MapPath(LeaguePerformanceDetail);
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;            
+
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                   ? Server.MapPath(LeaguePerformanceFullMeasureDetail)
+                   : Server.MapPath(LeaguePerformanceHalfMeasureDetail);
 
             this._detailReportService.ExportLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
 
@@ -286,10 +295,12 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = false;
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
-                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
+            if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+              || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml"); 
 
             return View();
         }
@@ -338,7 +349,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult ExportTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var templatePath = Server.MapPath(TraderPerformanceDetail);
+
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                   ? Server.MapPath(TraderPerformanceFullMeasureDetail)
+                   : Server.MapPath(TraderPerformanceHalfMeasureDetail);
+
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
             this._detailReportService.ExportTraderPerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);
@@ -379,11 +394,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Markets = GetMarketsPermission();            
             ViewBag.GroupBetTypes = groupBetTypes;
             ViewBag.Markets = GetMarketsPermission();
-            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = false;
+            ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();            
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
-                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
+            if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
+                return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");           
 
             return View();
         }
@@ -493,9 +510,12 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public ActionResult ExportGradePerformance(GetGradePerformanceCriteria criteria)
         {
-            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var templatePath = Server.MapPath(GradePerformanceDetail);
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;            
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                   ? Server.MapPath(GradePerformanceFullMeasureDetail)
+                   : Server.MapPath(GradePerformanceHalfMeasureDetail);
 
             this._detailReportService.ExportGradePerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);
 
@@ -521,9 +541,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Teams = teams;
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.LeagueGroups = this._detailReportService.GetLeagueGroups();
-            ViewBag.IsRealFigurePermission = false;
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            if (!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+            if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
+                || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");
 
             return View();
@@ -602,7 +624,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult ExportTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var templatePath = Server.MapPath(TeamPerformanceDetail);
+
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                   ? Server.MapPath(TeamPerformanceFullMeasureDetail)
+                   : Server.MapPath(TeamPerformanceHalfMeasureDetail);
+
             var isViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
 
             _detailReportService.ExportTeamPerformance(CurrentSession.UserId, criteria, templatePath, isViewScore);

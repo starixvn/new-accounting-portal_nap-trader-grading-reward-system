@@ -40,7 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public DateTime FromDate { get; set; }
 
-        public DateTime ToDate { get; set; }
+        public DateTime ToDate { get; set; }       
 
         public decimal? Turnover { get; set; }
 
@@ -49,6 +49,20 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
         public decimal? MarginFrom { get; set; }
 
         public decimal? MarginTo { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsReal { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsVirtual { get; set; }
+        
+        public decimal? TurnoverReal { get; set; }
+        
+        public decimal? WinLossReal { get; set; }
+        
+        public decimal? MarginFromReal { get; set; }
+        
+        public decimal? MarginToReal { get; set; }
 
         public string BetTypes { get; set; }
 

@@ -1609,7 +1609,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Real Margin.
+        ///   Looks up a localized string similar to Real Margin %.
         /// </summary>
         public static string RealMargin {
             get {
@@ -2284,7 +2284,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Virtual Margin.
+        ///   Looks up a localized string similar to Virtual Margin %.
         /// </summary>
         public static string VirtualMargin {
             get {

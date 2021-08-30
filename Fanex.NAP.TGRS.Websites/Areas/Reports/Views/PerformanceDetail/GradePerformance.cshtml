@@ -72,8 +72,61 @@
                         </optgroup>
                     }
                 </select>
-            </div>           
+            </div>
         </div>
+
+        @if (@ViewBag.IsVirtualPerformancePermission)
+        {
+            <div class="filter-row">
+                <div class="lbl-field col_8">
+                    <label for="txtMinTurnover">@ViewLang.MinimumVirtualTurnover</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_5 min-winloss">
+                    <label for="txtMinWinLoss">@ViewLang.MinimumVirtualWinLoss</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_3 margin">
+                    <label for="txtMarginFrom">@ViewLang.VirtualMargin</label>
+                </div>
+                <div class="edit-field col_9">
+                    <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                    <span> - </span>
+                    <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                </div>
+            </div>
+        }
+
+        @if (@ViewBag.IsRealPerformancePermission)
+        {
+            <div class="filter-row">
+                <div class="lbl-field col_8">
+                    <label for="txtMinTurnoverReal">@ViewLang.MinimumRealTurnover</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinTurnoverReal" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_5 min-winloss">
+                    <label for="txtMinWinLossReal">@ViewLang.MinimumRealWinLoss</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtMinWinLossReal" maxlength="10" data-val-number="@Messages.InvalidValueError" />
+                </div>
+                <div class="lbl-field col_3 margin">
+                    <label for="txtMarginFromReal">@ViewLang.RealMargin</label>
+                </div>
+                <div class="edit-field col_9">
+                    <input type="text" id="txtMarginFromReal" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                    <span> - </span>
+                    <input type="text" id="txtMarginToReal" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
+                </div>
+            </div>
+        }
+
         <div class="filter-row">
             <div class="lbl-field col_5">
                 <label for="txtLeague">@ViewLang.LeagueGroup</label>
@@ -86,30 +139,12 @@
                     }
                 </select>
             </div>
-            <div class="lbl-field col_5">
-                <label for="txtMinTurnover">@ViewLang.MinimumTurnover</label>
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtMinTurnover" maxlength="10" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_5 min-winloss">
-                <label for="txtMinWinLoss">@ViewLang.MinimumWinLoss</label>
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtMinWinLoss" maxlength="10" data-val-number="@Messages.InvalidValueError" />
-            </div>
-            <div class="lbl-field col_3 margin">
-                <label for="txtMarginFrom">@ViewLang.Margin</label>
-            </div>
-            <div class="edit-field col_9">
-                <input type="text" id="txtMarginFrom" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-                <span> - </span>
-                <input type="text" id="txtMarginTo" class="margin" maxlength="5" data-val-number="@Messages.InvalidValueError" />
-            </div>
+
             <div class="submit col_4">
                 <input id="btnGenerate" type="button" class="blue-button" value="@ViewLang.Generate" />
             </div>
         </div>
+
     </div>
 </div>
 <div id="divGradePerformanceContainer" class="content-grid display-none">
@@ -181,10 +216,13 @@
             ScoreByLatestBenchMark: '@ViewLang.ScoreByLatestBenchMark',
             ScoreByPeriod: '@ViewLang.ScoreByPeriod'
         };
+
         var messages = {
             InvalidValue: '@Messages.InvalidValueError',
             RequiredField: '@Messages.RequiredFieldError'
         };
-        
+
+        var isVirtualPerformancePermission = '@ViewBag.IsVirtualPerformancePermission' == "True";
+        var isRealPerformancePermission = '@ViewBag.IsRealPerformancePermission' == "True";
 </script>
 }
