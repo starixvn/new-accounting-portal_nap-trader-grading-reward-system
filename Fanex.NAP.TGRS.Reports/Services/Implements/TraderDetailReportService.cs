@@ -256,7 +256,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 record.AddRange(new object[] {
                         total.Turnover,
-                        total.Turnover / total.NoOfMatches,
+                        total.NoOfMatches != 0 ? (object)(total.Turnover / total.NoOfMatches) : ViewLang.NA,
                         total.WinLoss,
                         (object)total.Margin ?? ViewLang.NA
                     });
@@ -265,8 +265,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
             if (criteria.IsReal)
             {
                 record.AddRange(new object[] {
-                        total.TurnoverReal,
-                        total.TurnoverReal / total.NoOfMatches,
+                        total.TurnoverReal,                        
+                        total.NoOfMatches != 0 ? (object)(total.TurnoverReal / total.NoOfMatches) : ViewLang.NA,
                         total.WinLossReal,
                         (object)total.MarginReal ?? ViewLang.NA
                     });
@@ -307,8 +307,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 if (criteria.IsVirtual)
                 {
                     record.AddRange(new object[] {
-                        item.Turnover,
-                        item.Turnover / item.NoOfMatches,
+                        item.Turnover,                        
+                        item.NoOfMatches != 0 ? (object)(item.Turnover / item.NoOfMatches) : ViewLang.NA,
                         item.WinLoss,
                         (object)item.Margin ?? ViewLang.NA
                     });
@@ -317,8 +317,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 if (criteria.IsReal)
                 {
                     record.AddRange(new object[] {
-                        item.TurnoverReal,
-                        item.TurnoverReal / item.NoOfMatches,
+                        item.TurnoverReal,                        
+                        item.NoOfMatches != 0 ? (object)(item.TurnoverReal / item.NoOfMatches) : ViewLang.NA,
                         item.WinLossReal,
                         (object)item.MarginReal ?? ViewLang.NA
                     });

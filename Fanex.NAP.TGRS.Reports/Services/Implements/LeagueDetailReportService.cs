@@ -482,7 +482,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 {
                     record.AddRange(new object[] {
                         item.Turnover,
-                        item.Turnover / item.NoOfMatches,
+                        item.NoOfMatches != 0 ? (object)(item.Turnover / item.NoOfMatches) : ViewLang.NA,
                         item.WinLoss,
                         (object)item.Margin ?? ViewLang.NA
                     });
@@ -492,7 +492,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 {
                     record.AddRange(new object[] {
                         item.TurnoverReal,
-                        item.TurnoverReal / item.NoOfMatches,
+                        item.NoOfMatches != 0 ? (object)(item.TurnoverReal / item.NoOfMatches) : ViewLang.NA,
                         item.WinLossReal,
                         (object)item.MarginReal ?? ViewLang.NA
                     });
@@ -503,9 +503,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (criteria.Market == -1)
             {
-                // Total row
-                LeaguePerformanceItem total = data.TotalItemLive;               
-
                 var totalRecord = CreateRecordTotalLeague(ref writer, data.TotalItemLive, criteria, ViewLang.GrandTotal, true);
 
                 writer.WriteRow(7, totalRecord.ToArray());
@@ -538,7 +535,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 record.AddRange(new object[] {
                         total.Turnover,
-                        total.Turnover / total.NoOfMatches,
+                        total.NoOfMatches != 0 ? (object)(total.Turnover / total.NoOfMatches) : ViewLang.NA,
                         total.WinLoss,
                         (object)total.Margin ?? ViewLang.NA
                     });
@@ -548,7 +545,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 record.AddRange(new object[] {
                         total.TurnoverReal,
-                        total.TurnoverReal / total.NoOfMatches,
+                        total.NoOfMatches != 0 ? (object)(total.TurnoverReal / total.NoOfMatches) : ViewLang.NA,
                         total.WinLossReal,
                         (object)total.MarginReal ?? ViewLang.NA
                     });
