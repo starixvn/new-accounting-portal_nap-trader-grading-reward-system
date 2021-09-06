@@ -29,19 +29,33 @@
     </div>
 </div>
 <div id="divReportData">
+    <fieldset>
+        <div id="switchChartFigure" class="switch-toggle-figure">
+            @if (ViewBag.IsVirtualPerformancePermission && ViewBag.IsRealPerformancePermission)
+            {
+                <input id="chkVirtualFigure" type="radio" name="Figure" value="Virtual">
+                <label for="Virtual" id="lblVirtualFigure">Virtual</label>
+
+                <input id="chkRealFigure" type="radio" name="Figure" value="Real" checked>
+                <label for="Real" id="lblRealFigure">Real</label>
+            }
+
+        </div>
+    </fieldset>
+
     <div id="divGeneralInfo" class="content-general-info display-none">
         <div class="info-cell-1">
-            <label class="title">@ViewLang.LiveTurnover</label>
+            <label class="title" id="titleTurnOver">@ViewLang.LiveTurnover</label>
             <label class="number" id="lblTurnOver">
             </label>
         </div>
         <div class="info-cell-1">
-            <label class="title">@ViewLang.LiveWinLoss</label>
+            <label class="title" id="titleWinLoss">@ViewLang.LiveWinLoss</label>
             <label class="number" id="lblWinLoss">
             </label>
         </div>
         <div class="info-cell-1">
-            <label class="title">@ViewLang.MarginSummary</label>
+            <label class="title" id="titleMargin">@ViewLang.MarginSummary</label>
             <label class="number" id="lblMargin">
             </label>
         </div>
@@ -64,7 +78,7 @@
             <label for="chkDay">Day</label>
 
             <a id="toggleA"></a>
-        </div>
+        </div>      
     </div>
     <div class="content-grid display-none">
         <div id="divBettypePerformanceGrid" class="freegrid display-none">
@@ -86,11 +100,12 @@
 @section Foot
 {
     @Scripts.Render("~/scripts/traderadmin")
-    <script type="text/javascript">
+<script type="text/javascript">
         var labels = {
             Date: '@ViewLang.Date',
             Team: '@ViewLang.Team',
             League: '@ViewLang.League',
+            Match: '@ViewLang.Match',
             Turnover: '@ViewLang.Turnover',
             WinLoss: '@ViewLang.WinLoss',
             Margin: '@ViewLang.Margin',
@@ -113,5 +128,8 @@
             DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
             AllowYearRange: parseInt('@ViewBag.AllowYearRange')
         };
-    </script>
+
+        var isVirtualPerformancePermission = '@ViewBag.IsVirtualPerformancePermission' == "True";
+        var isRealPerformancePermission = '@ViewBag.IsRealPerformancePermission' == "True";
+</script>
 }

@@ -1,10 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.Trader
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class BettypeOfMatch
     {
         public int Bettype { get; set; }
@@ -13,10 +8,17 @@
 
         public decimal Turnover { get; set; }
 
-        public decimal Winloss { get; set; }
+        public decimal Winloss { get; set; }        
+
+        public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinlossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
 
         public int BetCount { get; set; }
 
-        public decimal Margin { get; set; }
     }
 }

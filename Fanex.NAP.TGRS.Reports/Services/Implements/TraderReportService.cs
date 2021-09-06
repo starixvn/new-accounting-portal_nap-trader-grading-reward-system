@@ -21,7 +21,7 @@
 
         public IEnumerable<TraderWinlossTurnover> GetTraderWinlossTurnover(GetTraderWinLossTurnoverCriteria criteria)
         {
-            return GetData<TraderWinlossTurnover>(criteria);
+            return GetData<TraderWinlossTurnover>(criteria).OrderBy(x=>x.WLDate);
         }
 
         public IEnumerable<BetTypePerformance> GetTraderBettypePerformance(GetTraderBetTypePerformanceCriteria criteria)
@@ -38,6 +38,7 @@
             {
                 leaguePerformance.AddLeagueList(leagueData, true);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);
             }
 
             return leaguePerformance;
@@ -51,7 +52,9 @@
             if (matchData != null && matchData.Any())
             {
                 matchPerformance.AddMatchList(matchData, true);
+
                 matchPerformance.Total.Margin = CalculateTotalMargin(matchPerformance.Total.WinLoss, matchPerformance.Total.Turnover);
+                matchPerformance.Total.MarginReal = CalculateTotalMargin(matchPerformance.Total.WinLossReal, matchPerformance.Total.TurnoverReal);
             }
 
             return matchPerformance;

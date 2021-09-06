@@ -8,11 +8,11 @@
 
         public decimal Turnover { get; set; }
 
-        public decimal Winlost { get; set; }
+        public decimal WinLoss { get; set; }
 
         public decimal TurnoverReal { get; set; }
 
-        public decimal WinlostReal { get; set; }
+        public decimal WinLossReal { get; set; }
 
         public string DisplayDate 
         {

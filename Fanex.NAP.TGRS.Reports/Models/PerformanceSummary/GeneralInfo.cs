@@ -18,9 +18,15 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
     {
         public decimal Turnover { get; set; }
 
-        public decimal Winlost { get; set; }
+        public decimal WinLoss { get; set; }
 
         public decimal? Margin { get; set; }
+
+        public decimal TurnoverReal { get; set; }
+
+        public decimal WinLossReal { get; set; }
+
+        public decimal? MarginReal { get; set; }
 
         public int MatchCount { get; set; }
     }

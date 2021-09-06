@@ -212,7 +212,7 @@ Fanex.TGRS.TraderChart = function () {
         Highcharts.setOptions(Highcharts.theme);
     };
 
-    $this.MixChartOption = function () {
+    $this.MixChartOption = function (permissionText) {
         return {
             chart: {
                 type: 'scatter',
@@ -285,7 +285,7 @@ Fanex.TGRS.TraderChart = function () {
                 },
                 lineWidth: 1,
                 title: {
-                    text: 'TURNOVER',
+                    text: permissionText + ' TURNOVER',
                     style: {
                         color: '#f28f43'
                     }
@@ -294,7 +294,7 @@ Fanex.TGRS.TraderChart = function () {
             }, { // Secondary yAxis
                 lineWidth: 0.5,
                 title: {
-                    text: 'WIN LOSS',
+                    text: permissionText + ' WIN LOSS',
                     style: {
                         color: '#7cb5ec'
                     }

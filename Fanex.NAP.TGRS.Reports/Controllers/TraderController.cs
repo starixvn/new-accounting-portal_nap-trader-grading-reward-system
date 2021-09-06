@@ -53,6 +53,9 @@
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
+
             return View();
         }
 
@@ -68,6 +71,9 @@
             ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
             ViewBag.DefaultToDate = DateTime.Today;
             ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
+            ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
+
             return View();
         }
 
@@ -91,7 +97,7 @@
         {
             CheckComeFromTraderReport();
 
-            var traderId = this.CurrentSession.UserId;
+            var traderId = this.CurrentSession.UserId;            
 
             if (filter.Trader != null)
             {
@@ -124,22 +130,24 @@
         [HttpPost]
         public JsonResult GetMatchOfLeague(ReportFilter filter)
         {
-            var traderId = this.CurrentSession.UserId;
+            var traderId = this.CurrentSession.UserId;            
 
             if (filter.Trader != null)
             {
-                GetAllTradersCriteria criteria = new GetAllTradersCriteria()
+                var criteria = new GetAllTradersCriteria()
                 {
                     UserName = filter.Trader
                 };
+
                 TraderInfoItem trader = traderMgnt.GetAllTrader(criteria).TraderInfoItems.FirstOrDefault();
+
                 if (trader != null)
                 {
                     traderId = trader.CustId;
                 }
             }
 
-            GetTraderLeaguePerformanceDetailCriteria detailCriteria = new GetTraderLeaguePerformanceDetailCriteria()
+            var detailCriteria = new GetTraderLeaguePerformanceDetailCriteria()
             {
                 TraderId = traderId,
                 FromDate = filter.FromDate,
@@ -147,14 +155,16 @@
                 LeagueId = filter.LeagueId,
                 IsExcludeLeagues = AppSession.IsExcludingLeagues
             };
+
             var result = traderReportService.GetMatchPerformanceOfLeague(detailCriteria);
+
             return Json(result);
         }
 
         [HttpPost]
         public JsonResult GetBettypeOfMatch(ReportFilter filter)
         {
-            var traderId = this.CurrentSession.UserId;
+            var traderId = this.CurrentSession.UserId;            
 
             if (filter.Trader != null)
             {
@@ -182,7 +192,7 @@
 
         private JsonResult GetReports(ReportFilter filter)
         {
-            var traderId = this.CurrentSession.UserId;
+            var traderId = this.CurrentSession.UserId;            
 
             if (filter.Trader != null)
             {
@@ -226,7 +236,7 @@
         }
 
         private GeneralInfo GetGeneralInfo(int traderId, DateTime fromtDate, DateTime toDate, int reportType)
-        {
+        {            
             GetGeneralInfoCriteria criteria = new GetGeneralInfoCriteria()
             {
                 TraderId = traderId,
@@ -253,42 +263,10 @@
             };
 
             return traderReportService.GetTraderWinlossTurnover(criteria).OrderBy(t => t.WLDate).ToList();           
-        }
-
-        private List<TraderWinlossTurnover> DataTest()
-        {
-            var data = new List<TraderWinlossTurnover>();
-
-            data.Add(new TraderWinlossTurnover
-            {
-                WLDate = new DateTime(2021, 08, 04),
-                Turnover = new decimal(432),
-                Winlost = new decimal(712),
-                TurnoverReal = new decimal(234),
-                WinlostReal = new decimal(-46)
-            });
-            data.Add(new TraderWinlossTurnover
-            {
-                WLDate = new DateTime(2021, 08, 03),
-                Turnover = new decimal(111),
-                Winlost = new decimal(111),
-                TurnoverReal = new decimal(78),
-                WinlostReal = new decimal(-2)
-            });
-            data.Add(new TraderWinlossTurnover
-            {
-                WLDate = new DateTime(2021, 08, 02),
-                Turnover = new decimal(222),
-                Winlost = new decimal(333),
-                TurnoverReal = new decimal(9),
-                WinlostReal = new decimal(-3)
-            });
-
-            return data;
-        }
+        }        
 
         private List<BetTypePerformance> GetTraderBettypePerformance(int traderId, DateTime fromtDate, DateTime toDate)
-        {
+        {            
             GetTraderBetTypePerformanceCriteria criteria = new GetTraderBetTypePerformanceCriteria()
             {
                 TraderId = traderId,
