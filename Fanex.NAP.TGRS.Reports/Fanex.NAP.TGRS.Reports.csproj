@@ -243,6 +243,8 @@
     <Compile Include="Criteria\PerformanceDetail\GetBetTypePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetTypesCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetGradePerformanceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeBetChoiceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeagueDetailTeamCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetChoicePerformanceOfBetTypeCriteria.cs" />
@@ -339,6 +341,7 @@
     <Compile Include="Models\PerformanceDetail\BetTypePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\BetTypeDetailInfo.cs" />
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\IntervalBetChoicePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceRawInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
@@ -441,6 +444,8 @@
     <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceGroup.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceItem.cs" />
     <Compile Include="ViewModels\MultipleMatchesPerformance\TraderPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\BetTypeBetChoiceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\BetTypeBetChoiceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypeItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\BetTypePerformanceList.cs" />

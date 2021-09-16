@@ -231,7 +231,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>TraderPerformanceList object.</returns>
         TraderPerformanceList GetTraderPerformanceOfBetTypeLeague(GetTraderPerformanceOfBetTypeLeagueCriteria criteria);
 
-        IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetChociePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria);
+        BetTypeBetChoiceList GetBetChoicePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria);
+
+        IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria);
+
+        IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria);
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.

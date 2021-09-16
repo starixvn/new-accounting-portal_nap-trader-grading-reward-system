@@ -817,6 +817,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interval.
+        /// </summary>
+        public static string Interval {
+            get {
+                return ResourceManager.GetString("Interval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IsEnabled.
         /// </summary>
         public static string IsEnabled {

@@ -23,6 +23,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
     using System;
+    using Fanex.Data;
 
     /// <summary>
     /// Detail report service.
@@ -200,16 +201,47 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             return traderPerformance;
+        }       
+
+        public BetTypeBetChoiceList GetBetChoicePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria)
+        {
+            var betTypeBetChoiceList = new BetTypeBetChoiceList();
+
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
+                    var fmBetTypeData = multi.Read<bool>();
+
+                    if (fmBetTypeData != null && fmBetTypeData.Any())
+                    {
+                        //betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];
+                        betTypeBetChoiceList.IsFMBetType = true; // test
+                    }
+                    betTypeBetChoiceList.BetType = criteria.BetType;
+                    betTypeBetChoiceList.AddItem(betChoiceData);
+                }
+            }
+
+            return betTypeBetChoiceList;
         }
 
-        public IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetChociePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria)
-        {           
-            var result = this.GetData<BetTypeBetChoicePerformanceInfo>(criteria);
-
-            result = result ?? new List<BetTypeBetChoicePerformanceInfo>();
-
-            return result;
+        public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
+        {
+            return GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest();
         }
+
+        public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest()
+        {
+            return new List<IntervalBetChoicePerformanceInfo>();
+        }
+
+        public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
+        {
+            return GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest();
+        }
+
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.

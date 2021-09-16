@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 {
     public class BetTypeBetChoicePerformanceInfo
-    {
-        public string BetChoice { get; set; }
+    {       
+        public string BetChoice { get; set; }        
 
         public int LeagueCount { get; set; }
 
@@ -34,6 +34,6 @@
             }
         }
 
-        public bool IsLive { get; set; }
+        public bool IsLive { get; set; }        
     }
 }

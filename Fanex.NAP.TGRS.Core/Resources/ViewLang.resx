@@ -879,4 +879,7 @@
   <data name="VirtualMargin" xml:space="preserve">
     <value>Virtual Margin %</value>
   </data>
+  <data name="Interval" xml:space="preserve">
+    <value>Interval</value>
+  </data>
 </root>

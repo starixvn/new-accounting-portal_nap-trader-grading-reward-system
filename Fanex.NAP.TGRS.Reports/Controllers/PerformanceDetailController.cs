@@ -792,7 +792,26 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBetChoicePerformaceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            var result = this._detailReportService.GetBetChociePerformanceOfBetTypeLeague(criteria);
+
+            var result = this._detailReportService.GetBetChoicePerformanceOfBetTypeLeague(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
+        {
+            var result = this._detailReportService.GetIntervalPerformanceOfBetTypeLeagueBetChoice(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
+        {
+            var result = this._detailReportService.GetIntervalPerformanceOfBetTypeBetChoice(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
