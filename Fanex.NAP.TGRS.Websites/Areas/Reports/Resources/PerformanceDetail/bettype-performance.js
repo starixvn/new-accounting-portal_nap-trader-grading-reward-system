@@ -129,7 +129,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         domElements.ddlBetType.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            width: 200,
             height: 200,
             allSelectedText: labels.AllBetTypes,
             groupsCollapsable: true,
@@ -203,7 +203,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         domElements.ddlLeagueGroup.multiselect({
             selectedList: 2,
-            minWidth: 195,
+            minWidth: 130,
             height: 200,
             allSelectedText: labels.AllLeagueGroups
         });
@@ -768,7 +768,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     // Render betchoice performance grid.
     var renderBetChoicePerformanceGrid = function (data, betTypeId, betTypeName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{7}" '
+            + 'data-bettype-id="{2}" data-betteam="{3}" data-oddsspread="{4}" data-isfmbettype="{5}" data-betoption="{6}">{7}</span>';
+      
         var colBetChoiceFormat = '<span class="interval-link link" title="{0}" data-betteam="{1}" data-bettype-id="{2}" data-oddsspread={3}>{0}</span>';
 
         var gridOptions = {
@@ -887,8 +889,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var totalBetCount = 0;
 
             $.each(data.ItemList, function (index, item) {
-                noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, numeral(item.LeagueCount).format(common.Formats.IntegerFormat));
-                colBetChoice = colBetChoiceFormat.format(item.BetOption + " " + item.OddsSpread, item.BetTeam, betTypeId, item.OddsSpread);
+                var betOption = (betTypeId == 221 || betTypeId == 222) ? item.BetOption + " " + item.OddsSpread : item.BetOption;
+
+                noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetTeam, item.OddsSpread, data.IsFMBetType
+                    , betOption, numeral(item.LeagueCount).format(common.Formats.IntegerFormat));
+                             
+                colBetChoice = colBetChoiceFormat.format(betOption, item.BetTeam, betTypeId, item.OddsSpread);
 
                 totalTO += item.Turnover;
                 totalWL += item.WinLoss;
@@ -973,8 +979,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var $link = $(this);
             var betTeam = $link.attr('data-betteam');
             var oddsspread = $link.attr('data-oddsspread');
-            var betChoice = $link.text();
-
+            var betChoice = $link.text();            
+            
             getIntervalPerformanceOfBetTypeBetChoice(betTeam, betTypeId, betTypeName, isLive, oddsspread, betChoice);
         });
 
@@ -982,7 +988,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var $link = $(this);
             var isLive = $link.attr('data-is-live');
             var betChoice = $link.attr('data-betchoice');
-            getLeagueByBetChoiceReport(isLive, betTypeId, betTypeName, betChoice);
+            var betTeam = $link.attr('data-betteam');
+            var oddsspread = $link.attr('data-oddsspread');
+            var isFMBetType = $link.attr('data-isfmbettype');
+            var betOption = $link.attr('data-betoption');
+
+            getLeagueByBetChoiceReport(isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption);
         });        
     };
 
@@ -1228,7 +1239,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
     }
 
-    var getLeagueByBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice) {
+    var getLeagueByBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption) {
         var leaguePerformance = {
             IsLive: isLive,
             BetType: betTypeId,
@@ -1236,7 +1247,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
             LeagueGroupIds: parameters.LeagueGroupIds,
-            LeagueName: parameters.LeagueName
+            LeagueName: parameters.LeagueName,
+            BetTeam: betTeam,
+            Oddsspread: oddsspread,
+            IsFMBetType: isFMBetType
         };
 
         common.DisableInput();
@@ -1247,7 +1261,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(leaguePerformance),
             success: function (result) {
-                renderLeagueOfBetChoicePerformanceGrid(result, betTypeId, betTypeName, betChoice, isLive);
+                renderLeagueOfBetChoicePerformanceGrid(result, betTypeId, betTypeName, betOption, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1260,7 +1274,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divBetChoicePerformanceContainer.addClass('display-none');
     };
 
-    var renderLeagueOfBetChoicePerformanceGrid = function (data, betTypeId, betTypeName, betChoice, isLive) {
+    var renderLeagueOfBetChoicePerformanceGrid = function (data, betTypeId, betTypeName, betOption, isLive) {
         var bodyData = [];
         var footerData = [];
 
@@ -1271,20 +1285,20 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divBetTypePerformanceContainer.addClass('display-none');
-        var gridOptions = renderLeagueOfBetChoiceGridOptions(betTypeId, betTypeName, betChoice, isLive);
+        var gridOptions = renderLeagueOfBetChoiceGridOptions(betTypeId, betTypeName, betOption, isLive);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeagueOfBetChoiceGridEvents();
     };
 
-    var renderLeagueOfBetChoiceGridOptions = function (betTypeId, betChoice, betTypeName, isLive) {
+    var renderLeagueOfBetChoiceGridOptions = function (betTypeId, betTypeName, betOption, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span id="spanBetChoiceLink" class="breadcrumb-link"> >> ({1}) {2} </span><span> >> {3}</span>';
         var gridOptions = {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betChoice)
+                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betOption)
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -2927,8 +2941,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var totalBetCount = 0;
             var colBetChoice = '';
 
-            $.each(data.ItemList, function (index, item) {                
-                colBetChoice = colBetChoiceFormat.format(item.BetOption + " " + item.OddsSpread, item.BetTeam, betTypeId, item.OddsSpread);
+            $.each(data.ItemList, function (index, item) {
+                var betOption = (betTypeId == 221 || betTypeId == 222) ? item.BetOption + " " + item.OddsSpread : item.BetOption;
+                colBetChoice = colBetChoiceFormat.format(betOption, item.BetTeam, betTypeId, item.OddsSpread);
                 totalTO += item.Turnover;
                 totalWL += item.WinLoss;
                 totalTOReal += item.TurnoverReal;

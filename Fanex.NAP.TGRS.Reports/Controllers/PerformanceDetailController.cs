@@ -755,9 +755,13 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
             LeaguePerformanceList leaguePerformance = this._detailReportService.GetLeaguePerformanceOfBetChoice(criteria);
+
             JsonResult jsonResult = Json(leaguePerformance);
+
             jsonResult.MaxJsonLength = int.MaxValue;
+
             return jsonResult;
         }
 

@@ -25,6 +25,12 @@
 
         public string BetChoice { get; set; }
 
+        public string BetTeam { get; set; }
+
+        public decimal Oddsspread { get; set; }
+
+        public bool IsFMBetType { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

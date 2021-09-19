@@ -120,7 +120,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         domElements.ddlBetType.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            width: 200,
             height: 200,
             allSelectedText: labels.AllBetTypes,
             groupsCollapsable: true,
@@ -134,13 +134,13 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         domElements.ddlTeam.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            minWidth: 140,
             height: 200,
             allSelectedText: labels.AllTeams,
             create: function () {
                 domElements.ddlTeam.multiselect('checkAll');
             }
-        }).multiselectfilter({ width: 135 }).change(function () {
+        }).multiselectfilter({ width: 100 }).change(function () {
             validator.ClearError(domElements.ddlTeam.next());
         });
 
@@ -206,7 +206,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         domElements.ddlLeagueGroup.multiselect({
             selectedList: 2,
-            minWidth: 200,
+            minWidth: 130,
             height: 200,
             allSelectedText: labels.AllLeagueGroups
         });
