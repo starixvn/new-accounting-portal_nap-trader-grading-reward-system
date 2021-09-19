@@ -2,7 +2,13 @@
 {
     public class BetTypeBetChoicePerformanceInfo
     {       
-        public string BetChoice { get; set; }        
+        public string BetChoice { get; set; }
+
+        public string BetOption { get; set; }
+
+        public string BetTeam { get; set; }
+
+        public decimal OddsSpread { get; set; }
 
         public int LeagueCount { get; set; }
 

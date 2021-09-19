@@ -10,9 +10,7 @@
         public BetTypeBetChoiceList()
         {
             ItemList = new List<BetTypeBetChoiceItem>();
-        }
-
-        public short BetType { get; set; }
+        }        
 
         public bool IsFMBetType { get; set; }
 

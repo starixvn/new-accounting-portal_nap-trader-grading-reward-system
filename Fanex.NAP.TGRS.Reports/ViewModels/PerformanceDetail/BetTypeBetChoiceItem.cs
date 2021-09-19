@@ -9,6 +9,9 @@
         public BetTypeBetChoiceItem(BetTypeBetChoicePerformanceInfo info)
         {          
             this.BetChoice = info.BetChoice;
+            this.BetOption = info.BetOption;
+            this.BetTeam = info.BetTeam;
+            this.OddsSpread = info.OddsSpread;
             this.LeagueCount = info.LeagueCount;
             this.MatchCount = info.MatchCount;
             this.BetCount = info.BetCount;
@@ -22,6 +25,12 @@
         }
 
         public string BetChoice { get; set; }
+
+        public string BetOption { get; set; }
+
+        public string BetTeam { get; set; }
+
+        public decimal OddsSpread { get; set; }
 
         public int LeagueCount { get; set; }
 

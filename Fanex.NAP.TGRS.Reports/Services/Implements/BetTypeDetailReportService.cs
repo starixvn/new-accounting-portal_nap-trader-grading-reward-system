@@ -216,10 +216,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                     if (fmBetTypeData != null && fmBetTypeData.Any())
                     {
-                        //betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];
-                        betTypeBetChoiceList.IsFMBetType = true; // test
-                    }
-                    betTypeBetChoiceList.BetType = criteria.BetType;
+                        betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];                        
+                    }                    
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }
             }
@@ -229,19 +227,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
         {
-            return GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest();
-        }
+            var result = this.GetData<IntervalBetChoicePerformanceInfo>(criteria);
 
-        public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest()
-        {
-            return new List<IntervalBetChoicePerformanceInfo>();
-        }
+            result = result ?? new List<IntervalBetChoicePerformanceInfo>();
+
+            return result;
+        }        
 
         public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
         {
-            return GetIntervalPerformanceOfBetTypeLeagueBetChoice_DataTest();
-        }
+            var result = this.GetData<IntervalBetChoicePerformanceInfo>(criteria);
 
+            result = result ?? new List<IntervalBetChoicePerformanceInfo>();
+
+            return result;
+        }       
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
@@ -501,13 +501,26 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 return string.Format("from {0} to {1}", marginFromString, marginToString);
         }
 
-        public IEnumerable<BetTypeBetChoicePerformanceInfo> GetBetTypeBetChoicePerformance(GetBetChoicePerformanceOfBetTypeCriteria criteria)
+        public BetTypeBetChoiceList GetBetTypeBetChoicePerformance(GetBetChoicePerformanceOfBetTypeCriteria criteria)
         {
-            var result = this.GetData<BetTypeBetChoicePerformanceInfo>(criteria);
+            var betTypeBetChoiceList = new BetTypeBetChoiceList();
 
-            result = result ?? new List<BetTypeBetChoicePerformanceInfo>();
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                {
+                    var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
+                    var fmBetTypeData = multi.Read<bool>();
 
-            return result;
+                    if (fmBetTypeData != null && fmBetTypeData.Any())
+                    {
+                        betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];                        
+                    }                    
+                    betTypeBetChoiceList.AddItem(betChoiceData);
+                }
+            }
+
+            return betTypeBetChoiceList;
         }
     }
 }

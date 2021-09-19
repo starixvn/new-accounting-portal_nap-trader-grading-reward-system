@@ -2,9 +2,7 @@
 {
     public class IntervalBetChoicePerformanceInfo
     {
-        public string Interval { get; set; }
-
-        public string BetChoice { get; set; }
+        public string Interval { get; set; }        
 
         public int LeagueCount { get; set; }
 

@@ -9,11 +9,27 @@
 
         public DateTime ToDate { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsLive { get; set; }
+
+        public Int16 Market
+        {
+            get
+            {
+                if (this.IsLive)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
         public short BetType { get; set; }
 
-        public string BetChoice { get; set; }
+        public string BetTeam { get; set; }
 
-        public bool IsFMBetType { get; set; }
+        public decimal Oddsspread { get; set; }
 
         public bool IsExcludeLeagues { get; set; }
 

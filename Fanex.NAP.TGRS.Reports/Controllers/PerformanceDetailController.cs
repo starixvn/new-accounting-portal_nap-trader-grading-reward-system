@@ -766,7 +766,19 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBetChoicePerformanceOfBetType(GetBetChoicePerformanceOfBetTypeCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
             var result = this._detailReportService.GetBetTypeBetChoicePerformance(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var result = this._detailReportService.GetIntervalPerformanceOfBetTypeBetChoice(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -802,19 +814,12 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
         {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
             var result = this._detailReportService.GetIntervalPerformanceOfBetTypeLeagueBetChoice(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
-        {
-            var result = this._detailReportService.GetIntervalPerformanceOfBetTypeBetChoice(criteria);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        }       
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
