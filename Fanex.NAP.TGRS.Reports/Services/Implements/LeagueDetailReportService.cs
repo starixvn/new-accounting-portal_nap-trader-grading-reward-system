@@ -400,13 +400,18 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>Bet type string.</returns>
         private string MakeBetTypeSelectString(List<BetTypeItem> data, string betTypes)
         {
-            if (betTypes == "0")
+            if (string.IsNullOrEmpty(betTypes) || betTypes == "0")
             {
                 return string.Join(", ", data.Select(obj => obj.BetTypeName));
             }
             else
             {
-                return string.Join(", ", data.Where(obj => betTypes.Contains(obj.BetTypeId.ToString())).Select(obj => obj.BetTypeName));
+                var betTypeList = betTypes.Split(',').Select(int.Parse).ToList();
+
+                var result = data.Join(betTypeList, b1 => b1.BetTypeId, b2 => b2,
+                                    (b1, b2) => new { b1.BetTypeName }).Select(x => x.BetTypeName);
+
+                return string.Join(", ", result);
             }
         }
 

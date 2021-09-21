@@ -842,7 +842,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', SortType: 'number', FormatNegative: '$'
                 }
             ]);
         }        
@@ -867,7 +867,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMarginReal', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', SortType: 'number', FormatNegative: '$'
                 }
             ]);           
         }
@@ -889,7 +889,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var totalBetCount = 0;
 
             $.each(data.ItemList, function (index, item) {
-                var betOption = (betTypeId == 221 || betTypeId == 222) ? item.BetOption + " " + item.OddsSpread : item.BetOption;
+                var betOption = '';
+
+                if (data.IsFMBetType)
+                    betOption = (betTypeId == 221 || betTypeId == 222) ? item.BetOption + " " + item.OddsSpread : item.BetOption;
+                else
+                    betOption = item.BetChoice;                
 
                 noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetTeam, item.OddsSpread, data.IsFMBetType
                     , betOption, numeral(item.LeagueCount).format(common.Formats.IntegerFormat));
@@ -1555,43 +1560,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
     var renderTraderPerformanceGridOptions = function (betTypeId, betTypeName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
-        var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.Trader, Width: 150, Name: 'ColTrader', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Grade, Width: 70, Name: 'ColGrade', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: labels.Team, Width: 150, Name: 'ColTeam', HeaderAlign: 'center', CellAlign: 'left' },
-            {
-                HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat
-            },
-            {
-                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat
-            },
-            {
-                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true
-            },
-            {
-                HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true
-            },
-            {
-                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.IntegerFormat, Sort: true
-            },
-            {
-                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
-            },
-            {
-                HeaderText: labels.Score, Width: 100, Name: 'ColScore', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
-            }],
+        var gridOptions = {           
             gridExpandHeight: 260,
             showNumberColumn: true,
             showTitle: true,
