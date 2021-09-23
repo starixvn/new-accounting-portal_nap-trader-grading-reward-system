@@ -31,6 +31,10 @@
 
         public decimal Oddsspread { get; set; }
 
+        public string LeagueGroupIds { get; set; }
+
+        public string LeagueName { get; set; }
+
         public bool IsExcludeLeagues { get; set; }
 
         public override string GetSettingKey()

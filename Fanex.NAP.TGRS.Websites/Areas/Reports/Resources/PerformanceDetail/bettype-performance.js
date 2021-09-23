@@ -1009,7 +1009,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             BetType: betTypeId,
             BetTeam: betTeam,
             IsLive: isLive,
-            Oddsspread: oddsspread
+            Oddsspread: oddsspread,
+            LeagueGroupIds: parameters.LeagueGroupIds,
+            LeagueName: parameters.LeagueName
         };
 
         common.DisableInput();
