@@ -14,6 +14,10 @@
 
         BetChoiceOfBettypeList GetBetChoiceOfBettype(GetBetChoiceOfBettypeCriteria criteria);
 
+        QuarterOfBettypeBetChoiceList GetQuarterOfBettypeBetChoice(GetQuarterOfBettypeBetChoiceCriteria criteria);
+
+        LeagueOfBettypeBetChoiceQuarterList GetLeagueOfBettypeBetChoiceQuarter(GetLeagueOfBettypeBetChoiceQuarterCriteria criteria);
+
         LeagueOfBettypeBetChoiceList GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria);
 
         TraderOfBettypeList GetTraderOfBettype(GetTraderOfBettypeCriteria criteria);

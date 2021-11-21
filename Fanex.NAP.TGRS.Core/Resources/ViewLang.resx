@@ -882,4 +882,7 @@
   <data name="Interval" xml:space="preserve">
     <value>Interval</value>
   </data>
+  <data name="Quarter" xml:space="preserve">
+    <value>Quarter</value>
+  </data>
 </root>

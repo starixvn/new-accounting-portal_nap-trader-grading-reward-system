@@ -328,6 +328,8 @@
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_BetType " SpName="TGRS_Basketball_Rpt_PerformanceDetail_BetType" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_League " SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_Quarter" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_Quarter" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_Quarter_League" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_Quarter_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League_BetChoice" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League_BetChoice" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League_Trader" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

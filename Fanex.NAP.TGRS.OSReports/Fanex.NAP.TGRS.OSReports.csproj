@@ -173,6 +173,8 @@
     <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeTraderCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetQuarterOfBettypeBetChoiceCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeBetChoiceQuarterCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetTraderOfBettypeLeagueCriteria.cs" />
     <Compile Include="Criteria\Dashboard\Basketball\BasketballSummaryInfoCriteria.cs" />
@@ -219,9 +221,11 @@
     <Compile Include="Models\BasketballPerformance\BettypePerformanceInfo.cs" />
     <Compile Include="Models\BasketballPerformance\LeagueGroupInfo.cs" />
     <Compile Include="Models\BasketballPerformance\LeagueOfBettypeBetChoiceInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\LeagueOfBettypeBetChoiceQuarterInfo.cs" />
     <Compile Include="Models\BasketballPerformance\LeagueOfBettypeInfo.cs" />
     <Compile Include="Models\BasketballPerformance\MatchOfBettypeLeagueTraderInfo.cs" />
     <Compile Include="Models\BasketballPerformance\MatchOfBettypeTraderInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\QuarterOfBettypeBetChoiceInfo.cs" />
     <Compile Include="Models\BasketballPerformance\TraderOfBettypeLeagueInfo.cs" />
     <Compile Include="Models\BasketballPerformance\TraderOfBettypeInfo.cs" />
     <Compile Include="Models\Dashboard\Basketball\BasketballLeagueGroupSummaryInfo.cs" />
@@ -274,6 +278,10 @@
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeBetChoiceQuarterItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeBetChoiceQuarterList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\QuarterOfBettypeBetChoiceItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\QuarterOfBettypeBetChoiceList.cs" />
     <Compile Include="ViewModel\Dashboard\Basketball\BasketballLeagueGroupSummary.cs" />
     <Compile Include="ViewModel\Dashboard\Basketball\BasketballSummaryGeneralInfo.cs" />
     <Compile Include="ViewModel\Dashboard\Basketball\BasketballSummaryGeneralInfoAvgItem.cs" />

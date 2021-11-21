@@ -119,6 +119,131 @@
             return betChoiceList;
         }
 
+        public QuarterOfBettypeBetChoiceList GetQuarterOfBettypeBetChoice(GetQuarterOfBettypeBetChoiceCriteria criteria)
+        {
+            var quarterList = new QuarterOfBettypeBetChoiceList();
+
+            //var quarterData = this.GetData<QuarterOfBettypeBetChoiceInfo>(criteria);
+
+            var quarterData= new List<QuarterOfBettypeBetChoiceInfo>();
+
+            if (quarterData != null && quarterData.Any())
+            {
+                foreach (var info in quarterData)
+                {
+                    quarterList.AddQuarter(info);
+                }
+
+                quarterList.CalculateMargin(quarterList.Total);
+            }
+            else
+            {
+                quarterList = GetQuarterOfBettypeBetChoiceDataTest();
+            }
+
+            return quarterList;
+        }
+
+        private QuarterOfBettypeBetChoiceList GetQuarterOfBettypeBetChoiceDataTest()
+        {
+            var quarterList = new QuarterOfBettypeBetChoiceList();
+            var quarterData = new List<QuarterOfBettypeBetChoiceInfo>();
+
+            for (int i = 1; i < 5; i++)
+            {
+                quarterData.Add(new QuarterOfBettypeBetChoiceInfo
+                {
+                     Quarter = "Quarter " + i + " Odd/Even",
+                     LeagueCount = 1,
+                     MatchCount = 1,
+                     Turnover = new decimal(2.44 + i),
+                     WinLoss = new decimal(2.4 + i),
+                     Margin = new decimal(0.5),
+                     BetCount = 112 + i
+                });
+            }
+
+            foreach (var info in quarterData)
+            {
+                quarterList.AddQuarter(info);
+            }
+
+            quarterList.CalculateMargin(quarterList.Total);
+
+            return quarterList;
+        }
+
+        public LeagueOfBettypeBetChoiceQuarterList GetLeagueOfBettypeBetChoiceQuarter(GetLeagueOfBettypeBetChoiceQuarterCriteria criteria)
+        {
+            var leagueList = new LeagueOfBettypeBetChoiceQuarterList();
+
+            //var leagueData = this.GetData<QuarterOfBettypeBetChoiceInfo>(criteria);
+
+            var leagueData = new List<LeagueOfBettypeBetChoiceQuarterInfo>();
+
+            if (leagueData != null && leagueData.Any())
+            {
+                var leagueGroupList = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+                if (leagueGroupList == null)
+                    leagueGroupList = new List<LeagueGroup>();
+
+                foreach (var info in leagueData)
+                {
+                    var group = leagueGroupList.FirstOrDefault(x => x.LeagueGroupId == info.LeagueGroupID);
+
+                    var leagueGroupName = group != null ? group.LeagueGroupName : string.Empty;
+
+                    leagueList.AddLeague(info, leagueGroupName);
+                }
+
+                leagueList.CalculateMargin(leagueList.Total);
+            }
+            else
+            {
+                leagueList = GetLeagueOfBettypeBetChoiceQuarterDataTest();
+            }
+
+            return leagueList;
+        }
+
+        private LeagueOfBettypeBetChoiceQuarterList GetLeagueOfBettypeBetChoiceQuarterDataTest()
+        {
+            var leagueList = new LeagueOfBettypeBetChoiceQuarterList();
+
+            var leagueData = new List<LeagueOfBettypeBetChoiceQuarterInfo>();
+
+            for (int i = 1; i < 5; i++)
+            {
+                leagueData.Add(new LeagueOfBettypeBetChoiceQuarterInfo
+                {
+                    LeagueId = i,
+                    LeagueName = "Korea KBL",
+                    LeagueGroupID = 1,
+                    MatchCount = 123 + i,
+                    Turnover = new decimal(1456 + i),
+                    WinLoss = new decimal(8645 + i),
+                    BetCount = i
+                });
+            }
+
+            var leagueGroupList = SessionManager.Get<List<LeagueGroup>>(LeagueGroupsSessionKey);
+            if (leagueGroupList == null)
+                leagueGroupList = new List<LeagueGroup>();
+
+            foreach (var info in leagueData)
+            {
+                var group = leagueGroupList.FirstOrDefault(x => x.LeagueGroupId == info.LeagueGroupID);
+
+                var leagueGroupName = group != null ? group.LeagueGroupName : string.Empty;
+
+                leagueList.AddLeague(info, leagueGroupName);
+            }
+
+            leagueList.CalculateMargin(leagueList.Total);
+
+            return leagueList;
+        }
+
         public LeagueOfBettypeBetChoiceList GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria)
         {
             var leagueList = new LeagueOfBettypeBetChoiceList();

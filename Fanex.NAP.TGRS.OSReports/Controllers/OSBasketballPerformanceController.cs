@@ -56,7 +56,23 @@
 
             return Json(betChoices, JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpPost]
+        public ActionResult GetQuarterOfBettypeBetChoice(GetQuarterOfBettypeBetChoiceCriteria criteria)
+        {
+            var quarters = _basketballBetTypeService.GetQuarterOfBettypeBetChoice(criteria);
+
+            return Json(quarters, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetLeagueOfBettypeBetChoiceQuarter(GetLeagueOfBettypeBetChoiceQuarterCriteria criteria)
+        {
+            var leagues = _basketballBetTypeService.GetLeagueOfBettypeBetChoiceQuarter(criteria);
+
+            return Json(leagues, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult GetLeagueOfBettypeBetChoice(GetLeagueOfBettypeBetChoiceCriteria criteria)
         {
