@@ -489,7 +489,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         if (data.Items && data.Items.length > 0) {
             $.each(data.Items, function (index, item) {
                 noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
-                betChoiceCol = betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetChoice);
+                betChoiceCol = item.BetIdMappingCount > 0 ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetChoice) : item.BetChoice;
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
@@ -664,12 +664,12 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
     }
 
     var renderQuarterOfBettypeBetChoiceGridBody = function (data, betTypeId, betChoice) {
-        var noOfLeaguesFormat = '<span class="league-link link" data-quarter="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-betchoice="{3}" data-quarter="{4}">{5}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-quarter="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-betchoice="{3}" data-betid="{4}" data-quarter="{5}">{6}</span>';
         var bodyData = [];
         var row;
 
         $.each(data.Items, function (index, item) {
-            noOfLeaguesCol = noOfLeaguesFormat.format(item.Quarter, item.IsLive, betTypeId, betChoice, item.Quarter, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
+            noOfLeaguesCol = noOfLeaguesFormat.format(item.Quarter, item.IsLive, betTypeId, betChoice, item.BetId, item.Quarter, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: index + 1 },
@@ -716,13 +716,14 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             var $link = $(this);
             var isLive = $link.attr('data-is-live');
             var betChoice = $link.attr('data-betchoice');
+            var betId = $link.attr('data-betid');
             var quarter = $link.attr('data-quarter');
 
-            getLeagueOfBettypeBetChoiceQuarterReport(isLive, betTypeId, betTypeName, betChoice, quarter);
+            getLeagueOfBettypeBetChoiceQuarterReport(isLive, betTypeId, betTypeName, betChoice, betId, quarter);
         });
     }
 
-    var getLeagueOfBettypeBetChoiceQuarterReport = function (isLive, betTypeId, betTypeName, betChoice, quarter) {
+    var getLeagueOfBettypeBetChoiceQuarterReport = function (isLive, betTypeId, betTypeName, betChoice, betId, quarter) {
         var leagueParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -730,7 +731,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LeagueName: parameters.LeagueName,
             LiveType: isLive === 'true' ? 1 : 0,
             Bettype: betTypeId,
-            BetChoice: betChoice
+            BetChoice: betChoice,
+            BetId: betId
         };
 
         common.DisableInput();

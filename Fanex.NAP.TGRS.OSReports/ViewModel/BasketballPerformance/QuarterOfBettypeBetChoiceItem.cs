@@ -14,6 +14,7 @@
         public QuarterOfBettypeBetChoiceItem(QuarterOfBettypeBetChoiceInfo info)
         {
             this.Quarter = info.Quarter;
+            this.BetId = info.BetId;
             this.IsLive = info.IsLive;
             this.NoOfLeagues = Converter.ToInt(info.LeagueCount);
             this.NoOfMatches = Converter.ToInt(info.MatchCount);
@@ -27,6 +28,8 @@
         }
 
         public string Quarter { get; set; }
+
+        public long BetId { get; set; }
 
         public bool IsLive { get; set; }
 

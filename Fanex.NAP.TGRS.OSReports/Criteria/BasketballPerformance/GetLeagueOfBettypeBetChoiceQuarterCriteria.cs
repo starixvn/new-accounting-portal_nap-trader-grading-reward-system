@@ -15,6 +15,8 @@
 
         public int Bettype { get; set; }
 
+        public long BetId { get; set; }
+
         public string BetChoice { get; set; }
 
         public int LiveType { get; set; }
