@@ -287,6 +287,25 @@
             return betChoiceList;
         }
 
+        public QuarterOfBettypeLeagueBetChoiceList GetQuarterOfBettypeLeagueBetChoice(GetQuarterOfBettypeLeagueBetChoiceCriteria criteria)
+        {
+            var quarterList = new QuarterOfBettypeLeagueBetChoiceList();
+
+            var quarterData = this.GetData<QuarterOfBettypeLeagueBetChoiceInfo>(criteria);
+
+            if (quarterData != null && quarterData.Any())
+            {
+                foreach (var info in quarterData)
+                {
+                    quarterList.AddQuarter(info);
+                }
+
+                quarterList.CalculateMargin(quarterList.Total);
+            }
+
+            return quarterList;
+        }
+
         public TraderOfBettypeLeagueList GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {
             var traderList = new TraderOfBettypeLeagueList();

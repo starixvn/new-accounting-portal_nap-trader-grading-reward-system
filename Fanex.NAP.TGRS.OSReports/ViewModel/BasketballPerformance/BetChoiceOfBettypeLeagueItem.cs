@@ -9,7 +9,6 @@
 
         public BetChoiceOfBettypeLeagueItem(BetChoiceOfBettypeLeagueInfo data)
         {
-
             this.BetChoice = data.BetChoice;
             this.IsLive = data.IsLive;
             this.NoOfMatches = Converter.ToInt(data.MatchCount);
@@ -17,6 +16,7 @@
             this.WinLoss = Converter.ToDecimal(data.WinLoss);
             this.Margin = Converter.ToDecimal(data.Margin);
             this.BetCount = Converter.ToInt(data.BetCount);
+            this.BetIdMappingCount = Converter.ToInt(data.BetIdMappingCount);
         }
 
         public string BetChoice { get; set; }
@@ -32,6 +32,8 @@
         public decimal Margin { get; set; }
 
         public int BetCount { get; set; }
+
+        public int BetIdMappingCount { get; set; }
 
     }
 }

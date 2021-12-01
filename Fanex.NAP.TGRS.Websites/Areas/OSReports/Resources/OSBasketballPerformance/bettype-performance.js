@@ -16,6 +16,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         GetLeagueOfBettypeBetChoiceQuarter: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeagueOfBettypeBetChoiceQuarter'),
         GetLeagueOfBettypeBetChoice: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeagueOfBettypeBetChoice'),
         GetBetChoiceOfBettypeLeague: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetBetChoiceOfBettypeLeague'),
+        GetQuarterOfBettypeLeagueBetChoice: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetQuarterOfBettypeLeagueBetChoice'),
         GetTraderOfBettype: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetTraderOfBettype'),
         GetMatchOfBettypeTrader: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetMatchOfBettypeTrader'),
         GetLeagueOfBettype: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeagueOfBettype'),
@@ -1625,7 +1626,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             dataType: 'json',
             data: JSON.stringify(betChoiceParams),
             success: function (result) {
-                renderBetChoiceOfBettypeLeagueGrid(result, betTypeId, betTypeName, leagueName, isLive);
+                renderBetChoiceOfBettypeLeagueGrid(result, betTypeId, betTypeName, leagueId, leagueName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1636,15 +1637,16 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         });
     };
 
-    var renderBetChoiceOfBettypeLeagueGrid = function (data, betTypeId, betTypeName, leagueName, isLive) {
+    var renderBetChoiceOfBettypeLeagueGrid = function (data, betTypeId, betTypeName, leagueId, leagueName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
             '<span id="spanLeagueLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
             '<span title="{3}"> >> {4}</span>';
         var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';
+        var betChoiceFormat = '<span class="betchoice-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-league-id="{3}">{4}</span>';
         var trimLeagueName = leagueName.length > 150 ? leagueName.substring(0, 151) : leagueName;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: labels.BetChoice, Width: 300, Name: 'ColBetChoice', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+            { HeaderText: labels.BetChoice, Width: 300, Name: 'ColBetChoice', HeaderAlign: 'center', CellAlign: 'left' },
             {
                 HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
@@ -1676,7 +1678,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             },
             sortOption: {
                 afterGridSorted: function (rows) {
-                    handleBetChoiceOfBettypeLeagueGridEvents();
+                    handleBetChoiceOfBettypeLeagueGridEvents(betTypeId, betTypeName, leagueName);
 
                     return rows;
                 }
@@ -1688,7 +1690,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges,
                 afterPagedFunction: function (rows) {
-                    handleBetChoiceOfBettypeLeagueGridEvents();
+                    handleBetChoiceOfBettypeLeagueGridEvents(betTypeId, betTypeName, leagueName);
 
                     return rows;
                 }
@@ -1701,9 +1703,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
         if (data && data.Items.length > 0) {
             $.each(data.Items, function (index, item) {
+                var betChoiceCol = item.BetIdMappingCount > 0 ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, leagueId, item.BetChoice) : item.BetChoice;
+
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
-                        { Name: 'ColBetChoice', Value: item.BetChoice },
+                        { Name: 'ColBetChoice', Value: betChoiceCol },
                         { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
                         { Name: 'ColTurnover', Value: item.Turnover },
                         { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
@@ -1716,7 +1720,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             });
 
             row = {
-                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 3, CellAlign: 'right' },
+                Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },
+                    { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
                     { Name: 'ColTurnover', Value: data.Total.Turnover },
                     { Name: 'ColAvgTurnoverPerMatch', Value: common.GetNumWithLabel(data.Total.Turnover / data.Total.NoOfMatches, labels.NA) },
                     { Name: 'ColWinLoss', Value: data.Total.WinLoss },
@@ -1733,10 +1738,10 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         gridOptions.footerRows = footerData;
         domElements.divBetChoicePerformanceGrid.fanexGrid(gridOptions);
 
-        handleBetChoiceOfBettypeLeagueGridEvents();
+        handleBetChoiceOfBettypeLeagueGridEvents(betTypeId, betTypeName, leagueName);
     };
 
-    var handleBetChoiceOfBettypeLeagueGridEvents = function () {
+    var handleBetChoiceOfBettypeLeagueGridEvents = function (betTypeId, betTypeName, leagueName) {
         domElements.divBetChoicePerformanceContainer.find('#spanBetTypeLink').click(function () {
             showBetTypePerformanceReport();
         });
@@ -1745,7 +1750,176 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             domElements.divBetChoicePerformanceContainer.addClass('display-none');
             showLeaguePerformanceReport();
         });
+
+        domElements.divBetChoicePerformanceContainer.find('span.betchoice-link').click(function () {
+            var $link = $(this);
+            var isLive = $link.attr('data-is-live');
+            var betChoice = $link.attr('data-betchoice');
+            var leagueId = $link.attr('data-league-id');
+
+            getQuarterOfBettypeLeagueBetChoiceReport(betTypeId, betTypeName, leagueId, leagueName, betChoice, isLive);
+        });
     };
+
+    var getQuarterOfBettypeLeagueBetChoiceReport = function (betTypeId, betTypeName, leagueId, leagueName, betChoice, isLive) {
+        var quarterParams = {
+            FromDate: parameters.FromDate,
+            ToDate: parameters.ToDate,
+            LeagueGroupIds: parameters.LeagueGroupIds,
+            LeagueName: parameters.LeagueName,
+            LiveType: isLive === 'true' ? 1 : 0,
+            Bettype: betTypeId,
+            LeagueId: leagueId,
+            BetChoice: betChoice
+        };
+
+        common.DisableInput();
+
+        $.ajax({
+            type: 'POST',
+            url: urls.GetQuarterOfBettypeLeagueBetChoice,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(quarterParams),
+            success: function (result) {
+                renderQuarterOfBettypeLeagueBetChoiceGrid(result, betTypeName, leagueName, betChoice, isLive);
+            },
+            error: function (xhr) {
+                common.HandleAjaxError(xhr);
+            },
+            complete: function () {
+                common.EnableInput();
+            }
+        });
+    }
+
+    var renderQuarterOfBettypeLeagueBetChoiceGrid = function (data, betTypeName, leagueName, betChoice, isLive) {
+        var bodyData = [];
+        var footerData = [];
+
+        if (data && data.Items.length) {
+            bodyData = renderQuarterOfBettypeLeagueBetChoiceGridBody(data);
+            footerData = renderQuarterOfBettypeLeagueBetChoiceGridFooter(data);
+        }
+
+        domElements.divBetChoicePerformanceContainer.addClass('display-none');
+
+        var gridOptions = renderQuarterOfBettypeLeagueBetChoiceGridOptions(betTypeName, leagueName, betChoice, isLive);
+        gridOptions.bodyRows = bodyData;
+        gridOptions.footerRows = footerData;
+
+        domElements.divQuarterPerformanceGrid.fanexGrid(gridOptions);
+
+        handleQuarterOfBettypeLeagueBetChoiceGridEvents();
+    }
+
+    var renderQuarterOfBettypeLeagueBetChoiceGridOptions = function (betTypeName, leagueName, betChoice, isLive) {
+        var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span id="spanBetChoiceLink" class="breadcrumb-link"> >> ({1}) {2} </span><span id="spanLeagueLink" class="breadcrumb-link"> >> {3}</span><span> >> {4}</span>';
+        var gridOptions = {
+            columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: labels.Quarter, Width: 300, Name: 'ColQuarter', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },            
+            {
+                HeaderText: labels.NoOfMatches, Width: 100, Name: 'ColNoOfMatches', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat
+            },
+            {
+                HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true
+            },
+            {
+                HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatch', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true
+            },
+            {
+                HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+            },
+            {
+                HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.IntegerFormat, Sort: true
+            },
+            {
+                HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+            }],
+            gridExpandHeight: 260,
+            showTitle: true,
+            titleInfo: {
+                text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, betChoice)
+            },
+            sortOption: {
+                afterGridSorted: function (rows) {
+                    handleQuarterOfBettypeLeagueBetChoiceGridEvents();
+
+                    return rows;
+                }
+            },
+            showNumberColumn: true,
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: common.Constants.PageSize,
+                itemsPerPageArray: common.Constants.PagerRanges,
+                afterPagedFunction: function (rows) {
+                    handleQuarterOfBettypeLeagueBetChoiceGridEvents();
+
+                    return rows;
+                }
+            },
+            showFooter: true
+        };
+
+        return gridOptions;
+    }
+
+    var renderQuarterOfBettypeLeagueBetChoiceGridBody = function (data) {
+        var bodyData = [];
+        var row;
+
+        $.each(data.Items, function (index, item) {
+            row = {
+                Columns: [{ Name: 'ColNo', Value: index + 1 },
+                { Name: 'ColQuarter', Value: item.Quarter },
+                { Name: 'ColNoOfMatches', Value: item.NoOfMatches },
+                { Name: 'ColTurnover', Value: item.Turnover },
+                { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.NoOfMatches) },
+                { Name: 'ColWinLoss', Value: item.WinLoss },
+                { Name: 'ColBetCount', Value: item.BetCount },
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]
+            };
+
+            bodyData.push(row);
+        });
+
+        return bodyData;
+    }
+
+    var renderQuarterOfBettypeLeagueBetChoiceGridFooter = function (data) {
+        return footerData = [{
+            Columns: [{ Name: 'ColNo', Value: labels.GrandTotal, MergeColNumber: 2, CellAlign: 'right' },            
+            { Name: 'ColNoOfMatches', Value: data.Total.NoOfMatches },
+            { Name: 'ColTurnover', Value: data.Total.Turnover },
+            { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
+            { Name: 'ColWinLoss', Value: data.Total.WinLoss },
+            { Name: 'ColBetCount', Value: data.Total.BetCount },
+            { Name: 'ColMargin', Value: common.GetNumWithLabel(data.Total.Margin, labels.NA) }]
+        }];
+    }
+
+    var handleQuarterOfBettypeLeagueBetChoiceGridEvents = function () {
+        domElements.divQuarterPerformanceContainer.find('#spanBetTypeLink').click(function () {
+            showBetTypePerformanceReport();
+        });
+
+        domElements.divQuarterPerformanceContainer.find('#spanLeagueLink').click(function () {            
+            showBetChoicePerformanceReport();
+        });
+
+        domElements.divQuarterPerformanceContainer.find('#spanBetChoiceLink').click(function () {
+            domElements.divBetChoicePerformanceContainer.addClass('display-none');
+            showLeaguePerformanceReport();
+        });
+    }
 
     var getTraderOfBettypeLeagueReport = function (betTypeId, betTypeName, leagueId, leagueName, isLive) {
         var traderParams = {
@@ -2066,6 +2240,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divBetChoicePerformanceContainer.addClass('display-none');
+        domElements.divQuarterPerformanceContainer.addClass('display-none');
     };
 
     var showLeaguePerformanceReport = function () {
@@ -2073,6 +2248,16 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         domElements.divTraderPerformanceContainer.addClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.removeClass('display-none');
+        domElements.divQuarterPerformanceContainer.addClass('display-none');
+    };
+
+    var showBetChoicePerformanceReport = function () {
+        domElements.divBetTypePerformanceContainer.addClass('display-none');
+        domElements.divTraderPerformanceContainer.addClass('display-none');
+        domElements.divMatchPerformanceContainer.addClass('display-none');
+        domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divBetChoicePerformanceContainer.removeClass('display-none');
+        domElements.divQuarterPerformanceContainer.addClass('display-none');
     };
 
     var showTraderPerformanceReport = function () {
@@ -2080,6 +2265,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         domElements.divTraderPerformanceContainer.removeClass('display-none');
         domElements.divMatchPerformanceContainer.addClass('display-none');
         domElements.divLeaguePerformanceContainer.addClass('display-none');
+        domElements.divQuarterPerformanceContainer.addClass('display-none');
     };
         
     $this.InitPage = function () {

@@ -112,7 +112,15 @@
 
             return Json(betChoices, JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpPost]
+        public ActionResult GetQuarterOfBettypeLeagueBetChoice(GetQuarterOfBettypeLeagueBetChoiceCriteria criteria)
+        {
+            var quarters = _basketballBetTypeService.GetQuarterOfBettypeLeagueBetChoice(criteria);
+
+            return Json(quarters, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult GetTraderOfBettypeLeague(GetTraderOfBettypeLeagueCriteria criteria)
         {

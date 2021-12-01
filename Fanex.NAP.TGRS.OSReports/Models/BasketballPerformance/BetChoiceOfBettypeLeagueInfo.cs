@@ -16,5 +16,7 @@
 
         public int BetCount { get; set; }
 
+        public int BetIdMappingCount { get; set; }
+
     }
 }

@@ -1,0 +1,21 @@
+﻿namespace Fanex.NAP.TGRS.OSReports.Models.BasketballPerformance
+{
+    public class QuarterOfBettypeLeagueBetChoiceInfo
+    {
+        public string Quarter { get; set; }
+
+        public long BetId { get; set; }        
+
+        public bool IsLive { get; set; }
+
+        public int MatchCount { get; set; }
+
+        public decimal Turnover { get; set; }
+
+        public decimal WinLoss { get; set; }
+
+        public int BetCount { get; set; }
+
+        public decimal Margin { get; set; }
+    }
+}
