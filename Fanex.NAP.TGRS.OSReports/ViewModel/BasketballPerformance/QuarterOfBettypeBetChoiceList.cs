@@ -17,9 +17,9 @@
 
         public QuarterOfBettypeBetChoiceItem Total { get; set; }
 
-        public void AddQuarter(QuarterOfBettypeBetChoiceInfo info)
+        public void AddQuarter(int betTypeId, QuarterOfBettypeBetChoiceInfo info)
         {
-            var item = new QuarterOfBettypeBetChoiceItem(info);
+            var item = new QuarterOfBettypeBetChoiceItem(betTypeId, info);
 
             this.Items.Add(item);
 

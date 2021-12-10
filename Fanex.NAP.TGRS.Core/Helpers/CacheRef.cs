@@ -29,6 +29,11 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             return GetBetType(bettypeId, null);
         }
 
+        public static string GetQuarter(object betTypeId, object betId)
+        {
+            return GetBetType(betTypeId, betId);
+        }
+
         /// <summary>
         /// Gets bet type name by bet type ID and bet ID.
         /// </summary>
@@ -45,7 +50,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
             }
 
             return refService.GetBetTypeName(betTypeId.ToString(), TWLang("en-US"), string.Empty, resourceId);
-        }
+        }      
 
         /// <summary>
         /// Gets sport name by ID.

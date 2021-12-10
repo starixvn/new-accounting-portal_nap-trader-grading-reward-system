@@ -22,7 +22,6 @@
                 this.Margin = Converter.ToDecimal(data.WinLoss / data.Turnover * 100);
             }            
             this.BetCount = Converter.ToInt(data.BetCount);
-            this.BetIdMappingCount = Converter.ToInt(data.BetIdMappingCount);
         }
 
         public string BetChoice { get; set; }
@@ -40,7 +39,5 @@
         public decimal Margin { get; set; }
 
         public int BetCount { get; set; }
-
-        public int BetIdMappingCount { get; set; }
     }
 }

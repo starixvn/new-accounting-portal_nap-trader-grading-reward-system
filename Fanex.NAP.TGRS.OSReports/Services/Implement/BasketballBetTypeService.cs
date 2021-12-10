@@ -129,7 +129,7 @@
             {
                 foreach (var info in quarterData)
                 {
-                    quarterList.AddQuarter(info);
+                    quarterList.AddQuarter(criteria.Bettype, info);
                 }
 
                 quarterList.CalculateMargin(quarterList.Total);
@@ -297,7 +297,7 @@
             {
                 foreach (var info in quarterData)
                 {
-                    quarterList.AddQuarter(info);
+                    quarterList.AddQuarter(criteria.Bettype, info);
                 }
 
                 quarterList.CalculateMargin(quarterList.Total);

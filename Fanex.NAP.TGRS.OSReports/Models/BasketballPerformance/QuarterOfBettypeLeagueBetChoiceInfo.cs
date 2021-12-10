@@ -2,8 +2,6 @@
 {
     public class QuarterOfBettypeLeagueBetChoiceInfo
     {
-        public string Quarter { get; set; }
-
         public long BetId { get; set; }        
 
         public bool IsLive { get; set; }

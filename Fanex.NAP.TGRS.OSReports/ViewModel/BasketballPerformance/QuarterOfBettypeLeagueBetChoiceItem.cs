@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
 {
     using Fanex.Common;
+    using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.OSReports.Models.BasketballPerformance;
     using System;
 
@@ -11,9 +12,9 @@
         {
         }
 
-        public QuarterOfBettypeLeagueBetChoiceItem(QuarterOfBettypeLeagueBetChoiceInfo info)
+        public QuarterOfBettypeLeagueBetChoiceItem(int betTypeId, QuarterOfBettypeLeagueBetChoiceInfo info)
         {
-            this.Quarter = info.Quarter;
+            this.Quarter = CacheRef.GetQuarter(betTypeId, info.BetId);
             this.BetId = info.BetId;
             this.IsLive = info.IsLive;            
             this.NoOfMatches = Converter.ToInt(info.MatchCount);

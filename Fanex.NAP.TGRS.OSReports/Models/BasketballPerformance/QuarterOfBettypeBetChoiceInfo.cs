@@ -2,8 +2,6 @@
 {
     public class QuarterOfBettypeBetChoiceInfo
     {
-        public string Quarter { get; set; }
-
         public long BetId { get; set; }
 
         public int LeagueGroupID { get; set; }

@@ -16,7 +16,7 @@
             this.TeamId = data.TeamId;
             this.TeamName = data.TeamName;
             this.NoOfMatches = data.MatchCount;
-            this.Turnover = data.WinLoss;
+            this.Turnover = data.Turnover;
             this.WinLoss = data.WinLoss;
             this.BetCount = data.BetCount;
             this.Margin = data.Margin;
