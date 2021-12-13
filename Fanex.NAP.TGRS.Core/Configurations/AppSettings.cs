@@ -26,6 +26,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int batchSizeForUpdateSpread;
         private static int spreadMinValue;
         private static int spreadMaxValue;
+        private static string basketballBettypeQuarter;
 
         public static string ServerTimezone
         {
@@ -136,6 +137,19 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             get
             {
                 return Converter.ToInt(GetValue("IsLocalTest")) > 0;
+            }
+        }
+
+        public static string BasketballBettypeQuarter
+        {
+            get
+            {
+                if (basketballBettypeQuarter == null)
+                {
+                    basketballBettypeQuarter = GetValue("BasketballBettypeQuarter");
+                }
+
+                return basketballBettypeQuarter;
             }
         }
 

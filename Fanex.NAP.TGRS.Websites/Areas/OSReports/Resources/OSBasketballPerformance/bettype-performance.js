@@ -490,7 +490,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         if (data.Items && data.Items.length > 0) {
             $.each(data.Items, function (index, item) {
                 noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
-                betChoiceCol = betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetChoice);
+                betChoiceCol = data.IsBetTypeQuarter ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetChoice) : item.BetChoice;
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
@@ -1703,7 +1703,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
         if (data && data.Items.length > 0) {
             $.each(data.Items, function (index, item) {
-                var betChoiceCol = betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, leagueId, item.BetChoice);
+                var betChoiceCol = data.IsBetTypeQuarter ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, leagueId, item.BetChoice) : item.BetChoice;
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },

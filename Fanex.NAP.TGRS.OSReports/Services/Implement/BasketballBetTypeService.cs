@@ -2,6 +2,7 @@
 {
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
@@ -103,7 +104,7 @@
         public BetChoiceOfBettypeList GetBetChoiceOfBettype(GetBetChoiceOfBettypeCriteria criteria)
         {
             var betChoiceList = new BetChoiceOfBettypeList();
-
+            
             var betChoiceData = this.GetData<BetChoiceOfBettypeInfo>(criteria);
 
             if (betChoiceData != null && betChoiceData.Any())
@@ -114,6 +115,15 @@
                 }
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
+
+                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
+
+                if (!string.IsNullOrEmpty(bettypeQuarters))
+                {
+                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
+
+                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
+                }
             }
 
             return betChoiceList;
@@ -282,6 +292,15 @@
                 }
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
+
+                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
+
+                if (!string.IsNullOrEmpty(bettypeQuarters))
+                {
+                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
+
+                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
+                }
             }
 
             return betChoiceList;

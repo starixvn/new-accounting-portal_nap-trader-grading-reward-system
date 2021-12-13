@@ -11,11 +11,14 @@
         {
             this.Items = new List<BetChoiceOfBettypeItem>();
             this.Total = new BetChoiceOfBettypeItem();
+            this.IsBetTypeQuarter = false;
         }
      
         public List<BetChoiceOfBettypeItem> Items { get; set; }
 
         public BetChoiceOfBettypeItem Total { get; set; }
+
+        public bool IsBetTypeQuarter { get; set; }
 
         public void AddBetChoice(BetChoiceOfBettypeInfo info)
         {
