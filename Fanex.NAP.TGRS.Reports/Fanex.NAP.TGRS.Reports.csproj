@@ -261,6 +261,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamsCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeLeagueCriteria.cs" />

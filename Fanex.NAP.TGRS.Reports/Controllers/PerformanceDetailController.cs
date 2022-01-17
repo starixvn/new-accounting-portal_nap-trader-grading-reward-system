@@ -787,6 +787,17 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDPCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var result = "";
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Gets the trader performance of a pair of bet type and league.
         /// </summary>

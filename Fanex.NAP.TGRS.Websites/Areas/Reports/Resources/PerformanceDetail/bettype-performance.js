@@ -22,6 +22,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         GetTraderPerformanceOfBetTypeLeague: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfBetTypeLeague'),
         GetBetChoicePerformaceOfBetTypeLeague: common.ResolveRootUrl('PerformanceDetail/GetBetChoicePerformaceOfBetTypeLeague'),
         GetIntervalPerformanceOfBetTypeLeagueBetChoice: common.ResolveRootUrl('PerformanceDetail/GetIntervalPerformanceOfBetTypeLeagueBetChoice'),
+        GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDP: common.ResolveRootUrl('PerformanceDetail/GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDP'),
         GetMatchPerformanceOfBetTypeLeagueTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfBetTypeLeagueTrader'),
         GetBetChoicePerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/GetBetChoicePerformanceOfBetType'),
         GetIntervalPerformanceOfBetTypeBetChoice: common.ResolveRootUrl('PerformanceDetail/GetIntervalPerformanceOfBetTypeBetChoice')
@@ -53,7 +54,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         divBetChoicePerformanceContainer: null,
         divBetChoicePerformanceGrid: null,
         divIntervalBetChoicePerformanceContainer: null,
-        divIntervalBetChoicePerformanceGrid: null
+        divIntervalBetChoicePerformanceGrid: null,
+        divTimeMachinePerformanceContainer: null,
+        divTimeMachinePerformanceGrid: null
     };
     var parameters = {
         MarketFilter: null,
@@ -99,6 +102,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divBetChoicePerformanceGrid = $('#divBetChoicePerformanceGrid');
         domElements.divIntervalBetChoicePerformanceContainer = $('#divIntervalBetChoicePerformanceContainer');
         domElements.divIntervalBetChoicePerformanceGrid = $('#divIntervalBetChoicePerformanceGrid');
+        domElements.divTimeMachinePerformanceContainer = $('#divTimeMachinePerformanceContainer');
+        domElements.divTimeMachinePerformanceGrid = $('#divTimeMachinePerformanceGrid');
 
         if (isVirtualPerformancePermission) {
             domElements.txtMarginFrom = domElements.divBetTypePerformanceFilter.find('#txtMarginFrom');
@@ -250,6 +255,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divBetChoicePerformanceContainer.addClass('display-none');
         domElements.divIntervalBetChoicePerformanceContainer.addClass('display-none');
+        domElements.divTimeMachinePerformanceContainer.addClass('display-none');
     };
 
     // Validate filter form.
