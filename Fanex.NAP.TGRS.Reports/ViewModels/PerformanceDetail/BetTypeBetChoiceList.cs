@@ -9,10 +9,14 @@
     {
         public BetTypeBetChoiceList()
         {
+            IsFMBetType = false;
+            IsBetChoiceDetail = false;
             ItemList = new List<BetTypeBetChoiceItem>();
         }        
 
         public bool IsFMBetType { get; set; }
+
+        public bool IsBetChoiceDetail { get; set; }
 
         public List<BetTypeBetChoiceItem> ItemList { get; set; }
 

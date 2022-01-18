@@ -510,11 +510,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
-                    var fmBetTypeData = multi.Read<bool>();
+                    var fmBetTypeBetChoiceInfo = multi.Read<FMBetTypeBetChoiceInfo>();
 
-                    if (fmBetTypeData != null && fmBetTypeData.Any())
+                    if (fmBetTypeBetChoiceInfo != null && fmBetTypeBetChoiceInfo.Any())
                     {
-                        betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];                        
+                        betTypeBetChoiceList.IsFMBetType = fmBetTypeBetChoiceInfo.ToList()[0].IsFMBetType;
+                        betTypeBetChoiceList.IsBetChoiceDetail = fmBetTypeBetChoiceInfo.ToList()[0].IsBetChoiceDetail;
                     }                    
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }

@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDPCriteria : CriteriaBase
+    public class GetPointHDPPerformanceOfBetTypeBetChoiceCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 

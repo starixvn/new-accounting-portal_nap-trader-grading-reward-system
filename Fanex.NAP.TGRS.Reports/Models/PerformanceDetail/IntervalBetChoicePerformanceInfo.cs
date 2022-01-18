@@ -35,5 +35,8 @@
         }
 
         public bool IsLive { get; set; }
+
+        public TimeMachineType TimeMachineType { get; set; }
+
     }
 }

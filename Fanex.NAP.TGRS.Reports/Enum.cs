@@ -34,4 +34,11 @@
         Days7,
         Days30
     }
+
+    public enum TimeMachineType
+    {
+        Interval,
+        HDP,
+        Point
+    }
 }

@@ -789,7 +789,18 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoiceHDPCriteria criteria)
+        public JsonResult GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var result = "";
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
@@ -834,7 +845,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var result = this._detailReportService.GetIntervalPerformanceOfBetTypeLeagueBetChoice(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }       
+        }
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
