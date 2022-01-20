@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria : CriteriaBase
+    public class GetTimeMachineOfBetTypeBetChoicePointHDPCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 
@@ -38,7 +38,7 @@
         public bool IsExcludeLeagues { get; set; }
 
         public override string GetSettingKey()
-            => "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_HDP";
+            => "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP_Minute";
 
         public override bool IsValid()
             => true;

@@ -246,6 +246,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeagueDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetLeagueOfBetTypeBetChoicePointHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetChoicePerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceOfBetChoiceCriteria.cs" />
@@ -262,7 +263,8 @@
     <Compile Include="Criteria\PerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamsCriteria.cs" />
-    <Compile Include="Criteria\PerformanceDetail\GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetTimeMachineOfBetTypeBetChoicePointHDPCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetTimeMachineOfBetTypeLeagueBetChoicePointHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeLeagueCriteria.cs" />
@@ -348,6 +350,7 @@
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceRawInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\PointHDPPerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\ScoreByPeriodInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamPerformanceInfo.cs" />
@@ -462,6 +465,8 @@
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceGroup.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\PointHDPPerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\PointHDPPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\ScoreByPeriodItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceItem.cs" />

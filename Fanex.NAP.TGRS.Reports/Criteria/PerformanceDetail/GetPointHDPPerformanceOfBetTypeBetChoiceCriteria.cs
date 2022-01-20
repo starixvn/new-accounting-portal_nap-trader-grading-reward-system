@@ -38,7 +38,7 @@
         public bool IsExcludeLeagues { get; set; }
 
         public override string GetSettingKey()
-            => "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_HDP";
+            => "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP";
 
         public override bool IsValid()
             => true;

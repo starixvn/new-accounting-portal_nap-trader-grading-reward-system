@@ -56,6 +56,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         divBetChoicePerformanceGrid: null,
         divIntervalBetChoicePerformanceContainer: null,
         divIntervalBetChoicePerformanceGrid: null,
+        divPointHDPPerformanceContainer: null,
+        divPointHDPPerformanceGrid: null,
         divTimeMachinePerformanceContainer: null,
         divTimeMachinePerformanceGrid: null
     };
@@ -103,6 +105,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divBetChoicePerformanceGrid = $('#divBetChoicePerformanceGrid');
         domElements.divIntervalBetChoicePerformanceContainer = $('#divIntervalBetChoicePerformanceContainer');
         domElements.divIntervalBetChoicePerformanceGrid = $('#divIntervalBetChoicePerformanceGrid');
+        domElements.divPointHDPPerformanceContainer = $('#divPointHDPPerformanceContainer');
+        domElements.divPointHDPPerformanceGrid = $('#divPointHDPPerformanceGrid');
         domElements.divTimeMachinePerformanceContainer = $('#divTimeMachinePerformanceContainer');
         domElements.divTimeMachinePerformanceGrid = $('#divTimeMachinePerformanceGrid');
 
@@ -256,6 +260,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divLeaguePerformanceContainer.addClass('display-none');
         domElements.divBetChoicePerformanceContainer.addClass('display-none');
         domElements.divIntervalBetChoicePerformanceContainer.addClass('display-none');
+        domElements.divPointHDPPerformanceContainer.addClass('display-none');
         domElements.divTimeMachinePerformanceContainer.addClass('display-none');
     };
 
@@ -1004,7 +1009,12 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
 
         domElements.divBetChoicePerformanceContainer.find('point-hdp-link').click(function () {
+            var $link = $(this);
+            var betTeam = $link.attr('data-betteam');
+            var oddsspread = $link.attr('data-oddsspread');
+            var betChoice = $link.text();      
 
+            getPointHDPPerformanceOfBetTypeBetChoice(betTeam, betTypeId, betTypeName, isLive, oddsspread, betChoice);
         });
 
         domElements.divBetChoicePerformanceContainer.find('span.league-link').click(function () {
@@ -1018,7 +1028,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
             getLeagueByBetChoiceReport(isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption);
         });        
-    };
+    };    
 
     var getIntervalPerformanceOfBetTypeBetChoice = function (betTeam, betTypeId, betTypeName, isLive, oddsspread, betChoice) {
         var intervalParamrters = {
@@ -1262,6 +1272,14 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             domElements.divBetChoicePerformanceContainer.removeClass('display-none');
             domElements.divIntervalBetChoicePerformanceContainer.addClass('display-none');
         });
+    }
+
+    var getPointHDPPerformanceOfBetTypeBetChoice = function (betTeam, betTypeId, betTypeName, isLive, oddsspread, betChoice) {
+
+    }
+
+    var renderPointHDPPerformanceOfBetTypeBetChoiceGrid = function (data, betTeam, betTypeId, betTypeName, isLive, oddsspread, betChoice) {
+
     }
 
     var getLeagueByBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption) {

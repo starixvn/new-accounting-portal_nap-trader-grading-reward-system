@@ -152,7 +152,10 @@
     <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Bettype_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
     <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_BetChoice" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_BetChoice" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
 	<Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_League_BetChoice_Interval" SpName="TGRS_Rpt_PerformanceDetail_Bettype_League_BetChoice_Interval" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-    <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP" SpName="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP_Minute" SpName="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP_Minute" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP_League" SpName="TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Grade_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_League_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader_Match" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

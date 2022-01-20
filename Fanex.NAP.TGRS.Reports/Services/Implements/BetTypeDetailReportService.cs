@@ -243,6 +243,23 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return result;
         }       
 
+        public PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria)
+        {
+            var pointHDPList = new PointHDPPerformanceList();
+
+            var pointHDPData = this.GetData<PointHDPPerformanceInfo>(criteria);            
+
+            if (pointHDPData != null && pointHDPData.Any())
+            {
+                pointHDPList.AddItem(pointHDPData);
+
+                pointHDPList.Total.Margin = CalculateTotalMargin(pointHDPList.Total.WinLoss, pointHDPList.Total.Turnover);
+                pointHDPList.Total.MarginReal = CalculateTotalMargin(pointHDPList.Total.WinLossReal, pointHDPList.Total.TurnoverReal);
+            }
+
+            return pointHDPList;
+        }
+
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
         /// </summary>

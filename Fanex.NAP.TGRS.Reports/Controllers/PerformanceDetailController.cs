@@ -793,14 +793,14 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
-            var result = "";
+            var result = this._detailReportService.GetPointHDPPerformanceOfBetTypeBetChoice(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
+        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachineOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 

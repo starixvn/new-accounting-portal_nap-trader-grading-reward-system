@@ -237,6 +237,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria);
 
+        PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria);
+
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
         /// </summary>
