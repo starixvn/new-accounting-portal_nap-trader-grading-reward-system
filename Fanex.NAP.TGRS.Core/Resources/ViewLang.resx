@@ -888,4 +888,7 @@
   <data name="Minute" xml:space="preserve">
     <value>Minute</value>
   </data>
+  <data name="PointHDP" xml:space="preserve">
+    <value>Point/HDP</value>
+  </data>
 </root>

@@ -23,8 +23,12 @@
             {
                 if (info != null)
                 {
-                    this.ItemList.Add(new PointHDPPerformanceItem(info));
-                }
+                    var item = new PointHDPPerformanceItem(info);
+
+                    this.ItemList.Add(item);
+
+                    CalculateTotal(item);
+                }                
             }
         }
 

@@ -260,6 +260,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return pointHDPList;
         }
 
+        public LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria)
+        {
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+
+            if (leagueData != null && leagueData.Any())
+            {
+                leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
+                leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);                
+            }
+
+            return leaguePerformance;
+        }
+
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
         /// </summary>
@@ -527,12 +542,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
-                    var fmBetTypeBetChoiceInfo = multi.Read<FMBetTypeBetChoiceInfo>();
+                    var betChoiceOfBetTypeInfo = multi.Read<FMBetTypeBetChoiceInfo>();
 
-                    if (fmBetTypeBetChoiceInfo != null && fmBetTypeBetChoiceInfo.Any())
+                    if (betChoiceOfBetTypeInfo != null && betChoiceOfBetTypeInfo.Any())
                     {
-                        betTypeBetChoiceList.IsFMBetType = fmBetTypeBetChoiceInfo.ToList()[0].IsFMBetType;
-                        betTypeBetChoiceList.IsBetChoiceDetail = fmBetTypeBetChoiceInfo.ToList()[0].IsBetChoiceDetail;
+                        //betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;                        
+                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;
+
+                        betTypeBetChoiceList.IsFMBetType = false; // for test
                     }                    
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }

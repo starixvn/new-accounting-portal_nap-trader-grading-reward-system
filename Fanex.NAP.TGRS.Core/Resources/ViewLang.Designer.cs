@@ -1582,6 +1582,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Point/HDP.
+        /// </summary>
+        public static string PointHDP {
+            get {
+                return ResourceManager.GetString("PointHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Point Margin.
         /// </summary>
         public static string PointMargin {

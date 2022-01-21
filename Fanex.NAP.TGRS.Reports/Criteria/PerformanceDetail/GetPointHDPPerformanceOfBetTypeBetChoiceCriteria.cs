@@ -9,8 +9,15 @@
 
         public DateTime ToDate { get; set; }
 
-        [SpParam(Ignored = true)]
-        public bool IsLive { get; set; }
+        public string LeagueName { get; set; }
+
+        public string LeagueGroupIds { get; set; }
+
+        public short BetType { get; set; }
+
+        public string BetTeam { get; set; }       
+
+        public bool IsExcludeLeagues { get; set; }
 
         public Int16 Market
         {
@@ -25,17 +32,8 @@
             }
         }
 
-        public short BetType { get; set; }
-
-        public string BetTeam { get; set; }
-
-        public decimal Oddsspread { get; set; }
-
-        public string LeagueGroupIds { get; set; }
-
-        public string LeagueName { get; set; }
-
-        public bool IsExcludeLeagues { get; set; }
+        [SpParam(Ignored = true)]
+        public bool IsLive { get; set; }
 
         public override string GetSettingKey()
             => "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice_PointHDP";

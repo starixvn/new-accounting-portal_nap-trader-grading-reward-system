@@ -239,6 +239,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria);
 
+        LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
+
         /// <summary>
         /// Gets the match performance of bet type, league and trader.
         /// </summary>

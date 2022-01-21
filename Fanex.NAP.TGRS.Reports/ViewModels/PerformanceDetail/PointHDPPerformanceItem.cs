@@ -6,11 +6,14 @@
     [Serializable]
     public class PointHDPPerformanceItem
     {
+        public PointHDPPerformanceItem() { }
+
         public PointHDPPerformanceItem(PointHDPPerformanceInfo info)
         {
             this.PointHDP = info.PointHDP;
             this.NoOfLeagues = info.LeagueCount;
-            this.NoOfMatches = info.MatchCount;            
+            this.NoOfMatches = info.MatchCount;
+            this.BetCount = info.BetCount;
             this.Turnover = info.Turnover;
             this.WinLoss = info.WinLoss;
             this.Margin = info.Margin;
