@@ -29,7 +29,7 @@
 
         public string BetTeam { get; set; }
 
-        public decimal Oddsspread { get; set; }
+        public decimal PointHDP { get; set; }
 
         public string LeagueGroupIds { get; set; }
 

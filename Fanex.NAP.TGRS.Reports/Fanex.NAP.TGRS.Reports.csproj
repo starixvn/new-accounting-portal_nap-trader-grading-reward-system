@@ -260,11 +260,13 @@
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTraderCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetMatchPerformanceOfTraderLeagueTeam.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetPointHDPPerformanceOfBetTypeBetChoiceCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetPointHDPPerformanceOfBetTypeLeagueBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetScoreByPeriodCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTeamsCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTimeMachineOfBetTypeBetChoicePointHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTimeMachineOfBetTypeLeagueBetChoicePointHDPCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetTraderPerformanceOfBetTypeLeagueCriteria.cs" />
@@ -354,6 +356,7 @@
     <Compile Include="Models\PerformanceDetail\ScoreByPeriodInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TeamPerformanceInfo.cs" />
+    <Compile Include="Models\PerformanceDetail\TimeMachinePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\TraderPerformanceInfo.cs" />
     <Compile Include="Models\PerformanceSummary\TeamHistoryDetail.cs" />
     <Compile Include="Models\PerformanceSummary\GradeHistoryDetail.cs" />
@@ -471,6 +474,8 @@
     <Compile Include="ViewModels\PerformanceDetail\TeamItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TeamPerformanceList.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TimeMachinePerformanceItem.cs" />
+    <Compile Include="ViewModels\PerformanceDetail\TimeMachinePerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\TraderPerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceSummary\ReportFilter.cs" />

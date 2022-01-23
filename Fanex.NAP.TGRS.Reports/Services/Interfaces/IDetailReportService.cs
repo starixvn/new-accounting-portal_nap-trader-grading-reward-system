@@ -233,6 +233,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         BetTypeBetChoiceList GetBetChoicePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria);
 
+        PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeLeagueBetChoice(GetPointHDPPerformanceOfBetTypeLeagueBetChoiceCriteria criteria);
+
+        TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria criteria);
+
         IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria);
 
         IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria);
@@ -240,6 +244,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria);
 
         LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
+
+        TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(GetTimeMachineOfBetTypeBetChoicePointHDPCriteria criteria);
 
         /// <summary>
         /// Gets the match performance of bet type, league and trader.

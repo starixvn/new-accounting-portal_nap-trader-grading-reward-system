@@ -212,17 +212,52 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
                 {
                     var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
-                    var fmBetTypeData = multi.Read<bool>();
+                    var betChoiceOfBetTypeInfo = multi.Read<FMBetTypeBetChoiceInfo>();
 
-                    if (fmBetTypeData != null && fmBetTypeData.Any())
+                    if (betChoiceOfBetTypeInfo != null && betChoiceOfBetTypeInfo.Any())
                     {
-                        betTypeBetChoiceList.IsFMBetType = fmBetTypeData.ToList()[0];                        
+                        betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;
+                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;
                     }                    
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }
             }
 
             return betTypeBetChoiceList;
+        }
+
+        public PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeLeagueBetChoice(GetPointHDPPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
+        {
+            var pointHDPList = new PointHDPPerformanceList();
+
+            var pointHDPData = this.GetData<PointHDPPerformanceInfo>(criteria);
+
+            if (pointHDPData != null && pointHDPData.Any())
+            {
+                pointHDPList.AddItem(pointHDPData, criteria.BetType, criteria.BetTeam);
+
+                pointHDPList.Total.Margin = CalculateTotalMargin(pointHDPList.Total.WinLoss, pointHDPList.Total.Turnover);
+                pointHDPList.Total.MarginReal = CalculateTotalMargin(pointHDPList.Total.WinLossReal, pointHDPList.Total.TurnoverReal);
+            }
+
+            return pointHDPList;
+        }
+
+        public TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
+        {
+            var timeList = new TimeMachinePerformanceList();
+
+            var timeData = this.GetData<TimeMachinePerformanceInfo>(criteria);
+
+            if (timeData != null && timeData.Any())
+            {
+                timeList.AddItem(timeData, criteria.BetType);
+
+                timeList.Total.Margin = CalculateTotalMargin(timeList.Total.WinLoss, timeList.Total.Turnover);
+                timeList.Total.MarginReal = CalculateTotalMargin(timeList.Total.WinLossReal, timeList.Total.TurnoverReal);
+            }
+
+            return timeList;
         }
 
         public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeLeagueBetChoice(GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
@@ -251,7 +286,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (pointHDPData != null && pointHDPData.Any())
             {
-                pointHDPList.AddItem(pointHDPData);
+                pointHDPList.AddItem(pointHDPData, criteria.BetType, criteria.BetTeam);
 
                 pointHDPList.Total.Margin = CalculateTotalMargin(pointHDPList.Total.WinLoss, pointHDPList.Total.Turnover);
                 pointHDPList.Total.MarginReal = CalculateTotalMargin(pointHDPList.Total.WinLossReal, pointHDPList.Total.TurnoverReal);
@@ -546,16 +581,31 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                     if (betChoiceOfBetTypeInfo != null && betChoiceOfBetTypeInfo.Any())
                     {
-                        //betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;                        
-                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;
-
-                        betTypeBetChoiceList.IsFMBetType = false; // for test
+                        betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;                        
+                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;                        
                     }                    
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }
             }
 
             return betTypeBetChoiceList;
+        }
+
+        public TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(GetTimeMachineOfBetTypeBetChoicePointHDPCriteria criteria)
+        {
+            var timeList = new TimeMachinePerformanceList();
+
+            var timeData = this.GetData<TimeMachinePerformanceInfo>(criteria);
+
+            if (timeData != null && timeData.Any())
+            {
+                timeList.AddItem(timeData, criteria.BetType);
+
+                timeList.Total.Margin = CalculateTotalMargin(timeList.Total.WinLoss, timeList.Total.Turnover);
+                timeList.Total.MarginReal = CalculateTotalMargin(timeList.Total.WinLossReal, timeList.Total.TurnoverReal);
+            }
+
+            return timeList;
         }
     }
 }

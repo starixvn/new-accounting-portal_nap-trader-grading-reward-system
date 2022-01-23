@@ -811,11 +811,11 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
-        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachineOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
+        public JsonResult GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(GetTimeMachineOfBetTypeBetChoicePointHDPCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
-            var result = "";
+            var result = this._detailReportService.GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -843,6 +843,28 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
 
             var result = this._detailReportService.GetBetChoicePerformanceOfBetTypeLeague(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetPointHDPPerformanceOfBetTypeLeagueBetChoice(GetPointHDPPerformanceOfBetTypeLeagueBetChoiceCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var result = this._detailReportService.GetPointHDPPerformanceOfBetTypeLeagueBetChoice(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public JsonResult GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+            var result = this._detailReportService.GetTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

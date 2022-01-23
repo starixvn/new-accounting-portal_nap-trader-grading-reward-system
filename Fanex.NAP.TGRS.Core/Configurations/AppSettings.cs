@@ -10,7 +10,9 @@
 namespace Fanex.NAP.TGRS.Core.Configurations
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
     using Fanex.Common;
 
     /// <summary>
@@ -27,6 +29,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int spreadMinValue;
         private static int spreadMaxValue;
         private static string basketballBettypeQuarter;
+        private static string soccerTotalGoalBettype;
 
         public static string ServerTimezone
         {
@@ -150,6 +153,26 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return basketballBettypeQuarter;
+            }
+        }
+
+        public static IEnumerable<string> SoccerTotalGoalBettype
+        {
+            get
+            {
+                var betTypes = Enumerable.Empty<string>();
+
+                if (soccerTotalGoalBettype == null)
+                {
+                    soccerTotalGoalBettype = GetValue("SoccerTotalGoalBettype");
+                }
+
+                if (soccerTotalGoalBettype != null)
+                {
+                    betTypes = soccerTotalGoalBettype.Split(',').AsEnumerable();
+                }
+
+                return betTypes;
             }
         }
 
