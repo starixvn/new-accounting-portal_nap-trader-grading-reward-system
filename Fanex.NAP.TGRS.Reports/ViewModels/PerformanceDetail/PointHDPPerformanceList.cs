@@ -23,7 +23,7 @@
 
         public void AddItem(IEnumerable<PointHDPPerformanceInfo> infos, short betType, string betTeam)
         {
-            var totalGoalBettypes = AppSettings.SoccerTotalGoalBettype;
+            var totalGoalBettypes = AppSettings.SoccerBettypeTotalGoalMinute;
 
             this.IsTotalGoalBetType = totalGoalBettypes.Any(x => x == betType.ToString());
 
@@ -44,13 +44,13 @@
 
         private string ConvertOption(string betTeam)
         {
-            if (betTeam == "Away")
+            if (betTeam.ToUpper() == "HOME")
             {
-                return "a";
+                return "1";
             }
-            else if (betTeam == "Home")
+            else if (betTeam.ToUpper() == "AWAY")
             {
-                return "h";
+                return "2";
             }
             else
             {

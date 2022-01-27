@@ -76,7 +76,7 @@
                         if (pointHDP > 0)
                             newPointHDP = "A+" + pointHDP.ToString("0.##");
                         else if (pointHDP < 0)
-                            newPointHDP = "H+" + pointHDP.ToString("0.##");
+                            newPointHDP = "H+" + Math.Abs(pointHDP).ToString("0.##");
                     }
                     break;                                  
                 case 228: // SABA OU Time Machine --- Total Goal

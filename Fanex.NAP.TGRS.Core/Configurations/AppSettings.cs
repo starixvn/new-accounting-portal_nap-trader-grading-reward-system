@@ -29,7 +29,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int spreadMinValue;
         private static int spreadMaxValue;
         private static string basketballBettypeQuarter;
-        private static string soccerTotalGoalBettype;
+        private static string soccerBettypeTotalGoalMinute;
 
         public static string ServerTimezone
         {
@@ -156,20 +156,20 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             }
         }
 
-        public static IEnumerable<string> SoccerTotalGoalBettype
+        public static IEnumerable<string> SoccerBettypeTotalGoalMinute
         {
             get
             {
                 var betTypes = Enumerable.Empty<string>();
 
-                if (soccerTotalGoalBettype == null)
+                if (soccerBettypeTotalGoalMinute == null)
                 {
-                    soccerTotalGoalBettype = GetValue("SoccerTotalGoalBettype");
+                    soccerBettypeTotalGoalMinute = GetValue("SoccerBettypeTotalGoalMinute");
                 }
 
-                if (soccerTotalGoalBettype != null)
+                if (soccerBettypeTotalGoalMinute != null)
                 {
-                    betTypes = soccerTotalGoalBettype.Split(',').AsEnumerable();
+                    betTypes = soccerBettypeTotalGoalMinute.Split(',').AsEnumerable();
                 }
 
                 return betTypes;

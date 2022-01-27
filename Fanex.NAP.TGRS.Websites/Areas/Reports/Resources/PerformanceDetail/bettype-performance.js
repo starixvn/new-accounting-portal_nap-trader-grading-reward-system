@@ -1324,8 +1324,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             title = titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, betChoice);
         }       
 
-        var hdpFormat = '<span class="pointhdp-link link" data-betteam="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-pointhdp="{3}">{4}</span>';
-        var noOfLeaguesFormat = '<span class="league-link link" data-betteam="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-pointhdp="{3}" data-betchoice="{4}">{5}</span>';
+        var hdpFormat = '<span class="pointhdp-link link" data-betteam="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-pointhdp="{3}" data-pointhdpconvert="{4}">{4}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-betteam="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-pointhdp="{3}" data-pointhdpconvert="{4}" data-betchoice="{5}">{6}</span>';
 
         var gridOptions = {
             gridExpandHeight: 260,
@@ -1437,7 +1437,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         if (data && data.ItemList.length > 0) {
             $.each(data.ItemList, function (index, item) {
-                var colNoOfLeagues = leagueId != null ? 1 : noOfLeaguesFormat.format(betTeam, isLive, betTypeId, item.PointHDP, betChoice, item.NoOfLeagues);
+                var colNoOfLeagues = leagueId != null ? 1 : noOfLeaguesFormat.format(betTeam, isLive, betTypeId, item.PointHDP, item.PointHDPConvert, betChoice, item.NoOfLeagues);
                 var colPointHDP = data.IsTotalGoalBetType ? hdpFormat.format(betTeam, isLive, betTypeId, item.PointHDP, item.PointHDPConvert) : item.PointHDPConvert;              
                
                 var currentColumns = [
@@ -1533,8 +1533,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var betTypeId = $link.attr('data-bettype-id');
             var betChoice = $link.attr('data-betchoice');
             var pointHDP = $link.attr('data-pointhdp');
+            var pointHDPConvert = $link.attr('data-pointhdpconvert');
 
-            getLeagueOfBetTypeBetChoicePointHDP(isLive, betTypeId, betTypeName, betTeam, betChoice, pointHDP);          
+            getLeagueOfBetTypeBetChoicePointHDP(isLive, betTypeId, betTypeName, betTeam, betChoice, pointHDP, pointHDPConvert);
         });
 
         domElements.divPointHDPPerformanceContainer.find('span.pointhdp-link').click(function () {
@@ -1543,16 +1544,17 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             var betTeam = $link.attr('data-betteam');
             var betTypeId = $link.attr('data-bettype-id');
             var pointHDP = $link.attr('data-pointhdp');
+            var pointHDPConvert = $link.attr('data-pointhdpconvert');
 
             if (leagueId != null) {
-                getTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPReport(betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName);
+                getTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPReport(betTypeId, betTypeName, isLive, betTeam, pointHDP, pointHDPConvert, leagueId, leagueName);
             } else {
-                getTimeMachinePerformanceOfBetTypeBetChoicePointHDPReport(betTypeId, betTypeName, isLive, betTeam, pointHDP);
+                getTimeMachinePerformanceOfBetTypeBetChoicePointHDPReport(betTypeId, betTypeName, isLive, betTeam, pointHDP, pointHDPConvert);
             }             
         });
     }
 
-    var getTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPReport = function (betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName) {
+    var getTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDPReport = function (betTypeId, betTypeName, isLive, betTeam, pointHDP, pointHDPConvert, leagueId, leagueName) {
         var timeMachineParameters = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -1572,7 +1574,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(timeMachineParameters),
             success: function (result) {
-                renderTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(result, betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName);
+                renderTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP(result, betTypeId, betTypeName, isLive, betTeam, pointHDPConvert, leagueId, leagueName);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1583,11 +1585,11 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
     }
 
-    var renderTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP = function (data, betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName) {
-        renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP(data, betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName);
+    var renderTimeMachinePerformanceOfBetTypeLeagueBetChoicePointHDP = function (data, betTypeId, betTypeName, isLive, betTeam, pointHDPConvert, leagueId, leagueName) {
+        renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP(data, betTypeId, betTypeName, isLive, betTeam, pointHDPConvert, leagueId, leagueName);
     }
 
-    var getTimeMachinePerformanceOfBetTypeBetChoicePointHDPReport = function (betTypeId, betTypeName, isLive, betTeam, pointHDP) {
+    var getTimeMachinePerformanceOfBetTypeBetChoicePointHDPReport = function (betTypeId, betTypeName, isLive, betTeam, pointHDP, pointHDPConvert) {
         var timeMachineParameters = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -1608,7 +1610,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(timeMachineParameters),
             success: function (result) {
-                renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP(result, betTypeId, betTypeName, isLive, betTeam, pointHDP, null, null);
+                renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP(result, betTypeId, betTypeName, isLive, betTeam, pointHDPConvert, null, null);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1619,13 +1621,13 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
     }
 
-    var renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP = function (data, betTypeId, betTypeName, isLive, betTeam, pointHDP, leagueId, leagueName) {
+    var renderTimeMachinePerformanceOfBetTypeBetChoicePointHDP = function (data, betTypeId, betTypeName, isLive, betTeam, pointHDPConvert, leagueId, leagueName) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
             '<span id="spanMarketLink" class="breadcrumb-link"> >> ({1}) {2}</span>' +
             '<span id="spanPointHDPLink" class="breadcrumb-link"> >> {3}</span>' +
             '<span> >> {4}</span>';
 
-        var title = titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betTeam, pointHDP);
+        var title = titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betTeam, pointHDPConvert);
 
         if (leagueId != null) {
             titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
@@ -1634,7 +1636,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
                 '<span id="spanPointHDPLink" class="breadcrumb-link"> >> {4}</span>' +
                 '<span title="{5}"> >> {5}</span>';
             
-            title = titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, betTeam, pointHDP);
+            title = titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, leagueName, betTeam, pointHDPConvert);
         }
 
         var gridOptions = {
@@ -1849,7 +1851,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         domElements.divTimeMachinePerformanceContainer.addClass('display-none');
     };
 
-    var getLeagueOfBetTypeBetChoicePointHDP = function (isLive, betTypeId, betTypeName, betTeam, betChoice, pointHDP) {
+    var getLeagueOfBetTypeBetChoicePointHDP = function (isLive, betTypeId, betTypeName, betTeam, betChoice, pointHDP, pointHDPConvert) {
         var leagueParamrters = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -1869,7 +1871,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             dataType: 'json',
             data: JSON.stringify(leagueParamrters),
             success: function (result) {
-                renderLeagueOfBetTypeBetChoicePointHDPGrid(result, betTypeId, betTypeName, betTeam, isLive, betChoice, pointHDP);
+                renderLeagueOfBetTypeBetChoicePointHDPGrid(result, betTypeId, betTypeName, betTeam, isLive, betChoice, pointHDPConvert);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -1880,7 +1882,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
     }
 
-    var renderLeagueOfBetTypeBetChoicePointHDPGrid = function (data, betTypeId, betTypeName, betTeam, isLive, betChoice, pointHDP) {
+    var renderLeagueOfBetTypeBetChoicePointHDPGrid = function (data, betTypeId, betTypeName, betTeam, isLive, betChoice, pointHDPConvert) {
         var bodyData = [];
         var footerData = [];     
 
@@ -1891,7 +1893,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divPointHDPPerformanceContainer.addClass('display-none');
-        var gridOptions = renderLeaguePerformanceOfBetTypeGridOptions(betTypeId, betTypeName, isLive, betChoice, pointHDP, false, false);
+        var gridOptions = renderLeaguePerformanceOfBetTypeGridOptions(betTypeId, betTypeName, isLive, betChoice, pointHDPConvert, false, false);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
@@ -2842,7 +2844,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     };
 
     // Render league performance grid.
-    var renderLeaguePerformanceOfBetTypeGrid = function (data, betTypeId, betTypeName, isLive, betChoice, pointHDP, isDisplayNoOfTraders, isDisplayNoOfBetChoices) {
+    var renderLeaguePerformanceOfBetTypeGrid = function (data, betTypeId, betTypeName, isLive, betChoice, pointHDPConvert, isDisplayNoOfTraders, isDisplayNoOfBetChoices) {
         var bodyData = [];
         var footerData = [];
 
@@ -2853,14 +2855,14 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
 
         // Hide previous report.
         domElements.divBetTypePerformanceContainer.addClass('display-none');
-        var gridOptions = renderLeaguePerformanceOfBetTypeGridOptions(betTypeId, betTypeName, isLive, betChoice, pointHDP, isDisplayNoOfTraders, isDisplayNoOfBetChoices);
+        var gridOptions = renderLeaguePerformanceOfBetTypeGridOptions(betTypeId, betTypeName, isLive, betChoice, pointHDPConvert, isDisplayNoOfTraders, isDisplayNoOfBetChoices);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
         domElements.divLeaguePerformanceGrid.fanexGrid(gridOptions);
         handleLeaguePerformanceOfBetTypeGridEvents(betTypeId, betTypeName);
     };
 
-    var renderLeaguePerformanceOfBetTypeGridOptions = function (betTypeId, betTypeName, isLive, betChoice, pointHDP, isDisplayNoOfTraders, isDisplayNoOfBetChoices) {
+    var renderLeaguePerformanceOfBetTypeGridOptions = function (betTypeId, betTypeName, isLive, betChoice, pointHDPConvert, isDisplayNoOfTraders, isDisplayNoOfBetChoices) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var titleLeagueOfPointHDPFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span>' +
             '<span id="spanMarketLink" class="breadcrumb-link"> >> ({1}) {2}</span>' + 
@@ -2872,7 +2874,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         if (isDisplayNoOfTraders && isDisplayNoOfBetChoices) {            
             title = titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName);
         } else {
-            title = titleLeagueOfPointHDPFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betChoice, pointHDP);
+            title = titleLeagueOfPointHDPFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betChoice, pointHDPConvert);
         }
 
         var gridOptions = {
@@ -3088,7 +3090,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         columns = columns.concat([{ Name: 'ColBetCount', Value: numeral(data.Total.BetCount).format(common.Formats.IntegerFormat) }]);
 
         if (isVirtualPerformancePermission) {
-            columns.concat([
+            columns = columns.concat([
                 { Name: 'ColTurnover', Value: data.Total.Turnover },
                 { Name: 'ColAvgTurnoverPerMatch', Value: (data.Total.Turnover / data.Total.NoOfMatches) },
                 { Name: 'ColWinLoss', Value: data.Total.WinLoss },
@@ -3097,7 +3099,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         }
 
         if (isRealPerformancePermission) {
-            columns.concat([
+            columns = columns.concat([
                 { Name: 'ColTurnoverReal', Value: data.Total.TurnoverReal },
                 { Name: 'ColAvgTurnoverPerMatchReal', Value: (data.Total.TurnoverReal / data.Total.NoOfMatches) },
                 { Name: 'ColWinLossReal', Value: data.Total.WinLossReal },
