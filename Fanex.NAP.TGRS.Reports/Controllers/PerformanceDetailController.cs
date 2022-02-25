@@ -144,6 +144,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.LeagueName = criteria.LeagueName ?? string.Empty;
+            if (criteria.IsAllLeagueGroup)
+            {
+                criteria.LeagueGroupIds = string.Empty;
+            }
             leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria, criteria.MarketFilter == Market.All);
             JsonResult jsonResult = Json(leaguePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -318,6 +322,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
 
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
             criteria.Username = criteria.Username ?? string.Empty;
+            if (criteria.IsAllLeagueGroup)
+            {
+                criteria.LeagueGroupIds = string.Empty;
+            }
             traderPerformance = this._detailReportService.GetTraderPerformance(criteria);
             JsonResult jsonResult = Json(traderPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -415,6 +423,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            if (criteria.IsAllLeagueGroup)
+            {
+                criteria.LeagueGroupIds = string.Empty;
+            }
             GradePerformanceList gradePerformance = this._detailReportService.GetGradePerformance(criteria);
             JsonResult jsonResult = Json(gradePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -561,6 +573,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetTeamPerformance(GetTeamPerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            if (criteria.IsAllLeagueGroup)
+            {
+                criteria.LeagueGroupIds = string.Empty;
+            }
             TeamPerformanceList teamPerformance = this._detailReportService.GetTeamPerformance(criteria);
             JsonResult jsonResult = Json(teamPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
@@ -696,6 +712,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public JsonResult GetBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            if (criteria.IsAllLeagueGroup)
+            {
+                criteria.LeagueGroupIds = string.Empty;
+            }
             BetTypePerformanceList betTypePerformance = this._detailReportService.GetBetTypePerformance(criteria);
             JsonResult jsonResult = Json(betTypePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;

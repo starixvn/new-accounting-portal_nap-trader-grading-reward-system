@@ -42,6 +42,9 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string LeagueGroupIds { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsAllLeagueGroup { get; set; }
+        
         public string LeagueName { get; set; }
 
         public decimal? Turnover { get; set; }

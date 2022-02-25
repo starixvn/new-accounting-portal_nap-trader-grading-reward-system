@@ -51,20 +51,14 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
             {
                 if (item != null)
                 {
-                    var leagueGroupName = "-";
+                    var leagueGroupName = string.Empty;
                     if (leagueGroups != null && item.LeagueGroupID.HasValue)
                     {
                         var group = leagueGroups
-                            .Where(x => x.LeagueGroupId < 12 && x.LeagueGroupId.Equals(item.LeagueGroupID.Value))
+                            .Where(x => x.LeagueGroupId.Equals(item.LeagueGroupID.Value))
                             .Select(x => x.LeagueGroupName).ToList();
-
-                        var otherGroup = leagueGroups
-                            .Where(x => x.LeagueGroupId >= 12)
-                            .Select(x => x.LeagueGroupName).ToList();
-
-                        leagueGroupName = group.Any()
-                            ? group[0]
-                            : (otherGroup.Any() ? "Other Groups" : "-");
+                      
+                        leagueGroupName = group.Any() ? group[0] : "-";
                     }
                     var itemData = new LeaguePerformanceItem(item);
                     itemData.LeagueGroupName = leagueGroupName;

@@ -213,7 +213,7 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
 
         domElements.btnGenerate.click(function () {
             if (validator.ValidateForm(domElements.divTeamPerformanceFilter, 'w') && validateFilterForm()) {
-                var selectedBetTypes = domElements.ddlBetType.val();                
+                var selectedBetTypes = domElements.ddlBetType.val();
                 var selectedTeams = domElements.ddlTeam.val();
                 var teamOptions = domElements.ddlTeam.find('option');
                 var selectedLeagueGroups = domElements.ddlLeagueGroup.val();
@@ -222,8 +222,11 @@ Fanex.NAP.TGRS.PerformanceDetail.TeamPerformance = function () {
                 parameters.FromDate = domElements.divDateRange.getFrom();
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.TeamIds = selectedTeams.length === teamOptions.length ? '0' : selectedTeams.join(',');
-                parameters.BetTypes = selectedBetTypes.join(',');               
-                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null,
+                parameters.BetTypes = selectedBetTypes.join(',');
+
+                var leagueGroupNotSelect = domElements.ddlLeagueGroup.find('option').not(':selected').length;
+                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : "";
+                parameters.IsAllLeagueGroup = leagueGroupNotSelect == 0;
                 parameters.IsVirtual = isVirtualPerformancePermission;
                 parameters.IsReal = isRealPerformancePermission;
 

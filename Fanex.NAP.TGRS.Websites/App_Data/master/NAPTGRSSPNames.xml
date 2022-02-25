@@ -170,6 +170,7 @@
     <Setting Key="TGRS_Rpt_PerformanceDetail_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Team_League_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_League_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Rpt_PerformanceDetail_Team_Trader" SpName="TGRS_Rpt_PerformanceDetail_Team_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	  <Setting Key="TGRS_LeagueGroupSoccer_Get" SpName="TGRS_LeagueGroupSoccer_Get" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
   <Function Name="DetailActualRateReports">
     <Setting Key="TGRS_Rpt_ARPerformanceDetail_League" SpName="TGRS_Rpt_ARPerformanceDetail_League" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
