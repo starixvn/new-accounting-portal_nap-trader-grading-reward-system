@@ -42,6 +42,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);
 
+        LeaguePerformanceList2 GetLeaguePerformance2(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);
+
         /// <summary>
         /// Gets the trader performance of a league.
         /// </summary>
@@ -220,7 +222,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         LeaguePerformanceList GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria);
 
-        LeaguePerformanceList GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria);
+        LeaguePerformanceList2 GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria);
 
         LeaguePerformanceList GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria);
 
@@ -243,7 +245,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria);
 
-        LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
+        LeaguePerformanceList2 GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
 
         TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(GetTimeMachineOfBetTypeBetChoicePointHDPCriteria criteria);
 
