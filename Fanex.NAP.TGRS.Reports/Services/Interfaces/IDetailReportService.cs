@@ -40,9 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>LeaguePerformanceList object.</returns>
-        LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);
-
-        LeaguePerformanceList2 GetLeaguePerformance2(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);
+        LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);        
 
         /// <summary>
         /// Gets the trader performance of a league.
@@ -222,7 +220,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         LeaguePerformanceList GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria);
 
-        LeaguePerformanceList2 GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria);
+        LeaguePerformanceList GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria);
 
         LeaguePerformanceList GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria);
 
@@ -245,7 +243,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria);
 
-        LeaguePerformanceList2 GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
+        LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria);
 
         TimeMachinePerformanceList GetTimeMachinePerformanceOfBetTypeBetChoicePointHDP(GetTimeMachineOfBetTypeBetChoicePointHDPCriteria criteria);
 

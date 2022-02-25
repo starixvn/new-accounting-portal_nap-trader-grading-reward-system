@@ -350,7 +350,6 @@
     <Compile Include="Models\PerformanceDetail\FMBetTypeBetChoiceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\GradePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\IntervalBetChoicePerformanceInfo.cs" />
-    <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo2.cs" />
     <Compile Include="Models\PerformanceDetail\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceRawInfo.cs" />
     <Compile Include="Models\PerformanceDetail\MatchPerformanceInfo.cs" />
@@ -465,8 +464,6 @@
     <Compile Include="ViewModels\PerformanceDetail\GradePerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\GroupBetTypes.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeagueGroup.cs" />
-    <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceItem2.cs" />
-    <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceList2.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceItem.cs" />
     <Compile Include="ViewModels\PerformanceDetail\LeaguePerformanceList.cs" />
     <Compile Include="ViewModels\PerformanceDetail\MatchPerformanceGroup.cs" />

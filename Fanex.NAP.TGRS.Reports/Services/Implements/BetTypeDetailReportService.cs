@@ -166,10 +166,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return leaguePerformance;
         }
 
-        public LeaguePerformanceList2 GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
+        public LeaguePerformanceList GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
         {
-            IEnumerable<LeaguePerformanceInfo2> leagueData = this.GetData<LeaguePerformanceInfo2>(criteria);
-            LeaguePerformanceList2 leaguePerformance = new LeaguePerformanceList2();
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
@@ -294,10 +294,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
             return pointHDPList;
         }
 
-        public LeaguePerformanceList2 GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria)
+        public LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria)
         {
-            IEnumerable<LeaguePerformanceInfo2> leagueData = this.GetData<LeaguePerformanceInfo2>(criteria);
-            var leaguePerformance = new LeaguePerformanceList2();
+            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {

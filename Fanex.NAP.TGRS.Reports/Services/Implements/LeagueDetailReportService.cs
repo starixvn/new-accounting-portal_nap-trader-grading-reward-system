@@ -102,7 +102,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             IEnumerable<LeagueGroup> leagueGroupList = this.GetData<LeagueGroup>(criteria);
 
             SessionManager.Set<List<LeagueGroup>>(LeagueGroupsSessionKey, leagueGroupList.ToList());
-
+            
             return leagueGroupList;
         }
 
@@ -176,58 +176,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             return leaguePerformance;
-        }
-
-        public LeaguePerformanceList2 GetLeaguePerformance2(Data.Repository.ICriteria criteria, bool isGroupOfLeague = false)
-        {
-            var leagueData = this.GetData<LeaguePerformanceInfo2>(criteria);
-            var leaguePerformance = new LeaguePerformanceList2();
-
-            if (leagueData != null && leagueData.Any())
-            {
-                if (isGroupOfLeague)
-                {
-                    var data = leagueData.AsEnumerable()
-                            .OrderBy(c => c.LeagueId)
-                            .ThenByDescending(c => c.IsLive)
-                            .Select(c => new LeaguePerformanceInfo2
-                            {
-                                LeagueId = c.LeagueId,
-                                LeagueName = c.LeagueName,
-                                LeagueGroupID = c.LeagueGroupID,
-                                LeagueBenchmark = c.LeagueBenchmark,
-                                BetTypeBMShift1 = c.BetTypeBMShift1,
-                                BetTypeBMShift2 = c.BetTypeBMShift2,
-                                BetTypeBMShift3 = c.BetTypeBMShift3,
-                                TraderCount = c.TraderCount,
-                                MatchCount = c.MatchCount,
-                                Turnover = c.Turnover,
-                                WinLoss = c.WinLoss,
-                                Margin = c.Margin,
-                                TurnoverReal = c.TurnoverReal,
-                                WinLossReal = c.WinLossReal,
-                                MarginReal = c.MarginReal,
-                                BetCount = c.BetCount,
-                                Market = c.Market,
-                                IsLive = c.IsLive,
-                                FlagForViewReport = leagueData.Count(b => b.LeagueId == c.LeagueId)
-                            });
-
-                    leaguePerformance.AddLeagueList(data);
-                }
-                else
-                {
-                    var isLive = GetIsLive(criteria);
-
-                    leaguePerformance.AddLeagueList(leagueData, isLive);
-                }
-
-                leaguePerformance.CalculateTotalMargin();
-                SessionManager.Set<LeaguePerformanceList2>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
-            }
-
-            return leaguePerformance;
-        }      
+        }        
 
         /// <summary>
         /// Gets the trader performance of a league.

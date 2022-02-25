@@ -17,7 +17,7 @@ namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 
         public string LeagueName { get; set; }
 
-        public int? LeagueGroupID { get; set; }
+        public short? LeagueGroupID { get; set; }
 
         public decimal? LeagueBenchmark { get; set; }
 

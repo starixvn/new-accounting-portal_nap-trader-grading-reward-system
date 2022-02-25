@@ -222,7 +222,7 @@ Fanex.NAP.TGRS.PerformanceDetail.LeaguePerformance = function () {
                 parameters.LeagueName = domElements.txtLeague.val();
                 parameters.BetTypes = selectedBetTypes !== null ? selectedBetTypes.join(',') : null;
                 parameters.IsVirtual = isVirtualPerformancePermission;
-                parameters.IsReal = isRealPerformancePermission;                               
+                parameters.IsReal = isRealPerformancePermission;
 
                 if (isVirtualPerformancePermission) {
                     parameters.MarginFrom = domElements.txtMarginFrom.val().replace(/,/g, '');
