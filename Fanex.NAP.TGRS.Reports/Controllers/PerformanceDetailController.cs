@@ -673,7 +673,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         public ActionResult GetMatchPerformanceOfTraderLeagueTeam(GetMatchPerformanceOfTraderLeagueTeam criteria)
         {
             criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            return Json(_detailReportService.GetMatchPerformanceOfTrader(criteria), JsonRequestBehavior.AllowGet);
+            
+            var data = _detailReportService.GetMatchPerformanceOfTrader(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         #endregion Team Performance
