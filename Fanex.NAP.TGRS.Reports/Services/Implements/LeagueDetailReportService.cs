@@ -99,9 +99,16 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             var criteria = new GetLeagueGroupSoccerCriteria { LeagueGroupIds = string.Empty };
 
-            IEnumerable<LeagueGroup> leagueGroupList = this.GetData<LeagueGroup>(criteria);
+            var leagueGroupList = new List<LeagueGroup>();
 
-            SessionManager.Set<List<LeagueGroup>>(LeagueGroupsSessionKey, leagueGroupList.ToList());
+            var data = this.GetData<LeagueGroup>(criteria);
+
+            if (data != null && data.Any())
+            {
+                leagueGroupList = data.Distinct(x => x.TargetLeagueGroupId).ToList();
+            }
+
+            SessionManager.Set<List<LeagueGroup>>(LeagueGroupsSessionKey, leagueGroupList);
             
             return leagueGroupList;
         }
@@ -416,7 +423,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             foreach (var id in ids)
             {
                 var group = leagueGroups
-                .Where(x => x.LeagueGroupId.ToString().Equals(id))
+                .Where(x => x.TargetLeagueGroupId.ToString().Equals(id))
                 .Select(x => x.LeagueGroupName).ToList();
 
                 if (group != null && group.Any())

@@ -55,7 +55,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                     if (leagueGroups != null && item.LeagueGroupID.HasValue)
                     {
                         var group = leagueGroups
-                            .Where(x => x.LeagueGroupId.Equals(item.LeagueGroupID.Value))                            
+                            .Where(x => x.TargetLeagueGroupId.Equals(item.LeagueGroupID.Value))                            
                             .Select(x => x.LeagueGroupName).ToList();                       
 
                         leagueGroupName = group.Any() ? group[0] : "-";
@@ -80,7 +80,7 @@ namespace Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail
                     if (leagueGroups != null && item.LeagueGroupID.HasValue)
                     {
                         var group = leagueGroups
-                            .Where(x => x.LeagueGroupId.Equals(item.LeagueGroupID.Value))
+                            .Where(x => x.TargetLeagueGroupId.Equals(item.LeagueGroupID.Value))
                             .Select(x => x.LeagueGroupName).ToList();
 
                         leagueGroupName = group.Any() ? group[0] : "-";
