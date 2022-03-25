@@ -153,14 +153,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         public LeaguePerformanceList GetLeaguePerformanceOfBetType(GetLeaguePerformanceOfBetTypeCriteria criteria)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+
             LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
                 leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);
-                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);                
             }
 
             return leaguePerformance;
@@ -169,14 +169,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
         public LeaguePerformanceList GetLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
-            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
                 leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);
-                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);                
             }
 
             return leaguePerformance;
@@ -298,7 +297,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         public LeaguePerformanceList GetLeaguePerformanceOfBetTypeBetChoicePointHDP(GetLeagueOfBetTypeBetChoicePointHDPCriteria criteria)
         {
             IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
-            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {

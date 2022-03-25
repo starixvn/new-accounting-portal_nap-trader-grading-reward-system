@@ -246,6 +246,7 @@
     <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetIntervalPerformanceOfBetTypeLeagueBetChoiceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeagueDetailTeamCriteria.cs" />
+    <Compile Include="Criteria\PerformanceDetail\GetLeagueGroupSoccerCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeagueOfBetTypeBetChoicePointHDPCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\PerformanceDetail\GetBetChoicePerformanceOfBetTypeCriteria.cs" />

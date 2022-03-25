@@ -67,6 +67,9 @@ namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 
         public string LeagueGroupIds { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsAllLeagueGroup { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

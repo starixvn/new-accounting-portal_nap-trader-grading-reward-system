@@ -40,7 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>LeaguePerformanceList object.</returns>
-        LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);
+        LeaguePerformanceList GetLeaguePerformance(Fanex.Data.Repository.ICriteria criteria, bool isGroupOfLeague = false);        
 
         /// <summary>
         /// Gets the trader performance of a league.

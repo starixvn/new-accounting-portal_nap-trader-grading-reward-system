@@ -27,5 +27,10 @@ namespace Fanex.NAP.Core.Web
                 currentSkip += batchSize;
             }
         }
+
+        public static IEnumerable<TSource> Distinct<TSource>(this IEnumerable<TSource> data, Func<TSource, object> predicate)
+        {
+            return from item in data.GroupBy(predicate) select item.First();
+        }
     }
 }

@@ -135,7 +135,7 @@
                 <select id="ddlLeagueGroup" multiple="multiple">
                     @foreach (var leagueGroup in (IEnumerable<LeagueGroup>)ViewBag.LeagueGroups)
                     {
-                        <option value=@leagueGroup.LeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
+                        <option value=@leagueGroup.TargetLeagueGroupId selected>@leagueGroup.LeagueGroupName</option>
                     }
                 </select>
             </div>

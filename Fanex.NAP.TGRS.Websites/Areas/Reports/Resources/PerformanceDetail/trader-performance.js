@@ -210,7 +210,9 @@ Fanex.NAP.TGRS.PerformanceDetail.TraderPerformance = function () {
                 parameters.ToDate = domElements.divDateRange.getTo();
                 parameters.Username = domElements.txtTrader.val();
                 parameters.BetTypes = selectedBetTypes.join(',');
-                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : null;
+                var leagueGroupNotSelect = domElements.ddlLeagueGroup.find('option').not(':selected').length;
+                parameters.LeagueGroupIds = selectedLeagueGroups !== null ? selectedLeagueGroups.join(',') : "";
+                parameters.IsAllLeagueGroup = leagueGroupNotSelect == 0;
                 parameters.IsVirtual = isVirtualPerformancePermission;
                 parameters.IsReal = isRealPerformancePermission;
 

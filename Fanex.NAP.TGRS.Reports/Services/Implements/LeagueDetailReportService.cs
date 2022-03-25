@@ -97,23 +97,19 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
-            var leagueGroupList = new List<LeagueGroup> {
-                new LeagueGroup { LeagueGroupId = 1, LeagueGroupName = "Major" },
-                new LeagueGroup { LeagueGroupId = 2, LeagueGroupName = "Minor 1" },
-                new LeagueGroup { LeagueGroupId = 3, LeagueGroupName = "Minor 2" },
-                new LeagueGroup { LeagueGroupId = 4, LeagueGroupName = "Minor 3" },
-                new LeagueGroup { LeagueGroupId = 5, LeagueGroupName = "Minor 4" },
-                new LeagueGroup { LeagueGroupId = 6, LeagueGroupName = "Others" },
-                new LeagueGroup { LeagueGroupId = 7, LeagueGroupName = "Others 1" },
-                new LeagueGroup { LeagueGroupId = 8, LeagueGroupName = "Others 2" },
-                new LeagueGroup { LeagueGroupId = 9, LeagueGroupName = "Others 3" },
-                new LeagueGroup { LeagueGroupId = 10, LeagueGroupName = "Others 4" },
-                new LeagueGroup { LeagueGroupId = 11, LeagueGroupName = "Others 5" },
-                new LeagueGroup { LeagueGroupId = 12, LeagueGroupName = "Other Groups" }
-            };
+            var criteria = new GetLeagueGroupSoccerCriteria { LeagueGroupIds = string.Empty };
+
+            var leagueGroupList = new List<LeagueGroup>();
+
+            var data = this.GetData<LeagueGroup>(criteria);
+
+            if (data != null && data.Any())
+            {
+                leagueGroupList = data.Distinct(x => x.TargetLeagueGroupId).ToList();
+            }
 
             SessionManager.Set<List<LeagueGroup>>(LeagueGroupsSessionKey, leagueGroupList);
-
+            
             return leagueGroupList;
         }
 
@@ -140,34 +136,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>LeaguePerformanceList object.</returns>
         public LeaguePerformanceList GetLeaguePerformance(Data.Repository.ICriteria criteria, bool isGroupOfLeague = false)
         {
-            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            var leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
             LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
                 if (isGroupOfLeague)
                 {
-                    var data = SortLeaguePerformanceInfo(leagueData);
-
-                    leaguePerformance.AddLeagueList(data);
-                }
-                else
-                {
-                    var isLive = GetIsLive(criteria);
-
-                    leaguePerformance.AddLeagueList(leagueData, isLive);
-                }
-
-                leaguePerformance.CalculateTotalMargin();
-                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
-            }
-
-            return leaguePerformance;
-        }
-
-        private IEnumerable<LeaguePerformanceInfo> SortLeaguePerformanceInfo(IEnumerable<LeaguePerformanceInfo> leagueData)
-        {
-            return leagueData.AsEnumerable()
+                    var data = leagueData.AsEnumerable()
                             .OrderBy(c => c.LeagueId)
                             .ThenByDescending(c => c.IsLive)
                             .Select(c => new LeaguePerformanceInfo
@@ -187,12 +163,27 @@ namespace Fanex.NAP.TGRS.Reports.Services
                                 TurnoverReal = c.TurnoverReal,
                                 WinLossReal = c.WinLossReal,
                                 MarginReal = c.MarginReal,
-                                BetCount = c.BetCount,                                
+                                BetCount = c.BetCount,
                                 Market = c.Market,
                                 IsLive = c.IsLive,
-                                FlagForViewReport = leagueData.Count(b=>b.LeagueId == c.LeagueId)
+                                FlagForViewReport = leagueData.Count(b => b.LeagueId == c.LeagueId)
                             });
-        }
+
+                    leaguePerformance.AddLeagueList(data);
+                }
+                else
+                {
+                    var isLive = GetIsLive(criteria);
+
+                    leaguePerformance.AddLeagueList(leagueData, isLive);
+                }
+
+                leaguePerformance.CalculateTotalMargin();
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leaguePerformance);
+            }
+
+            return leaguePerformance;
+        }        
 
         /// <summary>
         /// Gets the trader performance of a league.
@@ -432,7 +423,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             foreach (var id in ids)
             {
                 var group = leagueGroups
-                .Where(x => x.LeagueGroupId.ToString().Equals(id))
+                .Where(x => x.TargetLeagueGroupId.ToString().Equals(id))
                 .Select(x => x.LeagueGroupName).ToList();
 
                 if (group != null && group.Any())
