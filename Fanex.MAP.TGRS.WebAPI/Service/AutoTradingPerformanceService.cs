@@ -611,9 +611,9 @@
 
         private DateTime GetSundayOfLastWeek()
         {
-            //return DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek); //temp comment
-
-            return AppSettings.SundayOfLastWeekDate;            
+            return AppSettings.IsManualSundayOfLastWeek
+                ? AppSettings.SundayOfLastWeekDate
+                : DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
         }
 
         private Dictionary<int, string> GetLeagueGroupList()

@@ -461,7 +461,7 @@
     <Content Include="Web.local.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.pro.config">
+    <Content Include="Web.prod.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
