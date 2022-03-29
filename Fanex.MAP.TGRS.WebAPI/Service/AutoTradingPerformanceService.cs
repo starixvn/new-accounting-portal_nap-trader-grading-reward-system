@@ -4,6 +4,7 @@
     using Fanex.MAP.TGRS.WebAPI.Criteria.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.DataModel.AutoTrading;
     using Fanex.MAP.TGRS.WebAPI.Model.HtmlModel.AutoTrading;
+    using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Consts;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
     using Newtonsoft.Json;
@@ -610,7 +611,9 @@
 
         private DateTime GetSundayOfLastWeek()
         {
-            return DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+            //return DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek); //temp comment
+
+            return AppSettings.SundayOfLastWeekDate;            
         }
 
         private Dictionary<int, string> GetLeagueGroupList()

@@ -30,6 +30,7 @@ namespace Fanex.NAP.TGRS.Core.Configurations
         private static int spreadMaxValue;
         private static string basketballBettypeQuarter;
         private static string soccerBettypeTotalGoalMinute;
+        private static DateTime? sundayOfLastWeekDate;
 
         public static string ServerTimezone
         {
@@ -173,6 +174,19 @@ namespace Fanex.NAP.TGRS.Core.Configurations
                 }
 
                 return betTypes;
+            }
+        }
+
+        public static DateTime SundayOfLastWeekDate
+        {
+            get
+            {
+                if (sundayOfLastWeekDate == null)
+                {
+                    sundayOfLastWeekDate = Converter.ToDateTime(GetValue("SundayOfLastWeekDate"));
+                }
+
+                return sundayOfLastWeekDate.Value;
             }
         }
 
