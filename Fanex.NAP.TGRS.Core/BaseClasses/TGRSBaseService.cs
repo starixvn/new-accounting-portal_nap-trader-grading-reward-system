@@ -9,28 +9,48 @@
 
 namespace Fanex.NAP.TGRS.Core.BaseClasses
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.NAP.Framework.Command;
     using System;
     using System.Collections;
-    using Fanex.Data;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Framework.Command;
-    using Fanex.Data.Repository;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Base Service.
     /// </summary>
-    public class TGRSBaseService : BaseService
+    public class TGRSBaseService
     {
-        /// <summary>
-        /// Updates the data.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The query result.</returns>
-        protected virtual ICommandResult UpdateData(ICriteria criteria)
+        public IEnumerable<T> GetData<T>(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var param = criteria.GetSpParams();
+                return db.Query<T>(criteria);
+            }
+        }
+
+        public void Execute(ICriteria criteria)
+        {
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public virtual CommandResult UpdateData(ICriteria criteria, string prefix)
+        {
+            //using (var db = new ObjectDb(criteria.GetSettingKey()))
+            //{
+            //    var param = criteria.GetSpParams();
+
+            //    db.ExecuteNonQuery(param);
+
+            //    return GetCommandResult(param);
+            //}
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                var param = new Hashtable();
 
                 db.ExecuteNonQuery(param);
 
@@ -40,24 +60,25 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
         /// <summary>
         /// Gets the command result.
-        /// </summary>
-        /// <param name="hash">The hash table.</param>
+        /// </summary>        
         /// <returns>CommandResult object contains error code and error message.</returns>
         private CommandResult GetCommandResult(Hashtable hash)
         {
-            var errCode = hash["errcode"];
-            var errMsg = hash["errmsg"];
+            //var errCode = hash["errcode"];
+            //var errMsg = hash["errmsg"];            
 
             return new CommandResult
             {
-                Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
-                Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
+                //Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
+                //Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
+                Code = 0,
+                Message = ""
             };
         }
 
-        protected T GetSingle<T>(ICriteria criteria)
+        public T GetSingle<T>(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.QueryEntity<T>(criteria);
             }

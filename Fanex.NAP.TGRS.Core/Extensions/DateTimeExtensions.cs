@@ -17,6 +17,7 @@ namespace Fanex.NAP.Core.Web
     public static class DateTimeExtensions
     {
         public const string ShortDateFormatForFileName = "yyyyMMdd";
+        public const string ShortDateFormat = "MM/dd/yyyy";
 
         /// <summary>
         /// Format a DateTime value to short date format for file name.
@@ -27,7 +28,7 @@ namespace Fanex.NAP.Core.Web
         {
             if (date.HasValue)
             {
-                return date.Value.ToShortFormatedDate();
+                return date.Value.ToString(ShortDateFormat);
             }
 
             return string.Empty;

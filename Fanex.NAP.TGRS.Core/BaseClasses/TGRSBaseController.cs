@@ -30,7 +30,7 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
         private readonly ICurrentSession _currentSession;
 
-        private readonly IServiceContext _serviceContext;
+        //private readonly IServiceContext _serviceContext;
 
         private readonly string _environment = NapSettings.Settings.Environment;
 
@@ -42,25 +42,28 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
         public TGRSBaseController()
         {
-            this._currentContext = new CurrentContext();
+            //this._currentContext = new CurrentContext();
+            //ViewBag.Session = this._currentSession = new CurrentSession();
+            //this._serviceContext = new ServiceContext
+            //{
+            //    UserId = this.CurrentSession.UserId,
+            //    SiteId = this.SiteId,
+            //    Ip = this.CurrentContext.IP
+            //};
+
+            //ViewFlags = new ViewFlags
+            //{
+            //    IsLive = this.Environment.Equals(Constant.Live),
+            //    HasEditRight = false,
+            //    IsReCheckin = NapSettings.Settings.EnableReCheckIn
+            //};
+
+            //ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
+
+            //this._userService = new UserService { ServiceContext = ServiceContext };
+
             ViewBag.Session = this._currentSession = new CurrentSession();
-            this._serviceContext = new ServiceContext
-            {
-                UserId = this.CurrentSession.UserId,
-                SiteId = this.SiteId,
-                Ip = this.CurrentContext.IP
-            };
-
-            ViewFlags = new ViewFlags
-            {
-                IsLive = this.Environment.Equals(Constant.Live),
-                HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.EnableReCheckIn
-            };
-
-            ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
-
-            this._userService = new UserService { ServiceContext = ServiceContext };
+            this._userService = new UserService();
         }
 
         public ICurrentContext CurrentContext
@@ -73,10 +76,10 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
             get { return _currentSession; }
         }
 
-        public IServiceContext ServiceContext
-        {
-            get { return _serviceContext; }
-        }
+        //public IServiceContext ServiceContext
+        //{
+        //    get { return _serviceContext; }
+        //}
 
         public string Environment
         {
@@ -138,9 +141,6 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
         /// <returns>Whether the specified user has the right on a function.</returns>
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            //int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this.CurrentSession.UserId, this.SiteId, functionKey);
-            //return functionPolicy >= (int)policy;
-
             return this._userService.IsHavingPermission(this.CurrentSession.UserId, this.SiteId, functionKey, policy);
         }
     }

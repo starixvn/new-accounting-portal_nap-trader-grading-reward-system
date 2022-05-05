@@ -13,13 +13,15 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
     using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Model;
+    //using Fanex.NAP.Core.Criteria.User;
+    using Fanex.NAP.Core.Models;
+    using Fanex.NAP.Core.Models.ParameterObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Auth;
@@ -40,8 +42,8 @@ namespace Fanex.NAP.TGRS.User.Controllers
         private readonly int _timeExipration = 30;
 
         private IUserService _userService;
-        private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
+        private readonly ISecurityService _securityService;
         private ISystemConfigurationService _systemConfigService;
 
         #endregion members
@@ -55,14 +57,14 @@ namespace Fanex.NAP.TGRS.User.Controllers
         }
 
         public SSOController(
-            IUserService userService,
-            IMenuItemService menuItemService,
+            IUserService userService,            
             ICurrentSession currentSession,
+            ISecurityService securityService,
             ISystemConfigurationService systemConfigService)
         {
             this._userService = userService ?? new UserService();
-            this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
+            this._securityService = securityService ?? new SecurityService();
             this._systemConfigService = systemConfigService ?? new SystemConfigurationService();
         }
 
@@ -81,7 +83,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
-            string currentTime = this._userService.UserSSOGetTime();
+            string currentTime = this._securityService.GetTime();
             string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
             TimeSpan expiration = new TimeSpan();
 
@@ -92,49 +94,29 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
             if (expiration.TotalSeconds <= this._timeExipration)
             {
-                // do SSO check-in
-                var criteria = new UserSSOCheckInUserCriteria
-                {
-                    UserId = Convert.ToInt32(userId),
-                    SiteId = SiteId,
-                    CheckOnUserId = Convert.ToInt32(onuserId),
-                    OnUserId = 0,
-                    IP = CurrentContext.IP,
-                    NetSessionId = Session.SessionID,
-                    LoginDate = DateTime.Now,
-                    BrowserName = CurrentContext.BrowserName,
-                    CountryCode = CurrentContext.CountryCode,
-                    Domain = CurrentContext.DomainName,
-                    Platform = CurrentContext.Platform
-                };
-
-                this._userService.UserSSOCheckIn(criteria);
+                var criteria = SetUserCriteria(Convert.ToInt32(userId), Convert.ToInt32(onuserId));
 
                 if (criteria.OnUserId != 0)
                 {
-                    var user = this._userService.GetById(criteria.UserId) as User;
+                    var user = this._userService.Get(criteria.UserId);
 
                     // saves user session & auth info
                     this._currentSession.UserId = user.Id;
                     this._currentSession.Username = user.Username;
                     this._currentSession.OnUserId = criteria.OnUserId;
                     this._currentSession.SessionId = Session.SessionID.ToString();
-                    this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+                    this._currentSession.Level = this._userService.GetUserLevel(user.Id, this.SiteId);
 
                     var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
                     AppSession.IsExcludingLeagues = IsExcludeLeague;
-                    AppSession.IsSoccerLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SoccerLive)) >= (int)Constant.Policy.Read ? true : false;
-                    AppSession.IsSoccerNoneLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive)) >= (int)Constant.Policy.Read ? true : false;
-                    AppSession.IsVirtualPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance)) >= (int)Constant.Policy.Read ? true : false;
-                    AppSession.IsRealPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.RealPerformance)) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsSoccerLivePermission = this._userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.SoccerLive) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsSoccerNoneLivePermission = this._userService.GetPermission(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsVirtualPerformancePermission = this._userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance) >= (int)Constant.Policy.Read ? true : false;
+                    AppSession.IsRealPerformancePermission = this._userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.RealPerformance) >= (int)Constant.Policy.Read ? true : false;
 
                     if (this.SiteId != 0)
                     {
-                        this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                user.Id,
-                                                                                SiteId,
-                                                                                this.Environment,
-                                                                                true) as IList<MenuItem>;
+                        this._currentSession.MenuItemList = this._userService.GetMenuItem(user.Id, SiteId, Environment, true).ToList();
                     }
 
                     this.CreateAuthInfo(user);
@@ -147,6 +129,29 @@ namespace Fanex.NAP.TGRS.User.Controllers
         }
 
         #region utilities
+        /// <summary>
+        ///     Set new value to user criteria.
+        /// </summary>
+        /// <param name="userId">User id parameter.</param>
+        /// <param name="onuserId">On User id.</param>
+        /// <returns>Return UserCriteria.</returns>
+        private SSOLoginParameter SetUserCriteria(int userId, int onuserId)
+        {
+            return new SSOLoginParameter
+            {
+                UserId = userId,
+                SiteId = SiteId,
+                CheckOnUserId = onuserId,
+                OnUserId = 0,
+                IP = CurrentContext.IP,
+                NetSessionId = Session.SessionID,
+                LoginDate = DateTime.Now,
+                BrowserName = CurrentContext.BrowserName,
+                CountryCode = CurrentContext.CountryCode,
+                Domain = CurrentContext.DomainName,
+                Platform = CurrentContext.Platform
+            };
+        }
 
         /// <summary>
         /// Create authorize information.

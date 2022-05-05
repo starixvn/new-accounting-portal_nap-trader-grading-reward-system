@@ -24,8 +24,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Model;
+    //using Fanex.NAP.Core.Criteria.User;
+    using Fanex.NAP.Core.Models;    
+    using Fanex.NAP.Core.Models.ParameterObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
@@ -47,10 +48,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         private IUserService _userService;
         private IGroupService _groupService;
-        private ISiteService _siteService;
-        private IMenuItemService _menuItemService;
+        private ISiteService _siteService;        
         private ICurrentSession _currentSession;
-        private IFunctionService _functionService;
+        private ISecurityService _securityService;
         private ISystemConfigurationService _systemConfigService;
         private HashAlgorithm _hashAlgorithm;
 
@@ -60,25 +60,23 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         [Simplect.Attribute.InjectObject]
         public LoginController()
-            : this(null, null, null, null, null, null, null)
+            : this(null, null, null, null, null, null)
         {
         }
 
         public LoginController(
             IUserService userService,
             IGroupService groupService,
-            ISiteService siteService,
-            IMenuItemService menuItemService,
+            ISiteService siteService,            
             ICurrentSession currentSession,
-            IFunctionService functionService,
-            ISystemConfigurationService systemConfigService)
+            ISecurityService securityService,
+        ISystemConfigurationService systemConfigService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
             this._siteService = siteService ?? new SiteService();
-            this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
-            this._functionService = functionService ?? new FunctionService();
+            this._securityService = securityService ?? new SecurityService();
             this._systemConfigService = systemConfigService ?? new SystemConfigurationService();
             this._hashAlgorithm = new SHA256Managed();
         }
@@ -141,7 +139,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
         {
             if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
             {
-                var user = this._userService.GetByUsername(username.Trim()) as User;
+                var user = this._userService.Get(username.Trim());
 
                 if (user != null)
                 {
@@ -149,32 +147,27 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
                     if (password == hashPassword)
                     {
-                        var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
-                        var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
+                        var group = _groupService.Get(user.GroupId);
+                        var siteLevelList = this._userService.GetSiteLevel(user.Id, Environment); // gets all sites of logging-in user
 
                         ClearToken();
 
                         if ((group == null || group.IsActive) && siteLevelList.Where(x => x.IsActive).Any())
                         {
-                            // check-in user
-                            DoCheckin(user);
+                            // Check-in user
+                            var criteria = SetUserCheckInCriteria(user.Id);
+                            var onId = this._securityService.Login(criteria);
 
-                            // current site is not NAP Hub
-                            if (this.SiteId != 0)
-                            {
-                                this.CreateUserMenu(user);
-                            }
-
-                            this.CreateAuthInfo(user);
-
-                            var currentFunction =
-                                    _functionService.GetByUserAndSiteIncludeGroup(user.Id, NapSettings.Settings.SiteId, NapSettings.Settings.Environment);
+                            // Saves user session
+                            SaveUserSession(user, username, onId);                        
+                           
+                            var currentFunction = this._userService.GetPermissions(user.Id, NapSettings.Settings.SiteId, FormsAuthentication.DefaultUrl, NapSettings.Settings.Environment);
                             AppSession.CurrentUser = user;
                             AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);
-                            AppSession.IsSoccerLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.SoccerLive)) >= (int)Constant.Policy.Read ? true : false;
-                            AppSession.IsSoccerNoneLivePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive)) >= (int)Constant.Policy.Read ? true : false;
-                            AppSession.IsVirtualPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance)) >= (int)Constant.Policy.Read ? true : false;
-                            AppSession.IsRealPerformancePermission = (int)(_userService.GetUserSiteFunctionKeyPolicy(user.Id, SiteId, TGRSFunctionKeys.RealPerformance)) >= (int)Constant.Policy.Read ? true : false;
+                            AppSession.IsSoccerLivePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.SoccerLive) >= (int)Constant.Policy.Read ? true : false;
+                            AppSession.IsSoccerNoneLivePermission = _userService.GetPermission(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive) >= (int)Constant.Policy.Read ? true : false;
+                            AppSession.IsVirtualPerformancePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance) >= (int)Constant.Policy.Read ? true : false;
+                            AppSession.IsRealPerformancePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.RealPerformance) >= (int)Constant.Policy.Read ? true : false;
 
                             // Config for League Exclusion
                             var IsExcludeLeague = _systemConfigService.GetLeagueExclusionConfig();
@@ -184,7 +177,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                             if (this.EnableDirectLogin)
                             {
                                 // checks if logging-in user is active on this site
-                                if (siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any())
+                                if (siteLevelList.Where(x => x.SiteId == this.SiteId && x.IsActive).Any())
                                 {
                                     return Redirect(FormsAuthentication.DefaultUrl);
                                 }
@@ -254,24 +247,20 @@ namespace Fanex.NAP.TGRS.User.Controllers
             if (!AppSettings.IsLocalTest)
             {
                 // check if not nap hub
-                if (this.SiteId != 0)
+                if (_currentSession == null || _currentSession.OnUserId == 0)
                 {
-                    var siteStatus = this._siteService.GetStatusById(this.SiteId);
-
-                    if (!siteStatus)
+                    return Json(new
                     {
-                        return this.Json("1");
-                    }
+                        IsKickedOut = "1"
+                    });
                 }
 
-                var criteria = new UserReCheckInUserCriteria();
-                criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
-                this._userService.ReUserCheckIn(criteria);
+                var isKickedOut = this._securityService.ReCheckIn(_currentSession.OnUserId, SiteId);
 
-                return this.Json(criteria.IsKickedOut ? "1" : "0");
+                return this.Json(new { IsKickedOut = isKickedOut.ToString() });
             }
 
-            return this.Json("0");
+            return this.Json(new { IsKickedOut = "0" });
         }
 
         #endregion Other Actions
@@ -279,15 +268,16 @@ namespace Fanex.NAP.TGRS.User.Controllers
         #region Helpers
 
         /// <summary>
-        /// Check in user.
+        ///     Set new value to user criteria.
         /// </summary>
-        /// <param name="user">The user to be checked in.</param>
-        private void DoCheckin(User user)
+        /// <param name="userId">User id parameter.</param>
+        /// <returns>Return user criteria.</returns>
+        private LoginParameter SetUserCheckInCriteria(int userId)
         {
-            var criteria = new UserCheckInUserCriteria
+            return new LoginParameter
             {
-                UserId = user.Id,
-                SiteId = this.SiteId,
+                UserId = userId,
+                SiteId = SiteId,
                 NetSessionId = Session.SessionID,
                 Ip = CurrentContext.IP,
                 LoginDate = DateTime.Now,
@@ -296,15 +286,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
                 Domain = CurrentContext.DomainName,
                 Platform = CurrentContext.Platform
             };
-
-            this._userService.UserCheckIn(criteria);
-
-            // saves user session
-            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
-            this._currentSession.UserId = user.Id;
-            this._currentSession.Username = user.Username;
-            this._currentSession.OnUserId = criteria.OnUserId;
-            this._currentSession.SessionId = Session.SessionID.ToString();
         }
 
         /// <summary>
@@ -312,12 +293,31 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// </summary>
         /// <param name="user">The login user.</param>
         private void CreateUserMenu(User user)
+        {           
+            this._currentSession.MenuItemList = (IList<MenuItem>)this._userService.GetMenuItem(user.Id, SiteId, Environment, true);
+        }
+
+        /// <summary>
+        ///     Save user session.
+        /// </summary>
+        /// <param name="user">User parameter.</param>
+        /// <param name="userName">User name.</param>
+        /// <param name="userId">On user id.</param>
+        private void SaveUserSession(User user, string userName, int userId)
         {
-            this._currentSession.MenuItemList = (IList<MenuItem>)this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                    user.Id,
-                                                                                    SiteId,
-                                                                                    this.Environment,
-                                                                                    true);
+            _currentSession.Level = _userService.GetUserLevel(userId, SiteId);
+            _currentSession.UserId = user.Id;
+            _currentSession.Username = userName;
+            _currentSession.OnUserId = userId;
+            _currentSession.SessionId = Session.SessionID;
+
+            // current site is not NAP Hub
+            if (SiteId != 0)
+            {
+                CreateUserMenu(user);
+            }
+
+            CreateAuthInfo(user);
         }
 
         /// <summary>
@@ -358,13 +358,26 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// </summary>
         private void DoSignOut()
         {
-            this._userService.UserLogOut(new LogOutUserCriteria
+            if (_currentSession.OnUserId != 0)
             {
-                OnUserId = this._currentSession.OnUserId
-            });
-            FormsAuthentication.SignOut();
+                _securityService.Logout(_currentSession.OnUserId);
+                FormsAuthentication.SignOut();
+                _currentSession.ClearAll();
+                DeleteCookiesAndClearSession();
+            }
+        }
+
+        private void DeleteCookiesAndClearSession()
+        {
             Response.Cookies.Clear();
-            this._currentSession.ClearAll();
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            authCookie.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Add(authCookie);
+
+            CurrentSession.ClearAll();
+            Session.Clear();
+            Session.Abandon();
         }
 
         /// <summary>
