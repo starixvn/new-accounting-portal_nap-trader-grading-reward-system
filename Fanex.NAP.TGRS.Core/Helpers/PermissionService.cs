@@ -12,7 +12,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
     using System.Collections.Generic;
     using System.Linq;
     using NAP.Core.Business;
-    using NAP.Core.Model.ValueObject;
+    using NAP.Core.Models.ValueObject;
 
     public static class PermissionService
     {
@@ -24,7 +24,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         public static Dictionary<string, int> GetRoleAccess(IEnumerable<FunctionPolicy> currentFunctions)
         {
             return currentFunctions.Where(functionPolicy => functionPolicy.Policy >= (int)Constant.Policy.Read)
-                                   .ToDictionary(functionPolicy => functionPolicy.Function.Key, functionPolicy => functionPolicy.Policy);
+                                   .ToDictionary(functionPolicy => functionPolicy.Key, functionPolicy => functionPolicy.Policy);
         }
 
         public static bool HasHostPermission(string functionName)

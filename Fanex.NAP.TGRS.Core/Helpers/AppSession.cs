@@ -12,7 +12,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
     using System;
     using System.Collections.Generic;
     using Logging;
-    using NAP.Core.Model;
+    using NAP.Core.Models;
 
     /// <summary>
     /// AppSession class.

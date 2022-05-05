@@ -138,8 +138,10 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
         /// <returns>Whether the specified user has the right on a function.</returns>
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this.CurrentSession.UserId, this.SiteId, functionKey);
-            return functionPolicy >= (int)policy;
+            //int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this.CurrentSession.UserId, this.SiteId, functionKey);
+            //return functionPolicy >= (int)policy;
+
+            return this._userService.IsHavingPermission(this.CurrentSession.UserId, this.SiteId, functionKey, policy);
         }
     }
 }

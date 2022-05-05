@@ -10,8 +10,8 @@
 
 namespace Fanex.NAP.TGRS.User.Controllers
 {
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Domain;
+    //using Fanex.NAP.Core.Criteria.User;
+    //using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
@@ -48,10 +48,10 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
         public UserInfoController(IUserService userService)
         {
-            _userService = userService ?? new UserService { ServiceContext = ServiceContext };
-            _hashAlgorithm = new SHA256Managed();
-            _userSetting = new UserSettings();
-            _detailReportService = new Reports.Services.DetailReportService();
+            //_userService = userService ?? new UserService { ServiceContext = ServiceContext };
+            //_hashAlgorithm = new SHA256Managed();
+            //_userSetting = new UserSettings();
+            //_detailReportService = new Reports.Services.DetailReportService();
         }
 
         public string FormToken
@@ -78,13 +78,13 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// Redirect to changing password form.
         /// </summary>
         /// <returns>Action result.</returns>
-        [HttpGet]
-        public ActionResult ChangePassword()
-        {
-            GenerateToken();
+        //[HttpGet]
+        //public ActionResult ChangePassword()
+        //{
+        //    GenerateToken();
 
-            return View(new UpdatePasswordCustCriteria { Username = CurrentSession.Username });
-        }
+        //    return View(new UpdatePasswordCustCriteria { Username = CurrentSession.Username });
+        //}
 
         /// <summary>
         /// Change password action.
@@ -92,40 +92,40 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// <param name="criteria">Criteria using to update password.</param>
         /// <param name="token">Changing password token.</param>
         /// <returns>Action result.</returns>
-        [HttpPost]
-        public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria, string token)
-        {
-            ////if (ModelState.IsValid)
-            if (CheckValidToken(token))
-            {
-                IUser user = _userService.GetById(CurrentSession.UserId);
-                string hashPassword = GetHash(user.Password + token);
+        //[HttpPost]
+        //public ActionResult ChangePassword(UpdatePasswordCustCriteria criteria, string token)
+        //{
+        //    ////if (ModelState.IsValid)
+        //    if (CheckValidToken(token))
+        //    {
+        //        IUser user = _userService.GetById(CurrentSession.UserId);
+        //        string hashPassword = GetHash(user.Password + token);
 
-                if (hashPassword == criteria.OldUserPwd)
-                {
-                    criteria.CustId = user.Id;
+        //        if (hashPassword == criteria.OldUserPwd)
+        //        {
+        //            criteria.CustId = user.Id;
 
-                    var result = this._userService.InsertOrUpdate(criteria);
+        //            var result = this._userService.InsertOrUpdate(criteria);
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                    else if (result != null && result.IsSuccessful == false)
-                    {
-                        ViewBag.Success = true;
-                    }
-                }
-                else
-                {
-                    ViewBag.Message = ViewResources.Wrong_password;
-                }
-            }
+        //            if (result != null && result.IsSuccessful)
+        //            {
+        //                ViewBag.Success = true;
+        //            }
+        //            else if (result != null && result.IsSuccessful == false)
+        //            {
+        //                ViewBag.Success = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = ViewResources.Wrong_password;
+        //        }
+        //    }
 
-            GenerateToken();
+        //    GenerateToken();
 
-            return View(criteria);
-        }
+        //    return View(criteria);
+        //}
 
         #endregion Change Password
 
@@ -135,47 +135,47 @@ namespace Fanex.NAP.TGRS.User.Controllers
         /// Redirect to profile page.
         /// </summary>
         /// <returns>Action result.</returns>
-        [HttpGet]
-        public ActionResult UserProfile()
-        {
-            var criteria = new UpdateCustCriteria();
-            var user = this._userService.GetById(CurrentSession.UserId);
+        //[HttpGet]
+        //public ActionResult UserProfile()
+        //{
+        //    var criteria = new UpdateCustCriteria();
+        //    var user = this._userService.Get(CurrentSession.UserId);
 
-            criteria.CustId = user.Id;
-            criteria.Username = user.Username;
-            criteria.FirstName = user.FirstName;
-            criteria.LastName = user.LastName;
-            criteria.Email = user.Email;
+        //    criteria.CustId = user.Id;
+        //    criteria.Username = user.Username;
+        //    criteria.FirstName = user.FirstName;
+        //    criteria.LastName = user.LastName;
+        //    criteria.Email = user.Email;
 
-            return View(criteria);
-        }
+        //    return View(criteria);
+        //}
 
         /// <summary>
         /// Update user profile.
         /// </summary>
         /// <param name="criteria">Criteria using to update user profile.</param>
         /// <returns>Action result.</returns>
-        [HttpPost]
-        public ActionResult UserProfile(UpdateCustCriteria criteria)
-        {
-            if (ModelState.IsValid)
-            {
-                criteria.CustId = CurrentSession.UserId;
-                criteria.Username = CurrentSession.Username;
-                criteria.FirstName = criteria.FirstName ?? string.Empty;
-                criteria.LastName = criteria.LastName ?? string.Empty;
-                criteria.Email = criteria.Email ?? string.Empty;
+        //[HttpPost]
+        //public ActionResult UserProfile(UpdateCustCriteria criteria)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        criteria.CustId = CurrentSession.UserId;
+        //        criteria.Username = CurrentSession.Username;
+        //        criteria.FirstName = criteria.FirstName ?? string.Empty;
+        //        criteria.LastName = criteria.LastName ?? string.Empty;
+        //        criteria.Email = criteria.Email ?? string.Empty;
 
-                var result = this._userService.InsertOrUpdate(criteria);
+        //        var result = this._userService.InsertOrUpdate(criteria);
 
-                if (result != null && result.IsSuccessful)
-                {
-                    ViewBag.Success = true;
-                }
-            }
+        //        if (result != null && result.IsSuccessful)
+        //        {
+        //            ViewBag.Success = true;
+        //        }
+        //    }
 
-            return View(criteria);
-        }
+        //    return View(criteria);
+        //}
 
         #endregion Profile
 
