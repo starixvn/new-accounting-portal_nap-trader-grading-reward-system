@@ -14,6 +14,7 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
+    using Fanex.NAP.Core.Context;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
@@ -42,8 +43,8 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
 
         public TGRSBaseController()
         {
-            //this._currentContext = new CurrentContext();
-            //ViewBag.Session = this._currentSession = new CurrentSession();
+            this._currentContext = new CurrentContext();
+            ViewBag.Session = this._currentSession = new CurrentSession();
             //this._serviceContext = new ServiceContext
             //{
             //    UserId = this.CurrentSession.UserId,
@@ -61,8 +62,7 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
             //ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
 
             //this._userService = new UserService { ServiceContext = ServiceContext };
-
-            ViewBag.Session = this._currentSession = new CurrentSession();
+            
             this._userService = new UserService();
         }
 

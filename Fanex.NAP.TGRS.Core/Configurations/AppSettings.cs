@@ -199,6 +199,8 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             }
         }
 
+        public static string StoredProcedurePath => GetValue("StoredProcedurePath");
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

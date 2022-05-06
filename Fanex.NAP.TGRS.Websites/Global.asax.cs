@@ -9,8 +9,11 @@
 
 namespace Fanex.NAP.TGRS.Websites
 {
-    using Fanex.Data.Configuration;
+    using Fanex.Data;
+    using Fanex.Data.SqlServer;
+    //using Fanex.Data.Configuration;
     using Fanex.Logging;
+    using Fanex.NAP.TGRS.Core.Configurations;
     using Infrastructure;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Configuration;
@@ -38,7 +41,13 @@ namespace Fanex.NAP.TGRS.Websites
         /// </summary>
         protected void Application_Start()
         {
-            DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager
+                .StartNewSession()
+                .WithSqlServer()
+                .UseDefaultDbSettingProvider(AppSettings.StoredProcedurePath)
+                .UseDefaultConnectionStringProvider()
+                .Run();
+
             AreaRegistration.RegisterAllAreas();
 
             InjectorFactory.CurrentInjector.Bind<IControllerActivator>().Using<ControllerActivator>();
