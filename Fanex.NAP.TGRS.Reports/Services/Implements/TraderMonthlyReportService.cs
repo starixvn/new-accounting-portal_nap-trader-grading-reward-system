@@ -17,7 +17,7 @@
     {
         public SummaryList GetReports(GetTraderPerformanceMonthlyCriteria filter)
         {
-            using (var db = new ObjectDb(filter.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(filter.GetSettingKey()))
             {
                 using (var multi = db.QueryMultiple(filter))
                 {

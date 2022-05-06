@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.ActualRatePerformanceDetail
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using System;
 

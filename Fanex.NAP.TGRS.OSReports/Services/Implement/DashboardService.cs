@@ -215,9 +215,9 @@
             if (criteria.ReportType == 1)
                 criteria = GenerateCriteriaRangeDate(criteria) as GetOSSummaryGeneralCriteria;
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var items = multi.Read<OSSummaryGeneralInfoItem>();
                     var avgItems = multi.Read<OSSummaryGeneralInfoAvgItem>();
@@ -244,9 +244,9 @@
 
         private OSSummaryGeneralInfo GetOSSummaryMarket(OSSummaryGeneralInfo osSummaryGeneral, GetOSSummaryMarketCriteria marketCriteria)
         {
-            using (var objectDb = new ObjectDb(marketCriteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(marketCriteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(marketCriteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(marketCriteria))
                 {
                     var marketItems = multi.Read<OSSummaryGeneralInfoItem>();
                     var marketAvgItems = multi.Read<OSSummaryGeneralInfoAvgItem>();
@@ -627,9 +627,9 @@
             if (criteria.ReportType == 1)
                 criteria = GenerateCriteriaRangeDate(criteria) as GetBasketballSummaryGeneralCriteria;
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var items = multi.Read<BasketballSummaryGeneralInfoItem>();
                     var avgItems = multi.Read<BasketballSummaryGeneralInfoAvgItem>();

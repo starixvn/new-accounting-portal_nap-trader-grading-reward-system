@@ -22,5 +22,10 @@
         {
             return "TGRS_OS_SpecialTargetInsert";
         }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }

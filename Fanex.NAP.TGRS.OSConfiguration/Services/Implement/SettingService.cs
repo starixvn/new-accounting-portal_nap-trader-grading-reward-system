@@ -14,7 +14,8 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Services.Implement
         {
             var criteria = new GetGlobalParameterCriteria();
 
-            return GetItem<Parameter>(criteria);
+            //return GetItem<Parameter>(criteria);
+            return this.GetSingle<Parameter>(criteria);
         }
 
         public IEnumerable<Setting> GetSettings()

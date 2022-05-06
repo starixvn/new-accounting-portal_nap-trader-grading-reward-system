@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.Dashboard
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class OSSummaryInfoCriteria : CriteriaBase
@@ -15,7 +16,12 @@
 
         [SpParam(Ignored = true)]
         public DayType DayType { get; set; }
-      
+
+        public override string GetSettingKey()
+        {
+            return "";
+        }
+
         public override bool IsValid()
         {
             return true;

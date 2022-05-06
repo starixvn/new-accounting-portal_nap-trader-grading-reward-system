@@ -25,9 +25,9 @@
         {
             var eventList = new AutoTradingList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
                     var summaryEventData = multi.Read<SummaryEventInfo>();
@@ -155,9 +155,9 @@
         {
             var leagueList = new AutoTradingList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var summaryLeagueOfEventData = multi.Read<SummaryLeagueOfEventInfo>();
                     var leagueData = multi.Read<LeaguePerformanceOfEventInfo>();
@@ -244,9 +244,9 @@
         {
             var eventLeagueList = new AutoTradingList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var summaryEventLeagueData = multi.Read<SummaryLeagueOfEventInfo>();
                     var eventLeagueData = multi.Read<LeaguePerformanceOfEventInfo>();
@@ -463,9 +463,9 @@
         {
             var matchList = new AutoTradingList();
 
-            using (var objectDb = new Data.ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var summaryMatchOfEventLeague = multi.Read<SummaryMatchOfEventLeagueInfo>();
                     var matchData = multi.Read<MatchPerformanceOfEventLeagueInfo>();

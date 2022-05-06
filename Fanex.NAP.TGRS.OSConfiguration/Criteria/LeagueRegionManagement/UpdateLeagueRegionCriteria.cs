@@ -18,5 +18,10 @@
         {
             return "TGRS_OS_LeagueRegionUpdate";
         }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }

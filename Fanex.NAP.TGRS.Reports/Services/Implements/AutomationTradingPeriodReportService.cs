@@ -24,9 +24,9 @@
         {
             var weekList = new AutoTradingList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
                     var summaryWeekData = multi.Read<SummaryPeriodInfo>();
@@ -90,9 +90,9 @@
         {
             var monthlyList = new AutoTradingList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
                     var summaryMonthData = multi.Read<SummaryPeriodInfo>();

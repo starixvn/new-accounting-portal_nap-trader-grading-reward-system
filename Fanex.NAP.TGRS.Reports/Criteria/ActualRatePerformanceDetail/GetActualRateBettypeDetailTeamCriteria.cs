@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.ActualRatePerformanceDetail
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
     public class GetActualRateBettypeDetailTeamCriteria : CriteriaBase
     {

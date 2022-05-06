@@ -48,9 +48,9 @@
         public AutoTradingList GetAutoTradingBetTypePerformance(GetBetTypePerformanceCriteria criteria)
         {
             var betTypeList = new AutoTradingList();
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var totalLeagueMatchData = multi.Read<TotalLeagueMatchInfo>();
                     var summaryBetTypeData = multi.Read<SummaryBetTypeInfo>();

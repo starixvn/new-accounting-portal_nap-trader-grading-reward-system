@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.Data.Repository;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
 {
+    using Fanex.Data.Repository;
+
     public class UpdateErrStatusCriteria : CriteriaBase
     {
         public int UserId { get; set; }
@@ -22,6 +17,11 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.ErrorManagement
         public override string GetSettingKey()
         {
             return "TGRS_OS_ErrorUpdateStatus";
+        }
+
+        public override bool IsValid()
+        {
+            return true;
         }
     }
 }

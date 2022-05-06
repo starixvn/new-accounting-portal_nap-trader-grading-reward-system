@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceDetail
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     /// <summary>

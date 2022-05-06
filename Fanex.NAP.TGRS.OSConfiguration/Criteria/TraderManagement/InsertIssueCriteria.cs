@@ -25,5 +25,10 @@
         {
             return "TGRS_OS_TraderIssueInsert";
         }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }

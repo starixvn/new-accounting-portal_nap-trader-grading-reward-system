@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetBettypeDetailTeamCriteria : CriteriaBase

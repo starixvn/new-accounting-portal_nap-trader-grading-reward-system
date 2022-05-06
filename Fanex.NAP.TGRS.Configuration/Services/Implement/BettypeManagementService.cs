@@ -16,9 +16,9 @@
             var criteria = new GetAllBettypeCriteria();
             var groupBetType = new GroupBetType();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = db.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = db.QueryMultiple(criteria))
                 {
                     var betTypeInfos = multi.Read<BetTypeInfo>();
                     var groupBetTypeInfos = multi.Read<GroupBetTypeInfo>();

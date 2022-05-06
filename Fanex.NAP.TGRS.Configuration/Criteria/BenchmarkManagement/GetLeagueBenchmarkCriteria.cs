@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     /// <summary>

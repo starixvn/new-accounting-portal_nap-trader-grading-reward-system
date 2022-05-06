@@ -8,8 +8,8 @@
 // </history>
 
 namespace Fanex.NAP.TGRS.Configuration.Criteria.BenchmarkManagement
-{
-    using System.Diagnostics.CodeAnalysis;
+{    
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     /// <summary>

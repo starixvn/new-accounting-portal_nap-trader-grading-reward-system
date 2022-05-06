@@ -43,5 +43,20 @@ namespace Fanex.NAP.Core.Web
         {
             return date.ToString(ShortDateFormatForFileName);
         }
+
+        public static string ToShortFormatedDate(this DateTime date)
+        {
+            return date.ToString(ShortDateFormat);
+        }
+
+        public static string ToShortFormatedDate(this DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                return date.Value.ToString(ShortDateFormat);
+            }
+
+            return string.Empty;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Criteria.Dashboard
 {  
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class BasketballSummaryInfoCriteria : CriteriaBase
@@ -13,6 +14,11 @@
 
         [SpParam(Ignored = true)]
         public DayType BasketballDays { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "";
+        }
 
         /// <summary>
         /// Checks validation of the criteria.

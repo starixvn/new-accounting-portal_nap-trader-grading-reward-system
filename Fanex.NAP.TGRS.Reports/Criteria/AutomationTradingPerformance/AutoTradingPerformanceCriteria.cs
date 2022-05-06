@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.AutomationTradingPerformance
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using System;
 
@@ -24,6 +25,11 @@
 
         [SpParam(Ignored = true)]
         public string MeasurementDescs { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "";
+        }
 
         public override bool IsValid()
            => true;

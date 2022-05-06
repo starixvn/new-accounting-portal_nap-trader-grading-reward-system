@@ -206,9 +206,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             var betTypeBetChoiceList = new BetTypeBetChoiceList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
                     var betChoiceOfBetTypeInfo = multi.Read<FMBetTypeBetChoiceInfo>();
@@ -571,9 +571,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             var betTypeBetChoiceList = new BetTypeBetChoiceList();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var betChoiceData = multi.Read<BetTypeBetChoicePerformanceInfo>();
                     var betChoiceOfBetTypeInfo = multi.Read<FMBetTypeBetChoiceInfo>();

@@ -29,5 +29,10 @@
         {
             return "TGRS_OS_TraderUpdate";
         }
+
+        public override bool IsValid()
+        {
+            return true;
+        }
     }
 }

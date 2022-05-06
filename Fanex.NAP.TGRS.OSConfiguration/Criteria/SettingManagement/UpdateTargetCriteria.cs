@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.Data.Repository;
-
-namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
+﻿namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
 {
+    using Fanex.Data.Repository;
+
     public class UpdateTargetCriteria : CriteriaBase
     {
         public int UserId { get; set; }
@@ -22,6 +17,11 @@ namespace Fanex.NAP.TGRS.OSConfiguration.Criteria.SettingManagement
         public override string GetSettingKey()
         {
             return "TGRS_OS_SpecialTargetUpdate";
+        }
+
+        public override bool IsValid()
+        {
+            return true;
         }
     }
 }

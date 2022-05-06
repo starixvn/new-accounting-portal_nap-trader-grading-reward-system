@@ -37,17 +37,8 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
             }
         }
 
-        public virtual CommandResult UpdateData(ICriteria criteria, string prefix)
+        public virtual CommandResult UpdateData(ICriteria criteria)
         {
-            //using (var db = new ObjectDb(criteria.GetSettingKey()))
-            //{
-            //    var param = criteria.GetSpParams();
-
-            //    db.ExecuteNonQuery(param);
-
-            //    return GetCommandResult(param);
-            //}
-
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var param = new Hashtable();
