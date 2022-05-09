@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.TGRS.WebAPI
 {
-    using Fanex.Data;    
+    using Fanex.Data;
+    using Fanex.Data.SqlServer;  
     using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;
@@ -13,10 +14,11 @@
         {
             DbSettingProviderManager
                 .StartNewSession()
+                .WithSqlServer()
+                .UseDefaultDbSettingProvider(resourcePath: ConfigurationManager.AppSettings["UAT"] ?? "~/App_Data")
                 .UseDefaultConnectionStringProvider()
-                .UseDefaultDbSettingProvider(resourcePath: ConfigurationManager.AppSettings["UAT"] ?? "~/App_Data", enableWatching: true)
                 .Run();
-                
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

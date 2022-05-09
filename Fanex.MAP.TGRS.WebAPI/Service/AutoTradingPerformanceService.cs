@@ -107,9 +107,9 @@
                 Model = 3, // TA
             };
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     var summaryLeagueData = multi.Read<AutoTradingSummaryEventLeaguesInfo>();
 
@@ -386,9 +386,9 @@
         {
             var title = "TA NO TRADER PERFORMANCE MONTHLY REPORT";
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     multi.Read<object>();
                     var summaryMonthlyData = multi.Read<AutoTradingSummaryMonthlyInfo>();
@@ -441,9 +441,9 @@
         {
             var autoTradingTimelineInfo = GetAutoTradingTimelineInfos();
 
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     multi.Read<object>();
                     var summaryWeeklyData = multi.Read<AutoTradingSummaryWeeklyInfo>();
@@ -488,9 +488,9 @@
 
         private void GetAutoTradingWeeklyPerformance(GetAutoTradingWeeklyPerformanceCriteria criteria, string title, IAutoTradingHtmlWriter writer)
         {
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     multi.Read<object>();
                     var summaryWeeklyData = multi.Read<AutoTradingSummaryWeeklyInfo>();
@@ -565,9 +565,9 @@
 
         private void GetAutoTradingEventTAPerformance(GetAutoTradingEventPerformanceCriteria criteria, Dictionary<int, string> leagueGroupList, string title, IAutoTradingHtmlWriter writer)
         {
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var multi = objectDb.QueryMultiple(criteria.GetSpParams()))
+                using (var multi = objectDb.QueryMultiple(criteria))
                 {
                     multi.Read<object>();
                     var summaryEventData = multi.Read<AutoTradingSummaryEventInfo>();

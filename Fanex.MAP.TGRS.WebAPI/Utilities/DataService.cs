@@ -8,28 +8,27 @@
 
     public static class DataService
     {
-        public static IEnumerable<T> GetData<T>(CriteriaBase criteria)
+        public static IEnumerable<T> GetData<T>(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey(), 300))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<T>(criteria);
             }
         }
 
-        public static void Execute(CriteriaBase criteria)
+        public static void Execute(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var param = criteria.GetSpParams();
-                db.ExecuteNonQuery(param);
+                db.ExecuteNonQuery(criteria);
             }
         }
 
         public static DBResult UpdateData(CriteriaBase criteria, string prefix)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var param = criteria.GetSpParams();
+                var param = db.GetOutputParams();
 
                 db.ExecuteNonQuery(param);
 
@@ -49,7 +48,7 @@
 
         public static T GetSingle<T>(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.QueryEntity<T>(criteria);
             }
@@ -57,7 +56,7 @@
 
         public static void QueryMultiple(CriteriaBase criteria, params Action<IMultiResultReader>[] extractors)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             using (var query = db.QueryMultiple(criteria))
             {
                 for (int i = 0; i < extractors.Length; i++)
@@ -69,7 +68,7 @@
 
         public static Tuple<IEnumerable<T>, IEnumerable<R>> QueryMultiple<T, R>(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             using (var query = db.QueryMultiple(criteria))
             {
                 return Tuple.Create(query.Read<T>(), query.Read<R>());
@@ -78,7 +77,7 @@
 
         public static Tuple<IEnumerable<T>, IEnumerable<R>, IEnumerable<U>> QueryMultiple<T, R, U>(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             using (var query = db.QueryMultiple(criteria))
             {
                 return Tuple.Create(query.Read<T>(), query.Read<R>(), query.Read<U>());
