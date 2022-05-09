@@ -194,7 +194,6 @@
     <Compile Include="BaseClasses\FSExcelConfig.cs" />
     <Compile Include="BaseClasses\TGRSBaseController.cs" />
     <Compile Include="BaseClasses\TGRSBaseService.cs" />
-    <Compile Include="BaseClasses\TGRSDataService.cs" />
     <Compile Include="Configurations\AppSettings.cs" />
     <Compile Include="Configurations\TGRSFunctionKeys.cs">
       <AutoGen>True</AutoGen>

@@ -25,8 +25,13 @@ namespace Fanex.NAP.TGRS.Configuration.DataAccess.Implement
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var data = db.Query<SpreadInfoModel>(criteria.GetSpParams());
-                //var totalItem = (int)db.GetOuputParams()["rowcount"];
+                var hashParams = db.GetOutputParams();
                 var totalItem = 0;
+                if (hashParams != null && hashParams.ContainsKey("rowcount"))
+                {
+                    totalItem = (int)hashParams["rowcount"];
+                }
+                
                 var result = new SpreadInfoList
                 {
                     TotalItem = totalItem,

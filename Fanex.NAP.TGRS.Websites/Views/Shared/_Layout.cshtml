@@ -28,8 +28,8 @@
             <div class="greeting">
                 <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
                 <ul>
-                    <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo", new { Area = "User" }, new { })</li>
-                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo", new { Area = "User" }, new { })</li>
+                    @*<li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo", new { Area = "User" }, new { })</li>
+                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo", new { Area = "User" }, new { })</li>*@
                     <li>@Html.ActionLink(ViewLang.Setting, "Setting", "UserInfo", new { Area = "User" }, new { })</li>
                     <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { Area = "User" }, new { })</li>
                 </ul>

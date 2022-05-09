@@ -35,7 +35,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
     public class UserInfoController : TGRSBaseController
     {
         private const string FormTokenKey = "_SecureChangePasswordFormToken";
-        private readonly IUserService _userService;
+        //private readonly IUserService _userService;
         private readonly IUserSetting _userSetting;
         private readonly TGRS.Reports.Services.IDetailReportService _detailReportService;
         private HashAlgorithm _hashAlgorithm;
@@ -49,9 +49,9 @@ namespace Fanex.NAP.TGRS.User.Controllers
         public UserInfoController(IUserService userService)
         {
             //_userService = userService ?? new UserService { ServiceContext = ServiceContext };
-            //_hashAlgorithm = new SHA256Managed();
-            //_userSetting = new UserSettings();
-            //_detailReportService = new Reports.Services.DetailReportService();
+            this._hashAlgorithm = new SHA256Managed();
+            this._userSetting = new UserSettings();
+            this._detailReportService = new Reports.Services.DetailReportService();
         }
 
         public string FormToken
@@ -187,7 +187,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
             var permission = Reports.ReportUtil.GetBettypePermission(HasRight);
             var groupBettypes = Enumerable.Empty<GroupBetTypes>();
 
-            var bettypes = _userSetting.GetDefaultBettypes(id, permission);
+            var bettypes = this._userSetting.GetDefaultBettypes(id, permission);
 
             if (bettypes != null && bettypes.Any())
             {

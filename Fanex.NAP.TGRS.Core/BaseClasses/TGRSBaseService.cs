@@ -40,14 +40,14 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
         public virtual CommandResult UpdateData(ICriteria criteria)
         {
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var param = new Hashtable();
+            {               
+                db.ExecuteNonQuery(criteria);
 
-                db.ExecuteNonQuery(param);
+                var hashParams = db.GetOutputParams();
 
-                return GetCommandResult(param);
+                return GetCommandResult(hashParams);
             }
-        }
+        }        
 
         /// <summary>
         /// Gets the command result.
@@ -55,15 +55,13 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
         /// <returns>CommandResult object contains error code and error message.</returns>
         private CommandResult GetCommandResult(Hashtable hash)
         {
-            //var errCode = hash["errcode"];
-            //var errMsg = hash["errmsg"];            
+            var errCode = hash["errcode"];
+            var errMsg = hash["errmsg"];
 
             return new CommandResult
             {
-                //Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
-                //Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
-                Code = 0,
-                Message = ""
+                Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
+                Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
             };
         }
 
