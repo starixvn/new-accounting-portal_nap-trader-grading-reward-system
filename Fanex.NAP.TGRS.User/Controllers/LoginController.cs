@@ -164,8 +164,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
                             var currentFunction = this._userService.GetPermissions(user.Id, NapSettings.Settings.SiteId, FormsAuthentication.DefaultUrl, NapSettings.Settings.Environment);
                             AppSession.CurrentUser = user;
                             AppSession.RoleAccess = PermissionService.GetRoleAccess(currentFunction);
-                            var isSoccerLivePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.SoccerLive);
-
                             AppSession.IsSoccerLivePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.SoccerLive) >= (int)Constant.Policy.Read ? true : false;
                             AppSession.IsSoccerNoneLivePermission = _userService.GetPermission(user.Id, this.SiteId, TGRSFunctionKeys.SoccerNonLive) >= (int)Constant.Policy.Read ? true : false;
                             AppSession.IsVirtualPerformancePermission = _userService.GetPermission(user.Id, SiteId, TGRSFunctionKeys.VirtualPerformance) >= (int)Constant.Policy.Read ? true : false;

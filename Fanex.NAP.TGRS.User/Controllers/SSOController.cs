@@ -85,25 +85,25 @@ namespace Fanex.NAP.TGRS.User.Controllers
         {
             string currentTime = this._securityService.GetTime();
             string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
-            TimeSpan expiration = new TimeSpan();
-
+            
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));
             onuserId = Cryptography.CfsDeCrypt(onuserId.Replace(" ", "+"));
             time = Cryptography.CfsDeCrypt(time.Replace(" ", "+"));
-            expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
+            var expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
 
             if (expiration.TotalSeconds <= this._timeExipration)
             {
                 var criteria = SetUserCriteria(Convert.ToInt32(userId), Convert.ToInt32(onuserId));
+                var onUserId = this._securityService.SSOLogin(criteria);
 
-                if (criteria.OnUserId != 0)
+                if (onUserId != 0)
                 {
                     var user = this._userService.Get(criteria.UserId);
 
                     // saves user session & auth info
                     this._currentSession.UserId = user.Id;
                     this._currentSession.Username = user.Username;
-                    this._currentSession.OnUserId = criteria.OnUserId;
+                    this._currentSession.OnUserId = onUserId;
                     this._currentSession.SessionId = Session.SessionID.ToString();
                     this._currentSession.Level = this._userService.GetUserLevel(user.Id, this.SiteId);
 
