@@ -10,6 +10,7 @@
 
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
+    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -123,6 +124,8 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.Markets = GetMarketsPermission();
             ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
             ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
+
+            LogService.Info("League Performance test");
 
             if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))

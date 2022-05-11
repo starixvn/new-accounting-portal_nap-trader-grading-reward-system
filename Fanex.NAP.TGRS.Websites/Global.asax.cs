@@ -13,6 +13,7 @@ namespace Fanex.NAP.TGRS.Websites
     using Fanex.Data.SqlServer;
     //using Fanex.Data.Configuration;
     using Fanex.Logging;
+    using Fanex.Logging.Sentry;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Infrastructure;
     using ONEbook.UM;
@@ -20,8 +21,10 @@ namespace Fanex.NAP.TGRS.Websites
     using ONEbook.UM.Helpers;
     using ONEbook.UM.Transport;
     using RemotingRef;
+    using Sentry;
     using Simplect;
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Data.SqlClient;
     using System.Web;
@@ -47,6 +50,15 @@ namespace Fanex.NAP.TGRS.Websites
                 .UseDefaultDbSettingProvider(AppSettings.StoredProcedurePath)
                 .UseDefaultConnectionStringProvider()
                 .Run();
+
+            LogManager.SetDefaultLogCategory(ConfigurationManager.AppSettings["Sentry-Log-Category"])
+                  .Use(new List<ILogEngine>
+                  {
+                         new SentryLogging(new SentryEngineOptions
+                         {
+                             Dsn = new Dsn(ConfigurationManager.AppSettings["Sentry-Log-Config"])
+                         })
+                  });
 
             AreaRegistration.RegisterAllAreas();
 

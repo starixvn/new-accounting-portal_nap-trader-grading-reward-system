@@ -1,5 +1,6 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Controllers
 {
+    using Fanex.Logging;
     using Fanex.MAP.TGRS.WebAPI.Service;
     using System;
     using System.IO;
@@ -23,7 +24,7 @@
         public HttpResponseMessage GetAutoTradingTAMonthly()
         {
             try
-            {               
+            {
                 var byteImages = _service.GetAutoTradingTAMonthly();
 
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
