@@ -4,6 +4,8 @@
     using System.Web.Mvc;
     using Core.Helpers;
     using Criteria.TargetedMargin;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Configuration.Models.TargetedMargin;
     using Fanex.NAP.TGRS.Configuration.Services.Interface;
@@ -17,14 +19,14 @@
 
         public TargetedMarginController(ITargetedMarginService service)
         {
-            _service = service;
+            _service = service;            
         }
 
         private bool HasHostPermission
         {
             get
             {
-                return PermissionService.HasHostPermission(TGRSFunctionKeys.TargetedMargin);
+                return this.HasRight(TGRSFunctionKeys.TargetedMargin, Constant.Policy.Host);
             }
         }
 

@@ -125,8 +125,6 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             ViewBag.IsVirtualPerformancePermission = AppSession.IsVirtualPerformancePermission;
             ViewBag.IsRealPerformancePermission = AppSession.IsRealPerformancePermission;
 
-            LogService.Info("League Performance test");
-
             if ((!AppSession.IsSoccerLivePermission && !AppSession.IsSoccerNoneLivePermission)
                 || (!AppSession.IsVirtualPerformancePermission && !AppSession.IsRealPerformancePermission))
                 return View("~/Areas/Reports/Views/PerformanceDetail/NoPermission.cshtml");

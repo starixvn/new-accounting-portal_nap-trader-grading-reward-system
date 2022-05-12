@@ -30,8 +30,7 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         private const string IsExcludingLeaguesKey = "Fanex.NAP.TGRS.Contants.AppSession.IsExcludingLeagues";
         private const string IsSoccerLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerLivePermission";
         private const string IsSoccerNoneLivePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsSoccerNoneLivePermission";
-        private const string CurrentMarketSelectionKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentMarketSelection";
-        private const string IsRealFigurePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsRealFigurePermission";
+        private const string CurrentMarketSelectionKey = "Fanex.NAP.TGRS.Contants.AppSession.CurrentMarketSelection";        
         private const string IsVirtualPerformancePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsVirtualPerformancePermission";
         private const string IsRealPerformancePermissionKey = "Fanex.NAP.TGRS.Contants.AppSession.IsRealPerformancePermission";
 

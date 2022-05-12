@@ -186,8 +186,8 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         [HttpGet]
         [NapAuth(FunctionKey = TGRSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetHostPermission()
-        {
-            return Json(PermissionService.HasHostPermission(TGRSFunctionKeys.SpreadManagement), JsonRequestBehavior.AllowGet);
+        {            
+            return Json(this.HasRight(TGRSFunctionKeys.SpreadManagement, Constant.Policy.Host), JsonRequestBehavior.AllowGet);
         }
 
         #region Utilities
