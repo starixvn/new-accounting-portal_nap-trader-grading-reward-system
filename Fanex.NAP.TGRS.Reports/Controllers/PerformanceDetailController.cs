@@ -148,8 +148,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             if (criteria.IsAllLeagueGroup)
             {
                 criteria.LeagueGroupIds = string.Empty;
-            }
+            }            
+
             leaguePerformance = this._detailReportService.GetLeaguePerformance(criteria, criteria.MarketFilter == Market.All);
+
             JsonResult jsonResult = Json(leaguePerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
