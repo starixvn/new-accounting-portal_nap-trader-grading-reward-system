@@ -41,11 +41,21 @@
             return result != null ? result.ToList() : new List<LeaguePerformance>();
         }
 
-        public List<BettypePerformance> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
+        public List<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
         {
-            var result = this.GetData<BettypePerformance>(criteria);
+            var result = new List<ViewModel.TraderPerformance.BettypePerformanceItem>();
+            
+            var data = this.GetData<Models.TraderPerformance.BettypePerformanceInfo>(criteria);
 
-            return result != null ? result.ToList() : new List<BettypePerformance>();
+            if (data != null && data.Any())
+            {
+                foreach (var item in data)
+                {
+                    result.Add(new ViewModel.TraderPerformance.BettypePerformanceItem(item));
+                }
+            }
+
+            return result;
         }
 
         public IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
@@ -94,12 +104,21 @@
             return matchList;
         }
 
-        public IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria)
+        public IEnumerable<MatchBettypeItem> GetMatchBettypes(GetMatchBettypeCriteria criteria)
         {
-            return GetData<MatchBettype>(criteria)
-                .OrderByDescending(bt => bt.Margin)
-                .ThenByDescending(bt => bt.Turnover)
-                .ThenByDescending(bt => bt.VWinloss);
+            var result = new List<MatchBettypeItem>();
+
+            var data = GetData<MatchBettypeInfo>(criteria);
+
+            if (data != null && data.Any())
+            {
+                foreach (var item in data)
+                {
+                    result.Add(new MatchBettypeItem(item));
+                }
+            }
+
+            return result;
         }
     }
 }

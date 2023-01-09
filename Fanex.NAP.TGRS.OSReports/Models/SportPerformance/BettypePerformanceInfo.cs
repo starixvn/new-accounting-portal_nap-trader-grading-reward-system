@@ -9,9 +9,11 @@
 
 namespace Fanex.NAP.TGRS.OSReports.Models.SportPerformance
 {
-    public class BettypePerformanceItem
+    public class BettypePerformanceInfo
     {
-        public string BettypeName { get; set; }
+        public int BettypeId { get; set; }
+
+        public int BetId { get; set; }
 
         public decimal Turnover { get; set; }
 

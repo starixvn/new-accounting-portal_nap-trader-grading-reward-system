@@ -4,9 +4,7 @@
     using System;
 
     public class GetTraderSportLeagueBettypePerformanceCriteria : CriteriaBase
-    {
-        public int ReportType { get; set; }
-
+    {        
         public int TraderId { get; set; }
 
         public int SportId { get; set; }

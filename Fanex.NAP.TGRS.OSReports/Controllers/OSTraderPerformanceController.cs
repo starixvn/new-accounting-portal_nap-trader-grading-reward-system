@@ -7,6 +7,7 @@
     using Fanex.NAP.TGRS.OSReports.Criteria.TraderPerformance;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class OSTraderPerformanceController : TGRSBaseController
@@ -91,7 +92,9 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformance, Policy = Constant.Policy.Read)]
         public ActionResult GetMatchBettypePerformanace(GetMatchBettypeCriteria criteria)
         {
-            return Json(_service.GetMatchBettypes(criteria), JsonRequestBehavior.AllowGet);
+            var data = _service.GetMatchBettypes(criteria);
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

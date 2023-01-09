@@ -1,8 +1,10 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Models.TraderPerformance
 {
-    public class MatchBettype
+    public class MatchBettypeInfo
     {
-        public string BettypeName { get; set; }
+        public int BettypeId { get; set; }
+
+        public int BetId { get; set; }
 
         public decimal Turnover { get; set; }
 

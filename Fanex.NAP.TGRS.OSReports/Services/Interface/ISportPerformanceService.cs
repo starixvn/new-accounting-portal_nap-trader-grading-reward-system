@@ -2,6 +2,7 @@
 {
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.SportPerformance;
+    using Fanex.NAP.TGRS.OSReports.ViewModel.SportPerformance;
     using System.Collections.Generic;
 
     public interface ISportPerformanceService

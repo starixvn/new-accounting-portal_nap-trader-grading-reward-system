@@ -4,6 +4,7 @@
     using Fanex.NAP.TGRS.OSReports.Criteria.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Models.SportPerformance;
     using Fanex.NAP.TGRS.OSReports.Services.Interface;
+    using Fanex.NAP.TGRS.OSReports.ViewModel.SportPerformance;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -31,10 +32,19 @@
         }
 
         public List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria)
-        {
-            var result = this.GetData<BettypePerformanceItem>(criteria);
+        {            
+            var result = new List<BettypePerformanceItem>();
+            var infos = this.GetData<BettypePerformanceInfo>(criteria);
 
-            return result != null ? result.ToList() : new List<BettypePerformanceItem>();
+            if (infos != null && infos.Any())
+            {
+                foreach (var item in infos)
+                {
+                    result.Add(new BettypePerformanceItem(item));
+                }
+            }
+
+            return result;
         }
 
         public List<RegionPerformanceItem> GetRegionPerformances(GetRegionBySportCriteria criteria)

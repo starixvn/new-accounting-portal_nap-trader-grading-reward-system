@@ -16,12 +16,12 @@
 
         List<LeaguePerformance> GetTraderSportLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria);
 
-        List<BettypePerformance> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
+        List<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
 
         List<Sport> GetAllSport();
 
         IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria);
 
-        IEnumerable<MatchBettype> GetMatchBettypes(GetMatchBettypeCriteria criteria);
+        IEnumerable<MatchBettypeItem> GetMatchBettypes(GetMatchBettypeCriteria criteria);
     }
 }
