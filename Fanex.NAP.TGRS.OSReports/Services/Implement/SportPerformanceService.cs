@@ -31,7 +31,7 @@
             return result != null ? result.ToList() : new List<LeaguePerformanceItem>();
         }
 
-        public List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria)
+        public IEnumerable<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria)
         {            
             var result = new List<BettypePerformanceItem>();
             var infos = this.GetData<BettypePerformanceInfo>(criteria);
@@ -44,7 +44,7 @@
                 }
             }
 
-            return result;
+            return result.OrderBy(x => x.BettypeId).ThenBy(x => x.BetId);
         }
 
         public List<RegionPerformanceItem> GetRegionPerformances(GetRegionBySportCriteria criteria)

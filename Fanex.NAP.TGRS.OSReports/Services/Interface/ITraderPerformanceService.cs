@@ -16,7 +16,7 @@
 
         List<LeaguePerformance> GetTraderSportLeaguePerformance(GetTraderSportLeaguePerformanceCriteria criteria);
 
-        List<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
+        IEnumerable<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria);
 
         List<Sport> GetAllSport();
 

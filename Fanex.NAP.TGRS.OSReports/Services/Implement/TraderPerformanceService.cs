@@ -41,7 +41,7 @@
             return result != null ? result.ToList() : new List<LeaguePerformance>();
         }
 
-        public List<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
+        public IEnumerable<ViewModel.TraderPerformance.BettypePerformanceItem> GetTraderSportLeagueBettypePerformance(GetTraderSportLeagueBettypePerformanceCriteria criteria)
         {
             var result = new List<ViewModel.TraderPerformance.BettypePerformanceItem>();
             
@@ -55,7 +55,7 @@
                 }
             }
 
-            return result;
+            return result.OrderBy(x => x.BettypeId).ThenBy(x => x.BetId);
         }
 
         public IEnumerable<MatchPerformanceInfo> GetTraderMatchPerformance(GetTraderMatchPerformanceCriteria criteria)
@@ -118,7 +118,7 @@
                 }
             }
 
-            return result;
+            return result.OrderBy(x => x.BettypeId).ThenBy(x => x.BetId);
         }
     }
 }

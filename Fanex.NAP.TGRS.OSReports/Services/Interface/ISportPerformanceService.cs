@@ -13,7 +13,7 @@
 
         List<LeaguePerformanceItem> GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
 
-        List<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria);
+        IEnumerable<BettypePerformanceItem> GetBettypePerformance(GetBettypePerformanceCriteria criteria);
 
         List<RegionPerformanceItem> GetRegionPerformances(GetRegionBySportCriteria criteria);
     }

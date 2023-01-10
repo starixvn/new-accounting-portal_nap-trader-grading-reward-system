@@ -547,23 +547,23 @@ var traderReports = (function ($) {
             { HeaderText: 'Product', Width: 200, Name: 'ColBettype', HeaderAlign: 'center', CellAlign: 'left' },
             {
                 HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc'
+                FormatNumber: common.Formats.DecimalFormat, Sort: true /*, SortDirection: 'desc' */
             },
             {
                 HeaderText: 'V.Win Loss', Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$', SortDirection: 'desc'
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true /*, SortDirection: 'desc' */
             },
             {
                 HeaderText: 'V.Margin', Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true /*, SortDirection: 'desc' */
             },
             {
                 HeaderText: 'Average V.Turnover', Width: 150, Name: 'ColAverageTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true 
             },
             {
                 HeaderText: 'Point Margin', Width: 100, Name: 'ColPointMargin', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true 
             },
             {
                 HeaderText: 'Bet Count', Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.IntegerFormat
@@ -769,9 +769,9 @@ var traderReports = (function ($) {
             [
                 { HeaderText: "#", Width: 60, Name: "No", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: "Product", Width: 300, Name: "Product", HeaderAlign: "center", CellAlign: "left", },
-                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc'},
-                { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc'},
-                { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true, SortDirection: 'desc'},
+                { HeaderText: "Turnover", Width: 100, Name: "Turnover", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true /*, SortDirection: 'desc'*/},
+                { HeaderText: "V.Win Loss", Width: 100, Name: "Winloss", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true /*, SortDirection: 'desc'*/},
+                { HeaderText: "V.Margin", Width: 100, Name: "Margin", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true /*, SortDirection: 'desc'*/},
                 { HeaderText: "Bet Count", Width: 100, Name: "BetCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: common.Formats.IntegerFormat }
             ]
 
