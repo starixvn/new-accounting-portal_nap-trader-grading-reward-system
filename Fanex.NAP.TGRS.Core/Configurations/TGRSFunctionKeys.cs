@@ -82,6 +82,8 @@ public static class TGRSFunctionKeys
 
     public const string OSTraderPerformance = "OSTraderPerformance";
 
+    public const string OSTraderPerformanceByCC = "OSTraderPerformance_CustomerClass";
+
     public const string OSTraderReportAdmin = "OSTraderReportAdmin";
 
     public const string OSTraderReport = "OSTraderReport";

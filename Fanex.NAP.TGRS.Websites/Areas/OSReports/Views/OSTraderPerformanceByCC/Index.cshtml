@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Trader Performance By Customer Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render("~/styles/trader-performance")
+}
+
+@section Headline{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@Html.Partial("IndexFilter")
+
+<div id="divTraderPerformanceCCContainer" class="content-grid display-none">
+    <div id="divTraderPerformanceCCGrid" class="freegrid"></div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/os-trader-report-CC")
+
+    <script type="text/javascript">
+        @*var labels = {
+            TraderPerformance: '@ViewLang.TraderPerformance',
+            No: '#',
+            NoOfLeagues: '@ViewLang.NoOfLeagues',
+            NoOfBettypes: '@ViewLang.NoOfBetTypes',
+            LeaguePerformance: '@ViewLang.LeaguePerformance',
+            SportPerformance: '@ViewLang.SportPerformance',
+            BetTypePerformance: '@ViewLang.BetTypePerformance',
+            Sport: '@ViewLang.Sport',
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            Trader: '@ViewLang.Trader',
+            GrandTotal: '@ViewLang.GrandTotal',
+            AllSports: '@ViewLang.AllSports',
+            NA: '@ViewLang.NA'
+        };
+        var messages = {
+            UpdateTraderSuccessfully: '@Messages.UpdateTraderSuccessfully',
+            AddTraderSuccessfully: '@Messages.AddTraderSuccessfully',
+            InvalidValueError: '@Messages.InvalidValueError',
+            AddIssueSuccessfully: '@Messages.AddIssueSuccesfully',
+
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';*@
+
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            DefaultFromDate: '@(((DateTime)ViewBag.DefaultFromDate).ToShortFormatedDate())',
+            DefaultToDate: '@(((DateTime)ViewBag.DefaultToDate).ToShortFormatedDate())',
+            AllowYearRange: parseInt('@ViewBag.AllowYearRange')
+        };
+    </script>
+}
