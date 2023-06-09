@@ -103,6 +103,7 @@ var traderCCReports = (function ($) {
                 cachedData = data;
                 showTraderPerformanceReport();
                 renderTraderGrid(data);
+                domElements.divTraderPerformanceCCContainer.find('#btnExportdivTraderPerformanceCCGrid').click(function () { exportExcel() });
             });
         });        
     };
@@ -176,8 +177,8 @@ var traderCCReports = (function ($) {
             },
             titleInfo:
             {
-                showExcelButton: true,
-                exportExcelFunction: exportExcel()
+                showExcelButton: true
+                //exportExcelFunction: exportExcel()
             },
         };
 
