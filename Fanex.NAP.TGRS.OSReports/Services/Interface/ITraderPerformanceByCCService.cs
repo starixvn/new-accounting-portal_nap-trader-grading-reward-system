@@ -8,8 +8,10 @@
     {
         IEnumerable<SportModel> GetSportFilter();
 
-        IEnumerable<CustomerClassViewModel> GetCTSCustomerClassFilter();
+        CustomerClassGroupViewModel GetCTSCustomerClassFilter();
 
         IEnumerable<TraderPerformanceByCCModel> GetTraderPerformancesByCC(GetTraderPerformanceByCCCriteria criteria);
+
+        void ExportTradePerformanceCC(ExportExcelTradePerfCCViewModel exportModel, string templatePath);
     }
 }

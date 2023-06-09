@@ -7,10 +7,11 @@
             </div>
             <div class="edit-field">
                 <select id="ddlSport">
-                    @if (@ViewBag.sports != null) { 
-                        foreach (var item in ViewBag.sports)
+                    @if (@ViewBag.Sports != null)
+                    {
+                        foreach (var item in ViewBag.Sports)
                         {
-                            <option value="item.SportId">@item.SportName</option>
+                            <option value="@item.SportId">@item.SportName</option>
                         }
                     }
                 </select>
@@ -28,16 +29,19 @@
             </div>
             <div class="edit-field col_8">
                 <select id="ddlCustomerClass" multiple="multiple" style="width: 160px">
-                    @if (@ViewBag.ctsCustomerClass != null) { 
-                        foreach (var groupClass in ViewBag.ctsCustomerClass)
+                    @if (@ViewBag.CustomerClassGroup != null)
+                    {
+                        foreach (var groupClass in ViewBag.CustomerClassGroup)
                         {
                             <optgroup label="@groupClass.CustomerClassGroupName" checked="true">
                                 @foreach (var item in @groupClass.ClassList)
                                 {
-                                    <option value="item" selected>@item</option>
+                                    <option value="@item" selected>@item</option>
                                 }
                             </optgroup>
                         }
+
+                        <option value="-999" selected>Unknown</option>
                     }
                 </select>
             </div>
@@ -47,4 +51,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="hide">
+    <input id="hdClassList" type="hidden" value="@ViewBag.ClassList" />
 </div>

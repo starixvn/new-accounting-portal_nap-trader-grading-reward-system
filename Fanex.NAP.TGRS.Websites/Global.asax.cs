@@ -10,6 +10,7 @@
 namespace Fanex.NAP.TGRS.Websites
 {
     using Fanex.Data;
+    using Fanex.Data.MySql;
     using Fanex.Data.SqlServer;
     //using Fanex.Data.Configuration;
     using Fanex.Logging;
@@ -47,6 +48,7 @@ namespace Fanex.NAP.TGRS.Websites
             DbSettingProviderManager
                 .StartNewSession()
                 .WithSqlServer()
+                .WithMySql()
                 .UseDefaultDbSettingProvider(AppSettings.StoredProcedurePath)
                 .UseDefaultConnectionStringProvider()
                 .Run();

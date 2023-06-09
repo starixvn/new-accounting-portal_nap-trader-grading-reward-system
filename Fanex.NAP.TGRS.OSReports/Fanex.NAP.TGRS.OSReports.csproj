@@ -266,6 +266,8 @@
     <Compile Include="Models\NewTraderPerformance\RegionPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
+    <Compile Include="Models\TraderPerformanceByCC\ExportExcelTradePerfCCViewModel.cs" />
+    <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassGroupViewModel.cs" />
     <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassViewModel.cs" />
     <Compile Include="Models\TraderPerformanceByCC\SportModel.cs" />
     <Compile Include="Models\TraderPerformanceByCC\CustomerClassModel.cs" />

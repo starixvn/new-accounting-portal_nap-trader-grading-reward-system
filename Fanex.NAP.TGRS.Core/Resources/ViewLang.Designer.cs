@@ -2221,6 +2221,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trader_Performance_By_Customer_Class_{0}_{1}.
+        /// </summary>
+        public static string TraderPerformanceByCC {
+            get {
+                return ResourceManager.GetString("TraderPerformanceByCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trader&apos;s Report.
         /// </summary>
         public static string TraderReport {

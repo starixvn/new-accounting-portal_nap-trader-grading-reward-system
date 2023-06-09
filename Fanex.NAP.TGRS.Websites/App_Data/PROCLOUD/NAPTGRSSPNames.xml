@@ -351,4 +351,8 @@
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_Trader_Match" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_Trader_Match" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
     <Setting Key="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_Trader" SpName="TGRS_Basketball_Rpt_PerformanceDetail_Bettype_Trader" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+	<Function Name="TraderPerformanceCC">
+		<Setting Key="TGRS_OS_Rpt_TraderPerformance_CustomerClass" SpName="TGRS_OS_Rpt_TraderPerformance_CustomerClass" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+		<Setting Key="CTS_DC_TGRS_Category_Get" SpName="CTS_DC_TGRS_Category_Get" DbName="MySQL.CTS_DataCenter.tgrWeb"/>
+	</Function>
 </Functions>

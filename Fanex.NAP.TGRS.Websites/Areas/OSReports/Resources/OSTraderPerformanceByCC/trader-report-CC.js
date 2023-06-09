@@ -17,8 +17,8 @@ var traderCCReports = (function ($) {
         txtTraderName: null,
         ddlSport: null,
         ddlCustomerClass: null,
-        divGrid: null,
         ddlPeriodType: null,
+        hdFullClassList: null,
         divTraderPerformanceCCContainer: null,
         divTraderPerformanceCCGrid: null,
     };
@@ -33,17 +33,14 @@ var traderCCReports = (function ($) {
         domElements.divDateRange = $('#divDateRange');
         domElements.btnSearch = $('#btnSearch');
         domElements.txtTraderName = $('#txtTraderName');
-        domElements.divGrid = $("#resultContainer");
-
+        domElements.hdClassList = $('#hdClassList'),
         domElements.divTraderPerformanceCCContainer = $('#divTraderPerformanceCCContainer');
         domElements.divTraderPerformanceCCGrid = $('#divTraderPerformanceCCGrid');
     };
 
-    traderCCReports.Initialize = function () {
+    traderCCReports.Initialize = function () {  
         cacheDOMElements();
-
         loadFilter()
-
         registerEvent();
     };
 
@@ -98,7 +95,8 @@ var traderCCReports = (function ($) {
                 Fromdate: domElements.divDateRange.getFrom(),
                 ToDate: domElements.divDateRange.getTo(),
                 SportId: domElements.ddlSport.val(),
-                CustomerClass: domElements.ddlCustomerClass.val().toString()
+                CustomerClassIds: domElements.ddlCustomerClass.val().toString(),
+                AllCustomerClassIds: domElements.hdClassList.val()
             };
             common.DisableInput();
             TraderReportCCService.GetTraderPerformanceCC(criteria, function (data) {
@@ -175,7 +173,12 @@ var traderCCReports = (function ($) {
                 currentPage: 0,
                 itemsPerPage: common.Constants.PageSize,
                 itemsPerPageArray: common.Constants.PagerRanges
-            }
+            },
+            titleInfo:
+            {
+                showExcelButton: true,
+                exportExcelFunction: exportExcel()
+            },
         };
 
         domElements.divTraderPerformanceCCGrid.fanexGrid(options);
@@ -198,5 +201,23 @@ var traderCCReports = (function ($) {
         $container.find($a => $a.is(report)).removeClass("display-none");
     }
 
+    var exportExcel = function () {
+        var url = common.ResolveRootUrl("OSReports/OSTraderPerformanceByCC/ExportExcel");
+        
+        var parameters = {
+            TraderName: domElements.txtTraderName.val().trim(),
+            Fromdate: domElements.divDateRange.getFrom(),
+            ToDate: domElements.divDateRange.getTo(),
+            SportId: domElements.ddlSport.val(),
+            SportName: domElements.ddlSport.find('option:selected').text(),
+            CustomerClassIds: domElements.ddlCustomerClass.val().toString(),
+            AllCustomerClassIds: domElements.hdClassList.val(),
+        };
+
+        common.DownloadFile(url, parameters);
+    };
+
+
     return traderCCReports;
+
 })(jQuery);
