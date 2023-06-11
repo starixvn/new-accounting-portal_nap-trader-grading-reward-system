@@ -101,9 +101,9 @@
             AppendBlockContent(ref contentRender, ref lineCount, "Sport Type: ", boldFont, exportModel.SportName, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, "Customer Class: ", boldFont, exportModel.CustomerClassIds, normalFont, "\n");
 
-            var contentRichTextString = contentRender.Render();
-            var contentRichTextArray = new string[1];
-            contentRichTextArray[0] = contentRichTextString.String;
+            IRichTextString contentRichTextString = contentRender.Render();
+            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(1, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
         }
