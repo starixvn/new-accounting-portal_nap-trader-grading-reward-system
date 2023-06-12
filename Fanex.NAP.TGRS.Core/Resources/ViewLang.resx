@@ -894,4 +894,7 @@
   <data name="TraderPerformanceByCC" xml:space="preserve">
     <value>Trader_Performance_By_Customer_Class_{0}_{1}</value>
   </data>
+  <data name="TraderPerformanceByCC_SheetName" xml:space="preserve">
+    <value>Trader Performance By CC</value>
+  </data>
 </root>

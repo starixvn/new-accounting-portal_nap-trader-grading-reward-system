@@ -83,7 +83,7 @@
                                 exportModel.FromDate.ToString(ShortDateFormatForFileName),
                                 exportModel.ToDate.ToString(ShortDateFormatForFileName));
 
-            var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderPerformanceByCC);
+            var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.TraderPerformanceByCC_SheetName);
             writer.CopyRows(0, 1);
             FilterBlock(exportModel, ref writer);
             FillHeader(ref writer);
