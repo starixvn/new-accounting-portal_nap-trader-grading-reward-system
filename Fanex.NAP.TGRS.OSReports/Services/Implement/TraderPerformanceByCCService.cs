@@ -21,7 +21,14 @@
 
         public IEnumerable<TraderPerformanceByCCModel> GetTraderPerformancesByCC(GetTraderPerformanceByCCCriteria criteria)
         {
-            return GetData<TraderPerformanceByCCModel>(criteria);
+            var result = GetData<TraderPerformanceByCCModel>(criteria);
+
+            if (result != null && result.Any())
+            {
+                return result.OrderBy(c => c.TraderName).ThenBy(c => c.CustomerClass);
+            }
+
+            return Enumerable.Empty<TraderPerformanceByCCModel>();
         }
 
         public IEnumerable<SportModel> GetSportFilter()

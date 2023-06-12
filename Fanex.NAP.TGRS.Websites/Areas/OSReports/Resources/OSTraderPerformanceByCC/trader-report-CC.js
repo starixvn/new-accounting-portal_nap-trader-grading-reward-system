@@ -60,7 +60,7 @@ var traderCCReports = (function ($) {
     var loadFilter = function () {
         domElements.ddlSport.multiselect({
             selectedList: 1,
-            minWidth: 230,
+            minWidth: 280,
             height: 150,
             multiple: false
         }).multiselectfilter({ width: 160 });
@@ -156,7 +156,7 @@ var traderCCReports = (function ($) {
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
                 { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'asc', CustomSortFunction: customSort },
-                { HeaderText: 'Customer Class', Width: 120, Name: 'colClass', HeaderAlign: 'center', CellAlign: 'left', Sort: true, CustomSortFunction: customSort},
+                { HeaderText: 'Customer Class', Width: 120, Name: 'colClass', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'asc', CustomSortFunction: customSort},
                 { HeaderText: 'Margin', Width: 100, Name: 'colRealMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Turnover', Width: 100, Name: 'colRealTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Winloss', Width: 100, Name: 'colRealWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
