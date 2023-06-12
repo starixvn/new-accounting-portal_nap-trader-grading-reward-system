@@ -80,7 +80,7 @@
             writer.CopyRows(0, 1);
             FilterBlock(exportModel, ref writer);
             FillHeader(ref writer);
-            writer.FreezeRow(0, 3);
+            writer.FreezeRow(0, 4);
             FillRowData(data, ref writer);
             writer.SyncColumnsWidth(10);
 
@@ -92,14 +92,14 @@
         private void FilterBlock(ExportExcelTradePerfCCViewModel exportModel, ref ExcelTemplateWriter writer)
         {
             var contentRender = new RichTextRender().Clear();
-            var boldFont = writer.GetFont(9, 0);
-            var normalFont = writer.GetFont(10, 0);
+            var boldFont = writer.GetFont(10, 0);
+            var normalFont = writer.GetFont(11, 0);
             var lineCount = 0;
 
-            AppendBlockContent(ref contentRender, ref lineCount, "From Date: ", boldFont, exportModel.FromDate.ToString("MM/dd/yyyy"), normalFont, " - ");
-            AppendBlockContent(ref contentRender, ref lineCount, "To Date: ", boldFont, exportModel.ToDate.ToString("MM/dd/yyyy"), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, "Sport Type: ", boldFont, exportModel.SportName, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, "Customer Class: ", boldFont, exportModel.CustomerClassIds, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, "From Date", boldFont, exportModel.FromDate.ToString("MM/dd/yyyy"), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, "To Date", boldFont, exportModel.ToDate.ToString("MM/dd/yyyy"), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, "Sport Type", boldFont, exportModel.SportName, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, "Customer Class", boldFont, exportModel.DisplayCustomerClassIds, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -137,14 +137,14 @@
 
         private void FillHeader(ref ExcelTemplateWriter writer)
         {
-            writer.CopyRows(2, 1);
+            writer.CopyRows(2, 2);
         }
 
         private void FillRowData(IEnumerable<TraderPerformanceByCCModel> data, ref ExcelTemplateWriter writer)
         {
             for (var i = 0; i < data.Count(); i++)
             {
-                var styleIndex = (i % 2 == 0) ? 3 : 4;
+                var styleIndex = (i % 2 == 0) ? 4 : 5;
                 var item = data.ElementAt(i);
 
                 var record = new object[]
