@@ -79,6 +79,8 @@ var traderCCReports = (function ($) {
             placeholder: '',
             label: '',
             selectAll: true
+        }).change(function () {
+            validator.ClearError(domElements.ddlCustomerClass.next());
         });
 
         initDatePicker();

@@ -106,6 +106,7 @@
             AppendBlockContent(ref contentRender, ref lineCount, "From Date", boldFont, exportModel.FromDate.ToString("MM/dd/yyyy"), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, "To Date", boldFont, exportModel.ToDate.ToString("MM/dd/yyyy"), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, "Sport Type", boldFont, exportModel.SportName, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, "Trader", boldFont, exportModel.TraderName ?? string.Empty, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, "Customer Class", boldFont, exportModel.DisplayCustomerClassIds, normalFont, "\n");
 
             IRichTextString contentRichTextString = contentRender.Render();
