@@ -6,7 +6,7 @@
 
         public string TraderName { get; set; }
 
-        public int CustomerClass { get; set; }
+        public string CustomerClass { get; set; }
 
         public double Margin { get; set; }
 

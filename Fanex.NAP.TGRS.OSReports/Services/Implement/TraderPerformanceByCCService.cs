@@ -25,7 +25,7 @@
 
             if (result != null && result.Any())
             {
-                return result.OrderBy(c => c.TraderName).ThenBy(c => c.CustomerClass);
+                return result;
             }
 
             return Enumerable.Empty<TraderPerformanceByCCModel>();

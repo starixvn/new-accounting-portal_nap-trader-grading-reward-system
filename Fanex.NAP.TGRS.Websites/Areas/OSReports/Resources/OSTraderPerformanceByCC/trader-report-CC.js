@@ -90,28 +90,42 @@ var traderCCReports = (function ($) {
 
     var registerEvent = function () {
         domElements.btnSearch.click(function () {
-            var criteria = {
-                TraderName: domElements.txtTraderName.val().trim(),
-                Fromdate: domElements.divDateRange.getFrom(),
-                ToDate: domElements.divDateRange.getTo(),
-                SportId: domElements.ddlSport.val(),
-                CustomerClassIds: domElements.ddlCustomerClass.val().toString(),
-                AllCustomerClassIds: domElements.hdClassList.val()
-            };
-            common.DisableInput();
-            TraderReportCCService.GetTraderPerformanceCC(criteria, function (data) {
-                cachedData = data;
-                showTraderPerformanceReport();
-                renderTraderGrid(data);
-                domElements.divTraderPerformanceCCContainer.find('#btnExportdivTraderPerformanceCCGrid').click(function () { exportExcel() });
-            });
+            if (validateCustomerClass()) {
+                var criteria = {
+                    TraderName: domElements.txtTraderName.val().trim(),
+                    Fromdate: domElements.divDateRange.getFrom(),
+                    ToDate: domElements.divDateRange.getTo(),
+                    SportId: domElements.ddlSport.val(),
+                    CustomerClassIds: domElements.ddlCustomerClass.val().toString(),
+                    AllCustomerClassIds: domElements.hdClassList.val()
+                };
+
+                common.DisableInput();
+                TraderReportCCService.GetTraderPerformanceCC(criteria, function (data) {
+                    cachedData = data;
+                    showTraderPerformanceReport();
+                    renderTraderGrid(data);
+                    domElements.divTraderPerformanceCCContainer.find('#btnExportdivTraderPerformanceCCGrid').click(function () { exportExcel() });
+                });
+            }
         });        
     };
 
+    var validateCustomerClass = function () {
+        var selectedClass = domElements.ddlCustomerClass.val();
+
+        if (!selectedClass) {
+            validator.ShowError(domElements.ddlCustomerClass.next(), "Required field!", 'w');
+
+            return false;
+        }
+
+        return true;
+    };
 
     function customSort(val1, val2, direction) {
-        var parsedCol1Value = val1.toLowerCase();
-        var parsedCol2Value = val2.toLowerCase();
+        var parsedCol1Value = val1.toString().toLowerCase();
+        var parsedCol2Value = val2.toString().toLowerCase();
 
         if (direction === 'asc') {
             return parsedCol1Value > parsedCol2Value ? 1 : -1;
@@ -155,8 +169,8 @@ var traderCCReports = (function ($) {
             ],
             columns: [
                 { HeaderText: '#', Width: 40, Name: 'colNum', HeaderAlign: 'center', CellAlign: 'center', },
-                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'asc', CustomSortFunction: customSort },
-                { HeaderText: 'Customer Class', Width: 120, Name: 'colClass', HeaderAlign: 'center', CellAlign: 'left', Sort: true, SortDirection: 'asc', CustomSortFunction: customSort},
+                { HeaderText: 'Customer Class', Width: 120, Name: 'colClass', HeaderAlign: 'center', CellAlign: 'left', Sort: true},
+                { HeaderText: 'Trader', Width: 100, Name: 'colTraderName', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
                 { HeaderText: 'Margin', Width: 100, Name: 'colRealMargin', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Turnover', Width: 100, Name: 'colRealTurnover', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
                 { HeaderText: 'Winloss', Width: 100, Name: 'colRealWinloss', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true },
@@ -183,6 +197,8 @@ var traderCCReports = (function ($) {
         };
 
         domElements.divTraderPerformanceCCGrid.fanexGrid(options);
+        domElements.divTraderPerformanceCCGrid.find('#divTraderPerformanceCCGrid_header_sort_colTraderName').find('.divSorter').addClass('asc');
+        domElements.divTraderPerformanceCCGrid.find('#divTraderPerformanceCCGrid_header_sort_colClass').find('.divSorter').addClass('asc');
     }
 
     function showTraderPerformanceReport() {
