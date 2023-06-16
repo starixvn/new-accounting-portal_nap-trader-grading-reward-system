@@ -31,6 +31,19 @@
             }
         }
 
+        public string DisplayTraderName
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(TraderName))
+                {
+                    return "contains '" + TraderName + "'";
+                };
+
+                return string.Empty;
+            }
+        }
+
         public string AllCustomerClassIds { get; set; }
     }
 }
