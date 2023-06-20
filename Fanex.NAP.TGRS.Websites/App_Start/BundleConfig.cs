@@ -425,6 +425,13 @@ namespace Fanex.NAP.TGRS.Websites
                     "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report-service.js",
                     "~/Areas/OSReports/Resources/OSNewTraderPerformance/trader-report.js"));
 
+            bundles.Add(
+                new ScriptBundle("~/scripts/os-trader-report-CC")
+                .Include(
+                    "~/Areas/OSReports/Resources/OSTraderPerformanceByCC/trader-report-CC-factory.js",
+                    "~/Areas/OSReports/Resources/OSTraderPerformanceByCC/trader-report-CC-service.js",
+                    "~/Areas/OSReports/Resources/OSTraderPerformanceByCC/trader-report-CC.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/os-trader-performance-admin").Include(
                 "~/Areas/OSReports/Resources/OSTraderReportAdmin/*.js",
                 "~/Scripts/Libraries/Highcharts/highcharts.js",

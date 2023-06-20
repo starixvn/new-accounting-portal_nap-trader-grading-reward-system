@@ -1,0 +1,58 @@
+﻿<div class="filter-bar">
+    <div id="divReportFilterForm" class="filter-form">
+        <div class="filter-row ">
+            <div class="date-range"><div id="divDateRange"></div></div>
+            <div class="lbl-field col_2">
+                <label for="ddlSport">@ViewLang.Sport</label>
+            </div>
+            <div class="edit-field">
+                <select id="ddlSport">
+                    @if (@ViewBag.Sports != null)
+                    {
+                        foreach (var item in ViewBag.Sports)
+                        {
+                            <option value="@item.SportId">@item.SportName</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtTraderName">@ViewLang.Trader</label>
+            </div>
+            <div class="edit-field col_8">
+                <input id="txtTraderName" type="text" class="clearable-input" style="min-width: 263px" />
+            </div>
+            <div class="lbl-field col_7">
+                <label for="ddlCustomerClass">Customer Class</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="ddlCustomerClass" multiple="multiple" style="width: 160px">
+                    @if (@ViewBag.CustomerClassGroup != null)
+                    {
+                        foreach (var groupClass in ViewBag.CustomerClassGroup)
+                        {
+                            <optgroup label="@groupClass.CustomerClassGroupName" checked="true">
+                                @foreach (var item in @groupClass.ClassList)
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                            </optgroup>
+                        }
+
+                        <option value="-999" selected>Unknown</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_3 trader-bm"></div>
+            <div class="submit col_4">
+                <input id="btnSearch" type="button" class="blue-button" value="@ViewLang.Generate" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hide">
+    <input id="hdClassList" type="hidden" value="@ViewBag.ClassList" />
+</div>

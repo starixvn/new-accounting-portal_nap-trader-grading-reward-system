@@ -37,6 +37,8 @@
             InjectorFactory.CurrentInjector.Bind<ITraderPerformanceService>().Using<TraderPerformanceService>();
 
             InjectorFactory.CurrentInjector.Bind<INewTraderPerformanceService>().Using<NewTraderPerformanceService>();
+
+            InjectorFactory.CurrentInjector.Bind<ITraderPerformanceByCCService>().Using<TraderPerformanceByCCService>();
         }
     }
 }

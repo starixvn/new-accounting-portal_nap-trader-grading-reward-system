@@ -68,6 +68,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Fanex\Fanex.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.1.0.6\lib\net461\Fanex.Logging.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Database, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Database.1.0.8\lib\net461\Fanex.Logging.Extensions.Database.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Core.Client.2.0.0\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
     </Reference>
@@ -173,6 +179,7 @@
     <Compile Include="Controllers\OSNewSportPerformanceController.cs" />
     <Compile Include="Controllers\OSSportPerformanceController.cs" />
     <Compile Include="Controllers\OSNewTraderPerformanceController.cs" />
+    <Compile Include="Controllers\OSTraderPerformanceByCCController.cs" />
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
@@ -218,6 +225,8 @@
     <Compile Include="Criteria\NewTraderPerformance\GetRegionByTraderCriteria.cs" />
     <Compile Include="Criteria\NewTraderPerformance\GetSportByTraderCriteria.cs" />
     <Compile Include="Criteria\NewTraderPerformance\GetTraderPerformanceCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformanceByCC\GetCTSCustomerClassCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformanceByCC\GetTraderPerformanceByCCCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetMatchBettypeCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderMatchPerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderPerformance\GetTraderSportLeagueBettypePerformanceCriteria.cs" />
@@ -263,6 +272,12 @@
     <Compile Include="Models\NewTraderPerformance\RegionPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
+    <Compile Include="Models\TraderPerformanceByCC\ExportExcelTradePerfCCViewModel.cs" />
+    <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassGroupViewModel.cs" />
+    <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassViewModel.cs" />
+    <Compile Include="Models\TraderPerformanceByCC\SportModel.cs" />
+    <Compile Include="Models\TraderPerformanceByCC\CustomerClassModel.cs" />
+    <Compile Include="Models\TraderPerformanceByCC\TraderPerformanceByCC.cs" />
     <Compile Include="Models\TraderPerformance\BettypePerformanceInfo.cs" />
     <Compile Include="Models\TraderPerformance\LeaguePerformance.cs" />
     <Compile Include="Models\TraderPerformance\MatchBettypeInfo.cs" />
@@ -283,6 +298,7 @@
     <Compile Include="Services\Implement\NewSportPerformanceService.cs" />
     <Compile Include="Services\Implement\SportPerformanceService.cs" />
     <Compile Include="Services\Implement\NewTraderPerformanceService.cs" />
+    <Compile Include="Services\Implement\TraderPerformanceByCCService.cs" />
     <Compile Include="Services\Implement\TraderPerformanceService.cs" />
     <Compile Include="Services\Implement\TraderReportService.cs" />
     <Compile Include="Services\Interface\IBasketballBetTypeService.cs" />
@@ -290,6 +306,7 @@
     <Compile Include="Services\Interface\INewSportPerformanceService.cs" />
     <Compile Include="Services\Interface\ISportPerformanceService.cs" />
     <Compile Include="Services\Interface\INewTraderPerformanceService.cs" />
+    <Compile Include="Services\Interface\ITraderPerformanceByCCService.cs" />
     <Compile Include="Services\Interface\ITraderPerformanceService.cs" />
     <Compile Include="Services\Interface\ITraderReportService.cs" />
     <Compile Include="ViewModel\BasketballPerformance\LeagueOfBettypeBetChoiceQuarterItem.cs" />
