@@ -10,22 +10,13 @@
 
 namespace Fanex.NAP.TGRS.User.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Security;
     using Core.Configurations;
     using Core.Helpers;
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
     //using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Models;    
+    using Fanex.NAP.Core.Models;
     using Fanex.NAP.Core.Models.ParameterObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
@@ -35,6 +26,15 @@ namespace Fanex.NAP.TGRS.User.Controllers
     using Fanex.NAP.TGRS.Configuration.Services.SystemConfiguration;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using ONEbook.UM.Filters;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
 
     /// <summary>
     /// Login controller.
@@ -70,7 +70,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
             ISiteService siteService,            
             ICurrentSession currentSession,
             ISecurityService securityService,
-        ISystemConfigurationService systemConfigService)
+            ISystemConfigurationService systemConfigService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
@@ -257,7 +257,10 @@ namespace Fanex.NAP.TGRS.User.Controllers
                     });
                 }
 
-                var isKickedOut = this._securityService.ReCheckIn(_currentSession.OnUserId, SiteId);
+                var isKickedOut = this._securityService.ReCheckIn(_currentSession.OnUserId, SiteId) ;
+                var isAuthenticated = HttpContext.Request.IsAuthenticated;
+
+                isKickedOut = (isKickedOut == 1 || !isAuthenticated) ? 1 : 0;
 
                 return this.Json(new { IsKickedOut = isKickedOut.ToString() });
             }
@@ -339,7 +342,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
                  1,
                 user.Username,
                 DateTime.Now,
-                DateTime.Now.AddMinutes(20000),
+                DateTime.Now.AddMinutes(720),
                 false,
                 authInfo.ToXml(),
                 currentDomain.Path);

@@ -48,6 +48,23 @@
         </div>
     </section>
     <div id="divPopup"></div>
+    <div id="divPopupExpiredSession" hidden class="form-bar width-400">
+        <div class="form expand-form">
+            <div id="divIcon" class="expired-session-icon width-400">
+            </div>
+            <div class="form-row">
+                <div class="lbl-field width-400" style="text-align:center">
+                    <label>Your session has expired!</label><br>
+                    <label>Because of the security. You have to re-login your account</label>
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <div class="lbl-field width-400" style="text-align:center">
+                    <input type="button" id="btnOk" class="blue-button" value="OK" />
+                </div>
+            </div>
+        </div>
+    </div>
     @Html.Hidden("RootURL", Url.Content("~/"))
     @Html.Hidden("AccessDeniedError", Messages.AccessDenied)
     @Html.Hidden("NotFoundError", Messages.NotFoundMessage)

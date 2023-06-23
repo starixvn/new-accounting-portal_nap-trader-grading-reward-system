@@ -62,7 +62,13 @@ namespace Fanex.NAP.TGRS.Core.BaseClasses
             //ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
 
             //this._userService = new UserService { ServiceContext = ServiceContext };
-            
+
+            ViewBag.ViewFlags = new ViewFlags
+            {
+                //IsReCheckin = (HttpContext?.Request?.IsAuthenticated ?? false);
+                IsReCheckin = true
+            };
+
             this._userService = new UserService();
         }
 

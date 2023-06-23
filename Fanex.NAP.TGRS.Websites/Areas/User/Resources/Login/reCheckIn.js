@@ -12,53 +12,90 @@ $(document).ready(function () {
 Namespace.Register("Fanex.TGRS.ReCheckIn");
 Fanex.TGRS.ReCheckIn = function () {
     var $this = this;
-    var cachedElements = {
+
+    var domElements = {
         AllowReCheckIn: false,
-        HeadlineMsgBox: null,
+        divPopupExpiredSession: null,
+        divPopup: null,
         RootURL: '',
-        KickedOutMessage: 'You have logged in from another session or your login session has expired!',
-        ReCheckInterval: 5000
+        ReCheckInterval: null
+    };
+
+    var popupElements = {
+        divPopupExpiredSession: null,
+        btnOk: null,
+        popupType: 0,
+        divErrorSuccessMsg: null
+    };
+
+    var cacheDOMElements = function () {
+        domElements.divPopupExpiredSession = $('#divPopupExpiredSession').clone();
+        domElements.divPopup = $('#divPopup');
+
+    };
+
+    var cachePopupElements = function () {
+        popupElements.divPopupExpiredSession = $("#divPopupExpiredSession", domElements.divPopup);
+        popupElements.btnOk = $('#btnOk', domElements.divPopup);
     };
 
     var initializeData = function () {
-        cachedElements.AllowReCheckIn = $('#AllowReCheckIn').val() === 'True';
-        cachedElements.RootURL = location.protocol + '//' + location.host + $('#RootURL').val();
-        cachedElements.HeadlineMsgBox = $.msgbox({
-            message: '',
-            type: 'err',
-            modal: false,
-            position: ['top:130', 'center'],
-            theme: '',
-            zIndex: 9999,
-            duration: 2000,
-            useAnimation: false,
-            beforeClose: function () {
-                window.location.href = cachedElements.RootURL + 'User/Login/LogOut';
-            }
-        });
+        domElements.RootURL = location.protocol + '//' + location.host + $('#RootURL').val();
+        domElements.ReCheckInterval = 60000 //1mins
+        domElements.AllowReCheckIn = $('#AllowReCheckIn').val() === 'True';
+        cacheDOMElements();
     };
 
     var reCheckIn = function () {
         $.ajax({
-            url: cachedElements.RootURL + 'User/Login/RecheckLogin',
+            url: domElements.RootURL + 'User/Login/RecheckLogin',
             type: 'POST',
             dataType: 'json',
             success: function (result) {
-                if (result === '1') {
-                    cachedElements.HeadlineMsgBox.showInfo(cachedElements.KickedOutMessage, { closeBtn: false });
+                if (result.IsKickedOut == "1") {
+                    createExpiredForm();
                 }
-                if (result === '-1') {
+                else if (result.IsKickedOut == "-1") {
                     window.location.href = cachedElements.RootURL + 'User/Common/Offline';
                 }
             }
         });
     };
 
+    var createExpiredForm = function () {
+        domElements.divPopupExpiredSession.removeAttr('hidden');
+
+        var form = domElements.divPopupExpiredSession.clone();
+
+        //common.CloseMsgBox();
+        //common.Modal("", form);
+
+        domElements.divPopup.html(form).dialog({
+            width: 'auto',
+            modal: true,
+            position: ['center', 160],
+            title: ""
+        });
+
+        domElements.divPopup.dialog("widget").find(".ui-dialog-titlebar-close").hide();
+
+        cachePopupElements();
+
+        bindExpiredSessionPopupEvent();
+    };
+
+    var bindExpiredSessionPopupEvent = function () {
+        popupElements.btnOk.click(function () {
+            window.location.href = domElements.RootURL + 'User/Login/LogOut';
+        });
+    };
+
     $this.Initialize = function () {
         initializeData();
 
-        if (cachedElements.AllowReCheckIn) {
-            setInterval(reCheckIn, cachedElements.ReCheckInterval);
+        if (domElements.AllowReCheckIn) {
+            reCheckIn();
+            setInterval(reCheckIn, domElements.ReCheckInterval);
         }
     };
 };
