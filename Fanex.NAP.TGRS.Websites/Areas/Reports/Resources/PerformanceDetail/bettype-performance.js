@@ -15,6 +15,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
     var urls = {
         GetBetTypePerformance: common.ResolveRootUrl('PerformanceDetail/GetBetTypePerformance'),
         ExportBetTypePerformance: common.ResolveRootUrl('PerformanceDetail/ExportBetTypePerformance'),
+        ExportBetChoicePerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/ExportBetChoicePerformanceOfBetType'),
+        ExportLeaguePerformanceOfBetChoice: common.ResolveRootUrl('PerformanceDetail/ExportLeaguePerformanceOfBetChoice'),
         GetTraderPerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/GetTraderPerformanceOfBetType'),
         GetMatchPerformanceOfBetTypeTrader: common.ResolveRootUrl('PerformanceDetail/GetMatchPerformanceOfBetTypeTrader'),
         GetLeaguePerformanceOfBetType: common.ResolveRootUrl('PerformanceDetail/GetLeaguePerformanceOfBetType'),
@@ -74,8 +76,35 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         BetTypeBMFrom: null,
         BetTypeBMTo: null,
         Turnover: null,
-        WinLoss: null
+        WinLoss: null,
+        IsVirtual: null,
+        IsReal: null        
     };
+
+    var betChoicePerformanceOfBetTypeParams = {
+        IsLive: null,
+        BetType: null,
+        FromDate: null,
+        ToDate: null,
+        LeagueGroupIds: null,
+        LeagueName: null,
+        IsVirtual: null,
+        IsReal: null
+    };
+
+    var leaguePerformanceOfBetChoiceParams = {
+        IsLive: null,
+        BetType: null,
+        BetChoice: null,
+        FromDate: null,
+        ToDate: null,
+        LeagueGroupIds: null,
+        LeagueName: null,
+        BetTeam: null,
+        Oddsspread: null,
+        IsFMBetType: null
+    };
+
     var cachedData = {
         MatchPerformance: null,
         GrandTotal: null,
@@ -755,16 +784,24 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         common.DownloadFile(urls.ExportBetTypePerformance, parameters);
     };
 
+    var exportBetChoicePerformanceOfBetType = function () {
+        common.DownloadFile(urls.ExportBetChoicePerformanceOfBetType, betChoicePerformanceOfBetTypeParams);
+    };
+
+    var exportLeaguePerformanceOfBetChoice = function () {
+        common.DownloadFile(urls.ExportLeaguePerformanceOfBetChoice, leaguePerformanceOfBetChoiceParams);
+    };
+
     // Get betchoice performance on a specific bet type.
-    var getBetChoicePerformanceReport = function (betTypeId, betTypeName, isLive) {
-        var betChoicePerformance = {
-            IsLive: isLive,
-            BetType: betTypeId,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate,
-            LeagueGroupIds: parameters.LeagueGroupIds,
-            LeagueName: parameters.LeagueName
-        };
+    var getBetChoicePerformanceReport = function (betTypeId, betTypeName, isLive) {      
+        betChoicePerformanceOfBetTypeParams.IsLive = isLive;
+        betChoicePerformanceOfBetTypeParams.BetType = betTypeId;
+        betChoicePerformanceOfBetTypeParams.FromDate = parameters.FromDate;
+        betChoicePerformanceOfBetTypeParams.ToDate = parameters.ToDate;
+        betChoicePerformanceOfBetTypeParams.LeagueGroupIds = parameters.LeagueGroupIds;
+        betChoicePerformanceOfBetTypeParams.LeagueName = parameters.LeagueName;
+        betChoicePerformanceOfBetTypeParams.IsVirtual = isVirtualPerformancePermission;
+        betChoicePerformanceOfBetTypeParams.IsReal = isRealPerformancePermission;
 
         common.DisableInput();
         $.ajax({
@@ -772,7 +809,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             url: urls.GetBetChoicePerformanceOfBetType,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(betChoicePerformance),
+            data: JSON.stringify(betChoicePerformanceOfBetTypeParams),
             success: function (result) {
                 renderBetChoicePerformanceGrid(result, betTypeId, betTypeName, isLive);
             },
@@ -798,6 +835,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportBetChoicePerformanceOfBetType();
+                },
                 text: titleFormat.format(labels.BetTypePerformance, isLive == 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName)
             },
             sortOption: {
@@ -1922,19 +1963,17 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         });
     }
 
-    var getLeagueByBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption) {
-        var leaguePerformance = {
-            IsLive: isLive,
-            BetType: betTypeId,
-            BetChoice: betChoice,
-            FromDate: parameters.FromDate,
-            ToDate: parameters.ToDate,
-            LeagueGroupIds: parameters.LeagueGroupIds,
-            LeagueName: parameters.LeagueName,
-            BetTeam: betTeam,
-            Oddsspread: oddsspread,
-            IsFMBetType: isFMBetType
-        };
+    var getLeagueByBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice, betTeam, oddsspread, isFMBetType, betOption) {      
+        leaguePerformanceOfBetChoiceParams.IsLive = isLive;
+        leaguePerformanceOfBetChoiceParams.BetType = betTypeId;
+        leaguePerformanceOfBetChoiceParams.BetChoice = betChoice;
+        leaguePerformanceOfBetChoiceParams.FromDate = parameters.FromDate;
+        leaguePerformanceOfBetChoiceParams.ToDate = parameters.ToDate;
+        leaguePerformanceOfBetChoiceParams.LeagueGroupIds = parameters.LeagueGroupIds;
+        leaguePerformanceOfBetChoiceParams.LeagueName = parameters.LeagueName;
+        leaguePerformanceOfBetChoiceParams.BetTeam = betTeam;
+        leaguePerformanceOfBetChoiceParams.Oddsspread = oddsspread;
+        leaguePerformanceOfBetChoiceParams.IsFMBetType = isFMBetType;
 
         common.DisableInput();
         $.ajax({
@@ -1942,7 +1981,7 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             url: urls.GetLeaguePerformanceOfBetChoice,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(leaguePerformance),
+            data: JSON.stringify(leaguePerformanceOfBetChoiceParams),
             success: function (result) {
                 renderLeagueOfBetChoicePerformanceGrid(result, betTypeId, betTypeName, betOption, isLive);
             },
@@ -1981,6 +2020,10 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportLeaguePerformanceOfBetChoice();
+                },
                 text: titleFormat.format(labels.BetTypePerformance, isLive === 'true' ? labels.MarketLive : labels.MarketNonLive, betTypeName, betOption)
             },
             sortOption: {

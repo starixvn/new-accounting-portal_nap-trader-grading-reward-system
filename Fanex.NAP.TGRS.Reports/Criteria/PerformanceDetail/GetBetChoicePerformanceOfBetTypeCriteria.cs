@@ -34,6 +34,12 @@
 
         public string LeagueName { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsReal { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsVirtual { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Rpt_PerformanceDetail_Bettype_BetChoice";

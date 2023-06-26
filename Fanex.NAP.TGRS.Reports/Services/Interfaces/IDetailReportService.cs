@@ -260,5 +260,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <param name="templatePath">Path to Excel template file.</param>
         void ExportBetTypePerformance(int userid, GetBetTypePerformanceCriteria criteria, string templatePath);
+
+        void ExportBetChoicePerformanceOfBetType(int userid, GetBetChoicePerformanceOfBetTypeCriteria criteria, string templatePath);
+
+        void ExportLeaguePerformanceOfBetChoice(int userid, GetLeaguePerformanceOfBetChoiceCriteria criteria, string templatePath);
+
     }
 }

@@ -6,6 +6,8 @@
     [Serializable]
     public class BetTypeBetChoiceItem
     {
+        public BetTypeBetChoiceItem() { }
+
         public BetTypeBetChoiceItem(BetTypeBetChoicePerformanceInfo info)
         {          
             this.BetChoice = info.BetChoice;

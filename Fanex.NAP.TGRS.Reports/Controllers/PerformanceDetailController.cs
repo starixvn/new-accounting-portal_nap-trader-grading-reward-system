@@ -43,6 +43,10 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         private const string TeamPerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\TeamPerformanceFullMeasure.xls";
         private const string BetTypePerformanceHalfMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceHalfMeasure.xls";
         private const string BetTypePerformanceFullMeasureDetail = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetTypePerformanceFullMeasure.xls";
+        private const string BetChoicePerformanceOfBetTypeFullMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetChoicePerformanceOfBetTypeFullMeasure.xls";
+        private const string BetChoicePerformanceOfBetTypeHalfMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\BetChoicePerformanceOfBetTypeHalfMeasure.xls";
+        private const string LeaguePerformanceOfBetChoiceFullMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceOfBetChoiceFullMeasure.xls";
+        private const string LeaguePerformanceOfBetChoiceHalfMeasure = @"~\Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceOfBetChoiceHalfMeasure.xls";
 
         private readonly IDetailReportService _detailReportService;
 
@@ -791,6 +795,19 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             return jsonResult;
         }
 
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportLeaguePerformanceOfBetChoice(GetLeaguePerformanceOfBetChoiceCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                    ? Server.MapPath(LeaguePerformanceOfBetChoiceFullMeasure)
+                    : Server.MapPath(LeaguePerformanceOfBetChoiceHalfMeasure);
+
+            this._detailReportService.ExportLeaguePerformanceOfBetChoice(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetBetChoicePerformanceOfBetType(GetBetChoicePerformanceOfBetTypeCriteria criteria)
@@ -800,6 +817,19 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             var result = this._detailReportService.GetBetTypeBetChoicePerformance(criteria);
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
+        public ActionResult ExportBetChoicePerformanceOfBetType(GetBetChoicePerformanceOfBetTypeCriteria criteria)
+        {
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            string templatePath = (criteria.IsReal && criteria.IsVirtual)
+                    ? Server.MapPath(BetChoicePerformanceOfBetTypeFullMeasure)
+                    : Server.MapPath(BetChoicePerformanceOfBetTypeHalfMeasure);
+
+            this._detailReportService.ExportBetChoicePerformanceOfBetType(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         [HttpPost]
@@ -938,7 +968,7 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
             this._detailReportService.ExportBetTypePerformance(CurrentSession.UserId, criteria, templatePath);
 
             return new EmptyResult();
-        }
+        }       
 
         #endregion Bet Type Performance
 

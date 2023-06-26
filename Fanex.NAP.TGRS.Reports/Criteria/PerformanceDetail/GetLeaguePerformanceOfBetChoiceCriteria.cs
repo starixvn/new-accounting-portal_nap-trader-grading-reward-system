@@ -42,6 +42,12 @@
 
         public string LeagueName { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsReal { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool IsVirtual { get; set; }
+
         /// <summary>
         /// Gets Setting Key.
         /// </summary>
