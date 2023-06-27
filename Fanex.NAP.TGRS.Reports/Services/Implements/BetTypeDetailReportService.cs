@@ -11,7 +11,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;    
+    using System.Linq;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.TGRS.Core.BaseClasses;
     using Fanex.NAP.TGRS.Core.ExcelUtility;
@@ -71,7 +71,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                               .ThenByDescending(c => c.IsLive)
                               .Select(c => new BetTypePerformanceInfo
                               {
-                                  BetType = c.BetType,                                 
+                                  BetType = c.BetType,
                                   TypeName = c.TypeName,
                                   TraderCount = c.TraderCount,
                                   LeagueCount = c.LeagueCount,
@@ -82,7 +82,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                                   TurnoverReal = c.TurnoverReal,
                                   WinLossReal = c.WinLossReal,
                                   MarginReal = c.MarginReal,
-                                  BetCount = c.BetCount,                                  
+                                  BetCount = c.BetCount,
                                   IsLive = c.IsLive,
                                   FlagForViewReport = betTypeData.Count(b => b.BetType == c.BetType)
                               });
@@ -101,7 +101,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             if (traderData != null && traderData.Any())
             {
                 traderPerformance.AddTraderList(traderData, criteria.IsLive);
-               
+
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
 
                 traderPerformance.Total.MarginReal = CalculateTotalMargin(traderPerformance.Total.WinLossReal, traderPerformance.Total.TurnoverReal);
@@ -162,7 +162,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);                
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);
             }
 
             return leaguePerformance;
@@ -198,13 +198,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
             if (traderData != null && traderData.Any())
             {
                 traderPerformance.AddTraderList(traderData, criteria.IsLive);
-                
+
                 traderPerformance.Total.Margin = CalculateTotalMargin(traderPerformance.Total.WinLoss, traderPerformance.Total.Turnover);
                 traderPerformance.Total.MarginReal = CalculateTotalMargin(traderPerformance.Total.WinLossReal, traderPerformance.Total.TurnoverReal);
             }
 
             return traderPerformance;
-        }       
+        }
 
         public BetTypeBetChoiceList GetBetChoicePerformanceOfBetTypeLeague(GetBetChociePerformanceOfBetTypeLeagueCriteria criteria)
         {
@@ -221,7 +221,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     {
                         betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;
                         betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;
-                    }                    
+                    }
                     betTypeBetChoiceList.AddItem(betChoiceData);
                 }
             }
@@ -270,7 +270,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             result = result ?? new List<IntervalBetChoicePerformanceInfo>();
 
             return result;
-        }        
+        }
 
         public IEnumerable<IntervalBetChoicePerformanceInfo> GetIntervalPerformanceOfBetTypeBetChoice(GetIntervalPerformanceOfBetTypeBetChoiceCriteria criteria)
         {
@@ -279,13 +279,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
             result = result ?? new List<IntervalBetChoicePerformanceInfo>();
 
             return result;
-        }       
+        }
 
         public PointHDPPerformanceList GetPointHDPPerformanceOfBetTypeBetChoice(GetPointHDPPerformanceOfBetTypeBetChoiceCriteria criteria)
         {
             var pointHDPList = new PointHDPPerformanceList();
 
-            var pointHDPData = this.GetData<PointHDPPerformanceInfo>(criteria);            
+            var pointHDPData = this.GetData<PointHDPPerformanceInfo>(criteria);
 
             if (pointHDPData != null && pointHDPData.Any())
             {
@@ -307,7 +307,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             {
                 leaguePerformance.AddLeagueList(leagueData, criteria.IsLive);
                 leaguePerformance.Total.Margin = CalculateTotalMargin(leaguePerformance.Total.WinLoss, leaguePerformance.Total.Turnover);
-                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);                
+                leaguePerformance.Total.MarginReal = CalculateTotalMargin(leaguePerformance.Total.WinLossReal, leaguePerformance.Total.TurnoverReal);
             }
 
             return leaguePerformance;
@@ -342,9 +342,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
         {
             BetTypePerformanceList betTypeData = SessionManager.Get<BetTypePerformanceList>(BetTypePerformanceDetailReportSessionKey);
 
-            if ((betTypeData != null) 
-                && (betTypeData.ItemByOrderList.Count > 0 
-                    || betTypeData.ItemLiveList.Count > 0 
+            if ((betTypeData != null)
+                && (betTypeData.ItemByOrderList.Count > 0
+                    || betTypeData.ItemLiveList.Count > 0
                     || betTypeData.ItemNonLiveList.Count > 0))
             {
                 string reportName = string.Format(
@@ -357,7 +357,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 writer.CopyRows(0, 1);
 
                 FilterBlock(userId, criteria, ref writer);
-                
+
                 var rowHeader = writer.CopyRows(3, 2);
 
                 if (!criteria.IsVirtual && criteria.IsReal)
@@ -365,10 +365,10 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     var cellHeader = rowHeader.GetCell(7);
 
                     cellHeader.SetCellValue("Real");
-                }                
+                }
 
                 FillRowData(betTypeData, criteria, ref writer);
-                
+
                 if (criteria.IsReal && criteria.IsVirtual)
                     writer.SyncColumnsWidth(15);
                 else
@@ -376,7 +376,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 writer.Render();
             }
-        }      
+        }
 
         /// <summary>
         /// Fills the content row.
@@ -413,13 +413,13 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     item.NoOfTraders,
                     item.NoOfLeagues,
                     item.NoOfMatches,
-                    item.BetCount,                 
+                    item.BetCount,
                 };
 
                 if (criteria.IsVirtual)
                 {
                     record.AddRange(new object[] {
-                        item.Turnover,                        
+                        item.Turnover,
                         item.NoOfMatches != 0 ? (object)(item.Turnover / item.NoOfMatches) : ViewLang.NA,
                         item.WinLoss,
                         (object)item.Margin ?? ViewLang.NA
@@ -429,12 +429,12 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 if (criteria.IsReal)
                 {
                     record.AddRange(new object[] {
-                        item.TurnoverReal,                        
+                        item.TurnoverReal,
                         item.NoOfMatches != 0 ? (object)(item.TurnoverReal / item.NoOfMatches) : ViewLang.NA,
                         item.WinLossReal,
                         (object)item.MarginReal ?? ViewLang.NA
                     });
-                }            
+                }
 
                 writer.WriteRow(styleIndex, record.ToArray());
             }
@@ -444,7 +444,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 var totalRecord = CreateRecord(ref writer, data.TotalItemLive, criteria, ViewLang.GrandTotal, true);
 
                 writer.WriteRow(7, totalRecord.ToArray());
-                
+
                 totalRecord = CreateRecord(ref writer, data.TotalItemNonLive, criteria, null, false);
 
                 writer.WriteRow(8, totalRecord.ToArray());
@@ -467,7 +467,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                     total.NoOfTraders,
                     total.NoOfLeagues,
                     total.NoOfMatches,
-                    total.BetCount,                  
+                    total.BetCount,
                 };
 
             if (criteria.IsVirtual)
@@ -508,7 +508,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
             List<BetTypeItem> betTypes = this.GetBetTypes(userid, permission).ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);          
+            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.Bettypes);
             string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
             var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
 
@@ -516,7 +516,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
-          
+
             if (criteria.IsVirtual)
             {
                 string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
@@ -533,8 +533,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealTurnover, boldFont, realTurnoverString, normalFont, "\n");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealWinLoss, boldFont, realWinlostString, normalFont, "\n");
-            }            
-                                             
+            }
+
             if (criteria.IsVirtual && criteria.MarginFrom != null || criteria.MarginTo != null)
             {
                 var marginString = GenerateMarginString(criteria.MarginFrom, criteria.MarginTo);
@@ -559,7 +559,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         }
 
         private string GenerateMarginString(decimal? marginFrom, decimal? marginTo)
-        {         
+        {
             var marginFromString = marginFrom != null ? marginFrom.ToString() : MinPercentString;
             var marginToString = marginTo != null ? marginTo.ToString() : MaxPercentString;
 
@@ -584,9 +584,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                     if (betChoiceOfBetTypeInfo != null && betChoiceOfBetTypeInfo.Any())
                     {
-                        betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;                        
-                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;                        
-                    }                    
+                        betTypeBetChoiceList.IsFMBetType = betChoiceOfBetTypeInfo.ToList()[0].IsFMBetType;
+                        betTypeBetChoiceList.IsBetChoiceDetail = betChoiceOfBetTypeInfo.ToList()[0].IsBetChoiceDetail;
+                    }
                     betTypeBetChoiceList.AddItem(betChoiceData);
 
                     if (betChoiceData != null && betChoiceData.Any())
@@ -622,16 +622,30 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (betChoiceData != null && betChoiceData.ItemList.Count > 0)
             {
+                var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
+                var betTypes = this.GetBetTypes(userid, permission).ToList();
+                string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetType.ToString());
+                string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+                var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
+
                 string reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
-                                    ViewLang.BetTypeExcelFile,
+                                    $"{betTypeString}_{marketString}",
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
                                     criteria.ToDate.ToShortFormatedDateForFileName());
                 var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.BetTypePerformance);
 
                 writer.CopyRows(0, 1);
 
-                FilterBlockBetChoiceOfBetType(userid, criteria, ref writer);
+                var filterBlockViewModel = new FilterBlockPerformanceDetail
+                {
+                    BetTypeName = betTypeString,
+                    LeagueGroupName = leagueGroupNameString,
+                    MarketName = marketString,
+                    FromDate = criteria.FromDate,
+                    ToDate = criteria.ToDate
+                };
+                FilterBlockPerformanceOfBetType(filterBlockViewModel, ref writer);
 
                 var rowHeader = writer.CopyRows(3, 2);
 
@@ -652,27 +666,21 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 writer.Render();
             }
 
-        }       
+        }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
-        private void FilterBlockBetChoiceOfBetType(int userid, GetBetChoicePerformanceOfBetTypeCriteria criteria, ref ExcelTemplateWriter writer)
+        private void FilterBlockPerformanceOfBetType(FilterBlockPerformanceDetail filterBlockViewModel, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
             IFont boldFont = writer.GetFont(11, 0);
             IFont normalFont = writer.GetFont(12, 0);
             var lineCount = 0;
 
-            var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
-            var betTypes = this.GetBetTypes(userid, permission).ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetType.ToString());
-            string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
-            var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
-
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, betTypeString, normalFont, "\n");
-            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, leagueGroupNameString, normalFont, "");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, filterBlockViewModel.MarketName, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, filterBlockViewModel.FromDate.ToShortFormatedDate(), normalFont, " - ");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, filterBlockViewModel.ToDate.ToShortFormatedDate(), normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, filterBlockViewModel.BetTypeName, normalFont, "\n");
+            AppendBlockContent(ref contentRender, ref lineCount, ViewLang.LeagueGroup, boldFont, filterBlockViewModel.LeagueGroupName, normalFont, "");
 
             IRichTextString contentRichTextString = contentRender.Render();
             IRichTextString[] contentRichTextArray = new IRichTextString[1];
@@ -682,8 +690,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         }
 
         private void FillRowDataBetChoiceOfBetType(BetTypeBetChoiceList data, GetBetChoicePerformanceOfBetTypeCriteria criteria, ref ExcelTemplateWriter writer)
-        {           
-            BetTypeBetChoiceItem item;           
+        {
+            BetTypeBetChoiceItem item;
 
             for (int i = 0; i < data.ItemList.Count; i++)
             {
@@ -694,9 +702,9 @@ namespace Fanex.NAP.TGRS.Reports.Services
                 var record = new List<object>
                 {
                     i + 1,
-                    item.BetChoice,              
+                    item.BetChoice,
                     item.LeagueCount,
-                    item.MatchCount,           
+                    item.MatchCount,
                     item.BetCount,
                 };
 
@@ -722,7 +730,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
                 writer.WriteRow(styleIndex, record.ToArray());
             }
-           
+
             var totalRecord = new List<object> { null, null, null, ViewLang.GrandTotal, data.Total.BetCount };
 
             if (criteria.IsVirtual)
@@ -750,7 +758,128 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         public void ExportLeaguePerformanceOfBetChoice(int userid, GetLeaguePerformanceOfBetChoiceCriteria criteria, string templatePath)
         {
+            var leaguePerformance = SessionManager.Get<LeaguePerformanceList>(LeaguePerformanceOfBetChoiceReportSessionKey);
+            if (leaguePerformance == null)
+            {
+                return;
+            }
 
+            var itemList = criteria.IsLive ? leaguePerformance.ItemLiveList : leaguePerformance.ItemNonLiveList;
+            if (itemList.Count > 0)
+            {
+                var permission = PermissionCheck == null ? Models.Permission.BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
+                var betTypes = this.GetBetTypes(userid, permission).ToList();
+                string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetType.ToString());
+                string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+                var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
+
+                string reportName = string.Format(
+                                   ViewLang.PerformanceDetailFileName,
+                                   $"{betTypeString}_{marketString}_{criteria.BetChoice}",
+                                   criteria.FromDate.ToShortFormatedDateForFileName(),
+                                   criteria.ToDate.ToShortFormatedDateForFileName());
+                var writer = new ExcelTemplateWriter(templatePath, reportName, ViewLang.LeaguePerformance);
+
+                writer.CopyRows(0, 1);
+
+                var filterBlockViewModel = new FilterBlockPerformanceDetail
+                {
+                    BetTypeName = betTypeString,
+                    LeagueGroupName = leagueGroupNameString,
+                    MarketName = marketString,
+                    FromDate = criteria.FromDate,
+                    ToDate = criteria.ToDate
+                };
+
+                FilterBlockPerformanceOfBetType(filterBlockViewModel, ref writer);
+
+                var rowHeader = writer.CopyRows(3, 2);
+
+                if (!criteria.IsVirtual && criteria.IsReal)
+                {
+                    var cellHeader = rowHeader.GetCell(5);
+
+                    cellHeader.SetCellValue("Real");
+                }
+
+                FillRowDataLeagueOfBetType(leaguePerformance, criteria, ref writer);
+
+                if (criteria.IsReal && criteria.IsVirtual)
+                    writer.SyncColumnsWidth(12);
+                else
+                    writer.SyncColumnsWidth(9);
+
+                writer.Render();
+            }
+        }
+
+        private void FillRowDataLeagueOfBetType(LeaguePerformanceList data, GetLeaguePerformanceOfBetChoiceCriteria criteria, ref ExcelTemplateWriter writer)
+        {
+            var item = default(LeaguePerformanceItem);
+            var itemList = criteria.IsLive ? data.ItemLiveList : data.ItemNonLiveList;
+
+
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                item = itemList[i];
+
+                int styleIndex = i % 2 == 0 ? 5 : 6;
+
+                var record = new List<object>
+                {
+                    i + 1,
+                    item.LeagueName,
+                    item.LeagueGroupName,
+                    item.NoOfMatches,
+                    item.BetCount,
+                };
+
+                if (criteria.IsVirtual)
+                {
+                    record.AddRange(new object[] {
+                        item.Turnover,
+                        item.BetCount != 0 ? (object)(item.Turnover / item.NoOfMatches) : ViewLang.NA,
+                        item.WinLoss,
+                        (object)item.Margin ?? ViewLang.NA
+                    });
+                }
+
+                if (criteria.IsReal)
+                {
+                    record.AddRange(new object[] {
+                        item.TurnoverReal,
+                        item.BetCount != 0 ? (object)(item.TurnoverReal / item.NoOfMatches) : ViewLang.NA,
+                        item.WinLossReal,
+                        (object)item.MarginReal ?? ViewLang.NA
+                    });
+                }
+
+                writer.WriteRow(styleIndex, record.ToArray());
+            }
+
+            var totalRecord = new List<object> { ViewLang.GrandTotal, null, null, data.Total.NoOfMatches, data.Total.BetCount };
+
+            if (criteria.IsVirtual)
+            {
+                totalRecord.AddRange(new object[] {
+                        data.Total.Turnover,
+                        data.Total.BetCount != 0 ? (object)(data.Total.Turnover / data.Total.NoOfMatches) : ViewLang.NA,
+                        data.Total.WinLoss,
+                        (object)data.Total.Margin ?? ViewLang.NA
+                    });
+            }
+
+            if (criteria.IsReal)
+            {
+                totalRecord.AddRange(new object[] {
+                        data.Total.TurnoverReal,
+                        data.Total.BetCount != 0 ? (object)(data.Total.TurnoverReal / data.Total.NoOfMatches) : ViewLang.NA,
+                        data.Total.WinLossReal,
+                        (object)data.Total.MarginReal ?? ViewLang.NA
+                    });
+            }
+
+            writer.WriteRow(7, totalRecord.ToArray());
         }
 
     }

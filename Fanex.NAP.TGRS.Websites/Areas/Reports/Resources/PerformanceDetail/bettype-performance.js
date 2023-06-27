@@ -102,7 +102,9 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         LeagueName: null,
         BetTeam: null,
         Oddsspread: null,
-        IsFMBetType: null
+        IsFMBetType: null,
+        IsVirtual: null,
+        IsReal: null
     };
 
     var cachedData = {
@@ -1974,6 +1976,8 @@ Fanex.NAP.TGRS.PerformanceDetail.BetTypePerformance = function () {
         leaguePerformanceOfBetChoiceParams.BetTeam = betTeam;
         leaguePerformanceOfBetChoiceParams.Oddsspread = oddsspread;
         leaguePerformanceOfBetChoiceParams.IsFMBetType = isFMBetType;
+        leaguePerformanceOfBetChoiceParams.IsVirtual = isVirtualPerformancePermission;
+        leaguePerformanceOfBetChoiceParams.IsReal = isRealPerformancePermission;
 
         common.DisableInput();
         $.ajax({
