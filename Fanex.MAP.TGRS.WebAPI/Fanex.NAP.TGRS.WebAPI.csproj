@@ -401,6 +401,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutoTradingController.cs" />
+    <Compile Include="Controllers\LeaguePerformanceController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TraderController.cs" />
     <Compile Include="Criteria\AutoTrading\AutoTradingPerformanceCriteria.cs" />
@@ -411,6 +412,7 @@
     <Compile Include="Criteria\GetMultipleMatchesCriteria.cs" />
     <Compile Include="Criteria\GetPerformanceDetailsCriteria.cs" />
     <Compile Include="Criteria\AutoTrading\GetAutoTradingMonthlyPerformanceCriteria.cs" />
+    <Compile Include="Criteria\LeaguePerformance\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -436,11 +438,14 @@
     <Compile Include="Model\HtmlModel\AutoTrading\AutoTradingRangeHeader.cs" />
     <Compile Include="Model\HtmlModel\AutoTrading\AutoTradingStyleCss.cs" />
     <Compile Include="Model\HtmlModel\AutoTrading\IAutoTradingHtmlWriter.cs" />
+    <Compile Include="Model\LeaguePerformance\LeaguePerformanceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AutoTradingPerformanceService.cs" />
     <Compile Include="Service\IAutoTradingPerformanceService.cs" />
+    <Compile Include="Service\LeaguePerformanceService.cs" />
     <Compile Include="Service\TraderPerformanceService.cs" />
     <Compile Include="Utilities\DataService.cs" />
+    <Compile Include="ViewModel\GetLeaguePerformanceParam.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPTGRS_WebAPI_SPNames.xml">
@@ -464,6 +469,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AutoTrading\" />
+    <Folder Include="Views\LeaguePerformance\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
