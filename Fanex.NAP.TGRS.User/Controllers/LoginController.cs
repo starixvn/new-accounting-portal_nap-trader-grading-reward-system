@@ -147,7 +147,7 @@ namespace Fanex.NAP.TGRS.User.Controllers
 
                     if (password == hashPassword)
                     {
-                        var group = _groupService.Get(user.GroupId);
+                        var group = user.GroupId == 0 ? null : _groupService.Get(user.GroupId);
                         var siteLevelList = this._userService.GetSiteLevel(user.Id, Environment); // gets all sites of logging-in user
 
                         ClearToken();
