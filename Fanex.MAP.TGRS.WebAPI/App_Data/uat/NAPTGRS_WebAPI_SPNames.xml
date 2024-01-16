@@ -11,5 +11,9 @@
     <Setting Key="TGRS_Rpt_RobotTrading_Event" SpName="TGRS_Rpt_RobotTrading_Event_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
     <Setting Key="TGRS_Rpt_RobotTrading_Event_League_Detail" SpName="TGRS_Rpt_RobotTrading_Event_League_Detail_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
   </Function>
+
+	<Function Name="LeaguePerformance">
+		<Setting Key="TGRS_API_LeaguePerformance_Get" SpName="TGRS_API_LeaguePerformance_Get_xtest" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
+	</Function>
   
 </Functions>
