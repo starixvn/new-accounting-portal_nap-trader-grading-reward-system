@@ -11,6 +11,8 @@
 namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -206,8 +208,25 @@ namespace Fanex.NAP.TGRS.Reports.Controllers
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
-            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-            MatchPerformanceGroup matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);
+            var matchPerformance = default(MatchPerformanceGroup);
+
+            try
+            {
+                criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+
+                matchPerformance = this._detailReportService.GetMatchPerformanceOfLeagueTrader(criteria);                
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                   .AddMessage("Get Match Performance Of League Trader Error: " + ex.Message + ex.StackTrace + "\n"
+                    + ex.InnerException.Message + ex.InnerException.Source + ex.InnerException
+                    + ex.InnerException.StackTrace)
+                   .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
             JsonResult jsonResult = Json(matchPerformance);
             jsonResult.MaxJsonLength = int.MaxValue;
 

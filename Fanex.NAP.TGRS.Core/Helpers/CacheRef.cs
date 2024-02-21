@@ -69,7 +69,8 @@ namespace Fanex.NAP.TGRS.Core.Helpers
         /// <returns>Team name.</returns>
         public static string GetTeamName(object teamId)
         {
-            return refService.GetTeamName(Converter.ToString2(teamId), TWLang("en-US"), string.Empty);
+            //return refService.GetTeamName(Converter.ToString2(teamId), TWLang("en"));    
+            return refService.GetTeamName(teamId.ToString(), "en");
         }
 
         /// <summary>
