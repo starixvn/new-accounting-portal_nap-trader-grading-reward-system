@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.Core", "Fanex.NAP.TGRS.Core\Fanex.NAP.TGRS.Core.csproj", "{C4051C15-1655-42E1-A071-A943BC29B37C}"
 EndProject
@@ -36,10 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D6BA9B
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.DataReportService", "Fanex.NAP.TGRS.DataReportService\Fanex.NAP.TGRS.DataReportService.csproj", "{78305834-C570-4E46-8A92-09C93783AEEE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.DataReportService.Console", "Fanex.NAP.TGRS.DataReportService.Console\Fanex.NAP.TGRS.DataReportService.Console.csproj", "{4E2B35B6-4A3E-4750-A16A-282A8D3BA998}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.WebAPI", "Fanex.MAP.TGRS.WebAPI\Fanex.NAP.TGRS.WebAPI.csproj", "{CBAC3B6A-4954-4F4C-86A4-AC29550C5CCC}"
 EndProject
@@ -81,14 +77,6 @@ Global
 		{317F1C96-9E2E-49E4-A141-413907D30E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{317F1C96-9E2E-49E4-A141-413907D30E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{317F1C96-9E2E-49E4-A141-413907D30E52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78305834-C570-4E46-8A92-09C93783AEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78305834-C570-4E46-8A92-09C93783AEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78305834-C570-4E46-8A92-09C93783AEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78305834-C570-4E46-8A92-09C93783AEEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E2B35B6-4A3E-4750-A16A-282A8D3BA998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E2B35B6-4A3E-4750-A16A-282A8D3BA998}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E2B35B6-4A3E-4750-A16A-282A8D3BA998}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E2B35B6-4A3E-4750-A16A-282A8D3BA998}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBAC3B6A-4954-4F4C-86A4-AC29550C5CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBAC3B6A-4954-4F4C-86A4-AC29550C5CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBAC3B6A-4954-4F4C-86A4-AC29550C5CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU

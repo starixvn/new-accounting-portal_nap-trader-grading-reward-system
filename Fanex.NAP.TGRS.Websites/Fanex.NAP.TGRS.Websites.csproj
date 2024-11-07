@@ -363,34 +363,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Data\MNL\NAPCommonSpNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\MNL\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\dev\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\local\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\local\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\PROCLOUD\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\PROCLOUD\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\prod\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\prod\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\master\NAPTGRSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\uat\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\uat\NAPTGRSSPNames.xml">
+    <Content Include="App_Data\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\NAPTGRSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Configuration\Resources\BenchmarkManagement\page-manager.js" />
@@ -826,12 +800,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Web.AppSettings.PROCLOUD.config" />
     <Content Include="Web.ConnectionString.PROCLOUD.config" />
@@ -939,46 +907,36 @@
     <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
-    <Content Include="Web.local.config">
+    <Content Include="Web.LOCAL.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.prod.config">
+    <Content Include="Web.PROD.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.uat.config">
+    <Content Include="Web.UATNEW.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.master.config" />
-    <Content Include="Web.ConnectionString.local.config">
+    <Content Include="Web.ConnectionString.LOCAL.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.ConnectionString.prod.config">
+    <Content Include="Web.ConnectionString.PROD.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.uat.config">
+    <Content Include="Web.ConnectionString.UATNEW.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.ConnectionString.master.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.local.config">
+    <Content Include="Web.AppSettings.LOCAL.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.uat.config">
+    <Content Include="Web.AppSettings.UATNEW.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.master.config">
+    <Content Include="Web.AppSettings.PROD.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.prod.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.AppSettings.backupMNL.config" />
-    <Content Include="Web.ConnectionString.backupMNL.config" />
     <None Include="Content\Themes\Fonts\HmnHiRzvcnQr8CjBje6GQhTbgVql8nDJpwnrE27mub0.woff2" />
     <None Include="Content\Themes\Fonts\VK2oK8L4CJesxwY5dF3zxeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
     <None Include="Content\Themes\Fonts\Y82YH_MJJWnsH2yUA5AuYeL2WfuF7Qc3ANwCvwl0TnA.woff2" />
