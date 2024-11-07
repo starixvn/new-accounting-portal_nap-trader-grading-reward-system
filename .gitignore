@@ -34,3 +34,4 @@ packages
 */bin/*
 */StyleCop.Cache
 .vs/*
+/Fanex.NAP.TGRS.Websites/App_Data/user-activity-detail-*.json
