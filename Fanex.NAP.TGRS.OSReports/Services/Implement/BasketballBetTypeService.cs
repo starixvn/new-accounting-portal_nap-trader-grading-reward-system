@@ -116,14 +116,8 @@
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
 
-                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
-
-                if (!string.IsNullOrEmpty(bettypeQuarters))
-                {
-                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
-
-                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
-                }
+                betChoiceList.IsBetTypeQuarter = AppSettings.BasketballBettypeQuarter.Any(x => x == criteria.Bettype);
+                betChoiceList.IsBetTypeHdp = AppSettings.BasketballBettypeHdp.Any(x => x == criteria.Bettype);
             }
 
             return betChoiceList;
@@ -292,15 +286,8 @@
                 }
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
-
-                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
-
-                if (!string.IsNullOrEmpty(bettypeQuarters))
-                {
-                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
-
-                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
-                }
+                betChoiceList.IsBetTypeQuarter = AppSettings.BasketballBettypeQuarter.Any(x => x == criteria.Bettype);
+                betChoiceList.IsBetTypeHdp = AppSettings.BasketballBettypeHdp.Any(x => x == criteria.Bettype);
             }
 
             return betChoiceList;

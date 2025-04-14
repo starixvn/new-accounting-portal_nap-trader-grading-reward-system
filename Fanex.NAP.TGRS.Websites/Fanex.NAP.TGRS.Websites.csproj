@@ -801,9 +801,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Web.AppSettings.PROCLOUD.config" />
-    <Content Include="Web.ConnectionString.PROCLOUD.config" />
-    <Content Include="Web.PROCLOUD.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

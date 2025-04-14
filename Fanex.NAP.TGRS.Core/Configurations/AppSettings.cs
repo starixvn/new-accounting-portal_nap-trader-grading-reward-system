@@ -145,18 +145,9 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             }
         }
 
-        public static string BasketballBettypeQuarter
-        {
-            get
-            {
-                if (basketballBettypeQuarter == null)
-                {
-                    basketballBettypeQuarter = GetValue("BasketballBettypeQuarter");
-                }
+        public static List<int> BasketballBettypeQuarter => new List<int> { 606, 607, 609, 610, 611, 612, 613, 614, 615, 616, 617, 627, 628, 629, 630, 631, 650 };
 
-                return basketballBettypeQuarter;
-            }
-        }
+        public static List<int> BasketballBettypeHdp => new List<int> { 401,402,403,404 };
 
         public static IEnumerable<string> SoccerBettypeTotalGoalMinute
         {
@@ -178,9 +169,9 @@ namespace Fanex.NAP.TGRS.Core.Configurations
             }
         }
 
-        public static bool IsManualSundayOfLastWeek 
+        public static bool IsManualSundayOfLastWeek
         {
-            get 
+            get
             {
                 return Converter.ToBool(GetValue("IsManualSundayOfLastWeek"));
             }
