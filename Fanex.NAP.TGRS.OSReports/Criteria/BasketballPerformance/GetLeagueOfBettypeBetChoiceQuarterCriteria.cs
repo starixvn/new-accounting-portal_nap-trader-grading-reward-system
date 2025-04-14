@@ -21,6 +21,8 @@
 
         public int LiveType { get; set; }
 
+        public decimal? Hdp { get; set; }
+
         public override string GetSettingKey()
         {
             return "TGRS_Basketball_Rpt_PerformanceDetail_Bettype_BetChoice_Quarter_League";

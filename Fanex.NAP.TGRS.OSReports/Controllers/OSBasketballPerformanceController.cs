@@ -60,6 +60,24 @@
         [HttpPost]
         public ActionResult GetQuarterOfBettypeBetChoice(GetQuarterOfBettypeBetChoiceCriteria criteria)
         {
+            if (criteria.IsHdp)
+            {
+                var hdpCriteria = new GetHdpOfBettypeBetChoiceCriteria
+                {
+                    BetChoice = criteria.BetChoice,
+                    Bettype = criteria.Bettype,
+                    FromDate = criteria.FromDate,
+                    LeagueGroupIds = criteria.LeagueGroupIds,
+                    LeagueName = criteria.LeagueName,
+                    LiveType = criteria.LiveType,
+                    ToDate = criteria.ToDate,
+                };
+
+                var hdp = _basketballBetTypeService.GetHdpOfBettypeBetChoice(hdpCriteria);
+
+                return Json(hdp, JsonRequestBehavior.AllowGet);
+            }
+
             var quarters = _basketballBetTypeService.GetQuarterOfBettypeBetChoice(criteria);
 
             return Json(quarters, JsonRequestBehavior.AllowGet);

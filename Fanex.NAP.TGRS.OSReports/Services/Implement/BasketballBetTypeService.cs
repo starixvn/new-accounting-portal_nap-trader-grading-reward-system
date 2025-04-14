@@ -140,7 +140,26 @@
             }
 
             return quarterList;
-        }       
+        }
+
+        public HdpOfBettypeBetChoiceList GetHdpOfBettypeBetChoice(GetHdpOfBettypeBetChoiceCriteria criteria)
+        {
+            var hdpList = new HdpOfBettypeBetChoiceList();
+
+            var hdpData = this.GetData<HdpOfBettypeBetChoiceInfo>(criteria);
+
+            if (hdpData != null && hdpData.Any())
+            {
+                foreach (var info in hdpData)
+                {
+                    hdpList.AddHdp(criteria.Bettype, info);
+                }
+
+                hdpList.CalculateMargin(hdpList.Total);
+            }
+
+            return hdpList;
+        }
 
         public LeagueOfBettypeBetChoiceQuarterList GetLeagueOfBettypeBetChoiceQuarter(GetLeagueOfBettypeBetChoiceQuarterCriteria criteria)
         {
