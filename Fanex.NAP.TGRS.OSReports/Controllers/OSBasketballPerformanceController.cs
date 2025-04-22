@@ -165,5 +165,20 @@
             return new EmptyResult();
         }
 
+        public ActionResult LeaguePerformance()
+        {
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.LeagueGroups = this._basketballBetTypeService.GetLeagueGroups();
+            ViewBag.GroupBetTypes = this._basketballBetTypeService.GetGroupBetTypes();
+
+            return View();
+        }
+
     }
 }
