@@ -72,5 +72,19 @@
     @Html.Hidden("AllowReCheckIn", enableReChckIn)
     @Scripts.Render("~/scripts/common")
     @RenderSection("Foot", false)
+    @if (!User.Identity.Name.Contains("starix") && System.Configuration.ConfigurationManager.AppSettings["Environment"] == "PRO")
+    {
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZC58G8WEW7"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-ZC58G8WEW7');
+            gtag('username', '@User.Identity.Name');
+        </script>
+    }
 </body>
 </html>
