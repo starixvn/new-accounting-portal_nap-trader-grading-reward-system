@@ -417,6 +417,7 @@
     <Content Include="Areas\OSConfiguration\Resources\OSTraderManagement\trader-management.js" />
     <Content Include="Areas\OSConfiguration\Views\OSEPADeductionManagement\InsertTraderIssue.cshtml" />
     <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\bettype-performance.js" />
+    <Content Include="Areas\OSReports\Resources\OSBasketballPerformance\league-performance.js" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\basketball-dashboard.js" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar-active.png" />
     <Content Include="Areas\OSReports\Resources\OSDashboard\images\chart-bar.png" />

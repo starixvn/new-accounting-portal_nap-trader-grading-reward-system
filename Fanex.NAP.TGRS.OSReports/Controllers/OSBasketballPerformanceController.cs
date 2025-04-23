@@ -180,5 +180,13 @@
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

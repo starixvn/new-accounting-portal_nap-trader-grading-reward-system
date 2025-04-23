@@ -190,6 +190,7 @@
     <Compile Include="Criteria\BasketballPerformance\GetLeagueGroupBySportCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeBetChoiceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeTraderCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetQuarterOfBettypeBetChoiceCriteria.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Models\BasketballPerformance\LeagueOfBettypeBetChoiceInfo.cs" />
     <Compile Include="Models\BasketballPerformance\LeagueOfBettypeBetChoiceQuarterInfo.cs" />
     <Compile Include="Models\BasketballPerformance\LeagueOfBettypeInfo.cs" />
+    <Compile Include="Models\BasketballPerformance\LeaguePerformanceInfo.cs" />
     <Compile Include="Models\BasketballPerformance\MatchOfBettypeLeagueTraderInfo.cs" />
     <Compile Include="Models\BasketballPerformance\MatchOfBettypeTraderInfo.cs" />
     <Compile Include="Models\BasketballPerformance\QuarterOfBettypeBetChoiceInfo.cs" />
@@ -273,6 +275,8 @@
     <Compile Include="Models\NewTraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
     <Compile Include="Models\TraderPerformanceByCC\ExportExcelTradePerfCCViewModel.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeaguePerformanceItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\LeaguePerformanceList.cs" />
     <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassGroupViewModel.cs" />
     <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassViewModel.cs" />
     <Compile Include="Models\TraderPerformanceByCC\SportModel.cs" />

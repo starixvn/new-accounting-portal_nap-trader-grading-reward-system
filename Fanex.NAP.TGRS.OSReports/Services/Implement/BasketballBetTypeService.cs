@@ -22,6 +22,7 @@
         private const string LeagueGroupsSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.LeagueGroups";
         private const string BettypesSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.Bettypes";
         private const string BetTypePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.GetBetTypes";
+        private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.LeaguePerformance.GetLeagues";
 
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
@@ -391,7 +392,29 @@
                 writer.Render();
             }
         }
-        
+
+        public LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            var leagueList = new LeaguePerformanceList();
+
+            var leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+
+            if (leagueData != null && leagueData.Any())
+            {
+                foreach (var info in leagueData)
+                {
+                    leagueList.AddLeague(info);
+                }
+
+                leagueList.CalculateMargin(leagueList.TotalItemLive);
+                leagueList.CalculateMargin(leagueList.TotalItemNonLive);
+
+                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leagueList);
+            }
+
+            return leagueList;
+        }
+
         private void FilterBlock(int userid, GetBettypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
             RichTextRender contentRender = new RichTextRender().Clear();
