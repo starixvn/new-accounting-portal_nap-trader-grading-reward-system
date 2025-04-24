@@ -40,5 +40,8 @@
 
         LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
 
+        MatchOfLeaguePerformanceList GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria);
+
+        BetTypeOfLeaguePerformanceList GetBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria);
     }
 }

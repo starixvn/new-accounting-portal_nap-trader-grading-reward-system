@@ -185,6 +185,7 @@
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeLeagueCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetBetTypeOfLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBettypesCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBettypePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetLeagueGroupBySportCriteria.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Criteria\BasketballPerformance\GetLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeLeagueTraderCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetMatchOfBettypeTraderCriteria.cs" />
+    <Compile Include="Criteria\BasketballPerformance\GetMatchOfLeaguePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetQuarterOfBettypeBetChoiceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetLeagueOfBettypeBetChoiceQuarterCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetQuarterOfBettypeLeagueBetChoiceCriteria.cs" />
@@ -275,8 +277,14 @@
     <Compile Include="Models\NewTraderPerformance\SportPerformance.cs" />
     <Compile Include="Models\NewTraderPerformance\TraderPerformance.cs" />
     <Compile Include="Models\TraderPerformanceByCC\ExportExcelTradePerfCCViewModel.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetTypeOfLeaguePerformanceInfo.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetTypeOfLeaguePerformanceItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\BetTypeOfLeaguePerformanceList.cs" />
     <Compile Include="ViewModel\BasketballPerformance\LeaguePerformanceItem.cs" />
     <Compile Include="ViewModel\BasketballPerformance\LeaguePerformanceList.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfLeaguePerformanceInfo.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfLeaguePerformanceItem.cs" />
+    <Compile Include="ViewModel\BasketballPerformance\MatchOfLeaguePerformanceList.cs" />
     <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassGroupViewModel.cs" />
     <Compile Include="ViewModel\TraderPerfomanceByCC\CustomerClassViewModel.cs" />
     <Compile Include="Models\TraderPerformanceByCC\SportModel.cs" />

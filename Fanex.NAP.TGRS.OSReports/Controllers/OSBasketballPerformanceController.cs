@@ -188,5 +188,21 @@
             return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetMatchOfLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetBetTypeOfLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

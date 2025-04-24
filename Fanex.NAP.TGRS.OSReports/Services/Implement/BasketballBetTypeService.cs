@@ -22,7 +22,6 @@
         private const string LeagueGroupsSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.LeagueGroups";
         private const string BettypesSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.Bettypes";
         private const string BetTypePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.BetTypePerformance.GetBetTypes";
-        private const string LeaguePerformanceDetailReportSessionKey = "Fanex.NAP.TGRS.OSReports.Basketball.LeaguePerformance.GetLeagues";
 
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
@@ -408,11 +407,31 @@
 
                 leagueList.CalculateMargin(leagueList.TotalItemLive);
                 leagueList.CalculateMargin(leagueList.TotalItemNonLive);
-
-                SessionManager.Set<LeaguePerformanceList>(LeaguePerformanceDetailReportSessionKey, leagueList);
             }
 
             return leagueList;
+        }
+
+        public MatchOfLeaguePerformanceList GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
+        {
+            var matchList = new MatchOfLeaguePerformanceList();
+
+            var matchData = this.GetData<MatchOfLeaguePerformanceInfo>(criteria);
+
+            matchList.AddMatchList(matchData, criteria.LiveType == 1);
+
+            return matchList;
+        }
+
+        public BetTypeOfLeaguePerformanceList GetBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria)
+        {
+            var betTypeList = new BetTypeOfLeaguePerformanceList();
+
+            var data = this.GetData<BetTypeOfLeaguePerformanceInfo>(criteria);
+
+            betTypeList.AddBetTypeList(data, criteria.LiveType == 1);
+
+            return betTypeList;
         }
 
         private void FilterBlock(int userid, GetBettypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
