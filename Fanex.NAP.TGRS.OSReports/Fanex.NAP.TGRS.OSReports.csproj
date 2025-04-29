@@ -183,6 +183,7 @@
     <Compile Include="Controllers\OSTraderPerformanceController.cs" />
     <Compile Include="Controllers\OSTraderReportController.cs" />
     <Compile Include="Controllers\OSTraderReportAdminController.cs" />
+    <Compile Include="Criteria\BasketballPerformance\BasePerformanceCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetChoiceOfBettypeLeagueCriteria.cs" />
     <Compile Include="Criteria\BasketballPerformance\GetBetTypeOfLeaguePerformanceCriteria.cs" />

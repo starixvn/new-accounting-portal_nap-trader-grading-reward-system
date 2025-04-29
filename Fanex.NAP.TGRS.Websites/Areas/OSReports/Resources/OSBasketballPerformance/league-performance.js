@@ -10,9 +10,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
 
     var urls = {
         GetLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetLeaguePerformance'),
-        ExportBettypePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportBettypePerformance'),
+        ExportLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportLeaguePerformance'),
         GetMatchOfLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetMatchOfLeaguePerformance'),
+        ExportMatchOfLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportMatchOfLeaguePerformance'),
         GetBetTypeOfLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/GetBetTypeOfLeaguePerformance'),
+        ExportBetTypeOfLeaguePerformance: common.ResolveRootUrl('OSReports/OSBasketballPerformance/ExportBetTypeOfLeaguePerformance'),
     };
 
     var domElements = {
@@ -226,7 +228,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             titleInfo: {
                 showExcelButton: true,
                 exportExcelFunction: function () {
-                    exportBetTypePerformance();
+                    exportLeaguePerformance();
                 }
             },
             sortOption: {
@@ -254,8 +256,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
         return gridOptions;
     };
 
-    var exportBetTypePerformance = function () {
-        common.DownloadFile(urls.ExportBettypePerformance, parameters);
+    var exportLeaguePerformance = function () {
+        common.DownloadFile(urls.ExportLeaguePerformance, parameters);
     };
 
     var renderLeaguePerformanceGridBody = function (data) {
@@ -401,38 +403,38 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                 { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
                 {
                     HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.IntegerFormat, Sort: true
+                    FormatNumber: common.Formats.IntegerFormat
                 },
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                    FormatNumber: common.Formats.DecimalFormat
                 },
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnoverAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                    FormatNumber: common.Formats.DecimalFormat
                 },
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLossAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMarginAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 }
             ],
             groupHeaderRows: [
                 {
                     Columns: [
                         { HeaderText: labels.No, Name: "ColNo", MergeRowNumber: 2 },
-                        { HeaderText: labels.League, Name: "ColMatch", MergeRowNumber: 2 },
+                        { HeaderText: labels.Match, Name: "ColMatch", MergeRowNumber: 2 },
                         { HeaderText: labels.EventDate, Name: "ColEventDate", MergeRowNumber: 2 },
                         { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
                         { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 3 },
@@ -443,7 +445,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName)
+                text: titleFormat.format(labels.LeaguePerformance, leagueName),
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportMatchOfLeaguePerformance();
+                }
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -518,6 +524,10 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
         handleMatchOfLeaguePerformanceGridEvents();
     };
 
+    var exportMatchOfLeaguePerformance = function () {
+        common.DownloadFile(urls.ExportMatchOfLeaguePerformance, parameters);
+    };
+
     var handleMatchOfLeaguePerformanceGridEvents = function () {
         domElements.divMatchPerformanceContainer.find('#spanLeagueLink').click(function () {
             showLeaguePerformanceReport();
@@ -572,31 +582,31 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                 { HeaderText: labels.EventDate, Width: 200, Name: 'ColBetType', HeaderAlign: 'center', CellAlign: 'left' },
                 {
                     HeaderText: labels.BetCount, Width: 100, Name: 'ColBetCount', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.IntegerFormat, Sort: true
+                    FormatNumber: common.Formats.IntegerFormat
                 },
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnover', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                    FormatNumber: common.Formats.DecimalFormat
                 },
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLoss', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnoverAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                    FormatNumber: common.Formats.DecimalFormat
                 },
                 {
                     HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLossAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 },
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMarginAR', HeaderAlign: 'center', CellAlign: 'right',
-                    FormatNumber: common.Formats.DecimalFormat, Sort: true, SortDirection: 'desc', FormatNegative: '$'
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$'
                 }
             ],
             groupHeaderRows: [
@@ -613,7 +623,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName, matchName)
+                text: titleFormat.format(labels.LeaguePerformance, leagueName, matchName),
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportBetTypeOfLeaguePerformance();
+                }
             },
             sortOption: {
                 afterGridSorted: function (rows) {
@@ -684,6 +698,10 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
         domElements.divBetTypePerformanceGrid.fanexGrid(gridOptions);
 
         handleBetTypeOfLeaguePerformanceGridEvents();
+    };
+
+    var exportBetTypeOfLeaguePerformance = function () {
+        common.DownloadFile(urls.ExportBetTypeOfLeaguePerformance, parameters);
     };
 
     var handleBetTypeOfLeaguePerformanceGridEvents = function () {

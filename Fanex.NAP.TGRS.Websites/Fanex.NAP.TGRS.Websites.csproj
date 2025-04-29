@@ -735,6 +735,9 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceOfBetChoiceFullMeasure.xls" />
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceOfBetChoiceHalfMeasure.xls" />
     <Content Include="Areas\OSReports\Views\OSBasketballPerformance\LeaguePerformance.cshtml" />
+    <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\LeaguePerformance.xls" />
+    <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypeLeaguePerformance.xls" />
+    <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\MatchLeaguePerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

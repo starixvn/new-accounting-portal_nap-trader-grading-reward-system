@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.Data.Repository;
+﻿using Fanex.Data.Repository;
+using System;
 
 namespace Fanex.NAP.TGRS.OSReports.Criteria.BasketballPerformance
 {
-    public class GetMatchOfLeaguePerformanceCriteria: CriteriaBase
+    public class GetMatchOfLeaguePerformanceCriteria: CriteriaBase, BasePerformanceCriteria
     {
         public DateTime FromDate { get; set; }
 
@@ -20,6 +16,8 @@ namespace Fanex.NAP.TGRS.OSReports.Criteria.BasketballPerformance
         public string Bettypes { get; set; }
 
         public int LiveType { get; set; }
+
+        public string LeagueName { get; set; }
 
         public override string GetSettingKey()
         {

@@ -14,6 +14,9 @@
     public class OSBasketballPerformanceController : TGRSBaseController
     {
         private const string BetTypePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls";
+        private const string LeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\LeaguePerformance.xls";
+        private const string MatchOfLeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\MatchLeaguePerformance.xls";
+        private const string BetTypeOfLeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypeLeaguePerformance.xls";
         private readonly IBasketballBetTypeService _basketballBetTypeService;
 
         public OSBasketballPerformanceController()
@@ -188,12 +191,32 @@
             return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(LeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
         [HttpPost]
         public ActionResult GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
         {
             var leaguePerformance = _basketballBetTypeService.GetMatchOfLeaguePerformance(criteria);
 
             return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ExportMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(MatchOfLeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportMatchOfLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
         }
 
         [HttpPost]
@@ -204,5 +227,14 @@
             return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult ExportBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(BetTypeOfLeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportBetTypeOfLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
     }
 }

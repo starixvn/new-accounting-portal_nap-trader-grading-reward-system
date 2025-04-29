@@ -3,7 +3,7 @@ using System;
 
 namespace Fanex.NAP.TGRS.OSReports.Criteria.BasketballPerformance
 {
-    public class GetLeaguePerformanceCriteria: CriteriaBase
+    public class GetLeaguePerformanceCriteria: CriteriaBase, BasePerformanceCriteria
     {
         public DateTime FromDate { get; set; }
 

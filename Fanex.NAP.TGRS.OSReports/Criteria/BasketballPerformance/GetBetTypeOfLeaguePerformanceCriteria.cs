@@ -3,11 +3,14 @@ using System;
 
 namespace Fanex.NAP.TGRS.OSReports.Criteria.BasketballPerformance
 {
-    public class GetBetTypeOfLeaguePerformanceCriteria: CriteriaBase
+    public class GetBetTypeOfLeaguePerformanceCriteria: CriteriaBase, BasePerformanceCriteria
     {
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
+        public string LeagueName { get; set; }
+        public string LeagueGroupIds { get; set; }
+        public string Bettypes { get; set; }
 
         public int LeagueId { get; set; }
 
