@@ -394,7 +394,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
     };
 
     var renderMatchOfLeaguePerformanceGrid = function (result, leagueId, leagueName, isLive) {
-        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span><span> >> {1}</span>';
+        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span><span> >> {1} {2}</span>';
 
         var gridOptions = {
             columns: [
@@ -445,7 +445,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName),
+                text: titleFormat.format(labels.LeaguePerformance, isLive == 'true' ? "(Live)" : "(Non-Live)", leagueName),
                 showExcelButton: true,
                 exportExcelFunction: function () {
                     exportMatchOfLeaguePerformance();
@@ -574,7 +574,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
     };
 
     var renderBetTypeOfLeaguePerformanceGrid = function (result, leagueName, matchName, isLive) {
-        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span><span id="spanMatchLink" class="breadcrumb-link"> >> {1}</span><span> >> {2}</span>';
+        var titleFormat = '<span id="spanLeagueLink" class="breadcrumb-link">{0}</span><span id="spanMatchLink" class="breadcrumb-link"> >> {1} {2}</span><span> >> {3}</span>';
 
         var gridOptions = {
             columns: [
@@ -623,7 +623,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             gridExpandHeight: 260,
             showTitle: true,
             titleInfo: {
-                text: titleFormat.format(labels.LeaguePerformance, leagueName, matchName),
+                text: titleFormat.format(labels.LeaguePerformance, isLive == "true" ? "(Live)" : "(Non-Live)", leagueName, matchName),
                 showExcelButton: true,
                 exportExcelFunction: function () {
                     exportBetTypeOfLeaguePerformance();
