@@ -1,7 +1,9 @@
 ﻿using Fanex.Common;
+using System;
 
 namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
 {
+    [Serializable]
     public class BetTypeOfLeaguePerformanceItem
     {
         public BetTypeOfLeaguePerformanceItem() { }

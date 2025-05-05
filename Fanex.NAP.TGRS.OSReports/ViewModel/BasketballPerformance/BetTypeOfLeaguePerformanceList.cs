@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
 {
+    [Serializable]
     public class BetTypeOfLeaguePerformanceList
     {
         public List<BetTypeOfLeaguePerformanceItem> ItemLiveList { get; set; } = new List<BetTypeOfLeaguePerformanceItem>();
