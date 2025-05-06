@@ -18,11 +18,14 @@ namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
                 this.IsLive = data.IsLive;
                 this.TraderCount = Converter.ToInt(data.TraderCount);
                 this.MatchCount = Converter.ToInt(data.MatchCount);
-                this.GroupName = data.GroupName;
+                this.GroupName = data.LeagueGroupName;
                 this.Turnover = Converter.ToDecimal(data.Turnover);
                 this.WinLoss = Converter.ToDecimal(data.WinLoss);
                 this.BetCount = Converter.ToInt(data.BetCount);
                 this.Margin = Converter.ToDecimal(data.Margin);
+                this.Turnover_AR = Converter.ToDecimal(data.Turnover_AR);
+                this.WinLoss_AR = Converter.ToDecimal(data.WinLoss_AR);
+                this.Margin_AR = Converter.ToDecimal(data.Margin_AR);
             }
         }
 
@@ -45,5 +48,11 @@ namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
         public decimal Margin { get; set; }
 
         public bool IsLive { get; set; }
+
+        public decimal Turnover_AR { get; set; }
+
+        public decimal WinLoss_AR { get; set; }
+
+        public decimal Margin_AR { get; set; }
     }
 }

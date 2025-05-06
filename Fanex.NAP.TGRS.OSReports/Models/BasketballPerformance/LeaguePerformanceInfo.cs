@@ -6,7 +6,7 @@
 
         public string LeagueName { get; set; }
 
-        public string GroupName { get; set; }
+        public string LeagueGroupName { get; set; }
 
         public int TraderCount { get; set; }
 
@@ -21,5 +21,11 @@
         public decimal Margin { get; set; }
 
         public bool IsLive { get; set; }
+
+        public decimal Turnover_AR { get; set; }
+
+        public decimal WinLoss_AR { get; set; }
+
+        public decimal Margin_AR { get; set; }
     }
 }

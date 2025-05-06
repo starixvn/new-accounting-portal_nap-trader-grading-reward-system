@@ -35,6 +35,11 @@ namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
             {
                 item.Margin = item.WinLoss / item.Turnover * 100;
             }
+            if (item.Turnover_AR != 0)
+            {
+                item.Margin_AR = item.WinLoss_AR / item.Turnover_AR * 100;
+            }
+
         }
 
         private void CalculateTotal(LeaguePerformanceItem item)
@@ -46,6 +51,8 @@ namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
                 this.TotalItemLive.Turnover += item.Turnover;
                 this.TotalItemLive.WinLoss += item.WinLoss;
                 this.TotalItemLive.BetCount += item.BetCount;
+                this.TotalItemLive.Turnover_AR += item.Turnover_AR;
+                this.TotalItemLive.WinLoss_AR += item.WinLoss_AR;
             }
             else
             {
@@ -54,6 +61,8 @@ namespace Fanex.NAP.TGRS.OSReports.ViewModel.BasketballPerformance
                 this.TotalItemNonLive.Turnover += item.Turnover;
                 this.TotalItemNonLive.WinLoss += item.WinLoss;
                 this.TotalItemNonLive.BetCount += item.BetCount;
+                this.TotalItemNonLive.Turnover_AR += item.Turnover_AR;
+                this.TotalItemNonLive.WinLoss_AR += item.WinLoss_AR;
             }
         }
     }

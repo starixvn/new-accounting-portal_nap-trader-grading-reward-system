@@ -434,7 +434,7 @@
                 writer.CopyRows(3, 2);
                 writer.FreezeRow(0, 4);
                 FillRowDataForLeague(leagueList, criteria.LiveType, ref writer);
-                writer.SyncColumnsWidth(9);
+                writer.SyncColumnsWidth(13);
                 writer.Render();
             }
         }
@@ -679,7 +679,11 @@
                     item.Turnover,
                     item.Turnover / item.MatchCount,
                     item.WinLoss,
-                    (object)item.Margin ?? ViewLang.NA
+                    (object)item.Margin ?? ViewLang.NA,
+                    item.Turnover_AR,
+                    item.Turnover_AR / item.MatchCount,
+                    item.WinLoss_AR,
+                    (object)item.Margin_AR ?? ViewLang.NA
                 };
 
                 writer.WriteRow(styleIndex, record);
@@ -816,7 +820,11 @@
                 data.TotalItemLive.Turnover,
                 data.TotalItemLive.MatchCount != 0 ? data.TotalItemLive.Turnover / data.TotalItemLive.MatchCount : 0,
                 data.TotalItemLive.WinLoss,
-                (object)data.TotalItemLive.Margin ?? ViewLang.NA
+                (object)data.TotalItemLive.Margin ?? ViewLang.NA,
+                data.TotalItemLive.Turnover_AR,
+                data.TotalItemLive.MatchCount != 0 ? data.TotalItemLive.Turnover_AR / data.TotalItemLive.MatchCount : 0,
+                data.TotalItemLive.WinLoss_AR,
+                (object)data.TotalItemLive.Margin_AR ?? ViewLang.NA
             };
 
             var itemNonLive = new object[]
@@ -831,7 +839,11 @@
                 data.TotalItemNonLive.Turnover,
                 data.TotalItemNonLive.MatchCount != 0 ? data.TotalItemNonLive.Turnover / data.TotalItemNonLive.MatchCount : 0,
                 data.TotalItemNonLive.WinLoss,
-                (object)data.TotalItemNonLive.Margin ?? ViewLang.NA
+                (object)data.TotalItemNonLive.Margin ?? ViewLang.NA,
+                data.TotalItemNonLive.Turnover_AR,
+                data.TotalItemNonLive.MatchCount != 0 ? data.TotalItemNonLive.Turnover_AR / data.TotalItemNonLive.MatchCount : 0,
+                data.TotalItemNonLive.WinLoss_AR,
+                (object)data.TotalItemNonLive.Margin_AR ?? ViewLang.NA
             };
 
             if (liveType == 0)
@@ -858,7 +870,11 @@
                     data.TotalItemNonLive.Turnover,
                     data.TotalItemNonLive.MatchCount != 0 ? data.TotalItemNonLive.Turnover / data.TotalItemNonLive.MatchCount : 0,
                     data.TotalItemNonLive.WinLoss,
-                    (object)data.TotalItemNonLive.Margin ?? ViewLang.NA
+                    (object)data.TotalItemNonLive.Margin ?? ViewLang.NA,
+                    data.TotalItemNonLive.Turnover_AR,
+                    data.TotalItemNonLive.MatchCount != 0 ? data.TotalItemNonLive.Turnover_AR / data.TotalItemNonLive.MatchCount : 0,
+                    data.TotalItemNonLive.WinLoss_AR,
+                    (object)data.TotalItemNonLive.Margin_AR ?? ViewLang.NA
                 };
                 writer.WriteRow(7, totalRecord);
 

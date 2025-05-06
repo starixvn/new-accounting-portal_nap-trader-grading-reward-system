@@ -208,6 +208,22 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                 {
                     HeaderText: labels.Margin, Width: 100, Name: 'ColMargin', HeaderAlign: 'center', CellAlign: 'right',
                     FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
+                },
+                {
+                    HeaderText: labels.Turnover, Width: 120, Name: 'ColTurnoverAR', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                },
+                {
+                    HeaderText: labels.AvgTurnoverPerMatch, Width: 130, Name: 'ColAvgTurnoverPerMatchAR', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, Sort: true
+                },
+                {
+                    HeaderText: labels.WinLoss, Width: 120, Name: 'ColWinLossAR', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
+                },
+                {
+                    HeaderText: labels.Margin, Width: 100, Name: 'ColMarginAR', HeaderAlign: 'center', CellAlign: 'right',
+                    FormatNumber: common.Formats.DecimalFormat, FormatNegative: '$', Sort: true
                 }
             ],
             groupHeaderRows: [
@@ -220,7 +236,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                         { HeaderText: labels.NoOfTraders, Name: "ColNoOfTraders", MergeRowNumber: 2 },
                         { HeaderText: labels.NoOfMatches, Name: "ColNoOfMatches", MergeRowNumber: 2 },
                         { HeaderText: labels.BetCount, Name: "ColBetCount", MergeRowNumber: 2 },
-                        { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 }
+                        { HeaderText: "Virtual", Name: "ColTurnover", MergeColNumber: 4 },
+                        { HeaderText: "Real", Name: "ColTurnoverAR", MergeColNumber: 4 }
                 ] }
             ],
             gridExpandHeight: 260,
@@ -288,7 +305,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                     { Name: 'ColTurnover', Value: item.Turnover },
                     { Name: 'ColAvgTurnoverPerMatch', Value: (item.Turnover / item.MatchCount) },
                     { Name: 'ColWinLoss', Value: item.WinLoss },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) }]),
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(item.Margin, labels.NA) },
+                    { Name: 'ColTurnoverAR', Value: item.Turnover_AR },
+                    { Name: 'ColAvgTurnoverPerMatchAR', Value: (item.Turnover_AR / item.MatchCount) },
+                    { Name: 'ColWinLossAR', Value: item.WinLoss_AR },
+                    { Name: 'ColMarginAR', Value: common.GetNumWithLabel(item.Margin_AR, labels.NA) }]),
                 CssClass: evenClass
             };
 
@@ -312,7 +333,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                 { Name: 'ColTurnover', Value: data.TotalItemLive.Turnover },
                 { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemLive.MatchCount !== 0 ? (data.TotalItemLive.Turnover / data.TotalItemLive.MatchCount) : 0 },
                 { Name: 'ColWinLoss', Value: data.TotalItemLive.WinLoss },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) }]
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) },
+                { Name: 'ColTurnoverAR', Value: data.TotalItemLive.Turnover_AR },
+                { Name: 'ColAvgTurnoverPerMatchAR', Value: data.TotalItemLive.MatchCount !== 0 ? (data.TotalItemLive.Turnover_AR / data.TotalItemLive.MatchCount) : 0 },
+                { Name: 'ColWinLossAR', Value: data.TotalItemLive.WinLoss_AR },
+                { Name: 'ColMarginAR', Value: common.GetNumWithLabel(data.TotalItemLive.Margin_AR, labels.NA) }]
         };
 
         var itemNonLive = {
@@ -326,7 +351,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                 { Name: 'ColTurnover', Value: data.TotalItemNonLive.Turnover },
                 { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemNonLive.MatchCount !== 0 ? (data.TotalItemNonLive.Turnover / data.TotalItemNonLive.MatchCount) : 0 },
                 { Name: 'ColWinLoss', Value: data.TotalItemNonLive.WinLoss },
-                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin, labels.NA) }]
+                { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin, labels.NA) },
+                { Name: 'ColTurnoverAR', Value: data.TotalItemNonLive.Turnover_AR },
+                { Name: 'ColAvgTurnoverPerMatchAR', Value: data.TotalItemNonLive.MatchCount !== 0 ? (data.TotalItemNonLive.Turnover_AR / data.TotalItemNonLive.MatchCount) : 0 },
+                { Name: 'ColWinLossAR', Value: data.TotalItemNonLive.WinLoss_AR },
+                { Name: 'ColMarginAR', Value: common.GetNumWithLabel(data.TotalItemNonLive.Margin_AR, labels.NA) }]
         };
 
         if (parameters.LiveType === "0") {
@@ -345,7 +374,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
                     { Name: 'ColTurnover', Value: data.TotalItemLive.Turnover },
                     { Name: 'ColAvgTurnoverPerMatch', Value: data.TotalItemLive.MatchCount !== 0 ? (data.TotalItemLive.Turnover / data.TotalItemLive.MatchCount) : 0 },
                     { Name: 'ColWinLoss', Value: data.TotalItemLive.WinLoss },
-                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) }]
+                    { Name: 'ColMargin', Value: common.GetNumWithLabel(data.TotalItemLive.Margin, labels.NA) },
+                    { Name: 'ColTurnoverAR', Value: data.TotalItemLive.Turnover_AR },
+                    { Name: 'ColAvgTurnoverPerMatchAR', Value: data.TotalItemLive.MatchCount !== 0 ? (data.TotalItemLive.Turnover_AR / data.TotalItemLive.MatchCount) : 0 },
+                    { Name: 'ColWinLossAR', Value: data.TotalItemLive.WinLoss_AR },
+                    { Name: 'ColMarginAR', Value: common.GetNumWithLabel(data.TotalItemLive.Margin_AR, labels.NA) }]
             });
         }
 
