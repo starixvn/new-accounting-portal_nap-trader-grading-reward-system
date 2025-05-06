@@ -116,14 +116,8 @@
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
 
-                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
-
-                if (!string.IsNullOrEmpty(bettypeQuarters))
-                {
-                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
-
-                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
-                }
+                betChoiceList.IsBetTypeQuarter = AppSettings.BasketballBettypeQuarter.Any(x => x == criteria.Bettype);
+                betChoiceList.IsBetTypeHdp = AppSettings.BasketballBettypeHdp.Any(x => x == criteria.Bettype);
             }
 
             return betChoiceList;
@@ -146,7 +140,26 @@
             }
 
             return quarterList;
-        }       
+        }
+
+        public HdpOfBettypeBetChoiceList GetHdpOfBettypeBetChoice(GetHdpOfBettypeBetChoiceCriteria criteria)
+        {
+            var hdpList = new HdpOfBettypeBetChoiceList();
+
+            var hdpData = this.GetData<HdpOfBettypeBetChoiceInfo>(criteria);
+
+            if (hdpData != null && hdpData.Any())
+            {
+                foreach (var info in hdpData)
+                {
+                    hdpList.AddHdp(criteria.Bettype, info);
+                }
+
+                hdpList.CalculateMargin(hdpList.Total);
+            }
+
+            return hdpList;
+        }
 
         public LeagueOfBettypeBetChoiceQuarterList GetLeagueOfBettypeBetChoiceQuarter(GetLeagueOfBettypeBetChoiceQuarterCriteria criteria)
         {
@@ -292,15 +305,8 @@
                 }
 
                 betChoiceList.CalculateMargin(betChoiceList.Total);
-
-                var bettypeQuarters = AppSettings.BasketballBettypeQuarter;
-
-                if (!string.IsNullOrEmpty(bettypeQuarters))
-                {
-                    var arrBettypeQuarter = bettypeQuarters.Split(',').Select(Int32.Parse);
-
-                    betChoiceList.IsBetTypeQuarter = arrBettypeQuarter.Any(x => x == criteria.Bettype);
-                }
+                betChoiceList.IsBetTypeQuarter = AppSettings.BasketballBettypeQuarter.Any(x => x == criteria.Bettype);
+                betChoiceList.IsBetTypeHdp = AppSettings.BasketballBettypeHdp.Any(x => x == criteria.Bettype);
             }
 
             return betChoiceList;

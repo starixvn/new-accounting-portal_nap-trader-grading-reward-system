@@ -427,7 +427,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
     var renderBetChoiceOfBettypeGrid = function (data, betTypeId, betTypeName, isLive) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span> >> ({1}) {2}</span>';
         var noOfLeaguesFormat = '<span class="league-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';
-        var betChoiceFormat = '<span class="betchoice-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}">{3}</span>';
+        var betChoiceFormat = '<span class="betchoice-link link" data-betchoice="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-is-quarter="{3}" data-is-hdp="{4}">{5}</span>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
@@ -490,7 +490,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         if (data.Items && data.Items.length > 0) {
             $.each(data.Items, function (index, item) {
                 noOfLeaguesCol = noOfLeaguesFormat.format(item.BetChoice, item.IsLive, betTypeId, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
-                betChoiceCol = data.IsBetTypeQuarter ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, item.BetChoice) : item.BetChoice;
+                betChoiceCol = data.IsBetTypeQuarter || data.IsBetTypeHdp ? betChoiceFormat.format(item.BetChoice, item.IsLive, betTypeId, data.IsBetTypeQuarter, data.IsBetTypeHdp, item.BetChoice) : item.BetChoice;
 
                 row = {
                     Columns: [{ Name: 'ColNo', Value: index + 1 },
@@ -537,8 +537,10 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             var $link = $(this);
             var isLive = $link.attr('data-is-live');
             var betChoice = $link.attr('data-betchoice');
+            var isQuarter = $link.attr('data-is-quarter');
+            var isHdp = $link.attr('data-is-hdp');
 
-            getQuarterOfBettypeBetChoiceReport(isLive, betTypeId, betTypeName, betChoice);
+            getQuarterOfBettypeBetChoiceReport(isLive, betTypeId, betTypeName, betChoice, isQuarter, isHdp);
         });
 
         domElements.divBetChoicePerformanceContainer.find('span.league-link').click(function () {
@@ -550,7 +552,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         });
     };
 
-    var getQuarterOfBettypeBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice) {
+    var getQuarterOfBettypeBetChoiceReport = function (isLive, betTypeId, betTypeName, betChoice, isQuarter, isHdp) {
         var quarterParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -558,9 +560,11 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LeagueName: parameters.LeagueName,
             LiveType: isLive === 'true' ? 1 : 0,
             Bettype: betTypeId,
-            BetChoice: betChoice
+            BetChoice: betChoice,
+            IsQuarter: isQuarter,
+            IsHdp: isHdp
         };
-
+        
         common.DisableInput();
 
         $.ajax({
@@ -570,7 +574,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             dataType: 'json',
             data: JSON.stringify(quarterParams),
             success: function (result) {
-                renderQuarterOfBettypeBetChoiceGrid(result, betTypeId, betTypeName, betChoice, isLive);
+                renderQuarterOfBettypeBetChoiceGrid(result, betTypeId, betTypeName, betChoice, isLive, isQuarter, isHdp);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
@@ -581,7 +585,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         });
     }
 
-    var renderQuarterOfBettypeBetChoiceGrid = function (data, betTypeId, betTypeName, betChoice, isLive) {
+    var renderQuarterOfBettypeBetChoiceGrid = function (data, betTypeId, betTypeName, betChoice, isLive, isQuarter, isHdp) {
         var bodyData = [];
         var footerData = [];
 
@@ -592,7 +596,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
 
         domElements.divBetChoicePerformanceContainer.addClass('display-none');
 
-        var gridOptions = renderQuarterOfBettypeBetChoiceGridOptions(betTypeId, betTypeName, betChoice, isLive);
+        var gridOptions = renderQuarterOfBettypeBetChoiceGridOptions(betTypeId, betTypeName, betChoice, isLive, isQuarter, isHdp);
         gridOptions.bodyRows = bodyData;
         gridOptions.footerRows = footerData;
 
@@ -601,11 +605,12 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
         handleQuarterOfBettypeBetChoiceGridEvents(betTypeId, betTypeName);
     }
 
-    var renderQuarterOfBettypeBetChoiceGridOptions = function (betTypeId, betTypeName, betChoice, isLive) {
+    var renderQuarterOfBettypeBetChoiceGridOptions = function (betTypeId, betTypeName, betChoice, isLive, isQuarter, isHdp) {
         var titleFormat = '<span id="spanBetTypeLink" class="breadcrumb-link">{0}</span><span id="spanBetChoiceLink" class="breadcrumb-link"> >> ({1}) {2} </span><span> >> {3}</span>';
+        var secondHeader = isHdp ? "HDP" : "Quarter";
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 60, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: labels.Quarter, Width: 300, Name: 'ColQuarter', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },      
+                { HeaderText: secondHeader, Width: 300, Name: 'ColQuarter', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },      
             {
                 HeaderText: labels.NoOfLeagues, Width: 100, Name: 'ColNoOfLeagues', HeaderAlign: 'center', CellAlign: 'right',
                 FormatNumber: common.Formats.IntegerFormat
@@ -665,12 +670,12 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
     }
 
     var renderQuarterOfBettypeBetChoiceGridBody = function (data, betTypeId, betChoice) {
-        var noOfLeaguesFormat = '<span class="league-link link" data-quarter="{0}" data-is-live="{1}" title="{0}" data-bettype-id="{2}" data-betchoice="{3}" data-betid="{4}" data-quarter="{5}">{6}</span>';
+        var noOfLeaguesFormat = '<span class="league-link link" data-quarter="{0}" data-is-live="{1}" data-bettype-id="{2}" data-betchoice="{3}" data-betid="{4}">{5}</span>';
         var bodyData = [];
         var row;
 
         $.each(data.Items, function (index, item) {
-            noOfLeaguesCol = noOfLeaguesFormat.format(item.Quarter, item.IsLive, betTypeId, betChoice, item.BetId, item.Quarter, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
+            noOfLeaguesCol = noOfLeaguesFormat.format(item.Quarter, item.IsLive, betTypeId, betChoice, item.BetId, numeral(item.NoOfLeagues).format(common.Formats.IntegerFormat));
 
             row = {
                 Columns: [{ Name: 'ColNo', Value: index + 1 },
@@ -718,13 +723,16 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             var isLive = $link.attr('data-is-live');
             var betChoice = $link.attr('data-betchoice');
             var betId = $link.attr('data-betid');
-            var quarter = $link.attr('data-quarter');
+            var quarter = $link.attr('data-quarter');            
 
             getLeagueOfBettypeBetChoiceQuarterReport(isLive, betTypeId, betTypeName, betChoice, betId, quarter);
         });
     }
 
     var getLeagueOfBettypeBetChoiceQuarterReport = function (isLive, betTypeId, betTypeName, betChoice, betId, quarter) {
+        var hdp = parseFloat(quarter);
+        hdp = isNaN(hdp) ? null : hdp;
+
         var leagueParams = {
             FromDate: parameters.FromDate,
             ToDate: parameters.ToDate,
@@ -733,7 +741,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace = function () {
             LiveType: isLive === 'true' ? 1 : 0,
             Bettype: betTypeId,
             BetChoice: betChoice,
-            BetId: betId
+            BetId: betId,
+            Hdp: hdp
         };
 
         common.DisableInput();
