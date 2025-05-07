@@ -583,7 +583,8 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             ToDate: parameters.ToDate,
             LiveType: isLive === 'true' ? "1" : "0",
             LeagueId: leagueId,
-            MatchId: matchId
+            MatchId: matchId,
+            Bettypes: parameters.Bettypes
         };
 
         common.DisableInput();
