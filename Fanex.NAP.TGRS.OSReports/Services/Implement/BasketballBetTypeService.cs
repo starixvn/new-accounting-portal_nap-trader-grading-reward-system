@@ -434,7 +434,7 @@
                 writer.CopyRows(3, 2);
                 writer.FreezeRow(0, 4);
                 FillRowDataForLeague(leagueList, criteria.LiveType, ref writer);
-                writer.SyncColumnsWidth(13);
+                writer.SyncColumnsWidth(15);
                 writer.Render();
             }
         }
@@ -471,7 +471,7 @@
                 writer.CopyRows(3, 2);
                 writer.FreezeRow(0, 4);
                 FillRowDataForMatchOfLeague(data, matchList.Total, ref writer);
-                writer.SyncColumnsWidth(9);
+                writer.SyncColumnsWidth(10);
                 writer.Render();
             }
         }
