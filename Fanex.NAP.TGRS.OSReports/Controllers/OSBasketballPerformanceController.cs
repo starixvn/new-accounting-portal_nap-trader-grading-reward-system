@@ -206,7 +206,12 @@
         {
             var leaguePerformance = _basketballBetTypeService.GetMatchOfLeaguePerformance(criteria);
 
-            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+            return new JsonResult
+            {
+                Data = leaguePerformance,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = int.MaxValue
+            };
         }
 
         [HttpGet]

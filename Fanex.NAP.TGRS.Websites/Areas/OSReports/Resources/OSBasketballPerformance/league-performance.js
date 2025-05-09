@@ -513,7 +513,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
         var noOfMatchesFormat = '<span class="bettype-link link" data-match="{0}" data-is-live="{1}" title="{2}" data-match-name="{3}" data-league="{4}" data-league-name="{5}">{3}</span>';
         if (data.length > 0) {
             $.each(data, function (index, item) {
-                var noOfMatchCol = noOfMatchesFormat.format(item.MatchId, item.IsLive, item.MatchName, item.MatchName, leagueId, leagueName);
+                var noOfMatchCol = noOfMatchesFormat.format(item.MatchId, isLive, item.MatchName, item.MatchName, leagueId, leagueName);
                 row = {
                     Columns: [
                         { Name: 'ColNo', Value: index + 1 },
@@ -596,7 +596,7 @@ Fanex.NAP.TGRS.OSReports.BasketballPerformace.League = function () {
             dataType: 'json',
             data: JSON.stringify(betTypeParams),
             success: function (result) {
-                renderBetTypeOfLeaguePerformanceGrid(result, leagueName, matchName);
+                renderBetTypeOfLeaguePerformanceGrid(result, leagueName, matchName, isLive);
             },
             error: function (xhr) {
                 common.HandleAjaxError(xhr);
