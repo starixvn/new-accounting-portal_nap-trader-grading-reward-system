@@ -66,5 +66,11 @@
                 return Json(new { ex.Message, ex.StackTrace }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult WeekPerformance()
+        {
+            return View();
+        }
     }
 }

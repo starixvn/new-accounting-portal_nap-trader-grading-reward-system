@@ -273,8 +273,12 @@ namespace Fanex.NAP.TGRS.Websites
                 "~/Areas/Reports/Resources/Trader/sampleData.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/traderPerformanceMonthly").Include(
-                    "~/Areas/Reports/Resources/TraderPerformanceMonthly/*.js"
+                    "~/Areas/Reports/Resources/TraderPerformanceMonthly/trader-performance-monthly.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/scripts/traderPerformanceMonthlyByWeek").Include(
+                "~/Areas/Reports/Resources/TraderPerformanceMonthly/trader-performance-monthly-by-week.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/scripts/bettypeMonthlyPerformance").Include(
                     "~/Areas/Reports/Resources/PerformanceDetail/performance-detail-helper.js",
