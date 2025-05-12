@@ -163,7 +163,7 @@
 
             if (teamData != null && teamData.Count() > 0)
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
                                 ViewLang.Team,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -195,7 +195,7 @@
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0, len = contentData.Count();
 
-            for (int i = 0; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
                 var styleIndex = (i % 2 == 0) ? 5 : 6;
                 var item = contentData.ElementAt(i);
@@ -264,7 +264,7 @@
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
 
             var teams = this.GetTeams().ToList();
-            string teamString = MakeTeamSelectString(teams, criteria.TeamIds);
+            var teamString = MakeTeamSelectString(teams, criteria.TeamIds);
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Team, boldFont, teamString, normalFont, "\n");
 
             var contentRichTextString = contentRender.Render();

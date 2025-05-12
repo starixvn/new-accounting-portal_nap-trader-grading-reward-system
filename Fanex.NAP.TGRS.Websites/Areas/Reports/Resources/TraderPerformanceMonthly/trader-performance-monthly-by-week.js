@@ -83,7 +83,7 @@
 
     $(domElements.btnExport).click(function () {
         if (validateFilterForm()) {
-            var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/ExportExcelForWeek");
+            var url = common.ResolveRootUrl("Reports/TraderMonthlyReport/ExportCoverageExcel");
             var filter =
             {
                 Year: $(domElements.yearSelector).val(),

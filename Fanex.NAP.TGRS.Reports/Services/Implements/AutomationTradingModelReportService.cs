@@ -66,7 +66,7 @@
 
             if (modelData != null && modelData.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                         ViewLang.AutomationTradingPerformanceFileName,
                         ViewLang.Model,
                         criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -91,17 +91,17 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlockModel(int userId, GetModelPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.DataType, boldFont, criteria.DataType, normalFont, "\n");
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
@@ -143,7 +143,7 @@
             var index = 1;
             foreach (var item in data.ItemList)
             {
-                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var styleIndex = index % 2 == 0 ? 6 : 5;
                 var record = new object[]
                 {
                     item.ModelName,
@@ -230,16 +230,16 @@
                 return;
             }
             // Name
-            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            var nameBlock = new TextBlock(name + ":  ", nameFont);
             content = content.AddText(nameBlock);
             // Value
-            TextBlock valueBlock = new TextBlock(value, valueFont);
+            var valueBlock = new TextBlock(value, valueFont);
             content = content.AddText(valueBlock);
             if (!string.IsNullOrEmpty(endString))
             {
                 content = content.AddText(endString);
             }
-            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
+            var charPerLine = 216; // Number char per line in filter block - use to calculate number of line
             var line = name + value;
             lineCount += Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }

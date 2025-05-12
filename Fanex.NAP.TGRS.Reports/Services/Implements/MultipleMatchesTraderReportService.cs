@@ -70,7 +70,7 @@
                 var traderGroups = traderData.GroupBy(obj => obj.CustId);
                 TraderPerformanceGroup traderGroup = null;
 
-                foreach (IGrouping<int, TraderPerformanceInfo> group in traderGroups)
+                foreach (var group in traderGroups)
                 {
                     traderGroup = new TraderPerformanceGroup(group.Key);
                     traderGroup.AddHeader(group);
@@ -98,7 +98,7 @@
             MatchPerformanceGroup matchGroup = null;
             var totalItems = 0;
 
-            foreach (IGrouping<int, MatchPerformanceInfo> group in matchGroups)
+            foreach (var group in matchGroups)
             {
                 matchGroup = new MatchPerformanceGroup(group.Key);
                 matchGroup.AddMatchList(group, isGroupingMatchDetail);
@@ -158,7 +158,7 @@
             var traderData = SessionManager.Get<TraderPerformanceList>(MultipleMatchesTraderPerformanceSessionKey);
             if (traderData != null && traderData.TotalItems > 0)
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.MultipleMatchesPerformanceTraderFileName,
                                 ViewLang.Trader,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -182,10 +182,10 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(int userId, GetTraderPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(10, 0);
-            IFont normalFont = writer.GetFont(11, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(10, 0);
+            var normalFont = writer.GetFont(11, 0);
+            var lineCount = 0;
             var gradeIds = criteria.GradeIds == SpaceBlank ? ViewLang.All : criteria.GradeIds;
             var multipleMatches = criteria.MultipleMatches == SpaceBlank ? ViewLang.All : criteria.MultipleMatches.Replace("5,6,7,8,9,10", ">=5");
 
@@ -196,8 +196,8 @@
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.BetType, boldFont, GetBettypes(criteria.Bettypes), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MultipleMatches, boldFont, multipleMatches, normalFont, "\n");
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(7, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
@@ -237,11 +237,11 @@
             }
 
             // Name
-            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            var nameBlock = new TextBlock(name + ":  ", nameFont);
             content = content.AddText(nameBlock);
 
             // Value
-            TextBlock valueBlock = new TextBlock(value, valueFont);
+            var valueBlock = new TextBlock(value, valueFont);
             content = content.AddText(valueBlock);
 
             if (!string.IsNullOrEmpty(endString))
@@ -254,7 +254,7 @@
 
         private int CountLine(string line)
         {
-            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
+            var charPerLine = 216; // Number char per line in filter block - use to calculate number of line
             return Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }
 
@@ -265,7 +265,7 @@
             {
                 foreach (var item in group.ItemList)
                 {
-                    int styleIndex = index % 2 == 0 ? 4 : 5;
+                    var styleIndex = index % 2 == 0 ? 4 : 5;
                     var record = new object[]
                     {
                         index,

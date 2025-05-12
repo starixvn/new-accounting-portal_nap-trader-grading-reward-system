@@ -10,7 +10,6 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary
 {
     using System;
-    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get top lose league.

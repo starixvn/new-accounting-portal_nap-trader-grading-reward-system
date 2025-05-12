@@ -20,7 +20,6 @@ namespace Fanex.NAP.TGRS.Reports.Services
     using Fanex.NAP.TGRS.Reports.Models.Permission;
     using Fanex.NAP.TGRS.Reports.ViewModels.PerformanceDetail;
     using NPOI.SS.UserModel;
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -39,8 +38,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>GradePerformanceList object.</returns>
         public GradePerformanceList GetGradePerformance(GetGradePerformanceCriteria criteria)
         {
-            IEnumerable<GradePerformanceInfo> gradeData = this.GetData<GradePerformanceInfo>(criteria);
-            GradePerformanceList gradePerformance = new GradePerformanceList();
+            var gradeData = this.GetData<GradePerformanceInfo>(criteria);
+            var gradePerformance = new GradePerformanceList();
 
             if (gradeData != null && gradeData.Any())
             {
@@ -69,8 +68,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>TraderPerformanceList object.</returns>
         public TraderPerformanceList GetTraderPerformanceOfGrade(GetTraderPerformanceOfGradeCriteria criteria)
         {
-            IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
-            TraderPerformanceList traderPerformance = new TraderPerformanceList();
+            var traderData = this.GetData<TraderPerformanceInfo>(criteria);
+            var traderPerformance = new TraderPerformanceList();
 
             if (traderData != null && traderData.Any())
             {
@@ -85,8 +84,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         public TraderPerformanceList GetTraderPerformanceOfGradeByLeague(GetTraderPerformanceOfGradeByLeagueCriteria criteria)
         {
-            IEnumerable<TraderPerformanceInfo> traderData = this.GetData<TraderPerformanceInfo>(criteria);
-            TraderPerformanceList traderPerformance = new TraderPerformanceList();
+            var traderData = this.GetData<TraderPerformanceInfo>(criteria);
+            var traderPerformance = new TraderPerformanceList();
 
             if (traderData != null && traderData.Any())
             {
@@ -101,8 +100,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
         public LeaguePerformanceList GetLeaguePerformanceOfGrade(GetLeaguePerformanceOfGradeCriteria criteria)
         {
-            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
-            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+            var leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
@@ -124,15 +123,15 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>MatchPerformanceList object.</returns>
         public MatchPerformanceList GetMatchPerformanceOfGradeTrader(GetMatchPerformanceOfGradeTraderCriteria criteria)
         {
-            IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
-            MatchPerformanceList matchPerformance = new MatchPerformanceList();
+            var matchData = this.GetData<MatchPerformanceInfo>(criteria);
+            var matchPerformance = new MatchPerformanceList();
 
             if (matchData != null && matchData.Any())
             {
-                IEnumerable<IGrouping<int?, MatchPerformanceInfo>> leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
+                var leagueGroups = matchData.GroupBy(obj => obj.LeagueId);
                 MatchPerformanceGroup leagueGroup = null;
 
-                foreach (IGrouping<int?, MatchPerformanceInfo> group in leagueGroups)
+                foreach (var group in leagueGroups)
                 {
                     if (group.Key.HasValue)
                     {
@@ -166,14 +165,14 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of bet type detail objects.</returns>
         public IEnumerable<BetTypeDetailItem> GetBettypeDetailGrade(GetBettypeDetailGradeCriteria criteria)
         {
-            IEnumerable<BetTypeDetailInfo> bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
-            List<BetTypeDetailItem> bettypeDetail = new List<BetTypeDetailItem>();
+            var bettypeData = this.GetData<BetTypeDetailInfo>(criteria);
+            var bettypeDetail = new List<BetTypeDetailItem>();
 
             if (bettypeData != null && bettypeData.Any())
             {
                 if (criteria.IsLive)
                 {
-                    GetScoreByPeriodCriteria scoreByPeriodCriteria = new GetScoreByPeriodCriteria
+                    var scoreByPeriodCriteria = new GetScoreByPeriodCriteria
                     {
                         FromDate = criteria.FromDate,
                         ToDate = criteria.ToDate,
@@ -184,7 +183,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
                         LeagueGroupIds = criteria.LeagueGroupIds
                     };
 
-                    IEnumerable<ScoreByPeriodInfo> scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
+                    var scoreByPeriodData = this.GetData<ScoreByPeriodInfo>(scoreByPeriodCriteria);
                     bettypeDetail = scoreByPeriodData.Any() ? bettypeData.Select(b => new BetTypeDetailItem(b)
                     {
                         Score = scoreByPeriodData.Where(s => s.BetType == b.BetType).First().Score,
@@ -211,11 +210,11 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <param name="templatePath">Path to Excel template file.</param>
         public void ExportGradePerformance(int userId, GetGradePerformanceCriteria criteria, string templatePath, bool isViewScore)
         {
-            GradePerformanceList gradeData = SessionManager.Get<GradePerformanceList>(GradePerformanceDetailReportSessionKey);
+            var gradeData = SessionManager.Get<GradePerformanceList>(GradePerformanceDetailReportSessionKey);
 
             if ((gradeData != null) && (gradeData.ItemLiveList.Any() || gradeData.ItemNonLiveList.Any()))
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                     ViewLang.PerformanceDetailFileName,
                                     ViewLang.Grade,
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -274,7 +273,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
             }
 
             // Total row
-            GradePerformanceItem total = contentData.Total;          
+            var total = contentData.Total;          
 
             var record = new List<object>
                 {
@@ -313,8 +312,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void FillGroupName(ref ExcelTemplateWriter writer, string groupName)
         {
             var contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(12, 0);
-            TextBlock nameBlock = new TextBlock(groupName, boldFont);
+            var boldFont = writer.GetFont(12, 0);
+            var nameBlock = new TextBlock(groupName, boldFont);
             contentRender = contentRender.AddText(nameBlock);
 
             WriteRowFromRichText(6, contentRender, ref writer);
@@ -370,15 +369,15 @@ namespace Fanex.NAP.TGRS.Reports.Services
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(int userId, GetGradePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
 
             var permission = (PermissionCheck == null) ? BettypeViewPermission.All : ReportUtil.GetBettypePermission(PermissionCheck);
-            List<BetTypeItem> betTypes = this.GetBetTypes(userId, permission).ToList();
-            string betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);           
-            string marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
+            var betTypes = this.GetBetTypes(userId, permission).ToList();
+            var betTypeString = MakeBetTypeSelectString(betTypes, criteria.BetTypes);           
+            var marketString = criteria.Market == -1 ? ViewLang.MarketAll : (criteria.Market == 1 ? ViewLang.MarketLive : ViewLang.MarketNonLive);
             var leagueGroupNameString = MakeLeagueGroupSelectString(criteria.LeagueGroupIds);
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Market, boldFont, marketString, normalFont, "\n");
@@ -388,8 +387,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (criteria.IsVirtual)
             {
-                string turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
-                string winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
+                var turnoverString = (criteria.Turnover != null) ? criteria.Turnover.Format(2) : string.Empty;
+                var winlostString = (criteria.WinLoss != null) ? criteria.WinLoss.Format(2) : string.Empty;
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumVirtualTurnover, boldFont, turnoverString, normalFont, "\n");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumVirtualWinLoss, boldFont, winlostString, normalFont, "\n");
@@ -404,8 +403,8 @@ namespace Fanex.NAP.TGRS.Reports.Services
 
             if (criteria.IsReal)
             {
-                string realTurnoverString = (criteria.TurnoverReal != null) ? criteria.TurnoverReal.Format(2) : string.Empty;
-                string realWinlostString = (criteria.WinLossReal != null) ? criteria.WinLossReal.Format(2) : string.Empty;
+                var realTurnoverString = (criteria.TurnoverReal != null) ? criteria.TurnoverReal.Format(2) : string.Empty;
+                var realWinlostString = (criteria.WinLossReal != null) ? criteria.WinLossReal.Format(2) : string.Empty;
 
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealTurnover, boldFont, realTurnoverString, normalFont, "\n");
                 AppendBlockContent(ref contentRender, ref lineCount, ViewLang.MinimumRealWinLoss, boldFont, realWinlostString, normalFont, "\n");
@@ -427,7 +426,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         private void WriteRowFromRichText(int rowIndex, RichTextRender contentRender, ref ExcelTemplateWriter writer)
         {
             var contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(rowIndex, contentRichTextArray);
         }

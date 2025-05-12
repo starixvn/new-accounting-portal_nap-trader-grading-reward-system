@@ -325,7 +325,8 @@
 	</Function>
 	<Function Name="TraderPerformanceMonthly">
 		<Setting Key="TGRS_Rpt_TraderPerformanceMonthly" SpName="TGRS_Rpt_TraderPerformanceMonthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>
-	</Function>
+    <Setting Key="TGRS_Rpt_TraderPerformanceWeeklyExcel" SpName="TGRS_Rpt_TraderPerformanceWeeklyExcel" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>    
+  </Function>
 
 	<Function Name="BettypeMonthlyPerformance">
 		<Setting Key="TGRS_Rpt_BettypePerformanceMonthly" SpName="TGRS_Rpt_BettypePerformanceMonthly" DbName="DBTGRS.bodb_TGRS.bodbTGRSNet"/>

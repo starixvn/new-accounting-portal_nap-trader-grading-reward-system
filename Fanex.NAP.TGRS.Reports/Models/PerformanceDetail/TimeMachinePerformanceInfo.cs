@@ -1,7 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 {
-    using System;
-
     public class TimeMachinePerformanceInfo
     {
         public decimal HDP1 { get; set; }

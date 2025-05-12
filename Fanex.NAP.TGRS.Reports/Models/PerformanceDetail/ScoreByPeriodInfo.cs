@@ -7,9 +7,6 @@
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceDetail
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Score by period model.

@@ -46,6 +46,18 @@
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=6.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.1.1\lib\net35\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net35\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Epplus.Mapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Epplus.Mapper.6.0.0\lib\net461\Epplus.Mapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net35\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Fanex.Caching.dll</HintPath>
     </Reference>
@@ -117,6 +129,8 @@
     <Reference Include="Olympus.HttpLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Olympus.HttpLogger.1.0.0.13\lib\net461\Olympus.HttpLogger.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Simplect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\DependencyInjector\Simplect.dll</HintPath>
@@ -164,6 +178,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BettypeMonthlyPerformanceController.cs" />
@@ -304,6 +319,7 @@
     <Compile Include="Criteria\AutomationTradingPerformance\GetModelPerformanceCriteria.cs" />
     <Compile Include="Criteria\AutomationTradingPerformance\GetMonthPerformanceCriteria.cs" />
     <Compile Include="Criteria\TraderManagement\GetAllTradersCriteria.cs" />
+    <Compile Include="Criteria\TraderPerformanceMonthly\GetTraderPerformanceMonthlyWeekCriteria.cs" />
     <Compile Include="Criteria\TraderPerformanceMonthly\GetTraderPerformanceMonthlyCriteria.cs" />
     <Compile Include="Criteria\TraderPerformanceMonthly\GetAllShiftCriteria.cs" />
     <Compile Include="Criteria\Trader\GetGeneralInfoCriteria.cs" />
@@ -414,6 +430,7 @@
     <Compile Include="Models\TraderPerformanceMonthly\SummaryItem.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\SummaryList.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\Trader.cs" />
+    <Compile Include="Models\TraderPerformanceMonthly\TraderPerformanceWeekRawData.cs" />
     <Compile Include="Models\TraderPerformanceMonthly\YearSummary.cs" />
     <Compile Include="Models\Trader\BetTypePerformance.cs" />
     <Compile Include="Models\Trader\LeaguePerformance.cs" />
@@ -431,6 +448,7 @@
     <Compile Include="Services\Implements\AutomationTradingPeriodReportService.cs" />
     <Compile Include="Services\Implements\BetTypeDetailReportService.cs" />
     <Compile Include="Services\Implements\BettypeMonthlyService.cs" />
+    <Compile Include="Services\Implements\CalendarHelper.cs" />
     <Compile Include="Services\Implements\DashboardService.cs" />
     <Compile Include="Services\Implements\GradeDetailReportService.cs" />
     <Compile Include="Services\Implements\MultipleMatchesTraderReportService.cs" />
@@ -445,6 +463,10 @@
     <Compile Include="Services\Implements\ActualRateTraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderDetailReportService.cs" />
     <Compile Include="Services\Implements\TraderManagementService.cs" />
+    <Compile Include="Services\Implements\TraderMonthlyWeekWeekCoverageSheetExcelService.cs" />
+    <Compile Include="Services\Implements\TraderMonthlyWeekMonthCoverageSheetExcelService.cs" />
+    <Compile Include="Services\Implements\TraderMonthlyWeekReportService.cs" />
+    <Compile Include="Services\Implements\TraderMonthlyWeekMainSheetExcelService.cs" />
     <Compile Include="Services\Implements\TraderMonthlyReportService.cs" />
     <Compile Include="Services\Implements\TraderReportService.cs" />
     <Compile Include="Services\Interfaces\IAutomationTradingReportService.cs" />

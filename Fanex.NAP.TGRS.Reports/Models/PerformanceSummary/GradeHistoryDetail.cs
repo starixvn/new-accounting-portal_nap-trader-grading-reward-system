@@ -10,7 +10,6 @@
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 {
     using System;
-    using System.Data;
 
     /// <summary>
     /// GradeHistoryDetail model.

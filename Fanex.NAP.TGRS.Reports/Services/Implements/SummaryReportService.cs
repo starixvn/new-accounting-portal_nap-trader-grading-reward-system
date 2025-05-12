@@ -8,7 +8,6 @@
 
 namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -73,7 +72,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>Trader performance model.</returns>
         public IEnumerable<TraderPerformance> GetTraderPerformance(GetTraderPerformanceCriteria criteria)
         {
-            IEnumerable<TraderPerformance> result = this.GetData<TraderPerformance>(criteria);
+            var result = this.GetData<TraderPerformance>(criteria);
 
             return result;
         }
@@ -94,7 +93,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of Grade History Detail Item.</returns>
         public IEnumerable<GradeHistoryDetailItem> GetGradeHistory(GetGradeHistoryCriteria criteria)
         {
-            IEnumerable<GradeHistoryDetail> rawData = this.GetData<GradeHistoryDetail>(criteria);
+            var rawData = this.GetData<GradeHistoryDetail>(criteria);
             IEnumerable<GradeHistoryDetailItem> result = null;
 
             if (rawData != null && rawData.Any())
@@ -117,7 +116,7 @@ namespace Fanex.NAP.TGRS.Reports.Services
         /// <returns>List of Team History Detail Item.</returns>
         public IEnumerable<TeamHistoryDetailItem> GetTeamHistory(GetTeamHistoryCriteria criteria)
         {
-            IEnumerable<TeamHistoryDetail> rawData = this.GetData<TeamHistoryDetail>(criteria);
+            var rawData = this.GetData<TeamHistoryDetail>(criteria);
             IEnumerable<TeamHistoryDetailItem> result = null;
 
             if (rawData != null && rawData.Any())

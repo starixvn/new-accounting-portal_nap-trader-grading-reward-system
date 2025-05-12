@@ -136,7 +136,7 @@
 
             if ((bettypeData != null) && (bettypeData.Count() > 0))
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                     ViewLang.NewPerformanceDetailFileName,
                                     ViewLang.BetTypeExcelFile,
                                     criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -162,9 +162,9 @@
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0, totalLeague = 0, len = contentData.Count();
 
-            for (int i = 0; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
-                int styleIndex = (i % 2 == 0) ? 5 : 6;
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
                 var item = contentData.ElementAt(i);
 
                 var record = new object[]

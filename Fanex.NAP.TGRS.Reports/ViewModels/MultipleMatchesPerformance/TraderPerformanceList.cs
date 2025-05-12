@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance
 {
-    using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
     using System;
     using System.Collections.Generic;
 

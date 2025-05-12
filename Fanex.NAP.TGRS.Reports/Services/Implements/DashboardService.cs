@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Services
 {
-    using Fanex.Data;
     using Fanex.NAP.TGRS.Core.BaseClasses;        
     using Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria;
     using Fanex.NAP.TGRS.Reports.Criteria.PerformanceSummary;
@@ -9,7 +8,6 @@
     using Fanex.NAP.TGRS.Reports.ViewModels.Dashboard;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     /// <summary>
@@ -67,7 +65,7 @@
                 IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
-            IEnumerable<League> result = this.GetData<League>(topLeagueCriteria);
+            var result = this.GetData<League>(topLeagueCriteria);
 
             result = result.Take(5);
 
@@ -94,7 +92,7 @@
                 IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
-            IEnumerable<TopTrader> result = this.GetData<TopTrader>(topTraderCriteria);
+            var result = this.GetData<TopTrader>(topTraderCriteria);
 
             return result;
         }
@@ -117,7 +115,7 @@
                 IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
-            IEnumerable<BetTypePerformance> result = this.GetData<BetTypePerformance>(topBettypeCriteria);
+            var result = this.GetData<BetTypePerformance>(topBettypeCriteria);
 
             return result.Take(10);
         }
@@ -140,7 +138,7 @@
                 IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
-            List<MonthAmount> rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
+            var rawData = this.GetData<MonthAmount>(summaryCriteria).ToList();
             rawData = rawData.OrderBy(x => x.EventDate).ToList();
 
             var result = new List<MonthAmountItem>();
@@ -169,7 +167,7 @@
                 IsExcludeLeagues = IsExcludeLeagueStatus
             };
 
-            IEnumerable<TeamPerformance> teamData = this.GetData<TeamPerformance>(teamCriteria);
+            var teamData = this.GetData<TeamPerformance>(teamCriteria);
 
             return teamData;
         }

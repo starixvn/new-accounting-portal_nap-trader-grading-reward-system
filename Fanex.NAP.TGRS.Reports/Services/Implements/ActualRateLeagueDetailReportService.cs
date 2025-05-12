@@ -7,10 +7,8 @@
     using Fanex.NAP.TGRS.Core.ExcelUtility.RichTextExtensions;
     using Fanex.NAP.TGRS.Core.Helpers;
     using Fanex.NAP.TGRS.Core.Resources;
-    using Fanex.NAP.TGRS.Reports.Criteria.NewPerformanceDetail;
     using Fanex.NAP.TGRS.Reports.Models.NewPerformanceDetail;
     using NPOI.SS.UserModel;
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -111,7 +109,7 @@
                 //sort desc field Margin before export data to excel, because this is set default for javascript display into grid
                 leagueData = leagueData.OrderByDescending(c => c.Margin);
 
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.ActualRatePerformanceDetailFileName,
                                 ViewLang.LeagueActualRate,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -156,9 +154,9 @@
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0;
 
-            for (int i = 0; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
-                int styleIndex = (i % 2 == 0) ? 5 : 6;
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
                 var item = data.ElementAt(i);
                 var record = new object[]
                 {

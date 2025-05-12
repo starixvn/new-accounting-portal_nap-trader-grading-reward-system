@@ -71,7 +71,7 @@
 
             if ((traderData != null) && (traderData.Count > 0))
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
                                 ViewLang.Trader,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -99,14 +99,14 @@
         private void FillRowData(IEnumerable<TraderPerformanceInfo> contentData, ref ExcelTemplateWriter writer, bool isViewScore)
         {
             // Content rows
-            int dataLength = contentData.ToList().Count;
+            var dataLength = contentData.ToList().Count;
             TraderPerformanceInfo item;
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int? totalLeague = 0, totalMatch = 0, totalBetcount = 0;
 
-            for (int i = 0; i < dataLength; i++)
+            for (var i = 0; i < dataLength; i++)
             {
-                int styleIndex = (i % 2 == 0) ? 5 : 6;
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
                 item = contentData.ElementAt(i);
 
                 totalTO += item.Turnover;
@@ -172,20 +172,20 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlock(GetTraderPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
 
             //// Trader
-            string userNameString = (criteria.Username != null) ? string.Format("contains '{0}'", criteria.Username) : string.Empty;
+            var userNameString = (criteria.Username != null) ? string.Format("contains '{0}'", criteria.Username) : string.Empty;
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Trader, boldFont, userNameString, normalFont, "\n");
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);

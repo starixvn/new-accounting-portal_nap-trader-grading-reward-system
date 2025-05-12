@@ -75,7 +75,7 @@
 
             if (eventList != null && eventList.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.Event,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -96,7 +96,7 @@
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 6144);
-                for (int i = 1; i < columns.Count; i++)
+                for (var i = 1; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
                 }
@@ -108,10 +108,10 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public void FilterBlock(int userId, AutoTradingPerformanceCriteria criteria, string breadcrumb, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
@@ -124,7 +124,7 @@
                 var arrDrilldownTab = breadcrumb.Split(';');
                 if (arrDrilldownTab.Length > 0)
                 {
-                    for (int i = 0; i < arrDrilldownTab.Length; i++)
+                    for (var i = 0; i < arrDrilldownTab.Length; i++)
                     {
                         var arrDrilldownLeague = arrDrilldownTab[i].Split(':');
                         if (arrDrilldownLeague.Length == 2)
@@ -135,8 +135,8 @@
                 }
             }
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
@@ -211,7 +211,7 @@
         {
             if (leagueList != null && leagueList.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.League,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -231,7 +231,7 @@
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 8192);
-                for (int i = 1; i < columns.Count; i++)
+                for (var i = 1; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
                 }
@@ -344,7 +344,7 @@
             GetLeaguePerformanceOfEventCriteria criteria,
             string templatePath)
         {
-            string reportName = string.Format(
+            var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.Event,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -380,7 +380,7 @@
 
             // Adjust column width for sheet
             sheet.SetColumnWidth(0, 9216);
-            for (int i = 1; i < columns.Count; i++)
+            for (var i = 1; i < columns.Count; i++)
             {
                 sheet.SetColumnWidth(i, 4096);
             }
@@ -419,7 +419,7 @@
            int cellCopyIndex,
            ref ExcelTemplateWriter writer)
         {
-            for (int i = 0; i < itemList.Count; i++)
+            for (var i = 0; i < itemList.Count; i++)
             {
                 var isNextItemExist = i + 1 < itemList.Count;
                 var isLeagueGroup = itemList[i].Type == AutoTradingType.LeagueGroup;
@@ -524,7 +524,7 @@
         {
             if (matchList != null && matchList.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.Match,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -545,7 +545,7 @@
                 // Adjust column width for sheet   
                 sheet.SetColumnWidth(0, 4096);
                 sheet.SetColumnWidth(1, 8192);
-                for (int i = 2; i < columns.Count; i++)
+                for (var i = 2; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
                 }

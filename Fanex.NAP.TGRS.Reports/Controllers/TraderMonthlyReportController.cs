@@ -1,4 +1,8 @@
-﻿namespace Fanex.NAP.TGRS.Reports.Controllers
+﻿using System.Linq;
+using Fanex.Data.Repository;
+using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly;
+
+namespace Fanex.NAP.TGRS.Reports.Controllers
 {
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -64,6 +68,28 @@
             catch (Exception ex)
             {
                 return Json(new { ex.Message, ex.StackTrace }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult ExportCoverageExcel(int year, string months, string weeks)
+        {
+            var templatePath = Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformanceCoverage.xlsx");
+            var monthList = months.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i=>int.Parse(i)).ToList();
+            var weekList = weeks.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i)).ToList();
+
+            var criteria = new GetTraderPerformanceMonthlyWeekCriteria
+            {
+                Year = year
+            };
+            var dynamicRepository = new DynamicRepository();
+            var rawData = dynamicRepository.Fetch<TraderPerformanceWeekRawData>(criteria).ToList();
+            
+            using (var service = new TraderMonthlyWeekReportService(templatePath, year,monthList, weekList,rawData))
+            {
+                var memoryStream = service.ExportExcel();
+                var filename = $"Saba_Trader_Winloss_Weekly_Report_{year}_(HDPOU).xlsx";
+                return File(memoryStream, "application/vnd.ms-excel", filename);
             }
         }
 

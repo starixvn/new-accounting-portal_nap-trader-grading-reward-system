@@ -148,7 +148,7 @@
 
         private string GenerateRangeDateInMonth(DateTime currentDate, DateTime fromDate, DateTime toDate)
         {
-            int days = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            var days = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
             var fromDateInMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
             var toDateInMonth = new DateTime(currentDate.Year, currentDate.Month, days);
 
@@ -178,7 +178,7 @@
 
             if (periodData != null && periodData.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.Period,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -205,7 +205,7 @@
 
                 // Adjust column width for sheet
                 sheet.SetColumnWidth(0, 6144);
-                for (int i = 1; i < columns.Count; i++)
+                for (var i = 1; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
                 }
@@ -217,10 +217,10 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlockPeriod(int userId, GetMonthPerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
             
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
@@ -230,8 +230,8 @@
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ViewBy, boldFont, criteria.ViewBy, normalFont, "\n");
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);

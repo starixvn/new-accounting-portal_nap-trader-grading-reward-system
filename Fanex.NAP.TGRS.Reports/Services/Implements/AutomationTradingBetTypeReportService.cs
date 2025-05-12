@@ -100,7 +100,7 @@
 
             if (betTypeData != null && betTypeData.ItemList.Any())
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.AutomationTradingPerformanceFileName,
                                 ViewLang.BetTypeExcelFile,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -127,7 +127,7 @@
                 FillGrandTotal(betTypeData.GrandTotal, 4, ref writer);
 
                 // Adjust column width for sheet
-                for (int i = 0; i < columns.Count; i++)
+                for (var i = 0; i < columns.Count; i++)
                 {
                     sheet.SetColumnWidth(i, 4096);
                 }
@@ -171,10 +171,10 @@
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void FilterBlockBetType(int userId, GetBetTypePerformanceCriteria criteria, ref ExcelTemplateWriter writer)
         {
-            RichTextRender contentRender = new RichTextRender().Clear();
-            IFont boldFont = writer.GetFont(11, 0);
-            IFont normalFont = writer.GetFont(12, 0);
-            int lineCount = 0;
+            var contentRender = new RichTextRender().Clear();
+            var boldFont = writer.GetFont(11, 0);
+            var normalFont = writer.GetFont(12, 0);
+            var lineCount = 0;
 
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.FromDate, boldFont, criteria.FromDate.ToShortFormatedDate(), normalFont, " - ");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.ToDate, boldFont, criteria.ToDate.ToShortFormatedDate(), normalFont, "\n");
@@ -183,8 +183,8 @@
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Site, boldFont, GetSiteName(criteria.TypeSiteIds), normalFont, "\n");
             AppendBlockContent(ref contentRender, ref lineCount, ViewLang.Measurement, boldFont, criteria.MeasurementDescs, normalFont, "\n");
 
-            IRichTextString contentRichTextString = contentRender.Render();
-            IRichTextString[] contentRichTextArray = new IRichTextString[1];
+            var contentRichTextString = contentRender.Render();
+            var contentRichTextArray = new IRichTextString[1];
             contentRichTextArray[0] = contentRichTextString;
             writer.WriteRow(8, contentRichTextArray);
             writer.SetRowHeight(1, PointInPixel * lineCount);
@@ -208,7 +208,7 @@
             {
                 columns.Add(groupHeader.HeaderText);
 
-                for (int i = 0; i < groupHeader.MergeColumnNumber - 1; i++)
+                for (var i = 0; i < groupHeader.MergeColumnNumber - 1; i++)
                 {
                     columns.Add(string.Empty);
                 }
@@ -217,7 +217,7 @@
             writer.SetRowValue(rowGroupHeader, columns.ToArray(), cellCopyIndex);
 
             // Merge range Group Header
-            for (int i = 0; i < groupHeaderList.Count; i++)
+            for (var i = 0; i < groupHeaderList.Count; i++)
             {
                 cellMergeEndIndex = cellMergeStartIndex + groupHeaderList[i].MergeColumnNumber - 1;
                 SheetExtensions.MergeCells(rowGroupHeader.Sheet, 2, cellMergeStartIndex, 2, cellMergeEndIndex);
@@ -239,7 +239,7 @@
             var row = writer.CopyRows(4, 1);
 
             var columns = new List<object>();
-            for (int i = 0; i < cellCopyIndex; i++)
+            for (var i = 0; i < cellCopyIndex; i++)
             {
                 columns.Add(string.Empty);
             }
@@ -262,7 +262,7 @@
 
             writer.SetRowValue(row, columns.ToArray(), cellCopyIndex);
 
-            for (int i = 0; i < cellCopyIndex; i++)
+            for (var i = 0; i < cellCopyIndex; i++)
             {
                 SheetExtensions.MergeCells(row.Sheet, 2, i, 3, i);
             }
@@ -277,7 +277,7 @@
             var index = 1;            
             foreach (var item in itemList)
             {
-                int styleIndex = index % 2 == 0 ? 6 : 5;
+                var styleIndex = index % 2 == 0 ? 6 : 5;
                 var columns = new List<object>();
                 
                 if (item.Type.Equals(AutoTradingType.Match))

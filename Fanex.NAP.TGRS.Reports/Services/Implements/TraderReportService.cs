@@ -31,8 +31,8 @@
 
         public LeaguePerformanceList GetTraderLeaguePerformance(GetTraderLeaguePerformanceCriteria criteria)
         {
-            IEnumerable<LeaguePerformanceInfo> leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
-            LeaguePerformanceList leaguePerformance = new LeaguePerformanceList();
+            var leagueData = this.GetData<LeaguePerformanceInfo>(criteria);
+            var leaguePerformance = new LeaguePerformanceList();
 
             if (leagueData != null && leagueData.Any())
             {
@@ -46,8 +46,8 @@
 
         public MatchPerformanceGroup GetMatchPerformanceOfLeague(GetTraderLeaguePerformanceDetailCriteria criteria)
         {
-            IEnumerable<MatchPerformanceInfo> matchData = this.GetData<MatchPerformanceInfo>(criteria);
-            MatchPerformanceGroup matchPerformance = new MatchPerformanceGroup();
+            var matchData = this.GetData<MatchPerformanceInfo>(criteria);
+            var matchPerformance = new MatchPerformanceGroup();
 
             if (matchData != null && matchData.Any())
             {

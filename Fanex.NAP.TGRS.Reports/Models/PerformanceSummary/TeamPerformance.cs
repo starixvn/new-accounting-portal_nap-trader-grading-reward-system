@@ -9,8 +9,6 @@
 
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 {
-    using System;
-
     /// <summary>
     /// Summary Report Team Performance model.
     /// </summary>

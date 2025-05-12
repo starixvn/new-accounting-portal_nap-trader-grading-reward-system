@@ -3,7 +3,6 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
-    using Fanex.NAP.TGRS.Core.Configurations;
     using Fanex.NAP.TGRS.Core.Helpers;       
     using Fanex.NAP.TGRS.Reports.Models.PerformanceSummary;
     using Fanex.NAP.TGRS.Reports.Services;
