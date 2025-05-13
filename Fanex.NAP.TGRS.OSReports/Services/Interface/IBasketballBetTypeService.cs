@@ -38,5 +38,18 @@
 
         void ExportBetTypePerformance(int userid, GetBettypePerformanceCriteria criteria, string templatePath);
 
+        LeaguePerformanceList GetLeaguePerformance(GetLeaguePerformanceCriteria criteria);
+
+        void ExportLeaguePerformance(int userid, GetLeaguePerformanceCriteria criteria, string templatePath);
+
+        MatchOfLeaguePerformanceList GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria);
+
+        void ExportMatchOfLeaguePerformance(int userId, GetMatchOfLeaguePerformanceCriteria criteria,
+            string templatePath);
+
+        BetTypeOfLeaguePerformanceList GetBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria);
+
+        void ExportBetTypeOfLeaguePerformance(int userId, GetBetTypeOfLeaguePerformanceCriteria criteria,
+            string templatePath);
     }
 }

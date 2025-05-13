@@ -448,6 +448,9 @@ namespace Fanex.NAP.TGRS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/os-basketball-performance").Include(
                 "~/Areas/OSReports/Resources/OSBasketballPerformance/bettype-performance.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/os-league-basketball-performance").Include(
+                "~/Areas/OSReports/Resources/OSBasketballPerformance/league-performance.js"));
         }
 
         public static void RegisterOSAdministrationBundles(BundleCollection bundles)

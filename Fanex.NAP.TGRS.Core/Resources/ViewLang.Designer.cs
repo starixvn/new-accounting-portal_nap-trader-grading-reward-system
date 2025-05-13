@@ -19,7 +19,7 @@ namespace Fanex.NAP.TGRS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -282,6 +282,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string BasketballBetTypePerformance {
             get {
                 return ResourceManager.GetString("BasketballBetTypePerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League Basketball Performance.
+        /// </summary>
+        public static string BasketballLeaguePerformance {
+            get {
+                return ResourceManager.GetString("BasketballLeaguePerformance", resourceCulture);
             }
         }
         
@@ -921,6 +930,15 @@ namespace Fanex.NAP.TGRS.Core.Resources {
         public static string LeagueCount {
             get {
                 return ResourceManager.GetString("LeagueCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League.
+        /// </summary>
+        public static string LeagueExcelFile {
+            get {
+                return ResourceManager.GetString("LeagueExcelFile", resourceCulture);
             }
         }
         

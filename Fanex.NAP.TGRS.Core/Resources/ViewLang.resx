@@ -897,4 +897,10 @@
   <data name="TraderPerformanceByCC_SheetName" xml:space="preserve">
     <value>Trader Performance By CC</value>
   </data>
+  <data name="BasketballLeaguePerformance" xml:space="preserve">
+    <value>League Basketball Performance</value>
+  </data>
+  <data name="LeagueExcelFile" xml:space="preserve">
+    <value>League</value>
+  </data>
 </root>

@@ -12,11 +12,19 @@
 
 @section Headline
 {
-    <div class="title">
-        <div>
-            <span class="curr">@ViewBag.Title</span>
-        </div>
-    </div>
+	<div class="title">
+		<div>
+			<span class="curr">@ViewBag.Title</span>
+		</div>
+	</div>
+	<div class="header-button">
+		<a href="#" class="green-button change-list disabled">
+			<span class="list-icon"></span>@ViewLang.BetType
+		</a>
+		<a href="@Url.Content("~/OSReports/OSBasketballPerformance/LeaguePerformance")" class="green-button change-list">
+			<span class="list-icon"></span>@ViewLang.League
+		</a>
+	</div>
 }
 
 <div class="filter-bar">

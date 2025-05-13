@@ -14,6 +14,9 @@
     public class OSBasketballPerformanceController : TGRSBaseController
     {
         private const string BetTypePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypePerformance.xls";
+        private const string LeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\LeaguePerformance.xls";
+        private const string MatchOfLeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\MatchLeaguePerformance.xls";
+        private const string BetTypeOfLeaguePerformanceDetail = @"~\Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypeLeaguePerformance.xls";
         private readonly IBasketballBetTypeService _basketballBetTypeService;
 
         public OSBasketballPerformanceController()
@@ -165,5 +168,78 @@
             return new EmptyResult();
         }
 
+        public ActionResult LeaguePerformance()
+        {
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.LeagueGroups = this._basketballBetTypeService.GetLeagueGroups();
+            ViewBag.GroupBetTypes = this._basketballBetTypeService.GetGroupBetTypes();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ExportLeaguePerformance(GetLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(LeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult GetMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetMatchOfLeaguePerformance(criteria);
+
+            return new JsonResult
+            {
+                Data = leaguePerformance,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = int.MaxValue
+            };
+        }
+
+        [HttpGet]
+        public ActionResult ExportMatchOfLeaguePerformance(GetMatchOfLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(MatchOfLeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportMatchOfLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult GetBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria)
+        {
+            var leaguePerformance = _basketballBetTypeService.GetBetTypeOfLeaguePerformance(criteria);
+
+            return Json(leaguePerformance, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ExportBetTypeOfLeaguePerformance(GetBetTypeOfLeaguePerformanceCriteria criteria)
+        {
+            string templatePath = Server.MapPath(BetTypeOfLeaguePerformanceDetail);
+
+            _basketballBetTypeService.ExportBetTypeOfLeaguePerformance(CurrentSession.UserId, criteria, templatePath);
+
+            return new EmptyResult();
+        }
     }
 }
