@@ -89,7 +89,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             // Week body
             var weekDates = CalendarHelper.GetWeekDates(year, week);
             var weekData = rawData.Where(x => weekDates.Contains(x.EventDate)).ToList();
-            var rowGroups = weekData.GroupBy(x => new { x.TraderName, x.LeagueName, x.Grade, x.TeamName, x.Department});
+            var rowGroups = weekData.GroupBy(x => new { x.TraderName, x.LeagueName, x.Grade, x.TeamName, x.Department });
             rowIndex++;
 
             foreach (var row in rowGroups)
@@ -198,8 +198,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         {
             template.Cells["A5:G5"].Copy(sheet.Cells[rowIndex, 1, rowIndex, 5]);
 
-            var columnIndex = 7; 
-            foreach (var month  in months)
+            var columnIndex = 7;
+            foreach (var month in months)
             {
                 var destRange = sheet.Cells[
                     rowIndex, columnIndex + 1,
@@ -207,7 +207,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
                 template.Cells["H5:L5"].Copy(destRange);
 
-                var monthData = rawData.Where(x => x.EventDate.Month == month).ToList();
+                var monthData = rawData.Where(x => x.EventDate.Month == month && x.EventDate.Year == year).ToList();
                 if (monthData.Count == 0)
                 {
                     AssignEmptyCell(rowIndex, columnIndex + 1, columnIndex + 5);

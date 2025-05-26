@@ -11,6 +11,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
     {
         private readonly ExcelWorksheet template;
         private readonly ExcelWorksheet sheet;
+        private readonly int year;
         private readonly List<int> months;
         private readonly List<TraderPerformanceWeekRawData> rawData;
         private int rowIndex = 3;
@@ -18,6 +19,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
         public TraderMonthlyWeekMonthCoverageSheetExcelService(
             ExcelWorksheet template,
             ExcelWorksheet sheet,
+            int year,
             List<int> months,
             List<TraderPerformanceWeekRawData> rawData)
         {
@@ -25,6 +27,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             this.template = template;
             this.sheet = sheet;
 
+            this.year = year;
             this.months = months;
             this.rawData = rawData;
         }
@@ -37,7 +40,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 var monthName = new DateTime(2000, month, 1).ToString("MMMM");
                 sheet.Cells[rowIndex, 1].Value = monthName;
 
-                var rawDataForMonth = rawData.Where(x => x.EventDate.Month == month).ToList();
+                var rawDataForMonth = rawData.Where(x => x.EventDate.Month == month && x.EventDate.Year == year).ToList();
                 if (rawDataForMonth.Count == 0)
                 {
                     AssignEmptyCell(rowIndex, 2, 7);

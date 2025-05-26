@@ -25,6 +25,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
 
         public TraderMonthlyWeekReportService(string templatePath, int year, List<int> months, List<int> weeks, List<TraderPerformanceWeekRawData> rawData)
         {
+            months = months.Distinct().OrderBy(x => x).ToList();
+            weeks = weeks.Distinct().OrderBy(x => x).ToList();
             excelPackage = new ExcelPackage(new FileInfo(templatePath));
             mainTemplate = excelPackage.Workbook.Worksheets["Sheet1"];
             mainSheet = excelPackage.Workbook.Worksheets.Add("Trader Monthly Performance", mainTemplate);
@@ -34,7 +36,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             weekCoverageSheet = excelPackage.Workbook.Worksheets.Add("Saba Match Coverage-Week", weekCoverageTemplate);
 
             mainSheetService = new TraderMonthlyWeekMainSheetExcelService(mainTemplate, mainSheet, year, months, rawData);
-            monthCoverageSheetService = new TraderMonthlyWeekMonthCoverageSheetExcelService(monthCoverageTemplate, monthCoverageSheet, months, rawData);
+            monthCoverageSheetService = new TraderMonthlyWeekMonthCoverageSheetExcelService(monthCoverageTemplate, monthCoverageSheet, year, months, rawData);
             weekCoverageSheetService = new TraderMonthlyWeekWeekCoverageSheetExcelService(weekCoverageTemplate, weekCoverageSheet, year, weeks, rawData);
         }
 
