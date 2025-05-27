@@ -26,30 +26,7 @@ namespace Fanex.NAP.TGRS.Websites.Controllers
         {
             Response.Cookies.Add(new HttpCookie("menu-id") { Expires = DateTime.Now.AddDays(-1d) });
 
-            if (this.HasRight(TGRSFunctionKeys.PerformanceSummary, NAP.Core.Business.Constant.Policy.Read))
-            {
-                return RedirectToAction("../Reports/Dashboard");
-            }
-            else if (this.HasRight(TGRSFunctionKeys.PerformanceSummaryComparison, NAP.Core.Business.Constant.Policy.Read))
-            {
-                return RedirectToAction("../OSReports/OSDashboard/BasketBallDashboard");
-            }
-            else if (this.HasRight(TGRSFunctionKeys.OSPerformanceSummary, NAP.Core.Business.Constant.Policy.Read))
-            {
-                return RedirectToAction("../OSReports/OSDashboard");
-            }
-            else if (this.HasRight(TGRSFunctionKeys.TraderReport, NAP.Core.Business.Constant.Policy.Read))
-            {
-                return RedirectToAction("../Reports/Trader");
-            }
-            else
-            {
-                return View();
-            }
-            ////else if (this.HasRight(TGRSFunctionKeys.OSTraderReport, NAP.Core.Business.Constant.Policy.Read))
-            ////{
-            ////    return RedirectToAction("../OSReports/OSTrader");
-            ////}
+            return View();
         }
 
         [ChildActionOnly]
