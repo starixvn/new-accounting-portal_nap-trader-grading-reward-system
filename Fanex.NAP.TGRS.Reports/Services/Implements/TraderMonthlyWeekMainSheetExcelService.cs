@@ -103,6 +103,13 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 var department = key.Department;
                 var league = key.LeagueName;
 
+                var allWeekDates = months.Select(m => CalendarHelper.GetWeekDates(year, m, week)).SelectMany(d => d);
+                var allWeekData = rowData.Where(x => allWeekDates.Contains(x.EventDate)).ToList();
+                if (allWeekData.Count == 0)
+                {
+                    continue;
+                }
+
                 BuildWeekTitle(trader, grade, teamName, department, league);
                 BuildWeekStatistic(week, rowData, trader, teamName, grade, department, league);
 
