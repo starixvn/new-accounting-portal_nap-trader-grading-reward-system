@@ -105,8 +105,8 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 var league = key.LeagueName;
 
                 var allWeekDates = months.Select(m => CalendarHelper.GetWeekDates(year, m, week)).SelectMany(d => d);
-                var allWeekData = rowData.Where(x => allWeekDates.Contains(x.EventDate)).ToList();
-                if (allWeekData.Count == 0)
+                rowData = rowData.Where(x => allWeekDates.Contains(x.EventDate)).ToList();
+                if (rowData.Count == 0)
                 {
                     continue;
                 }
