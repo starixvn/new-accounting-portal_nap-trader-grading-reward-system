@@ -81,6 +81,7 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
             for (var i = 0; i < months.Count; i++)
             {
                 template.Cells[3, 8, 3, 12].Copy(sheet.Cells[rowIndex, 8 + 5 * i, rowIndex, 12 + 5 * i]);
+                sheet.Columns[8 + 5 * i, 12 + 5 * i].Width = 12;
             }
 
             sheet.Cells[rowIndex, 1, rowIndex, columnCount].Merge = true;
@@ -147,7 +148,6 @@ namespace Fanex.NAP.TGRS.Reports.Services.Implements
                 var traderDataForMonth = GetTraderDataForMonth(rowData, monthDates, trader, teamName, grade, department, league);
 
                 template.Cells[4, 8, 4, 12].Copy(sheet.Cells[rowIndex, columnIndex + 1, rowIndex, columnIndex + 5]);
-
                 if (traderDataForMonth.Count == 0)
                 {
                     AssignEmptyCell(rowIndex, columnIndex + 1, columnIndex + 5);
