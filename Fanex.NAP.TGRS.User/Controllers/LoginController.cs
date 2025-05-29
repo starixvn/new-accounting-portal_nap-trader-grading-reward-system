@@ -114,12 +114,6 @@ namespace Fanex.NAP.TGRS.User.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (!NapSettings.Settings.IsNapHub && !EnableDirectLogin)
-            {
-                // if login-directly feature is disabled then redirect users to NAP Hub
-                return Redirect(NapSettings.Settings.HubUrl);
-            }
-
             GenerateToken();
 
             return View();
