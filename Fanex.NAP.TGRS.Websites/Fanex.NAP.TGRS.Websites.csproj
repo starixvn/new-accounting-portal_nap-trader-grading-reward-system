@@ -65,6 +65,18 @@
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.4.0.0\lib\dotless.Core.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=6.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.1.1\lib\net35\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net35\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Epplus.Mapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Epplus.Mapper.6.0.0\lib\net461\Epplus.Mapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net35\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Caching, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.2.2.0-beta2\lib\net461\Fanex.Caching.dll</HintPath>
       <Private>True</Private>
@@ -185,6 +197,8 @@
       <HintPath>..\packages\ONEbook.UM.Transport.3.0.0-beta1\lib\net461\ONEbook.UM.Transport.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RestSharp, Version=106.5.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.5.4\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -345,6 +359,7 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs">
@@ -477,6 +492,7 @@
     <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\period-performance.js" />
     <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\bettype-performance.js" />
     <Content Include="Areas\Reports\Resources\AutomationTradingPerformance\summary-performance.js" />
+    <Content Include="Areas\Reports\Resources\TraderPerformanceMonthly\trader-performance-monthly-by-week.js" />
     <Content Include="Areas\Reports\Resources\TraderPerformanceMonthly\trader-performance-monthly.js" />
     <Content Include="Areas\Reports\Resources\Trader\report.js" />
     <Content Include="Areas\Reports\Resources\Trader\sampleData.js" />
@@ -736,6 +752,9 @@
     <Content Include="Areas\Reports\ExcelTemplates\DetailReports\LeaguePerformanceOfBetChoiceHalfMeasure.xls" />
     <Content Include="Areas\OSReports\Views\OSBasketballPerformance\LeaguePerformance.cshtml" />
     <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\LeaguePerformance.xls" />
+    <Content Include="Areas\Reports\Views\TraderMonthlyReport\WeekPerformance.cshtml" />
+    <Content Include="Areas\Reports\ExcelTemplates\PerformanceMonthly\MonthlyPerformanceCoverage.xlsx" />
+    <Content Include="Areas\Reports\Views\TraderMonthlyReport\WeekPerformanceFilter.cshtml" />
     <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\BetTypeLeaguePerformance.xls" />
     <Content Include="Areas\OSReports\ExcelTemplates\OSBasketballPerformance\MatchLeaguePerformance.xls" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -806,6 +825,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
+    <None Include="Web.KLDR.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -926,6 +948,9 @@
     <Content Include="Web.ConnectionString.PROD.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+	<Content Include="Web.ConnectionString.KLDR.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionString.UATNEW.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -937,6 +962,9 @@
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.PROD.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+	<Content Include="Web.AppSettings.KLDR.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <None Include="Content\Themes\Fonts\HmnHiRzvcnQr8CjBje6GQhTbgVql8nDJpwnrE27mub0.woff2" />

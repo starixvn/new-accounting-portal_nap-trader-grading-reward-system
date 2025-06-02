@@ -7,7 +7,6 @@
     using Fanex.NAP.TGRS.Reports.Models.MultipleMatchesPerformance;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Match performance view model.

@@ -1,6 +1,4 @@
-﻿using Fanex.Common;
-
-namespace Fanex.NAP.TGRS.Reports.Models.AutomationTradingPerformance
+﻿namespace Fanex.NAP.TGRS.Reports.Models.AutomationTradingPerformance
 {
     public class RTModelPerformanceInfo
     {

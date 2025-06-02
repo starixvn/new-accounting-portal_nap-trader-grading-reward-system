@@ -150,7 +150,7 @@
             WriteObject(row, offset, item.LastYear, AvgSummary.Columns);
             offset += AvgSummary.Columns.Count;
 
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 if (item.Months.ContainsKey(i + 1)) WriteObject(row, offset, item.Months[i + 1], Summary.Columns);
                 else WriteObject(row, offset, null, Summary.Columns);
@@ -180,7 +180,7 @@
             WriteObject(row, offset, total.LastYear, AvgSummary.Columns);
             offset += AvgSummary.Columns.Count;
 
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 if (total.Months.ContainsKey(i + 1)) WriteObject(row, offset, total.Months[i + 1], Summary.Columns);
                 else WriteObject(row, offset, null, Summary.Columns);

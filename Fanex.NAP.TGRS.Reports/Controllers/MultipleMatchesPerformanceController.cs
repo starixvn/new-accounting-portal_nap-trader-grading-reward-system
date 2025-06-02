@@ -9,7 +9,6 @@
     using System;
     using System.Web.Mvc;
     using Fanex.NAP.TGRS.Core.Helpers;
-    using Fanex.NAP.TGRS.Reports.ViewModels.MultipleMatchesPerformance;
 
     public class MultipleMatchesPerformanceController : TGRSBaseController
     {

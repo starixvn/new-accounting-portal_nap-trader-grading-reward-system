@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.Trader
 {
-    using Fanex.Data.Repository;
     using System;
 
     public class GetTraderBetTypePerformanceCriteria : BettypeGroupCriteria

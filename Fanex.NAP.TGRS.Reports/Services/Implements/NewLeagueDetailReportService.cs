@@ -107,7 +107,7 @@
 
             if (leagueData != null && leagueData.Count() > 0)
             {
-                string reportName = string.Format(
+                var reportName = string.Format(
                                 ViewLang.NewPerformanceDetailFileName,
                                 ViewLang.League,
                                 criteria.FromDate.ToShortFormatedDateForFileName(),
@@ -129,8 +129,8 @@
         {
             var match = this.GetData<LeagueMatchPerformanceInfo>(criteria).OrderBy(c=>c.EventDate).ThenBy(c=>c.LeagueName);
             var content = new StringBuilder();
-            string NA = "N/A";
-            string formatNumber = "0.##";
+            var NA = "N/A";
+            var formatNumber = "0.##";
 
             decimal totalTO = 0, totalWL = 0, totalJuiceWL = 0, totalJuiceTO = 0, totalLeftoverWL = 0, totalLeftoverTO = 0;
             int totalMatch = 0, totalLeague = 0, totalBetcount = 0;
@@ -142,11 +142,11 @@
 
             foreach (var item in match)
             {
-                string juiceMargin = item.JuiceMargin.HasValue ? item.JuiceMargin.Value.ToString(formatNumber) : NA;
-                string juiceMarginTotal = item.JuiceMarginTotal.HasValue ? item.JuiceMarginTotal.Value.ToString(formatNumber) : NA;
-                string leftoverMargin = item.LeftoverMargin.HasValue ? item.LeftoverMargin.Value.ToString(formatNumber) : NA;
-                string leftoverMarginTotal = item.LeftoverMarginTotal.HasValue ? item.LeftoverMarginTotal.Value.ToString(formatNumber) : NA;
-                string margin = item.Margin.HasValue ? item.Margin.Value.ToString(formatNumber) : NA;
+                var juiceMargin = item.JuiceMargin.HasValue ? item.JuiceMargin.Value.ToString(formatNumber) : NA;
+                var juiceMarginTotal = item.JuiceMarginTotal.HasValue ? item.JuiceMarginTotal.Value.ToString(formatNumber) : NA;
+                var leftoverMargin = item.LeftoverMargin.HasValue ? item.LeftoverMargin.Value.ToString(formatNumber) : NA;
+                var leftoverMarginTotal = item.LeftoverMarginTotal.HasValue ? item.LeftoverMarginTotal.Value.ToString(formatNumber) : NA;
+                var margin = item.Margin.HasValue ? item.Margin.Value.ToString(formatNumber) : NA;
 
                 content.AppendLine($"{item.EventDateString}," +
                     $"{item.LeagueName}," +
@@ -173,11 +173,11 @@
                 totalBetcount += item.BetCount.HasValue ? item.BetCount.Value : 0;
             }
 
-            string totalJuiceMargin = totalJuiceTO > 0 ? (totalJuiceWL / totalJuiceTO * 100).ToString(formatNumber) : NA;
-            string totalJuiceMarginTotal = totalTO > 0 ? (totalJuiceWL / totalTO * 100).ToString(formatNumber) : NA;
-            string totalLeftoverMargin = totalLeftoverTO > 0 ? (totalLeftoverWL / totalLeftoverTO * 100).ToString(formatNumber) : NA;
-            string totalLeftoverMarginTotal = totalTO > 0 ? (totalLeftoverWL / totalTO * 100).ToString(formatNumber) : NA;
-            string totalMargin = totalTO > 0 ? (totalWL / totalTO * 100).ToString(formatNumber) : NA;
+            var totalJuiceMargin = totalJuiceTO > 0 ? (totalJuiceWL / totalJuiceTO * 100).ToString(formatNumber) : NA;
+            var totalJuiceMarginTotal = totalTO > 0 ? (totalJuiceWL / totalTO * 100).ToString(formatNumber) : NA;
+            var totalLeftoverMargin = totalLeftoverTO > 0 ? (totalLeftoverWL / totalLeftoverTO * 100).ToString(formatNumber) : NA;
+            var totalLeftoverMarginTotal = totalTO > 0 ? (totalLeftoverWL / totalTO * 100).ToString(formatNumber) : NA;
+            var totalMargin = totalTO > 0 ? (totalWL / totalTO * 100).ToString(formatNumber) : NA;
 
             content.AppendLine("Total," +
                 $"{totalLeague}," +
@@ -230,9 +230,9 @@
             decimal totalTO = 0, totalTOJuice = 0, totalTOLeftover = 0, totalJuice = 0, totalLeftover = 0, totalWL = 0;
             int totalTrader = 0, totalMatch = 0, totalBetcount = 0;
 
-            for (int i = 0; i < len; i++)
+            for (var i = 0; i < len; i++)
             {
-                int styleIndex = (i % 2 == 0) ? 5 : 6;
+                var styleIndex = (i % 2 == 0) ? 5 : 6;
                 var item = data.ElementAt(i);
                 var record = new object[]
                 {
@@ -295,11 +295,11 @@
             }
 
             // Name
-            TextBlock nameBlock = new TextBlock(name + ":  ", nameFont);
+            var nameBlock = new TextBlock(name + ":  ", nameFont);
             content = content.AddText(nameBlock);
 
             // Value
-            TextBlock valueBlock = new TextBlock(value, valueFont);
+            var valueBlock = new TextBlock(value, valueFont);
             content = content.AddText(valueBlock);
 
             if (!string.IsNullOrEmpty(endString))
@@ -312,7 +312,7 @@
 
         private int CountLine(string line)
         {
-            int charPerLine = 216; // Number char per line in filter block - use to calculate number of line
+            var charPerLine = 216; // Number char per line in filter block - use to calculate number of line
             return Convert.ToInt32(Math.Ceiling((float)line.Length / charPerLine));
         }
         #endregion Private

@@ -1,8 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.OSReports.Controllers
 {
-    using Fanex.Logging;
-    using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -24,32 +21,20 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.OSTraderPerformanceByCC, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            try
-            {
-                DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
-                minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
+            DateTime minDate = new DateTime(DateTime.Today.AddYears(AppSettings.PerformanceYearRange * -1).Year, 1, 1);
+            minDate = minDate < AppSettings.AvailableDate ? AppSettings.AvailableDate : minDate;
 
-                var ctsCustomerClass = _service.GetCTSCustomerClassFilter();
+            var ctsCustomerClass = _service.GetCTSCustomerClassFilter();
 
-                var sports = _service.GetSportFilter();
+            var sports = _service.GetSportFilter();
 
-                ViewBag.MinDate = minDate;
-                ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
-                ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
-                ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
-                ViewBag.Sports = sports;
-                ViewBag.CustomerClassGroup = ctsCustomerClass.CustomerClassGroup;
-                ViewBag.ClassList = ctsCustomerClass.ClassList;
-            }
-            catch(Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                                  .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                  .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
-            }
-            
+            ViewBag.MinDate = minDate;
+            ViewBag.DefaultFromDate = DateTime.Today.AddDays(AppSettings.PerformanceDefaultDayRange * -1);
+            ViewBag.DefaultToDate = DateTime.Today.AddDays(-1);
+            ViewBag.AllowYearRange = AppSettings.PerformanceAllowYearRange;
+            ViewBag.Sports = sports;
+            ViewBag.CustomerClassGroup = ctsCustomerClass.CustomerClassGroup;
+            ViewBag.ClassList = ctsCustomerClass.ClassList;
 
             return View();
         }
@@ -70,7 +55,7 @@
         {
             var templatePath = Server.MapPath("~/Areas/OSReports/ExcelTemplates/OSTraderPerformanceByCC/TraderPerformanceByCC.xls");
 
-             _service.ExportTradePerformanceCC(criteria, templatePath);
+            _service.ExportTradePerformanceCC(criteria, templatePath);
 
             return new EmptyResult();
         }

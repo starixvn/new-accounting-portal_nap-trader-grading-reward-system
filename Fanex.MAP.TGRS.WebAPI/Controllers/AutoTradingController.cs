@@ -1,6 +1,5 @@
 ﻿namespace Fanex.MAP.TGRS.WebAPI.Controllers
 {
-    using Fanex.Logging;
     using Fanex.MAP.TGRS.WebAPI.Service;
     using System;
     using System.IO;

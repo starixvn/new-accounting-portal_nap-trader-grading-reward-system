@@ -68,11 +68,20 @@
             }
         </style>
         <div class="title">
-            <div>
-                <span class="curr">@ViewBag.Title</span>
-            </div>
+	        <div>
+		        <span class="curr">@ViewBag.Title</span>
+	        </div>
         </div>
-    }
+
+        <div class="header-button">
+	        <a href="#" class="green-button change-list disabled">
+		        <span class="list-icon"></span>@ViewLang.Shift
+	        </a>
+	        <a href="@Url.Content("~/Reports/TraderMonthlyReport/WeekPerformance")" class="green-button change-list">
+		        <span class="list-icon"></span>@ViewLang.Week
+	        </a>
+        </div>
+}
 
     @Html.Partial("Filter")
 

@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.MultipleMatchesPerformance
 {
     using Fanex.Data.Repository;
-    using System;
 
     public class GetBettypeDetailOfTraderCriteria : CriteriaBase
     {

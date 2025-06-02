@@ -9,9 +9,6 @@
 
 namespace Fanex.NAP.TGRS.Reports.Models.PerformanceSummary
 {
-    using System;
-    using System.Data;
-
     /// <summary>
     /// Summary Report Trader Performance information model.
     /// </summary>

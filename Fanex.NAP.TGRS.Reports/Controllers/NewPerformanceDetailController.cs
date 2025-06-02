@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Controllers
 {
-    using Fanex.Logging;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.TGRS.Core.BaseClasses;
@@ -95,37 +94,21 @@
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetTraderPerformanceOfLeague(GetTraderPerformanceOfLeagueCriteria criteria)
         {
-            try
-            {
-                criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-                criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
-                var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            criteria.IsViewScore = HasRight(TGRSFunctionKeys.ScoreViewing, Constant.Policy.Read);
+            var result = this._newDetailReportService.GetTraderPerformanceByLeague(criteria);
 
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error(ex.Message, ex);
-                return null;
-            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = TGRSFunctionKeys.PerformanceDetail, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchPerformanceOfLeagueTrader(GetMatchPerformanceOfLeagueTraderCriteria criteria)
         {
-            try
-            {
-                criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
-                var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
+            criteria.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+            var result = this._newDetailReportService.GetMatchPerformanceOfLeagueAndTrader(criteria);
 
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error(ex.Message, ex);
-                return null;
-            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

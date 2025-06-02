@@ -17,6 +17,7 @@ namespace Fanex.NAP.TGRS.Websites
     using Fanex.Logging.Sentry;
     using Fanex.NAP.TGRS.Core.Configurations;
     using Infrastructure;
+    using OfficeOpenXml;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Configuration;
     using ONEbook.UM.Helpers;
@@ -45,6 +46,8 @@ namespace Fanex.NAP.TGRS.Websites
         /// </summary>
         protected void Application_Start()
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             DbSettingProviderManager
                 .StartNewSession()
                 .WithSqlServer()

@@ -10,7 +10,6 @@
 namespace Fanex.NAP.TGRS.Reports
 {
     using System.Web.Mvc;
-    using Simplect;
 
     public class ReportsAreaRegistration : AreaRegistration
     {

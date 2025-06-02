@@ -17,7 +17,7 @@
             {
                 result = new TraderInfoList();
 
-                foreach (TraderInfo trader in rawData)
+                foreach (var trader in rawData)
                 {
                     var traderInfoItem = new TraderInfoItem(trader);
 

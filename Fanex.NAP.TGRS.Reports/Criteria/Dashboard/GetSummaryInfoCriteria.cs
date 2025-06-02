@@ -10,7 +10,6 @@
 namespace Fanex.NAP.TGRS.Reports.Criteria.GetSummaryInfoCriteria
 {
     using System;
-    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get general info.

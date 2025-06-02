@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Criteria.TraderManagement
 {
-    using System;
     using Fanex.Data.Repository;
 
     /// <summary>

@@ -1,0 +1,102 @@
+﻿using System.Linq;
+using Fanex.Data.Repository;
+using Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly;
+
+namespace Fanex.NAP.TGRS.Reports.Controllers
+{
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.TGRS.Core.BaseClasses;
+    using Fanex.NAP.TGRS.Core.Helpers;
+    using Fanex.NAP.TGRS.Reports.Criteria.TraderPerformanceMonthly;
+    using Fanex.NAP.TGRS.Reports.Services.Implements;
+    using Fanex.NAP.TGRS.Reports.Services.Interfaces;
+    using NAP.Core.Web;
+    using Newtonsoft.Json.Linq;
+    using System;
+    using System.Web.Mvc;
+
+    public class TraderMonthlyReportController : TGRSBaseController
+    {
+        private ITraderMonthlyReport _service;
+
+        public TraderMonthlyReportController()
+        {
+            _service = new TraderMonthlyReportService();
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult Index()
+        {
+            var shifts = _service.GetShifts();
+            ViewBag.User = this.CurrentSession.Username;
+
+            return View(shifts);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult GetMonthlyData(GetTraderPerformanceMonthlyCriteria filter)
+        {
+            try
+            {
+                filter.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+                filter.LeagueName = filter.LeagueName ?? string.Empty;
+                filter.TraderName = filter.TraderName ?? string.Empty;
+                var data = _service.GetReports(filter);
+                var json = JObject.FromObject(data);
+                return Content(json.ToString(), "application/json");
+            }
+            catch (System.Exception e)
+            {
+                return Json(new { msg = e.Message, stack = e.StackTrace });
+            }
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+        public ActionResult ExportExcel(GetTraderPerformanceMonthlyCriteria filter)
+        {
+            try
+            {
+                filter.IsExcludeLeagues = AppSession.IsExcludingLeagues;
+                filter.LeagueName = filter.LeagueName ?? string.Empty;
+                var file = _service.ExportExcel(Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformance.xlsx"), filter);
+                var fileName = "Trader_Monthly_Performance_" + DateTime.Now.ToShortFormatedDateForFileName() + ".xlsx";
+
+                return File(file, "application/vnd.ms-excel", fileName);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ex.Message, ex.StackTrace }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [NapAuth(FunctionKey = TGRSFunctionKeys.TraderPerformanceMonthly, Policy = Constant.Policy.Read)]
+<<<<<<< HEAD
+        public ActionResult WeekPerformance()
+        {
+            return View();
+=======
+        public ActionResult ExportCoverageExcel(int year, string months, string weeks)
+        {
+            var templatePath = Server.MapPath("~/Areas/Reports/ExcelTemplates/PerformanceMonthly/MonthlyPerformanceCoverage.xlsx");
+            var monthList = months.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i=>int.Parse(i)).ToList();
+            var weekList = weeks.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(i => int.Parse(i)).ToList();
+
+            var criteria = new GetTraderPerformanceMonthlyWeekCriteria
+            {
+                Year = year
+            };
+            var dynamicRepository = new DynamicRepository();
+            var rawData = dynamicRepository.Fetch<TraderPerformanceWeekRawData>(criteria).ToList();
+            
+            using (var service = new TraderMonthlyWeekReportService(templatePath, year,monthList, weekList,rawData))
+            {
+                var memoryStream = service.ExportExcel();
+                var filename = $"Saba_Trader_Winloss_Weekly_Report_{year}_(HDPOU).xlsx";
+                return File(memoryStream, "application/vnd.ms-excel", filename);
+            }
+>>>>>>> 21e79f7c (feat: export excel)
+        }
+    }
+}

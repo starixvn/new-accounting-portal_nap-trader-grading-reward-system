@@ -1,8 +1,6 @@
 ﻿namespace Fanex.NAP.TGRS.Reports.Models.TraderPerformanceMonthly
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class SummaryItem
     {

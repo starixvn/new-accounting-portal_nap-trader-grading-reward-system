@@ -1,0 +1,63 @@
+﻿<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="yearSelector">Year</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="yearSelector">
+                    @for (var year = DateTime.Now.Year; year >= 2015; year--)
+                    {
+                        if (year < DateTime.Now.Year)
+                        {
+                            <option value="@((int) year)">@year</option>
+                        }
+                        else
+                        {
+                            <option value="@((int) year)" selected>@year</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="lbl-field col_3">
+                <label for="monthSelector">Month</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="monthSelector" multiple="multiple">
+	                <option value="1" selected>January</option>
+                    <option value="2" selected>February</option>
+                    <option value="3" selected>March</option>
+                    <option value="4" selected>April</option>
+	                <option value="5" selected>May</option>
+                    <option value="6" selected>June</option>
+                    <option value="7" selected>July</option>
+                    <option value="8" selected>August</option>
+                    <option value="9" selected>September</option>
+                    <option value="10" selected>October</option>
+                    <option value="11" selected>November</option>
+                    <option value="12" selected>December</option>
+                </select>
+            </div>
+
+            <div class="lbl-field col_4">
+                <label for="weekSelector">Week</label>
+            </div>
+            <div class="edit-field col_5">
+                <select id="weekSelector" multiple="multiple">
+                    @for (var week = 1; week <= 53; week++)
+                    {
+	                    <option value="@((int) week)" selected>Week @week</option>
+                    }
+                </select>
+            </div>
+
+            <div class="lbl-field col_5">
+	            <label for="blankSelector"></label>
+            </div>
+            <div class="submit col_5">
+	            <input id="btnExport" type="button" class="blue-button" value="@ViewLang.Export" />
+            </div>
+        </div>
+    </div>
+</div>
