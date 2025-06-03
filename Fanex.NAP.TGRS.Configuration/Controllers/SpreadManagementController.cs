@@ -196,7 +196,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
             if (correctSpreads.Count > 0)
             {
                 var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-                CacheManager.Set<IEnumerable<SpreadChecker>>(currentUser + "_Spreads", correctSpreads);
+                SessionManager.Set(currentUser + "_Spreads", correctSpreads);
             }
         }
 
@@ -255,7 +255,7 @@ namespace Fanex.NAP.TGRS.Configuration.Controllers
         private IEnumerable<SpreadChecker> GetCorrectSpreadsCache()
         {
             var currentUser = AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0;
-            var correctSpreadsCache = CacheManager.Get<IEnumerable<SpreadChecker>>(currentUser + "_Spreads");
+            var correctSpreadsCache = SessionManager.Get<IEnumerable<SpreadChecker>>(currentUser + "_Spreads");
             return correctSpreadsCache;
         }
 

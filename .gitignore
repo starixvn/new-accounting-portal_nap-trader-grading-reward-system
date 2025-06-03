@@ -37,3 +37,4 @@ packages
 /Fanex.NAP.TGRS.Websites/App_Data/user-activity-detail-*.json
 /Fanex.MAP.TGRS.WebAPI/.vs/Fanex.NAP.TGRS.WebAPI.csproj.dtbcache.json
 **/.vs/**
+*.orig
