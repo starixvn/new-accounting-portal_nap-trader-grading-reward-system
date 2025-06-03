@@ -378,7 +378,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="App_Data\NAPCommonSpNames.xml" />
     <Content Include="App_Data\NAPTGRSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -948,7 +947,7 @@
     <Content Include="Web.ConnectionString.PROD.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionString.KLDR.config">
+    <Content Include="Web.ConnectionString.KLDR.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.UATNEW.config">
@@ -964,7 +963,7 @@
     <Content Include="Web.AppSettings.PROD.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-	<Content Include="Web.AppSettings.KLDR.config">
+    <Content Include="Web.AppSettings.KLDR.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <None Include="Content\Themes\Fonts\HmnHiRzvcnQr8CjBje6GQhTbgVql8nDJpwnrE27mub0.woff2" />
