@@ -7,6 +7,8 @@
 //   <change who="Jason.Ly" date="2014.5.15">Created</change>
 // </history>
 
+using Fanex.Logging;
+
 namespace Fanex.NAP.TGRS.Core.Helpers
 {
     using Fanex.Common;
